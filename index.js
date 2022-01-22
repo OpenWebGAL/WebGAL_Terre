@@ -1,13 +1,10 @@
 //initialize
 const Port = 80;//设置端口号，一般是80
 const express = require('express');
-const {fstat} = require('fs');
 const app = express();
 const bodyParser = require('body-parser')
 const cors = require('cors');
-const MongoClient = require('mongodb').MongoClient;
-const {resolve} = require('path');
-const {rejects} = require('assert');
+const api = require('./src/router')
 process.env.PORT = `${Port}`;
 
 app.use('/', express.static(__dirname + '/public'));//allow browser access resources
@@ -23,12 +20,7 @@ process.on('uncaughtException', function (err) {
 process.on('unhandledRejection', function (err, promise) {
 }) //监听Promise没有被捕获的失败函数
 
-const MongoUrl = "";
-
-//测试
-app.get('/api', (req, res) => {
-    res.send('API Test OK!')
-});
+app.use('/api', api);
 
 app.listen(Port, () => console.log('服务器已就绪，运行在端口' + Port))//输出服务器启动信息
 
