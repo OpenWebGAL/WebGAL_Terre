@@ -2,6 +2,8 @@ const express = require('express');
 const manageGame = express.Router();
 const getGameList = require("../service/getGameList")
 const createNewGame = require("../service/createNewGame");
+const addAsset = require("./addAsset");
+const updateGameConfig = require("../service/updateGameConfig");
 
 manageGame.get('/gameList', async (req, res) => {
     let gameList;
@@ -30,6 +32,18 @@ manageGame.get('/createGame/*', async (req, res) => {
 })
 
 // 上传文件资源，并写入文件资源的map中
+manageGame.post('/addAsset', addAsset);
+
+//修改游戏配置
+manageGame.post('/config', async (req, res) => {
+    const editGame = req.body.currentEditGame;
+    const config = req.body.config;
+    const stat = await updateGameConfig(editGame, config);
+    if (stat === 'success')
+        res.send('OK');
+    else
+        res.send('fail');
+})
 
 
 module.exports = manageGame;
