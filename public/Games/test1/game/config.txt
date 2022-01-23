@@ -1,5 +1,0 @@
-Game_name:WebGAL;
-Game_key:00000000;
-Title_img:none;
-Title_bgm:none;
-Loading_img:none;
