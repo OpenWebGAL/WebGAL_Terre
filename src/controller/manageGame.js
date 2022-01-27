@@ -2,7 +2,6 @@ const express = require('express');
 const manageGame = express.Router();
 const getGameList = require("../service/getGameList")
 const createNewGame = require("../service/createNewGame");
-const addAsset = require("./addAsset");
 const updateGameConfig = require("../service/updateGameConfig");
 
 manageGame.get('/gameList', async (req, res) => {
@@ -30,9 +29,6 @@ manageGame.get('/createGame/*', async (req, res) => {
         res.send('AlreadyExist');
     }
 })
-
-// 上传文件资源，并写入文件资源的map中
-manageGame.post('/addAsset', addAsset);
 
 //修改游戏配置
 manageGame.post('/config', async (req, res) => {
