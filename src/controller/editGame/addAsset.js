@@ -1,7 +1,7 @@
 const express = require('express');
 const addAsset = express.Router();
 
-addAsset.post('/background', (req, res) => {
+addAsset.post('/*', (req, res) => {
 
 })
 
