@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express.Router();
 const manageGame = require('./controller/manageGame')
-const editGame = require("./controller/editGame/editGame");
+const editGame = require("./controller/editGame");
 
 //测试
 app.get('/test', (req, res) => {
