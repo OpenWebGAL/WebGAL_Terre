@@ -1,5 +1,5 @@
-Game_name:星光咖啡馆与死神之蝶;
+Game_name:测试;
 Game_key:114514LTS;
-Title_img:none;
-Title_bgm:none;
-Loading_img:none;
+Title_img:20220114-223127.jpeg;
+Title_bgm:Famishin - 花鳥風月.flac;
+Loading_img:20220114-223127.jpeg;
