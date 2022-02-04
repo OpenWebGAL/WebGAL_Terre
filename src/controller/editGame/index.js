@@ -3,6 +3,8 @@ const getAssets = require("./getAssets");
 const addAsset = require("./addAsset");
 const mkDir = require("../../service/mkDir");
 const addScene = require("../../service/addScene");
+const writeScene = require("../../service/writeScene");
+const logger = require("../../extend/logger");
 const editGame = express.Router();
 
 editGame.get('/test', (req, res) => {
@@ -23,6 +25,17 @@ editGame.post('/addNewScene', async (req, res) => {
     const gameName = req.body['gameName'];
     const sceneName = req.body['sceneName'];
     const result = await addScene(gameName, sceneName);
+    res.send(result);
+})
+
+editGame.post('/editScene', async (req, res) => {
+    logger.info('开始更新场景');
+    logger.info('场景数据：', req.body['sceneData']);
+    logger.info('场景名称：' + req.body['sceneName'].substring(0, req.body['sceneName'].length - 5))
+    const gameName = req.body['gameName'];//游戏名称
+    const sceneName = req.body['sceneName'].substring(0, req.body['sceneName'].length - 5);//场景名称
+    const sceneData = req.body['sceneData'];//场景数据
+    const result = await writeScene(gameName, sceneName, sceneData);
     res.send(result);
 })
 
