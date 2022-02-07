@@ -1,5 +1,6 @@
 const fs = require('fs');
 const logger = require("../extend/logger");
+const scriptParser = require("./scriptParser");
 
 const writeScene = (gameName, sceneName, sceneData) => {
     //要写入的JSON和txt文件目录：
@@ -20,24 +21,7 @@ const writeScene = (gameName, sceneName, sceneData) => {
 
         //更新txt文件（生成语句）
         function updateSceneTxt() {
-            let txtStr = '';
-
-            //语法生成器
-            for (const sentence of sceneData) {
-                switch (sentence['type']) {
-                    case 'dialog':
-                        let temp;
-                        if (sentence['speaker'] === '') {
-                            temp = `${sentence['content']};\n`;
-                        } else {
-                            temp = `${sentence['speaker']}:${sentence['content']};\n`;
-                        }
-
-                        txtStr = txtStr + temp;
-                        break;
-                }
-            }
-
+            const txtStr = scriptParser(sceneData);
             fs.writeFile(txtDir, txtStr, (err, data) => {
                 if (err) {
                     console.log(err);
