@@ -20,6 +20,7 @@ manageGame.get('/createGame/*', async (req, res) => {
     let url = req.url;
     url = url.split('/');
     let gameName = url[url.length - 1];
+    gameName = decodeURI(gameName);
     console.log(gameName);
     let createResult;
     createResult = await createNewGame(gameName);
