@@ -1,0 +1,2 @@
+WebGAL:现在测试跳转！;
+choose:{3:test3.txt,4:test4.txt,回开始:start.txt};
