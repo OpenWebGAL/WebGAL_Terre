@@ -1,4 +1,4 @@
-bgm:none;
 changeBG_next:0000.png
+bgm:none;
 雪之下雪乃:vocal-V1.ogg,你来得真早。;
 changeScene:Chapter-1.txt;

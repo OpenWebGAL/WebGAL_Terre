@@ -1,1 +1,1 @@
-[{"type":"bgm","bgm":"Famishin - 花鳥風月.flac","noBgm":true},{"type":"bg","bg":"0000.png","noBg":false,"next":true},{"type":"dialog","speaker":"雪之下雪乃","content":"你来得真早。","vocal":"V1.ogg","ignoreSpeaker":false},{"type":"changeScene","newScene":"Chapter-1.txt"}]
+[{"type":"bg","bg":"0000.png","noBg":false,"next":true},{"type":"bgm","bgm":"Famishin - 花鳥風月.flac","noBgm":true},{"type":"dialog","speaker":"雪之下雪乃","content":"你来得真早。","vocal":"V1.ogg","ignoreSpeaker":false},{"type":"changeScene","newScene":"Chapter-1.txt"}]

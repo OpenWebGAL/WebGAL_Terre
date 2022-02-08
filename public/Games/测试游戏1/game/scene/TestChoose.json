@@ -1,0 +1,1 @@
+[{"type":"dialog","speaker":"WebGAL","content":"现在测试跳转！","vocal":"","ignoreSpeaker":false},{"type":"choose","chooseItem":[{"text":"3","scene":"test3.txt"},{"text":"4","scene":"test4.txt"},{"text":"回开始","scene":"start.txt"}]}]

@@ -1,3 +1,4 @@
+const logger = require("../extend/logger");
 const scriptParser = (sceneData) => {
     let txtStr = '';
     //语法生成器
@@ -34,9 +35,9 @@ const scriptParser = (sceneData) => {
                 break;
             case 'bgm':
                 let tempBgm;
-                if(sentence['noBgm']){
+                if (sentence['noBgm']) {
                     tempBgm = `bgm:none;\n`;
-                }else {
+                } else {
                     tempBgm = `bgm:${sentence['bgm']};\n`;
                 }
                 txtStr = txtStr + tempBgm;
@@ -47,6 +48,36 @@ const scriptParser = (sceneData) => {
             case 'video':
                 txtStr = txtStr + `playVideo:${sentence['video']};\n`;
                 break;
+            case 'changeP':
+                let tempP;
+                tempP = 'changeP';
+                if (sentence['pos'] !== '') {
+                    tempP = tempP + `_${sentence['pos']}`;
+                }
+                if (sentence['next']) {
+                    tempP = tempP + `_next`;
+                }
+                tempP = tempP + ':'
+                if (sentence['noP']) {
+                    tempP = tempP + 'none';
+                } else {
+                    tempP = tempP + sentence['newP'];
+                }
+                tempP = tempP + `;\n`;
+                txtStr = txtStr + tempP;
+                break;
+            case 'choose': {
+                let tempChoose = 'choose:{'
+                for (let i = 0; i < sentence['chooseItem'].length; i++) {
+                    if (i !== 0) {
+                        tempChoose = tempChoose + ',';
+                    }
+                    tempChoose = tempChoose + `${sentence['chooseItem'][i].text}:${sentence['chooseItem'][i].scene}`;
+                }
+                tempChoose = tempChoose + '};\n'
+                txtStr = txtStr + tempChoose;
+                break;
+            }
         }
     }
     return txtStr;
