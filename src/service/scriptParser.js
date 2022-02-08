@@ -32,6 +32,21 @@ const scriptParser = (sceneData) => {
                 }
                 txtStr = txtStr + tempBg;
                 break;
+            case 'bgm':
+                let tempBgm;
+                if(sentence['noBgm']){
+                    tempBgm = `bgm:none;\n`;
+                }else {
+                    tempBgm = `bgm:${sentence['bgm']};\n`;
+                }
+                txtStr = txtStr + tempBgm;
+                break;
+            case 'changeScene':
+                txtStr = txtStr + `changeScene:${sentence['newScene']};\n`;
+                break;
+            case 'video':
+                txtStr = txtStr + `playVideo:${sentence['video']};\n`;
+                break;
         }
     }
     return txtStr;
