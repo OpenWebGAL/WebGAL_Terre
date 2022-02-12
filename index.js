@@ -1,5 +1,5 @@
 //initialize
-const Port = 80;//设置端口号，一般是80
+const Port = 3001;//设置端口号，一般是80
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
@@ -33,6 +33,6 @@ process.on('unhandledRejection', function (err, promise) {
 
 app.use('/api', api);
 
-app.listen(Port, () => console.log('服务器已就绪，运行在端口' + Port))//输出服务器启动信息
+app.listen(Port, () => console.log('已就绪，请访问：' + `http://localhost:${Port}/`))//输出服务器启动信息
 
 module.exports = app;
