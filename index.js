@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const api = require('./src/router')
+const open = require('open')
 process.env.PORT = `${Port}`;
 
 // app.use('/', express.static(__dirname + '/public', {
