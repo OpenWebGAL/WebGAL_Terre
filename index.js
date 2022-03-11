@@ -34,5 +34,6 @@ process.on('unhandledRejection', function (err, promise) {
 app.use('/api', api);
 
 app.listen(Port, () => console.log('已就绪，请访问：' + `http://localhost:${Port}/`))//输出服务器启动信息
+open(`http://localhost:${Port}/`);
 
 module.exports = app;
