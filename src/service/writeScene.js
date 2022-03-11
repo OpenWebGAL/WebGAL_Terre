@@ -7,17 +7,32 @@ const writeScene = (gameName, sceneName, sceneData) => {
     const JSONdir = `./public/Games/${gameName}/game/scene/${sceneName}.json`;
     const txtDir = `./public/Games/${gameName}/game/scene/${sceneName}.txt`;
 
+    //检查JSON语法
+    const checkSyntax = (text) => {
+        try {
+            const json = JSON.parse(text);
+        } catch (error) {
+            return false;
+        }
+        return true;
+    }
     return new Promise(r => {
         //更新JSON文件
         logger.info('现在开始写入JSON', sceneData);
         logger.info('写入到：' + JSONdir);
-        fs.writeFile(JSONdir, JSON.stringify(sceneData), (err, data) => {
-            if (err) {
-                console.log(err);
-                r('fail')
-            } else
-                updateSceneTxt();
-        })
+        const writeJson = JSON.stringify(sceneData);
+        if (checkSyntax(writeJson)) {
+            fs.writeFile(JSONdir, writeJson, (err, data) => {
+                if (err) {
+                    console.log(err);
+                    r('fail')
+                } else
+                    updateSceneTxt();
+            })
+        } else {
+            r('fail')
+        }
+
 
         //更新txt文件（生成语句）
         function updateSceneTxt() {
