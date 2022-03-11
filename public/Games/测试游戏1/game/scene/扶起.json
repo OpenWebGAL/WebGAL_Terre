@@ -1,0 +1,57 @@
+[
+    {
+        "type": "dialog",
+        "speaker": "王哥",
+        "content": "你没事吧？",
+        "vocal": "",
+        "ignoreSpeaker": false
+    },
+    {
+        "type": "changeP",
+        "newP": "仰头.bmp",
+        "next": true,
+        "noP": true,
+        "pos": "left"
+    },
+    {
+        "type": "changeP",
+        "newP": "li1.webp",
+        "next": false,
+        "noP": false,
+        "pos": "right"
+    },
+    {
+        "type": "dialog",
+        "speaker": "",
+        "content": "这个女性穿的很少，有着一头长发",
+        "vocal": "",
+        "ignoreSpeaker": true
+    },
+    {
+        "type": "dialog",
+        "speaker": "王哥",
+        "content": "欸？！？！？！？！？？！？！",
+        "vocal": "",
+        "ignoreSpeaker": false
+    },
+    {
+        "type": "dialog",
+        "speaker": "",
+        "content": "这是？猫耳？！？！？？！？！",
+        "vocal": "",
+        "ignoreSpeaker": false
+    },
+    {
+        "type": "bg",
+        "bg": "云层.png",
+        "noBg": false,
+        "next": false
+    },
+    {
+        "type": "dialog",
+        "speaker": "",
+        "content": "你",
+        "vocal": "",
+        "ignoreSpeaker": true
+    }
+]
