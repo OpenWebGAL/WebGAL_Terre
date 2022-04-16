@@ -3,4 +3,4 @@ bgm:cb1.mp3;
 changeBg:c3.jpg -next
 changeFigure:m1.png -left -next;
 测试对话1:测试基本句 -V1.ogg;
-choose:测试分支1:测试分支1.txt|测试分支2:测试分支2.txt;
+choose:测试分支1:测试分支1.txt|测试分支2:测试分支2.txt|测试intro:测试intro.txt;
