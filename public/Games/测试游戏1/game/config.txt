@@ -1,5 +1,4 @@
 Game_name:测试游戏1;
-Game_key:114514LTS;
-Title_img:xgmain.jpeg;
-Title_bgm:Famishin - 花鳥風月.flac;
-Loading_img:b.jpg;
+Title_bgm:s_Title.mp3;
+Title_img:c1.jpg;
+Loading_img:c1.jpg;
