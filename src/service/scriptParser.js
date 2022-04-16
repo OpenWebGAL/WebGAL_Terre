@@ -8,7 +8,7 @@ const scriptParser = (sceneData) => {
                 let temp;
                 let content = sentence['content'];
                 if (sentence['vocal'] !== '') {
-                    content = `vocal-${sentence['vocal']},` + content;
+                    content = content + ` -${sentence['vocal']}`;
                 }
                 if (sentence['ignoreSpeaker']) {
                     temp = `:${content};\n`;
@@ -21,15 +21,16 @@ const scriptParser = (sceneData) => {
                 break;
             case 'bg':
                 let tempBg;
-                if (sentence['next']) {
-                    tempBg = 'changeBG_next:'
-                } else {
-                    tempBg = 'changeBG:'
-                }
+                tempBg = 'changeBg:'
                 if (sentence['noBg']) {
-                    tempBg = tempBg + 'none\n';
+                    tempBg = tempBg + 'none';
                 } else {
-                    tempBg = tempBg + sentence['bg'] + '\n';
+                    tempBg = tempBg + sentence['bg'];
+                }
+                if (sentence['next']) {
+                    tempBg = tempBg + ' -next\n';
+                } else {
+                    tempBg = tempBg + '\n';
                 }
                 txtStr = txtStr + tempBg;
                 break;
@@ -50,31 +51,31 @@ const scriptParser = (sceneData) => {
                 break;
             case 'changeP':
                 let tempP;
-                tempP = 'changeP';
-                if (sentence['pos'] !== '') {
-                    tempP = tempP + `_${sentence['pos']}`;
-                }
-                if (sentence['next']) {
-                    tempP = tempP + `_next`;
-                }
+                tempP = 'changeFigure';
                 tempP = tempP + ':'
                 if (sentence['noP']) {
                     tempP = tempP + 'none';
                 } else {
                     tempP = tempP + sentence['newP'];
                 }
+                if (sentence['pos'] !== '') {
+                    tempP = tempP + ` -${sentence['pos']}`;
+                }
+                if (sentence['next']) {
+                    tempP = tempP + ` -next`;
+                }
                 tempP = tempP + `;\n`;
                 txtStr = txtStr + tempP;
                 break;
             case 'choose': {
-                let tempChoose = 'choose:{'
+                let tempChoose = 'choose:'
                 for (let i = 0; i < sentence['chooseItem'].length; i++) {
                     if (i !== 0) {
-                        tempChoose = tempChoose + ',';
+                        tempChoose = tempChoose + '|';
                     }
                     tempChoose = tempChoose + `${sentence['chooseItem'][i].text}:${sentence['chooseItem'][i].scene}`;
                 }
-                tempChoose = tempChoose + '};\n'
+                tempChoose = tempChoose + ';\n'
                 txtStr = txtStr + tempChoose;
                 break;
             }

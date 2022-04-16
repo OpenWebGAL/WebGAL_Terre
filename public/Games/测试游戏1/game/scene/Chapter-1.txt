@@ -1,6 +1,0 @@
-WebGAL:这是新场景的第一条语句！;
-playVideo:[SNAFU] Yahari Ore no Seishun Love Comedy wa Machigatteiru. Kan - 01 [E3D78739]_Trim.mp4;
-changeP_left:testFigure02.png;
-changeScene:TestChoose.txt;
-;
-;
