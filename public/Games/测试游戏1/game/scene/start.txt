@@ -1,5 +1,6 @@
-changeBG_next:0000.png
-bgm:none;
-雪之下雪乃:vocal-V1.ogg,你来得真早。;
-changeScene:Chapter-1.txt;
-changeBG:
+playVideo:OP.mp4;
+bgm:cb1.mp3;
+changeBg:c3.jpg -next
+changeFigure:m1.png -left -next;
+测试对话1:测试基本句 -V1.ogg;
+choose:测试分支1:测试分支1.txt|测试分支2:测试分支2.txt;
