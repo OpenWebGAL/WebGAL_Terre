@@ -79,6 +79,18 @@ const scriptParser = (sceneData) => {
                 txtStr = txtStr + tempChoose;
                 break;
             }
+            case 'intro':
+                let tempIntro = 'intro:';
+                sentence['content'].forEach((e, i) => {
+                    if (i !== 0) {
+                        tempIntro = tempIntro + '|';
+                    }
+                    tempIntro = tempIntro + e;
+                })
+                tempIntro = tempIntro + ';\n'
+                txtStr = txtStr + tempIntro;
+                break;
+
         }
     }
     return txtStr;
