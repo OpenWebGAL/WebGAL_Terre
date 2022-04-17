@@ -1,4 +1,0 @@
-Game_name:测试游戏1;
-Title_bgm:s_Title.mp3;
-Title_img:c1.jpg;
-Loading_img:c1.jpg;
