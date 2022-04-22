@@ -1,3 +1,0 @@
-changeBg:c3.jpg -next
-changeFigure:k1.png -next;
-栞那:测试WebGAL 与编辑器同步;
