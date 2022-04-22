@@ -9,6 +9,7 @@ specifiers:
   multer: ^1.4.4
   open: ^8.4.0
   vercel: ^23.1.2
+  ws: ^8.5.0
 
 dependencies:
   body-parser: 1.19.1
@@ -19,6 +20,7 @@ dependencies:
   multer: 1.4.4
   open: 8.4.0
   vercel: 23.1.2
+  ws: 8.5.0
 
 packages:
 
@@ -1257,6 +1259,19 @@ packages:
       is-typedarray: 1.0.0
       signal-exit: 3.0.6
       typedarray-to-buffer: 3.1.5
+    dev: false
+
+  /ws/8.5.0:
+    resolution: {integrity: sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
     dev: false
 
   /xdg-basedir/4.0.0:
