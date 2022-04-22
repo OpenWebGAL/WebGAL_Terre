@@ -1,1 +1,1 @@
-[]
+[{"type":"bg","bg":"c3.jpg","noBg":false,"next":true},{"type":"changeP","newP":"k1.png","next":true,"noP":false,"pos":""},{"type":"dialog","speaker":"栞那","content":"测试WebGAL 与编辑器同步","vocal":"","ignoreSpeaker":false}]
