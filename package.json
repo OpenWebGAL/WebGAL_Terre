@@ -1,6 +1,9 @@
 {
   "name": "terre",
   "version": "0.8.4",
+  "scripts": {
+    "serve": "node index.js"
+  },
   "dependencies": {
     "body-parser": "^1.19.1",
     "cloudlogjs": "^1.0.9",
