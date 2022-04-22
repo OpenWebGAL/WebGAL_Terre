@@ -8,6 +8,26 @@ const api = require('./src/router')
 const open = require('open')
 process.env.PORT = `${Port}`;
 
+/**
+ * socket 部分，使用9999 端口
+ */
+const ws = require('ws');
+const logger = require("./src/extend/logger");
+const wsServer = new ws.WebSocketServer({port: 9999});
+
+const connectionList = [];
+
+wsServer.on('connection', (conn) => {
+    logger.info('ws已连接');
+    connectionList.push(conn);
+    conn.on('message', (data) => {
+        const str = data.toString();
+        logger.info('WS收到：', str);
+        connectionList.forEach(e => {
+            e.send(str);
+        })
+    })
+})
 // app.use('/', express.static(__dirname + '/public', {
 //     setHeaders: (res => {
 //         res.set('Access-Control-Allow-Origin', '*');
