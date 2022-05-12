@@ -3,6 +3,7 @@ const manageGame = express.Router();
 const getGameList = require("../service/getGameList")
 const createNewGame = require("../service/createNewGame");
 const updateGameConfig = require("../service/updateGameConfig");
+const ejectGame = require("../service/ejectGame");
 
 manageGame.get('/gameList', async (req, res) => {
     let gameList;
@@ -41,6 +42,15 @@ manageGame.post('/config', async (req, res) => {
     else
         res.send('fail');
 })
+
+// 导出游戏
+
+manageGame.post('/export', async (req, res) => {
+    const gameName = req.body.gameName;
+    const platform = req.body.platform;
+    await ejectGame(gameName, platform);
+    res.send('OK');
+});
 
 
 module.exports = manageGame;
