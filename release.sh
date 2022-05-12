@@ -1,1 +1,1 @@
-pkg index.js  -o app
+pkg index.js  -o WebGAL_Origine
