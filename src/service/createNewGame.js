@@ -17,7 +17,7 @@ const createNewGame = (gameName) => {
             //创建目录
             fs.mkdir('./public/Games/' + gameName, result => {
                 //然后，将模板复制到 ./public/Games/下
-                fs.cp('./WebGAL_Template/', './public/Games/' + gameName, {recursive: true}, createResult => {
+                fs.cp('./WebGAL_Template/game', './public/Games/' + gameName + '/' + 'game', {recursive: true}, createResult => {
                     resolve(true)
                 })
             })
