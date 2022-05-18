@@ -13,6 +13,7 @@ process.env.PORT = `${Port}`;
  */
 const ws = require('ws');
 const logger = require("./src/extend/logger");
+const removeRedundantFiles = require("./src/util/removeRedundantFiles");
 const wsServer = new ws.WebSocketServer({port: 9999});
 
 const connectionList = [];
@@ -34,11 +35,29 @@ wsServer.on('connection', (conn) => {
 //     })
 // }));//allow browser access resources
 
+//allow browser access resources
+
+express.static.mime.define({'application/x-javascript': ['js']});
+express.static.mime.define({'text/css': ['css']});
+
 app.use('/', express.static('public', {
     setHeaders: (res => {
         res.set('Access-Control-Allow-Origin', '*');
     })
-}));//allow browser access resources
+}));
+
+app.use('/Games/:gamename/game/', express.static('public/Games/:gamename/game', {
+    setHeaders: (res => {
+        res.set('Access-Control-Allow-Origin', '*');
+    })
+}))
+
+app.use('/Games/:gamename/', express.static('WebGAL_Template', {
+    setHeaders: (res => {
+        res.set('Access-Control-Allow-Origin', '*');
+    })
+}))
+
 
 app.use(cors());//允许跨域访问
 // parse application/x-www-form-urlencoded
@@ -56,5 +75,7 @@ app.use('/api', api);
 
 app.listen(Port, () => console.log('已就绪，请访问：' + `http://localhost:${Port}/`))//输出服务器启动信息
 open(`http://localhost:${Port}/`);
+
+removeRedundantFiles('WebGAL_Template/assets');
 
 module.exports = app;

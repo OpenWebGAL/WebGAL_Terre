@@ -1,4 +1,5 @@
 const fs = require('fs');
+const logger = require("../extend/logger");
 
 const webgalMkdir = (path) => {
     return new Promise((resolve, reject) => {
@@ -16,4 +17,15 @@ const webgalCopy = (src, dest) => {
     });
 }
 
-module.exports = {webgalMkdir, webgalCopy};
+function webgalDelete(path) {
+    return new Promise((resolve, reject) => {
+        fs.rm(path, (err) => {
+            if (err) {
+                logger.error('删除文件或文件夹失败');
+            }
+            resolve();
+        })
+    });
+}
+
+module.exports = {webgalMkdir, webgalCopy, webgalDelete};
