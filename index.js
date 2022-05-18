@@ -77,5 +77,6 @@ app.listen(Port, () => console.log('已就绪，请访问：' + `http://localhos
 open(`http://localhost:${Port}/`);
 
 removeRedundantFiles('WebGAL_Template/assets');
+removeRedundantFiles('public/assets');
 
 module.exports = app;
