@@ -30,8 +30,14 @@ async function removeRedundantFiles(dir) {
     logger.debug('文件信息', fileInfoList);
 
     // 删除多余的 css 文件
+    deleteFileByRegExp(dir,fileInfoList,/index.*.css/g);
+    deleteFileByRegExp(dir,fileInfoList,/index.*.js/g);
+    deleteFileByRegExp(dir,fileInfoList,/vendor.*.js/g);
+}
+
+function deleteFileByRegExp(dir, fileInfoList, regExp) {
     const cssFileList = fileInfoList.filter(e => {
-        return e.name.match(/index.*.css/g);
+        return e.name.match(regExp);
     })
     // 判断个数，如果文件数大于1，则代表有冗余
     if (cssFileList.length > 1) {
@@ -40,13 +46,13 @@ async function removeRedundantFiles(dir) {
         // 删除除第一个以外的其他文件
         const deleteList = [];
         for (let i = 1; i < cssFileList.length; i++) {
-            deleteList.push(`$dir/${cssFileList[i]}`);
+            deleteList.push(`${dir}/${cssFileList[i].name}`);
         }
+        logger.debug('准备删除：', deleteList);
         deleteList.forEach(e => {
-            webgalDelete(e);
+            webgalDelete(e).then(r => logger.debug('删除完成'));
         })
     }
-
 }
 
 module.exports = removeRedundantFiles;
