@@ -19,14 +19,14 @@ ejectGame = async (gameName, ejectPlatform) => {
         const electronExportDir = `${exportDir}/electron-windows`;
         await webgalMkdir(electronExportDir);
         await webgalCopy(`./WebGAL_Electron_Template/`, `${electronExportDir}/`);
-        await webgalCopy(gameDir, `${electronExportDir}/resources/app/public/game/`);
         await webgalCopy('./WebGAL_Template/', `${electronExportDir}/resources/app/public/`);
+        await webgalCopy(gameDir, `${electronExportDir}/resources/app/public/game/`);
     }
     if (ejectPlatform === 'web') {
         const webExportDir = `${exportDir}/web`;
         await webgalMkdir(webExportDir);
-        await webgalCopy(gameDir, `${webExportDir}/game/`);
         await webgalCopy('./WebGAL_Template/', `${webExportDir}/`);
+        await webgalCopy(gameDir, `${webExportDir}/game/`);
     }
 }
 
