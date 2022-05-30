@@ -74,7 +74,7 @@ process.on('unhandledRejection', function (err, promise) {
 app.use('/api', api);
 
 app.listen(Port, () => console.log('已就绪，请访问：' + `http://localhost:${Port}/`))//输出服务器启动信息
-console.log('WebGAL Terre 1.1.4');
+console.log('WebGAL Terre 1.2.2');
 console.log('Github: https://github.com/MakinoharaShoko/WebGAL ');
 console.log('Made with ❤ by MakinoharaShoko');
 open(`http://localhost:${Port}/`);
