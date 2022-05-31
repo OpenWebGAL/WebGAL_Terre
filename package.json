@@ -1,6 +1,6 @@
 {
   "name": "terre",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "scripts": {
     "serve": "node index.js"
   },
