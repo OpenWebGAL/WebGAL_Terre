@@ -90,7 +90,27 @@ const scriptParser = (sceneData) => {
                 tempIntro = tempIntro + ';\n'
                 txtStr = txtStr + tempIntro;
                 break;
-
+            case 'setAnimation':
+                let tempSetAnimation = '';
+                let tempArg = ' -';
+                if(sentence['target'] === 'bg'){
+                    tempSetAnimation = 'setBgAni:';
+                    tempArg = '';
+                }
+                if(sentence['target'] === 'left'){
+                    tempSetAnimation = 'setFigAni:';
+                    tempArg = tempArg+ 'left';
+                }
+                if(sentence['target'] === 'right'){
+                    tempSetAnimation = 'setFigAni:';
+                    tempArg = tempArg+ 'right';
+                }
+                if(sentence['target'] === 'center'){
+                    tempSetAnimation = 'setFigAni:';
+                    tempArg = tempArg+ 'center';
+                }
+                tempSetAnimation = tempSetAnimation + sentence['animationName'] +' '+sentence['duration']+'s' + tempArg + ';\n';
+                txtStr = txtStr + tempSetAnimation;
         }
     }
     return txtStr;
