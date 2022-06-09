@@ -2,9 +2,11 @@
 
 # WebGAL_Terre
 
-前端代码仓库地址： https://github.com/MakinoharaShoko/WebGAL_Origine
+**重新定义Galgame的制作方式**
 
 演示视频： https://www.bilibili.com/video/BV1KL4y1T7kZ/
+
+前端代码仓库地址： https://github.com/MakinoharaShoko/WebGAL_Origine
 
 ## 立即体验
 
