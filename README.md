@@ -1,6 +1,10 @@
+![wgfav-new-min](https://user-images.githubusercontent.com/30483415/172886968-bb6cfcab-a258-45dd-8e17-754373ec01b1.png)
+
 # WebGAL_Terre
 
 前端代码仓库地址： https://github.com/MakinoharaShoko/WebGAL_Origine
+
+演示视频： https://www.bilibili.com/video/BV1KL4y1T7kZ/
 
 ## 立即体验
 
