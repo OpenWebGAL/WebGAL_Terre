@@ -1,32 +1,10 @@
 # WebGAL_Terre
 
-前端代码仓库地址： https://github.com/MakinoharaShoko/WebGAL_Origine
-
 ## 立即体验
 
 ##### 下载链接( Windows )
 
 https://github.com/MakinoharaShoko/WebGAL_Terre/releases
-
-##### MacOS 和 Linux 用户可以直接下载源代码，然后使用 Node.Js 运行 
-
-```
-npm install -g pnpm
-pnpm install
-node index.js
-```
-
-### 更新计划与bug修复
-
-```
-bug修复：
-1、修复预览逻辑与引擎正常运行逻辑不一致问题（已修复）
-2、修复语句key与内容不对应问题（已修复）
-3、修复文件名太长导致“选择文件”收缩问题（已修复）
-
-更新计划：
-完善编辑器功能，导出增加 Apple Silicon（功能已完成，待上线）
-```
 
 ## 使用说明
 
@@ -49,3 +27,14 @@ bug修复：
 在左侧是场景列表，在右侧是场景编辑器，你可以通过点击 “+” 按钮来开始制作你的 GalGame！
 ![image](https://user-images.githubusercontent.com/30483415/164865631-4eb655e6-feca-42ef-a1f8-8be2d36e17cf.png)
 
+### 更新计划与bug修复
+
+```
+bug修复：
+1、修复预览逻辑与引擎正常运行逻辑不一致问题（已修复）
+2、修复语句key与内容不对应问题（已修复）
+3、修复文件名太长导致“选择文件”收缩问题（已修复）
+
+更新计划：
+完善编辑器功能，导出增加 Apple Silicon（功能已完成，待上线）
+```
