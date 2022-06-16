@@ -1,5 +1,8 @@
 echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
 
+# 清理
+rm -rf release
+
 mkdir release
 
 # 进入 Terre 目录
