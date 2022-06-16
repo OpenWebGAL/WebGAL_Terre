@@ -2,9 +2,20 @@
   "name": "webgal-terre",
   "version": "2.0.0",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "scripts": {
+    "release": "release.sh"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/WebGAL-electron",
+      "**/WebGAL-electron/**",
+      "**/electron",
+      "**/electron/**"
+    ]
+  },
   "dependencies": {
   }
 }
