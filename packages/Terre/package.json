@@ -1,0 +1,18 @@
+{
+  "name": "terre",
+  "version": "1.2.5",
+  "scripts": {
+    "serve": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "cloudlogjs": "^1.0.9",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^4.2.1",
+    "multer": "^1.4.4",
+    "open": "^8.4.0",
+    "vercel": "^23.1.2",
+    "ws": "^8.5.0"
+  }
+}
