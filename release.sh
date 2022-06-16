@@ -1,4 +1,5 @@
-# 注意：在运行前应全局安装pkg
+echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
+
 mkdir release
 
 # 进入 Terre 目录
@@ -22,3 +23,5 @@ cp -r -f build/ ../../release/WebGAL_Electron_template
 cd ../../
 
 cd release
+
+echo "WebGAL Origine is now ready to be deployed."
