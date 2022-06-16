@@ -15,14 +15,14 @@ cd ../../
 # 进入 Origine 目录
 cd packages/Origine
 yarn build
-cp -r -f dist/ ../../release/public
+cp -rf dist/* ../../release/public/
 cd ../../
 
 # 进入 Electron 目录
 cd packages/WebGAL-electron
 yarn
 yarn build
-cp -r -f build/ ../../release/WebGAL_Electron_template
+cp -rf build/win-unpacked/* ../../release/WebGAL_Electron_template/
 cd ../../
 
 cd release
