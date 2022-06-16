@@ -1,0 +1,50 @@
+.main {
+  min-width: 60vw;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 0 0 0;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}
+
+.tag {
+  padding: 1px 1px 3px 6px;
+  margin: 0 0 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tag:hover {
+  background-color: rgb(235, 236, 237);
+}
+
+.tagOpened {
+  padding: 1px 1px 3px 6px;
+  margin: 0 0 0 5px;
+  border-bottom: 2px solid #8e354a;
+  cursor: pointer;
+}
+
+.tagList {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  padding: 0 0 0 5px;
+}
+
+.tagIcon {
+  padding: 5px 5px 5px 3px;
+  transform: translate(0, 3px);
+}
+
+.closeIcon {
+  padding: 5px 5px 5px 5px;
+  transform: translate(0, 3px);
+  border-radius: 100px;
+}
+
+.closeIcon:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
