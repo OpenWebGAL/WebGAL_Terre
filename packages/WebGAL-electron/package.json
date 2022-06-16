@@ -1,0 +1,32 @@
+{
+  "name": "WebGAL-Electron-Project",
+  "version": "1.0.0",
+  "description": "WebGAL Electron Support",
+  "main": "main.js",
+  "repository": "https://github.com/WebGAL-Technical-Committee/WebGAL-Electron-Project.git",
+  "author": "Mahiru <makinoharashoko@outlook.com>",
+  "license": "MPL-2.0",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^18.2.0",
+    "electron-builder": "^23.0.3"
+  },
+  "build": {
+    "productName": "WebGAL",
+    "appId": "com.wtc.webgal",
+    "copyright": "webgal",
+    "directories": {
+      "output": "build"
+    },
+    "asar": false,
+    "win": {
+      "icon": "public/icon.ico"
+    },
+    "electronDownload": {
+      "mirror": "https://npmmirror.com/mirrors/electron/"
+    }
+  }
+}
