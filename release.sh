@@ -5,6 +5,7 @@ mkdir release
 cd packages/Terre
 pkg index.js  -o WebGAL_Origine
 cp -r Exported_Games public uploads WebGAL_Electron_template WebGAL_Template WebGAL_Origine.exe  ../../release
+rm WebGAL_Origine.exe
 cd ../../
 
 # 进入 Origine 目录
