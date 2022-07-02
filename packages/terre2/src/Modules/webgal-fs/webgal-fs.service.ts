@@ -4,6 +4,6 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 export class WebgalFsService {
   constructor(private readonly logger: ConsoleLogger) {}
   greet() {
-    this.logger.log('123');
+    this.logger.log('Welcome to WebGAl Fils System Service!');
   }
 }
