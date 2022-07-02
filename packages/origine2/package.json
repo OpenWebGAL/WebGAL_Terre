@@ -1,7 +1,8 @@
 {
-  "name": "vite-react-ts-template",
+  "name": "webgal-origine-2",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.1",
+  "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
     "build": "tsc && vite build --base=./",
