@@ -2609,7 +2609,7 @@ clone@^1.0.2:
 
 cloudlogjs@^1.0.11:
   version "1.0.11"
-  resolved "https://registry.npmjs.org/cloudlogjs/-/cloudlogjs-1.0.11.tgz#986ee884b786434c9bf3812e2afdbea9163e31a3"
+  resolved "https://registry.yarnpkg.com/cloudlogjs/-/cloudlogjs-1.0.11.tgz#986ee884b786434c9bf3812e2afdbea9163e31a3"
   integrity sha512-0dfQYXHCpPfGOrOEJjRRWcRArjqKxBSYb01+YLdFVj5bQ+9sZ1Uf5EuXpfqZh+r9Xlugpipi2uvNcdChAKHq2w==
   dependencies:
     axios "^0.24.0"

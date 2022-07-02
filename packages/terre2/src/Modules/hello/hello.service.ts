@@ -1,9 +1,8 @@
-import { Get, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class HelloService {
-  @Get('/api/hello')
   getHelloText() {
-    return 'Hello,World!';
+    return 'Welcome to WebGAL Terre!';
   }
 }
