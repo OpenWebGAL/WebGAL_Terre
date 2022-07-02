@@ -12,6 +12,10 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'public'),
       serveRoot: '/',
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'assets', 'templates', 'WebGAL_Template'),
+      serveRoot: '/Games/:gamename/',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
