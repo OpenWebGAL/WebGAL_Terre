@@ -1,16 +1,13 @@
-import {PrimaryButton } from '@fluentui/react/lib/Button';
 import './App.css';
 import { logger } from "./utils/logger";
+import DashBoard from "./pages/dashboard/DashBoard";
 
 function App() {
 
-  const handleClick = ()=>{
-    logger.info('clicked');
-  };
-
   return (
-    <div className="App">
-      <PrimaryButton text="Primary" onClick={handleClick} allowDisabledFocus/>
+    // 将编辑器的根元素占满整个视口
+    <div className="App" style={{width:'100vw',height:'100vh'}}>
+      <DashBoard/>
     </div>
   );
 }
