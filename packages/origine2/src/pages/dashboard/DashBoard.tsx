@@ -2,8 +2,10 @@ import { useEffect, useRef } from "react";
 import { useValue } from "../../hooks/useValue";
 import axios from "axios";
 import { logger } from "../../utils/logger";
-import { PrimaryButton } from "@fluentui/react/lib/Button";
 import { Message, TestRefRef } from "../../components/message/Message";
+import styles from "./dashboard.module.scss";
+import Sidebar from "./components/Sidebar";
+import { GamePreview } from "./components/GamePreview";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -17,6 +19,8 @@ export default function DashBoard() {
 
   // 文件目录信息（游戏名为名称的游戏目录）
   const dirInfo = useValue<Array<string>>([]);
+  // 当前选中的游戏
+  const currentGame = useValue<string>("");
 
   async function getDirInfo() {
     return await axios.get("/api/manageGame/gameList").then(r => r.data);
@@ -25,8 +29,12 @@ export default function DashBoard() {
   async function createGame() {
     const res = await axios.post("/api/manageGame/createGame", { gameName: "测试" }).then(r => r.data);
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`测试游戏 已创建`, 3000);
+    messageRef.current!.showMessage(`测试 已创建`, 3000);
     refreashDashboard();
+  }
+
+  function setCurrent(e: string) {
+    currentGame.set(e);
   }
 
   function refreashDashboard() {
@@ -43,13 +51,15 @@ export default function DashBoard() {
     refreashDashboard();
   }, []);
 
-  const showGameList = dirInfo.value.map(e => {
-    return <div key={e}>{e}</div>;
-  });
-
-  return <div>
-    <Message ref={messageRef} />
-    {showGameList}
-    <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton>
+  return <div className={styles.dashboard_container}>
+    <div className={styles.topBar}>
+      WebGAL Origine
+    </div>
+    <div className={styles.dashboard_main}>
+      <Message ref={messageRef} />
+      <Sidebar createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value} gameList={dirInfo.value} />
+      <GamePreview gameName={currentGame.value} />
+      {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}
+    </div>
   </div>;
 }
