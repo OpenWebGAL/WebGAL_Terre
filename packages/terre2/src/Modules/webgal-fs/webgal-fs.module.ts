@@ -3,6 +3,6 @@ import { WebgalFsService } from './webgal-fs.service';
 
 @Module({
   providers: [WebgalFsService, ConsoleLogger],
-  exports: [WebgalFsService],
+  exports: [WebgalFsService, ConsoleLogger],
 })
 export class WebgalFsModule {}
