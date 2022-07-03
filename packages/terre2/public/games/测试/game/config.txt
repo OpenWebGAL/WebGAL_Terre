@@ -1,0 +1,5 @@
+Game_name:12123;
+Game_key:;
+Title_img:;
+Title_bgm:;
+Loading_img:none;
