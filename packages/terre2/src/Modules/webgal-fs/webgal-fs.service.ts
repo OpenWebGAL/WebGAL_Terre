@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { join } from 'path';
+import { resolve } from 'path';
 
 export interface IFileInfo {
   name: string;
@@ -48,11 +48,16 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPathFromRoot(rawPath: string) {
-    return join(process.cwd(), ...rawPath.split('/'));
+    return resolve(process.cwd(), ...rawPath.split('/'));
   }
 
+  /**
+   * 新建文件夹
+   * @param src 文件夹建立目录
+   * @param dirName 文件夹名称
+   */
   async mkdir(src, dirName) {
-    return await fs.mkdir(`${src}/${dirName}`);
+    return await fs.mkdir(resolve(src, dirName));
   }
 
   /**
@@ -60,6 +65,6 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPath(rawPath: string) {
-    return join(...rawPath.split('/'));
+    return resolve(...rawPath.split('/'));
   }
 }
