@@ -1,10 +1,11 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { resolve } from 'path';
+import { resolve, extname } from 'path';
 
 export interface IFileInfo {
   name: string;
   isDir: boolean;
+  extName: string;
 }
 
 @Injectable()
@@ -21,11 +22,13 @@ export class WebgalFsService {
   async getDirInfo(dir: string) {
     const fileNames = await fs.readdir(dir);
     const dirInfoPromises = fileNames.map((e) => {
+      const elementPath = this.getPath(`${dir}/${e}`);
       return new Promise((resolve) => {
-        fs.stat(this.getPath(`${dir}/${e}`)).then((result) => {
+        fs.stat(elementPath).then((result) => {
           const ret: IFileInfo = {
             name: e,
             isDir: result.isDirectory(),
+            extName: extname(elementPath),
           };
           resolve(ret);
         });

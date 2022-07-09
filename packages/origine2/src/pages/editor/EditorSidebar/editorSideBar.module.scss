@@ -1,0 +1,51 @@
+.editor_sidebar {
+  width: 35%;
+  border-right: 1px solid rgba(0,0,0,0.1);
+  padding: 15px 15px 15px 15px;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  flex-flow: column;
+}
+
+.editor_sidebar_control {
+  width: 50px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 15px 0 15px 0;
+  //border-right: 1px solid rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+.editor_sidebar_control_button {
+  padding: 6px 6px 3px 6px;
+  border-radius: 3px;
+  //border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin: 2px 0 1px 0;
+}
+
+.editor_sidebar_control_button_active {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+.preview_title{
+  font-weight: bold;
+  font-size: 115%;
+  color: #005caf;
+}
+
+.preview_container{
+  display: flex;
+  flex-flow: column;
+  max-height: 50%;
+  flex: 1;
+}
+
+.previewWindow {
+  flex: 1;
+  //max-height: 50%;
+  width: 100%;
+  box-sizing: border-box;
+}
