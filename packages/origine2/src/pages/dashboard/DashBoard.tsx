@@ -6,6 +6,8 @@ import { Message, TestRefRef } from "../../components/message/Message";
 import styles from "./dashboard.module.scss";
 import Sidebar from "./components/Sidebar";
 import { GamePreview } from "./components/GamePreview";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/origineStore";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -14,6 +16,8 @@ interface IFileInfo {
 }
 
 export default function DashBoard() {
+
+  const isDashboardShow:boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
 
   const messageRef = useRef<TestRefRef>(null);
 
@@ -51,15 +55,18 @@ export default function DashBoard() {
     refreashDashboard();
   }, []);
 
-  return <div className={styles.dashboard_container}>
-    <div className={styles.topBar}>
-      WebGAL Origine
-    </div>
-    <div className={styles.dashboard_main}>
-      <Message ref={messageRef} />
-      <Sidebar createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value} gameList={dirInfo.value} />
-      <GamePreview gameName={currentGame.value} />
-      {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}
-    </div>
-  </div>;
+  return <>
+    { isDashboardShow && (<div className={styles.dashboard_container}>
+      <div className={styles.topBar}>
+        WebGAL Origine
+      </div>
+      <div className={styles.dashboard_main}>
+        <Message ref={messageRef} />
+        <Sidebar createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value}
+          gameList={dirInfo.value} />
+        <GamePreview gameName={currentGame.value} />
+        {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}
+      </div>
+    </div>)}
+  </>;
 }
