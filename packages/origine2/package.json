@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fluentui/react": "^8.77.3",
+    "@icon-park/react": "^1.4.2",
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.27.2",
     "cloudlogjs": "^1.0.11",
