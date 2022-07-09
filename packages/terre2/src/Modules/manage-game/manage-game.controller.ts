@@ -27,4 +27,16 @@ export class ManageGameController {
       return { status: 'filed' };
     }
   }
+
+  @Get('readGameAssets/*')
+  async readGameAssets(@Req() request: Request) {
+    const requestUrl = request.url;
+    // 截取出有关要阅读的目录的信息
+    const readDirName = decodeURI(requestUrl.split('readGameAssets/')[1]);
+    const dirPath = this.webgalFs.getPathFromRoot(
+      `public/games/${readDirName}`,
+    );
+    const dirInfo = await this.webgalFs.getDirInfo(dirPath);
+    return { readDirName, dirPath, dirInfo };
+  }
 }
