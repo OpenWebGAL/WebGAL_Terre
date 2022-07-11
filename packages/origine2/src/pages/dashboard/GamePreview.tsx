@@ -1,6 +1,6 @@
 import styles from "./gamepreview.module.scss";
 import { useDispatch } from "react-redux";
-import { setDashboardShow, setEditingGame } from "../../../store/statusReducer";
+import { setDashboardShow, setEditingGame } from "../../store/statusReducer";
 
 interface IGamePreviewProps {
   gameName: string;
