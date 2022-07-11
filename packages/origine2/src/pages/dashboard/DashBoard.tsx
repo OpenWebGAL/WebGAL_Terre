@@ -4,8 +4,8 @@ import axios from "axios";
 import { logger } from "../../utils/logger";
 import { Message, TestRefRef } from "../../components/message/Message";
 import styles from "./dashboard.module.scss";
-import Sidebar from "./components/Sidebar";
-import { GamePreview } from "./components/GamePreview";
+import Sidebar from "./Sidebar";
+import { GamePreview } from "./GamePreview";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/origineStore";
 
