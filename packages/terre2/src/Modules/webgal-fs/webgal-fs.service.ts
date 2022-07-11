@@ -1,16 +1,18 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { resolve, extname } from 'path';
+import { extname, join } from 'path';
 
 export interface IFileInfo {
   name: string;
   isDir: boolean;
   extName: string;
+  path: string;
 }
 
 @Injectable()
 export class WebgalFsService {
   constructor(private readonly logger: ConsoleLogger) {}
+
   greet() {
     this.logger.log('Welcome to WebGAl Files System Service!');
   }
@@ -29,6 +31,7 @@ export class WebgalFsService {
             name: e,
             isDir: result.isDirectory(),
             extName: extname(elementPath),
+            path: elementPath,
           };
           resolve(ret);
         });
@@ -51,16 +54,16 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPathFromRoot(rawPath: string) {
-    return resolve(process.cwd(), ...rawPath.split('/'));
+    return join(process.cwd(), ...rawPath.split('/'));
   }
 
   /**
    * 新建文件夹
-   * @param src 文件夹建立目录
+   * @param src 文件夹建立目录，必须用 path 处理过。
    * @param dirName 文件夹名称
    */
   async mkdir(src, dirName) {
-    return await fs.mkdir(resolve(src, dirName));
+    return await fs.mkdir(join(src, dirName));
   }
 
   /**
@@ -68,6 +71,24 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPath(rawPath: string) {
-    return resolve(...rawPath.split('/'));
+    return join(...rawPath.split('/'));
+  }
+
+  /**
+   * 对文件进行重命名
+   * @param path 文件原路径
+   * @param newName 新文件名
+   */
+  async renameFile(path: string, newName: string) {
+    // 取出旧文件的路径
+    const oldPath = join(...path.split(/[\/\\]/g));
+    const pathAsArray = path.split(/[\/\\]/g);
+    const newPathAsArray = pathAsArray.slice(0, pathAsArray.length - 1);
+    const newPath = join(...newPathAsArray, newName);
+    return await new Promise((resolve) => {
+      fs.rename(oldPath, newPath)
+        .then(() => resolve('File renamed!'))
+        .catch(() => resolve('File not exist!'));
+    });
   }
 }

@@ -39,4 +39,13 @@ export class ManageGameController {
     const dirInfo = await this.webgalFs.getDirInfo(dirPath);
     return { readDirName, dirPath, dirInfo };
   }
+
+  @Post('editFileName/*')
+  async editFileName(@Req() request: Request) {
+    const requestBody = request.body;
+    return await this.webgalFs.renameFile(
+      requestBody.path,
+      requestBody.newName,
+    );
+  }
 }
