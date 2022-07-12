@@ -9,6 +9,8 @@ export interface IFileInfo {
   path: string;
 }
 
+//TODO：安全性问题：访问文件系统前检查是否访问的是进程所在路径下。
+
 @Injectable()
 export class WebgalFsService {
   constructor(private readonly logger: ConsoleLogger) {}
@@ -88,6 +90,19 @@ export class WebgalFsService {
     return await new Promise((resolve) => {
       fs.rename(oldPath, newPath)
         .then(() => resolve('File renamed!'))
+        .catch(() => resolve('File not exist!'));
+    });
+  }
+
+  /**
+   * 删除文件
+   * @param path 文件路径
+   */
+  async deleteFile(path: string) {
+    return await new Promise((resolve) => {
+      this.logger.log(path);
+      fs.unlink(path)
+        .then(() => resolve('File Deleted'))
         .catch(() => resolve('File not exist!'));
     });
   }

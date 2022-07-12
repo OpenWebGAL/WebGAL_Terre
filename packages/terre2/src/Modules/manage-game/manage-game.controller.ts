@@ -48,4 +48,10 @@ export class ManageGameController {
       requestBody.newName,
     );
   }
+
+  @Post('deleteFile/*')
+  async deleteFile(@Req() request: Request) {
+    const requestBody = request.body;
+    return await this.webgalFs.deleteFile(requestBody.path);
+  }
 }
