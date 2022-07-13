@@ -106,4 +106,16 @@ export class WebgalFsService {
         .catch(() => resolve('File not exist!'));
     });
   }
+
+  /**
+   * 创建一个空文件
+   * @param path 文件路径
+   */
+  async createEmptyFile(path: string) {
+    return await new Promise((resolve) => {
+      fs.writeFile(path, '')
+        .then(() => resolve('created'))
+        .catch(() => resolve('path error or no right.'));
+    });
+  }
 }
