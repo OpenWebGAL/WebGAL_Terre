@@ -65,4 +65,15 @@ export class ManageGameController {
     );
     return await this.webgalFs.createEmptyFile(path);
   }
+
+  @Get('getGameConfig/*')
+  async getGameConfig(@Req() request: Request) {
+    // 截取出游戏名称
+    const gameNameFromUrl: string = request.url.split('getGameConfig/')[1];
+    const gameName = decodeURI(gameNameFromUrl);
+    const configFilePath = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameName}/game/config.txt`,
+    );
+    return await this.webgalFs.readTextFile(configFilePath);
+  }
 }

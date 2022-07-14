@@ -118,4 +118,16 @@ export class WebgalFsService {
         .catch(() => resolve('path error or no right.'));
     });
   }
+
+  /**
+   * 读取文本文件
+   * @param path 要读取的文本文件路径
+   */
+  async readTextFile(path: string) {
+    return await new Promise((resolve) => {
+      fs.readFile(path)
+        .then((r) => resolve(r.toString()))
+        .catch(() => resolve('file not exist'));
+    });
+  }
 }
