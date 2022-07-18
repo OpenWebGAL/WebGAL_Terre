@@ -13,7 +13,7 @@ function App() {
             setIsManagement(store.get('isManagement'))
         }, 'setIsManagementFunc');
         // 打印初始log信息
-        console.log('WebGAL Origine 1.2.5');
+        console.log('WebGAL Origine 1.2.7');
         console.log('Github: https://github.com/MakinoharaShoko/WebGAL ');
         console.log('Made with ❤ by MakinoharaShoko');
     }, []);
