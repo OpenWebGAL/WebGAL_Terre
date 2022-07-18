@@ -79,7 +79,7 @@ console.log('Github: https://github.com/MakinoharaShoko/WebGAL ');
 console.log('Made with ❤ by MakinoharaShoko');
 open(`http://localhost:${Port}/`);
 
-// removeRedundantFiles('WebGAL_Template/assets');
-// removeRedundantFiles('public/assets');
+removeRedundantFiles('WebGAL_Template/assets');
+removeRedundantFiles('public/assets');
 
 module.exports = app;
