@@ -12,16 +12,21 @@
   "dependencies": {
     "@fluentui/react": "^8.77.3",
     "@icon-park/react": "^1.4.2",
+    "@monaco-editor/react": "^4.4.5",
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.27.2",
     "cloudlogjs": "^1.0.11",
+    "lodash": "^4.17.21",
     "react": "^18.0.0",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^18.0.0",
     "react-redux": "^8.0.1",
     "sass": "^1.51.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.182",
     "@types/react": "^18.0.0",
+    "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
