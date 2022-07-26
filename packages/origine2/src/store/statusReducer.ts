@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import { cloneDeep } from "lodash";
 
 const dashboardInitState = {
   showDashBoard: true
@@ -12,15 +12,41 @@ export enum sidebarTag {
   scenes
 }
 
-const editorInitState = {
+export interface ITag {
+  // tag显示的名称
+  tagName: string,
+  tagType: "scene" | "asset",
+  // 唯一，Tag 指向的文件
+  tagTarget: string
+}
+
+interface IEditorState {
+  currentEditingGame: string,
+  showPreview: boolean,
+  currentSidebarTag: sidebarTag
+  tags: Array<ITag>,
+  selectedTagTarget: string
+}
+
+// tag的假数据，用于测试
+const mockTags: Array<ITag> = [
+  { tagName: "start.txt", tagType: "scene", tagTarget: "scene/start.txt" },
+  { tagName: "start2.txt", tagType: "scene", tagTarget: "scene/start2.txt" },
+  { tagName: "start3.txt", tagType: "scene", tagTarget: "scene/start3.txt" },
+  { tagName: "start4.txt", tagType: "scene", tagTarget: "scene/start4.txt" }
+];
+
+export const editorInitState: IEditorState = {
   currentEditingGame: "",
   showPreview: true,
-  currentSidebarTag: sidebarTag.gameconfig
+  currentSidebarTag: sidebarTag.gameconfig,
+  tags: mockTags,
+  selectedTagTarget: "scene/start.txt",
 };
 
 const initialState = {
-  dashboard: dashboardInitState,
-  editor: editorInitState
+  dashboard: cloneDeep(dashboardInitState),
+  editor: cloneDeep(editorInitState)
 };
 
 const statusSlice = createSlice({
@@ -38,10 +64,23 @@ const statusSlice = createSlice({
     },
     setEditorSidebarTag: function(state, action: PayloadAction<sidebarTag>) {
       state.editor.currentSidebarTag = action.payload;
+    },
+    resetTagOrder: function(state, action: PayloadAction<Array<ITag>>) {
+      state.editor.tags = action.payload;
+    },
+    setCurrentTagTarget:function(state, action:PayloadAction<string>){
+      state.editor.selectedTagTarget = action.payload;
     }
   }
 });
 
-export const { setDashboardShow, setEditingGame, setEditorPreviewShow, setEditorSidebarTag } = statusSlice.actions;
+export const {
+  setDashboardShow,
+  setEditingGame,
+  setEditorPreviewShow,
+  setEditorSidebarTag,
+  resetTagOrder,
+  setCurrentTagTarget
+} = statusSlice.actions;
 
 export default statusSlice.reducer;
