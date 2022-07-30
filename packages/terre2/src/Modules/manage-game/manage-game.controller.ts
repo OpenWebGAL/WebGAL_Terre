@@ -66,6 +66,18 @@ export class ManageGameController {
     return await this.webgalFs.createEmptyFile(path);
   }
 
+  @Post('editScene/*')
+  async editScene(@Req() request: Request) {
+    const requestBody = request.body;
+    const gameName: string = requestBody.gameName;
+    const sceneName: string = requestBody.sceneName;
+    const content: { value: string } = JSON.parse(requestBody.sceneData);
+    const path = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameName}/game/scene/${sceneName}`,
+    );
+    return await this.webgalFs.updateTextFile(path, content.value);
+  }
+
   @Get('getGameConfig/*')
   async getGameConfig(@Req() request: Request) {
     // 截取出游戏名称
