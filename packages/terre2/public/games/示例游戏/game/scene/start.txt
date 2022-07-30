@@ -1,8 +1,7 @@
-playVideo:OP.mp4;
 bgm:TeaBreak.mp3;
-changeBg:cafe.jpg -next
+changeBg:cafe.jpg -next;
 setBgAni:bg_down 1s;
-changeFigure:kanna.png -next;
+changeFigure:kanna.png ;
 setFigAni:upIn 1s -center;
-WebGAL:我会制作Galgame了！;
+WebGAL:好！我会制作Galgame了！;
 choose:1:1.txt|2:2.txt;

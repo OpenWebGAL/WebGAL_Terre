@@ -119,6 +119,14 @@ export class WebgalFsService {
     });
   }
 
+  async updateTextFile(path: string, content: string) {
+    return await new Promise((resolve) => {
+      fs.writeFile(path, content)
+        .then(() => resolve('Updated.'))
+        .catch(() => resolve('path error or no right.'));
+    });
+  }
+
   /**
    * 读取文本文件
    * @param path 要读取的文本文件路径
