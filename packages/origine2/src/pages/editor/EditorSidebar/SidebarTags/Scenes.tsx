@@ -1,15 +1,17 @@
 import styles from "./sidebarTags.module.scss";
 import { useValue } from "../../../../hooks/useValue";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/origineStore";
 import axios from "axios";
 import { IFileInfo } from "webgal-terre-2/dist/Modules/webgal-fs/webgal-fs.service";
 import FileElement from "../sidebarComponents/FileElement";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
+import { ITag, statusActions } from "../../../../store/statusReducer";
 
 export default function Scenes() {
   const state = useSelector((state: RootState) => state.status.editor);
+  const dispatch = useDispatch();
   const currentGameName = state.currentEditingGame;
   // 场景文件的列表
   const sceneList = useValue<IFileInfo[]>([]);
@@ -75,8 +77,21 @@ export default function Scenes() {
     };
   }
 
+  // 添加 Tag 的函数
+  function addEditTag(name: string, target: string) {
+    const tag: ITag = { tagName: name, tagTarget: target, tagType: "scene" };
+    // 先要确定没有这个tag
+    const result = state.tags.findIndex((e) => e.tagTarget === target);
+    if (result < 0)
+      dispatch(statusActions.addEditAreaTag(tag));
+    dispatch(statusActions.setCurrentTagTarget(target));
+  }
+
   const showSceneList = sceneList.value.map(singleFile => {
-    return <FileElement name={singleFile.name} key={singleFile.name}
+    return <FileElement
+      clickCallback={() => addEditTag(singleFile.name, singleFile.path)}
+      name={singleFile.name}
+      key={singleFile.name}
       deleteCallback={constructDeleteFileFunc(singleFile.path)}
       editFileNameCallback={constructUpdateFilenameFunc(singleFile.path)} />;
   });
