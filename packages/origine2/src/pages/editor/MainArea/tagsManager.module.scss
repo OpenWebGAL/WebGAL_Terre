@@ -1,8 +1,28 @@
 .tag {
-  padding: 5px 12px 5px 12px;
+  padding: 5px 7px 3px 17px;
   cursor: default !important;
+  user-select: none !important;
+  display: flex;
+  border-bottom: 3px solid rgba(0, 0, 0, 0);
+  transition: all 0.33s;
 }
-.tag_active{
-  background: rgba(0,0,0,0.1);
+
+.tag_active {
+  background: rgba(11, 52, 110, 0.1) !important;
   border-bottom: 3px solid #0B346E;
+}
+
+.tag:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.closeIcon {
+  border-radius: 100px;
+  margin: 0 0 0 2px;
+  padding: 0 5px 3px 5px;
+  transition: all 0.33s;
+}
+
+.closeIcon:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
