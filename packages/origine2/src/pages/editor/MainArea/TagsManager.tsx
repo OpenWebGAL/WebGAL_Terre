@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { ITag, resetTagOrder, setCurrentTagTarget } from "../../../store/statusReducer";
 import { cloneDeep } from "lodash";
+import { CloseSmall } from "@icon-park/react";
 
 export default function TagsManager() {
   // 获取 Tags 数据
@@ -36,6 +37,30 @@ export default function TagsManager() {
     dispatch(setCurrentTagTarget(tagTarget));
   }
 
+  function closeTag(ev: MouseEvent, tagTarget: string) {
+    // 先设法确定新的 target 是什么
+    // 删除的是尾部，就是前一个，删除的不是尾部，就是后一个
+    const targetIndex = tags.findIndex((e) => e.tagTarget === tagTarget);
+    let newTarget = "";
+    if (tags.length > 1) {
+      // 是最后一个
+      if (targetIndex === tags.length - 1) {
+        newTarget = tags[tags.length - 2].tagTarget;
+      } else { // 不是最后一个
+        newTarget = tags[targetIndex + 1].tagTarget;
+      }
+    }
+    const newTags = Array.from(tags);
+    newTags.splice(targetIndex, 1);
+    console.log(newTags);
+    console.log(newTarget);
+    // 关闭这个标签并设置新的激活标签
+    if (tagTarget === tagSelected)
+      dispatch(setCurrentTagTarget(newTarget));
+    dispatch(resetTagOrder(newTags));
+    ev.stopPropagation();
+  }
+
   return <DragDropContext onDragEnd={onDragEnd}>
     <Droppable droppableId="droppable" direction="horizontal">
       {(provided, snapshot) => (
@@ -51,13 +76,16 @@ export default function TagsManager() {
               {(provided, snapshot) => (
                 // 下面开始书写可拖拽的元素
                 <div
-                  onClick={()=>selectTag(item.tagTarget)}
+                  onClick={() => selectTag(item.tagTarget)}
                   className={item.tagTarget === tagSelected ? `${styles.tag} ${styles.tag_active}` : styles.tag}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
                   {item.tagName}
+                  <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
+                    <CloseSmall theme="outline" size="15" fill="#000" strokeWidth={3} />
+                  </div>
                 </div>
               )}
             </Draggable>
