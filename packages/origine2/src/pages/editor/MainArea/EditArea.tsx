@@ -8,7 +8,7 @@ export default function EditArea(){
   // 根据 tag 的类型选择怎样显示编辑器主体区域，现在先默认设置为 scene
   const showType = 'scene';
   return <div className={styles.editArea_main}>
-    {state.selectedTagTarget === '' && <div>目前没有打开任何文件</div>}
+    {state.selectedTagTarget === '' && <div className={styles.none_text}>目前没有打开任何文件</div>}
     {state.selectedTagTarget!==''&&<TextEditor targetPath={state.selectedTagTarget}/>}
   </div>;
 }
