@@ -74,11 +74,13 @@ const createSentence = (sentenceType) => {
         animationName: "",
         duration: 1
       };
+      break;
     case "free":
       sentence = {
         type: sentenceType,
         content: ""
       };
+      break;
   }
 
   return sentence;
