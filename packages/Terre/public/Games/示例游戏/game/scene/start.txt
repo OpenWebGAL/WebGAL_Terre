@@ -3,3 +3,4 @@ setBgAni:bg_down 1s;
 changeFigure:kanna.png -next;
 setFigAni:upIn 1s -center;
 WebGAL:欢迎使用 WebGAL Origine！;
+miniAvatar:kanna.png;

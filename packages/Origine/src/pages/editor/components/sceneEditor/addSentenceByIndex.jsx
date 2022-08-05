@@ -1,5 +1,15 @@
 import styles from './sceneEditor.module.scss'
-import {Avatar, Change, Comment, FileMusic, ListView, Pic, SplitTurnDownRight, Video} from "@icon-park/react";
+import {
+    AllApplication,
+    Avatar,
+    Change,
+    Comment,
+    FileMusic,
+    ListView,
+    Pic,
+    SplitTurnDownRight,
+    Video
+} from "@icon-park/react";
 import {createNewSentence} from "./index";
 import {Play} from "@icon-park/react/es";
 
@@ -50,6 +60,11 @@ const AddSentenceByIndex = (props) => {
                 createNewSentence('setAnimation', props.index)
             }}><Play className={styles.addItemIcon} theme="outline" size='18' fill="#333"
                          style={{padding: '0 5px 0 0'}}/>设置动画
+            </div>
+            <div className={styles.addSentenceButton} onClick={() => {
+                createNewSentence('free', props.index)
+            }}><AllApplication className={styles.addItemIcon} theme="outline" size='18' fill="#333"
+                     style={{padding: '0 5px 0 0'}}/>自由指令
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@ import ChangeP from "../sentence/changeP";
 import ChooseScene from "../sentence/chooseScene";
 import Intro from "../sentence/intro";
 import SetAnimation from "../sentence/setAnimation";
+import Free from "../sentence/free";
 
 const sentenceMap = (sentence, index) => {
     let temp;
@@ -37,6 +38,9 @@ const sentenceMap = (sentence, index) => {
             break;
         case 'setAnimation':
             temp = <SetAnimation data={sentence} index={index} key={index}/>;
+            break;
+        case 'free':
+            temp = <Free data={sentence} index={index} key={index}/>;
             break;
     }
     return temp;

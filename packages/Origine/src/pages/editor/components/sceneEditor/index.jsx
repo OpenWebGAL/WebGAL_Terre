@@ -3,7 +3,18 @@ import {useEffect, useState} from "react";
 import store from "../../store/editorStore";
 import runtime from "../../../../env/runtime";
 import axios from "axios";
-import {Avatar, Change, Comment, FileMusic, ListView, Pic, Plus, SplitTurnDownRight, Video} from "@icon-park/react";
+import {
+    AllApplication,
+    Avatar,
+    Change,
+    Comment,
+    FileMusic,
+    ListView,
+    Pic,
+    Plus,
+    SplitTurnDownRight,
+    Video
+} from "@icon-park/react";
 import createSentence from "./createSentence";
 import sentenceMap from "./sentenceMap";
 import 'antd/dist/antd.css';
@@ -108,6 +119,11 @@ const SceneEditor = (props) => {
             setShowAdd(false);
         }}><Play className={styles.addItemIcon} theme="outline" size='18' fill="#333"
                      style={{padding: '0 5px 0 0'}}/>设置动画
+        </div>
+        <div className={styles.addSentenceButton} onClick={() => {
+            createNewSentence('free', props.index)
+        }}><AllApplication className={styles.addItemIcon} theme="outline" size='18' fill="#333"
+                           style={{padding: '0 5px 0 0'}}/>自由指令
         </div>
     </div>
 

@@ -111,6 +111,12 @@ const scriptParser = (sceneData) => {
                 }
                 tempSetAnimation = tempSetAnimation + sentence['animationName'] +' '+sentence['duration']+'s' + tempArg + ';\n';
                 txtStr = txtStr + tempSetAnimation;
+                break;
+            case 'free':
+                const newTempString = sentence['content'];
+                const newTempStringWithSingleLine = newTempString.replaceAll(/\r/g,'\n').split('\n')[0];
+                txtStr = txtStr + newTempStringWithSingleLine +'\n';
+                break;
         }
     }
     return txtStr;
