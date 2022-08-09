@@ -6,13 +6,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { useValue } from "../../../hooks/useValue";
 import axios from "axios";
+import { logger } from "../../../utils/logger";
 
 interface ITextEditorProps {
   targetPath: string;
 }
 
 export default function TextEditor(props: ITextEditorProps) {
-  const state = useSelector((state: RootState) => state.status.editor);
+  const target = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
+  const tags = useSelector((state:RootState)=>state.status.editor.tags);
+  const currentEditingGame = useSelector((state:RootState)=>state.status.editor.currentEditingGame);
   // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = { value: "Loading Scene Data......" };
 
@@ -37,10 +40,11 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} monaco
    */
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
+    logger.debug('编辑器挂载');
     editorRef.current = editor;
     editor.onDidChangeCursorPosition((event) => {
       const lineNumber = event.position.lineNumber;
-      const sceneName = state.tags.find((e) => e.tagTarget === state.selectedTagTarget)!.tagName;
+      const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
       console.log('场景名称'+sceneName);
       // @ts-ignore
       if (window["currentWs"] && checkJumpStatus(lineNumber)) { // @ts-ignore
@@ -55,9 +59,10 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} ev
    */
   function handleChange(value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) {
+    logger.debug('编辑器提交更新');
     const lineNumber = ev.changes[0].range.startLineNumber;
-    const gameName = state.currentEditingGame;
-    const sceneName = state.tags.find((e) => e.tagTarget === state.selectedTagTarget)!.tagName;
+    const gameName = currentEditingGame;
+    const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
     if (value)
       currentText.value = value;
     const params = new URLSearchParams();
@@ -65,7 +70,7 @@ export default function TextEditor(props: ITextEditorProps) {
     params.append("sceneName", sceneName);
     params.append("sceneData", JSON.stringify({ value: currentText.value }));
     axios.post("/api/manageGame/editScene/", params).then((res) => {
-      console.log(res);
+      // console.log(res);
       // @ts-ignore
       if (window["currentWs"] && checkJumpStatus(lineNumber)) { // @ts-ignore
         window["currentWs"].send(`jmp ${sceneName} ${lineNumber}`);
@@ -74,8 +79,8 @@ export default function TextEditor(props: ITextEditorProps) {
   }
 
   function updateEditData() {
-    const currentEditName = state.tags.find((e) => e.tagTarget === state.selectedTagTarget)!.tagName;
-    const url = `/games/${state.currentEditingGame}/game/scene/${currentEditName}`;
+    const currentEditName = tags.find((e) => e.tagTarget === target)!.tagName;
+    const url = `/games/${currentEditingGame}/game/scene/${currentEditName}`;
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
       currentText.value = data;
@@ -91,7 +96,7 @@ export default function TextEditor(props: ITextEditorProps) {
   });
 
   return <div className={styles.textEditor_main}>
-    <Editor key={state.selectedTagTarget} height="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="abap"
+    <Editor key={target} height="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="abap"
       defaultValue={currentText.value}
     />
   </div>;
