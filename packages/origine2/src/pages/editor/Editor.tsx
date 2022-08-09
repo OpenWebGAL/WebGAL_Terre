@@ -8,14 +8,13 @@ import { sidebarTag } from "../../store/statusReducer";
 import MainArea from "./MainArea/MainArea";
 
 export default function Editor() {
-  const state = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
-  const editorState = useSelector((state: RootState) => state.status.editor);
+  const isShowDashboard = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
   return <>
-    {!state && <div className={styles.editor}>
+    {!isShowDashboard && <div className={styles.editor}>
       <TopBar />
       <div className={styles.container}>
         <EditorSidebarControl />
-        {(editorState.currentSidebarTag !== sidebarTag.none || editorState.showPreview) && <EditorSideBar />}
+        <EditorSideBar />
         <MainArea />
       </div>
     </div>}
