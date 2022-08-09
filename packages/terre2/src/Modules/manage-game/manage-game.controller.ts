@@ -88,4 +88,16 @@ export class ManageGameController {
     );
     return await this.webgalFs.readTextFile(configFilePath);
   }
+
+  @Post('setGameConfig/*')
+  async setGameConfig(@Req() request: Request) {
+    // 将新的配置文件写入
+    const body = request.body;
+    const gameName = body.gameName;
+    const newConfig = body.newConfig;
+    const configFilePath = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameName}/game/config.txt`,
+    );
+    return await this.webgalFs.updateTextFile(configFilePath, newConfig);
+  }
 }
