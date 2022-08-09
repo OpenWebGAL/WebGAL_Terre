@@ -31,7 +31,7 @@ export default function MainArea() {
     } catch (e) {
       console.warn('ws连接失败');
     }
-  });
+  },[]);
   return <div className={styles.MainArea_main}>
     <TagsManager/>
     <EditArea/>
