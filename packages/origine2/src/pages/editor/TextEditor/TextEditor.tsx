@@ -10,6 +10,7 @@ import { logger } from "../../../utils/logger";
 
 interface ITextEditorProps {
   targetPath: string;
+  isHide:boolean;
 }
 
 export default function TextEditor(props: ITextEditorProps) {
@@ -95,8 +96,8 @@ export default function TextEditor(props: ITextEditorProps) {
     };
   });
 
-  return <div className={styles.textEditor_main}>
-    <Editor key={target} height="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="abap"
+  return <div style={{display:props.isHide?'none':'block'}} className={styles.textEditor_main}>
+    <Editor height="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="abap"
       defaultValue={currentText.value}
     />
   </div>;
