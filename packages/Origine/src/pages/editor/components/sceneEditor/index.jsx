@@ -156,8 +156,17 @@ function updateSceneFromFile() {
         return;
     const url = `${runtime.domain}/Games/${runtime.currentEditGame}/game/scene/${sceneName}`;
     axios.get(url,).then(r => {
-        runtime.currentSceneSentenceList = r.data;
-        store.set('updateScene', !store.get('updateScene'));
+        console.log(r);
+        const sceneJsonData = r.data;
+        const isArr = Array.isArray(sceneJsonData)
+        if(!isArr) {
+            console.log('触发反序列化错误，现在恢复');
+            writeSence();
+        } else{
+            runtime.currentSceneSentenceList = r.data;
+            store.set('updateScene', !store.get('updateScene'));
+        }
+
         // if (runtime.isRealtimeRefreashPreview) {
         //     eventSender('refPreviewButton', 0, 0);
         // }
