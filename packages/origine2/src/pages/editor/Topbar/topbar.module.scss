@@ -1,15 +1,15 @@
 .editor_topbar{
-  height: 50px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .editor_title{
-  font-size: 150%;
+  font-size: 135%;
   color: #005caf;
   font-family: Georgia, serif;
-  padding: 0.5em 0.5em 0.5em 0.75em;
+  padding: 0.5em 0.5em 0.5em 0.35em;
+  text-decoration: none;
 }
 
 .editor_editingGame{
@@ -17,4 +17,17 @@
   padding: 0.2em 1em 0.2em 1em;
   background-color: rgba(0,92,175,0.1);
   border-radius: 2px;
+}
+
+.home_btn{
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 0 0.25em 0 0.5em;
+  margin: 5px 1em 5px 1em;
+  border-radius: 5px;
+}
+
+.home_btn:hover{
+  background: rgba(0,0,0,0.075);
 }

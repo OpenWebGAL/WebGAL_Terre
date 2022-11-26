@@ -52,6 +52,7 @@ export default function TextEditor(props: ITextEditorProps) {
         window["currentWs"].send(`jmp ${sceneName} ${lineNumber}`);
       }
     });
+    editor.updateOptions({unicodeHighlight:{ambiguousCharacters:false}});
   }
 
   /**
