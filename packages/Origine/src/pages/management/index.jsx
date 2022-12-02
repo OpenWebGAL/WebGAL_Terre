@@ -61,7 +61,7 @@ const Management = () => {
                       	    <span onClick="" className={styles.title} >登录</span>
                       	    <span className={styles.title}>|</span>
                       	    <span onClick="" className={styles.title} >注册</span>
-			</div>
+			            </div>
                     </div>
                 </div>
             </nav>
