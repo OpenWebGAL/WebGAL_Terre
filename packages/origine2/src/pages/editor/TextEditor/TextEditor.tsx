@@ -4,31 +4,30 @@ import { useEffect, useRef } from "react";
 import styles from "./textEditor.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
-import { useValue } from "../../../hooks/useValue";
 import axios from "axios";
 import { logger } from "../../../utils/logger";
 
+// 语法高亮相关的依赖
+import { loadWASM } from "onigasm"; // peer dependency of 'monaco-textmate'
+import { Registry } from "monaco-textmate"; // peer dependency
+import { wireTmGrammars } from "monaco-editor-textmate";
+// 语法高亮文件
+import hljson from "../../../config/highlighting/hl.json";
+import theme from "../../../config/themes/monokai-light.json";
+import { WG_ORIGINE_RUNTIME } from "../../../runtime/WG_ORIGINE_RUNTIME";
+
 interface ITextEditorProps {
   targetPath: string;
-  isHide:boolean;
+  isHide: boolean;
 }
 
 export default function TextEditor(props: ITextEditorProps) {
   const target = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
-  const tags = useSelector((state:RootState)=>state.status.editor.tags);
-  const currentEditingGame = useSelector((state:RootState)=>state.status.editor.currentEditingGame);
+  const tags = useSelector((state: RootState) => state.status.editor.tags);
+  const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = { value: "Loading Scene Data......" };
 
-  function checkJumpStatus(targetNumber: number) {
-    const text = currentText.value;
-    const validLines = text
-      .replaceAll(/[\r\n]/g, "\n")
-      .split("\n")
-      .filter(e => e !== "");
-    const validLineNumber = validLines.length;
-    return targetNumber <= validLineNumber;
-  }
 
   // 准备获取 Monaco
   // 建立 Ref
@@ -41,18 +40,22 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} monaco
    */
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
-    logger.debug('编辑器挂载');
+    logger.debug("编辑器挂载");
     editorRef.current = editor;
     editor.onDidChangeCursorPosition((event) => {
       const lineNumber = event.position.lineNumber;
+      console.log(lineNumber);
+      const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
       const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
-      console.log('场景名称'+sceneName);
+      console.log("场景名称" + sceneName);
       // @ts-ignore
-      if (window["currentWs"] && checkJumpStatus(lineNumber)) { // @ts-ignore
-        window["currentWs"].send(`jmp ${sceneName} ${lineNumber}`);
+      if (window["currentWs"]) { // @ts-ignore
+        window["currentWs"].send(`jmp ${sceneName} ${trueLineNumber}`);
       }
     });
-    editor.updateOptions({unicodeHighlight:{ambiguousCharacters:false}});
+    editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
+    monaco.languages.register({ id: "webgal" });
+    liftOff(editor).then();
   }
 
   /**
@@ -61,8 +64,9 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} ev
    */
   function handleChange(value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) {
-    logger.debug('编辑器提交更新');
+    logger.debug("编辑器提交更新");
     const lineNumber = ev.changes[0].range.startLineNumber;
+    const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     const gameName = currentEditingGame;
     const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
     if (value)
@@ -74,8 +78,8 @@ export default function TextEditor(props: ITextEditorProps) {
     axios.post("/api/manageGame/editScene/", params).then((res) => {
       // console.log(res);
       // @ts-ignore
-      if (window["currentWs"] && checkJumpStatus(lineNumber)) { // @ts-ignore
-        window["currentWs"].send(`jmp ${sceneName} ${lineNumber}`);
+      if (window["currentWs"]) { // @ts-ignore
+        window["currentWs"].send(`jmp ${sceneName} ${trueLineNumber}`);
       }
     });
   }
@@ -92,14 +96,59 @@ export default function TextEditor(props: ITextEditorProps) {
 
   useEffect(() => {
     updateEditData();
-    return ()=>{
+    return () => {
 
     };
   });
 
-  return <div style={{display:props.isHide?'none':'block'}} className={styles.textEditor_main}>
-    <Editor height="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="abap"
+  return <div style={{ display: props.isHide ? "none" : "block" }} className={styles.textEditor_main}>
+    <Editor height="100%" width="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="webgal"
       defaultValue={currentText.value}
     />
   </div>;
+}
+
+
+async function liftOff(editor: monaco.editor.IStandaloneCodeEditor) {
+  if (!WG_ORIGINE_RUNTIME.textEditor.isInitWasm) {
+    await loadWASM(`./wasm/onigasm.wasm`); // See https://www.npmjs.com/package/onigasm#light-it-up
+    WG_ORIGINE_RUNTIME.textEditor.isInitWasm = true;
+  }
+
+
+  const registry = new Registry({
+    getGrammarDefinition: async (scopeName) => {
+      return {
+        format: "json",
+        content: JSON.stringify(hljson)
+      };
+    }
+  });
+
+  // map of monaco "language id's" to TextMate scopeNames
+  const grammars = new Map();
+  grammars.set("webgal", "source.txt");
+
+  // monaco's built-in themes aren't powereful enough to handle TM tokens
+  // https://github.com/Nishkalkashyap/monaco-vscode-textmate-theme-converter#monaco-vscode-textmate-theme-converter
+  monaco.editor.defineTheme("webgal-theme", theme as any);
+  editor.updateOptions({ theme: "webgal-theme" });
+
+  await wireTmGrammars(monaco, registry, grammars, editor);
+}
+
+function getTrueLinenumber(lineNumber: number, allText: string) {
+  // CRLF 转 LF
+  const text = allText.replaceAll(/\r\n/g, "\n");
+  const textArray = text.split("\n");
+  const trueLineNumber = [0];
+  for (let i = 1; i <= textArray.length; i++) {
+    const line = textArray[i - 1];
+    // 取分号前
+    const lineContent = line.split(";")[0];
+    if (lineContent !== "") {
+      trueLineNumber[i] = trueLineNumber[i - 1] + 1;
+    } else trueLineNumber[i] = trueLineNumber[i - 1];
+  }
+  return trueLineNumber[lineNumber];
 }

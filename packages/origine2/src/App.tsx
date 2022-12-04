@@ -13,7 +13,7 @@ function App() {
   });
   return (
     // 将编辑器的根元素占满整个视口
-    <div className="App" style={{ width: "100vw", height: "100vh" }}>
+    <div className="App" style={{ width: "100vw", height: "100vh",overflow:'hidden' }}>
       <Provider store={origineStore}>
         <DashBoard />
         <Editor />

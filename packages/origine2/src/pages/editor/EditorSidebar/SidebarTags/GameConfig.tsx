@@ -79,11 +79,11 @@ export default function GameConfig() {
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>标题背景图片</div>
-          <GameConfigEditor key="gameName" value={gameConfig.value.titleBackground} onChange={(e:string)=>updateGameConfig("titleBackground", e)}/>
+          <GameConfigEditor key="titleBackground" value={gameConfig.value.titleBackground} onChange={(e:string)=>updateGameConfig("titleBackground", e)}/>
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>标题背景音乐</div>
-          <GameConfigEditor key="gameName" value={gameConfig.value.titleBgm} onChange={(e:string)=>updateGameConfig("titleBgm", e)}/>
+          <GameConfigEditor key="titleBgm" value={gameConfig.value.titleBgm} onChange={(e:string)=>updateGameConfig("titleBgm", e)}/>
         </div>
       </div>
     </div>
@@ -98,18 +98,14 @@ interface IGameConfigEditor {
 
 function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
-  const currentValue= useValue(props.value);
   const inputBoxRef = useRef<ITextField>(null);
   return <div>
     {!showEditBox.value && props.value}
     {!showEditBox.value && <div className={styles.editButton} onClick={()=>{showEditBox.set(true);
       setTimeout(()=>inputBoxRef.current?.focus(),100);
     }}>修改</div>}
-    {showEditBox.value && <TextField componentRef={inputBoxRef} value={currentValue.value}
-      onChange={(event, newValue) => {
-        currentValue.set(newValue);
-      }}
-      onBlur={()=>{props.onChange(currentValue.value);showEditBox.set(false);}}
+    {showEditBox.value && <TextField componentRef={inputBoxRef} defaultValue={props.value}
+      onBlur={()=>{props.onChange(inputBoxRef!.current!.value);showEditBox.set(false);}}
     />}
   </div>;
 }
