@@ -11,8 +11,8 @@ mkdir release
 # 进入 Terre 目录
 cd packages/terre2
 yarn build
+yarn pkg
 cd dist
-pkg main.js -o WebGAL_Terre
 cp -r WebGAL_Terre.exe  ../../../release
 rm WebGAL_Terre.exe
 cd ../
