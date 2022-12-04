@@ -65,7 +65,9 @@ export class WebgalFsService {
    * @param dirName 文件夹名称
    */
   async mkdir(src, dirName) {
-    return await fs.mkdir(join(src, dirName));
+    return await fs.mkdir(join(src, dirName)).catch((e) => {
+      console.log('跳过文件夹创建');
+    });
   }
 
   /**
