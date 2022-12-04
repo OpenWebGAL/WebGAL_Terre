@@ -1,4 +1,7 @@
 echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
+# 安装依赖
+npm install yarn -g
+yarn
 
 # 清理
 rm -rf release
@@ -6,14 +9,18 @@ rm -rf release
 mkdir release
 
 # 进入 Terre 目录
-cd packages/Terre
-pkg index.js  -o WebGAL_Origine
-cp -r Exported_Games public uploads WebGAL_Electron_template WebGAL_Template WebGAL_Origine.exe  ../../release
-rm WebGAL_Origine.exe
+cd packages/terre2
+yarn build
+cd dist
+pkg main.js -o WebGAL_Terre
+cp -r WebGAL_Terre.exe  ../../../release
+rm WebGAL_Terre.exe
+cd ../
+cp -r public assets Exported_Games ../../release
 cd ../../
 
 # 进入 Origine 目录
-cd packages/Origine
+cd packages/origine2
 yarn build
 cp -rf dist/* ../../release/public/
 cd ../../
@@ -22,9 +29,14 @@ cd ../../
 cd packages/WebGAL-electron
 yarn
 yarn build
-cp -rf build/win-unpacked/* ../../release/WebGAL_Electron_template/
+cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_template/
 cd ../../
 
 cd release
+
+# 删除冗余文件
+rm -rf Exported_Games/*
+rm -rf public/games/*
+rm -rf assets/templates/WebGAL_Template/game/video/*
 
 echo "WebGAL Origine is now ready to be deployed."
