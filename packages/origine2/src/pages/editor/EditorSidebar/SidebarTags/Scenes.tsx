@@ -94,7 +94,7 @@ export default function Scenes() {
   });
 
   return (
-    <div style={{ height: "50%", overflow: "auto" }}>
+    <div style={{ height: "100%", overflow: "auto" }}>
       <div className={styles.sidebar_tag_head}>
         <div className={styles.sidebar_tag_title}>场景管理</div>
         <div className={styles.sidebar_tag_head_button}>
@@ -130,7 +130,7 @@ export default function Scenes() {
           )}
         </div>
       </div>
-      <div style={{ overflow: "auto", height: "calc(100% - 45px)" }}>{showSceneList}</div>
+      <div style={{ overflow: "auto", maxHeight: "calc(100% - 45px)" }}>{showSceneList}</div>
     </div>
   );
 }
