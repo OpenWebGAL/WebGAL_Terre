@@ -1,0 +1,29 @@
+.sidebar_main{
+  width: 20em;
+  height: 100%;
+  border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+.sidebar_top{
+  display: flex;
+  padding: 1em 1em 1em 1em;
+  //border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.sidebar_top_title{
+  font-size: 115%;
+  padding: 0.15em 0 0 0;
+  font-weight: bold;
+  color: #005caf;
+}
+
+.createGameButton{
+  margin: 0 0 0 auto;
+  font-size: 100%;
+  background: #005caf;
+  color: white;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 0.25em 1em 0.25em 1em;
+  cursor: pointer;
+}

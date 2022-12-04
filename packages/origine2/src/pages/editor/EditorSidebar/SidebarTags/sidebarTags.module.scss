@@ -1,0 +1,47 @@
+.sidebar_tag_title{
+  font-size: 115%;
+  padding: 0.15em 0 0 0;
+  font-weight: bold;
+  color: #005caf;
+}
+
+.sidebar_tag_head{
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0 ;
+}
+
+.sidebar_tag_head_button{
+  margin: 0 0 0 auto;
+}
+
+.sidebar_gameconfig_title{
+  font-weight: bold;
+}
+
+.sidebar_gameconfig_container{
+  padding: 0.5em 0 0.5em 0;
+  user-select: none;
+}
+
+.editButton{
+  display: inline-block;
+  font-size: smaller;
+  box-sizing: border-box;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  background: rgba(0,92,175,0.1);
+  color: #005caf;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 1em 0 1em;
+}
+
+.open_assets{
+  cursor: pointer;
+  background: rgba(0,92,175,0.1);
+  padding: 5px 10px 5px 10px;
+  box-sizing: border-box;
+  margin: 5px 10px 0 5px;
+  color: #0B346E;
+  border-radius: 4px;
+}
