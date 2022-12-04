@@ -28,6 +28,15 @@ export class ManageGameController {
     }
   }
 
+  @Get('openGameAssetsDict/*')
+  async openGameAssetsDict(@Req() request: Request) {
+    const requestUrl = request.url;
+    // 截取出有关要阅读的目录的信息
+    const gameName = decodeURI(requestUrl.split('openGameAssetsDict/')[1]);
+    console.log(gameName);
+    this.manageGame.openAssetsDictionary(gameName).then();
+  }
+
   @Get('readGameAssets/*')
   async readGameAssets(@Req() request: Request) {
     const requestUrl = request.url;

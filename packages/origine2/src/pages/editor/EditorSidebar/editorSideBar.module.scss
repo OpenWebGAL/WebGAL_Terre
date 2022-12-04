@@ -1,5 +1,6 @@
 .editor_sidebar {
   width: 35%;
+  min-width: 35%;
   border-right: 1px solid rgba(0,0,0,0.1);
   padding: 15px 15px 15px 15px;
   box-sizing: border-box;
@@ -48,4 +49,9 @@
   //max-height: 50%;
   width: 100%;
   box-sizing: border-box;
+}
+
+.preview_top_title_container{
+  display: flex;
+  align-items: center;
 }

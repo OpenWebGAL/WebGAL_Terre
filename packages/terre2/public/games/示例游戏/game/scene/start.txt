@@ -1,5 +1,0 @@
-bgm:TeaBreak.mp3;
-changeBg:cafe.jpg -next;
-changeFigure:kanna.png;
-WebGAL:好！我会制作Galgame了！;
-choose:1:1.txt|2:2.txt;
