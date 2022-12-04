@@ -3,12 +3,13 @@
   cursor: default !important;
   user-select: none !important;
   display: flex;
+  background: white;
   border-bottom: 3px solid rgba(0, 0, 0, 0);
   transition: all 0.33s;
 }
 
 .tag_active {
-  background: rgba(11, 52, 110, 0.1) !important;
+  background: rgb(240, 247, 253) !important;
   border-bottom: 3px solid #0B346E;
 }
 

@@ -1,7 +1,6 @@
 import { forwardRef, ReactNode, useImperativeHandle, useRef, useState } from "react";
 import { useValue } from "../../hooks/useValue";
 import styles from "./message.module.scss";
-import { logger } from "../../utils/logger";
 
 // 传递的 Refs 的类型声明
 export interface TestRefRef {

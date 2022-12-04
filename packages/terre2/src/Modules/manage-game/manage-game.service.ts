@@ -1,5 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
+import open = require('open');
 
 @Injectable()
 export class ManageGameService {
@@ -8,6 +9,13 @@ export class ManageGameService {
     private readonly webgalFs: WebgalFsService,
   ) {}
 
+  /**
+   * 打开游戏资源文件夹
+   */
+  async openAssetsDictionary(gameName: string) {
+    const path = this.webgalFs.getPathFromRoot(`public/games/${gameName}/game`);
+    await open(path);
+  }
   /**
    * 从模板创建游戏
    * @param gameName

@@ -1,5 +1,3 @@
-Game_name:;
-Game_key:;
-Title_img:;
-Title_bgm:;
-Loading_img:none;
+Game_name:请设置游戏名称;
+Title_bgm:TeaBreak.mp3;
+Title_img:cafe.jpg;
