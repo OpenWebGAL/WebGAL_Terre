@@ -30,10 +30,10 @@ export default function DashBoard() {
     return await axios.get("/api/manageGame/gameList").then(r => r.data);
   }
 
-  async function createGame() {
-    const res = await axios.post("/api/manageGame/createGame", { gameName: "测试" }).then(r => r.data);
+  async function createGame(gameName:string) {
+    const res = await axios.post("/api/manageGame/createGame", { gameName: gameName }).then(r => r.data);
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`测试 已创建`, 3000);
+    messageRef.current!.showMessage(`${gameName} 已创建`, 2000);
     refreashDashboard();
   }
 
@@ -54,6 +54,8 @@ export default function DashBoard() {
   useEffect(() => {
     refreashDashboard();
   }, []);
+
+
 
   return <>
     { isDashboardShow && (<div className={styles.dashboard_container}>
