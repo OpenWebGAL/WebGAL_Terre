@@ -37,6 +37,25 @@ export class ManageGameController {
     this.manageGame.openAssetsDictionary(gameName).then();
   }
 
+  @Get('ejectGameAsWeb/*')
+  async ejectGameAsWeb(@Req() request: Request) {
+    const requestUrl = request.url;
+    // 截取出有关要阅读的目录的信息
+    const gameName = decodeURI(requestUrl.split('ejectGameAsWeb/')[1]);
+    console.log(gameName);
+    this.manageGame.exportGame(gameName, 'web').then();
+  }
+
+  @Get('ejectGameAsExe/*')
+  async ejectGameAsExe(@Req() request: Request) {
+    const requestUrl = request.url;
+    // 截取出有关要阅读的目录的信息
+    const gameName = decodeURI(requestUrl.split('ejectGameAsExe/')[1]);
+    console.log(gameName);
+    console.log('export as exe');
+    this.manageGame.exportGame(gameName, 'electron-windows').then();
+  }
+
   @Get('readGameAssets/*')
   async readGameAssets(@Req() request: Request) {
     const requestUrl = request.url;
