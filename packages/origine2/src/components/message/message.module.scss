@@ -1,0 +1,25 @@
+.main {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  position: fixed;
+  align-items: center;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.singleMessage {
+  //background-color: rgba(0, 92, 175, 0.95);
+  //border: 1px solid #0B346E;
+  background-color: rgba(250,252,255,1);
+  font-size: 115%;
+  color: #0B346E;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  margin: 0.5em 0.5em 0.5em 0.5em;
+  min-width: 350px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0,0,0,0.1);
+}

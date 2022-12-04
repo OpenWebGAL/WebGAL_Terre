@@ -1,0 +1,47 @@
+.preview_main{
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+}
+
+.previewWindow {
+  flex: 1;
+  //max-height: 50%;
+  width: 100%;
+  padding: 1em 1em 1em 1em;
+  box-sizing: border-box;
+}
+
+.preview_title{
+  display: flex;
+  text-align: left;
+  padding: 1em 1em 1em 1em ;
+  //border-bottom: 1px solid rgba(0,0,0,0.1);
+  color: #005caf;
+}
+
+.preview_title_text{
+  font-size: 125%;
+  padding: 0.1em 0 0 0;
+  font-weight: bold;
+}
+
+.editGameButton{
+  margin: 0 0 0 auto;
+  font-size: 100%;
+  background: #005caf;
+  color: white;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 0.25em 1em 0.25em 1em;
+  cursor: pointer;
+}
+
+.noneChecked{
+  font-size: 115%;
+  padding: 1em 0 0 0;
+  width: 100%;
+  text-align: center;
+  color: rgba(0,0,0,0.75);
+  flex: 1;
+}
