@@ -3,7 +3,12 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "release": "release.sh"
+    "dev": "concurrently \"yarn dev:terre\" \"yarn dev:origine\"",
+    "lint": "concurrently \"yarn lint:terre\" \"yarn lint:origine\"",
+    "dev:terre": "cd packages/terre2 && nest start --debug --watch",
+    "dev:origine": "cd packages/origine2 && vite --host=3002",
+    "lint:terre": "cd packages/terre2 && yarn lint",
+    "lint:origine": "cd packages/origine2 && yarn lint"
   },
   "workspaces": {
     "packages": [
@@ -16,6 +21,8 @@
       "**/electron/**"
     ]
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^7.2.2"
   }
 }

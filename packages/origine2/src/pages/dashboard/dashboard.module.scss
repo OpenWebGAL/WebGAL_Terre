@@ -1,0 +1,22 @@
+.dashboard_container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.dashboard_main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+}
+
+.topBar {
+  padding: 0.5em 0.5em 0.5em 0.75em;
+  text-align: left;
+  font-family: Georgia, serif;
+  font-size: 150%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #005caf;
+}
