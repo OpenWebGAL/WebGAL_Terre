@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req } from '@nestjs/common';
+import { ConsoleLogger, Controller, Get, Post, Req } from '@nestjs/common';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import { Request } from 'express';
 import { ManageGameService } from './manage-game.service';
@@ -8,6 +8,7 @@ export class ManageGameController {
   constructor(
     private readonly webgalFs: WebgalFsService,
     private readonly manageGame: ManageGameService,
+    private readonly logger: ConsoleLogger,
   ) {}
 
   @Get('gameList')
@@ -33,7 +34,6 @@ export class ManageGameController {
     const requestUrl = request.url;
     // 截取出有关要阅读的目录的信息
     const gameName = decodeURI(requestUrl.split('openGameAssetsDict/')[1]);
-    console.log(gameName);
     this.manageGame.openAssetsDictionary(gameName).then();
   }
 
@@ -42,8 +42,9 @@ export class ManageGameController {
     const requestUrl = request.url;
     // 截取出有关要阅读的目录的信息
     const gameName = decodeURI(requestUrl.split('ejectGameAsWeb/')[1]);
-    console.log(gameName);
-    this.manageGame.exportGame(gameName, 'web').then();
+    this.manageGame
+      .exportGame(gameName, 'web')
+      .then(() => this.logger.log(`${gameName} export as web app`));
   }
 
   @Get('ejectGameAsExe/*')
@@ -51,9 +52,9 @@ export class ManageGameController {
     const requestUrl = request.url;
     // 截取出有关要阅读的目录的信息
     const gameName = decodeURI(requestUrl.split('ejectGameAsExe/')[1]);
-    console.log(gameName);
-    console.log('export as exe');
-    this.manageGame.exportGame(gameName, 'electron-windows').then();
+    this.manageGame
+      .exportGame(gameName, 'electron-windows')
+      .then(() => this.logger.log(`${gameName} export as exe`));
   }
 
   @Get('readGameAssets/*')
