@@ -18,9 +18,10 @@ wsServer.on('connection', (conn) => {
 });
 
 async function bootstrap() {
+  console.log(`WebGAL Terre 2.3.2-insider2 starting at ${process.cwd()}`);
   const app = await NestFactory.create(AppModule);
-  console.log(process.cwd());
   await app.listen(3001);
   open('http://localhost:3001');
 }
+
 bootstrap();
