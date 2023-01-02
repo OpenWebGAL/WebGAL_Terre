@@ -33,6 +33,20 @@ export default function EditorSideBar() {
             borderRadius: "4px"
           }}>刷新
           </div>
+          <div onClick={()=>{
+            window.open(`/games/${state.currentEditingGame}`,'_blank');
+          }
+          }
+          style={{
+            fontWeight: "bold",
+            margin: "0 0 0 5px",
+            padding: "3px 7px 3px 7px",
+            color: "#005caf",
+            background: "rgba(0,92,175,0.1)",
+            cursor: "pointer",
+            borderRadius: "4px"
+          }}>在新标签页预览
+          </div>
         </div>
 
         {/* eslint-disable-next-line react/iframe-missing-sandbox */}
