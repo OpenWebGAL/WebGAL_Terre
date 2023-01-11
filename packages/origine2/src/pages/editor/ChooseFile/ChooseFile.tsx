@@ -5,6 +5,9 @@ import { IFileInfo } from "webgal-terre-2/dist/Modules/webgal-fs/webgal-fs.servi
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { logger } from "../../../utils/logger";
+import { useId } from "@fluentui/react-hooks";
+import { Callout, DefaultButton, Link, Text } from "@fluentui/react";
+import styles from './chooseFile.module.scss';
 
 export interface IChooseFile {
   sourceBase: string;
@@ -29,7 +32,38 @@ export default function ChooseFile(props: IChooseFile) {
 
   }, [currentDirName]);
 
-  return <div>123</div>;
+  const isShowChooseFileCallout = useValue(false);
+  const buttonId = useId("choosefile-callout");
+  const labelId = useId("callout-label");
+  const descriptionId = useId("callout-description");
+
+  function toggleIsCalloutVisible() {
+    isShowChooseFileCallout.set(!isShowChooseFileCallout.value);
+  }
+
+  return <>
+    <DefaultButton
+      id={buttonId}
+      onClick={toggleIsCalloutVisible}
+      text={isShowChooseFileCallout.value ? "Hide callout" : "Show callout"}
+    />
+    {isShowChooseFileCallout.value && (
+      <Callout
+        ariaLabelledBy={labelId}
+        ariaDescribedBy={descriptionId}
+        role="dialog"
+        gapSpace={0}
+        target={`#${buttonId}`}
+        onDismiss={toggleIsCalloutVisible}
+        setInitialFocus
+        className={styles.callout}
+      >
+        <Text as="h1" block variant="xLarge" id={labelId}>
+          选择文件
+        </Text>
+      </Callout>
+    )}
+  </>;
 }
 
 /**

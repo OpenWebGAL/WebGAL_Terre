@@ -6,7 +6,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 export default function Assets() {
 
   function open_assets(){
-    axios.get(`/api/manageGame/openGameAssetsDict/${origineStore.getState().status.editor.currentEditingGame}`);
+    axios.get(`/api/manageGame/openGameAssetsDict/${origineStore.getState().status.editor.currentEditingGame}`).then();
   }
 
 
