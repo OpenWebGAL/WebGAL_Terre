@@ -15,6 +15,7 @@ import { wireTmGrammars } from "monaco-editor-textmate";
 import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
 import { WG_ORIGINE_RUNTIME } from "../../../runtime/WG_ORIGINE_RUNTIME";
+import { WsUtil } from "../../../utils/wsUtil";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -44,14 +45,11 @@ export default function TextEditor(props: ITextEditorProps) {
     editorRef.current = editor;
     editor.onDidChangeCursorPosition((event) => {
       const lineNumber = event.position.lineNumber;
-      console.log(lineNumber);
+      const editorValue = editor.getValue();
+      const targetValue = editorValue.split('\n')[lineNumber-1];
       const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
       const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
-      console.log("场景名称" + sceneName);
-      // @ts-ignore
-      if (window["currentWs"]) { // @ts-ignore
-        window["currentWs"].send(`jmp ${sceneName} ${trueLineNumber}`);
-      }
+      WsUtil.sendSyncCommand(sceneName,trueLineNumber,targetValue);
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
     monaco.languages.register({ id: "webgal" });
@@ -76,11 +74,8 @@ export default function TextEditor(props: ITextEditorProps) {
     params.append("sceneName", sceneName);
     params.append("sceneData", JSON.stringify({ value: currentText.value }));
     axios.post("/api/manageGame/editScene/", params).then((res) => {
-      // console.log(res);
-      // @ts-ignore
-      if (window["currentWs"]) { // @ts-ignore
-        window["currentWs"].send(`jmp ${sceneName} ${trueLineNumber}`);
-      }
+      const targetValue = currentText.value.split('\n')[lineNumber-1];
+      WsUtil.sendSyncCommand(sceneName,trueLineNumber,targetValue);
     });
   }
 
