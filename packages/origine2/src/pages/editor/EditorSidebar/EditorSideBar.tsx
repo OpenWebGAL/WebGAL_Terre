@@ -12,8 +12,11 @@ export default function EditorSideBar() {
   const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
   useEffect(()=>{
-    // @ts-ignore
-    ifRef!.current!.contentWindow.console.log = function(){};
+    if(ifRef.current){
+      // @ts-ignore
+      ifRef!.current!.contentWindow.console.log = function(){};
+    }
+
   });
   return <>
     {(state.currentSidebarTag !== sidebarTag.none || state.showPreview) && <div className={styles.editor_sidebar}>
