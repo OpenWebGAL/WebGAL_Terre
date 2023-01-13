@@ -1,7 +1,6 @@
 import styles from './sidebarTags.module.scss';
 import axios from "axios";
 import { origineStore } from "../../../../store/origineStore";
-import ChooseFile from "../../ChooseFile/ChooseFile";
 
 export default function Assets() {
 
@@ -16,10 +15,6 @@ export default function Assets() {
       <div className={styles.open_assets} onClick={open_assets}>
         打开此游戏的资源文件夹
       </div>
-      <ChooseFile sourceBase="bgm"
-        onChange={(name)=>{
-          console.log(name);}}
-        extName={[".mp3"]}/>
     </div>
   );
 }
