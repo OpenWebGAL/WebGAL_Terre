@@ -4,12 +4,12 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { useId } from "@fluentui/react-hooks";
-import { Callout, DefaultButton, Text } from "@fluentui/react";
+import { Callout, DefaultButton } from "@fluentui/react";
 import styles from "./chooseFile.module.scss";
 
 export interface IChooseFile {
   sourceBase: string;
-  onChange: (choosedFileDescription:IFileDescription | null) => void;
+  onChange: (choosedFileDescription: IFileDescription | null) => void;
   // 拓展名，要加.
   extName: string[];
 }
@@ -22,7 +22,7 @@ export interface IFileDescription {
 }
 
 export default function ChooseFile(props: IChooseFile) {
-  const currentChildDir = useValue([]);
+  const currentChildDir = useValue<string[]>([]);
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
   const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
@@ -43,23 +43,40 @@ export default function ChooseFile(props: IChooseFile) {
     isShowChooseFileCallout.set(!isShowChooseFileCallout.value);
   }
 
-  function onChooseFile(fileDescription:IFileDescription){
+  function onChooseFile(fileDescription: IFileDescription) {
     toggleIsCalloutVisible();
+    fileDescription.name = currentChildDir.value.reduce((prev, curr) => prev + curr + "/", "") + fileDescription.name;
     props.onChange(fileDescription);
   }
 
-  const fileSelectButtonList = currentDirFiles.value.map(file=>{
-    return <div key={file.path} className={styles.choseFileButton} onClick={()=>onChooseFile(file)}>
+  function onEnterChildDir(dirName: string) {
+    currentChildDir.set([...currentChildDir.value, dirName]);
+  }
+
+  function onBack() {
+    currentChildDir.set(currentChildDir.value.slice(0, currentChildDir.value.length - 1));
+  }
+
+  const fileSelectButtonList = currentDirFiles.value.map(file => {
+    if (file.isDir) {
+      return <div key={file.path} className={styles.choseFileButton} onClick={() => onEnterChildDir(file.name)}>
+        {file.name}
+      </div>;
+    }
+    return <div key={file.path} className={styles.choseFileButton} onClick={() => onChooseFile(file)}>
       {file.name}
     </div>;
   });
 
+  function onCancel(){
+    toggleIsCalloutVisible();
+    props.onChange(null);
+  }
+
   return <>
     <DefaultButton
       id={buttonId}
-      onClick={isShowChooseFileCallout.value ? ()=>{toggleIsCalloutVisible();
-        props.onChange(null);
-      } : toggleIsCalloutVisible}
+      onClick={isShowChooseFileCallout.value ? onCancel : toggleIsCalloutVisible}
       text={isShowChooseFileCallout.value ? "取消选择" : "选择文件"}
     />
     {isShowChooseFileCallout.value && (
@@ -67,14 +84,22 @@ export default function ChooseFile(props: IChooseFile) {
         role="dialog"
         gapSpace={0}
         target={`#${buttonId}`}
-        onDismiss={toggleIsCalloutVisible}
+        onDismiss={onCancel}
         setInitialFocus
         className={styles.callout}
       >
-        <div className={styles.chooseFileCalloutTitle}>
-          选择文件
+        <div className={styles.chooseFileCalloutContentWarpper}>
+          <div className={styles.chooseFileCalloutTitle}>
+            选择文件
+          </div>
+          <div className={styles.chooseFileFileListWarpper}>
+            {currentChildDir.value.length > 0 && (
+              <div className={styles.choseFileButton} onClick={onBack}>
+                ...
+              </div>)}
+            {fileSelectButtonList}
+          </div>
         </div>
-        {fileSelectButtonList}
       </Callout>
     )}
   </>;
@@ -91,6 +116,9 @@ async function getFileList(currentGameName: string, childDir: string, extName: s
   const rawFileList: IFileDescription[] = await axios.get(url).then((r) => r.data.dirInfo);
   if (extName.length === 0) {
     return rawFileList;
+  }
+  for(const e of rawFileList){
+    e.extName = e.extName.toLowerCase();
   }
   return rawFileList.filter((e: any) => extName.includes(e.extName) || e.isDir);
 }
