@@ -6,6 +6,7 @@ import { RootState } from "../../../../store/origineStore";
 import { useEffect, useRef } from "react";
 import { cloneDeep } from "lodash";
 import { ITextField, TextField } from "@fluentui/react";
+import ChooseFile from "../../ChooseFile/ChooseFile";
 
 interface IGameConfig {
   gameName: string;
@@ -94,12 +95,19 @@ export default function GameConfig() {
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>标题背景图片</div>
-          <GameConfigEditor key="titleBackground" value={gameConfig.value.titleBackground}
+          <GameConfigEditorWithFileChoose
+            sourceBase="background"
+            extNameList={['.jpg','.png','.webp']}
+            key="titleBackground"
+            value={gameConfig.value.titleBackground}
             onChange={(e: string) => updateGameConfig("titleBackground", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>标题背景音乐</div>
-          <GameConfigEditor key="titleBgm" value={gameConfig.value.titleBgm}
+          <GameConfigEditorWithFileChoose
+            extNameList={['.mp3','.ogg','.wav']}
+            sourceBase="bgm" key="titleBgm"
+            value={gameConfig.value.titleBgm}
             onChange={(e: string) => updateGameConfig("titleBgm", e)} />
         </div>
       </div>
@@ -128,5 +136,27 @@ function GameConfigEditor(props: IGameConfigEditor) {
         showEditBox.set(false);
       }}
     />}
+  </div>;
+}
+
+function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {sourceBase:string,extNameList:string[]}) {
+  const showEditBox = useValue(false);
+  const inputBoxRef = useRef<ITextField>(null);
+  return <div>
+    {!showEditBox.value && props.value}
+    {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+      showEditBox.set(true);
+      setTimeout(() => inputBoxRef.current?.focus(), 100);
+    }}>修改</div>}
+    {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
+      onChange={(file)=>{
+        if(file){
+          props.onChange(file.name);
+          showEditBox.set(false);
+        }else{
+          showEditBox.set(false);
+        }
+      }}
+      extName={props.extNameList}/>}
   </div>;
 }

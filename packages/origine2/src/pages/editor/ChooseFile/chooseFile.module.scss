@@ -1,0 +1,31 @@
+.callout{
+  padding: 10px 12px;
+  width: 320px;
+  max-width: 90%;
+  height: 30vh;
+}
+
+.chooseFileCalloutTitle{
+  font-weight: bold;
+  font-size: large;
+  padding: 2px 0 2px 4px;
+}
+
+.choseFileButton{
+  padding: 4px 8px 4px 8px;
+  margin: 2px 0 0 0;
+  background: rgba(0,0,0,0.05);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chooseFileCalloutContentWarpper{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.chooseFileFileListWarpper{
+  flex:1;
+  overflow: auto;
+}
