@@ -5,12 +5,19 @@ import { sidebarTag } from "../../../store/statusReducer";
 import GameConfig from "./SidebarTags/GameConfig";
 import Assets from "./SidebarTags/Assets";
 import Scenes from "./SidebarTags/Scenes";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 
 export default function EditorSideBar() {
   const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
+  useEffect(()=>{
+    if(ifRef.current){
+      // @ts-ignore
+      ifRef!.current!.contentWindow.console.log = function(){};
+    }
+
+  });
   return <>
     {(state.currentSidebarTag !== sidebarTag.none || state.showPreview) && <div className={styles.editor_sidebar}>
       {state.showPreview && <div className={styles.preview_container}>

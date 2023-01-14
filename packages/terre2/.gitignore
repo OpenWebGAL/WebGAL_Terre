@@ -37,3 +37,4 @@ lerna-debug.log*
 /assets/templates/WebGAL_Electron_Template
 
 Exported_Games/*
+public/games/*
