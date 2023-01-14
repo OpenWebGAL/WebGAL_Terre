@@ -2,6 +2,7 @@
   padding: 10px 12px;
   width: 320px;
   max-width: 90%;
+  height: 30vh;
 }
 
 .chooseFileCalloutTitle{
@@ -16,4 +17,15 @@
   background: rgba(0,0,0,0.05);
   border-radius: 4px;
   cursor: pointer;
+}
+
+.chooseFileCalloutContentWarpper{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.chooseFileFileListWarpper{
+  flex:1;
+  overflow: auto;
 }
