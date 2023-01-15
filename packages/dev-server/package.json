@@ -1,0 +1,12 @@
+{
+  "name": "webgal-terre-dev-server",
+  "version": "1.0.0",
+  "description": "For WebGAL Terre dev",
+  "main": "index.js",
+  "author": "Mahiru",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6"
+  }
+}
