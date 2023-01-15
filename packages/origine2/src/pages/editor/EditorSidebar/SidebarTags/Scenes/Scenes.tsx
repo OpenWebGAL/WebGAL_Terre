@@ -1,13 +1,13 @@
-import styles from "./sidebarTags.module.scss";
-import { useValue } from "../../../../hooks/useValue";
+import styles from "../sidebarTags.module.scss";
+import { useValue } from "../../../../../hooks/useValue";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../store/origineStore";
+import { RootState } from "../../../../../store/origineStore";
 import axios from "axios";
 import { IFileInfo } from "webgal-terre-2/dist/Modules/webgal-fs/webgal-fs.service";
-import FileElement from "../sidebarComponents/FileElement";
+import FileElement from "../../sidebarComponents/FileElement";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
-import { ITag, statusActions } from "../../../../store/statusReducer";
+import { ITag, statusActions } from "../../../../../store/statusReducer";
 
 export default function Scenes() {
   const state = useSelector((state: RootState) => state.status.editor);

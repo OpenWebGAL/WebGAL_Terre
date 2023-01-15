@@ -111,7 +111,7 @@ export default function ChooseFile(props: IChooseFile) {
  * @param childDir 目录
  * @param extName 拓展名，要加.
  */
-async function getFileList(currentGameName: string, childDir: string, extName: string[]) {
+export async function getFileList(currentGameName: string, childDir: string, extName: string[]) {
   const url = `/api/manageGame/readGameAssets/${currentGameName}/game/${childDir}`;
   const rawFileList: IFileDescription[] = await axios.get(url).then((r) => r.data.dirInfo);
   if (extName.length === 0) {
