@@ -1,12 +1,12 @@
-import styles from "./sidebarTags.module.scss";
-import { useValue } from "../../../../hooks/useValue";
+import styles from "../sidebarTags.module.scss";
+import { useValue } from "../../../../../hooks/useValue";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/origineStore";
+import { RootState } from "../../../../../store/origineStore";
 import { useEffect, useRef } from "react";
 import { cloneDeep } from "lodash";
 import { ITextField, TextField } from "@fluentui/react";
-import ChooseFile from "../../ChooseFile/ChooseFile";
+import ChooseFile from "../../../ChooseFile/ChooseFile";
 
 interface IGameConfig {
   gameName: string;
