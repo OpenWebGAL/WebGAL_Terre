@@ -66,6 +66,7 @@ export default function Assets() {
     currentFileList = currentDirFiles.value.map((fileDesc) => {
 
       const currentFileName = dirnameToDisplayNameMap.get(fileDesc.name) ?? fileDesc.name;
+      function openChildDir(){currentChildDir.set([...currentChildDir.value,fileDesc.name]);}
       return <CommonFileButton
         key={fileDesc.path}
         extName={fileDesc.extName}
@@ -73,6 +74,11 @@ export default function Assets() {
         name={currentFileName}
         path={fileDesc.path}
         onClick={() => {
+          if(fileDesc.isDir){
+            openChildDir();
+          }else{
+            // 暂时没有逻辑，后面写到标签里面
+          }
         }} />;
     });
   }
