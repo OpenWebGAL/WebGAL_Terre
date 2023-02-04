@@ -1,0 +1,53 @@
+.assetsHead {
+  display: flex;
+  align-items: center;
+}
+
+.controlHead {
+  display: flex;
+  align-items: center;
+  margin: 4px 0 0 0;
+}
+
+.controlCommonButton {
+  padding: 4px 3px 2px 3px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.33s;
+}
+
+.controlCommonButton:hover {
+  background: rgba(0, 92, 175, 0.1);
+}
+
+.controlDirnameDisplay {
+  padding: 4px 0 7px 10px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  flex: 1;
+  margin: 0 0 0 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.commonFileButton {
+  padding: 5px 5px 5px 10px;
+  margin: 5px 0 0 0;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  flex: 1;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileList {
+  overflow: auto;
+  margin: 3px 0 0 0;
+  padding: 0 3px 0 0;
+}

@@ -2,9 +2,9 @@ import styles from "./editorSideBar.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { sidebarTag } from "../../../store/statusReducer";
-import GameConfig from "./SidebarTags/GameConfig";
-import Assets from "./SidebarTags/Assets";
-import Scenes from "./SidebarTags/Scenes";
+import GameConfig from "./SidebarTags/GameConfig/GameConfig";
+import Assets from "./SidebarTags/Assets/Assets";
+import Scenes from "./SidebarTags/Scenes/Scenes";
 import { useEffect, useRef } from "react";
 
 
