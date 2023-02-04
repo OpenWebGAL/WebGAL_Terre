@@ -47,9 +47,9 @@ export default function TextEditor(props: ITextEditorProps) {
       const lineNumber = event.position.lineNumber;
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[lineNumber-1];
-      const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
+      // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
       const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
-      WsUtil.sendSyncCommand(sceneName,trueLineNumber,targetValue);
+      WsUtil.sendSyncCommand(sceneName,lineNumber,targetValue);
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
     monaco.languages.register({ id: "webgal" });
@@ -64,7 +64,7 @@ export default function TextEditor(props: ITextEditorProps) {
   function handleChange(value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) {
     logger.debug("编辑器提交更新");
     const lineNumber = ev.changes[0].range.startLineNumber;
-    const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
+    // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     const gameName = currentEditingGame;
     const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
     if (value)
@@ -75,7 +75,7 @@ export default function TextEditor(props: ITextEditorProps) {
     params.append("sceneData", JSON.stringify({ value: currentText.value }));
     axios.post("/api/manageGame/editScene/", params).then((res) => {
       const targetValue = currentText.value.split('\n')[lineNumber-1];
-      WsUtil.sendSyncCommand(sceneName,trueLineNumber,targetValue);
+      WsUtil.sendSyncCommand(sceneName,lineNumber,targetValue);
     });
   }
 
@@ -132,18 +132,23 @@ async function liftOff(editor: monaco.editor.IStandaloneCodeEditor) {
   await wireTmGrammars(monaco, registry, grammars, editor);
 }
 
-function getTrueLinenumber(lineNumber: number, allText: string) {
-  // CRLF 转 LF
-  const text = allText.replaceAll(/\r\n/g, "\n");
-  const textArray = text.split("\n");
-  const trueLineNumber = [0];
-  for (let i = 1; i <= textArray.length; i++) {
-    const line = textArray[i - 1];
-    // 取分号前
-    const lineContent = line.split(";")[0];
-    if (lineContent !== "") {
-      trueLineNumber[i] = trueLineNumber[i - 1] + 1;
-    } else trueLineNumber[i] = trueLineNumber[i - 1];
-  }
-  return trueLineNumber[lineNumber];
-}
+
+/**
+ * 现在不用搞这一套换算了
+ */
+
+// function getTrueLinenumber(lineNumber: number, allText: string) {
+//   // CRLF 转 LF
+//   const text = allText.replaceAll(/\r\n/g, "\n");
+//   const textArray = text.split("\n");
+//   const trueLineNumber = [0];
+//   for (let i = 1; i <= textArray.length; i++) {
+//     const line = textArray[i - 1];
+//     // 取分号前
+//     const lineContent = line.split(";")[0];
+//     if (lineContent !== "") {
+//       trueLineNumber[i] = trueLineNumber[i - 1] + 1;
+//     } else trueLineNumber[i] = trueLineNumber[i - 1];
+//   }
+//   return trueLineNumber[lineNumber];
+// }
