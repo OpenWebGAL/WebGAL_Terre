@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host=3000",
     "build": "tsc && vite build --base=./",
-    "build-lowram": "tsc && vite build --base=./ --max_old_space_size=512000",
+    "build-lowram": "tsc && node --max_old_space_size=1024000 ./node_modules/vite/bin/vite build --base=./",
     "preview": "vite preview",
     "lint": "eslint src/** --fix"
   },
