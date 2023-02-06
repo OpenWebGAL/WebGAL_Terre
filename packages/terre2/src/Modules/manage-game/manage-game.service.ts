@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { _open } from 'src/util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
-import open = require('open');
 
 @Injectable()
 export class ManageGameService {
@@ -14,7 +14,7 @@ export class ManageGameService {
    */
   async openAssetsDictionary(gameName: string) {
     const path = this.webgalFs.getPathFromRoot(`public/games/${gameName}/game`);
-    await open(path);
+    await _open(path);
   }
   /**
    * 从模板创建游戏
@@ -100,7 +100,7 @@ export class ManageGameService {
         gameDir,
         `${electronExportDir}/resources/app/public/game/`,
       );
-      await open(electronExportDir);
+      await _open(electronExportDir);
     }
     if (ejectPlatform === 'web') {
       const webExportDir = this.webgalFs.getPath(`${exportDir}/web`);
@@ -110,7 +110,7 @@ export class ManageGameService {
         `${webExportDir}/`,
       );
       await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
-      await open(webExportDir);
+      await _open(webExportDir);
     }
   }
 }
