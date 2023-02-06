@@ -21,14 +21,14 @@ cd ../../
 
 # 进入 Origine 目录
 cd packages/origine2
-yarn build
+yarn build-lowram
 cp -rf dist/* ../../release/public/
 cd ../../
 
 # 进入 Electron 目录
 cd packages/WebGAL-electron
 yarn
-yarn build-lowram
+yarn build
 cp -rf build/linux-unpacked/* ../../release/assets/templates/WebGAL_Electron_template/
 cd ../../
 
