@@ -21,7 +21,8 @@ cd ../../
 
 # 进入 Origine 目录
 cd packages/origine2
-yarn build-lowram
+export NODE_OPTIONS=--max_old_space_size=512000
+yarn build
 cp -rf dist/* ../../release/public/
 cd ../../
 
