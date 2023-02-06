@@ -75,6 +75,9 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPath(rawPath: string) {
+    if (rawPath[0] === '/') {
+      return join('/', ...rawPath.split('/'));
+    }
     return join(...rawPath.split('/'));
   }
 
