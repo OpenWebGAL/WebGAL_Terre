@@ -9,6 +9,16 @@ export interface IFileInfo {
   path: string;
 }
 
+export interface IUploadFileInfo {
+  fileName: string;
+  file: Buffer;
+}
+
+interface FileList {
+  fileName: string;
+  file: Buffer;
+}
+
 //TODO：安全性问题：访问文件系统前检查是否访问的是进程所在路径下。
 
 @Injectable()
@@ -142,5 +152,26 @@ export class WebgalFsService {
         .then((r) => resolve(r.toString()))
         .catch(() => resolve('file not exist'));
     });
+  }
+
+  async writeFiles(
+    targetDirectory: string,
+    fileList: FileList[],
+  ): Promise<boolean> {
+    try {
+      await fs.mkdir(this.getPathFromRoot(targetDirectory), {
+        recursive: true,
+      });
+      for (const file of fileList) {
+        await fs.writeFile(
+          `${this.getPathFromRoot(targetDirectory)}/${file.fileName}`,
+          file.file,
+        );
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   }
 }
