@@ -16,6 +16,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.33s;
+  margin: 0 2px 0 2px;
 }
 
 .controlCommonButton:hover {
@@ -28,7 +29,6 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   flex: 1;
-  margin: 0 0 0 3px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -50,4 +50,51 @@
   overflow: auto;
   margin: 3px 0 0 0;
   padding: 0 3px 0 0;
+}
+
+.uploadCallout{
+  padding: 6px 12px 6px 12px;
+}
+
+.fileUploadContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileSelectButton {
+  background-color: #0078D4;
+  color: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 4px 0 0 0;
+}
+
+.fileSelectButton:hover {
+  background-color: #005a9e;
+}
+
+.fileSelectInput {
+  width: 200px;
+  height: 40px;
+  border: 1px solid #0078D4;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+}
+
+.fileSelectInput:focus {
+  border-color: #005a9e;
+  box-shadow: 0 0 0 2px rgba(0, 90, 158, 0.2);
 }
