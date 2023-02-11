@@ -1,7 +1,20 @@
-import { ConsoleLogger, Controller, Get, Post, Req } from '@nestjs/common';
-import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
+import {
+  Body,
+  ConsoleLogger,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
+import {
+  IUploadFileInfo,
+  WebgalFsService,
+} from '../webgal-fs/webgal-fs.service';
 import { Request } from 'express';
 import { ManageGameService } from './manage-game.service';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/manageGame')
 export class ManageGameController {
@@ -128,5 +141,18 @@ export class ManageGameController {
       `/public/games/${gameName}/game/config.txt`,
     );
     return await this.webgalFs.updateTextFile(configFilePath, newConfig);
+  }
+
+  @Post('uploadFiles')
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadFiles(
+    @UploadedFiles() files,
+    @Body('targetDirectory') targetDirectory: string,
+  ) {
+    console.log(`Target directory: ${targetDirectory}`);
+    const fileInfos: IUploadFileInfo[] = files.map((file) => {
+      return { fileName: file.originalname, file: file.buffer };
+    });
+    return await this.webgalFs.writeFiles(targetDirectory, fileInfos);
   }
 }
