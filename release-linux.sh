@@ -21,6 +21,7 @@ cd ../../
 
 # 进入 Origine 目录
 cd packages/origine2
+# 低内存，使用下一行限制内存使用
 export NODE_OPTIONS=--max_old_space_size=512000
 yarn build
 cp -rf dist/* ../../release/public/
