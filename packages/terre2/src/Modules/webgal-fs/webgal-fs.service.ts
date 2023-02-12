@@ -9,6 +9,16 @@ export interface IFileInfo {
   path: string;
 }
 
+export interface IUploadFileInfo {
+  fileName: string;
+  file: Buffer;
+}
+
+interface FileList {
+  fileName: string;
+  file: Buffer;
+}
+
 //TODO：安全性问题：访问文件系统前检查是否访问的是进程所在路径下。
 
 @Injectable()
@@ -75,6 +85,9 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPath(rawPath: string) {
+    if (rawPath[0] === '/') {
+      return join('/', ...rawPath.split('/'));
+    }
     return join(...rawPath.split('/'));
   }
 
@@ -89,6 +102,7 @@ export class WebgalFsService {
     const pathAsArray = path.split(/[\/\\]/g);
     const newPathAsArray = pathAsArray.slice(0, pathAsArray.length - 1);
     const newPath = join(...newPathAsArray, newName);
+    console.log(oldPath, newPath);
     return await new Promise((resolve) => {
       fs.rename(oldPath, newPath)
         .then(() => resolve('File renamed!'))
@@ -107,6 +121,52 @@ export class WebgalFsService {
         .then(() => resolve('File Deleted'))
         .catch(() => resolve('File not exist!'));
     });
+  }
+
+  /**
+   * 删除文件或目录
+   * @param path
+   */
+  async deleteFileOrDirectory(path: string): Promise<boolean> {
+    try {
+      const stat = await fs.stat(path);
+      if (stat.isDirectory()) {
+        const files = await fs.readdir(path);
+        await Promise.all(
+          files.map(async (file) => {
+            const filePath = `${path}/${file}`;
+            await this.deleteFileOrDirectory(filePath);
+          }),
+        );
+        await fs.rmdir(path);
+      } else {
+        await fs.unlink(path);
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * 重命名文件或目录
+   * @param path
+   * @param newName
+   */
+  async renameFileOrDirectory(path: string, newName: string): Promise<boolean> {
+    try {
+      const stat = await fs.stat(path);
+      const dir = path.substr(0, path.lastIndexOf('/') + 1);
+      const newPath = dir + newName;
+      if (stat.isDirectory()) {
+        await fs.rename(path, newPath);
+      } else {
+        await fs.rename(path, newPath);
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   /**
@@ -139,5 +199,26 @@ export class WebgalFsService {
         .then((r) => resolve(r.toString()))
         .catch(() => resolve('file not exist'));
     });
+  }
+
+  async writeFiles(
+    targetDirectory: string,
+    fileList: FileList[],
+  ): Promise<boolean> {
+    try {
+      await fs.mkdir(this.getPathFromRoot(targetDirectory), {
+        recursive: true,
+      });
+      for (const file of fileList) {
+        await fs.writeFile(
+          `${this.getPathFromRoot(targetDirectory)}/${file.fileName}`,
+          file.file,
+        );
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   }
 }

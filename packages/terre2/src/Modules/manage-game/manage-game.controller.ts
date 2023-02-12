@@ -1,7 +1,20 @@
-import { ConsoleLogger, Controller, Get, Post, Req } from '@nestjs/common';
-import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
+import {
+  Body,
+  ConsoleLogger,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
+import {
+  IUploadFileInfo,
+  WebgalFsService,
+} from '../webgal-fs/webgal-fs.service';
 import { Request } from 'express';
 import { ManageGameService } from './manage-game.service';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/manageGame')
 export class ManageGameController {
@@ -128,5 +141,42 @@ export class ManageGameController {
       `/public/games/${gameName}/game/config.txt`,
     );
     return await this.webgalFs.updateTextFile(configFilePath, newConfig);
+  }
+
+  @Post('uploadFiles')
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadFiles(
+    @UploadedFiles() files,
+    @Body('targetDirectory') targetDirectory: string,
+  ) {
+    console.log(`Target directory: ${targetDirectory}`);
+    const fileInfos: IUploadFileInfo[] = files.map((file) => {
+      return { fileName: file.originalname, file: file.buffer };
+    });
+    return await this.webgalFs.writeFiles(targetDirectory, fileInfos);
+  }
+
+  @Post('mkdir')
+  async mkDir(@Body('source') source: string, @Body('name') name: string) {
+    await this.webgalFs.mkdir(this.webgalFs.getPathFromRoot(source), name);
+    return true;
+  }
+
+  @Post('delete')
+  async deleteFileOrDir(@Body('source') source: string) {
+    return await this.webgalFs.deleteFileOrDirectory(
+      this.webgalFs.getPathFromRoot(source),
+    );
+  }
+
+  @Post('rename')
+  async rename(
+    @Body('source') source: string,
+    @Body('newName') newName: string,
+  ) {
+    return await this.webgalFs.renameFile(
+      this.webgalFs.getPathFromRoot(source),
+      newName,
+    );
   }
 }
