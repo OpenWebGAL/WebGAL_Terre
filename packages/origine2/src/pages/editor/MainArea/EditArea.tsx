@@ -37,7 +37,7 @@ export default function EditArea() {
   </div>;
 }
 
-const imageTypes = ["png", "jpg", "jpeg", "gif"];
+const imageTypes = ["png", "jpg", "jpeg", "gif","webp"];
 const videoTypes = ["mp4", "webm", "ogg"];
 const audioTypes = ["mp3", "wav", "aac"];
 
