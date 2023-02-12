@@ -3,18 +3,22 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import TextEditor from "../TextEditor/TextEditor";
 import ResourceDisplay, { ResourceType } from "../ResourceDisplay/ResourceDisplay";
+import { ITag } from "../../../store/statusReducer";
 
 export default function EditArea() {
   const selectedTagTarget = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const tags = useSelector((state: RootState) => state.status.editor.tags);
 
   // 生成每个 Tag 对应的编辑器主体
-  const tagPages = tags.map(tag => {
+
+  const tag = tags.find(tag => tag.tagTarget === selectedTagTarget);
+
+  const getTagPage = (tag: ITag) => {
     if (tag.tagType === "scene")
       return <TextEditor isHide={tag.tagTarget !== selectedTagTarget} key={tag.tagTarget} targetPath={tag.tagTarget} />;
-    else{
+    else {
       const fileType = getFileType(tag.tagTarget);
-      if(!fileType){
+      if (!fileType) {
         return <div>文件类型不支持</div>;
       }
       return <ResourceDisplay
@@ -23,11 +27,13 @@ export default function EditArea() {
         resourceUrl={tag.tagTarget}
       />;
     }
-  });
+  };
+
+  const tagPage = tag ? getTagPage(tag) : "";
 
   return <div className={styles.editArea_main}>
     {selectedTagTarget === "" && <div className={styles.none_text}>目前没有打开任何文件</div>}
-    {selectedTagTarget !== "" && tagPages}
+    {selectedTagTarget !== "" && tagPage}
   </div>;
 }
 

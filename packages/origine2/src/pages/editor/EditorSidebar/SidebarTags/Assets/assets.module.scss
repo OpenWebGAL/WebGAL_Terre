@@ -44,6 +44,28 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.fileName{
+  flex: 1;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deleteButton{
+  background:rgba(0,0,0,0.05);
+  padding: 2px 2px 1px 2px;
+  margin: 0 4px 0 0;
+  border-radius: 4px;
+  transition: all 0.33s;
+}
+
+.deleteButton:hover{
+  background: rgba(0,0,0,0.1);
 }
 
 .fileList {
@@ -54,6 +76,9 @@
 
 .uploadCallout{
   padding: 6px 12px 6px 12px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 .fileUploadContainer {
@@ -97,4 +122,12 @@
 .fileSelectInput:focus {
   border-color: #005a9e;
   box-shadow: 0 0 0 2px rgba(0, 90, 158, 0.2);
+}
+
+.extNameShow{
+  background: rgba(0,120,212,0.1);
+  color: #0078D4;
+  padding: 1px 5px 4px 5px;
+  border-radius: 4px;
+  margin: 0 0 0 4px;
 }
