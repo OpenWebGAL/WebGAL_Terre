@@ -53,7 +53,7 @@ function processResourceUrl(url: string): string {
   return extractPathAfterPublic(url);
 }
 
-function extractPathAfterPublic(path: string): string {
+export function extractPathAfterPublic(path: string): string {
   const parts = path.split(/[/\\]/);
   const publicIndex = parts.indexOf("public");
 

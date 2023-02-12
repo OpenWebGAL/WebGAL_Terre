@@ -155,4 +155,28 @@ export class ManageGameController {
     });
     return await this.webgalFs.writeFiles(targetDirectory, fileInfos);
   }
+
+  @Post('mkdir')
+  async mkDir(@Body('source') source: string, @Body('name') name: string) {
+    await this.webgalFs.mkdir(this.webgalFs.getPathFromRoot(source), name);
+    return true;
+  }
+
+  @Post('delete')
+  async deleteFileOrDir(@Body('source') source: string) {
+    return await this.webgalFs.deleteFileOrDirectory(
+      this.webgalFs.getPathFromRoot(source),
+    );
+  }
+
+  @Post('rename')
+  async rename(
+    @Body('source') source: string,
+    @Body('newName') newName: string,
+  ) {
+    return await this.webgalFs.renameFile(
+      this.webgalFs.getPathFromRoot(source),
+      newName,
+    );
+  }
 }
