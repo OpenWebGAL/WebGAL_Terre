@@ -11,7 +11,6 @@ export class WsUtil{
   }
 
   private static getIsCurrentLineJump(currentLineValue:string):boolean{
-    console.log(currentLineValue);
     const command = currentLineValue.split(':')[0];
     if(command === 'unlockCg' || command === 'unlockBgm'){
       if(!currentLineValue.match(/;/g))
