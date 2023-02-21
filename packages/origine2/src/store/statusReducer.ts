@@ -26,6 +26,7 @@ interface IEditorState {
   currentSidebarTag: sidebarTag
   tags: Array<ITag>,
   selectedTagTarget: string,
+  isCodeMode: boolean,
 }
 
 // tag的假数据，用于测试
@@ -41,7 +42,8 @@ export const editorInitState: IEditorState = {
   showPreview: true,
   currentSidebarTag: sidebarTag.gameconfig,
   tags: [],
-  selectedTagTarget: ""
+  selectedTagTarget: "",
+  isCodeMode: (localStorage.getItem("isCodeMode") ?? "") === "true"
 };
 
 const initialState = {
@@ -108,6 +110,15 @@ const statusSlice = createSlice({
      */
     addEditAreaTag: function(state, action: PayloadAction<ITag>) {
       state.editor.tags.push(action.payload);
+    },
+    /**
+     * 设置是否是 code 模式
+     * @param state
+     * @param action
+     */
+    setEditMode: function(state, action: PayloadAction<boolean>) {
+      localStorage.setItem("isCodeMode", action.payload.toString());
+      state.editor.isCodeMode = action.payload;
     }
   }
 });
@@ -118,7 +129,8 @@ export const {
   setEditorPreviewShow,
   setEditorSidebarTag,
   resetTagOrder,
-  setCurrentTagTarget
+  setCurrentTagTarget,
+  setEditMode,
 } = statusSlice.actions;
 
 export const statusActions = statusSlice.actions;
