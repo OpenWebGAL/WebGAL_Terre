@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 export function useValue<T>(initialState: T) {
-  const [value, setValue] = useState(initialState);
+  const [value, setValue] = useState<T>(initialState);
   return {
     value,
-    set: function(newValue: any) {
+    set: function(newValue: T) {
       this.value = newValue;
       setValue(newValue);
     }
