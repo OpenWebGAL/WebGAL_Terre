@@ -6,6 +6,13 @@ export interface ISentenceEditorProps {
   onSubmit: (newSentence: string) => void;
 }
 
+export const sentenceEditorDefault = {
+  type: commandType.say,
+  title:'普通对话',
+  initialText: "角色:对话;",
+  component: Say
+};
+
 export const sentenceEditorConfig = [
   {
     type: commandType.say,
