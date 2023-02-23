@@ -1,0 +1,15 @@
+.sentenceEditorContent {
+  display: flex;
+  align-items: flex-start;
+  flex-flow: column;
+}
+
+.editItem {
+  display: flex;
+  align-items: center;
+  padding: 2px 0 2px 0;
+}
+
+.flex1 {
+  flex: 1;
+}
