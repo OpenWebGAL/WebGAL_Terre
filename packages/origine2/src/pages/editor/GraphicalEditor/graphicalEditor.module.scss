@@ -1,21 +1,22 @@
-.main{
+.main {
   height: 100%;
 }
 
 .sentenceEditorWrapper {
   display: flex;
   padding: 6px 12px 6px 12px;
-  border-bottom: 4px solid rgba(0,0,0,0.1);
+  border-bottom: 4px solid rgba(0, 0, 0, 0.1);
+  background: white;;
 }
 
 .lineNumber {
-  width: 1.5em;
+  width: 2em;
   text-align: right;
   font-family: Consolas, monospace;
   box-sizing: border-box;
   padding: 8px 6px 0 0;
   font-weight: bold;
-  color: rgba(0,0,0,0.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .seArea {
@@ -42,9 +43,8 @@
 }
 
 
-
-.optionButton{
-  background: rgba(0,0,0,0.05);
+.optionButton {
+  background: rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   padding: 3px 6px 3px 6px;
   border-radius: 4px;
