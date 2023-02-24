@@ -10,6 +10,7 @@ import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
 import { Sort } from "@icon-park/react";
+import AddSentence from "./components/AddSentence";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -52,7 +53,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   function addOneSentence(newSentence: string, updateIndex: number) {
-    const arr = splitToArray(sceneText.value);
+    const arr = sceneText.value === "" ? [] : splitToArray(sceneText.value);
     arr.splice(updateIndex, 0, newSentence);
     submitSceneAndUpdate(mergeToString(arr), updateIndex);
   }
@@ -82,59 +83,63 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   const parsedScene = (sceneText.value === "" ? { sentenceList: [] } : parseScene(sceneText.value));
-  return <DragDropContext onDragEnd={onDragEnd}>
-    <Droppable droppableId="droppable">
-      {(provided, snapshot) => (
-        // 下面开始书写容器
-        <div className={styles.main}
-          // provided.droppableProps应用的相同元素.
-          {...provided.droppableProps}
-          // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
-          ref={provided.innerRef}
-        >
-          {parsedScene.sentenceList.map((sentence, i) => {
-            // 实际显示的行数
-            const index = i + 1;
-            const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
-            const SentenceEditor = sentenceConfig.component;
-            return <Draggable key={sentence.content + sentence.commandRaw}
-              draggableId={sentence.content + sentence.commandRaw} index={i}>
-              {(provided, snapshot) => (
-                <div className={styles.sentenceEditorWrapper} key={sentence.commandRaw + sentence.content}
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                >
-                  <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
-                    <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
-                      fill="rgba(0,0,0,0.5)" />
-                  </div>
-                  <div className={styles.seArea}>
-                    <div className={styles.head}>
-                      <div className={styles.title}>
-                        {sentenceConfig.title}
+  return <div className={styles.main}>
+    <div>
+      <AddSentence titleText="添加语句"
+        onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
+    </div>
+    <div style={{ flex: 1 }}>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            // 下面开始书写容器
+            <div style={{ height: "100%" }}
+              // provided.droppableProps应用的相同元素.
+              {...provided.droppableProps}
+              // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
+              ref={provided.innerRef}
+            >
+              {parsedScene.sentenceList.map((sentence, i) => {
+                // 实际显示的行数
+                const index = i + 1;
+                const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
+                const SentenceEditor = sentenceConfig.component;
+                return <Draggable key={sentence.content + sentence.commandRaw}
+                  draggableId={sentence.content + sentence.commandRaw} index={i}>
+                  {(provided, snapshot) => (
+                    <div className={styles.sentenceEditorWrapper} key={sentence.commandRaw + sentence.content}
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                    >
+                      <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
+                        <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
+                          fill="rgba(0,0,0,0.5)" />
                       </div>
-                      <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
-                        onClick={() => deleteOneSentence(i)}>
-                        删除本句
-                      </div>
-                      <div className={styles.optionButton}>
-                        本句前插入句子
-                      </div>
-                      <div className={styles.optionButton}>
-                        本句后插入句子
+                      <div className={styles.seArea}>
+                        <div className={styles.head}>
+                          <div className={styles.title}>
+                            {sentenceConfig.title}
+                          </div>
+                          <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
+                            onClick={() => deleteOneSentence(i)}>
+                            删除本句
+                          </div>
+                          <AddSentence titleText="本句后插入句子"
+                            onChoose={(newSentence) => addOneSentence(newSentence, i + 1)} />
+                        </div>
+                        <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
+                          updateSentenceByIndex(newSentence, i);
+                        }} />
                       </div>
                     </div>
-                    <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
-                      updateSentenceByIndex(newSentence, i);
-                    }} />
-                  </div>
-                </div>
-              )}
-            </Draggable>;
-          })}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
-  </DragDropContext>;
+                  )}
+                </Draggable>;
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </div>
+  </div>;
 }
