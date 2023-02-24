@@ -62,9 +62,9 @@ export default function TopBar() {
 
     <div className={styles.editor_editingGame}>正在编辑：<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
     <div style={{ display: "flex", justifyItems: "center" }}>
-      <Toggle styles={{ root: { margin: "0 0 0 6px" } }}
+      <Toggle styles={{ root: { margin: "0 0 0 12px" } }}
         checked={isCodeMode}
-        label="编辑模式" inlineLabel onText="脚本编辑模式" offText="图形编辑模式"
+        label="脚本编辑模式" inlineLabel onText="开启" offText="关闭"
         onChange={(event, checked) => handleChange(checked ?? false)} />
     </div>
 
