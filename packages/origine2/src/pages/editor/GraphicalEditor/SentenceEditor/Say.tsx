@@ -23,7 +23,7 @@ export default function Say(props: ISentenceEditorProps) {
       />
     </div>
     <div className={styles.editItem}>
-      对话：<TextField styles={{
+      对话：<TextField key={currentValue.value} styles={{
         root: {
           width: "600px"
         }
