@@ -4,14 +4,15 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import styles from "./sentenceEditor.module.scss";
 import ChooseFile from "../../ChooseFile/ChooseFile";
+import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 
 export default function Say(props: ISentenceEditorProps) {
   const currentValue = useValue(props.sentence.content);
   const currentSpeaker = useValue(getArgByKey(props.sentence, "speaker").toString());
   const currentVocal = useValue(getArgByKey(props.sentence, "vocal").toString());
-  const isNoSpeaker = useValue(false);
+  const isNoSpeaker = useValue(props.sentence.commandRaw === "");
   const submit = () => {
-    props.onSubmit(`${currentSpeaker.value}${isNoSpeaker.value ? "" : ":"}${currentValue.value}${currentVocal.value === "" ? "" : " -" + currentVocal.value};`);
+    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value}${currentVocal.value === "" ? "" : " -" + currentVocal.value};`);
   };
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
@@ -21,6 +22,7 @@ export default function Say(props: ISentenceEditorProps) {
         }}
         onBlur={submit}
       />
+      {`\u00a0提示：留空角色名可以继承先前的角色名`}
     </div>
     <div className={styles.editItem}>
       对话：<TextField key={currentValue.value} styles={{
@@ -41,6 +43,13 @@ export default function Say(props: ISentenceEditorProps) {
         submit();
       }}
       extName={[".ogg", ".mp3", ".wav"]} />
+    </div>
+    <div className={styles.editItem}>
+      旁白模式：
+      <TerreToggle title="" onChange={(newValue) => {
+        isNoSpeaker.set(newValue);
+        submit();
+      }} onText="开启，将不显示角色名" offText="关闭，正常显示角色名" isChecked={isNoSpeaker.value} />
     </div>
   </div>;
 }

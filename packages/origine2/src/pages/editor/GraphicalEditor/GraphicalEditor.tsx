@@ -9,7 +9,7 @@ import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
-import { Sort } from "@icon-park/react";
+import { DeleteFive, Sort } from "@icon-park/react";
 import AddSentence from "./components/AddSentence";
 
 interface IGraphicalEditorProps {
@@ -84,7 +84,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   const parsedScene = (sceneText.value === "" ? { sentenceList: [] } : parseScene(sceneText.value));
   return <div className={styles.main}>
-    <div>
+    <div className={styles.topBar}>
       <AddSentence titleText="添加语句"
         onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
     </div>
@@ -122,6 +122,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => deleteOneSentence(i)}>
+                            <DeleteFive style={{padding:'0 4px 0 0'}} theme="outline" size="16" fill="#333"/>
                             删除本句
                           </div>
                           <AddSentence titleText="本句后插入句子"
