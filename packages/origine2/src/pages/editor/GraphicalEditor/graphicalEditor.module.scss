@@ -46,10 +46,22 @@
 
 
 .optionButton {
-  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
   padding: 3px 6px 3px 6px;
+  background: rgba(0,0,0,0.05);
   border-radius: 4px;
   cursor: pointer;
-  margin: 0 0 0 5px;
+  margin: 0 4px 0 4px;
+  //border: 1px solid rgba(0,0,0,0.1);
+}
+
+.topBar{
+  display: flex;
+  align-items: center;
+  padding: 3px 6px 3px 6px;
+  box-sizing: border-box;
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
