@@ -206,7 +206,7 @@ export default function Assets() {
             </Text>
             <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
               <TextField value={newDirName.value} onChange={(ev, val) => {
-                newDirName.set(val);
+                newDirName.set(val??'');
               }} />
               <br />
               <PrimaryButton onClick={handleCreatNewDir}>创建</PrimaryButton>
@@ -272,7 +272,7 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
         </Text>
         <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
           <TextField value={newFileName.value} onChange={(ev, val) => {
-            newFileName.set(val);
+            newFileName.set(val??'');
           }} />
           <br />
           <PrimaryButton onClick={() => {
