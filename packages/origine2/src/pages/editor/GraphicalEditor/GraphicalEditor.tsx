@@ -104,10 +104,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 const index = i + 1;
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
-                return <Draggable key={sentence.content + sentence.commandRaw}
-                  draggableId={sentence.content + sentence.commandRaw} index={i}>
+                return <Draggable key={sentence.content + sentence.commandRaw + i}
+                  draggableId={sentence.content + sentence.commandRaw + i} index={i}>
                   {(provided, snapshot) => (
-                    <div className={styles.sentenceEditorWrapper} key={sentence.commandRaw + sentence.content}
+                    <div className={styles.sentenceEditorWrapper} key={sentence.commandRaw + sentence.content + i}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                     >
@@ -122,8 +122,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => deleteOneSentence(i)}>
-                            <DeleteFive style={{padding:'0 4px 0 0'}} theme="outline" size="16" fill="#333"/>
-                            删除本句
+                            <DeleteFive style={{ padding: "0 4px 0 0" }} theme="outline" size="16" fill="#333" />
+                            <div>
+                              删除本句
+                            </div>
                           </div>
                           <AddSentence titleText="本句后插入句子"
                             onChoose={(newSentence) => addOneSentence(newSentence, i + 1)} />
