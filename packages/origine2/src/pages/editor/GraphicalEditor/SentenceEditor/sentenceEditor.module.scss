@@ -7,9 +7,8 @@
 .editItem {
   display: flex;
   //align-items: center;
-  padding: 2px 0 2px 0;
   align-items: stretch;
-  margin:4px 0 0 0;
+  margin: 4px 0 0 0;
   width: 100%;
 }
 
@@ -17,21 +16,21 @@
   flex: 1;
 }
 
-.sayInput{
+.sayInput {
   box-shadow: none;
   appearance: none;
   outline: none;
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.075);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.075);
   padding: 6px 6px 6px 6px;
   border-radius: 4px;
-  font-size: 110%;
+  font-size: 90%;
   width: 35%;
 }
 
-.sayArea{
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.075);
+.sayArea {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.075);
   width: 100%;
   font-family: inherit;
   color: inherit;
@@ -40,6 +39,6 @@
   resize: none;
   padding: 6px 6px 6px 6px;
   border-radius: 4px;
-  font-size: 110%;
-  height: 3em;
+  font-size: 90%;
+  height: 2em;
 }
