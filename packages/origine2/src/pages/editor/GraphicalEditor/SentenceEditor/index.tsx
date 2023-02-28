@@ -19,7 +19,7 @@ interface ISentenceEditorConfig {
 export const sentenceEditorDefault: ISentenceEditorConfig = {
   type: commandType.say,
   title: "普通对话",
-  initialText: "角色:对话;",
+  initialText: "角色名，留空以继承上句:对话;",
   component: Say,
   icon:<CommentOne theme="outline" size="24" fill="#333"/>
 };
@@ -28,7 +28,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   {
     type: commandType.say,
     title: "普通对话",
-    initialText: "角色:对话;",
+    initialText: "角色名，留空以继承上句:对话;",
     component: Say,
     icon:<CommentOne theme="outline" size="24" fill="#333"/>
   }

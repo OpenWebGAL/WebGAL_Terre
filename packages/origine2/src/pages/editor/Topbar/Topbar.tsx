@@ -62,7 +62,7 @@ export default function TopBar() {
     </a>
 
     <div className={styles.editor_editingGame}>正在编辑：<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
-    <div style={{ display: "flex", justifyItems: "center" }}>
+    <div style={{ display: "flex", justifyItems: "center",padding:'0 0 0 12px' }}>
       <TerreToggle
         isChecked={isCodeMode}
         title="脚本编辑模式"  onText="开启" offText="关闭"

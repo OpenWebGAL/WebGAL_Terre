@@ -6,10 +6,40 @@
 
 .editItem {
   display: flex;
-  align-items: center;
+  //align-items: center;
   padding: 2px 0 2px 0;
+  align-items: stretch;
+  margin:4px 0 0 0;
+  width: 100%;
 }
 
 .flex1 {
   flex: 1;
+}
+
+.sayInput{
+  box-shadow: none;
+  appearance: none;
+  outline: none;
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.075);
+  padding: 6px 6px 6px 6px;
+  border-radius: 4px;
+  font-size: 110%;
+  width: 35%;
+}
+
+.sayArea{
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.075);
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+  box-shadow: none;
+  outline: none;
+  resize: none;
+  padding: 6px 6px 6px 6px;
+  border-radius: 4px;
+  font-size: 110%;
+  height: 3em;
 }
