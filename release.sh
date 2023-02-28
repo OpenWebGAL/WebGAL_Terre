@@ -16,6 +16,7 @@ cd dist
 cp -r WebGAL_Terre.exe  ../../../release
 rm WebGAL_Terre.exe
 cd ../
+mkdir Exported_Games
 cp -r public assets Exported_Games ../../release
 cd ../../
 
