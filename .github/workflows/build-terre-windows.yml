@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy on Windows
 on: push
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
       with:
         node-version: '16.x'
     - name: Install Deps
-      run: npm insatll yarn -g && yarn
+      run: npm install yarn -g && yarn
     - name: Build
       shell: bash
       run: ./release.sh
