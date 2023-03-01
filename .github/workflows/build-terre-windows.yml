@@ -13,7 +13,9 @@ jobs:
       with:
         node-version: '16.x'
     - name: Install Deps
-      run: yarn
+      run: |
+        yarn config set registry https://registry.npmjs.org/
+        yarn
     - name: Build
       shell: bash
       run: rm yarn.lock && yarn config set registry https://registry.npmjs.org/ && ./release.sh
