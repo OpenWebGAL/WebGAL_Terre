@@ -1,0 +1,29 @@
+.addSceneButton{
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 3px 6px 3px 6px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 4px 0 4px;
+  //border: 1px solid rgba(0,0,0,0.05);
+}
+
+.sentenceTypeButton{
+  display: flex;
+  align-items: center;
+  padding: 3px 6px 3px 6px;
+  box-sizing: border-box;
+  background: rgba(0,0,0,0.05);
+  border-radius: 4px;
+  margin: 4px 0 0 0;
+  cursor: pointer;
+}
+
+
+.title{
+  font-size: 115%;
+  margin: 0 0 0 4px;
+  padding: 0 0 2px 0;
+}

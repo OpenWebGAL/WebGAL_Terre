@@ -1,12 +1,21 @@
 import styles from "./topbar.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { origineStore, RootState } from "../../../store/origineStore";
 import { LeftSmall } from "@icon-park/react";
-import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
+import { CommandBar, ICommandBarItemProps} from "@fluentui/react";
 import axios from "axios";
+import { setEditMode } from "../../../store/statusReducer";
+import TerreToggle from "../../../components/terreToggle/TerreToggle";
 
 export default function TopBar() {
   const editingGame: string = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+
+  const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode); // false 是脚本模式 true 是图形化模式
+  const dispatch = useDispatch();
+
+  const handleChange = (newValue: boolean) => {
+    dispatch(setEditMode(newValue));
+  };
 
   const _items: ICommandBarItemProps[] = [
     {
@@ -53,6 +62,13 @@ export default function TopBar() {
     </a>
 
     <div className={styles.editor_editingGame}>正在编辑：<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
+    <div style={{ display: "flex", justifyItems: "center",padding:'0 0 0 12px' }}>
+      <TerreToggle
+        isChecked={isCodeMode}
+        title="脚本编辑模式"  onText="开启" offText="关闭"
+        onChange={handleChange} />
+    </div>
+
     <div style={{ margin: "0 5px 0 auto" }}>
       <CommandBar
         items={_items}
