@@ -13,7 +13,7 @@ jobs:
       with:
         node-version: '16.x'
     - name: Build
-      run: ./release-linux.sh
+      run: sh release-linux.sh
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
