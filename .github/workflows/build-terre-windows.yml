@@ -13,12 +13,14 @@ jobs:
       with:
         node-version: '16.x'
     - name: Install Deps
+      shell: bash
       run: |
+        rm yarn.lock
         yarn config set registry https://registry.npmjs.org/
         yarn
     - name: Build
       shell: bash
-      run: rm yarn.lock && yarn config set registry https://registry.npmjs.org/ && ./release.sh
+      run:  ./release.sh
     - name: Install 7-Zip
       run: |
         # Download and extract 7-Zip
