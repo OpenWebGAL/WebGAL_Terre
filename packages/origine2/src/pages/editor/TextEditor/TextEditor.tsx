@@ -84,7 +84,7 @@ export default function TextEditor(props: ITextEditorProps) {
     const url = `/games/${currentEditingGame}/game/scene/${currentEditName}`;
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
-      currentText.value = data;
+      currentText.value = data.toString();
       editorRef.current!.getModel()!.setValue(currentText.value);
     });
   }
