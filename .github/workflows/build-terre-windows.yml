@@ -13,10 +13,10 @@ jobs:
       with:
         node-version: '16.x'
     - name: Install Deps
-      run: npm install yarn -g && yarn
+      run: yarn
     - name: Build
       shell: bash
-      run: ./release.sh
+      run: rm yarn.lock && yarn config set registry https://registry.npmjs.org/ && ./release.sh
     - name: Install 7-Zip
       run: |
         # Download and extract 7-Zip
@@ -30,4 +30,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: WebGAL_Terre.7z
-        path: ./WebGAL_Terre.7z
+        path: WebGAL_Terre.7z
