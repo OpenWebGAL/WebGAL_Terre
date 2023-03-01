@@ -1,4 +1,4 @@
-name: Build and Deploy Linux
+name: Build and Deploy on Linux
 on: push
 
 jobs:
@@ -26,4 +26,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: WebGAL_Terre.7z
-        path: ./release/WebGAL_Terre.7z
+        path: WebGAL_Terre.7z
