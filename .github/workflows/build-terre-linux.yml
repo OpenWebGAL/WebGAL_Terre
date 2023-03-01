@@ -13,9 +13,17 @@ jobs:
       with:
         node-version: '16.x'
     - name: Build
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: sh release-linux.sh
+    - name: Install 7-Zip
+      run: sudo apt-get install p7zip-full
+    - name: Compress
+      run: |
+        # Use "-mx9" option for extreme compression
+        7z a -t7z -mx9 WebGAL_Terre.7z release/*
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: WebGAL_Terre
-        path: ./release/WebGAL_Terre
+        name: WebGAL_Terre.7z
+        path: ./release/WebGAL_Terre.7z
