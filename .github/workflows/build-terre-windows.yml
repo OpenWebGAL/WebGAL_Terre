@@ -12,6 +12,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '16.x'
+    - name: Install Deps
+      run: yarn
     - name: Build
       shell: bash
       run: rm yarn.lock && yarn config set registry https://registry.npmjs.org/ && ./release.sh
