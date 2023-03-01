@@ -30,6 +30,7 @@ cd ../../
 cd packages/WebGAL-electron
 yarn
 yarn build
+mkdir ../../release/assets/templates/WebGAL_Electron_template
 cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_template/
 cd ../../
 
