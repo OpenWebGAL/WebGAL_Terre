@@ -1,0 +1,67 @@
+.main {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.sentenceEditorWrapper {
+  display: flex;
+  padding: 6px 12px 6px 12px;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.1);
+  background: white;;
+}
+
+.lineNumber {
+  width: 2em;
+  text-align: right;
+  font-family: Consolas, monospace;
+  box-sizing: border-box;
+  padding: 8px 6px 0 0;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.seArea {
+  flex: 1;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0 0 3px 0;
+  padding: 2px 0 2px 0;
+}
+
+.title {
+  color: rgba(0, 92, 175, 1);
+  //background: rgba(0, 92, 175, 0.1);
+  padding: 1px 4px 1px 4px;
+  box-sizing: border-box;
+  font-weight: bold;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+
+.optionButton {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 3px 6px 3px 6px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 4px 0 4px;
+  //border: 1px solid rgba(0,0,0,0.1);
+}
+
+.topBar{
+  display: flex;
+  align-items: center;
+  padding: 8px 6px 6px 6px;
+  box-sizing: border-box;
+  //border-bottom: 2px solid rgba(0,0,0,0.1);
+  //box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
