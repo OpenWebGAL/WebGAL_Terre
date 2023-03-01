@@ -16,13 +16,14 @@ cd dist
 cp -r WebGAL_Terre  ../../../release
 rm WebGAL_Terre
 cd ../
+mkdir Exported_Games
 cp -r public assets Exported_Games ../../release
 cd ../../
 
 # 进入 Origine 目录
 cd packages/origine2
 # 低内存，使用下一行限制内存使用
-export NODE_OPTIONS=--max_old_space_size=512000
+# export NODE_OPTIONS=--max_old_space_size=512000
 yarn build
 cp -rf dist/* ../../release/public/
 cd ../../
@@ -31,6 +32,7 @@ cd ../../
 cd packages/WebGAL-electron
 yarn
 yarn build
+mkdir ../../release/assets/templates/WebGAL_Electron_template
 cp -rf build/linux-unpacked/* ../../release/assets/templates/WebGAL_Electron_template/
 cd ../../
 
