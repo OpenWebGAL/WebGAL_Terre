@@ -79,7 +79,7 @@ export default function TextEditor(props: ITextEditorProps) {
             resolve(result);
           });
         });
-      }, triggerCharacters: [...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)), "-","",":"]
+      }, triggerCharacters: ["-", "", ":"]
     });
     liftOff(editor).then();
   }
