@@ -1,7 +1,7 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "2.3.12",
+  "version": "2.3.13",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
