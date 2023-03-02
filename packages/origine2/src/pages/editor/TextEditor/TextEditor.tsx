@@ -16,7 +16,7 @@ import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
 import { WG_ORIGINE_RUNTIME } from "../../../runtime/WG_ORIGINE_RUNTIME";
 import { WsUtil } from "../../../utils/wsUtil";
-import { mapLspKindToMonacoKind } from "./convert";
+import { lspSceneName } from "../../../App";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -44,6 +44,8 @@ export default function TextEditor(props: ITextEditorProps) {
    */
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     logger.debug("编辑器挂载");
+
+    lspSceneName.value = sceneName;
     editorRef.current = editor;
     editor.onDidChangeCursorPosition((event) => {
       const lineNumber = event.position.lineNumber;
@@ -54,35 +56,6 @@ export default function TextEditor(props: ITextEditorProps) {
       WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
-    monaco.languages.register({ id: "webgal" });
-    /**
-     * LSP
-     */
-    monaco.languages.registerCompletionItemProvider("webgal", {
-      provideCompletionItems: (model, position) => {
-        const editorValue = model.getValue();
-        const params: any = {
-          textDocument: {
-            uri: sceneName
-          },
-          position: { line: position.lineNumber - 1, character: position.column }
-        };
-
-        const data = {
-          editorValue, params
-        };
-
-        return new Promise(resolve => {
-          axios.post("/api/lsp/compile", data).then((response) => {
-            // 处理 LSP 的响应
-            const result = { suggestions: response.data.items.map((suggestion:any)=>{
-              return {...suggestion,kind:mapLspKindToMonacoKind(suggestion.kind)};
-            }) };
-            resolve(result);
-          });
-        });
-      }, triggerCharacters: ["-", "", ":"]
-    });
     liftOff(editor).then();
   }
 
