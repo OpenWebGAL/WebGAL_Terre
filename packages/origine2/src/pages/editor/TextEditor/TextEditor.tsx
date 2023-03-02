@@ -16,6 +16,7 @@ import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
 import { WG_ORIGINE_RUNTIME } from "../../../runtime/WG_ORIGINE_RUNTIME";
 import { WsUtil } from "../../../utils/wsUtil";
+import { lspSceneName } from "../../../App";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -28,6 +29,7 @@ export default function TextEditor(props: ITextEditorProps) {
   const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = { value: "Loading Scene Data......" };
+  const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
 
 
   // 准备获取 Monaco
@@ -42,17 +44,18 @@ export default function TextEditor(props: ITextEditorProps) {
    */
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     logger.debug("编辑器挂载");
+
+    lspSceneName.value = sceneName;
     editorRef.current = editor;
     editor.onDidChangeCursorPosition((event) => {
       const lineNumber = event.position.lineNumber;
       const editorValue = editor.getValue();
-      const targetValue = editorValue.split('\n')[lineNumber-1];
+      const targetValue = editorValue.split("\n")[lineNumber - 1];
       // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
       const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
-      WsUtil.sendSyncCommand(sceneName,lineNumber,targetValue);
+      WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
-    monaco.languages.register({ id: "webgal" });
     liftOff(editor).then();
   }
 
@@ -66,7 +69,6 @@ export default function TextEditor(props: ITextEditorProps) {
     const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     const gameName = currentEditingGame;
-    const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
     if (value)
       currentText.value = value;
     const params = new URLSearchParams();
@@ -74,8 +76,8 @@ export default function TextEditor(props: ITextEditorProps) {
     params.append("sceneName", sceneName);
     params.append("sceneData", JSON.stringify({ value: currentText.value }));
     axios.post("/api/manageGame/editScene/", params).then((res) => {
-      const targetValue = currentText.value.split('\n')[lineNumber-1];
-      WsUtil.sendSyncCommand(sceneName,lineNumber,targetValue);
+      const targetValue = currentText.value.split("\n")[lineNumber - 1];
+      WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
     });
   }
 
@@ -98,6 +100,7 @@ export default function TextEditor(props: ITextEditorProps) {
 
   return <div style={{ display: props.isHide ? "none" : "block" }} className={styles.textEditor_main}>
     <Editor height="100%" width="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="webgal"
+      language="webgal"
       defaultValue={currentText.value}
     />
   </div>;
