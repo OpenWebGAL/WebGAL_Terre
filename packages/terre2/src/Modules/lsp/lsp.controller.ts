@@ -10,16 +10,12 @@ export class LspController {
   async compile(
     @Body() data: { editorValue: string; params: CompletionParams },
   ): Promise<CompletionList> {
-    await this.myLanguageService.updateDocument(
-      data.params.textDocument.uri,
-      data.editorValue,
-    );
-    return this.myLanguageService.completion(data.params);
+    return this.myLanguageService.completion(data.params, data.editorValue);
   }
 
-  @Post('updateDocument')
-  async update(@Body('uri') uri: string, @Body('newValue') newValue: string) {
-    await this.myLanguageService.updateDocument(uri, newValue);
-    return 'OK';
-  }
+  // @Post('updateDocument')
+  // async update(@Body('uri') uri: string, @Body('newValue') newValue: string) {
+  //   await this.myLanguageService.updateDocument(uri, newValue);
+  //   return 'OK';
+  // }
 }

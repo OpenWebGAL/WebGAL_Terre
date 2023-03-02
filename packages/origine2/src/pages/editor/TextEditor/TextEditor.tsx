@@ -16,6 +16,7 @@ import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
 import { WG_ORIGINE_RUNTIME } from "../../../runtime/WG_ORIGINE_RUNTIME";
 import { WsUtil } from "../../../utils/wsUtil";
+import { mapLspKindToMonacoKind } from "./convert";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -64,7 +65,7 @@ export default function TextEditor(props: ITextEditorProps) {
           textDocument: {
             uri: sceneName
           },
-          position: position
+          position: { line: position.lineNumber - 1, character: position.column }
         };
 
         const data = {
@@ -74,7 +75,9 @@ export default function TextEditor(props: ITextEditorProps) {
         return new Promise(resolve => {
           axios.post("/api/lsp/compile", data).then((response) => {
             // 处理 LSP 的响应
-            const result = { suggestions: response.data.items };
+            const result = { suggestions: response.data.items.map((suggestion:any)=>{
+              return {...suggestion,kind:mapLspKindToMonacoKind(suggestion.kind)};
+            }) };
             resolve(result);
           });
         });
