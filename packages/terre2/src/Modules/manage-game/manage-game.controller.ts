@@ -119,7 +119,7 @@ export class ManageGameController {
     const path = this.webgalFs.getPathFromRoot(
       `/public/games/${gameName}/game/scene/${sceneName}`,
     );
-    await this.lspServerce.updateDocument(sceneName, content.value);
+    // await this.lspServerce.updateDocument(sceneName, content.value);
     return await this.webgalFs.updateTextFile(path, content.value);
   }
 
