@@ -7,6 +7,8 @@ import {
   TextDocuments,
 } from 'vscode-languageserver';
 import { getCommands } from './suggestionRules/getCommands';
+import { getArgsKey } from './suggestionRules/getArgsKey';
+import { getKeywordsAndConstants } from './suggestionRules/getKeywordsAndConstants';
 
 @Injectable()
 export class LspService {
@@ -46,6 +48,8 @@ export class LspService {
 
     // 指令
     suggestions.push(...getCommands(line, allTextBefore, position));
+    suggestions.push(...getArgsKey(line, allTextBefore, position));
+    suggestions.push(...getKeywordsAndConstants(line, allTextBefore, position));
 
     return { isIncomplete: false, items: suggestions };
   }
