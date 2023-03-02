@@ -65,7 +65,7 @@ export default function TopBar() {
     <div style={{ display: "flex", justifyItems: "center",padding:'0 0 0 12px' }}>
       <TerreToggle
         isChecked={isCodeMode}
-        title="脚本编辑模式"  onText="开启" offText="关闭"
+        title="脚本编辑模式"  onText="开启" offText="图形化编辑尚未准备完毕，请打开脚本编辑模式"
         onChange={handleChange} />
     </div>
 
