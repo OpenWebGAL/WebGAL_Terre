@@ -54,11 +54,12 @@ export default function TextEditor(props: ITextEditorProps) {
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
     monaco.languages.register({ id: "webgal" });
+    /**
+     * LSP
+     */
     monaco.languages.registerCompletionItemProvider("webgal", {
       provideCompletionItems: (model, position) => {
-        /**
-         * LSP
-         */
+        const editorValue = model.getValue();
         const params: any = {
           textDocument: {
             uri: sceneName
@@ -67,15 +68,13 @@ export default function TextEditor(props: ITextEditorProps) {
         };
 
         const data = {
-          editorValue: currentText.value, params
+          editorValue, params
         };
 
         return new Promise(resolve => {
           axios.post("/api/lsp/compile", data).then((response) => {
             // 处理 LSP 的响应
             const result = { suggestions: response.data.items };
-            console.log(result);
-            console.log(model.getLanguageId());
             resolve(result);
           });
         });
