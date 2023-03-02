@@ -15,6 +15,7 @@ import {
 import { Request } from 'express';
 import { ManageGameService } from './manage-game.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { LspService } from '../lsp/lsp.service';
 
 @Controller('api/manageGame')
 export class ManageGameController {
@@ -22,6 +23,7 @@ export class ManageGameController {
     private readonly webgalFs: WebgalFsService,
     private readonly manageGame: ManageGameService,
     private readonly logger: ConsoleLogger,
+    private readonly lspServerce: LspService,
   ) {}
 
   @Get('gameList')
@@ -117,6 +119,7 @@ export class ManageGameController {
     const path = this.webgalFs.getPathFromRoot(
       `/public/games/${gameName}/game/scene/${sceneName}`,
     );
+    await this.lspServerce.updateDocument(sceneName, content.value);
     return await this.webgalFs.updateTextFile(path, content.value);
   }
 
