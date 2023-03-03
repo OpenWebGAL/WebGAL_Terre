@@ -30,7 +30,7 @@ export default function AddSentence(props: IAddSentenceProps) {
   const modelProps = {
     isBlocking: false,
     // styles: { main: { maxWidth: 600 } },
-    topOffsetFixed: true,
+    topOffsetFixed: true
   };
   const dialogContentProps = {
     type: DialogType.largeHeader,
@@ -44,18 +44,18 @@ export default function AddSentence(props: IAddSentenceProps) {
       {props.titleText}
     </div>
     {/* @ts-ignore */}
-    <Dialog
+    {isShowCallout.value && <Dialog
       hidden={!isShowCallout.value}
       onDismiss={() => isShowCallout.set(false)}
       dialogContentProps={dialogContentProps}
       modalProps={modelProps}
-      maxWidth="800px"
+      maxWidth="600px"
     >
       <div className={stylesAs.sentenceTypeButtonList}>
         {addSentenceButtons}
       </div>
 
-    </Dialog>
+    </Dialog>}
     {/* {( */}
     {/*  <Callout */}
     {/*    role="dialog" */}
