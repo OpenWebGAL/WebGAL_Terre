@@ -40,28 +40,28 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   {
     type: commandType.changeBg,
     title: "切换背景",
-    initialText: "changeBg:;",
+    initialText: "changeBg:选择背景图片;",
     component: ChangeBg,
     icon:<NewPicture theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
   },
   {
     type: commandType.changeFigure,
     title: "切换立绘",
-    initialText: "changeFigure:;",
+    initialText: "changeFigure:选择立绘文件;",
     component: ChangeFigure,
     icon:<People theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
   },
   {
     type: commandType.bgm,
     title: "背景音乐",
-    initialText: "bgm:;",
+    initialText: "bgm:选择背景音乐;",
     component: Bgm,
     icon:<Music theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
   },
   {
     type: commandType.video,
     title: "播放视频",
-    initialText: "playVideo:;",
+    initialText: "playVideo:选择视频文件;",
     component: PlayVideo,
     icon:<VideoTwo theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
   },

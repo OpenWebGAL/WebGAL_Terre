@@ -7,7 +7,7 @@ import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
-
+  const isNoFile = props.sentence.content === "";
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const bgFile = useValue(props.sentence.content);
   const submit = () => {
@@ -17,7 +17,16 @@ export default function ChangeBg(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="1" title="背景文件">
+      <CommonOptions key="isNoDialog" title="关闭背景">
+        <TerreToggle title="" onChange={(newValue) => {
+          if (!newValue) {
+            bgFile.set("选择背景图片");
+          } else
+            bgFile.set("none");
+          submit();
+        }} onText="关闭背景" offText="显示背景" isChecked={isNoFile} />
+      </CommonOptions>
+      {!isNoFile && <CommonOptions key="1" title="背景文件">
         <>
           {bgFile.value + "\u00a0\u00a0"}
           <ChooseFile sourceBase="background" onChange={(fileDesc) => {
@@ -26,8 +35,8 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           }}
           extName={[".png", ".jpg", ".webp"]} />
         </>
-      </CommonOptions>
-      <CommonOptions key="2" title="连续执行下一句">
+      </CommonOptions>}
+      <CommonOptions key="2" title="连续执行">
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
