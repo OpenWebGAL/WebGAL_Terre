@@ -84,10 +84,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   const parsedScene = (sceneText.value === "" ? { sentenceList: [] } : parseScene(sceneText.value));
   return <div className={styles.main}>
-    <div className={styles.topBar}>
-      <AddSentence titleText="添加语句"
-        onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
-    </div>
     <div style={{ flex: 1 }}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
@@ -127,8 +123,8 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               删除本句
                             </div>
                           </div>
-                          <AddSentence titleText="本句后插入句子"
-                            onChoose={(newSentence) => addOneSentence(newSentence, i + 1)} />
+                          <AddSentence titleText="本句前插入句子"
+                            onChoose={(newSentence) => addOneSentence(newSentence, i)} />
                         </div>
                         <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
                           updateSentenceByIndex(newSentence, i);
@@ -139,6 +135,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 </Draggable>;
               })}
               {provided.placeholder}
+              <div className={styles.topBar}>
+                <AddSentence titleText="添加语句"
+                  onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
+              </div>
             </div>
           )}
         </Droppable>
