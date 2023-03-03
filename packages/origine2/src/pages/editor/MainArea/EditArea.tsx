@@ -25,7 +25,7 @@ export default function EditArea() {
     else {
       const fileType = getFileType(tag.tagTarget);
       if (!fileType) {
-        return <div>文件类型不支持</div>;
+        return <div>该文件类型不支持预览</div>;
       }
       return <ResourceDisplay
         isHidden={tag.tagTarget !== selectedTagTarget}

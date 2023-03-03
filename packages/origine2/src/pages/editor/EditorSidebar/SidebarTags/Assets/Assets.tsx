@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { getFileList, IFileDescription } from "../../../ChooseFile/ChooseFile";
 import { dirnameToDisplayNameMap, dirNameToExtNameMap } from "../../../ChooseFile/chooseFileConfig";
-import { DeleteOne, Editor, FolderPlus, LeftSmall, Upload } from "@icon-park/react";
+import { DeleteOne, Editor, FolderOpen, FolderPlus, LeftSmall, Notes, Upload } from "@icon-park/react";
 import { useId } from "@fluentui/react-hooks";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
-import { statusActions } from "../../../../../store/statusReducer";
+import { ITag, statusActions } from "../../../../../store/statusReducer";
 import { extractPathAfterPublic } from "../../../ResourceDisplay/ResourceDisplay";
 
 export default function Assets() {
@@ -36,6 +36,7 @@ export default function Assets() {
   const currentDirExtName = useValue<string[]>(["unset"]);
   const currentDirExtNameKey = currentDirExtName.value.toString();
   const dispatch = useDispatch();
+  const tags = useSelector((state: RootState) => state.status.editor.tags);
 
   /**
    * 新建文件夹
@@ -89,8 +90,8 @@ export default function Assets() {
 
   if (currentDirName === "") {
     currentFileList = currentDirFiles.value.map((fileDesc) => {
-
       const currentFileName = dirnameToDisplayNameMap.get(fileDesc.name) ?? fileDesc.name;
+      if(currentFileName === '场景') return null;
       return <CommonFileButton
         showOptions={false}
         key={fileDesc.path}
@@ -131,12 +132,16 @@ export default function Assets() {
           if (fileDesc.isDir) {
             openChildDir();
           } else {
-            dispatch(statusActions.addEditAreaTag({
+            const target = fileDesc.path;
+            const tag: ITag = {
               tagName: fileDesc.name,
               tagTarget: fileDesc.path,
               tagType: "asset"
-            }));
-            dispatch(statusActions.setCurrentTagTarget(fileDesc.path));
+            };
+            // 先要确定没有这个tag
+            const result = tags.findIndex((e) => e.tagTarget === target);
+            if (result < 0) dispatch(statusActions.addEditAreaTag(tag));
+            dispatch(statusActions.setCurrentTagTarget(target));
           }
         }} />;
     });
@@ -206,7 +211,7 @@ export default function Assets() {
             </Text>
             <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
               <TextField value={newDirName.value} onChange={(ev, val) => {
-                newDirName.set(val??'');
+                newDirName.set(val ?? "");
               }} />
               <br />
               <PrimaryButton onClick={handleCreatNewDir}>创建</PrimaryButton>
@@ -215,7 +220,7 @@ export default function Assets() {
         )}
       </div>
       <div className={assetsStyles.fileList}>
-        {currentDirName !== "" && <div style={{display:"flex",alignItems:"center"}}>
+        {currentDirName !== "" && <div style={{ display: "flex", alignItems: "center" }}>
           当前目录支持的文件类型：{currentDirExtName.value.map(e => {
             return <span key={e} className={assetsStyles.extNameShow}>{e}</span>;
           })}
@@ -241,6 +246,10 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
   const deleteButtonId = useId("deleteBtn");
 
   return <div className={assetsStyles.commonFileButton}>
+    {!props.isDir && <Notes onClick={() => props.onClick()} theme="multi-color" size="22"
+      fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />}
+    {props.isDir && <FolderOpen onClick={() => props.onClick()} theme="multi-color" size="22"
+      fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />}
     <div onClick={() => props.onClick()} className={assetsStyles.fileName}>
       {props.name}
     </div>
@@ -272,7 +281,7 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
         </Text>
         <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
           <TextField value={newFileName.value} onChange={(ev, val) => {
-            newFileName.set(val??'');
+            newFileName.set(val ?? "");
           }} />
           <br />
           <PrimaryButton onClick={() => {

@@ -13,6 +13,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
   const figurePosition = useValue<"left" | "" | "right">("");
+  const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   useEffect(() => {
     /**
@@ -34,17 +35,27 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="1" title="立绘文件">
-        <>
-          {figureFile.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-            figureFile.set(fileDesc?.name ?? "");
-            submit();
-          }}
-          extName={[".png", ".jpg", ".webp"]} />
-        </>
+      <CommonOptions key="isNoDialog" title="关闭立绘">
+        <TerreToggle title="" onChange={(newValue) => {
+          if (!newValue) {
+            figureFile.set("选择立绘文件");
+          } else
+            figureFile.set("none");
+          submit();
+        }} onText="关闭立绘" offText="显示立绘" isChecked={isNoFile} />
       </CommonOptions>
-      <CommonOptions key="2" title="连续执行下一句">
+      {!isNoFile &&
+        <CommonOptions key="1" title="立绘文件">
+          <>
+            {figureFile.value + "\u00a0\u00a0"}
+            <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+              figureFile.set(fileDesc?.name ?? "");
+              submit();
+            }}
+            extName={[".png", ".jpg", ".webp"]} />
+          </>
+        </CommonOptions>}
+      <CommonOptions key="2" title="连续执行">
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
@@ -69,7 +80,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           placeholder="立绘 ID"
-          style={{width:"100%"}}
+          style={{ width: "100%" }}
         />
       </CommonOptions>
     </div>
