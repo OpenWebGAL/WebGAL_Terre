@@ -14,9 +14,12 @@
 .choseFileButton{
   padding: 4px 8px 4px 8px;
   margin: 2px 0 0 0;
-  background: rgba(0,0,0,0.05);
-  border-radius: 4px;
+  //background: rgba(0,0,0,0.05);
+  //border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .chooseFileCalloutContentWarpper{
