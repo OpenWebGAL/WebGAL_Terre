@@ -11,12 +11,12 @@
 
 .controlCommonButton {
   padding: 4px 3px 2px 3px;
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  //background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.33s;
-  margin: 0 2px 0 2px;
+  margin: 0 0 0 4px;
 }
 
 .controlCommonButton:hover {
@@ -25,20 +25,21 @@
 
 .controlDirnameDisplay {
   padding: 4px 0 7px 10px;
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  //background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin: 0 0 0 4px;
 }
 
 .commonFileButton {
   padding: 5px 5px 5px 10px;
   margin: 5px 0 0 0;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
+  //background: rgba(0, 0, 0, 0.05);
+  //border-radius: 4px;
   flex: 1;
   cursor: pointer;
   overflow: hidden;
@@ -46,6 +47,7 @@
   white-space: nowrap;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .fileName{
@@ -54,6 +56,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin: 0 0 0 6px;
 }
 
 .deleteButton{
