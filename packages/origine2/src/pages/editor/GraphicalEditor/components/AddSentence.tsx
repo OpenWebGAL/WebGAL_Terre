@@ -35,7 +35,7 @@ export default function AddSentence(props: IAddSentenceProps) {
   const dialogContentProps = {
     type: DialogType.largeHeader,
     title: props.titleText,
-    subText: props.titleText === "添加语句" ? "在场景的末尾添加一条语句" : "在所选句子的后方添加一条语句"
+    subText: props.titleText === "添加语句" ? "在场景末尾添加一条语句" : "在所选句子前添加一条语句"
   };
 
   return <>

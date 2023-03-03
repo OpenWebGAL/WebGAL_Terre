@@ -6,6 +6,7 @@ import { RootState } from "../../../store/origineStore";
 import { useId } from "@fluentui/react-hooks";
 import { Callout, DefaultButton } from "@fluentui/react";
 import styles from "./chooseFile.module.scss";
+import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
 
 export interface IChooseFile {
   sourceBase: string;
@@ -26,20 +27,25 @@ export default function ChooseFile(props: IChooseFile) {
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
   const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
-  useEffect(() => {
+
+  const updateFileList = ()=>{
     /**
      * 更新当前目录内的文件
      */
     getFileList(gameName, currentDirName, props.extName).then(result => {
       currentDirFiles.set(result);
     });
+  };
 
+  useEffect(() => {
+    updateFileList();
   }, [currentDirName]);
 
   const isShowChooseFileCallout = useValue(false);
   const buttonId = useId("choosefile-callout");
 
   function toggleIsCalloutVisible() {
+    updateFileList();
     isShowChooseFileCallout.set(!isShowChooseFileCallout.value);
   }
 
@@ -60,10 +66,14 @@ export default function ChooseFile(props: IChooseFile) {
   const fileSelectButtonList = currentDirFiles.value.map(file => {
     if (file.isDir) {
       return <div key={file.path} className={styles.choseFileButton} onClick={() => onEnterChildDir(file.name)}>
+        <FolderOpen theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+        {'\u00a0\u00a0'}
         {file.name}
       </div>;
     }
     return <div key={file.path} className={styles.choseFileButton} onClick={() => onChooseFile(file)}>
+      <Notes theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+      {'\u00a0\u00a0'}
       {file.name}
     </div>;
   });
@@ -95,6 +105,8 @@ export default function ChooseFile(props: IChooseFile) {
           <div className={styles.chooseFileFileListWarpper}>
             {currentChildDir.value.length > 0 && (
               <div className={styles.choseFileButton} onClick={onBack}>
+                <FolderWithdrawal theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+                {'\u00a0\u00a0'}
                 ...
               </div>)}
             {fileSelectButtonList}
