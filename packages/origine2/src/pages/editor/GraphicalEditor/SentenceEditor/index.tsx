@@ -1,12 +1,33 @@
 import { commandType, ISentence } from "webgal-parser/src/interface/sceneInterface";
 import Say from "./Say";
 import { FC, ReactElement } from "react";
-import { CommentOne, Music, NewPicture, People, VideoTwo } from "@icon-park/react";
+import {
+  Acoustic,
+  AlignLeftTwo,
+  AlignTextBottomOne,
+  Avatar,
+  Code,
+  CommentOne,
+  Effects,
+  Erase,
+  Logout,
+  Music,
+  NewPicture,
+  People,
+  VideoTwo
+} from "@icon-park/react";
 import ChangeBg from "./ChangeBg";
 import ChangeFigure from "./ChangeFigure";
 import Bgm from "./Bgm";
 import PlayVideo from "./PlayVideo";
 import Unrecognized from "./Unrecognized";
+import PixiPerform from "./PixiPerform";
+import Intro from "./Intro";
+import End from "./End";
+import MiniAvatar from "./MiniAvatar";
+import Comment from "./Comment";
+import PlayEffect from "./PlayEffect";
+import SetTextbox from "./SetTextbox";
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -64,5 +85,61 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     initialText: "playVideo:选择视频文件;",
     component: PlayVideo,
     icon:<VideoTwo theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.pixi,
+    title: "使用特效",
+    initialText: "pixiPerform:snow;",
+    component: PixiPerform,
+    icon:<Effects theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.pixiInit,
+    title: "清除特效",
+    initialText: "pixiInit;",
+    component: PixiPerform,
+    icon:<Erase theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.intro,
+    title: "黑屏文字",
+    initialText: "intro:;",
+    component: Intro,
+    icon:<AlignLeftTwo theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.miniAvatar,
+    title: "角落头像",
+    initialText: "miniAvatar:选择小头像;",
+    component: MiniAvatar,
+    icon:<Avatar theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.playEffect,
+    title: "效果声音",
+    initialText: "playEffect:;",
+    component: PlayEffect,
+    icon:<Acoustic theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.setTextbox,
+    title: "文本显示",
+    initialText: "setTextbox:hide;",
+    component: SetTextbox,
+    icon:<AlignTextBottomOne theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.end,
+    title: "结束游戏",
+    initialText: "end;",
+    component: End,
+    icon:<Logout theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.comment,
+    title: "单行注释",
+    initialText: ";注释",
+    component: Comment,
+    icon:<Code theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
   },
 ];
