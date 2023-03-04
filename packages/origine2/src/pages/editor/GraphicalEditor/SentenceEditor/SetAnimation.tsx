@@ -11,9 +11,11 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const isPresetTarget = ["bg-main", "fig-left", "fig-center", "fig-right"].includes(target.value);
+  const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const isUsePreset = useValue(isPresetTarget);
   const submit = () => {
-    props.onSubmit(`setAnimation:${fileName.value} -target=${target.value};`);
+    const isGoNextStr = isGoNext.value ? " -next" : "";
+    props.onSubmit(`setAnimation:${fileName.value} -target=${target.value}${isGoNextStr};`);
   };
   return <div className={styles.sentenceEditorContent}>
     <div>
@@ -62,6 +64,12 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
+      <CommonOptions key="2" title="连续执行">
+        <TerreToggle title="" onChange={(newValue) => {
+          isGoNext.set(newValue);
+          submit();
+        }} onText="本句执行后执行下一句" offText="本句执行后等待" isChecked={isGoNext.value} />
+      </CommonOptions>
     </div>
   </div>;
 }

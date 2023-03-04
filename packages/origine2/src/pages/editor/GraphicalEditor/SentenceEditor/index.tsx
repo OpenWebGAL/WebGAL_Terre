@@ -11,12 +11,15 @@ import {
   Avatar,
   Code,
   CommentOne,
+  CornerRightUp,
   Effects,
   Erase,
+  ListCheckbox,
   Logout,
   Music,
   NewPicture,
   People,
+  SwitchThemes,
   VideoTwo
 } from "@icon-park/react";
 import ChangeBg from "./ChangeBg";
@@ -34,6 +37,7 @@ import SetTextbox from "./SetTextbox";
 import UnlockExtra from "./UnlockExtra";
 import SetAnimation from "./SetAnimation";
 import ChangeCallScene from "./ChangeCallScene";
+import Choose from "./Choose";
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -125,14 +129,21 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: "调用场景",
     initialText: "callScene:选择场景文件;",
     component: ChangeCallScene,
-    icon:<AutoWidth theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+    icon:<CornerRightUp theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
   },
   {
     type: commandType.changeScene,
     title: "切换场景",
     initialText: "changeScene:选择场景文件;",
     component: ChangeCallScene,
-    icon:<AutoWidth theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+    icon:<SwitchThemes theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  },
+  {
+    type: commandType.choose,
+    title: "分支选择",
+    initialText: "choose:选项:选择场景文件;",
+    component: Choose,
+    icon:<ListCheckbox theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
   },
   {
     type: commandType.miniAvatar,
