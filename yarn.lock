@@ -7721,10 +7721,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-parser@^4.3.13-3:
-  version "4.3.13-3"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.3.13-3.tgz#3c3cdb2d29ab616dc39e9c6f64ded618cfcec14a"
-  integrity sha512-nXTt3biaDVjBW4ttJzTNZU8VGwvr8VEL9TkidtsGuSgR869MEK3NE4pOQSP1yTvvQ6ChlQSU2JKAkY8UEDbs0A==
+webgal-parser@^4.3.13-5:
+  version "4.3.13-5"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.3.13-5.tgz#26c8ab930d18e7a55c7aceaa5c2d64fb675e453e"
+  integrity sha512-Bc+u2/ReFHJUVPd/wF6N9INfnv58XxYV2eWbD5ScsZ47bX1R2iIbR6W9pMekHAL4wYeJjVP9y8trmEmIDBNH8g==
   dependencies:
     cloudlogjs "^1.0.11"
     lodash "^4.17.21"

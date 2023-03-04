@@ -4,6 +4,7 @@ import { useId } from "@fluentui/react-hooks";
 import { Dialog, DialogType } from "@fluentui/react";
 import { Add } from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
+import { commandType } from "webgal-parser/src/interface/sceneInterface";
 
 interface IAddSentenceProps {
   titleText: string;
@@ -13,7 +14,7 @@ interface IAddSentenceProps {
 export default function AddSentence(props: IAddSentenceProps) {
   const isShowCallout = useValue(false);
   const addButtonId = useId("addbutton");
-  const addSentenceButtons = sentenceEditorConfig.map(sentenceConfig => {
+  const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
       props.onChoose(sentenceConfig.initialText);
       isShowCallout.set(false);
