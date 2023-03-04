@@ -4,6 +4,7 @@ import { useId } from "@fluentui/react-hooks";
 import { Dialog, DialogType } from "@fluentui/react";
 import { Add } from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
+import { commandType } from "webgal-parser/src/interface/sceneInterface";
 
 interface IAddSentenceProps {
   titleText: string;
@@ -13,7 +14,7 @@ interface IAddSentenceProps {
 export default function AddSentence(props: IAddSentenceProps) {
   const isShowCallout = useValue(false);
   const addButtonId = useId("addbutton");
-  const addSentenceButtons = sentenceEditorConfig.map(sentenceConfig => {
+  const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
       props.onChoose(sentenceConfig.initialText);
       isShowCallout.set(false);
@@ -30,7 +31,7 @@ export default function AddSentence(props: IAddSentenceProps) {
   const modelProps = {
     isBlocking: false,
     // styles: { main: { maxWidth: 600 } },
-    topOffsetFixed: true,
+    topOffsetFixed: true
   };
   const dialogContentProps = {
     type: DialogType.largeHeader,
@@ -44,18 +45,18 @@ export default function AddSentence(props: IAddSentenceProps) {
       {props.titleText}
     </div>
     {/* @ts-ignore */}
-    <Dialog
+    {isShowCallout.value && <Dialog
       hidden={!isShowCallout.value}
       onDismiss={() => isShowCallout.set(false)}
       dialogContentProps={dialogContentProps}
       modalProps={modelProps}
-      maxWidth="800px"
+      maxWidth="600px"
     >
       <div className={stylesAs.sentenceTypeButtonList}>
         {addSentenceButtons}
       </div>
 
-    </Dialog>
+    </Dialog>}
     {/* {( */}
     {/*  <Callout */}
     {/*    role="dialog" */}
