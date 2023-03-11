@@ -1,14 +1,14 @@
-.addSceneButton {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 3px 6px 3px 6px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 0 4px 0 4px;
-  //border: 1px solid rgba(0,0,0,0.05);
-}
+//.addSceneButton {
+//  display: flex;
+//  align-items: center;
+//  box-sizing: border-box;
+//  padding: 3px 6px 3px 6px;
+//  background: rgba(0, 0, 0, 0.05);
+//  border-radius: 4px;
+//  cursor: pointer;
+//  margin: 0 4px 0 4px;
+//  //border: 1px solid rgba(0,0,0,0.05);
+//}
 
 .sentenceTypeButtonList {
   display: flex;
@@ -17,13 +17,14 @@
 
 .sentenceTypeButton {
   display: flex;
-  flex-flow: column;
+  flex: 0 0 270px;
+  //flex-flow: column;
   align-items: center;
-  padding: 6px 6px 6px 6px;
+  padding: 6px 6px 6px 10px;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
-  margin: 0 4px 2px 2px;
+  margin: 0 4px 6px 2px;
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.33s;
@@ -34,8 +35,17 @@
   background: rgba(0, 0, 0, 0);
 }
 
+
+.buttonDesc{
+  padding: 0 0 0 10px;
+}
+
 .title {
   font-size: 115%;
-  margin: 0 0 0 4px;
-  padding: 0 0 2px 0;
+  font-weight: bold;
+  color: #005caf;
+}
+
+.text{
+  font-size: 90%;
 }
