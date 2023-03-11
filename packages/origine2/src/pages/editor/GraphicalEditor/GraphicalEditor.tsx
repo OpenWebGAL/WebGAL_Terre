@@ -118,7 +118,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => deleteOneSentence(i)}>
-                            <DeleteFive style={{ padding: "0 4px 0 0" }} theme="outline" size="16" fill="#333" />
+                            <DeleteFive style={{ padding: "2px 4px 0 0" }} theme="outline" size="16" fill="#333" />
                             <div>
                               删除本句
                             </div>
