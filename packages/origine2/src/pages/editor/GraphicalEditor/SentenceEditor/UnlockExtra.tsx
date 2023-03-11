@@ -6,6 +6,7 @@ import { Dropdown } from "@fluentui/react";
 import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import ChooseFile from "../../ChooseFile/ChooseFile";
+import CommonTips from "../components/CommonTips";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
 
@@ -21,7 +22,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
   };
 
   return <div className={styles.sentenceEditorContent}>
-    提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。
+    <CommonTips text="提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。"/>
     <div className={styles.editItem}>
       <CommonOptions key="1" title="解锁鉴赏类型">
         <Dropdown options={[{ key: "unlockCg", text: "CG" }, { key: "unlockBgm", text: "BGM" }]}
