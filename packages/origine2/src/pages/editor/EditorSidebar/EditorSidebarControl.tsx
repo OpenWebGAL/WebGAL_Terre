@@ -41,23 +41,28 @@ export default function EditorSidebarControl() {
       <SidebarIcons isActive={state.showPreview}>
         <>
           {state.showPreview && <PreviewOpen theme="outline" size="24" fill="#0B346E" strokeWidth={3} />}
-          {!state.showPreview && <PreviewCloseOne theme="outline" size="24" fill="#0B346E" strokeWidth={3} />}
+          {!state.showPreview && <PreviewCloseOne theme="outline" size="24" fill="#666" strokeWidth={3} />}
         </>
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.gameconfig)} style={{ margin: "auto 0 0 0" }}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.gameconfig}>
-        <SettingConfig theme="outline" size="24" fill="#0B346E" strokeWidth={3} />
+        <SettingConfig theme="outline" size="24"
+          fill={state.currentSidebarTag === sidebarTag.gameconfig ? "#0B346E" : "#666"} strokeWidth={3} />
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.assets)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.assets}>
-        <FolderOpen theme="outline" size="24" fill="#0B346E" strokeWidth={3} />
+        <FolderOpen theme="outline" size="24"
+          fill={state.currentSidebarTag === sidebarTag.assets ? "#0B346E" : "#666"}
+          strokeWidth={3} />
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.scenes)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.scenes}>
-        <PlayTwo theme="outline" size="24" fill="#0B346E" strokeWidth={3} />
+        <PlayTwo theme="outline" size="24"
+          fill={state.currentSidebarTag === sidebarTag.scenes ? "#0B346E" : "#666"}
+          strokeWidth={3} />
       </SidebarIcons>
     </div>
   </div>;

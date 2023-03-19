@@ -4,6 +4,7 @@ import { useId } from "@fluentui/react-hooks";
 import { Dialog, DialogType } from "@fluentui/react";
 import { Add } from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
+import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 
 interface IAddSentenceProps {
@@ -19,19 +20,25 @@ export default function AddSentence(props: IAddSentenceProps) {
       props.onChoose(sentenceConfig.initialText);
       isShowCallout.set(false);
     }}>
-      <div>
+      <div style={{padding:'0 0 4px 0'}}>
         {sentenceConfig.icon}
       </div>
-      <div className={stylesAs.title}>
-        {sentenceConfig.title}
+      <div className={stylesAs.buttonDesc}>
+        <div className={stylesAs.title}>
+          {sentenceConfig.title}
+        </div>
+        <div className={stylesAs.text}>
+          {sentenceConfig.descText}
+        </div>
       </div>
+
     </div>;
   });
 
   const modelProps = {
     isBlocking: false,
     // styles: { main: { maxWidth: 600 } },
-    topOffsetFixed: true
+    topOffsetFixed: false
   };
   const dialogContentProps = {
     type: DialogType.largeHeader,
@@ -40,8 +47,8 @@ export default function AddSentence(props: IAddSentenceProps) {
   };
 
   return <>
-    <div id={addButtonId} className={stylesAs.addSceneButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
-      <Add style={{ padding: "0 4px 0 0" }} theme="outline" size="16" fill="#333" />
+    <div id={addButtonId} className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
+      <Add style={{ padding: "2px 4px 0 0" }} theme="outline" size="16" fill="#333" />
       {props.titleText}
     </div>
     {/* @ts-ignore */}
@@ -50,7 +57,7 @@ export default function AddSentence(props: IAddSentenceProps) {
       onDismiss={() => isShowCallout.set(false)}
       dialogContentProps={dialogContentProps}
       modalProps={modelProps}
-      maxWidth="600px"
+      maxWidth="900px"
     >
       <div className={stylesAs.sentenceTypeButtonList}>
         {addSentenceButtons}
