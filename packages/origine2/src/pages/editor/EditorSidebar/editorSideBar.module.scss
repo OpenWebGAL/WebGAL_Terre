@@ -31,8 +31,9 @@
 }
 
 .editor_sidebar_control_button_active {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  //border: 1px solid rgba(0, 0, 0, 0.15);
+  //box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background: rgba(0,0,0,0.1);
 }
 .preview_title{
   font-weight: bold;
@@ -52,6 +53,7 @@
   //max-height: 50%;
   width: 100%;
   box-sizing: border-box;
+  margin: 4px 0 4px 0;
 }
 
 .preview_top_title_container{

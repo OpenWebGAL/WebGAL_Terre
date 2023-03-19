@@ -4,14 +4,16 @@
   padding: 3px 5px 3px 5px;
   box-sizing: border-box;
   margin: 1px 2px 1px 2px;
-  border-radius: 3px;
+  //border-radius: 3px;
   cursor: pointer;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
 }
 
 .fileElement:hover{
-  box-shadow: 0 0 5px rgba(0,0,0,0.15);
-  padding: 2px 4px 2px 4px;
-  border: 1px solid rgba(0,0,0,0.15);
+  //box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  //padding: 2px 4px 2px 4px;
+  //border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.05);
 }
 
 .fileElement_name{
