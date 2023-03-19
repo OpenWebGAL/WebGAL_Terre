@@ -6,6 +6,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonOptions from "../components/CommonOption";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { Dropdown } from "@fluentui/react";
+import CommonTips from "../components/CommonTips";
 
 export default function SetAnimation(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
@@ -18,13 +19,8 @@ export default function SetAnimation(props: ISentenceEditorProps) {
     props.onSubmit(`setAnimation:${fileName.value} -target=${target.value}${isGoNextStr};`);
   };
   return <div className={styles.sentenceEditorContent}>
-    <div>
-      提示：先设置立绘/背景，再应用动画，否则找不到目标。
-    </div>
-
-    <div>
-      选择一个动画文件以应用，其中 animationTable 是动画定义，不要选择。
-    </div>
+    <CommonTips text="提示：先设置立绘/背景，再应用动画，否则找不到目标。"/>
+    <CommonTips text="选择一个动画文件以应用，其中 animationTable 是动画定义，不要选择。"/>
     <div className={styles.editItem}>
       <CommonOptions key="1" title="选择动画">
         <>
@@ -52,7 +48,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           { key: "bg-main", text: "背景图片" }
         ]} selectedKey={target.value} />
       </CommonOptions>}
-      {!isUsePreset.value && <CommonOptions key="3" title="输入目标 ID">
+      {!isUsePreset.value && <CommonOptions key="4" title="输入目标 ID">
         <input value={target.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -64,7 +60,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-      <CommonOptions key="2" title="连续执行">
+      <CommonOptions key="5" title="连续执行">
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();

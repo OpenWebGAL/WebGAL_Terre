@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styles from "./tagsManager.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { ITag, resetTagOrder, setCurrentTagTarget } from "../../../store/statusReducer";
 import { cloneDeep } from "lodash";
-import { CloseSmall } from "@icon-park/react";
+import { CloseSmall, FileCodeOne } from "@icon-park/react";
 
 export default function TagsManager() {
   // 获取 Tags 数据
@@ -82,6 +81,7 @@ export default function TagsManager() {
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
+                  <FileCodeOne theme="outline" size="18" style={{transform:'translate(0,1px)', padding:'0 4px 0 0'}} fill="#333"/>
                   {item.tagName}
                   <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
                     <CloseSmall theme="outline" size="15" fill="#000" strokeWidth={3} />

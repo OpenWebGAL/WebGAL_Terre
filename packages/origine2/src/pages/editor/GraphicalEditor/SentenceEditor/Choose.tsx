@@ -32,7 +32,7 @@ export default function Choose(props: ISentenceEditorProps) {
         onBlur={submit}
         className={styles.sayInput}
         placeholder="选项名称"
-        style={{ width: "50%", margin: "0 6px 0 0" }}
+        style={{ width: "50%", margin: "0 6px 0 6px" }}
       />
       {
         item[1] + "\u00a0"
