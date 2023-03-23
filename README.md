@@ -1,4 +1,4 @@
-![wgfav-new-min](https://user-images.githubusercontent.com/30483415/172886968-bb6cfcab-a258-45dd-8e17-754373ec01b1.png)
+![WebGAL](https://user-images.githubusercontent.com/30483415/227243167-5ce43420-497a-4049-a621-21a639797abd.png)
 
 # WebGAL_Terre
 
