@@ -170,7 +170,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   {
     type: commandType.playEffect,
     title: "效果声音",
-    initialText: "playEffect:;",
+    initialText: "playEffect:选择效果音文件;",
     component: PlayEffect,
     icon: <Acoustic theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
     descText:'播放一段效果音'
