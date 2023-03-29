@@ -22,11 +22,12 @@ app.use(createProxyMiddleware("/api", {
 
 app.use(createProxyMiddleware("/games", {
   target: "http://localhost:3001",// http代理跨域目标接口
-  changeOrigin: true
+  changeOrigin: true,
 }));
 
 app.use(createProxyMiddleware("/", {
   target: "http://localhost:3000",// http代理跨域目标接口
+  ws:true,
   changeOrigin: true
 }));
 
