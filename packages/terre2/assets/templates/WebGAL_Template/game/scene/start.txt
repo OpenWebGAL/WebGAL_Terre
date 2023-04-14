@@ -3,4 +3,4 @@ changeBg:cafe.jpg;
 changeFigure:kanna.png;
 
 ;注释
-WebGAL:好！我会制作Galgame了！;
+WebGAL:好！我会制作视觉小说了！;
