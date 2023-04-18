@@ -64,7 +64,7 @@ export default function DashBoard() {
       </div>
       <div className={styles.dashboard_main}>
         <Message ref={messageRef} />
-        <Sidebar createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value}
+        <Sidebar onDeleteGame={()=>{refreashDashboard();setCurrent('');}} createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value}
           gameList={dirInfo.value} />
         <GamePreview gameName={currentGame.value} />
         {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}

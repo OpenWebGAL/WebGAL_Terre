@@ -16,6 +16,7 @@ import { Request } from 'express';
 import { ManageGameService } from './manage-game.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { LspService } from '../lsp/lsp.service';
+import { logger } from 'webgal-origine-2/src/utils/logger';
 
 @Controller('api/manageGame')
 export class ManageGameController {
@@ -167,6 +168,7 @@ export class ManageGameController {
 
   @Post('delete')
   async deleteFileOrDir(@Body('source') source: string) {
+    this.logger.log(source);
     return await this.webgalFs.deleteFileOrDirectory(
       this.webgalFs.getPathFromRoot(source),
     );
