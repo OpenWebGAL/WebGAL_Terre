@@ -7,7 +7,7 @@ export class ManageGameService {
   constructor(
     private readonly logger: ConsoleLogger,
     private readonly webgalFs: WebgalFsService,
-  ) {}
+  ) { }
 
   /**
    * 打开游戏资源文件夹
@@ -55,7 +55,7 @@ export class ManageGameService {
    */
   async exportGame(
     gameName: string,
-    ejectPlatform: 'web' | 'electron-windows',
+    ejectPlatform: 'web' | 'electron-windows' | 'android',
   ) {
     // 根据 GameName 找到游戏所在目录
     const gameDir = this.webgalFs.getPathFromRoot(
@@ -101,6 +101,25 @@ export class ManageGameService {
         `${electronExportDir}/resources/app/public/game/`,
       );
       await _open(electronExportDir);
+    }
+    if (ejectPlatform === 'android') {
+      const androidExportDir = this.webgalFs.getPath(`${exportDir}/android`);
+      await this.webgalFs.mkdir(androidExportDir, '');
+      await this.webgalFs.copy(
+        this.webgalFs.getPathFromRoot(
+          `/assets/templates/WebGAL_Android_Template/`,
+        ),
+        `${androidExportDir}/`,
+      );
+      await this.webgalFs.copy(
+        this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+        `${androidExportDir}/app/src/main/assets/webgal/`,
+      );
+      await this.webgalFs.copy(
+        gameDir,
+        `${androidExportDir}/app/src/main/assets/webgal/game/`,
+      );
+      await _open(androidExportDir);
     }
     if (ejectPlatform === 'web') {
       const webExportDir = this.webgalFs.getPath(`${exportDir}/web`);
