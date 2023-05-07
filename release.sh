@@ -30,8 +30,8 @@ cd ../../
 cd packages/WebGAL-electron
 yarn
 yarn build
-mkdir ../../release/assets/templates/WebGAL_Electron_template
-cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_template/
+mkdir ../../release/assets/templates/WebGAL_Electron_Template
+cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
 
 # 克隆 WebGAL Android 模板
@@ -45,6 +45,7 @@ cd release
 # 删除冗余文件
 rm -rf Exported_Games/*
 rm -rf public/games/*
+rm -rf public/games/.gitkeep
 rm -rf assets/templates/WebGAL_Template/game/video/*
 rm -rf assets/templates/WebGAL_Template/game/video/.gitkeep
 rm -rf assets/templates/WebGAL_Android_Template/.git
