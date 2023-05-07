@@ -25,7 +25,7 @@ export class ManageGameController {
     private readonly manageGame: ManageGameService,
     private readonly logger: ConsoleLogger,
     private readonly lspServerce: LspService,
-  ) {}
+  ) { }
 
   @Get('gameList')
   async testReadDir() {
@@ -71,6 +71,16 @@ export class ManageGameController {
     this.manageGame
       .exportGame(gameName, 'electron-windows')
       .then(() => this.logger.log(`${gameName} export as exe`));
+  }
+
+  @Get('ejectGameAsAndroid/*')
+  async ejectGameAsAndroid(@Req() request: Request) {
+    const requestUrl = request.url;
+    // 截取出有关要阅读的目录的信息
+    const gameName = decodeURI(requestUrl.split('ejectGameAsAndroid/')[1]);
+    this.manageGame
+      .exportGame(gameName, 'android')
+      .then(() => this.logger.log(`${gameName} export as android`));
   }
 
   @Get('readGameAssets/*')
