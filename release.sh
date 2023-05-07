@@ -30,15 +30,26 @@ cd ../../
 cd packages/WebGAL-electron
 yarn
 yarn build
-mkdir ../../release/assets/templates/WebGAL_Electron_template
-cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_template/
+mkdir ../../release/assets/templates/WebGAL_Electron_Template
+cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
+
+# 克隆 WebGAL Android 模板
+cd release/assets/templates/
+git clone https://github.com/nini22P/WebGAL-Android.git
+mv WebGAL-Android WebGAL_Android_Template
+cd ../../../
 
 cd release
 
 # 删除冗余文件
 rm -rf Exported_Games/*
 rm -rf public/games/*
+rm -rf public/games/.gitkeep
 rm -rf assets/templates/WebGAL_Template/game/video/*
+rm -rf assets/templates/WebGAL_Template/game/video/.gitkeep
+rm -rf assets/templates/WebGAL_Android_Template/.git
+rm -rf assets/templates/WebGAL_Android_Template/.gitattributes
+rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
 
 echo "WebGAL Origine is now ready to be deployed."
