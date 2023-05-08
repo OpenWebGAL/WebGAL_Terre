@@ -1,6 +1,6 @@
 import GameElement from "./GameElement";
 import styles from "./sidebar.module.scss";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 
 interface ISidebarProps {
@@ -8,6 +8,7 @@ interface ISidebarProps {
   currentSetGame: string;
   setCurrentGame: Function;
   createGame: Function;
+  onDeleteGame?: () => void;
 }
 
 
@@ -18,7 +19,8 @@ export default function Sidebar(props: ISidebarProps) {
 
   const showGameList = props.gameList.map(e => {
     const checked = props.currentSetGame === e;
-    return <GameElement onClick={() => props.setCurrentGame(e)} gameName={e} key={e} checked={checked} />;
+    return <GameElement onDeleteGame={() => props.onDeleteGame?.()} onClick={() => props.setCurrentGame(e)} gameName={e}
+      key={e} checked={checked} />;
   });
 
   function createNewGame() {
@@ -52,7 +54,7 @@ export default function Sidebar(props: ISidebarProps) {
         </Text>
         <div>
           <TextField onChange={(event, newValue) => {
-            setNewGameName(newValue??'');
+            setNewGameName(newValue ?? "");
           }} defaultValue="新的游戏" label="新游戏名" />
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
