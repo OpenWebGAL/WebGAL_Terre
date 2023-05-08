@@ -1,6 +1,7 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { _open } from 'src/util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
+import { error } from 'console';
 
 @Injectable()
 export class ManageGameService {
@@ -48,6 +49,43 @@ export class ManageGameService {
     return true;
   }
 
+  // 获取游戏配置
+  async getGameConfig(gameName: string) {
+    interface Config {
+      Game_name: string;
+      Game_key: string;
+      Package_name: string;
+    }
+    const config: Config = {
+      Game_name: '',
+      Game_key: '',
+      Package_name: '',
+    };
+    // 根据 GameName 找到游戏所在目录
+    const gameDir = this.webgalFs.getPathFromRoot(
+      `/public/Games/${gameName}/game/`,
+    );
+    // 读取配置文件
+    const configFile: string | unknown = await this.webgalFs.readTextFile(
+      `${gameDir}/config.txt`,
+    );
+    if (typeof configFile === 'string') {
+      configFile
+        .replace(/[\r\n]/g, '')
+        .split(';')
+        .filter((x) => x !== '')
+        .map((x) => {
+          const arr = x.split(':');
+          config[arr[0]] = arr[1];
+        });
+    }
+    return {
+      gameName: config.Game_name === '' ? '新的游戏' : config.Game_name,
+      packageName:
+        config.Package_name === '' ? 'dev.webgal' : config.Package_name,
+    };
+  }
+
   /**
    * 导出游戏
    * @param gameName 游戏名称
@@ -81,6 +119,7 @@ export class ManageGameService {
     }
 
     // 将游戏复制到导出目录，并附加对应的模板
+    // 导出 electron-windows
     if (ejectPlatform === 'electron-windows') {
       const electronExportDir = this.webgalFs.getPath(
         `${exportDir}/electron-windows`,
@@ -102,6 +141,7 @@ export class ManageGameService {
       );
       await _open(electronExportDir);
     }
+    // 导出 android
     if (ejectPlatform === 'android') {
       const androidExportDir = this.webgalFs.getPath(`${exportDir}/android`);
       await this.webgalFs.mkdir(androidExportDir, '');
@@ -119,8 +159,44 @@ export class ManageGameService {
         gameDir,
         `${androidExportDir}/app/src/main/assets/webgal/game/`,
       );
+      // 修改信息
+      const gameConfig = await this.getGameConfig(gameName);
+      await this.webgalFs.replaceTextFile(
+        `${androidExportDir}/settings.gradle`,
+        'WebGAL',
+        gameConfig.gameName,
+      );
+      await this.webgalFs.replaceTextFile(
+        `${androidExportDir}/app/src/main/res/values/strings.xml`,
+        'WebGAL',
+        gameConfig.gameName,
+      );
+      await this.webgalFs.replaceTextFile(
+        `${androidExportDir}/app/build.gradle`,
+        'io.github.nini22p.webgal',
+        gameConfig.packageName,
+      );
+      await this.webgalFs.replaceTextFile(
+        `${androidExportDir}/app/src/main/java/MainActivity.kt`,
+        'io.github.nini22p.webgal',
+        gameConfig.packageName,
+      );
+      await this.webgalFs.mkdir(
+        // eslint-disable-next-line prettier/prettier
+        `${androidExportDir}/app/src/main/java/${gameConfig.packageName.replace(/\./g, '/')}`,
+        '',
+      );
+      await this.webgalFs.copy(
+        `${androidExportDir}/app/src/main/java/MainActivity.kt`,
+        // eslint-disable-next-line prettier/prettier
+        `${androidExportDir}/app/src/main/java/${gameConfig.packageName.replace(/\./g, '/')}/MainActivity.kt`
+      );
+      await this.webgalFs.deleteFileOrDirectory(
+        `${androidExportDir}/app/src/main/java/MainActivity.kt`,
+      );
       await _open(androidExportDir);
     }
+    // 导出 Web
     if (ejectPlatform === 'web') {
       const webExportDir = this.webgalFs.getPath(`${exportDir}/web`);
       await this.webgalFs.mkdir(webExportDir, '');
