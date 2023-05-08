@@ -40,6 +40,8 @@ cd ../../
 cd release/assets/templates/
 git clone https://github.com/nini22P/WebGAL-Android.git
 mv WebGAL-Android WebGAL_Android_Template
+# MainActivity.kt 移动到主文件夹防止误删
+mv WebGAL_Android_Template/app/src/main/java/io/github/nini22p/webgal/MainActivity.kt WebGAL_Android_Template/app/src/main/java/MainActivity.kt
 cd ../../../
 
 cd release
@@ -53,6 +55,6 @@ rm -rf assets/templates/WebGAL_Template/game/video/.gitkeep
 rm -rf assets/templates/WebGAL_Android_Template/.git
 rm -rf assets/templates/WebGAL_Android_Template/.gitattributes
 rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
-
+rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/io
 
 echo "WebGAL Origine is now ready to be deployed."
