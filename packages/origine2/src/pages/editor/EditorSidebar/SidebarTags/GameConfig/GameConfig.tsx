@@ -13,13 +13,14 @@ interface IGameConfig {
   titleBgm: string;
   titleBackground: string;
   gameKey: string;
+  packageName: string;
 }
 
 export default function GameConfig() {
   const state = useSelector((state: RootState) => state.status.editor);
 
   // 拿到游戏配置
-  const gameConfig = useValue<IGameConfig>({ gameName: "", titleBgm: "", titleBackground: "", gameKey: "" });
+  const gameConfig = useValue<IGameConfig>({ gameName: "", titleBgm: "", titleBackground: "", gameKey: "", packageName: "" });
   const getGameConfig = () => {
     axios
       .get(`/api/manageGame/getGameConfig/${state.currentEditingGame}`)
@@ -52,6 +53,9 @@ export default function GameConfig() {
       case "Game_key":
         gameConfig.set({ ...gameConfig.value, gameKey: e[1] });
         break;
+      case "Package_name":
+        gameConfig.set({ ...gameConfig.value, packageName: e[1] });
+        break;
       default:
         console.log("NOT PARSED");
       }
@@ -71,7 +75,7 @@ export default function GameConfig() {
     const draft = cloneDeep(gameConfig.value);
     draft[key] = content;
     gameConfig.set(draft);
-    const newConfig = `Game_name:${gameConfig.value.gameName};\nGame_key:${gameConfig.value.gameKey};\nTitle_bgm:${gameConfig.value.titleBgm};\nTitle_img:${gameConfig.value.titleBackground};\n`;
+    const newConfig = `Game_name:${gameConfig.value.gameName};\nGame_key:${gameConfig.value.gameKey};\nPackage_name:${gameConfig.value.packageName};\nTitle_bgm:${gameConfig.value.titleBgm};\nTitle_img:${gameConfig.value.titleBackground};\n`;
     const form = new URLSearchParams();
     form.append("gameName", state.currentEditingGame);
     form.append("newConfig", newConfig);
@@ -92,6 +96,11 @@ export default function GameConfig() {
           <div className={styles.sidebar_gameconfig_title}>游戏识别码</div>
           <GameConfigEditor key="gameKey" value={gameConfig.value.gameKey}
             onChange={(e: string) => updateGameConfig("gameKey", e)} />
+        </div>
+        <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>游戏包名</div>
+          <GameConfigEditor key="packageName" value={gameConfig.value.packageName}
+            onChange={(e: string) => updateGameConfig("packageName", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>标题背景图片</div>
