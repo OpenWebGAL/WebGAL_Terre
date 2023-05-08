@@ -25,7 +25,7 @@ export class ManageGameController {
     private readonly manageGame: ManageGameService,
     private readonly logger: ConsoleLogger,
     private readonly lspServerce: LspService,
-  ) { }
+  ) {}
 
   @Get('gameList')
   async testReadDir() {
