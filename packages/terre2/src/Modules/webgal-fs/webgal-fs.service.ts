@@ -188,6 +188,27 @@ export class WebgalFsService {
         .catch(() => resolve('path error or no right.'));
     });
   }
+  /**
+   * 替换文本文件中的文本
+   * @param path 文件路径
+   * @param text 要替换的文本
+   * @param newText 替换后的文本
+   */
+  async replaceTextFile(path: string, text: string, newText: string) {
+    try {
+      const textFile: string | unknown = await this.readTextFile(path);
+      if (typeof textFile === 'string') {
+        const newTextFile = textFile.replace(new RegExp(text, 'g'), newText);
+        return await new Promise((resolve) => {
+          fs.writeFile(path, newTextFile)
+            .then(() => resolve('Replaced.'))
+            .catch(() => resolve('Path error or no text'));
+        });
+      } else return false;
+    } catch (error) {
+      return false;
+    }
+  }
 
   /**
    * 读取文本文件
