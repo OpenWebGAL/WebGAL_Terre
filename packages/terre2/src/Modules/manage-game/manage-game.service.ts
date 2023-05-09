@@ -1,7 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { _open } from 'src/util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
-import { error } from 'console';
 
 @Injectable()
 export class ManageGameService {
@@ -73,14 +72,15 @@ export class ManageGameService {
       configFile
         .replace(/[\r\n]/g, '')
         .split(';')
-        .filter((x) => x !== '')
-        .map((x) => {
-          const arr = x.split(':');
+        .filter((commandText) => commandText !== '')
+        .map((commandText) => {
+          const i = commandText.indexOf(':');
+          const arr = [commandText.slice(0, i), commandText.slice(i + 1)];
           config[arr[0]] = arr[1];
         });
     }
     return {
-      gameName: config.Game_name === '' ? '新的游戏' : config.Game_name,
+      gameName: config.Game_name === '' ? 'WebGAL' : config.Game_name,
       packageName:
         config.Package_name === '' ? 'dev.webgal' : config.Package_name,
     };
@@ -135,6 +135,10 @@ export class ManageGameService {
         this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
         `${electronExportDir}/resources/app/public/`,
       );
+      // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+      await this.webgalFs.deleteFileOrDirectory(
+        `${electronExportDir}/resources/app/public/game/`,
+      );
       await this.webgalFs.copy(
         gameDir,
         `${electronExportDir}/resources/app/public/game/`,
@@ -145,6 +149,10 @@ export class ManageGameService {
     if (ejectPlatform === 'android') {
       const androidExportDir = this.webgalFs.getPath(`${exportDir}/android`);
       await this.webgalFs.mkdir(androidExportDir, '');
+      // 复制模板前尝试删除文件夹，防止包名更改后有多余文件
+      await this.webgalFs.deleteFileOrDirectory(
+        `${androidExportDir}/app/src/main/java/`,
+      );
       await this.webgalFs.copy(
         this.webgalFs.getPathFromRoot(
           `/assets/templates/WebGAL_Android_Template/`,
@@ -154,6 +162,10 @@ export class ManageGameService {
       await this.webgalFs.copy(
         this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
         `${androidExportDir}/app/src/main/assets/webgal/`,
+      );
+      // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+      await this.webgalFs.deleteFileOrDirectory(
+        `${androidExportDir}/app/src/main/assets/webgal/game/`,
       );
       await this.webgalFs.copy(
         gameDir,
@@ -204,6 +216,8 @@ export class ManageGameService {
         this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
         `${webExportDir}/`,
       );
+      // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+      await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
       await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
       await _open(webExportDir);
     }
