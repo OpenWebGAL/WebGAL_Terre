@@ -1,6 +1,6 @@
 cd packages/WebGAL-electron
-yarn
-yarn build
+npm i
+npm run build
 cd ../terre2/assets/templates/
 mkdir WebGAL_Electron_Template
 cd ../../../WebGAL-electron
