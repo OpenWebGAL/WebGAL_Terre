@@ -35,7 +35,8 @@ export default function GameConfig() {
     // 对于每一行，，截取分号，找出键值
     let dataWithKeyValue = dataArray.map((e: string) => {
       let commandText = e.replaceAll(/[;；]/g, "");
-      return commandText.split(":");
+      const i = commandText.indexOf(':');
+      return [commandText.slice(0, i), commandText.slice(i + 1)];
     });
     dataWithKeyValue = dataWithKeyValue.filter((e) => e.length >= 2);
     // 开始修改
