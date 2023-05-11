@@ -6,9 +6,11 @@ import GameConfig from "./SidebarTags/GameConfig/GameConfig";
 import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
 import { useEffect, useRef } from "react";
+import useTrans from "@/hooks/useTrans";
 
 
 export default function EditorSideBar() {
+  const t = useTrans('editor.sideBar.preview.');
   const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
   useEffect(()=>{
@@ -23,7 +25,7 @@ export default function EditorSideBar() {
       {state.showPreview && <div className={styles.preview_container}>
         <div className={styles.preview_top_title_container}>
           <div className={styles.preview_title}>
-            游戏预览
+            {t('title')}
           </div>
           <div onClick={()=>{
             // @ts-ignore
@@ -38,7 +40,8 @@ export default function EditorSideBar() {
             background: "rgba(0,92,175,0.1)",
             cursor: "pointer",
             borderRadius: "4px"
-          }}>刷新
+          }}>
+            {t('refresh')}
           </div>
           <div onClick={()=>{
             window.open(`/games/${state.currentEditingGame}`,'_blank');
@@ -52,7 +55,8 @@ export default function EditorSideBar() {
             background: "rgba(0,92,175,0.1)",
             cursor: "pointer",
             borderRadius: "4px"
-          }}>在新标签页预览
+          }}>
+            {t('previewInNewTab')}
           </div>
         </div>
 

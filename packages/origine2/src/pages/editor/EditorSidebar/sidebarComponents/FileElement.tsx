@@ -1,9 +1,10 @@
 import { DeleteOne, Editor, Notes } from "@icon-park/react";
-import React, { MouseEventHandler, ReactElement } from "react";
+import { ReactElement } from "react";
 import styles from "./sidebarComponents.module.scss";
 import { useValue } from "../../../../hooks/useValue";
-import { Callout, Text, Link, TextField, PrimaryButton, DefaultButton } from "@fluentui/react";
+import { Callout, Text,  TextField, PrimaryButton, DefaultButton } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
+import useTrans from "@/hooks/useTrans";
 
 export interface IFileElementProps {
   name: string;
@@ -16,6 +17,8 @@ export interface IFileElementProps {
 
 
 export default function FileElement(props: IFileElementProps) {
+  const t = useTrans('editor.sideBar.file.dialogs.');
+  
   const icon = props.icon ?? <Notes theme="outline" size="24" fill="#333" strokeWidth={3} />;
 
   // 修改文件名部分
@@ -74,13 +77,13 @@ export default function FileElement(props: IFileElementProps) {
         style={{ width: "300px", padding: "5px 10px 5px 10px" }}
       >
         <Text block variant="xLarge" className={styles.title} id="editNameTitle">
-          修改文件名
+          {t('editName.title')}
         </Text>
         <div>
-          <TextField defaultValue={newFileName.value} onChange={updateNewFilename} label="新文件名" />
+          <TextField defaultValue={newFileName.value} onChange={updateNewFilename} label={t('editName.text')} />
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text="修改" onClick={commitNewFileName} allowDisabledFocus />
+          <PrimaryButton text={t('$common.revise')} onClick={commitNewFileName} allowDisabledFocus />
         </div>
       </Callout>}
     </div>
@@ -98,11 +101,11 @@ export default function FileElement(props: IFileElementProps) {
         style={{ width: "300px", padding: "5px 10px 5px 10px" }}
       >
         <Text block variant="xLarge" className={styles.title} id="editNameTitle">
-          删除 {props.name} ？
+          {t({key: 'delete.text', format: {name: props.name}})}
         </Text>
         <div style={{ display: "flex", justifyContent: "space-evenly", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text="删除" onClick={delteFileCallback} allowDisabledFocus />
-          <DefaultButton text="取消" onClick={()=>{showDeleteCalllout.set(false);}} allowDisabledFocus />
+          <PrimaryButton text={t('$common.delete')} onClick={delteFileCallback} allowDisabledFocus />
+          <DefaultButton text={t('$common.cancel')} onClick={()=>{showDeleteCalllout.set(false);}} allowDisabledFocus />
         </div>
       </Callout>}
     </div>
