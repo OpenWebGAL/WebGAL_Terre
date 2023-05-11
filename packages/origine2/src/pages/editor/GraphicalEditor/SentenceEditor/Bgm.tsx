@@ -4,8 +4,10 @@ import styles from "./sentenceEditor.module.scss";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
+import useTrans from "@/hooks/useTrans";
 
 export default function Bgm(props: ISentenceEditorProps) {
+  const t = useTrans('editor.graphical.sentences.bgm.');
   const bgmFile = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const submit = () => {
@@ -14,16 +16,16 @@ export default function Bgm(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title="停止 BGM">
+      <CommonOptions key="isNoDialog" title={t('options.stop.title')}>
         <TerreToggle title="" onChange={(newValue) => {
           if(!newValue){
-            bgmFile.set('选择背景音乐');
+            bgmFile.set(t('options.stop.choose'));
           }else
-            bgmFile.set("none");
+            bgmFile.set('none');
           submit();
-        }} onText="结束当前 BGM 的播放" offText="正常播放 BGM" isChecked={isNoFile} />
+        }} onText={t('options.stop.on')} offText={t('options.stop.off')} isChecked={isNoFile} />
       </CommonOptions>
-      {!isNoFile && <CommonOptions key="1" title="背景音乐文件">
+      {!isNoFile && <CommonOptions key="1" title={t('options.file.title')}>
         <>
           {bgmFile.value + "\u00a0\u00a0"}
           <ChooseFile sourceBase="bgm" onChange={(fileDesc) => {
