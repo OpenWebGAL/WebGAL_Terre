@@ -9,6 +9,7 @@ import "@icon-park/react/styles/index.css";
 import axios from "axios";
 import { mapLspKindToMonacoKind } from "./pages/editor/TextEditor/convert";
 import * as monaco from "monaco-editor";
+import Translation from "./components/translation/Translation";
 
 
 // 当前要发给 LSP 的场景名称
@@ -55,6 +56,7 @@ function App() {
     // 将编辑器的根元素占满整个视口
     <div className="App" style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
       <Provider store={origineStore}>
+        <Translation />
         <DashBoard />
         <Editor />
       </Provider>
