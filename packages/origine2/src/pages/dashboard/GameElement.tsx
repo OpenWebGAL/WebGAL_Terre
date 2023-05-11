@@ -3,6 +3,7 @@ import { Delete } from "@icon-park/react";
 import { DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton } from "@fluentui/react";
 import { useValue } from "../../hooks/useValue";
 import axios from "axios";
+import useVarTrans from "@/hooks/useVarTrans";
 
 interface IGameElementProps {
   gameName: string;
@@ -18,11 +19,13 @@ export default function GameElement(props: IGameElementProps) {
     className = className + " " + styles.gameElement_checked;
   }
 
+  const t = useVarTrans('dashBoard.');
+
   const isShowDialog = useValue(false);
   const dialogContentProps = {
     type: DialogType.normal,
-    title: "删除游戏",
-    subText: `是否要删除“${props.gameName}”`
+    title: t('dialogs.deleteGame.title'),
+    subText: t('dialogs.deleteGame.subtext', {gameName: props.gameName}),
   };
 
   const deleteThisGame = () => {
@@ -48,8 +51,8 @@ export default function GameElement(props: IGameElementProps) {
       // modalProps={modalProps}
     >
       <DialogFooter>
-        <PrimaryButton onClick={deleteThisGame} text="删除" />
-        <DefaultButton onClick={() => isShowDialog.set(false)} text="返回" />
+        <PrimaryButton onClick={deleteThisGame} text={t('$common.delete')} />
+        <DefaultButton onClick={() => isShowDialog.set(false)} text={t('$common.exit')} />
       </DialogFooter>
     </Dialog>
   </div>;
