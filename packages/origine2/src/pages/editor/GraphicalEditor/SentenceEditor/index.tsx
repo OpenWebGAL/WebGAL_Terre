@@ -1,6 +1,7 @@
 import { commandType, ISentence } from "webgal-parser/src/interface/sceneInterface";
 import Say from "./Say";
 import { FC, ReactElement } from "react";
+import { t } from 'i18next';
 import {
   Acoustic,
   AddMusic,
@@ -53,9 +54,11 @@ interface ISentenceEditorConfig {
   descText: string,
 }
 
+const tPrefix = 'editor.graphical.sentences.';
+
 export const sentenceEditorDefault: ISentenceEditorConfig = {
   type: commandType.say,
-  title: "未识别",
+  title: t(tPrefix + 'unknown.title'),
   initialText: "",
   component: Unrecognized,
   icon: <CommentOne theme="outline" size="24" fill="#333" />,
@@ -65,154 +68,154 @@ export const sentenceEditorDefault: ISentenceEditorConfig = {
 export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   {
     type: commandType.say,
-    title: "普通对话",
-    initialText: "角色名，留空以继承上句:对话;",
+    title: t(tPrefix + 'say.title'),
+    initialText: t(tPrefix + 'say.initText'),
     component: Say,
     icon: <CommentOne theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'添加一句对话，可以附带语音'
+    descText: t(tPrefix + 'say.descText')
   },
   {
     type: commandType.changeBg,
-    title: "切换背景",
-    initialText: "changeBg:选择背景图片;",
+    title: t(tPrefix + 'changeBg.title'),
+    initialText: t(tPrefix + 'changeBg.initText'),
     component: ChangeBg,
     icon: <NewPicture theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'切换背景图片'
+    descText: t(tPrefix + 'changeBg.descText')
   },
   {
     type: commandType.changeFigure,
-    title: "切换立绘",
-    initialText: "changeFigure:选择立绘文件;",
+    title: t(tPrefix + 'changeFigure.title'),
+    initialText: t(tPrefix + 'changeFigure.initText'),
     component: ChangeFigure,
     icon: <People theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'添加或切换指定位置的立绘'
+    descText: t(tPrefix + 'changeFigure.descText')
   },
   {
     type: commandType.setAnimation,
-    title: "设置动画",
-    initialText: "setAnimation:选择动画文件;",
+    title: t(tPrefix + 'setAnime.title'),
+    initialText: t(tPrefix + 'setAnime.initText'),
     component: SetAnimation,
     icon: <AutoWidth theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'为立绘或背景图片设置动画效果'
+    descText: t(tPrefix + 'setAnime.descText')
   },
   {
     type: commandType.bgm,
-    title: "背景音乐",
-    initialText: "bgm:选择背景音乐;",
+    title: t(tPrefix + 'bgm.title'),
+    initialText: t(tPrefix + 'bgm.initText'),
     component: Bgm,
     icon: <Music theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'启动、切换或停止背景音乐的播放'
+    descText: t(tPrefix + 'bgm.descText')
   },
   {
     type: commandType.video,
-    title: "播放视频",
-    initialText: "playVideo:选择视频文件;",
+    title: t(tPrefix + 'video.title'),
+    initialText: t(tPrefix + 'video.initText'),
     component: PlayVideo,
     icon: <VideoTwo theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'播放一小段视频'
+    descText: t(tPrefix + 'video.descText')
   },
   {
     type: commandType.pixi,
-    title: "使用特效",
-    initialText: "pixiPerform:snow;",
+    title: t(tPrefix + 'effect.title'),
+    initialText: t(tPrefix + 'effect.initText'),
     component: PixiPerform,
     icon: <Effects theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'为当前的舞台添加特殊效果'
+    descText: t(tPrefix + 'effect.descText')
   },
   {
     type: commandType.pixiInit,
-    title: "清除特效",
-    initialText: "pixiInit;",
+    title: t(tPrefix + 'clearEffect.title'),
+    initialText: t(tPrefix + 'clearEffect.initText'),
     component: PixiPerform,
     icon: <Erase theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'清除当前舞台的特殊效果'
+    descText: t(tPrefix + 'clearEffect.descText')
   },
   {
     type: commandType.intro,
-    title: "黑屏文字",
-    initialText: "intro:;",
+    title: t(tPrefix + 'intro.title'),
+    initialText: t(tPrefix + 'intro.initText'),
     component: Intro,
     icon: <AlignLeftTwo theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'黑屏显示一段文字，用于独白或引出场景'
+    descText: t(tPrefix + 'intro.descText')
   },
   {
     type: commandType.callScene,
-    title: "调用场景",
-    initialText: "callScene:选择场景文件;",
+    title: t(tPrefix + 'changeCallScene.title'),
+    initialText: t(tPrefix + 'changeCallScene.initText'),
     component: ChangeCallScene,
     icon: <CornerRightUp theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'调用一段场景文件，在结束后返回父场景'
+    descText: t(tPrefix + 'changeCallScene.descText')
   },
   {
     type: commandType.changeScene,
-    title: "切换场景",
-    initialText: "changeScene:选择场景文件;",
+    title: t(tPrefix + 'changeScene.title'),
+    initialText: t(tPrefix + 'changeScene.initText'),
     component: ChangeCallScene,
     icon: <SwitchThemes theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'切换到另一个场景文件，并清除当前场景'
+    descText: t(tPrefix + 'changeScene.descText')
   },
   {
     type: commandType.choose,
-    title: "分支选择",
-    initialText: "choose:选项:选择场景文件;",
+    title: t(tPrefix + 'choose.title'),
+    initialText: t(tPrefix + 'choose.initText'),
     component: Choose,
     icon: <ListCheckbox theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'通过选项进入不同的场景'
+    descText: t(tPrefix + 'choose.descText')
   },
   {
     type: commandType.miniAvatar,
-    title: "角落头像",
-    initialText: "miniAvatar:选择小头像;",
+    title: t(tPrefix + 'miniAvatar.title'),
+    initialText: t(tPrefix + 'miniAvatar.initText'),
     component: MiniAvatar,
     icon: <Avatar theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'在对话框的左下角显示一个小头像'
+    descText: t(tPrefix + 'miniAvatar.descText')
   },
   {
     type: commandType.playEffect,
-    title: "效果声音",
-    initialText: "playEffect:选择效果音文件;",
+    title: t(tPrefix + 'soundEffect.descText'),
+    initialText: t(tPrefix + 'soundEffect.descText'),
     component: PlayEffect,
     icon: <Acoustic theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'播放一段效果音'
+    descText: t(tPrefix + 'soundEffect.descText')
   },
   {
     type: commandType.unlockCg,
-    title: "鉴赏图片",
-    initialText: "unlockCg:;",
+    title: t(tPrefix + 'unlockCg.title'),
+    initialText: t(tPrefix + 'unlockCg.initText'),
     component: UnlockExtra,
     icon: <AddPicture theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'添加一张图片到 CG 鉴赏界面'
+    descText: t(tPrefix + 'unlockCg.descText')
   },
   {
     type: commandType.unlockBgm,
-    title: "鉴赏音乐",
-    initialText: "unlockBgm:;",
+    title: t(tPrefix + 'unlockBgm.descText'),
+    initialText: t(tPrefix + 'unlockBgm.descText'),
     component: UnlockExtra,
     icon: <AddMusic theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'添加一首音乐到音乐鉴赏界面'
+    descText: t(tPrefix + 'unlockBgm.descText')
   },
   {
     type: commandType.setTextbox,
-    title: "文本显示",
-    initialText: "setTextbox:hide;",
+    title: t(tPrefix + 'setTextBox.title'),
+    initialText: t(tPrefix + 'setTextBox.initText'),
     component: SetTextbox,
     icon: <AlignTextBottomOne theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'控制是否要显示文本框'
+    descText: t(tPrefix + 'setTextBox.descText')
   },
   {
     type: commandType.end,
-    title: "结束游戏",
-    initialText: "end;",
+    title: t(tPrefix + 'end.title'),
+    initialText: t(tPrefix + 'end.initText'),
     component: End,
     icon: <Logout theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'结束当前游戏并回到标题画面'
+    descText: t(tPrefix + 'end.descText')
   },
   {
     type: commandType.comment,
-    title: "单行注释",
-    initialText: ";注释",
+    title: t(tPrefix + 'comment.title'),
+    initialText: t(tPrefix + 'comment.initText'),
     component: Comment,
     icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText:'添加一行注释'
+    descText: t(tPrefix + 'comment.descText')
   }
 ];
