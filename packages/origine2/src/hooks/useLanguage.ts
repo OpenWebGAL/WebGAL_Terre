@@ -17,7 +17,7 @@ export function getLanguageName(lang: language): string {
   }
 }
 
-export default function useLanguage() {
+export default function useLanguage(): (lang?: language) => void {
   const { i18n } = useTranslation();
   const GlobalStatesRef = useGenSyncRef((state: RootState) => state.status);
   const dispatch = useDispatch();

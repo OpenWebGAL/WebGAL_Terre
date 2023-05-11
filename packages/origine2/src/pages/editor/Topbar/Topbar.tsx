@@ -6,10 +6,14 @@ import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { registerIcons } from "@fluentui/react/lib/Styling";
 import { AndroidLogoIcon } from "@fluentui/react-icons-mdl2";
 import axios from "axios";
-import { setEditMode } from "../../../store/statusReducer";
+import { language, setEditMode } from "../../../store/statusReducer";
 import TerreToggle from "../../../components/terreToggle/TerreToggle";
+import useVarTrans from "@/hooks/useVarTrans";
+import useLanguage from "@/hooks/useLanguage";
 
 export default function TopBar() {
+  const t = useVarTrans('editor.topBar.');
+  const setLanguage = useLanguage();
   const editingGame: string = useSelector((state: RootState) => state.status.editor.currentEditingGame);
 
   const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode); // false 是脚本模式 true 是图形化模式
@@ -27,6 +31,32 @@ export default function TopBar() {
   });
 
   const _items: ICommandBarItemProps[] = [
+    {
+      key: "language",
+      text: t('commandBar.items.language.text'),
+      cacheKey: 'language',
+      iconProps: { iconName: ''},
+      subMenuProps: {
+        items: [
+          {
+            key: 'zhCn',
+            text: '简体中文',
+            onClick() {setLanguage(language.zhCn)} 
+          },
+          {
+            key: 'en',
+            text: 'English',
+            onClick() {setLanguage(language.en)}
+          },
+          {
+            key: 'jp',
+            text: '日本語',
+            onClick() {setLanguage(language.jp)}
+          }
+        ]
+      }
+    },
+
     {
       key: "help",
       text: "制作指南",

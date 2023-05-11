@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import { GamePreview } from "./GamePreview";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/origineStore";
+import useTrans from "@/hooks/useTrans";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -16,6 +17,7 @@ interface IFileInfo {
 }
 
 export default function DashBoard() {
+  const t = useTrans('dashBoard.');
 
   const isDashboardShow:boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
 
@@ -33,7 +35,7 @@ export default function DashBoard() {
   async function createGame(gameName:string) {
     const res = await axios.post("/api/manageGame/createGame", { gameName: gameName }).then(r => r.data);
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`${gameName} 已创建`, 2000);
+    messageRef.current!.showMessage(`${gameName} ` + t('msgs.created'), 2000);
     refreashDashboard();
   }
 
