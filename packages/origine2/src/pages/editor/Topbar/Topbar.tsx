@@ -6,10 +6,14 @@ import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { registerIcons } from "@fluentui/react/lib/Styling";
 import { AndroidLogoIcon } from "@fluentui/react-icons-mdl2";
 import axios from "axios";
-import { setEditMode } from "../../../store/statusReducer";
+import { language, setEditMode } from "../../../store/statusReducer";
 import TerreToggle from "../../../components/terreToggle/TerreToggle";
+import useTrans from "@/hooks/useTrans";
+import useLanguage from "@/hooks/useLanguage";
 
 export default function TopBar() {
+  const t = useTrans('editor.topBar.');
+  const setLanguage = useLanguage();
   const editingGame: string = useSelector((state: RootState) => state.status.editor.currentEditingGame);
 
   const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode); // false 是脚本模式 true 是图形化模式
@@ -28,8 +32,34 @@ export default function TopBar() {
 
   const _items: ICommandBarItemProps[] = [
     {
+      key: "language",
+      text: t('commandBar.items.language.text'),
+      cacheKey: 'language',
+      iconProps: { iconName: 'LocaleLanguage'},
+      subMenuProps: {
+        items: [
+          {
+            key: 'zhCn',
+            text: '简体中文',
+            onClick() {setLanguage(language.zhCn)} 
+          },
+          {
+            key: 'en',
+            text: 'English',
+            onClick() {setLanguage(language.en)}
+          },
+          {
+            key: 'jp',
+            text: '日本語',
+            onClick() {setLanguage(language.jp)}
+          }
+        ]
+      }
+    },
+
+    {
       key: "help",
-      text: "制作指南",
+      text: t('commandBar.items.help.text'),
       cacheKey: "help", // changing this key will invalidate this item's cache
       onClick: () => {
         window.open("https://docs.msfasr.com/guide/", "_blank");
@@ -39,14 +69,14 @@ export default function TopBar() {
 
     {
       key: "release",
-      text: "导出游戏",
+      text: t('commandBar.items.release.text'),
       cacheKey: "release", // changing this key will invalidate this item's cache
       iconProps: { iconName: "PublishContent" },
       subMenuProps: {
         items: [
           {
             key: "export-as-web",
-            text: "导出为网页",
+            text: t('commandBar.items.release.items.web'),
             iconProps: { iconName: "Globe" },
             onClick: () => {
               axios.get(`/api/manageGame/ejectGameAsWeb/${origineStore.getState().status.editor.currentEditingGame}`);
@@ -54,7 +84,7 @@ export default function TopBar() {
           },
           {
             key: "export as exe",
-            text: "导出为可执行文件",
+            text: t('commandBar.items.release.items.exe'),
             iconProps: { iconName: "WindowsLogo" },
             onClick: () => {
               axios.get(`/api/manageGame/ejectGameAsExe/${origineStore.getState().status.editor.currentEditingGame}`);
@@ -62,7 +92,7 @@ export default function TopBar() {
           },
           {
             key: "export as android",
-            text: "导出为安卓工程文件",
+            text: t('commandBar.items.release.items.android'),
             iconProps: { iconName: "AndroidLogo" },
             onClick: () => {
               axios.get(`/api/manageGame/ejectGameAsAndroid/${origineStore.getState().status.editor.currentEditingGame}`);
@@ -78,11 +108,11 @@ export default function TopBar() {
       <div className={styles.editor_title}>WebGAL Origine</div>
     </a>
 
-    <div className={styles.editor_editingGame}>正在编辑：<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
+    <div className={styles.editor_editingGame}>{t('editing')}<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
     <div style={{ display: "flex", justifyItems: "center", padding: '0 0 0 12px' }}>
       <TerreToggle
         isChecked={isCodeMode}
-        title="脚本编辑模式" onText="开启，使用脚本编辑" offText="关闭，使用图形编辑"
+        title={t('editMode.title')} onText={t('editMode.onText')} offText={t('editMode.offText')}
         onChange={handleChange} />
     </div>
 
