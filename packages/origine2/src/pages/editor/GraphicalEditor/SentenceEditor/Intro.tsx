@@ -3,9 +3,11 @@ import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
 import { useValue } from "../../../../hooks/useValue";
 import { cloneDeep } from "lodash";
-import { Button, DefaultButton } from "@fluentui/react";
+import { DefaultButton } from "@fluentui/react";
+import useTrans from "@/hooks/useTrans";
 
 export default function Intro(props: ISentenceEditorProps) {
+  const t = useTrans('editor.graphical.sentences.intro.options.');
   const introTextList = useValue(props.sentence.content.split("|"));
 
   const submit = () => {
@@ -23,7 +25,7 @@ export default function Intro(props: ISentenceEditorProps) {
         }}
         onBlur={submit}
         className={styles.sayInput}
-        placeholder="Intro 文本"
+        placeholder={t('value.title')}
         style={{ width: "100%" }}
       />
       <div style={{padding:'0 0 0 8px'}}/>
@@ -32,7 +34,7 @@ export default function Intro(props: ISentenceEditorProps) {
         newList.splice(index,1);
         introTextList.set(newList);
         submit();
-      }}>删除</DefaultButton>
+      }}>{t('$common.delete')}</DefaultButton>
     </div>;
   });
 
@@ -43,6 +45,6 @@ export default function Intro(props: ISentenceEditorProps) {
       newList.push('');
       introTextList.set(newList);
       submit();
-    }}>添加新行</DefaultButton>
+    }}>{t('add.button')}</DefaultButton>
   </div>;
 }
