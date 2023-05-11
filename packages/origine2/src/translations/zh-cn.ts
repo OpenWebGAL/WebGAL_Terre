@@ -34,10 +34,27 @@ export const zhCn = {
 
     editor: {
         topBar: {
+            editing: '正在编辑：',
+            editMode: {
+                title: '脚本编辑模式',
+                onText: '开启，使用脚本编辑',
+                offText: '关闭，使用图形编辑'
+            },
             commandBar: {
                 items: {
                     language: {
                         text: '语言'
+                    },
+                    help: {
+                        text: '制作指南'
+                    },
+                    release: {
+                        text: "导出游戏",
+                        items: {
+                            web: "导出为网页",
+                            exe: "导出为可执行文件",
+                            android: "导出为安卓工程文件"
+                        }
                     }
                 }
             }
