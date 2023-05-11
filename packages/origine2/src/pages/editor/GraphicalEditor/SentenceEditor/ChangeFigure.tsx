@@ -7,9 +7,10 @@ import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { useEffect } from "react";
 import { Dropdown } from "@fluentui/react";
+import useTrans from "@/hooks/useTrans";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
-
+  const t = useTrans('editor.graphical.sentences.changeFigure.');
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
   const figurePosition = useValue<"left" | "" | "right">("");
@@ -35,17 +36,17 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title="关闭立绘">
+      <CommonOptions key="isNoDialog" title={t("options.close.title")}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            figureFile.set("选择立绘文件");
+            figureFile.set(t("options.close.choose"));
           } else
             figureFile.set("none");
           submit();
-        }} onText="关闭立绘" offText="显示立绘" isChecked={isNoFile} />
+        }} onText={t("options.close.on")} offText={t("options.close.off")} isChecked={isNoFile} />
       </CommonOptions>
       {!isNoFile &&
-        <CommonOptions key="1" title="立绘文件">
+        <CommonOptions key="1" title={t("options.file.title")}>
           <>
             {figureFile.value + "\u00a0\u00a0"}
             <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
@@ -55,23 +56,27 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             extName={[".png", ".jpg", ".webp"]} />
           </>
         </CommonOptions>}
-      <CommonOptions key="2" title="连续执行">
+      <CommonOptions key="2" title={t('$editor.graphical.sentences.common.options.goNext.title')}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
-        }} onText="本句执行后执行下一句" offText="本句执行后等待" isChecked={isGoNext.value} />
+        }} onText={t('$editor.graphical.sentences.common.options.goNext.on')} offText={t('$editor.graphical.sentences.common.options.goNext.off')} isChecked={isGoNext.value} />
       </CommonOptions>
-      <CommonOptions title="立绘位置" key="3">
+      <CommonOptions title={t('options.position.title')} key="3">
         <Dropdown
           selectedKey={figurePosition.value}
-          options={[{ key: "left", text: "左侧" }, { key: "", text: "中间" }, { key: "right", text: "右侧" }]}
+          options={[
+            { key: "left", text: t('options.position.options.left') },
+            { key: "", text: t('options.position.options.center') },
+            { key: "right", text: t('options.position.options.right') }
+          ]}
           onChange={(ev, newValue: any) => {
             figurePosition.set(newValue?.key?.toString() ?? "");
             submit();
           }}
         />
       </CommonOptions>
-      <CommonOptions title="立绘ID（可选）" key="4">
+      <CommonOptions title={t('options.id.title')} key="4">
         <input value={id.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -79,7 +84,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder="立绘 ID"
+          placeholder={t('options.id.id')}
           style={{ width: "100%" }}
         />
       </CommonOptions>

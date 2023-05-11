@@ -6,13 +6,21 @@ import { Add } from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
+import useTrans from "@/hooks/useTrans";
+
+export enum addSentenceType {
+  before,
+  after
+}
 
 interface IAddSentenceProps {
   titleText: string;
+  type: addSentenceType
   onChoose: (newSentence: string) => void;
 }
 
 export default function AddSentence(props: IAddSentenceProps) {
+  const t = useTrans('editor.graphical.components.addSentence.');
   const isShowCallout = useValue(false);
   const addButtonId = useId("addbutton");
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
@@ -43,7 +51,7 @@ export default function AddSentence(props: IAddSentenceProps) {
   const dialogContentProps = {
     type: DialogType.largeHeader,
     title: props.titleText,
-    subText: props.titleText === "添加语句" ? "在场景末尾添加一条语句" : "在所选句子前添加一条语句"
+    subText: props.type ? t('dialogs.add.text.after') : t('dialogs.add.text.before')
   };
 
   return <>
