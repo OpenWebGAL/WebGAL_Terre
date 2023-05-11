@@ -2,6 +2,7 @@ import GameElement from "./GameElement";
 import styles from "./sidebar.module.scss";
 import React, { useState } from "react";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
+import useTrans from "@/hooks/useTrans";
 
 interface ISidebarProps {
   gameList: string[];
@@ -13,9 +14,10 @@ interface ISidebarProps {
 
 
 export default function Sidebar(props: ISidebarProps) {
+  const t = useTrans('dashBoard.');
 
   const [showCreateGameCallout, setShowCreateGameCallout] = useState(false);
-  const [newGameName, setNewGameName] = useState("新的游戏");
+  const [newGameName, setNewGameName] = useState(t('createNewGame.dialog.defaultName') || "新的游戏");
 
   const showGameList = props.gameList.map(e => {
     const checked = props.currentSetGame === e;
@@ -31,11 +33,11 @@ export default function Sidebar(props: ISidebarProps) {
 
   return <div className={styles.sidebar_main}>
     <div className={styles.sidebar_top}>
-      <span className={styles.sidebar_top_title}>游戏列表</span>
+      <span className={styles.sidebar_top_title}>{t('titles.gameList')}</span>
       { /* @ts-ignore} */}
       <span id="new-game-button" onClick={() => {
         setShowCreateGameCallout(!showCreateGameCallout);
-      }} className={styles.createGameButton}>新建游戏</span>
+      }} className={styles.createGameButton}>{t('createNewGame.button')}</span>
       {showCreateGameCallout && <Callout
         className={styles.callout}
         ariaLabelledBy="createNewSceneCallout"
@@ -50,15 +52,15 @@ export default function Sidebar(props: ISidebarProps) {
         style={{ width: "300px", padding: "5px 10px 5px 10px" }}
       >
         <Text block variant="xLarge" className={styles.title}>
-          创建新游戏
+          {t('createNewGame.dialog.title')}
         </Text>
         <div>
           <TextField onChange={(event, newValue) => {
             setNewGameName(newValue ?? "");
-          }} defaultValue="新的游戏" label="新游戏名" />
+          }} defaultValue={t('createNewGame.dialog.defaultName')} label={t('createNewGame.dialog.text')} />
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text="创建" onClick={createNewGame} allowDisabledFocus />
+          <PrimaryButton text={t('$common.create')} onClick={createNewGame} allowDisabledFocus />
         </div>
       </Callout>}
     </div>
