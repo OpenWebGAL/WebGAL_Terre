@@ -7,7 +7,7 @@ import { DefaultButton } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 
 export default function Choose(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.components.choose.');
+  const t = useTrans('editor.graphical.sentences.choose.');
   const chooseItems = useValue(props.sentence.content.split("|").map(e => e.split(":")));
 
   const submit = () => {
