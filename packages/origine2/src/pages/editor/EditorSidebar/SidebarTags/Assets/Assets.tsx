@@ -92,7 +92,8 @@ export default function Assets() {
 
   if (currentDirName === "") {
     currentFileList = currentDirFiles.value.map((fileDesc) => {
-      const currentFileName = dirnameToDisplayNameMap.get(fileDesc.name)() ?? fileDesc.name;
+      const dirName = dirnameToDisplayNameMap.get(fileDesc.name);
+      const currentFileName = dirName ? dirName() : fileDesc.name;
       if(currentFileName === t('folders.scene')) return null;
       return <CommonFileButton
         showOptions={false}
@@ -114,8 +115,8 @@ export default function Assets() {
     });
   } else {
     currentFileList = currentDirFiles.value.map((fileDesc) => {
-
-      const currentFileName = dirnameToDisplayNameMap.get(fileDesc.name) ?? fileDesc.name;
+      const dirName = dirnameToDisplayNameMap.get(fileDesc.name);
+      const currentFileName = dirName ? dirName() : fileDesc.name;
 
       function openChildDir() {
         currentChildDir.set([...currentChildDir.value, fileDesc.name]);
@@ -223,7 +224,7 @@ export default function Assets() {
       </div>
       <div className={assetsStyles.fileList}>
         {currentDirName !== "" && <div style={{ display: "flex", alignItems: "center" }}>
-          {t('supportFileTypes') + currentDirExtName.value.map(e => {
+          {t('supportFileTypes')} {currentDirExtName.value.map(e => {
             return <span key={e} className={assetsStyles.extNameShow}>{e}</span>;
           })}
         </div>

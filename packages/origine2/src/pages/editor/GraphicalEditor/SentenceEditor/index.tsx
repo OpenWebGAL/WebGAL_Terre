@@ -196,11 +196,11 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   },
   {
     type: commandType.setTextbox,
-    title: () => t(tPrefix + 'setTextbox.title'),
-    initialText: () => t(tPrefix + 'setTextbox.initText'),
+    title: () => t(tPrefix + 'setTextBox.title'),
+    initialText: () => t(tPrefix + 'setTextBox.initText'),
     component: SetTextbox,
     icon: <AlignTextBottomOne theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText: () => t(tPrefix + 'setTextbox.descText')
+    descText: () => t(tPrefix + 'setTextBox.descText')
   },
   {
     type: commandType.end,
