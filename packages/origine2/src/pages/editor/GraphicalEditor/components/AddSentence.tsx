@@ -6,18 +6,26 @@ import { Add } from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
+import useTrans from "@/hooks/useTrans";
+
+export enum addSentenceType {
+  forward,
+  backward
+}
 
 interface IAddSentenceProps {
   titleText: string;
+  type: addSentenceType
   onChoose: (newSentence: string) => void;
 }
 
 export default function AddSentence(props: IAddSentenceProps) {
+  const t = useTrans('editor.graphical.components.addSentence.');
   const isShowCallout = useValue(false);
   const addButtonId = useId("addbutton");
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
-      props.onChoose(sentenceConfig.initialText);
+      props.onChoose(sentenceConfig.initialText());
       isShowCallout.set(false);
     }}>
       <div style={{padding:'0 0 4px 0'}}>
@@ -25,10 +33,10 @@ export default function AddSentence(props: IAddSentenceProps) {
       </div>
       <div className={stylesAs.buttonDesc}>
         <div className={stylesAs.title}>
-          {sentenceConfig.title}
+          {sentenceConfig.title()}
         </div>
         <div className={stylesAs.text}>
-          {sentenceConfig.descText}
+          {sentenceConfig.descText()}
         </div>
       </div>
 
@@ -43,7 +51,7 @@ export default function AddSentence(props: IAddSentenceProps) {
   const dialogContentProps = {
     type: DialogType.largeHeader,
     title: props.titleText,
-    subText: props.titleText === "添加语句" ? "在场景末尾添加一条语句" : "在所选句子前添加一条语句"
+    subText: props.type ? t('dialogs.add.text.backward') : t('dialogs.add.text.forward')
   };
 
   return <>

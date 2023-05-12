@@ -7,6 +7,7 @@ import { useId } from "@fluentui/react-hooks";
 import { Callout, DefaultButton } from "@fluentui/react";
 import styles from "./chooseFile.module.scss";
 import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
+import useTrans from "@/hooks/useTrans";
 
 export interface IChooseFile {
   sourceBase: string;
@@ -23,6 +24,7 @@ export interface IFileDescription {
 }
 
 export default function ChooseFile(props: IChooseFile) {
+  const t = useTrans('editor.fileChoose.');
   const currentChildDir = useValue<string[]>([]);
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
@@ -87,7 +89,7 @@ export default function ChooseFile(props: IChooseFile) {
     <DefaultButton
       id={buttonId}
       onClick={isShowChooseFileCallout.value ? onCancel : toggleIsCalloutVisible}
-      text={isShowChooseFileCallout.value ? "取消选择" : "选择文件"}
+      text={isShowChooseFileCallout.value ? t('cancel') : t('choose')}
     />
     {isShowChooseFileCallout.value && (
       <Callout
@@ -100,7 +102,7 @@ export default function ChooseFile(props: IChooseFile) {
       >
         <div className={styles.chooseFileCalloutContentWarpper}>
           <div className={styles.chooseFileCalloutTitle}>
-            选择文件
+            {t('choose')}
           </div>
           <div className={styles.chooseFileFileListWarpper}>
             {currentChildDir.value.length > 0 && (
