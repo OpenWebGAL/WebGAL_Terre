@@ -36,14 +36,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t("options.close.title")}>
+      <CommonOptions key="isNoDialog" title={t("options.hide.title")}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            figureFile.set(t("options.close.choose"));
+            figureFile.set(t("options.hide.choose"));
           } else
             figureFile.set("none");
           submit();
-        }} onText={t("options.close.on")} offText={t("options.close.off")} isChecked={isNoFile} />
+        }} onText={t("options.hide.on")} offText={t("options.hide.off")} isChecked={isNoFile} />
       </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t("options.file.title")}>
@@ -84,7 +84,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('options.id.id')}
+          placeholder={t('options.id.placeholder')}
           style={{ width: "100%" }}
         />
       </CommonOptions>

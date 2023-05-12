@@ -5,8 +5,10 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
+import useTrans from "@/hooks/useTrans";
 
 export default function PlayEffect(props: ISentenceEditorProps) {
+  const t = useTrans('editor.graphical.sentences.soundEffect.options.');
   const fileName = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
@@ -16,16 +18,16 @@ export default function PlayEffect(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title="关闭效果音">
+      <CommonOptions key="isNoDialog" title={t('stop.title')}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            fileName.set("选择效果音文件");
+            fileName.set(t('stop.choose'));
           } else
             fileName.set("none");
           submit();
-        }} onText="关闭效果音" offText="播放效果音" isChecked={isNoFile} />
+        }} onText={t('stop.on')} offText={t('stop.off')} isChecked={isNoFile} />
       </CommonOptions>
-      {!isNoFile &&<CommonOptions key="1" title="效果音文件">
+      {!isNoFile &&<CommonOptions key="1" title={t('file.title')}>
         <>
           {fileName.value + "\u00a0\u00a0"}
           <ChooseFile sourceBase="vocal" onChange={(fileDesc) => {
@@ -35,7 +37,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
           extName={[".mp3", ".ogg", ".wav"]} />
         </>
       </CommonOptions>}
-      <CommonOptions title="效果音 ID（输入以使效果音循环，后面再用这个 id 来关闭）" key="4">
+      <CommonOptions title={t('id.title')} key="4">
         <input value={id.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -43,7 +45,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder="效果音 ID"
+          placeholder={t('id.placeholder')}
           style={{ width: "100%" }}
         />
       </CommonOptions>
