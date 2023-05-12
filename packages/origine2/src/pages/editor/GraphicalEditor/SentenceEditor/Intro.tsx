@@ -25,7 +25,7 @@ export default function Intro(props: ISentenceEditorProps) {
         }}
         onBlur={submit}
         className={styles.sayInput}
-        placeholder={t('value.title')}
+        placeholder={t('value.placeholder')}
         style={{ width: "100%" }}
       />
       <div style={{padding:'0 0 0 8px'}}/>
