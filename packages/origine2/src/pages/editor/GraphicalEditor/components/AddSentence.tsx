@@ -9,8 +9,8 @@ import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import useTrans from "@/hooks/useTrans";
 
 export enum addSentenceType {
-  before,
-  after
+  forward,
+  backward
 }
 
 interface IAddSentenceProps {
@@ -25,7 +25,7 @@ export default function AddSentence(props: IAddSentenceProps) {
   const addButtonId = useId("addbutton");
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
-      props.onChoose(sentenceConfig.initialText);
+      props.onChoose(sentenceConfig.initialText());
       isShowCallout.set(false);
     }}>
       <div style={{padding:'0 0 4px 0'}}>
@@ -33,10 +33,10 @@ export default function AddSentence(props: IAddSentenceProps) {
       </div>
       <div className={stylesAs.buttonDesc}>
         <div className={stylesAs.title}>
-          {sentenceConfig.title}
+          {sentenceConfig.title()}
         </div>
         <div className={stylesAs.text}>
-          {sentenceConfig.descText}
+          {sentenceConfig.descText()}
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export default function AddSentence(props: IAddSentenceProps) {
   const dialogContentProps = {
     type: DialogType.largeHeader,
     title: props.titleText,
-    subText: props.type ? t('dialogs.add.text.after') : t('dialogs.add.text.before')
+    subText: props.type ? t('dialogs.add.text.backward') : t('dialogs.add.text.forward')
   };
 
   return <>
