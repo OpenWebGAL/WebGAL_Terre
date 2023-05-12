@@ -112,6 +112,11 @@ export const zhCn = {
       },
 
       sentences: {
+        say: {
+          title: '普通对话',
+          initText: "角色名，留空以继承上句:对话;",
+          descText: '添加一句对话，可以附带语音',
+        },
         common: {
           options: {
             goNext: {
@@ -121,9 +126,10 @@ export const zhCn = {
             }
           }
         },
-
         bgm: {
-          title: '',
+          title: "背景音乐",
+          initText: "bgm:选择背景音乐;",
+          descText: '启动、切换或停止背景音乐的播放',
           options: {
             stop: {
               title: "停止 BGM",
@@ -137,7 +143,9 @@ export const zhCn = {
           }
         },
         changeBg: {
-          title: '',
+          title: "切换背景",
+          initText: 'changeBg: 选择背景图片;',
+          descText: '切换背景图片',
           options: {
             hide: {
               title: "关闭背景",
@@ -151,7 +159,9 @@ export const zhCn = {
           }
         },
         changeCallScene: {
-          title: '',
+          title: "调用场景",
+          initText: "callScene:选择场景文件;",
+          descText: '调用一段场景文件，在结束后返回父场景',
           options: {
             file: {
               title: "场景文件",
@@ -164,7 +174,9 @@ export const zhCn = {
           }
         },
         changeFigure: {
-          title: '',
+          title: '切换立绘',
+          initText: "changeFigure:选择立绘文件;",
+          descText: '添加或切换指定位置的立绘',
           options: {
             close: {
               title: "关闭立绘",
@@ -189,6 +201,112 @@ export const zhCn = {
             }
           }
         },
+        changeScene: {
+          title: "切换场景",
+          initText: "changeScene:选择场景文件;",
+          descText: '切换到另一个场景文件，并清除当前场景',
+        },
+        setAnime: {
+          title: "设置动画",
+          initText: "setAnimation:选择动画文件;",
+          descText: '为立绘或背景图片设置动画效果',
+        },
+        video: {
+          title: "播放视频",
+          initText: "playVideo:选择视频文件;",
+          descText: '播放一小段视频',
+        },
+        effect: {
+          title: "使用特效",
+          initText: "pixiPerform:snow;",
+          descText: '为当前的舞台添加特殊效果',
+        },
+        clearEffect: {
+          title: "清除特效",
+          initText: "pixiInit;",
+          descText: '清除当前舞台的特殊效果',
+        },
+        intro: {
+          title: "黑屏文字",
+          initText: "intro:;",
+          descText: '黑屏显示一段文字，用于独白或引出场景',
+          options: {
+            value: {
+              title: "Intro 文本",
+            },
+            add: {
+              button: '添加新行'
+            }
+          }
+        },
+        miniAvatar: {
+          title: "角落头像",
+          initText: "miniAvatar:选择小头像;",
+          descText: '在对话框的左下角显示一个小头像',
+          options: {
+            close: {
+              title: "关闭小头像",
+              on: "关闭小头像",
+              off: "展示小头像",
+              choose: '选择小头像'
+            },
+            file: {
+              title: "小头像文件",
+            }
+          }
+        },
+        setTextBox: {
+          title: "文本显示",
+          initText: "setTextbox:hide;",
+          descText: '控制是否要显示文本框',
+        },
+        choose: {
+          title: "分支选择",
+          initText: "choose:选项:选择场景文件;",
+          descText: '通过选项进入不同的场景',
+          delete: '删除本句',
+          option: {
+            name: '选项名称',
+            option: '选项',
+            chooseFile: '选择场景文件'
+          },
+          add: '添加语句',
+        },
+        soundEffect: {
+          title: "效果声音",
+          initText: "playEffect:选择效果音文件;",
+          descText: '播放一段效果音',
+        },
+        unlockCg: {
+          title: "鉴赏图片",
+          initText: "unlockCg:;",
+          descText: '添加一张图片到 CG 鉴赏界面',
+        },
+        unlockBgm: {
+          title: "鉴赏音乐",
+          initText: "unlockBgm:;",
+          descText: '添加一首音乐到音乐鉴赏界面',
+        },
+        comment: {
+          title: "单行注释",
+          initText: ";注释",
+          descText: '添加一行注释',
+          options: {
+            value: {
+              title: "注释",
+              tip: '注释仅在编辑时可见，游戏中不会执行',
+            }
+          }
+        },
+        end: {
+          title: "结束游戏",
+          initText: "end;",
+          descText: '结束当前游戏并回到标题画面',
+          tip: '此指令将结束游戏',
+        },
+        unknown: {
+          title: "未识别"
+        }
       },
 
       components: {
@@ -202,16 +320,6 @@ export const zhCn = {
             }
           }
         },
-
-        choose: {
-          delete: '删除本句',
-          option: {
-            name: '选项名称',
-            option: '选项',
-            chooseFile: '选择场景文件'
-          },
-          add: '添加语句',
-        }
       },
     },
 
