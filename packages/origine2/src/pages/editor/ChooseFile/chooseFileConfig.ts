@@ -1,6 +1,6 @@
 import { t } from 'i18next';
 
-export const dirnameToDisplayNameMap = new Map();
+export const dirnameToDisplayNameMap = new Map<string, () => string>();
 const tPrefix = 'editor.sideBar.assets.folders.';
 
 dirnameToDisplayNameMap.set('animation', () => t(tPrefix + 'animation'));
