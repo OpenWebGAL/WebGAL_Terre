@@ -116,7 +116,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                       <div className={styles.seArea}>
                         <div className={styles.head}>
                           <div className={styles.title}>
-                            {sentenceConfig.title}
+                            {sentenceConfig.title()}
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => deleteOneSentence(i)}>
@@ -125,7 +125,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               {t('delete')}
                             </div>
                           </div>
-                          <AddSentence titleText={t('addBefore')} type={addSentenceType.before}
+                          <AddSentence titleText={t('addForward')} type={addSentenceType.forward}
                             onChoose={(newSentence) => addOneSentence(newSentence, i)} />
                         </div>
                         <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
@@ -138,7 +138,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               })}
               {provided.placeholder}
               <div className={styles.topBar}>
-                <AddSentence titleText={t('add')} type={addSentenceType.after}
+                <AddSentence titleText={t('add')} type={addSentenceType.backward}
                   onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
               </div>
             </div>
