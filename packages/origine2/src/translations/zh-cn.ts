@@ -81,6 +81,29 @@ export const zhCn = {
         }
       },
 
+      assets: {
+        title: '资源管理',
+        supportFileTypes: '当前目录支持的文件类型：',
+        buttons: {
+          createNewFolder: '新建文件夹',
+          openFolder: '打开此游戏的资源文件夹',
+          rename: '重命名',
+          deleteSure: '确认删除',
+          upload: '上传',
+          uploadAsset: '上传资源'
+        },
+        folders: {
+          animation: '动画',
+          background: '背景',
+          bgm: '音乐',
+          figure: '立绘',
+          scene: '场景',
+          tex: '纹理',
+          video: '视频',
+          vocal: '语音'
+        }
+      },
+
       gameConfigs: {
         title: '游戏配置',
         options: {
@@ -104,10 +127,15 @@ export const zhCn = {
       }
     },
 
+    mainArea: {
+      noFileOpened: '目前没有打开任何文件',
+      canNotPreview: '该文件类型不支持预览'
+    },
+
     graphical: {
       buttons: {
         delete: '删除本句',
-        addBefore: '本句前插入句子',
+        addForward: '本句前插入句子',
         add: '添加语句'
       },
 
@@ -116,6 +144,25 @@ export const zhCn = {
           title: '普通对话',
           initText: "角色名，留空以继承上句:对话;",
           descText: '添加一句对话，可以附带语音',
+          options: {
+            speaker: {
+              placeholder: {
+                voiceover: "旁白模式，无角色名",
+                role: "角色名，留空以继承上句"
+              }
+            },
+            dialogue: {
+              placeholder: "对话"
+            },
+            voiceover: {
+              title: "旁白模式",
+              on: "不显示角色名",
+              off: "显示角色名"
+            },
+            vocal: {
+              title: "语音"
+            }
+          }
         },
         common: {
           options: {
@@ -178,7 +225,7 @@ export const zhCn = {
           initText: "changeFigure:选择立绘文件;",
           descText: '添加或切换指定位置的立绘',
           options: {
-            close: {
+            hide: {
               title: "关闭立绘",
               on: "关闭立绘",
               off: '显示立绘',
@@ -197,7 +244,7 @@ export const zhCn = {
             },
             id: {
               title: "立绘ID（可选）",
-              id: "立绘 ID"
+              placeholder: "立绘 ID"
             }
           }
         },
@@ -210,16 +257,68 @@ export const zhCn = {
           title: "设置动画",
           initText: "setAnimation:选择动画文件;",
           descText: '为立绘或背景图片设置动画效果',
+          options: {
+            tips: {
+              set: "提示：先设置立绘/背景，再应用动画，否则找不到目标。",
+              select: "选择一个动画文件以应用，其中 animationTable 是动画定义，不要选择。"
+            },
+            file: {
+              title: "选择动画"
+            },
+            preparedTarget: {
+              title: "使用预设目标",
+              on: "使用预设的作用目标，如果设置了id则不生效",
+              off: "手动输入 ID",
+              choose: {
+                title: "选择预设目标",
+                options: {
+                  figLeft: "左侧立绘",
+                  figCenter: "中间立绘",
+                  figRight: "右侧立绘",
+                  bgMain: "背景图片"
+                }
+              }
+            },
+            targetId: {
+              title: "输入目标 ID",
+              placeholder: "立绘 ID",
+            }
+          }
         },
         video: {
           title: "播放视频",
           initText: "playVideo:选择视频文件;",
           descText: '播放一小段视频',
+          options: {
+            file: {
+              title: "视频文件"
+            }
+          }
         },
         effect: {
           title: "使用特效",
           initText: "pixiPerform:snow;",
           descText: '为当前的舞台添加特殊效果',
+          options: {
+            clear: {
+              title: "清除特效",
+              on: "清除特效",
+              off: "使用特效"
+            },
+            usePrepared: {
+              title: "使用预制特效",
+              on: "使用引擎内置的特效",
+              off: "使用自定义特效",
+              effects: {
+                snow: "下雪",
+                rain: "下雨"
+              }
+            },
+            useUser: {
+              title: "自定义特效名称",
+            },
+
+          }
         },
         clearEffect: {
           title: "清除特效",
@@ -232,7 +331,7 @@ export const zhCn = {
           descText: '黑屏显示一段文字，用于独白或引出场景',
           options: {
             value: {
-              title: "Intro 文本",
+              placeholder: "Intro 文本",
             },
             add: {
               button: '添加新行'
@@ -259,6 +358,13 @@ export const zhCn = {
           title: "文本显示",
           initText: "setTextbox:hide;",
           descText: '控制是否要显示文本框',
+          options: {
+            hide: {
+              title: "隐藏文本框",
+              on: "隐藏文本框",
+              off: "显示文本框"
+            }
+          }
         },
         choose: {
           title: "分支选择",
@@ -276,11 +382,45 @@ export const zhCn = {
           title: "效果声音",
           initText: "playEffect:选择效果音文件;",
           descText: '播放一段效果音',
+          options: {
+            stop: {
+              title: "关闭效果音",
+              on: "关闭效果音",
+              off: "播放效果音",
+              choose: "选择效果音文件"
+            },
+            file: {
+              title: '效果音文件',
+            },
+            id: {
+              title: "效果音 ID（输入以使效果音循环，后面再用这个 id 来关闭）",
+              placeholder: "效果音 ID"
+            }
+          }
         },
         unlockCg: {
           title: "鉴赏图片",
           initText: "unlockCg:;",
           descText: '添加一张图片到 CG 鉴赏界面',
+          options: {
+            tips: {
+              afterEdit: "提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。"
+            },
+            type: {
+              title: "解锁鉴赏类型",
+              options: {
+                cg: "CG",
+                bgm: "BGM"
+              }
+            },
+            file: {
+              title: "鉴赏资源文件"
+            },
+            name: {
+              title: "解锁名称",
+              placeholder: "解锁的 CG 或 BGM 名称"
+            }
+          }
         },
         unlockBgm: {
           title: "鉴赏音乐",
@@ -305,7 +445,13 @@ export const zhCn = {
           tip: '此指令将结束游戏',
         },
         unknown: {
-          title: "未识别"
+          title: "未识别",
+          options: {
+            tip: {
+              title: "未识别的指令",
+              text: '该指令没有被识别，请打开脚本编辑模式以手动编辑'
+            }
+          }
         }
       },
 
@@ -314,12 +460,16 @@ export const zhCn = {
           dialogs: {
             add: {
               text: {
-                before: "在所选句子前添加一条语句",
-                after: '在场景末尾添加一条语句'
+                forward: "在所选句子前添加一条语句",
+                backward: '在场景末尾添加一条语句'
               }
             }
           }
         },
+        template: {
+          title: "编辑组件",
+          text: '在这里放置编辑组件'
+        }
       },
     },
 
