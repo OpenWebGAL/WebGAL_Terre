@@ -5,8 +5,10 @@ import TextEditor from "../TextEditor/TextEditor";
 import ResourceDisplay, { ResourceType } from "../ResourceDisplay/ResourceDisplay";
 import { ITag } from "../../../store/statusReducer";
 import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
+import useTrans from "@/hooks/useTrans";
 
 export default function EditArea() {
+  const t = useTrans('editor.mainArea.');
   const selectedTagTarget = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const tags = useSelector((state: RootState) => state.status.editor.tags);
   const isCodeMode = useSelector((state:RootState)=>state.status.editor.isCodeMode);
@@ -25,7 +27,7 @@ export default function EditArea() {
     else {
       const fileType = getFileType(tag.tagTarget);
       if (!fileType) {
-        return <div>该文件类型不支持预览</div>;
+        return <div>{t('canNotPreview')}</div>;
       }
       return <ResourceDisplay
         isHidden={tag.tagTarget !== selectedTagTarget}
@@ -38,7 +40,7 @@ export default function EditArea() {
   const tagPage = tag ? getTagPage(tag) : "";
 
   return <div className={styles.editArea_main}>
-    {selectedTagTarget === "" && <div className={styles.none_text}>目前没有打开任何文件</div>}
+    {selectedTagTarget === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
     {selectedTagTarget !== "" && tagPage}
   </div>;
 }
