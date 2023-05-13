@@ -110,6 +110,9 @@ export class ManageGameService {
         isThisGameExist = true;
       }
     });
+    // 获取游戏配置
+    const gameConfig = await this.getGameConfig(gameName);
+    // 获取导出目录
     const exportDir = this.webgalFs.getPathFromRoot(
       `/Exported_Games/${gameName}`,
     );
@@ -172,11 +175,10 @@ export class ManageGameService {
         `${androidExportDir}/app/src/main/assets/webgal/game/`,
       );
       // 修改信息
-      const gameConfig = await this.getGameConfig(gameName);
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/settings.gradle`,
         'WebGAL',
-        gameConfig.gameName,
+        gameName,
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/src/main/res/values/strings.xml`,
