@@ -1,7 +1,6 @@
 echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
 # 安装依赖
-npm install yarn -g
-yarn
+npm i
 
 # 清理
 rm -rf release
@@ -10,8 +9,8 @@ mkdir release
 
 # 进入 Terre 目录
 cd packages/terre2
-yarn build
-yarn pkg
+npm run build
+npm run pkg
 cd dist
 cp -r WebGAL_Terre  ../../../release
 rm WebGAL_Terre
@@ -24,14 +23,14 @@ cd ../../
 cd packages/origine2
 # 低内存，使用下一行限制内存使用
 # export NODE_OPTIONS=--max_old_space_size=512000
-yarn build
+npm run build
 cp -rf dist/* ../../release/public/
 cd ../../
 
 # 进入 Electron 目录
 cd packages/WebGAL-electron
-yarn
-yarn build
+npm i
+npm run build
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/linux-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
