@@ -7,8 +7,10 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonTips from "../components/CommonTips";
+import useTrans from "@/hooks/useTrans";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
+  const t = useTrans('editor.graphical.sentences.unlockCg.options.');
 
   const unlockType = useValue(props.sentence.command === commandType.unlockCg ? "unlockCg" : "unlockBgm");
   const fileName = useValue(props.sentence.content);
@@ -22,16 +24,19 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
   };
 
   return <div className={styles.sentenceEditorContent}>
-    <CommonTips text="提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。"/>
+    <CommonTips text={t('tips.afterEdit')}/>
     <div className={styles.editItem}>
-      <CommonOptions key="1" title="解锁鉴赏类型">
-        <Dropdown options={[{ key: "unlockCg", text: "CG" }, { key: "unlockBgm", text: "BGM" }]}
-          selectedKey={unlockType.value} onChange={(event, option) => {
-            unlockType.set(option?.key?.toString() ?? "");
-            submit();
-          }} />
+      <CommonOptions key="1" title={t('type.title')}>
+        <Dropdown options={[
+          { key: "unlockCg", text: t('type.options.cg') }, 
+          { key: "unlockBgm", text: t('type.options.bgm') }
+        ]}
+        selectedKey={unlockType.value} onChange={(event, option) => {
+          unlockType.set(option?.key?.toString() ?? "");
+          submit();
+        }} />
       </CommonOptions>
-      <CommonOptions key="2" title="鉴赏资源文件">
+      <CommonOptions key="2" title={t('file.title')}>
         <>
           {fileName.value}{"\u00a0"}<ChooseFile sourceBase={unlockType.value === "unlockCg" ? "background" : "bgm"}
             onChange={(newFile) => {
@@ -41,7 +46,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
             extName={unlockType.value === "unlockCg" ? [".png", ".jpg", ".webp"] : [".mp3", ".ogg", ".wav"]} />
         </>
       </CommonOptions>
-      <CommonOptions title="解锁名称">
+      <CommonOptions title={t('name.title')}>
         <input value={unlockName.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -50,7 +55,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           style={{ width: "200px" }}
-          placeholder="解锁的 CG 或 BGM 名称"
+          placeholder={t('name.placeholder')}
         />
       </CommonOptions>
     </div>

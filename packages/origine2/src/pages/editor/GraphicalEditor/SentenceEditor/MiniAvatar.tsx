@@ -4,8 +4,10 @@ import styles from "./sentenceEditor.module.scss";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
+import useTrans from "@/hooks/useTrans";
 
 export default function MiniAvatar(props: ISentenceEditorProps) {
+  const t = useTrans('editor.graphical.sentences.miniAvatar.options.');
   const fileName = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const submit = () => {
@@ -14,16 +16,16 @@ export default function MiniAvatar(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title="关闭小头像">
+      <CommonOptions key="isNoDialog" title={t('close.title')}>
         <TerreToggle title="" onChange={(newValue) => {
           if(!newValue){
-            fileName.set('选择小头像');
+            fileName.set(t('close.choose'));
           }else
             fileName.set("none");
           submit();
-        }} onText="关闭小头像" offText="展示小头像" isChecked={isNoFile} />
+        }} onText={t('close.on')} offText={t('close.off')} isChecked={isNoFile} />
       </CommonOptions>
-      {!isNoFile && <CommonOptions key="1" title="小头像文件">
+      {!isNoFile && <CommonOptions key="1" title={t('file.title')}>
         <>
           {fileName.value + "\u00a0\u00a0"}
           <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
