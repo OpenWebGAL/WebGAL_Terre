@@ -4,7 +4,6 @@ import EditorSideBar from "./EditorSidebar/EditorSideBar";
 import EditorSidebarControl from "./EditorSidebar/EditorSidebarControl";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/origineStore";
-import { sidebarTag } from "../../store/statusReducer";
 import MainArea from "./MainArea/MainArea";
 
 export default function Editor() {
