@@ -1,6 +1,7 @@
 echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
 # 安装依赖
-npm i
+npm install yarn -g
+yarn
 
 # 清理
 rm -rf release
@@ -9,8 +10,8 @@ mkdir release
 
 # 进入 Terre 目录
 cd packages/terre2
-npm run build
-npm run pkg
+yarn build
+yarn pkg
 cd dist
 cp -r WebGAL_Terre.exe  ../../../release
 rm WebGAL_Terre.exe
@@ -21,14 +22,14 @@ cd ../../
 
 # 进入 Origine 目录
 cd packages/origine2
-npm run build
+yarn build
 cp -rf dist/* ../../release/public/
 cd ../../
 
 # 进入 Electron 目录
 cd packages/WebGAL-electron
-npm i
-npm run build
+yarn
+yarn build
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
