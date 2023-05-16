@@ -172,8 +172,8 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   },
   {
     type: commandType.playEffect,
-    title: () => t(tPrefix + 'soundEffect.descText'),
-    initialText: () => t(tPrefix + 'soundEffect.descText'),
+    title: () => t(tPrefix + 'soundEffect.title'),
+    initialText: () => t(tPrefix + 'soundEffect.initText'),
     component: PlayEffect,
     icon: <Acoustic theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
     descText: () => t(tPrefix + 'soundEffect.descText')
@@ -188,8 +188,8 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   },
   {
     type: commandType.unlockBgm,
-    title: () => t(tPrefix + 'unlockBgm.descText'),
-    initialText: () => t(tPrefix + 'unlockBgm.descText'),
+    title: () => t(tPrefix + 'unlockBgm.title'),
+    initialText: () => t(tPrefix + 'unlockBgm.initText'),
     component: UnlockExtra,
     icon: <AddMusic theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
     descText: () => t(tPrefix + 'unlockBgm.descText')
