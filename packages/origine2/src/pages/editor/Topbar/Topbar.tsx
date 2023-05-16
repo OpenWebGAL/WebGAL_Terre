@@ -41,17 +41,17 @@ export default function TopBar() {
           {
             key: 'zhCn',
             text: '简体中文',
-            onClick() {setLanguage(language.zhCn)} 
+            onClick() {setLanguage(language.zhCn);}
           },
           {
             key: 'en',
             text: 'English',
-            onClick() {setLanguage(language.en)}
+            onClick() {setLanguage(language.en);}
           },
           {
             key: 'jp',
             text: '日本語',
-            onClick() {setLanguage(language.jp)}
+            onClick() {setLanguage(language.jp);}
           }
         ]
       }
@@ -62,7 +62,7 @@ export default function TopBar() {
       text: t('commandBar.items.help.text'),
       cacheKey: "help", // changing this key will invalidate this item's cache
       onClick: () => {
-        window.open("https://docs.msfasr.com/guide/", "_blank");
+        window.open("https://docs.openwebgal.com/guide/", "_blank");
       },
       iconProps: { iconName: "DocumentSearch" }
     },
