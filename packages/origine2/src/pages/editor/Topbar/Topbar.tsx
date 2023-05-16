@@ -41,17 +41,17 @@ export default function TopBar() {
           {
             key: 'zhCn',
             text: '简体中文',
-            onClick() {setLanguage(language.zhCn)}
+            onClick() {setLanguage(language.zhCn);}
           },
           {
             key: 'en',
             text: 'English',
-            onClick() {setLanguage(language.en)}
+            onClick() {setLanguage(language.en);}
           },
           {
             key: 'jp',
             text: '日本語',
-            onClick() {setLanguage(language.jp)}
+            onClick() {setLanguage(language.jp);}
           }
         ]
       }
