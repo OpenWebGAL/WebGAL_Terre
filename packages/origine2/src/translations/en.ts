@@ -368,7 +368,7 @@ export const en = {
         },
         choose: {
           title: "Choose Branch",
-          initText: "choose: option: Choose a scene file;",
+          initText: "choose: Choose a scene file;",
           descText: 'Turn to different scene by different option',
           delete: 'Delete',
           option: {
