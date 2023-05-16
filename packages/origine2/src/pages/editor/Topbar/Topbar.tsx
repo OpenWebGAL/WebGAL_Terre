@@ -41,7 +41,7 @@ export default function TopBar() {
           {
             key: 'zhCn',
             text: '简体中文',
-            onClick() {setLanguage(language.zhCn)} 
+            onClick() {setLanguage(language.zhCn)}
           },
           {
             key: 'en',
@@ -62,7 +62,7 @@ export default function TopBar() {
       text: t('commandBar.items.help.text'),
       cacheKey: "help", // changing this key will invalidate this item's cache
       onClick: () => {
-        window.open("https://docs.msfasr.com/guide/", "_blank");
+        window.open("https://docs.openwebgal.com/guide/", "_blank");
       },
       iconProps: { iconName: "DocumentSearch" }
     },
