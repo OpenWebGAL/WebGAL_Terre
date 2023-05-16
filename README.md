@@ -18,7 +18,7 @@ https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
 ## 使用说明
 
-https://docs.msfasr.com/guide/
+https://docs.openwebgal.com/guide/
 
 ### 赞助
 
@@ -26,7 +26,7 @@ WebGAL 是一款开源软件，因此你可以免费在 MPL-2.0 开源协议的�
 
 但即便如此，你的赞助也可以给予开发者前进的动力，让这个项目变得更好。
 
-[赞助本项目](https://docs.msfasr.com/sponsor/)
+[赞助本项目](https://docs.openwebgal.com/sponsor/)
 
 ### 更新计划与bug修复
 
