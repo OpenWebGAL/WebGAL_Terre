@@ -10,6 +10,8 @@ import { language, setEditMode } from "../../../store/statusReducer";
 import TerreToggle from "../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
+import IconWrapper from "@/components/iconWrapper/IconWrapper";
+import AndroidIcon from 'material-icon-theme/icons/android.svg';
 
 export default function TopBar() {
   const t = useTrans('editor.topBar.');
@@ -26,7 +28,7 @@ export default function TopBar() {
   // 注册 Android svg 图标
   registerIcons({
     icons: {
-      AndroidLogo: <AndroidLogoIcon style={{ lineHeight: "16px", marginTop: "-4px" }} />
+      AndroidLogo: <IconWrapper src={AndroidIcon}/>
     }
   });
 
@@ -41,17 +43,17 @@ export default function TopBar() {
           {
             key: 'zhCn',
             text: '简体中文',
-            onClick() {setLanguage(language.zhCn)} 
+            onClick() {setLanguage(language.zhCn);}
           },
           {
             key: 'en',
             text: 'English',
-            onClick() {setLanguage(language.en)}
+            onClick() {setLanguage(language.en);}
           },
           {
             key: 'jp',
             text: '日本語',
-            onClick() {setLanguage(language.jp)}
+            onClick() {setLanguage(language.jp);}
           }
         ]
       }
@@ -62,7 +64,7 @@ export default function TopBar() {
       text: t('commandBar.items.help.text'),
       cacheKey: "help", // changing this key will invalidate this item's cache
       onClick: () => {
-        window.open("https://docs.msfasr.com/guide/", "_blank");
+        window.open("https://docs.openwebgal.com/guide/", "_blank");
       },
       iconProps: { iconName: "DocumentSearch" }
     },
