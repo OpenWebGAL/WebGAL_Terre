@@ -82,7 +82,9 @@ export class ManageGameService {
     return {
       gameName: config.Game_name === '' ? 'WebGAL' : config.Game_name,
       packageName:
-        config.Package_name === '' ? 'dev.webgal' : config.Package_name,
+        config.Package_name === ''
+          ? 'com.openwebgal.demo'
+          : config.Package_name,
     };
   }
 
@@ -187,12 +189,12 @@ export class ManageGameService {
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/build.gradle`,
-        'io.github.nini22p.webgal',
+        'com.openwebgal.demo',
         gameConfig.packageName,
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/src/main/java/MainActivity.kt`,
-        'io.github.nini22p.webgal',
+        'com.openwebgal.demo',
         gameConfig.packageName,
       );
       await this.webgalFs.mkdir(
