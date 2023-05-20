@@ -1,9 +1,14 @@
 .item {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 2px 6px 2px 2px;
-  margin: 0 0 0 8px;
+  //border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 6px 8px 6px 8px;
+  //margin: 0 0 0 8px;
   display: flex;
   flex-flow: column;
+  border-radius: 4px;
+}
+
+.item:hover{
+  background: rgba(0,0,0,0.05);
 }
 
 .title {
@@ -14,13 +19,14 @@
   font-size: 95%;
 }
 
-.item:last-child {
-  border-right: none;
-}
-
-.item:first-child {
-  margin: 0 0 0 0;
-}
+//.item:last-child {
+//  border-right: none;
+//}
+//
+//.item:first-child {
+//  border-left: none;
+//  margin: 0 0 0 0;
+//}
 
 .content {
   flex: 1;

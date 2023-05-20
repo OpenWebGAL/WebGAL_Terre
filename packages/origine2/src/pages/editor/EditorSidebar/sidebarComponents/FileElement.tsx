@@ -5,6 +5,8 @@ import { useValue } from "../../../../hooks/useValue";
 import { Callout, Text,  TextField, PrimaryButton, DefaultButton } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import useTrans from "@/hooks/useTrans";
+import documentLogo from 'material-icon-theme/icons/document.svg';
+import IconWrapper from "@/components/iconWrapper/IconWrapper";
 
 export interface IFileElementProps {
   name: string;
@@ -18,8 +20,8 @@ export interface IFileElementProps {
 
 export default function FileElement(props: IFileElementProps) {
   const t = useTrans('editor.sideBar.file.dialogs.');
-  
-  const icon = props.icon ?? <Notes theme="outline" size="24" fill="#333" strokeWidth={3} />;
+
+  const icon = props.icon ?? <IconWrapper src={documentLogo} size={24} iconSize={20}/>;
 
   // 修改文件名部分
   const showEditNameCallout = useValue(false);
