@@ -3,6 +3,12 @@ import audioIcon from "material-icon-theme/icons/audio.svg";
 import videoIcon from "material-icon-theme/icons/video.svg";
 import jsonIcon from "material-icon-theme/icons/json.svg";
 import textIcon from "material-icon-theme/icons/document.svg";
+import folderImageIcon from 'material-icon-theme/icons/folder-images.svg';
+import folderAudioIcon from 'material-icon-theme/icons/folder-audio.svg';
+import folderVideoIcon from 'material-icon-theme/icons/folder-video.svg';
+import folderJsonIcon from 'material-icon-theme/icons/folder-json.svg';
+import folderTextIcon from 'material-icon-theme/icons/folder-docs.svg';
+import folderIcon from 'material-icon-theme/icons/folder.svg';
 
 type FileType = "image" | "video" | "text" | "audio" | "json" | "unknown";
 
@@ -46,20 +52,39 @@ export function getFileIcon(filename: string) {
   }
 }
 
+// Build the mapping
+const fileMappings = new Map<string, FileType>();
+fileMappings.set("animation", "json");
+fileMappings.set("background", "image");
+fileMappings.set("bgm", "audio");
+fileMappings.set("figure", "image");
+fileMappings.set("scene", "text");
+fileMappings.set("tex", "image");
+fileMappings.set("video", "video");
+fileMappings.set("vocal", "audio");
+
+// The function
+function getFileType(path: string): FileType {
+  const splitPath = path.split(/[/\\]/); // handle both '/' and '\'
+  const fileName = splitPath[splitPath.length - 1]; // get the last segment
+  const fileType = fileMappings.get(fileName);
+  return fileType ? fileType : "unknown";
+}
+
 export function getDirIcon(dirName:string){
-  const filetype = extractExtension(dirName);
+  const filetype = getFileType(dirName);
   switch (filetype) {
   case "image":
-    return imageIcon;
+    return folderImageIcon;
   case "audio":
-    return audioIcon;
+    return folderAudioIcon;
   case "video":
-    return videoIcon;
+    return folderVideoIcon;
   case "json" :
-    return jsonIcon;
+    return folderJsonIcon;
   case "text":
-    return textIcon;
+    return folderTextIcon;
   default:
-    return textIcon;
+    return folderIcon;
   }
 }
