@@ -47,7 +47,13 @@
   white-space: nowrap;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
+  //border-bottom: 1px solid rgba(0,0,0,0.1);
+  height: 35px;
+}
+
+.commonFileButton:hover{
+  background: rgba(0,0,0,0.05);
 }
 
 .fileName{
@@ -59,12 +65,18 @@
   margin: 0 0 0 6px;
 }
 
+
 .deleteButton{
-  background:rgba(0,0,0,0.05);
+  //background:rgba(0,0,0,0.05);
   padding: 2px 2px 1px 2px;
   margin: 0 4px 0 0;
   border-radius: 4px;
   transition: all 0.33s;
+  display: none;
+}
+
+.commonFileButton:hover .deleteButton{
+  display: block;
 }
 
 .deleteButton:hover{
