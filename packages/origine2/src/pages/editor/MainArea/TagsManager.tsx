@@ -78,6 +78,11 @@ export default function TagsManager() {
                 // 下面开始书写可拖拽的元素
                 <div
                   onClick={() => selectTag(item.tagTarget)}
+                  onMouseDown={(event:any)=>{
+                    if(event.button === 1){
+                      closeTag(event, item.tagTarget);
+                    }
+                  }}
                   className={item.tagTarget === tagSelected ? `${styles.tag} ${styles.tag_active}` : styles.tag}
                   ref={provided.innerRef}
                   {...provided.draggableProps}

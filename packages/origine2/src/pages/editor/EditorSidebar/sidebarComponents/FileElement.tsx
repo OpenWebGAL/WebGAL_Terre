@@ -21,7 +21,7 @@ export interface IFileElementProps {
 export default function FileElement(props: IFileElementProps) {
   const t = useTrans('editor.sideBar.file.dialogs.');
 
-  const icon = props.icon ?? <IconWrapper src={documentLogo} size={24} iconSize={20}/>;
+  const icon = props.icon ?? <IconWrapper src={documentLogo} size={22} iconSize={20}/>;
 
   // 修改文件名部分
   const showEditNameCallout = useValue(false);
@@ -66,7 +66,7 @@ export default function FileElement(props: IFileElementProps) {
     <div className={styles.fileElement_icon} onClick={clickCallback}>{icon}</div>
     <div className={styles.fileElement_name} onClick={clickCallback}>{props.name}</div>
     <div id={`current_${props.name}`} className={styles.fileElement_interactable_icon} onClick={switchEditNameCallout}>
-      <Editor id={editNameButtonId} theme="outline" size="24" fill="#333" strokeWidth={3} />
+      <Editor id={editNameButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />
       {showEditNameCallout.value && <Callout
         className={styles.callout}
         ariaLabelledBy="editName"
@@ -90,7 +90,7 @@ export default function FileElement(props: IFileElementProps) {
       </Callout>}
     </div>
     <div className={styles.fileElement_interactable_icon} onClick={()=>{showDeleteCalllout.set(!showDeleteCalllout.value);}}>
-      <DeleteOne id={deleteButtonId} theme="outline" size="24" fill="#333" strokeWidth={3} />
+      <DeleteOne id={deleteButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />
       {showDeleteCalllout.value && <Callout
         className={styles.callout}
         ariaLabelledBy="deleteFile"
