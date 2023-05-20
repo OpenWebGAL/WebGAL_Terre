@@ -13,6 +13,8 @@ import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
 import { extractPathAfterPublic } from "../../../ResourceDisplay/ResourceDisplay";
 import useTrans from "@/hooks/useTrans";
+import IconWrapper from "@/components/iconWrapper/IconWrapper";
+import { getDirIcon, getFileIcon } from "@/utils/getFileIcon";
 
 export default function Assets() {
   const t = useTrans('editor.sideBar.assets.');
@@ -161,7 +163,7 @@ export default function Assets() {
       </div>
       <div className={assetsStyles.controlHead}>
         <div className={assetsStyles.controlCommonButton} onClick={goBack}>
-          <LeftSmall theme="outline" size="24" fill="#333" />
+          <LeftSmall theme="outline" strokeWidth={3} size="18" fill="#333" />
         </div>
         <div className={assetsStyles.controlDirnameDisplay}>
           {currentDirName === "" ? "/" : currentDirName}
@@ -170,11 +172,11 @@ export default function Assets() {
           <>
             <div id={buttonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowUploadCallout.set(!isShowUploadCallout.value)}>
-              <Upload theme="outline" size="24" fill="#333" />
+              <Upload theme="outline" size="18" strokeWidth={3} fill="#333" />
             </div>
             <div id={mkdirButtonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowMkdirCallout.set(!isShowMkdirCallout.value)}>
-              <FolderPlus theme="outline" size="24" fill="#333" />
+              <FolderPlus theme="outline" size="18" strokeWidth={3} fill="#333" />
             </div>
           </>
         }
@@ -250,10 +252,8 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
   const deleteButtonId = useId("deleteBtn");
 
   return <div className={assetsStyles.commonFileButton}>
-    {!props.isDir && <Notes onClick={() => props.onClick()} theme="multi-color" size="22"
-      fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />}
-    {props.isDir && <FolderOpen onClick={() => props.onClick()} theme="multi-color" size="22"
-      fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />}
+    {!props.isDir && <IconWrapper src={getFileIcon(props.name)} size={22} iconSize={20}/>}
+    {props.isDir && <IconWrapper src={getDirIcon(props.path)} size={22} iconSize={20}/>}
     <div onClick={() => props.onClick()} className={assetsStyles.fileName}>
       {props.name}
     </div>
@@ -262,12 +262,12 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
         showRenameCallout.set(!showRenameCallout.value);
         newFileName.set(props.name);
       }} id={renameButtonId} className={assetsStyles.deleteButton}>
-        <Editor theme="outline" size="24" fill="#333" strokeWidth={3} />
+        <Editor theme="outline" size="18" fill="#333" strokeWidth={3} />
       </div>
       <div onClick={() => {
         showConformDeleteCallout.set(!showConformDeleteCallout.value);
       }} id={deleteButtonId} className={assetsStyles.deleteButton}>
-        <DeleteOne theme="outline" size="24" fill="#333" strokeWidth={3} />
+        <DeleteOne theme="outline" size="18" fill="#333" strokeWidth={3} />
       </div>
       {showRenameCallout.value && <Callout
         className={assetsStyles.uploadCallout}

@@ -55,7 +55,7 @@ export const zhCn = {
             items: {
               web: "导出为网页",
               exe: "导出为可执行文件",
-              android: "导出为安卓工程文件"
+              android: "导出为安卓项目文件"
             }
           }
         }
