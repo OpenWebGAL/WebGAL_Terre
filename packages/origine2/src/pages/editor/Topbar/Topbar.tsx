@@ -10,6 +10,8 @@ import { language, setEditMode } from "../../../store/statusReducer";
 import TerreToggle from "../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
+import IconWrapper from "@/components/iconWrapper/IconWrapper";
+import AndroidIcon from 'material-icon-theme/icons/android.svg';
 
 export default function TopBar() {
   const t = useTrans('editor.topBar.');
@@ -26,7 +28,7 @@ export default function TopBar() {
   // 注册 Android svg 图标
   registerIcons({
     icons: {
-      AndroidLogo: <AndroidLogoIcon style={{ lineHeight: "16px", marginTop: "-4px" }} />
+      AndroidLogo: <IconWrapper src={AndroidIcon}/>
     }
   });
 
