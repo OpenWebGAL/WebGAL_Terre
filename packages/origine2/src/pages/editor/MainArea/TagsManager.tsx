@@ -5,6 +5,8 @@ import { RootState } from "../../../store/origineStore";
 import { ITag, resetTagOrder, setCurrentTagTarget } from "../../../store/statusReducer";
 import { cloneDeep } from "lodash";
 import { CloseSmall, FileCodeOne } from "@icon-park/react";
+import IconWrapper from "@/components/iconWrapper/IconWrapper";
+import { getFileIcon } from "@/utils/getFileIcon";
 
 export default function TagsManager() {
   // 获取 Tags 数据
@@ -81,8 +83,10 @@ export default function TagsManager() {
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
-                  <FileCodeOne theme="outline" size="18" style={{transform:'translate(0,1px)', padding:'0 4px 0 0'}} fill="#333"/>
-                  {item.tagName}
+                  <IconWrapper src={getFileIcon(item.tagTarget)} size={24} iconSize={18}/>
+                  <div>
+                    {item.tagName}
+                  </div>
                   <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
                     <CloseSmall theme="outline" size="15" fill="#000" strokeWidth={3} />
                   </div>
