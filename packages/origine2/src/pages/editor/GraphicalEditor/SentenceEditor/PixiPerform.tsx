@@ -44,12 +44,12 @@ export default function PixiPerform(props: ISentenceEditorProps) {
       {isUsePreset.value && <CommonOptions title={t('usePrepared.title')} key="3">
         <Dropdown
           selectedKey={effectName.value}
-          options={[{ key: "snow", text: "下雪" }, { key: "rain", text: "下雨" }, { key: "cherryBlossoms", text: "櫻花" }]}
+          options={[{ key: "snow", text: t('usePrepared.effects.snow') }, { key: "rain", text: t('usePrepared.effects.rain') }, { key: "cherryBlossoms",  text: t('usePrepared.effects.cherryBlossoms') }]}
           onChange={(ev, newValue) => {
             effectName.set(newValue?.key?.toString() ?? "");
             submit();
           }}
-          styles={{ dropdown: { width: "80px" } }}
+          styles={{ dropdown: { width: "160px" } }}
         />
       </CommonOptions>}
       {!isUsePreset.value && !isSetEffectsOff.value && < CommonOptions title={t('useUser.title')} key="3">
