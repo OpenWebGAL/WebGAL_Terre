@@ -311,7 +311,8 @@ export const zhCn = {
               off: "使用自定义特效",
               effects: {
                 snow: "下雪",
-                rain: "下雨"
+                rain: "下雨",
+                cherryBlossoms: "櫻花"
               }
             },
             useUser: {
