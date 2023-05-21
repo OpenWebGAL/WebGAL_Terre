@@ -311,7 +311,8 @@ export const jp = {
                 off: "カスタムの特殊効果を使用",
                 effects: {
                   snow: "雪",
-                  rain: "雨"
+                  rain: "雨",
+                  cherryBlossoms: "桜"
                 }
               },
               useUser: {

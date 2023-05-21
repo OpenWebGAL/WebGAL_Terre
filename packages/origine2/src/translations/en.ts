@@ -311,7 +311,8 @@ export const en = {
               off: "Use the effects defined by user",
               effects: {
                 snow: "Snow",
-                rain: "Rain"
+                rain: "Rain",
+                cherryBlossoms: "CherryBlossoms"
               }
             },
             useUser: {
