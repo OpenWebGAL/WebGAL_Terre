@@ -6586,7 +6586,7 @@ wcwidth@^1.0.1:
     defaults "^1.0.3"
 
 "webgal-origine-2@file:D:\\Projects\\WebGAL_Aile\\WebGAL_Terre\\packages\\origine2":
-  version "2.3.18"
+  version "2.3.18.1"
   resolved "file:packages/origine2"
   dependencies:
     "@fluentui/react" "^8.77.3"
@@ -6598,6 +6598,7 @@ wcwidth@^1.0.1:
     cloudlogjs "^1.0.11"
     i18next "^22.4.15"
     lodash "^4.17.21"
+    material-icon-theme "^4.27.0"
     monaco-editor "^0.34.1"
     monaco-editor-textmate "^4.0.0"
     monaco-textmate "^3.0.1"
@@ -6619,7 +6620,7 @@ webgal-parser@^4.3.13-10:
     lodash "^4.17.21"
 
 "webgal-terre-2@file:D:\\Projects\\WebGAL_Aile\\WebGAL_Terre\\packages\\terre2":
-  version "2.3.18"
+  version "2.3.18.1"
   resolved "file:packages/terre2"
   dependencies:
     "@nestjs/common" "^8.0.0"
