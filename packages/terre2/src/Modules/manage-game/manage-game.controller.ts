@@ -15,6 +15,8 @@ import {
 import { Request } from 'express';
 import { ManageGameService } from './manage-game.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { LspService } from '../lsp/lsp.service';
+import { logger } from 'webgal-origine-2/src/utils/logger';
 
 @Controller('api/manageGame')
 export class ManageGameController {
@@ -22,6 +24,7 @@ export class ManageGameController {
     private readonly webgalFs: WebgalFsService,
     private readonly manageGame: ManageGameService,
     private readonly logger: ConsoleLogger,
+    private readonly lspServerce: LspService,
   ) {}
 
   @Get('gameList')
@@ -68,6 +71,16 @@ export class ManageGameController {
     this.manageGame
       .exportGame(gameName, 'electron-windows')
       .then(() => this.logger.log(`${gameName} export as exe`));
+  }
+
+  @Get('ejectGameAsAndroid/*')
+  async ejectGameAsAndroid(@Req() request: Request) {
+    const requestUrl = request.url;
+    // 截取出有关要阅读的目录的信息
+    const gameName = decodeURI(requestUrl.split('ejectGameAsAndroid/')[1]);
+    this.manageGame
+      .exportGame(gameName, 'android')
+      .then(() => this.logger.log(`${gameName} export as android`));
   }
 
   @Get('readGameAssets/*')
@@ -117,6 +130,7 @@ export class ManageGameController {
     const path = this.webgalFs.getPathFromRoot(
       `/public/games/${gameName}/game/scene/${sceneName}`,
     );
+    // await this.lspServerce.updateDocument(sceneName, content.value);
     return await this.webgalFs.updateTextFile(path, content.value);
   }
 
@@ -164,6 +178,7 @@ export class ManageGameController {
 
   @Post('delete')
   async deleteFileOrDir(@Body('source') source: string) {
+    this.logger.log(source);
     return await this.webgalFs.deleteFileOrDirectory(
       this.webgalFs.getPathFromRoot(source),
     );
