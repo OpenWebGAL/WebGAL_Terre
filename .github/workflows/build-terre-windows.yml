@@ -1,5 +1,9 @@
 name: Build and Deploy on Windows
-on: push
+
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -12,11 +16,6 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '16.x'
-    - name: Install Deps
-      shell: bash
-      run: |
-        yarn config set network-timeout 600000
-        yarn
     - name: Build
       shell: bash
       run:  ./release.sh

@@ -4,8 +4,10 @@ import { useValue } from "../../../../hooks/useValue";
 import { cloneDeep } from "lodash";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import { DefaultButton } from "@fluentui/react";
+import useTrans from "@/hooks/useTrans";
 
 export default function Choose(props: ISentenceEditorProps) {
+  const t = useTrans('editor.graphical.sentences.choose.');
   const chooseItems = useValue(props.sentence.content.split("|").map(e => e.split(":")));
 
   const submit = () => {
@@ -21,7 +23,7 @@ export default function Choose(props: ISentenceEditorProps) {
         newList.splice(i,1);
         chooseItems.set(newList);
         submit();
-      }}>删除本句</DefaultButton>
+      }}>{t('delete')}</DefaultButton>
       <input value={item[0]}
         onChange={(ev) => {
           const newValue = ev.target.value;
@@ -31,8 +33,8 @@ export default function Choose(props: ISentenceEditorProps) {
         }}
         onBlur={submit}
         className={styles.sayInput}
-        placeholder="选项名称"
-        style={{ width: "50%", margin: "0 6px 0 0" }}
+        placeholder={t('option.name')}
+        style={{ width: "50%", margin: "0 6px 0 6px" }}
       />
       {
         item[1] + "\u00a0"
@@ -50,9 +52,9 @@ export default function Choose(props: ISentenceEditorProps) {
     {chooseList}
     <DefaultButton onClick={() => {
       const newList = cloneDeep(chooseItems.value);
-      newList.push(["选项", "选择场景文件"]);
+      newList.push(t('option.option', 'option.chooseFile'));
       chooseItems.set(newList);
       submit();
-    }}>添加语句</DefaultButton>
+    }}>{t('add')}</DefaultButton>
   </div>;
 }

@@ -10,7 +10,8 @@ import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
 import { DeleteFive, Sort } from "@icon-park/react";
-import AddSentence from "./components/AddSentence";
+import AddSentence, { addSentenceType } from "./components/AddSentence";
+import useTrans from "@/hooks/useTrans";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -18,6 +19,7 @@ interface IGraphicalEditorProps {
 }
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
+  const t = useTrans('editor.graphical.buttons.');
   const sceneText = useValue("");
   const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
 
@@ -114,16 +116,16 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                       <div className={styles.seArea}>
                         <div className={styles.head}>
                           <div className={styles.title}>
-                            {sentenceConfig.title}
+                            {sentenceConfig.title()}
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => deleteOneSentence(i)}>
-                            <DeleteFive style={{ padding: "0 4px 0 0" }} theme="outline" size="16" fill="#333" />
+                            <DeleteFive style={{ padding: "2px 4px 0 0" }} theme="outline" size="16" fill="#333" />
                             <div>
-                              删除本句
+                              {t('delete')}
                             </div>
                           </div>
-                          <AddSentence titleText="本句前插入句子"
+                          <AddSentence titleText={t('addForward')} type={addSentenceType.forward}
                             onChoose={(newSentence) => addOneSentence(newSentence, i)} />
                         </div>
                         <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
@@ -136,7 +138,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               })}
               {provided.placeholder}
               <div className={styles.topBar}>
-                <AddSentence titleText="添加语句"
+                <AddSentence titleText={t('add')} type={addSentenceType.backward}
                   onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
               </div>
             </div>

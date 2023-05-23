@@ -1,6 +1,6 @@
 import styles from "../sidebarTags.module.scss";
 import { useValue } from "../../../../../hooks/useValue";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../store/origineStore";
 import axios from "axios";
@@ -8,8 +8,10 @@ import { IFileInfo } from "webgal-terre-2/dist/Modules/webgal-fs/webgal-fs.servi
 import FileElement from "../../sidebarComponents/FileElement";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
+import useTrans from "@/hooks/useTrans";
 
 export default function Scenes() {
+  const t = useTrans('editor.sideBar.scenes.');
   const state = useSelector((state: RootState) => state.status.editor);
   const dispatch = useDispatch();
   const currentGameName = state.currentEditingGame;
@@ -96,11 +98,11 @@ export default function Scenes() {
   return (
     <div style={{ height: "100%", overflow: "auto" }}>
       <div className={styles.sidebar_tag_head}>
-        <div className={styles.sidebar_tag_title}>场景管理</div>
+        <div className={styles.sidebar_tag_title}>{t('title')}</div>
         <div className={styles.sidebar_tag_head_button}>
           <PrimaryButton
             id="createSceneButton"
-            text="新建场景"
+            text={t('dialogs.create.button')}
             onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
           />
           {showCreateSceneCallout.value && (
@@ -118,13 +120,13 @@ export default function Scenes() {
               style={{ width: "300px", padding: "5px 10px 5px 10px" }}
             >
               <Text block variant="xLarge" className={styles.title}>
-                创建新场景
+                {t('dialogs.create.title')}
               </Text>
               <div>
-                <TextField defaultValue={newSceneName.value} onChange={updateNewSceneName} label="新场景名" />
+                <TextField defaultValue={newSceneName.value} onChange={updateNewSceneName} label={t('dialogs.create.text')} />
               </div>
               <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
-                <PrimaryButton text="创建" onClick={createNewScene} allowDisabledFocus />
+                <PrimaryButton text={t('$common.create')} onClick={createNewScene} allowDisabledFocus />
               </div>
             </Callout>
           )}

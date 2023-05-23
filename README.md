@@ -1,4 +1,4 @@
-![wgfav-new-min](https://user-images.githubusercontent.com/30483415/172886968-bb6cfcab-a258-45dd-8e17-754373ec01b1.png)
+![WebGAL](https://user-images.githubusercontent.com/30483415/227243167-5ce43420-497a-4049-a621-21a639797abd.png)
 
 # WebGAL_Terre
 
@@ -18,7 +18,24 @@ https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
 ## 使用说明
 
-https://docs.msfasr.com/guide/
+https://docs.openwebgal.com/guide/
+
+### 赞助
+
+WebGAL 是一款开源软件，因此你可以免费在 MPL-2.0 开源协议的范畴下使用本软件，并可用于商业使用。
+
+但即便如此，你的赞助也可以给予开发者前进的动力，让这个项目变得更好。
+
+[赞助本项目](https://docs.openwebgal.com/sponsor/)
+
+
+## Sponsor
+
+| <img src="https://avatars.githubusercontent.com/u/91712707?v=4" alt="T2" style="zoom:25%;" /> |
+| ------------------------------------------------------------ |
+| [T2-official(T2)](https://github.com/T2-official)            |
+
+
 
 ### 更新计划与bug修复
 

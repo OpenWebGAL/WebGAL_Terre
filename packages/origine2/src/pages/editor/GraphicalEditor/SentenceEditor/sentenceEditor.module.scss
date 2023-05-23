@@ -10,6 +10,8 @@
   align-items: stretch;
   margin: 4px 0 0 0;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .flex1 {
@@ -31,14 +33,14 @@
 .sayArea {
   background: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.075);
-  width: 100%;
+  width: 90%;
   font-family: inherit;
-  color: inherit;
   box-shadow: none;
   outline: none;
   resize: none;
   padding: 6px 6px 6px 6px;
   border-radius: 4px;
   font-size: 90%;
-  height: 2em;
+  height: 2.5em;
+  color: black;
 }

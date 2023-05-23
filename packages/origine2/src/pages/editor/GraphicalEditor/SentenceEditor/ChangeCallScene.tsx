@@ -5,8 +5,10 @@ import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import { useValue } from "../../../../hooks/useValue";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
+import useTrans from "@/hooks/useTrans";
 
 export default function ChangeCallScene(props: ISentenceEditorProps) {
+  const t = useTrans('editor.graphical.sentences.changeCallScene.');
   const isCallScene = useValue(props.sentence.command === commandType.callScene);
   const fileName = useValue(props.sentence.content);
   const submit = () => {
@@ -15,7 +17,7 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="1" title="场景文件">
+      <CommonOptions key="1" title={t('options.file.title')}>
         <>
           {fileName.value}{'\u00a0'}
           <ChooseFile sourceBase="scene" onChange={(file) => {
@@ -24,12 +26,12 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
           }} extName={[".txt"]} />
         </>
       </CommonOptions>
-      <CommonOptions key="1" title="调用/切换场景">
+      <CommonOptions key="1" title={t('options.call.title')}>
         <TerreToggle title="" onChange={(newValue) => {
           isCallScene.set(newValue);
           submit();
-        }} onText="调用场景，新场景结束后返回父场景"
-        offText="切换场景，新场景直接替换父场景" isChecked={isCallScene.value} />
+        }} onText={t('options.call.on')}
+        offText={t('options.call.off')} isChecked={isCallScene.value} />
       </CommonOptions>
     </div>
   </div>;

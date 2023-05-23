@@ -12,8 +12,12 @@ import { useId } from "@fluentui/react-hooks";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
 import { extractPathAfterPublic } from "../../../ResourceDisplay/ResourceDisplay";
+import useTrans from "@/hooks/useTrans";
+import IconWrapper from "@/components/iconWrapper/IconWrapper";
+import { getDirIcon, getFileIcon } from "@/utils/getFileIcon";
 
 export default function Assets() {
+  const t = useTrans('editor.sideBar.assets.');
 
   function open_assets() {
     axios.get(`/api/manageGame/openGameAssetsDict/${origineStore.getState().status.editor.currentEditingGame}`).then();
@@ -90,8 +94,9 @@ export default function Assets() {
 
   if (currentDirName === "") {
     currentFileList = currentDirFiles.value.map((fileDesc) => {
-      const currentFileName = dirnameToDisplayNameMap.get(fileDesc.name) ?? fileDesc.name;
-      if(currentFileName === '场景') return null;
+      const dirName = dirnameToDisplayNameMap.get(fileDesc.name);
+      const currentFileName = dirName ? dirName() : fileDesc.name;
+      if(currentFileName === t('folders.scene')) return null;
       return <CommonFileButton
         showOptions={false}
         key={fileDesc.path}
@@ -112,8 +117,8 @@ export default function Assets() {
     });
   } else {
     currentFileList = currentDirFiles.value.map((fileDesc) => {
-
-      const currentFileName = dirnameToDisplayNameMap.get(fileDesc.name) ?? fileDesc.name;
+      const dirName = dirnameToDisplayNameMap.get(fileDesc.name);
+      const currentFileName = dirName ? dirName() : fileDesc.name;
 
       function openChildDir() {
         currentChildDir.set([...currentChildDir.value, fileDesc.name]);
@@ -151,14 +156,14 @@ export default function Assets() {
   return (
     <div style={{ height: "100%", overflow: "auto", display: "flex", flexFlow: "column" }}>
       <div className={assetsStyles.assetsHead}>
-        <div className={styles.sidebar_tag_title}>资源管理</div>
+        <div className={styles.sidebar_tag_title}>{t('title')}</div>
         <div className={styles.open_assets} onClick={open_assets}>
-          打开此游戏的资源文件夹
+          {t('buttons.openFolder')}
         </div>
       </div>
       <div className={assetsStyles.controlHead}>
         <div className={assetsStyles.controlCommonButton} onClick={goBack}>
-          <LeftSmall theme="outline" size="24" fill="#333" />
+          <LeftSmall theme="outline" strokeWidth={3} size="18" fill="#333" />
         </div>
         <div className={assetsStyles.controlDirnameDisplay}>
           {currentDirName === "" ? "/" : currentDirName}
@@ -167,11 +172,11 @@ export default function Assets() {
           <>
             <div id={buttonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowUploadCallout.set(!isShowUploadCallout.value)}>
-              <Upload theme="outline" size="24" fill="#333" />
+              <Upload theme="outline" size="18" strokeWidth={3} fill="#333" />
             </div>
             <div id={mkdirButtonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowMkdirCallout.set(!isShowMkdirCallout.value)}>
-              <FolderPlus theme="outline" size="24" fill="#333" />
+              <FolderPlus theme="outline" size="18" strokeWidth={3} fill="#333" />
             </div>
           </>
         }
@@ -185,7 +190,7 @@ export default function Assets() {
             setInitialFocus
           >
             <Text as="h1" block variant="xLarge" className={styles.title}>
-              上传资源
+              {t('buttons.uploadAsset')}
             </Text>
             <FileUploader onUpload={() => {
               isShowUploadCallout.set(false);
@@ -207,21 +212,21 @@ export default function Assets() {
             setInitialFocus
           >
             <Text as="h1" block variant="xLarge" className={styles.title}>
-              新建文件夹
+              {t('buttons.createNewFolder')}
             </Text>
             <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
               <TextField value={newDirName.value} onChange={(ev, val) => {
                 newDirName.set(val ?? "");
               }} />
               <br />
-              <PrimaryButton onClick={handleCreatNewDir}>创建</PrimaryButton>
+              <PrimaryButton onClick={handleCreatNewDir}>{t('$common.create')}</PrimaryButton>
             </div>
           </Callout>
         )}
       </div>
       <div className={assetsStyles.fileList}>
         {currentDirName !== "" && <div style={{ display: "flex", alignItems: "center" }}>
-          当前目录支持的文件类型：{currentDirExtName.value.map(e => {
+          {t('supportFileTypes')} {currentDirExtName.value.map(e => {
             return <span key={e} className={assetsStyles.extNameShow}>{e}</span>;
           })}
         </div>
@@ -238,6 +243,7 @@ export default function Assets() {
  * @constructor
  */
 function CommonFileButton(props: IFileDescription & { showOptions: boolean, onClick: Function, onRename: (newName: string) => void, onDelete: () => void }) {
+  const t = useTrans('editor.sideBar.assets.');
 
   const showConformDeleteCallout = useValue(false);
   const showRenameCallout = useValue(false);
@@ -246,10 +252,8 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
   const deleteButtonId = useId("deleteBtn");
 
   return <div className={assetsStyles.commonFileButton}>
-    {!props.isDir && <Notes onClick={() => props.onClick()} theme="multi-color" size="22"
-      fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />}
-    {props.isDir && <FolderOpen onClick={() => props.onClick()} theme="multi-color" size="22"
-      fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />}
+    {!props.isDir && <IconWrapper src={getFileIcon(props.name)} size={22} iconSize={20}/>}
+    {props.isDir && <IconWrapper src={getDirIcon(props.path)} size={22} iconSize={20}/>}
     <div onClick={() => props.onClick()} className={assetsStyles.fileName}>
       {props.name}
     </div>
@@ -258,12 +262,12 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
         showRenameCallout.set(!showRenameCallout.value);
         newFileName.set(props.name);
       }} id={renameButtonId} className={assetsStyles.deleteButton}>
-        <Editor theme="outline" size="24" fill="#333" strokeWidth={3} />
+        <Editor theme="outline" size="18" fill="#333" strokeWidth={3} />
       </div>
       <div onClick={() => {
         showConformDeleteCallout.set(!showConformDeleteCallout.value);
       }} id={deleteButtonId} className={assetsStyles.deleteButton}>
-        <DeleteOne theme="outline" size="24" fill="#333" strokeWidth={3} />
+        <DeleteOne theme="outline" size="18" fill="#333" strokeWidth={3} />
       </div>
       {showRenameCallout.value && <Callout
         className={assetsStyles.uploadCallout}
@@ -277,7 +281,7 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
         setInitialFocus
       >
         <Text as="h1" block variant="xLarge" className={styles.title}>
-          重命名
+          {t('buttons.rename')}
         </Text>
         <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
           <TextField value={newFileName.value} onChange={(ev, val) => {
@@ -287,7 +291,7 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
           <PrimaryButton onClick={() => {
             props.onRename(newFileName.value);
             showRenameCallout.set(false);
-          }}>重命名</PrimaryButton>
+          }}>{t('buttons.rename')}</PrimaryButton>
         </div>
       </Callout>}
       {showConformDeleteCallout.value && <Callout
@@ -301,13 +305,13 @@ function CommonFileButton(props: IFileDescription & { showOptions: boolean, onCl
         setInitialFocus
       >
         <Text as="h1" block variant="xLarge" className={styles.title}>
-          删除
+          {t('$common.delete')}
         </Text>
         <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
           <PrimaryButton onClick={() => {
             props.onDelete();
             showConformDeleteCallout.set(false);
-          }}>确认删除</PrimaryButton>
+          }}>{t('buttons.deleteSure')}</PrimaryButton>
         </div>
       </Callout>}
     </>}
@@ -321,6 +325,8 @@ interface IFileUploaderProps {
 }
 
 function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderProps) {
+  const t = useTrans('editor.sideBar.assets.');
+
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -346,7 +352,7 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderPro
       <div>
         <input className={assetsStyles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
       </div>
-      <button className={assetsStyles.fileSelectButton} onClick={handleUpload}>上传</button>
+      <button className={assetsStyles.fileSelectButton} onClick={handleUpload}>{t('buttons.upload')}</button>
     </div>
   );
 }
