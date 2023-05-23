@@ -1,7 +1,7 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "2.3.12",
+  "version": "2.3.18.1",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
@@ -12,12 +12,15 @@
   },
   "dependencies": {
     "@fluentui/react": "^8.77.3",
+    "@fluentui/react-icons-mdl2": "^1.3.41",
     "@icon-park/react": "^1.4.2",
     "@monaco-editor/react": "^4.4.5",
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.27.2",
     "cloudlogjs": "^1.0.11",
+    "i18next": "^22.4.15",
     "lodash": "^4.17.21",
+    "material-icon-theme": "^4.27.0",
     "monaco-editor": "^0.34.1",
     "monaco-editor-textmate": "^4.0.0",
     "monaco-textmate": "^3.0.1",
@@ -25,9 +28,10 @@
     "react": "^18.0.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^18.0.0",
+    "react-i18next": "^12.2.2",
     "react-redux": "^8.0.1",
     "sass": "^1.51.0",
-    "webgal-parser": "^4.3.11-1"
+    "webgal-parser": "^4.3.13-10"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",

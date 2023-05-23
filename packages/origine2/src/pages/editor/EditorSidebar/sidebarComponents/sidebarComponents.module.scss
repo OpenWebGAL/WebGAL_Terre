@@ -1,17 +1,26 @@
 .fileElement {
-  display: flex;
-  justify-items: center;
-  padding: 3px 5px 3px 5px;
-  box-sizing: border-box;
-  margin: 1px 2px 1px 2px;
-  border-radius: 3px;
+  padding: 5px 5px 5px 10px;
+  margin: 5px 0 0 0;
+  //background: rgba(0, 0, 0, 0.05);
+  //border-radius: 4px;
+  flex: 1;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  border-radius: 4px;
+  //border-bottom: 1px solid rgba(0,0,0,0.1);
+  height: 25px;
 }
 
 .fileElement:hover{
-  box-shadow: 0 0 5px rgba(0,0,0,0.15);
-  padding: 2px 4px 2px 4px;
-  border: 1px solid rgba(0,0,0,0.15);
+  //box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  //padding: 2px 4px 2px 4px;
+  //border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.05);
 }
 
 .fileElement_name{
@@ -25,7 +34,6 @@
   margin: 1px 1px 1px 1px;
   box-sizing: border-box;
 }
-
 .fileElement_interactable_icon{
   box-sizing: border-box;
   padding: 2px 3px 1px 2px;
@@ -33,6 +41,10 @@
   border-radius: 4px;
   transition: all 0.33s;
   cursor: pointer;
+  display: none;
+}
+.fileElement:hover .fileElement_interactable_icon{
+  display: block;
 }
 
 .fileElement_interactable_icon:hover{
