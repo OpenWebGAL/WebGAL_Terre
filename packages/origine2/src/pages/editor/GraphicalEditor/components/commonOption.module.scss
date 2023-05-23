@@ -1,0 +1,36 @@
+.item {
+  //border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 6px 8px 6px 8px;
+  //margin: 0 0 0 8px;
+  display: flex;
+  flex-flow: column;
+  border-radius: 4px;
+}
+
+.item:hover{
+  background: rgba(0,0,0,0.05);
+}
+
+.title {
+  text-align: left;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 0 0 5px 0;
+  font-weight: bold;
+  font-size: 95%;
+}
+
+//.item:last-child {
+//  border-right: none;
+//}
+//
+//.item:first-child {
+//  border-left: none;
+//  margin: 0 0 0 0;
+//}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}

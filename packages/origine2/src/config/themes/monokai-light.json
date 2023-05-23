@@ -1,6 +1,6 @@
 {
     "inherit": false,
-    "base": "vs-dark",
+    "base": "vs",
     "colors": {
         "editor.background": "#fafafa",
         "editor.lineHighlightBackground": "#e6e3c3",
