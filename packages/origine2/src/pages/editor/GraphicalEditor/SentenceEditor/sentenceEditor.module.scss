@@ -1,0 +1,46 @@
+.sentenceEditorContent {
+  display: flex;
+  align-items: flex-start;
+  flex-flow: column;
+}
+
+.editItem {
+  display: flex;
+  //align-items: center;
+  align-items: stretch;
+  margin: 4px 0 0 0;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.sayInput {
+  box-shadow: none;
+  appearance: none;
+  outline: none;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  padding: 6px 6px 6px 6px;
+  border-radius: 4px;
+  font-size: 90%;
+  width: 35%;
+}
+
+.sayArea {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  width: 90%;
+  font-family: inherit;
+  box-shadow: none;
+  outline: none;
+  resize: none;
+  padding: 6px 6px 6px 6px;
+  border-radius: 4px;
+  font-size: 90%;
+  height: 2.5em;
+  color: black;
+}
