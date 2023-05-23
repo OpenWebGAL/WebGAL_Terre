@@ -22,9 +22,9 @@
     "pkg": "cd dist && pkg main.js -o WebGAL_Terre"
   },
   "dependencies": {
-    "@nestjs/common": "^8.0.0",
+    "@nestjs/common": "^9.0.5",
     "@nestjs/core": "^9.0.5",
-    "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/platform-express": "^9.0.5",
     "@nestjs/serve-static": "^2.2.2",
     "open": "^8.4.0",
     "reflect-metadata": "^0.1.13",
