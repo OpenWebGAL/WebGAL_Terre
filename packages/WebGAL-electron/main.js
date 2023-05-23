@@ -1,4 +1,4 @@
-const {app, BrowserWindow, Menu} = require('electron');
+const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
 
 /**
  * 关闭默认菜单栏
@@ -26,6 +26,11 @@ const createWindow = () => {
     })
 
     win.loadFile('./public/index.html').then(r => console.log(r));
+
+    // 注册快捷键 Ctrl + F12 切换开发者工具
+    globalShortcut.register("Ctrl+F12", () => {
+        win.isFocused() && win.webContents.toggleDevTools();
+    });
 }
 
 /**
