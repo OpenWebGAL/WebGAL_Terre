@@ -11,6 +11,11 @@ export enum sidebarTag {
   assets,
   scenes
 }
+export enum language {
+  zhCn,
+  en,
+  jp,
+}
 
 export interface ITag {
   // tag显示的名称
@@ -26,6 +31,8 @@ interface IEditorState {
   currentSidebarTag: sidebarTag
   tags: Array<ITag>,
   selectedTagTarget: string,
+  isCodeMode: boolean,
+  language: language
 }
 
 // tag的假数据，用于测试
@@ -41,7 +48,9 @@ export const editorInitState: IEditorState = {
   showPreview: true,
   currentSidebarTag: sidebarTag.gameconfig,
   tags: [],
-  selectedTagTarget: ""
+  selectedTagTarget: "",
+  isCodeMode: (localStorage.getItem("isCodeMode") ?? "") === "true",
+  language: language.zhCn
 };
 
 const initialState = {
@@ -58,7 +67,7 @@ const statusSlice = createSlice({
      * @param state
      * @param action
      */
-    setDashboardShow: function(state, action: PayloadAction<boolean>) {
+    setDashboardShow: function (state, action: PayloadAction<boolean>) {
       state.dashboard.showDashBoard = action.payload;
     },
     /**
@@ -66,7 +75,7 @@ const statusSlice = createSlice({
      * @param state
      * @param action
      */
-    setEditingGame: function(state, action: PayloadAction<string>) {
+    setEditingGame: function (state, action: PayloadAction<string>) {
       state.editor.currentEditingGame = action.payload;
     },
     /**
@@ -74,7 +83,7 @@ const statusSlice = createSlice({
      * @param state
      * @param action
      */
-    setEditorPreviewShow: function(state, action: PayloadAction<boolean>) {
+    setEditorPreviewShow: function (state, action: PayloadAction<boolean>) {
       state.editor.showPreview = action.payload;
     },
     /**
@@ -82,7 +91,7 @@ const statusSlice = createSlice({
      * @param state
      * @param action
      */
-    setEditorSidebarTag: function(state, action: PayloadAction<sidebarTag>) {
+    setEditorSidebarTag: function (state, action: PayloadAction<sidebarTag>) {
       state.editor.currentSidebarTag = action.payload;
     },
     /**
@@ -90,7 +99,7 @@ const statusSlice = createSlice({
      * @param state
      * @param action
      */
-    resetTagOrder: function(state, action: PayloadAction<Array<ITag>>) {
+    resetTagOrder: function (state, action: PayloadAction<Array<ITag>>) {
       state.editor.tags = action.payload;
     },
     /**
@@ -98,7 +107,7 @@ const statusSlice = createSlice({
      * @param state
      * @param action
      */
-    setCurrentTagTarget: function(state, action: PayloadAction<string>) {
+    setCurrentTagTarget: function (state, action: PayloadAction<string>) {
       state.editor.selectedTagTarget = action.payload;
     },
     /**
@@ -106,9 +115,27 @@ const statusSlice = createSlice({
      * @param state
      * @param action
      */
-    addEditAreaTag: function(state, action: PayloadAction<ITag>) {
+    addEditAreaTag: function (state, action: PayloadAction<ITag>) {
       state.editor.tags.push(action.payload);
-    }
+    },
+    /**
+     * 设置是否是 code 模式
+     * @param state
+     * @param action
+     */
+    setEditMode: function (state, action: PayloadAction<boolean>) {
+      localStorage.setItem("isCodeMode", action.payload.toString());
+      state.editor.isCodeMode = action.payload;
+    },
+    /**
+     * 设置语言
+     * @param state
+     * @param action 
+     */
+    setLanguage: (state, action: PayloadAction<language>) => {
+      state.editor.language = action.payload;
+      window?.localStorage?.setItem('editor-lang', action.payload.toString());
+    },
   }
 });
 
@@ -118,7 +145,9 @@ export const {
   setEditorPreviewShow,
   setEditorSidebarTag,
   resetTagOrder,
-  setCurrentTagTarget
+  setCurrentTagTarget,
+  setEditMode,
+  setLanguage
 } = statusSlice.actions;
 
 export const statusActions = statusSlice.actions;
