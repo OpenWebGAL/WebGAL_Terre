@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styles from "./tagsManager.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { ITag, resetTagOrder, setCurrentTagTarget } from "../../../store/statusReducer";
 import { cloneDeep } from "lodash";
-import { CloseSmall } from "@icon-park/react";
+import { CloseSmall, FileCodeOne } from "@icon-park/react";
+import IconWrapper from "@/components/iconWrapper/IconWrapper";
+import { getFileIcon } from "@/utils/getFileIcon";
 
 export default function TagsManager() {
   // 获取 Tags 数据
@@ -77,12 +78,20 @@ export default function TagsManager() {
                 // 下面开始书写可拖拽的元素
                 <div
                   onClick={() => selectTag(item.tagTarget)}
+                  onMouseDown={(event:any)=>{
+                    if(event.button === 1){
+                      closeTag(event, item.tagTarget);
+                    }
+                  }}
                   className={item.tagTarget === tagSelected ? `${styles.tag} ${styles.tag_active}` : styles.tag}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
-                  {item.tagName}
+                  <IconWrapper src={getFileIcon(item.tagTarget)} size={24} iconSize={18}/>
+                  <div>
+                    {item.tagName}
+                  </div>
                   <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
                     <CloseSmall theme="outline" size="15" fill="#000" strokeWidth={3} />
                   </div>
