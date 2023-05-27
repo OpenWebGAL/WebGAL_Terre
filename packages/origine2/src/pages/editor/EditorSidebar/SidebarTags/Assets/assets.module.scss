@@ -31,13 +31,15 @@
 
 .controlDirnameDisplay {
   padding: 0 0 0 10px;
+  font-family: Consolas, "Courier New", monospace;
   //background: rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   flex: 1;
   font-size: 14px;
   height: 25px;
-  line-height: 22px;
+  line-height: 25px;
+  letter-spacing: .01em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -62,11 +64,11 @@
   height: 25px;
 }
 
-.commonFileButton:hover{
-  background: rgba(0,0,0,0.05);
+.commonFileButton:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 
-.fileName{
+.fileName {
   flex: 1;
   cursor: pointer;
   overflow: hidden;
@@ -76,7 +78,7 @@
 }
 
 
-.deleteButton{
+.deleteButton {
   //background:rgba(0,0,0,0.05);
   padding: 2px 2px 1px 2px;
   margin: 0 4px 0 0;
@@ -85,12 +87,12 @@
   display: none;
 }
 
-.commonFileButton:hover .deleteButton{
+.commonFileButton:hover .deleteButton {
   display: block;
 }
 
-.deleteButton:hover{
-  background: rgba(0,0,0,0.1);
+.deleteButton:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .fileList {
@@ -99,7 +101,7 @@
   padding: 0 3px 0 0;
 }
 
-.uploadCallout{
+.uploadCallout {
   padding: 3px 9px 9px 9px;
   display: flex;
   flex-flow: column;
@@ -148,8 +150,8 @@
   box-shadow: 0 0 0 2px rgba(0, 90, 158, 0.2);
 }
 
-.extNameShow{
-  background: rgba(0,120,212,0.1);
+.extNameShow {
+  background: rgba(0, 120, 212, 0.1);
   color: #0078D4;
   padding: 1px 5px 4px 5px;
   border-radius: 4px;

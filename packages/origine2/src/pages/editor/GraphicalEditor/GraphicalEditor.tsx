@@ -121,7 +121,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => deleteOneSentence(i)}>
-                            <DeleteFive strokeWidth={3} style={{ padding: "1px 4px 0 0" }} theme="outline" size="16"
+                            <DeleteFive strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"
                               fill="#333" />
                             <div>
                               {t("delete")}
@@ -129,8 +129,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                           <AddSentence titleText={t("addForward")} type={addSentenceType.forward}
                             onChoose={(newSentence) => addOneSentence(newSentence, i)} />
-                          <AddSentence titleText={t("add")} type={addSentenceType.backward}
-                            onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
                         </div>
                         <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
                           updateSentenceByIndex(newSentence, i);
@@ -141,7 +139,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 </Draggable>;
               })}
               {provided.placeholder}
-              <div className={styles.topBar}>
+              <div className={styles.addWrapper}>
                 <AddSentence titleText={t("add")} type={addSentenceType.backward}
                   onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
               </div>
