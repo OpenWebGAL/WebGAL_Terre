@@ -128,7 +128,7 @@ export default function Scenes() {
           </div>
         </Callout>
       )}</>}/>
-      <div style={{ overflow: "auto", maxHeight: "calc(100% - 45px)" }}>{showSceneList}</div>
+      <div style={{ overflow: "auto", maxHeight: "calc(100% - 35px)" }}>{showSceneList}</div>
     </div>
   );
 }
