@@ -81,3 +81,11 @@
   //border-bottom: 2px solid rgba(0,0,0,0.1);
   //box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.addWrapper{
+  display: flex;
+  align-items: center;
+  padding: 30px 16px 30px 16px;
+  box-sizing: border-box;
+  justify-content: center;
+}
