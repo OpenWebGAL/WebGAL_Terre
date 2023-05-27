@@ -1,11 +1,11 @@
-import { DeleteOne, Editor, Notes } from "@icon-park/react";
+import { DeleteOne, Editor } from "@icon-park/react";
 import { ReactElement } from "react";
 import styles from "./sidebarComponents.module.scss";
 import { useValue } from "../../../../hooks/useValue";
-import { Callout, Text,  TextField, PrimaryButton, DefaultButton } from "@fluentui/react";
+import { Callout, DefaultButton, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import useTrans from "@/hooks/useTrans";
-import documentLogo from 'material-icon-theme/icons/document.svg';
+import documentLogo from "material-icon-theme/icons/document.svg";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 
 export interface IFileElementProps {
@@ -19,9 +19,9 @@ export interface IFileElementProps {
 
 
 export default function FileElement(props: IFileElementProps) {
-  const t = useTrans('editor.sideBar.file.dialogs.');
+  const t = useTrans("editor.sideBar.file.dialogs.");
 
-  const icon = props.icon ?? <IconWrapper src={documentLogo} size={22} iconSize={20}/>;
+  const icon = props.icon ?? <IconWrapper src={documentLogo} size={22} iconSize={20} />;
 
   // 修改文件名部分
   const showEditNameCallout = useValue(false);
@@ -51,21 +51,27 @@ export default function FileElement(props: IFileElementProps) {
   };
 
   // 删除文件部分
-  const delteFileCallback = ()=>{
+  const delteFileCallback = () => {
     props?.deleteCallback && props.deleteCallback();
   };
 
   const showDeleteCalllout = useValue(false);
 
   const editNameButtonId = useId(`editNameButton`);
-  const deleteButtonId = useId('deleteButton');
+  const deleteButtonId = useId("deleteButton");
+
 
   // @ts-ignore
   // @ts-ignore
-  return <div className={styles.fileElement}>
-    <div className={styles.fileElement_icon} onClick={clickCallback}>{icon}</div>
-    <div className={styles.fileElement_name} onClick={clickCallback}>{props.name}</div>
-    <div id={`current_${props.name}`} className={styles.fileElement_interactable_icon} onClick={switchEditNameCallout}>
+  return <div className={styles.fileElement} onClick={clickCallback}>
+    <div className={styles.fileElement_icon}>{icon}</div>
+    <div className={styles.fileElement_name}>{props.name}</div>
+    <div id={`current_${props.name}`} style={{
+      display: showEditNameCallout.value ? "block" : undefined
+    }} className={styles.fileElement_interactable_icon} onClick={(e) => {
+      e.stopPropagation();
+      switchEditNameCallout();
+    }}>
       <Editor id={editNameButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />
       {showEditNameCallout.value && <Callout
         className={styles.callout}
@@ -79,17 +85,22 @@ export default function FileElement(props: IFileElementProps) {
         style={{ width: "300px", padding: "5px 10px 5px 10px" }}
       >
         <Text block variant="xLarge" className={styles.title} id="editNameTitle">
-          {t('editName.title')}
+          {t("editName.title")}
         </Text>
         <div>
-          <TextField defaultValue={newFileName.value} onChange={updateNewFilename} label={t('editName.text')} />
+          <TextField defaultValue={newFileName.value} onChange={updateNewFilename} label={t("editName.text")} />
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text={t('$common.revise')} onClick={commitNewFileName} allowDisabledFocus />
+          <PrimaryButton text={t("$common.revise")} onClick={commitNewFileName} allowDisabledFocus />
         </div>
       </Callout>}
     </div>
-    <div className={styles.fileElement_interactable_icon} onClick={()=>{showDeleteCalllout.set(!showDeleteCalllout.value);}}>
+    <div style={{
+      display: showEditNameCallout.value ? "block" : undefined
+    }} className={styles.fileElement_interactable_icon} onClick={(e) => {
+      e.stopPropagation();
+      showDeleteCalllout.set(!showDeleteCalllout.value);
+    }}>
       <DeleteOne id={deleteButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />
       {showDeleteCalllout.value && <Callout
         className={styles.callout}
@@ -98,16 +109,20 @@ export default function FileElement(props: IFileElementProps) {
         role="dialog"
         gapSpace={0}
         target={`#${deleteButtonId}`}
-        onDismiss={()=>{showDeleteCalllout.set(false);}}
+        onDismiss={() => {
+          showDeleteCalllout.set(false);
+        }}
         setInitialFocus
         style={{ width: "300px", padding: "5px 10px 5px 10px" }}
       >
         <Text block variant="xLarge" className={styles.title} id="editNameTitle">
-          {t({key: 'delete.text', format: {name: props.name}})}
+          {t({ key: "delete.text", format: { name: props.name } })}
         </Text>
         <div style={{ display: "flex", justifyContent: "space-evenly", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text={t('$common.delete')} onClick={delteFileCallback} allowDisabledFocus />
-          <DefaultButton text={t('$common.cancel')} onClick={()=>{showDeleteCalllout.set(false);}} allowDisabledFocus />
+          <PrimaryButton text={t("$common.delete")} onClick={delteFileCallback} allowDisabledFocus />
+          <DefaultButton text={t("$common.cancel")} onClick={() => {
+            showDeleteCalllout.set(false);
+          }} allowDisabledFocus />
         </div>
       </Callout>}
     </div>

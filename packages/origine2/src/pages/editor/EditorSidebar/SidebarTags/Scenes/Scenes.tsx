@@ -9,6 +9,7 @@ import FileElement from "../../sidebarComponents/FileElement";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
+import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 
 export default function Scenes() {
   const t = useTrans('editor.sideBar.scenes.');
@@ -97,41 +98,36 @@ export default function Scenes() {
 
   return (
     <div style={{ height: "100%", overflow: "auto" }}>
-      <div className={styles.sidebar_tag_head}>
-        <div className={styles.sidebar_tag_title}>{t('title')}</div>
-        <div className={styles.sidebar_tag_head_button}>
-          <PrimaryButton
-            id="createSceneButton"
-            text={t('dialogs.create.button')}
-            onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
-          />
-          {showCreateSceneCallout.value && (
-            <Callout
-              className={styles.callout}
-              ariaLabelledBy="createNewSceneCallout"
-              ariaDescribedBy="createNewSceneCallout"
-              role="dialog"
-              gapSpace={0}
-              target="#createSceneButton"
-              onDismiss={() => {
-                showCreateSceneCallout.set(false);
-              }}
-              setInitialFocus
-              style={{ width: "300px", padding: "5px 10px 5px 10px" }}
-            >
-              <Text block variant="xLarge" className={styles.title}>
-                {t('dialogs.create.title')}
-              </Text>
-              <div>
-                <TextField defaultValue={newSceneName.value} onChange={updateNewSceneName} label={t('dialogs.create.text')} />
-              </div>
-              <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
-                <PrimaryButton text={t('$common.create')} onClick={createNewScene} allowDisabledFocus />
-              </div>
-            </Callout>
-          )}
-        </div>
-      </div>
+      <TagTitleWrapper title={t('title')} extra={<><div
+        id="createSceneButton"
+        className="tag_title_button"
+        onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
+      >{t('dialogs.create.button')}</div>
+      {showCreateSceneCallout.value && (
+        <Callout
+          className={styles.callout}
+          ariaLabelledBy="createNewSceneCallout"
+          ariaDescribedBy="createNewSceneCallout"
+          role="dialog"
+          gapSpace={0}
+          target="#createSceneButton"
+          onDismiss={() => {
+            showCreateSceneCallout.set(false);
+          }}
+          setInitialFocus
+          style={{ width: "300px", padding: "5px 10px 5px 10px" }}
+        >
+          <Text block variant="xLarge" className={styles.title}>
+            {t('dialogs.create.title')}
+          </Text>
+          <div>
+            <TextField defaultValue={newSceneName.value} onChange={updateNewSceneName} label={t('dialogs.create.text')} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
+            <PrimaryButton text={t('$common.create')} onClick={createNewScene} allowDisabledFocus />
+          </div>
+        </Callout>
+      )}</>}/>
       <div style={{ overflow: "auto", maxHeight: "calc(100% - 45px)" }}>{showSceneList}</div>
     </div>
   );

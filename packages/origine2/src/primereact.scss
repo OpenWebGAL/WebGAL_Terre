@@ -1,0 +1,14 @@
+.p-splitter {
+  border: none;
+}
+
+.p-splitter-panel {
+  //height: 100%;
+  //overflow: auto;
+}
+
+.p-splitter-panel {
+  flex-basis: initial !important;
+  flex-grow: 0;
+  //max-width: 100%;
+}
