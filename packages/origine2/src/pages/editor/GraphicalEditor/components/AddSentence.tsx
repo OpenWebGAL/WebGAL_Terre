@@ -56,7 +56,7 @@ export default function AddSentence(props: IAddSentenceProps) {
 
   return <>
     <div id={addButtonId} className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
-      <Add style={{ padding: "2px 4px 0 0" }} theme="outline" size="16" fill="#333" />
+      <Add strokeWidth={3} style={{ padding: "1px 4px 0 0" }} theme="outline" size="16" fill="#333" />
       {props.titleText}
     </div>
     {/* @ts-ignore */}
