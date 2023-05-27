@@ -19,7 +19,7 @@ interface IGraphicalEditorProps {
 }
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
-  const t = useTrans('editor.graphical.buttons.');
+  const t = useTrans("editor.graphical.buttons.");
   const sceneText = useValue("");
   const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
 
@@ -111,6 +111,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                     >
                       <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
                         <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
+                          strokeWidth={3}
                           fill="rgba(0,0,0,0.5)" />
                       </div>
                       <div className={styles.seArea}>
@@ -122,10 +123,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                             onClick={() => deleteOneSentence(i)}>
                             <DeleteFive style={{ padding: "2px 4px 0 0" }} theme="outline" size="16" fill="#333" />
                             <div>
-                              {t('delete')}
+                              {t("delete")}
                             </div>
                           </div>
-                          <AddSentence titleText={t('addForward')} type={addSentenceType.forward}
+                          <AddSentence titleText={t("addForward")} type={addSentenceType.forward}
                             onChoose={(newSentence) => addOneSentence(newSentence, i)} />
                         </div>
                         <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
@@ -138,7 +139,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               })}
               {provided.placeholder}
               <div className={styles.topBar}>
-                <AddSentence titleText={t('add')} type={addSentenceType.backward}
+                <AddSentence titleText={t("add")} type={addSentenceType.backward}
                   onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
               </div>
             </div>

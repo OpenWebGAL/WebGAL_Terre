@@ -19,11 +19,17 @@ interface IGameConfig {
 }
 
 export default function GameConfig() {
-  const t = useTrans('editor.sideBar.gameConfigs.');
+  const t = useTrans("editor.sideBar.gameConfigs.");
   const state = useSelector((state: RootState) => state.status.editor);
 
   // 拿到游戏配置
-  const gameConfig = useValue<IGameConfig>({ gameName: "", titleBgm: "", titleBackground: "", gameKey: "", packageName: "" });
+  const gameConfig = useValue<IGameConfig>({
+    gameName: "",
+    titleBgm: "",
+    titleBackground: "",
+    gameKey: "",
+    packageName: ""
+  });
   const getGameConfig = () => {
     axios
       .get(`/api/manageGame/getGameConfig/${state.currentEditingGame}`)
@@ -38,7 +44,7 @@ export default function GameConfig() {
     // 对于每一行，，截取分号，找出键值
     let dataWithKeyValue = dataArray.map((e: string) => {
       let commandText = e.replaceAll(/[;；]/g, "");
-      const i = commandText.indexOf(':');
+      const i = commandText.indexOf(":");
       return [commandText.slice(0, i), commandText.slice(i + 1)];
     });
     dataWithKeyValue = dataWithKeyValue.filter((e) => e.length >= 2);
@@ -89,36 +95,36 @@ export default function GameConfig() {
 
   return (
     <div>
-      <TagTitleWrapper title={t('title')}/>
-      <div>
+      <TagTitleWrapper title={t("title")} />
+      <div style={{ paddingLeft: "10px" }}>
         <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t('options.name')}</div>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.name")}</div>
           <GameConfigEditor key="gameName" value={gameConfig.value.gameName}
             onChange={(e: string) => updateGameConfig("gameName", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t('options.id')}</div>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.id")}</div>
           <GameConfigEditor key="gameKey" value={gameConfig.value.gameKey}
             onChange={(e: string) => updateGameConfig("gameKey", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t('options.packageName')}</div>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.packageName")}</div>
           <GameConfigEditor key="packageName" value={gameConfig.value.packageName}
             onChange={(e: string) => updateGameConfig("packageName", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t('options.bg')}</div>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.bg")}</div>
           <GameConfigEditorWithFileChoose
             sourceBase="background"
-            extNameList={['.jpg','.png','.webp']}
+            extNameList={[".jpg", ".png", ".webp"]}
             key="titleBackground"
             value={gameConfig.value.titleBackground}
             onChange={(e: string) => updateGameConfig("titleBackground", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t('options.bgm')}</div>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.bgm")}</div>
           <GameConfigEditorWithFileChoose
-            extNameList={['.mp3','.ogg','.wav']}
+            extNameList={[".mp3", ".ogg", ".wav"]}
             sourceBase="bgm" key="titleBgm"
             value={gameConfig.value.titleBgm}
             onChange={(e: string) => updateGameConfig("titleBgm", e)} />
@@ -135,7 +141,7 @@ interface IGameConfigEditor {
 }
 
 function GameConfigEditor(props: IGameConfigEditor) {
-  const t = useTrans('common.');
+  const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
 
@@ -144,7 +150,7 @@ function GameConfigEditor(props: IGameConfigEditor) {
     {!showEditBox.value && <div className={styles.editButton} onClick={() => {
       showEditBox.set(true);
       setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t('revise')}</div>}
+    }}>{t("revise")}</div>}
     {showEditBox.value && <TextField componentRef={inputBoxRef} defaultValue={props.value}
       onBlur={() => {
         props.onChange(inputBoxRef!.current!.value);
@@ -154,8 +160,8 @@ function GameConfigEditor(props: IGameConfigEditor) {
   </div>;
 }
 
-function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {sourceBase:string,extNameList:string[]}) {
-  const t = useTrans('common.');
+function GameConfigEditorWithFileChoose(props: IGameConfigEditor & { sourceBase: string, extNameList: string[] }) {
+  const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
   return <div>
@@ -163,16 +169,16 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {sourceBase:s
     {!showEditBox.value && <div className={styles.editButton} onClick={() => {
       showEditBox.set(true);
       setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t('revise')}</div>}
+    }}>{t("revise")}</div>}
     {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
-      onChange={(file)=>{
-        if(file){
+      onChange={(file) => {
+        if (file) {
           props.onChange(file.name);
           showEditBox.set(false);
-        }else{
+        } else {
           showEditBox.set(false);
         }
       }}
-      extName={props.extNameList}/>}
+      extName={props.extNameList} />}
   </div>;
 }
