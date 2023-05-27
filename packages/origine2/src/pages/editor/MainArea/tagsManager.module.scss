@@ -1,17 +1,54 @@
 .tag {
   padding: 5px 7px 3px 10px;
-  cursor: default !important;
+  cursor: pointer !important;
   user-select: none !important;
   display: flex;
-  background: white;
-  border-bottom: 3px solid rgba(0, 0, 0, 0);
+  //background: white;
+  background: rgba(248, 248, 248, 1);
+  border-top: 1px solid rgba(0, 0, 0, 0);
   transition: all 0.33s;
   align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.tagsContainer {
+  display: flex;
+  background: rgba(248, 248, 248, 1);
+  overflow: auto;
+  width: 100%;
+  max-width: 100%;
+  //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+    background-color: #f2f2f2;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #ccc;
+
+    &:hover {
+      background-color: #999;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  & {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ccc #f2f2f2; /* Firefox */
+  }
 }
 
 .tag_active {
-  background: rgb(240, 247, 253) !important;
-  border-bottom: 3px solid #0B346E;
+  //background: rgb(240, 247, 253) !important;
+  background: rgb(255, 255, 255) !important;
+  border-top: 1px solid #0B346E;
 }
 
 .tag:hover {

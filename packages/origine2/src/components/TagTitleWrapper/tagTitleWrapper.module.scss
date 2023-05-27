@@ -1,0 +1,17 @@
+.title_wrapper{
+  display: flex;
+  align-items: center;
+  padding: 5px 7px 5px 10px;
+}
+
+.title{
+  font-size: 90%;
+  color: #005caf;
+  font-weight: bold;
+}
+
+.extra{
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}

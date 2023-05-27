@@ -7,6 +7,7 @@ import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
 import { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
+import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 
 
 export default function EditorSideBar() {
@@ -23,43 +24,21 @@ export default function EditorSideBar() {
   return <>
     {(state.currentSidebarTag !== sidebarTag.none || state.showPreview) && <div className={styles.editor_sidebar}>
       {state.showPreview && <div className={styles.preview_container}>
-        <div className={styles.preview_top_title_container}>
-          <div className={styles.preview_title}>
-            {t('title')}
-          </div>
-          <div onClick={()=>{
-            // @ts-ignore
-            ( ifRef.current as HTMLIFrameElement).contentWindow.location.reload();
-          }
-          }
-          style={{
-            fontWeight: "bold",
-            margin: "0 0 0 auto",
-            padding: "3px 7px 3px 7px",
-            color: "#005caf",
-            background: "rgba(0,92,175,0.1)",
-            cursor: "pointer",
-            borderRadius: "4px"
-          }}>
-            {t('refresh')}
-          </div>
-          <div onClick={()=>{
-            window.open(`/games/${state.currentEditingGame}`,'_blank');
-          }
-          }
-          style={{
-            fontWeight: "bold",
-            margin: "0 0 0 5px",
-            padding: "3px 7px 3px 7px",
-            color: "#005caf",
-            background: "rgba(0,92,175,0.1)",
-            cursor: "pointer",
-            borderRadius: "4px"
-          }}>
-            {t('previewInNewTab')}
-          </div>
+        <TagTitleWrapper title={ t('title')} extra={<>          <div onClick={()=>{
+          // @ts-ignore
+          ( ifRef.current as HTMLIFrameElement).contentWindow.location.reload();
+        }
+        }
+        className="tag_title_button">
+          {t('refresh')}
         </div>
-
+        <div onClick={()=>{
+          window.open(`/games/${state.currentEditingGame}`,'_blank');
+        }
+        }
+        className="tag_title_button">
+          {t('previewInNewTab')}
+        </div></>}/>
         {/* eslint-disable-next-line react/iframe-missing-sandbox */}
         <iframe ref={ifRef} id="gamePreviewIframe" frameBorder="0" className={styles.previewWindow}
           src={`/games/${state.currentEditingGame}`} />
