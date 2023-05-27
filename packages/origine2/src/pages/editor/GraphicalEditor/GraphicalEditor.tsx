@@ -121,13 +121,16 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => deleteOneSentence(i)}>
-                            <DeleteFive style={{ padding: "2px 4px 0 0" }} theme="outline" size="16" fill="#333" />
+                            <DeleteFive strokeWidth={3} style={{ padding: "1px 4px 0 0" }} theme="outline" size="16"
+                              fill="#333" />
                             <div>
                               {t("delete")}
                             </div>
                           </div>
                           <AddSentence titleText={t("addForward")} type={addSentenceType.forward}
                             onChoose={(newSentence) => addOneSentence(newSentence, i)} />
+                          <AddSentence titleText={t("add")} type={addSentenceType.backward}
+                            onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)} />
                         </div>
                         <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
                           updateSentenceByIndex(newSentence, i);
