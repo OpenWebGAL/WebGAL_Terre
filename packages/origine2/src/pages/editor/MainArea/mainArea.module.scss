@@ -1,6 +1,9 @@
-.MainArea_main{
+.MainArea_main {
   flex: 1;
   display: flex;
   flex-flow: column;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 }

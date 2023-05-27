@@ -8,6 +8,7 @@ import { cloneDeep } from "lodash";
 import { ITextField, TextField } from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
+import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 
 interface IGameConfig {
   gameName: string;
@@ -88,7 +89,7 @@ export default function GameConfig() {
 
   return (
     <div>
-      <div className={styles.sidebar_tag_title}>{t('title')}</div>
+      <TagTitleWrapper title={t('title')}/>
       <div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t('options.name')}</div>

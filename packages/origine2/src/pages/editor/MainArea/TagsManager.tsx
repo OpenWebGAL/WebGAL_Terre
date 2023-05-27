@@ -7,6 +7,7 @@ import { cloneDeep } from "lodash";
 import { CloseSmall, FileCodeOne } from "@icon-park/react";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import { getFileIcon } from "@/utils/getFileIcon";
+import React, { useRef } from "react";
 
 export default function TagsManager() {
   // 获取 Tags 数据
@@ -62,11 +63,26 @@ export default function TagsManager() {
     ev.stopPropagation();
   }
 
+  const handleScroll = (event: React.WheelEvent<HTMLDivElement>) => {
+    const deltaY = event.deltaY;
+    console.log(`滚动距离：${deltaY}px`);
+    const element = document.getElementById('tags-container');
+    if(element){
+      const x = element.scrollLeft;
+      const toX = x + deltaY;
+      element.scrollTo(toX,0);
+    }
+  };
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return <DragDropContext onDragEnd={onDragEnd}>
     <Droppable droppableId="droppable" direction="horizontal">
       {(provided, snapshot) => (
         // 下面开始书写容器
-        <div style={{ display: "flex" }}
+        <div className={styles.tagsContainer}
+          id="tags-container"
+          onWheel={handleScroll}
           // provided.droppableProps应用的相同元素.
           {...provided.droppableProps}
           // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
