@@ -53,19 +53,26 @@
   align-items: center;
   box-sizing: border-box;
   padding: 3px 6px 3px 6px;
-  background: rgba(0,0,0,0.05);
+  //background: rgba(0,0,0,0.05);
   border-radius: 4px;
   cursor: pointer;
   margin: 0 4px 0 4px;
-  border: 1px solid rgba(0,0,0,0);
+  //border: 1px solid rgba(0,0,0,0);
+  //border-left: 1px solid rgba(0, 0, 0, 0.1);
+  //
+  //&:first-child {
+  //  border-left: 1px solid rgba(0, 0, 0, 0);
+  //}
+  transition: background-color 0.33s;
 }
 
-.optionButton:hover{
-  background: white;
-  border: 1px solid rgba(0,0,0,0.1);
+.optionButton:hover {
+  //background: white;
+  //border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.05)
 }
 
-.topBar{
+.topBar {
   display: flex;
   align-items: center;
   padding: 8px 6px 6px 6px;
