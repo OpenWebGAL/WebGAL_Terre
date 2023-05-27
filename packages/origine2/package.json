@@ -25,6 +25,7 @@
     "monaco-editor-textmate": "^4.0.0",
     "monaco-textmate": "^3.0.1",
     "onigasm": "^2.2.5",
+    "primereact": "^9.5.0",
     "react": "^18.0.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^18.0.0",
