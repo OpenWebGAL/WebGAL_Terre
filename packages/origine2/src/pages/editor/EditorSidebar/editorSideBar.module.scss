@@ -46,7 +46,9 @@
   display: flex;
   flex-flow: column;
   max-height: 40%;
-  flex: 1;
+  //flex: 1;
+  height: 250px;
+  flex-shrink: 0;
 }
 
 .previewWindow {
