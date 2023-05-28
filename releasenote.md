@@ -1,14 +1,14 @@
-## 发布日志：WebGAL Terre 2.3.19
+## 发布日志：WebGAL Terre 2.3.20
 ### 在此版本中
 
-修复了编辑器在修改文件名时界面的异常
+修复编辑器刷新时导致存档丢失的问题
 
-## Release Note: WebGAL Terre 2.3.19
+## Release Note: WebGAL Terre 2.3.20
 ### In this version
 
-Fixed the abnormality in the interface of the editor when modifying the file name
+Fix the problem that the saves is lost when the editor is refreshed
 
-## リリースログ：WebGAL Terre 2.3.19
+## リリースログ：WebGAL Terre 2.3.20
 ### このバージョンでは
 
-エディターのインターフェイスで、ファイル名を修正する際に例外が発生する不具合を修正
+エディターがリフレッシュされたときにセーブが失われる問題を修正しました
