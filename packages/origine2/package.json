@@ -1,7 +1,7 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "2.3.17",
+  "version": "2.3.18",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
@@ -20,6 +20,7 @@
     "cloudlogjs": "^1.0.11",
     "i18next": "^22.4.15",
     "lodash": "^4.17.21",
+    "material-icon-theme": "^4.27.0",
     "monaco-editor": "^0.34.1",
     "monaco-editor-textmate": "^4.0.0",
     "monaco-textmate": "^3.0.1",

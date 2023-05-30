@@ -64,7 +64,7 @@ export default function EditorSideBar() {
         <iframe ref={ifRef} id="gamePreviewIframe" frameBorder="0" className={styles.previewWindow}
           src={`/games/${state.currentEditingGame}`} />
       </div>}
-      <div style={{height:'50%'}}>
+      <div style={{height:'60%'}}>
         {state.currentSidebarTag === sidebarTag.gameconfig && <GameConfig />}
         {state.currentSidebarTag === sidebarTag.assets && <Assets />}
         {state.currentSidebarTag === sidebarTag.scenes && <Scenes />}

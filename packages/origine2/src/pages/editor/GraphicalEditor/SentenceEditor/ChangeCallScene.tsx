@@ -26,12 +26,12 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
           }} extName={[".txt"]} />
         </>
       </CommonOptions>
-      <CommonOptions key="1" title={t('options.title')}>
+      <CommonOptions key="1" title={t('options.call.title')}>
         <TerreToggle title="" onChange={(newValue) => {
           isCallScene.set(newValue);
           submit();
-        }} onText={t('options.on')}
-        offText={t('options.off')} isChecked={isCallScene.value} />
+        }} onText={t('options.call.on')}
+        offText={t('options.call.off')} isChecked={isCallScene.value} />
       </CommonOptions>
     </div>
   </div>;
