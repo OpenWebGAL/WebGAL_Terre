@@ -7,8 +7,11 @@ import styles from "./dashboard.module.scss";
 import Sidebar from "./Sidebar";
 import { GamePreview } from "./GamePreview";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/origineStore";
+import { origineStore, RootState } from "../../store/origineStore";
 import useTrans from "@/hooks/useTrans";
+import useLanguage from "@/hooks/useLanguage";
+import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
+import { language } from "@/store/statusReducer";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -17,7 +20,10 @@ interface IFileInfo {
 }
 
 export default function DashBoard() {
-  const t = useTrans('dashBoard.');
+
+  const t = useTrans('editor.topBar.');
+  const setLanguage = useLanguage();
+  const trans = useTrans('dashBoard.');
 
   const isDashboardShow:boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
 
@@ -35,7 +41,7 @@ export default function DashBoard() {
   async function createGame(gameName:string) {
     const res = await axios.post("/api/manageGame/createGame", { gameName: gameName }).then(r => r.data);
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`${gameName} ` + t('msgs.created'), 2000);
+    messageRef.current!.showMessage(`${gameName} ` + trans('msgs.created'), 2000);
     refreashDashboard();
   }
 
@@ -57,12 +63,47 @@ export default function DashBoard() {
     refreashDashboard();
   }, []);
 
+  const _items: ICommandBarItemProps[] = [
+    {
+      key: "language",
+      text: t('commandBar.items.language.text'),
+      cacheKey: 'language',
+      iconProps: { iconName: 'LocaleLanguage'},
+      subMenuProps: {
+        items: [
+          {
+            key: 'zhCn',
+            text: '简体中文',
+            onClick() {setLanguage(language.zhCn);}
+          },
+          {
+            key: 'en',
+            text: 'English',
+            onClick() {setLanguage(language.en);}
+          },
+          {
+            key: 'jp',
+            text: '日本語',
+            onClick() {setLanguage(language.jp);}
+          }
+        ]
+      }
+    },
+  ];
 
 
   return <>
     { isDashboardShow && (<div className={styles.dashboard_container}>
       <div className={styles.topBar}>
         WebGAL Origine
+        <div>
+          <CommandBar
+            items={_items}
+            ariaLabel="Inbox actions"
+            primaryGroupAriaLabel="Email actions"
+            farItemsGroupAriaLabel="More actions"
+          />
+        </div>
       </div>
       <div className={styles.dashboard_main}>
         <Message ref={messageRef} />
