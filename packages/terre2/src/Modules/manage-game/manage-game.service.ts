@@ -82,7 +82,9 @@ export class ManageGameService {
     return {
       gameName: config.Game_name === '' ? 'WebGAL' : config.Game_name,
       packageName:
-        config.Package_name === '' ? 'dev.webgal' : config.Package_name,
+        config.Package_name === ''
+          ? 'com.openwebgal.demo'
+          : config.Package_name,
     };
   }
 
@@ -110,6 +112,9 @@ export class ManageGameService {
         isThisGameExist = true;
       }
     });
+    // 获取游戏配置
+    const gameConfig = await this.getGameConfig(gameName);
+    // 获取导出目录
     const exportDir = this.webgalFs.getPathFromRoot(
       `/Exported_Games/${gameName}`,
     );
@@ -172,11 +177,10 @@ export class ManageGameService {
         `${androidExportDir}/app/src/main/assets/webgal/game/`,
       );
       // 修改信息
-      const gameConfig = await this.getGameConfig(gameName);
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/settings.gradle`,
         'WebGAL',
-        gameConfig.gameName,
+        gameName,
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/src/main/res/values/strings.xml`,
@@ -185,12 +189,12 @@ export class ManageGameService {
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/build.gradle`,
-        'io.github.nini22p.webgal',
+        'com.openwebgal.demo',
         gameConfig.packageName,
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/src/main/java/MainActivity.kt`,
-        'io.github.nini22p.webgal',
+        'com.openwebgal.demo',
         gameConfig.packageName,
       );
       await this.webgalFs.mkdir(

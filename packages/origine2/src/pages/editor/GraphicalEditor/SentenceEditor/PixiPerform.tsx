@@ -12,7 +12,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
 
   const isSetEffectsOff = useValue(props.sentence.command === commandType.pixiInit);
   const effectName = useValue(props.sentence.content);
-  const isUsePreset = useValue(["snow", "rain"].includes(effectName.value));
+  const isUsePreset = useValue(["snow", "rain", "cherryBlossoms"].includes(effectName.value));
 
 
   const submit = () => {
@@ -44,7 +44,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
       {isUsePreset.value && <CommonOptions title={t('usePrepared.title')} key="3">
         <Dropdown
           selectedKey={effectName.value}
-          options={[{ key: "snow", text: t('usePrepared.effects.snow') }, { key: "rain", text: t('usePrepared.effects.rain') }]}
+          options={[{ key: "snow", text: "下雪" }, { key: "rain", text: "下雨" }, { key: "cherryBlossoms", text: "櫻花" }]}
           onChange={(ev, newValue) => {
             effectName.set(newValue?.key?.toString() ?? "");
             submit();
