@@ -122,6 +122,7 @@ export const zhCn = {
             button: '新建场景',
             title: '创建新场景',
             text: '新场景名',
+            sceneExisted: '场景已存在'
           }
         }
       }
