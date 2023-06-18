@@ -1,6 +1,6 @@
 import styles from "../sidebarTags.module.scss";
 import { useValue } from "../../../../../hooks/useValue";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../store/origineStore";
 import axios from "axios";
@@ -13,11 +13,14 @@ import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 
 export default function Scenes() {
   const t = useTrans('editor.sideBar.scenes.');
+
   const state = useSelector((state: RootState) => state.status.editor);
   const dispatch = useDispatch();
   const currentGameName = state.currentEditingGame;
   // 场景文件的列表
   const sceneList = useValue<IFileInfo[]>([]);
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   // 处理新建场景的问题
   const showCreateSceneCallout = useValue(false);
@@ -26,16 +29,22 @@ export default function Scenes() {
     const newValue = event.target.value;
     newSceneName.set(newValue);
   };
-  const createNewScene = () => {
+  const createNewScene = async () => {
     const gameName = state.currentEditingGame;
     const params = new URLSearchParams();
+
     params.append("gameName", gameName);
     params.append("sceneName", newSceneName.value);
-    axios.post("/api/manageGame/createNewScene/", params).then(() => {
-      showCreateSceneCallout.set(false);
-      updateSceneListView();
-      newSceneName.set("");
-    });
+
+    axios.post("/api/manageGame/createNewScene/", params)
+      .then(() => {
+        showCreateSceneCallout.set(false);
+        updateSceneListView();
+        newSceneName.set("");
+      })
+      .catch(() => {
+        setErrorMessage(t('dialogs.create.sceneExisted'));
+      });
   };
 
   // 请求场景文件的函数
@@ -58,7 +67,7 @@ export default function Scenes() {
 
   // 更新文件名的函数
   function constructUpdateFilenameFunc(oldPath: string) {
-    return function(newFilename: string) {
+    return function (newFilename: string) {
       const params = new URLSearchParams();
       params.append("path", oldPath);
       params.append("newName", newFilename);
@@ -68,7 +77,7 @@ export default function Scenes() {
 
   // 删除文件的函数
   function constructDeleteFileFunc(path: string) {
-    return function() {
+    return function () {
       const params = new URLSearchParams();
       params.append("path", path);
       axios.post("/api/manageGame/deleteFile/", params).then(updateSceneListView);
@@ -120,14 +129,15 @@ export default function Scenes() {
           <Text block variant="xLarge" className={styles.title}>
             {t('dialogs.create.title')}
           </Text>
+
           <div>
-            <TextField defaultValue={newSceneName.value} onChange={updateNewSceneName} label={t('dialogs.create.text')} />
+            <TextField defaultValue={newSceneName.value} onChange={updateNewSceneName} label={t('dialogs.create.text')} errorMessage={errorMessage} />
           </div>
           <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
             <PrimaryButton text={t('$common.create')} onClick={createNewScene} allowDisabledFocus />
           </div>
         </Callout>
-      )}</>}/>
+      )}</>} />
       <div style={{ overflow: "auto", maxHeight: "calc(100% - 35px)" }}>{showSceneList}</div>
     </div>
   );

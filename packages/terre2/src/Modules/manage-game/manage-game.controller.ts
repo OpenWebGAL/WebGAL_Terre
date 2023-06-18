@@ -112,13 +112,18 @@ export class ManageGameController {
 
   @Post('createNewScene/*')
   async createNewScene(@Req() request: Request) {
-    const requestBody = request.body;
-    const gameName: string = requestBody.gameName;
-    const sceneName: string = requestBody.sceneName;
-    const path = this.webgalFs.getPathFromRoot(
-      `/public/games/${gameName}/game/scene/${sceneName}.txt`,
-    );
-    return await this.webgalFs.createEmptyFile(path);
+    return new Promise(async (resolve, reject) => {
+      const requestBody = request.body;
+      const gameName: string = requestBody.gameName;
+      const sceneName: string = requestBody.sceneName;
+      const path = this.webgalFs.getPathFromRoot(
+        `/public/games/${gameName}/game/scene/${sceneName}.txt`,
+      );
+
+      if (await this.webgalFs.exists(path)) return reject('Scene existed');
+
+      resolve(await this.webgalFs.createEmptyFile(path));
+    });
   }
 
   @Post('editScene/*')
