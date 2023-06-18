@@ -167,14 +167,11 @@ export class WebgalFsService {
     try {
       const path = decodeURI(_path);
 
-      const stat = await fs.stat(path);
       const dir = path.substr(0, path.lastIndexOf('/') + 1);
       const newPath = dir + decodeURI(newName);
-      if (stat.isDirectory()) {
-        await fs.rename(path, newPath);
-      } else {
-        await fs.rename(path, newPath);
-      }
+
+      await fs.rename(path, newPath);
+
       return true;
     } catch (error) {
       return false;
@@ -182,11 +179,23 @@ export class WebgalFsService {
   }
 
   /**
+   * 检查文件是否存在
+   */
+  async exists(_path: string): Promise<boolean> {
+    const path = decodeURI(_path);
+
+    return await fs
+      .stat(path)
+      .then(() => true)
+      .catch(() => false);
+  }
+
+  /**
    * 创建一个空文件
    * @param path 文件路径
    */
   async createEmptyFile(path: string) {
-    return await new Promise((resolve) => {
+    return await new Promise<string>((resolve) => {
       fs.writeFile(decodeURI(path), '')
         .then(() => resolve('created'))
         .catch(() => resolve('path error or no right.'));
