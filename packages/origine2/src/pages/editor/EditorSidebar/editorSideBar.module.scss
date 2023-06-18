@@ -11,6 +11,7 @@
   max-height: 100%;
   min-height: 100%;
   position: relative;
+  margin-right: 2px;
 }
 
 .editor_sidebar_control {
@@ -70,12 +71,12 @@
 
 .divider {
   height: 100%;
-  width: 1px;
+  width: 2px;
   background-color: rgba(0, 0, 0, 0.1);
   position: absolute;
   top: 0;
   cursor: ew-resize;
-  right: 0;
+  right: -2px;
   transition: width 0.33s, background-color 0.33s;
 }
 
@@ -87,4 +88,10 @@
 .divider:active {
   width: 2px;
   background-color: #005caf;
+
 }
+
+ .editor_sidebar {
+  user-select: none;
+}
+
