@@ -1,10 +1,10 @@
 import { useValue } from "../../../hooks/useValue";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { useId } from "@fluentui/react-hooks";
-import { Callout, DefaultButton } from "@fluentui/react";
+import { Callout, DefaultButton, TextField } from "@fluentui/react";
 import styles from "./chooseFile.module.scss";
 import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
 import useTrans from "@/hooks/useTrans";
@@ -28,6 +28,7 @@ export default function ChooseFile(props: IChooseFile) {
   const currentChildDir = useValue<string[]>([]);
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
+  const fileSearch = useValue<string>('');
   const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
 
   const updateFileList = ()=>{
@@ -65,20 +66,23 @@ export default function ChooseFile(props: IChooseFile) {
     currentChildDir.set(currentChildDir.value.slice(0, currentChildDir.value.length - 1));
   }
 
-  const fileSelectButtonList = currentDirFiles.value.map(file => {
-    if (file.isDir) {
-      return <div key={file.path} className={styles.choseFileButton} onClick={() => onEnterChildDir(file.name)}>
-        <FolderOpen theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+  const fileSelectButtonList = useMemo(() => currentDirFiles.value
+    .filter(f => f.name.includes(fileSearch.value))
+    .sort((a, b) => a.name.indexOf(fileSearch.value) - b.name.indexOf(fileSearch.value))
+    .map(file => {
+      if (file.isDir) {
+        return <div key={file.path} className={styles.choseFileButton} onClick={() => onEnterChildDir(file.name)}>
+          <FolderOpen theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+          {'\u00a0\u00a0'}
+          {file.name}
+        </div>;
+      }
+      return <div key={file.path} className={styles.choseFileButton} onClick={() => onChooseFile(file)}>
+        <Notes theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
         {'\u00a0\u00a0'}
         {file.name}
       </div>;
-    }
-    return <div key={file.path} className={styles.choseFileButton} onClick={() => onChooseFile(file)}>
-      <Notes theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
-      {'\u00a0\u00a0'}
-      {file.name}
-    </div>;
-  });
+    }), [currentDirFiles, fileSearch.value]);
 
   function onCancel(){
     toggleIsCalloutVisible();
@@ -103,6 +107,9 @@ export default function ChooseFile(props: IChooseFile) {
         <div className={styles.chooseFileCalloutContentWarpper}>
           <div className={styles.chooseFileCalloutTitle}>
             {t('choose')}
+          </div>
+          <div className="file-search">
+            <TextField label={t('fileSearch')} onChange={(ev, newValue) => fileSearch.set(newValue || '')}/>
           </div>
           <div className={styles.chooseFileFileListWarpper}>
             {currentChildDir.value.length > 0 && (
