@@ -101,6 +101,7 @@ export default function Scenes() {
         key={singleFile.name}
         deleteCallback={constructDeleteFileFunc(singleFile.path)}
         editFileNameCallback={constructUpdateFilenameFunc(singleFile.path)}
+        undeletable={singleFile.name === 'start.txt'}
       />
     );
   });
