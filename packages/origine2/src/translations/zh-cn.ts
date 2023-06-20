@@ -478,6 +478,7 @@ export const zhCn = {
     fileChoose: {
       cancel: "取消选择",
       choose: "选择文件",
+      fileSearch: '搜索文件'
     }
   },
 };
