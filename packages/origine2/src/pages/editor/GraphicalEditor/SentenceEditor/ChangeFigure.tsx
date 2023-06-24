@@ -5,33 +5,68 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import { useEffect } from "react";
-import { Dropdown } from "@fluentui/react";
+import { useEffect,useState } from "react";
+import { Dropdown,IDropdownOption } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
+import { logger } from "../../../../utils/logger";
+import { RootState } from "../../../../store/origineStore";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
+
   const t = useTrans('editor.graphical.sentences.changeFigure.');
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
   const figurePosition = useValue<"left" | "" | "right">("");
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
+  const regex = /.json$/;
+  const motionOption = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
+  let motionKeyList:any;
+  let Motions;
+  //const motionOptions:IDropdownOption[] = useState([{ key: '', text: 'None' }]);
+  const [motionOptions, setState] = useState([{ key: '', text: 'none' }]);
+  //const motionOptions:any = [{ key: '', text: 'None' }];
+  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const url = location.href +"/games/"+ gameName +"/game/figure/"+figureFile.value;
+  //let modelSelectedKey:any;
+
   useEffect(() => {
     /**
      * 初始化立绘位置
      */
+
     if (getArgByKey(props.sentence, "left")) {
       figurePosition.set("left");
     }
     if (getArgByKey(props.sentence, "right")) {
       figurePosition.set("right");
     }
+
+    // Add when extension is json and no dropdown list
+    if (regex.test(figureFile.value) && motionOptions.length == 1){
+      // get json
+      axios.get(url).then(res => {
+        // get motion
+        Motions = res.data.FileReferences.Motions;
+        if(Motions){
+          motionKeyList = Object.keys(Motions);
+          for (let id in motionKeyList){
+            setState((list) => ([...list, {key: motionKeyList[id], text: motionKeyList[id]}]));
+          }
+        }
+      });
+    }
+    
   }, []);
+
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = id.value !== "" ? ` -id=${id.value}` : "";
-    props.onSubmit(`changeFigure:${figureFile.value}${pos}${isGoNextStr}${idStr};`);
+    const motion = motionOption.value !== "" ? ` -motion=${motionOption.value}` : "";
+    props.onSubmit(`changeFigure:${figureFile.value}${pos}${isGoNextStr}${idStr}${motion};`);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -53,7 +88,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
-            extName={[".png", ".jpg", ".webp"]} />
+            extName={[".png", ".jpg", ".webp", ".json"]} />
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t('$editor.graphical.sentences.common.options.goNext.title')}>
@@ -88,6 +123,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>
+      {regex.test(figureFile.value) && <CommonOptions title="motion" key="5" >
+        <Dropdown
+          options={motionOptions}
+          onChange={(ev, newValue: any) => {
+            motionOption.set(newValue?.key?.toString() ?? "");
+            logger.debug("motionOptions",motionOptions);
+            submit();
+          }}
+          selectedKey={motionOption.value}
+          styles={{ dropdown: { width: "260px" } }}
+        />
+      </CommonOptions>}
     </div>
   </div>;
 }
