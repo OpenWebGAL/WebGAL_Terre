@@ -1,13 +1,14 @@
 import styles from "./editorSideBar.module.scss";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/origineStore";
-import {sidebarTag} from "../../../store/statusReducer";
+import {setIsLivePreview, sidebarTag} from "../../../store/statusReducer";
 import GameConfig from "./SidebarTags/GameConfig/GameConfig";
 import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
 import React, {useEffect, useRef} from "react";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
+import TerreToggle from "@/components/terreToggle/TerreToggle";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -70,6 +71,9 @@ export default function EditorSideBar() {
     };
   }, []);
 
+  const isEnableLivePreview = useSelector((state:RootState)=>state.status.editor.isEnableLivePreview);
+  const dispatch = useDispatch();
+
 
   return <>
     {(state.currentSidebarTag !== sidebarTag.none || state.showPreview) && <div className={styles.editor_sidebar}>
@@ -96,6 +100,12 @@ export default function EditorSideBar() {
             {t("previewInNewTab")}
           </div>
         </>}/>
+        <div className={styles.livePreviewNotice}>
+          <TerreToggle title={t('livePreview')} isChecked={isEnableLivePreview} onChange={(v)=>{dispatch(setIsLivePreview(v));}} onText="" offText=""/>
+          <div>
+            {t('notice')}
+          </div>
+        </div>
         {/* eslint-disable-next-line react/iframe-missing-sandbox */}
         <iframe ref={ifRef} id="gamePreviewIframe" frameBorder="0" className={styles.previewWindow}
           src={`/games/${state.currentEditingGame}`}/>
