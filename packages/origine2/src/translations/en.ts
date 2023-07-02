@@ -44,6 +44,7 @@ export const en = {
       },
       commandBar: {
         items: {
+          source:"Source Code",
           language: {
             text: 'Language'
           },
