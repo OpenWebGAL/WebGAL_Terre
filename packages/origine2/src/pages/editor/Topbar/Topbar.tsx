@@ -12,6 +12,7 @@ import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import AndroidIcon from 'material-icon-theme/icons/android.svg';
+import GithubIcon from './github.svg';
 
 export default function TopBar() {
   const t = useTrans('editor.topBar.');
@@ -28,11 +29,21 @@ export default function TopBar() {
   // 注册 Android svg 图标
   registerIcons({
     icons: {
-      AndroidLogo: <IconWrapper src={AndroidIcon}/>
+      AndroidLogo: <IconWrapper src={AndroidIcon}/>,
+      GitHub: <IconWrapper src={GithubIcon}/>
     }
   });
 
   const _items: ICommandBarItemProps[] = [
+    {
+      key: "source",
+      text: t('commandBar.items.source'),
+      cacheKey: "source", // changing this key will invalidate this item's cache
+      onClick: () => {
+        window.open("https://github.com/MakinoharaShoko/WebGAL_Terre", "_blank");
+      },
+      iconProps: { iconName: "GitHub" }
+    },
     {
       key: "language",
       text: t('commandBar.items.language.text'),
