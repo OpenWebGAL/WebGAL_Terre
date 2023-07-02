@@ -44,6 +44,7 @@ export const zhCn = {
       },
       commandBar: {
         items: {
+          source:"源代码",
           language: {
             text: '语言'
           },

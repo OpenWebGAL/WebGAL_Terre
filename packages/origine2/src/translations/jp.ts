@@ -44,6 +44,7 @@ export const jp = {
       },
       commandBar: {
         items: {
+          source:'ソースコード',
           language: {
             text: '言語選択'
           },
