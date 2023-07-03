@@ -15,6 +15,7 @@ export interface IFileElementProps {
   clickCallback?: Function;
   deleteCallback?: Function;
   icon?: ReactElement;
+  undeletable?: boolean;
 }
 
 
@@ -51,8 +52,8 @@ export default function FileElement(props: IFileElementProps) {
   };
 
   // 删除文件部分
-  const delteFileCallback = () => {
-    props?.deleteCallback && props.deleteCallback();
+  const deleteFileCallback = () => {
+    if (!props?.undeletable) props?.deleteCallback && props.deleteCallback();
   };
 
   const showDeleteCalllout = useValue(false);
@@ -101,8 +102,8 @@ export default function FileElement(props: IFileElementProps) {
       e.stopPropagation();
       showDeleteCalllout.set(!showDeleteCalllout.value);
     }}>
-      <DeleteOne id={deleteButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />
-      {showDeleteCalllout.value && <Callout
+      {!props?.undeletable && <DeleteOne id={deleteButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />}
+      {!props?.undeletable && showDeleteCalllout.value && <Callout
         className={styles.callout}
         ariaLabelledBy="deleteFile"
         ariaDescribedBy="deleteFile"
@@ -119,7 +120,7 @@ export default function FileElement(props: IFileElementProps) {
           {t({ key: "delete.text", format: { name: props.name } })}
         </Text>
         <div style={{ display: "flex", justifyContent: "space-evenly", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text={t("$common.delete")} onClick={delteFileCallback} allowDisabledFocus />
+          <PrimaryButton text={t("$common.delete")} onClick={deleteFileCallback} allowDisabledFocus />
           <DefaultButton text={t("$common.cancel")} onClick={() => {
             showDeleteCalllout.set(false);
           }} allowDisabledFocus />

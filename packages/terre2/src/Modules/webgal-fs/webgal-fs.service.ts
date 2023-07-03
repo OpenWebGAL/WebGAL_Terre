@@ -33,7 +33,8 @@ export class WebgalFsService {
    * 获取目录下文件信息
    * @param dir 目录，需用 path 处理。
    */
-  async getDirInfo(dir: string) {
+  async getDirInfo(_dir: string) {
+    const dir = decodeURI(_dir);
     const fileNames = await fs.readdir(dir);
     const dirInfoPromises = fileNames.map((e) => {
       const elementPath = this.getPath(`${dir}/${e}`);
@@ -58,7 +59,7 @@ export class WebgalFsService {
    * @param dest 目标文件夹
    */
   async copy(src: string, dest: string) {
-    return await fs.cp(src, dest, { recursive: true });
+    return await fs.cp(decodeURI(src), decodeURI(dest), { recursive: true });
   }
 
   /**
@@ -66,7 +67,7 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPathFromRoot(rawPath: string) {
-    return join(process.cwd(), ...rawPath.split('/'));
+    return join(process.cwd(), ...decodeURI(rawPath).split('/'));
   }
 
   /**
@@ -75,16 +76,19 @@ export class WebgalFsService {
    * @param dirName 文件夹名称
    */
   async mkdir(src, dirName) {
-    return await fs.mkdir(join(src, dirName)).catch(() => {
-      this.logger.log('跳过文件夹创建');
-    });
+    return await fs
+      .mkdir(join(decodeURI(src), decodeURI(dirName)))
+      .catch(() => {
+        this.logger.log('跳过文件夹创建');
+      });
   }
 
   /**
    * 将字符串路径解析
    * @param rawPath 字符串路径
    */
-  getPath(rawPath: string) {
+  getPath(_rawPath: string) {
+    const rawPath = decodeURI(_rawPath);
     if (rawPath[0] === '/') {
       return join('/', ...rawPath.split('/'));
     }
@@ -98,11 +102,11 @@ export class WebgalFsService {
    */
   async renameFile(path: string, newName: string) {
     // 取出旧文件的路径
-    const oldPath = join(...path.split(/[\/\\]/g));
+    const oldPath = join(...decodeURI(path).split(/[\/\\]/g));
     const pathAsArray = path.split(/[\/\\]/g);
     const newPathAsArray = pathAsArray.slice(0, pathAsArray.length - 1);
-    const newPath = join(...newPathAsArray, newName);
-    console.log(oldPath, newPath);
+    const newPath = join(...newPathAsArray, decodeURI(newName));
+
     return await new Promise((resolve) => {
       fs.rename(oldPath, newPath)
         .then(() => resolve('File renamed!'))
@@ -117,7 +121,7 @@ export class WebgalFsService {
   async deleteFile(path: string) {
     return await new Promise((resolve) => {
       this.logger.log(path);
-      fs.unlink(path)
+      fs.unlink(decodeURI(path))
         .then(() => resolve('File Deleted'))
         .catch(() => resolve('File not exist!'));
     });
@@ -127,9 +131,12 @@ export class WebgalFsService {
    * 删除文件或目录
    * @param path
    */
-  async deleteFileOrDirectory(path: string): Promise<boolean> {
+  async deleteFileOrDirectory(_path: string): Promise<boolean> {
     try {
+      const path = decodeURI(_path);
+
       const stat = await fs.stat(path);
+
       if (stat.isDirectory()) {
         const files = await fs.readdir(path);
         await Promise.all(
@@ -153,16 +160,18 @@ export class WebgalFsService {
    * @param path
    * @param newName
    */
-  async renameFileOrDirectory(path: string, newName: string): Promise<boolean> {
+  async renameFileOrDirectory(
+    _path: string,
+    newName: string,
+  ): Promise<boolean> {
     try {
-      const stat = await fs.stat(path);
+      const path = decodeURI(_path);
+
       const dir = path.substr(0, path.lastIndexOf('/') + 1);
-      const newPath = dir + newName;
-      if (stat.isDirectory()) {
-        await fs.rename(path, newPath);
-      } else {
-        await fs.rename(path, newPath);
-      }
+      const newPath = dir + decodeURI(newName);
+
+      await fs.rename(path, newPath);
+
       return true;
     } catch (error) {
       return false;
@@ -170,12 +179,24 @@ export class WebgalFsService {
   }
 
   /**
+   * 检查文件是否存在
+   */
+  async exists(_path: string): Promise<boolean> {
+    const path = decodeURI(_path);
+
+    return await fs
+      .stat(path)
+      .then(() => true)
+      .catch(() => false);
+  }
+
+  /**
    * 创建一个空文件
    * @param path 文件路径
    */
   async createEmptyFile(path: string) {
-    return await new Promise((resolve) => {
-      fs.writeFile(path, '')
+    return await new Promise<string>((resolve) => {
+      fs.writeFile(decodeURI(path), '')
         .then(() => resolve('created'))
         .catch(() => resolve('path error or no right.'));
     });
@@ -183,7 +204,7 @@ export class WebgalFsService {
 
   async updateTextFile(path: string, content: string) {
     return await new Promise((resolve) => {
-      fs.writeFile(path, content)
+      fs.writeFile(decodeURI(path), content)
         .then(() => resolve('Updated.'))
         .catch(() => resolve('path error or no right.'));
     });
@@ -194,8 +215,10 @@ export class WebgalFsService {
    * @param text 要替换的文本
    * @param newText 替换后的文本
    */
-  async replaceTextFile(path: string, text: string, newText: string) {
+  async replaceTextFile(_path: string, text: string, newText: string) {
     try {
+      const path = decodeURI(_path);
+
       const textFile: string | unknown = await this.readTextFile(path);
       if (typeof textFile === 'string') {
         const newTextFile = textFile.replace(new RegExp(text, 'g'), newText);
@@ -216,23 +239,26 @@ export class WebgalFsService {
    */
   async readTextFile(path: string) {
     return await new Promise((resolve) => {
-      fs.readFile(path)
+      fs.readFile(decodeURI(path))
         .then((r) => resolve(r.toString()))
         .catch(() => resolve('file not exist'));
     });
   }
 
   async writeFiles(
-    targetDirectory: string,
+    _targetDirectory: string,
     fileList: FileList[],
   ): Promise<boolean> {
     try {
+      const targetDirectory = decodeURI(_targetDirectory);
       await fs.mkdir(this.getPathFromRoot(targetDirectory), {
         recursive: true,
       });
       for (const file of fileList) {
         await fs.writeFile(
-          `${this.getPathFromRoot(targetDirectory)}/${file.fileName}`,
+          `${this.getPathFromRoot(targetDirectory)}/${decodeURI(
+            file.fileName,
+          )}`,
           file.file,
         );
       }
