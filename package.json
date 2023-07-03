@@ -27,6 +27,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "concurrently": "^7.2.2"
+    "concurrently": "^7.2.2",
+    "makensis": "^2.0.5"
   }
 }
