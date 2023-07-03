@@ -27,6 +27,7 @@ export interface ITag {
 
 interface IEditorState {
   currentEditingGame: string,
+  isEnableLivePreview:boolean,
   showPreview: boolean,
   currentSidebarTag: sidebarTag
   tags: Array<ITag>,
@@ -45,6 +46,7 @@ interface IEditorState {
 
 export const editorInitState: IEditorState = {
   currentEditingGame: "",
+  isEnableLivePreview:false,
   showPreview: true,
   currentSidebarTag: sidebarTag.gameconfig,
   tags: [],
@@ -130,12 +132,17 @@ const statusSlice = createSlice({
     /**
      * 设置语言
      * @param state
-     * @param action 
+     * @param action
      */
     setLanguage: (state, action: PayloadAction<language>) => {
       state.editor.language = action.payload;
       window?.localStorage?.setItem('editor-lang', action.payload.toString());
     },
+
+    setIsLivePreview:(state,action:PayloadAction<boolean>)=>{
+      state.editor.isEnableLivePreview = action.payload;
+    }
+
   }
 });
 
@@ -147,7 +154,8 @@ export const {
   resetTagOrder,
   setCurrentTagTarget,
   setEditMode,
-  setLanguage
+  setLanguage,
+  setIsLivePreview
 } = statusSlice.actions;
 
 export const statusActions = statusSlice.actions;
