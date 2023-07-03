@@ -44,6 +44,7 @@ export const zhCn = {
       },
       commandBar: {
         items: {
+          source:"源代码",
           language: {
             text: '语言'
           },
@@ -66,7 +67,9 @@ export const zhCn = {
       preview: {
         title: '游戏预览',
         refresh: '刷新',
-        previewInNewTab: '在新标签页预览'
+        previewInNewTab: '在新标签页预览',
+        livePreview:'实时预览',
+        notice:'实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。',
       },
 
       file: {
@@ -122,6 +125,7 @@ export const zhCn = {
             button: '新建场景',
             title: '创建新场景',
             text: '新场景名',
+            sceneExisted: '场景已存在'
           }
         }
       }
@@ -477,6 +481,7 @@ export const zhCn = {
     fileChoose: {
       cancel: "取消选择",
       choose: "选择文件",
+      fileSearch: '搜索文件'
     }
   },
 };
