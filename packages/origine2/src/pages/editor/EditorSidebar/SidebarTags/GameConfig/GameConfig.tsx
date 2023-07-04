@@ -14,6 +14,9 @@ interface IGameConfig {
   gameName: string;
   titleBgm: string;
   titleBackground: string;
+  logo1: string;
+  logo2: string;
+  logo3: string;
   gameKey: string;
   packageName: string;
 }
@@ -27,6 +30,9 @@ export default function GameConfig() {
     gameName: "",
     titleBgm: "",
     titleBackground: "",
+    logo1: "",
+    logo2: "",
+    logo3: "",
     gameKey: "",
     packageName: ""
   });
@@ -60,6 +66,15 @@ export default function GameConfig() {
       case "Title_img":
         gameConfig.set({ ...gameConfig.value, titleBackground: e[1] });
         break;
+      case "logo1":
+        gameConfig.set({ ...gameConfig.value, logo1: e[1] });
+        break;
+      case "logo2":
+        gameConfig.set({ ...gameConfig.value, logo2: e[1] });
+        break;
+      case "logo3":
+        gameConfig.set({ ...gameConfig.value, logo3: e[1] });
+        break;
       case "Game_key":
         gameConfig.set({ ...gameConfig.value, gameKey: e[1] });
         break;
@@ -85,7 +100,7 @@ export default function GameConfig() {
     const draft = cloneDeep(gameConfig.value);
     draft[key] = content;
     gameConfig.set(draft);
-    const newConfig = `Game_name:${gameConfig.value.gameName};\nGame_key:${gameConfig.value.gameKey};\nPackage_name:${gameConfig.value.packageName};\nTitle_bgm:${gameConfig.value.titleBgm};\nTitle_img:${gameConfig.value.titleBackground};\n`;
+    const newConfig = `Game_name:${gameConfig.value.gameName};\nGame_key:${gameConfig.value.gameKey};\nPackage_name:${gameConfig.value.packageName};\nTitle_bgm:${gameConfig.value.titleBgm};\nTitle_img:${gameConfig.value.titleBackground};\nlogo1:${gameConfig.value.logo1};\nlogo2:${gameConfig.value.logo2};\nlogo3:${gameConfig.value.logo3};\n`;
     const form = new URLSearchParams();
     form.append("gameName", state.currentEditingGame);
     form.append("newConfig", newConfig);
@@ -120,6 +135,33 @@ export default function GameConfig() {
             key="titleBackground"
             value={gameConfig.value.titleBackground}
             onChange={(e: string) => updateGameConfig("titleBackground", e)} />
+        </div>
+        <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.logo1")}</div>
+          <GameConfigEditorWithFileChoose
+            sourceBase="background"
+            extNameList={[".jpg", ".png", ".webp"]}
+            key="logo1"
+            value={gameConfig.value.logo1}
+            onChange={(e: string) => updateGameConfig("logo1", e)} />
+        </div>
+        <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.logo2")}</div>
+          <GameConfigEditorWithFileChoose
+            sourceBase="background"
+            extNameList={[".jpg", ".png", ".webp"]}
+            key="logo2"
+            value={gameConfig.value.logo2}
+            onChange={(e: string) => updateGameConfig("logo2", e)} />
+        </div>
+        <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.logo3")}</div>
+          <GameConfigEditorWithFileChoose
+            sourceBase="background"
+            extNameList={[".jpg", ".png", ".webp"]}
+            key="logo3"
+            value={gameConfig.value.logo3}
+            onChange={(e: string) => updateGameConfig("logo3", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.bgm")}</div>

@@ -44,7 +44,6 @@ export const en = {
       },
       commandBar: {
         items: {
-          source:"Source Code",
           language: {
             text: 'Language'
           },
@@ -67,9 +66,7 @@ export const en = {
       preview: {
         title: 'Game Preview',
         refresh: 'Refresh',
-        previewInNewTab: 'Preview in new tab',
-        livePreview:'Live Preview',
-        notice:'Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won\'t be reflected in the preview.'
+        previewInNewTab: 'Preview in new tab'
       },
 
       file: {
@@ -83,7 +80,7 @@ export const en = {
           }
         }
       },
-
+      
       assets: {
         title: 'Assets Management',
         supportFileTypes: 'File types supported by this folder',
@@ -115,6 +112,9 @@ export const en = {
           packageName: 'Game package name',
           bg: 'Background image of title',
           bgm: 'BGM of title',
+          logo1: 'Logo1',
+          logo2: 'Logo2',
+          logo3: 'Logo3'
         }
       },
 
