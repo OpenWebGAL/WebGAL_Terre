@@ -44,6 +44,7 @@ export const en = {
       },
       commandBar: {
         items: {
+          source:"Source Code",
           language: {
             text: 'Language'
           },
@@ -66,7 +67,9 @@ export const en = {
       preview: {
         title: 'Game Preview',
         refresh: 'Refresh',
-        previewInNewTab: 'Preview in new tab'
+        previewInNewTab: 'Preview in new tab',
+        livePreview:'Live Preview',
+        notice:'Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won\'t be reflected in the preview.'
       },
 
       file: {
@@ -80,7 +83,7 @@ export const en = {
           }
         }
       },
-      
+
       assets: {
         title: 'Assets Management',
         supportFileTypes: 'File types supported by this folder',
