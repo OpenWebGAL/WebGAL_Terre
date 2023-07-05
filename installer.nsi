@@ -79,11 +79,12 @@ Section -Install
     WriteRegStr HKLM "${UNINSTALL_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\uninstallerIcon.ico"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "${VERSION}"
+
+    ; 让程序以管理员身份运行
+    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\WebGal_Terre.exe" "RUNASADMIN"
 SectionEnd
 
-; 让程序以管理员身份运行
 Section run_as_admin
-    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\WebGal_Terre.exe" "RUNASADMIN"
 SectionEnd
 
 
@@ -98,6 +99,8 @@ Section -Uninstall
 
     ; delete reg item
     DeleteRegKey HKLM "${UNINSTALL_KEY}"
+
+    DeleteRegKey HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers\$INSTDIR"
 SectionEnd
 
 ; languages
