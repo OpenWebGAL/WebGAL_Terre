@@ -18,6 +18,7 @@
 ; 安装信息
 Name "${NAME} v${version} Setup" ; 安装程序名称
 OutFile "./bundle/WebGal_Terre_Setup.exe" ; 安装包输出路径
+RequestExecutionLevel admin ; 设置安装包以管理员权限运行
 ; 图标
 Icon "${ICON_PATH}"
 !define MUI_ICON "${ICON_PATH}"
@@ -78,6 +79,11 @@ Section -Install
     WriteRegStr HKLM "${UNINSTALL_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\uninstallerIcon.ico"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "${VERSION}"
+SectionEnd
+
+; 让程序以管理员身份运行
+Section run_as_admin
+    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\WebGal_Terre.exe" "RUNASADMIN"
 SectionEnd
 
 
