@@ -62,7 +62,7 @@ export class ManageGameService {
     };
     // 根据 GameName 找到游戏所在目录
     const gameDir = this.webgalFs.getPathFromRoot(
-      `/public/Games/${gameName}/game/`,
+      `/public/games/${gameName}/game/`,
     );
     // 读取配置文件
     const configFile: string | unknown = await this.webgalFs.readTextFile(
@@ -99,7 +99,7 @@ export class ManageGameService {
   ) {
     // 根据 GameName 找到游戏所在目录
     const gameDir = this.webgalFs.getPathFromRoot(
-      `/public/Games/${gameName}/game/`,
+      `/public/games/${gameName}/game/`,
     );
     // 检查是否存在这个游戏
     const checkDir = await this.webgalFs.getDirInfo(

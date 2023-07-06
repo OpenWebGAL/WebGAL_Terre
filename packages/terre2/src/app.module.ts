@@ -19,10 +19,10 @@ import { LspModule } from './Modules/lsp/lsp.module';
     // 静态文件服务：引擎模板
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'assets', 'templates', 'WebGAL_Template'),
-      serveRoot: '/Games/:gamename/',
+      serveRoot: '/games/:gamename/',
     }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
