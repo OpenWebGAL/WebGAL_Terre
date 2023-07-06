@@ -23,7 +23,15 @@
     },
     "asar": false,
     "win": {
-      "icon": "public/icon.ico"
+      "icon": "public/icon.ico",
+      "target": [
+        "dir"
+      ]
+    },
+    "linux": {
+      "target": [
+        "dir"
+      ]
     },
     "electronDownload": {
       "mirror": "https://npmmirror.com/mirrors/electron/"
