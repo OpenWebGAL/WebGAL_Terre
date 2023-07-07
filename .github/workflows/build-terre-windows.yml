@@ -19,17 +19,8 @@ jobs:
     - name: Build
       shell: bash
       run:  ./release.sh
-#     - name: Install 7-Zip
-#       run: |
-#         # Download and extract 7-Zip
-#         Invoke-WebRequest "https://www.7-zip.org/a/7z2104-x64.msi" -OutFile "7z.msi"
-#         Start-Process msiexec.exe -Wait -ArgumentList '/i','7z.msi','/quiet','/norestart'
-    - name: Compress
-      run: |
-        # Use "-mx9" option for extreme compression
-        & "C:\Program Files\7-Zip\7z.exe" a -t7z -mx9 WebGAL_Terre.7z release/*
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: WebGAL_Terre.7z
-        path: WebGAL_Terre.7z
+        name: WebGAL_Terre
+        path: release
