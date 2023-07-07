@@ -8,7 +8,8 @@
   "license": "MPL-2.0",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "build-universal": "electron-builder --universal"
   },
   "devDependencies": {
     "electron": "^18.3.7",
@@ -32,6 +33,9 @@
       "target": [
         "dir"
       ]
+    },
+    "mac": {
+      "icon": "public/icon.ico"
     },
     "electronDownload": {
       "mirror": "https://npmmirror.com/mirrors/electron/"

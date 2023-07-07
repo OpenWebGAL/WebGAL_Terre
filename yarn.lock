@@ -2684,9 +2684,14 @@
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
 
-"esbuild-windows-64@0.14.54":
-  "integrity" "sha512-AoHTRBUuYwXtZhjXZbA1pGfTo8cJo3vZIcWGLiUcTNgHpJJMC1rVA44ZereBHMJtotyN71S8Qw0npiCIkW96cQ=="
-  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.14.54.tgz"
+"esbuild-darwin-arm64@^0.15.18":
+  "integrity" "sha512-tKPSxcTJ5OmNb1btVikATJ8NftlyNlc8BVNtyT/UAr62JFOhwHlnoPrhYWz09akBLHI9nElFVfWSTSRsrZiDUA=="
+  "resolved" "https://registry.npmjs.org/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.15.18.tgz"
+  "version" "0.15.18"
+
+"esbuild-darwin-arm64@0.14.54":
+  "integrity" "sha512-OPafJHD2oUPyvJMrsCvDGkRrVCar5aVyHfWGQzY1dWnzErjrDuSETxwA2HSsyg2jORLY8yBfzc1MIpUkXlctmw=="
+  "resolved" "https://registry.npmjs.org/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.14.54.tgz"
   "version" "0.14.54"
 
 "esbuild@^0.14.27":
@@ -6237,6 +6242,8 @@
   "version" "1.14.1"
 
 "tslib@^2.1.0", "tslib@^2.4.0", "tslib@2.5.0":
+  "integrity" "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg=="
+  "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   "version" "2.5.0"
 
 "tslib@2.4.0":
@@ -6451,7 +6458,7 @@
   dependencies:
     "defaults" "^1.0.3"
 
-"webgal-origine-2@file:C:\\Users\\Mahiru\\Documents\\GitHub\\WebGAL_Terre\\packages\\origine2":
+"webgal-origine-2@file:/Users/futianchen/Documents/GitHub/WebGAL_Terre/packages/origine2":
   "resolved" "file:packages/origine2"
   "version" "4.4.0"
   dependencies:
@@ -6486,7 +6493,7 @@
     "cloudlogjs" "^1.0.11"
     "lodash" "^4.17.21"
 
-"webgal-terre-2@file:C:\\Users\\Mahiru\\Documents\\GitHub\\WebGAL_Terre\\packages\\terre2":
+"webgal-terre-2@file:/Users/futianchen/Documents/GitHub/WebGAL_Terre/packages/terre2":
   "resolved" "file:packages/terre2"
   "version" "4.4.0"
   dependencies:
@@ -6501,7 +6508,7 @@
     "vscode-languageserver" "^8.1.0"
     "ws" "^8.8.1"
 
-"webgal-terre-dev-server@file:C:\\Users\\Mahiru\\Documents\\GitHub\\WebGAL_Terre\\packages\\dev-server":
+"webgal-terre-dev-server@file:/Users/futianchen/Documents/GitHub/WebGAL_Terre/packages/dev-server":
   "resolved" "file:packages/dev-server"
   "version" "1.0.0"
   dependencies:
