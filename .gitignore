@@ -3,3 +3,6 @@ node_modules
 .vscode
 release
 bundle
+yarn.lock
+package-lock.json
+.DS_Store
