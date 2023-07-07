@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     name: Build Binary
-    runs-on: macos-arm64
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
