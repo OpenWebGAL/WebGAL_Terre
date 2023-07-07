@@ -8,7 +8,8 @@
   "license": "MPL-2.0",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "build-universal": "electron-builder --universal"
   },
   "devDependencies": {
     "electron": "^18.3.7",
@@ -23,6 +24,17 @@
     },
     "asar": false,
     "win": {
+      "icon": "public/icon.ico",
+      "target": [
+        "dir"
+      ]
+    },
+    "linux": {
+      "target": [
+        "dir"
+      ]
+    },
+    "mac": {
       "icon": "public/icon.ico"
     },
     "electronDownload": {
