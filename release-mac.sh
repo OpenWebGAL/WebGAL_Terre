@@ -21,7 +21,7 @@ cd ../../
 
 # 进入 Origine 目录
 cd packages/origine2
-npm install esbuild-darwin-arm64
+#npm install esbuild-darwin-arm64
 npm run build
 cp -rf dist/* ../../release/public/
 cd ../../
