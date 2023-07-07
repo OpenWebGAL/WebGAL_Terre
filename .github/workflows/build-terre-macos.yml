@@ -1,0 +1,27 @@
+name: Build and Deploy on Linux
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Binary
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.x'
+    - name: Build
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: sh release-mac.sh
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: WebGAL_Terre
+        path: release
