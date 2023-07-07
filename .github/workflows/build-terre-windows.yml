@@ -22,5 +22,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: WebGAL_Terre.7z
-        path: WebGAL_Terre.7z
+        name: WebGAL_Terre
+        path: release
