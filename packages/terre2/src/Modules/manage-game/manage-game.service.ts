@@ -1,13 +1,14 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { _open } from 'src/util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
+import * as process from 'process';
 
 @Injectable()
 export class ManageGameService {
   constructor(
     private readonly logger: ConsoleLogger,
     private readonly webgalFs: WebgalFsService,
-  ) { }
+  ) {}
 
   /**
    * 打开游戏资源文件夹
@@ -126,29 +127,56 @@ export class ManageGameService {
     // 将游戏复制到导出目录，并附加对应的模板
     // 导出 electron-windows
     if (ejectPlatform === 'electron-windows') {
-      const electronExportDir = this.webgalFs.getPath(
-        `${exportDir}/electron-windows`,
-      );
-      await this.webgalFs.mkdir(electronExportDir, '');
-      await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot(
-          `/assets/templates/WebGAL_Electron_Template/`,
-        ),
-        `${electronExportDir}/`,
-      );
-      await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-        `${electronExportDir}/resources/app/public/`,
-      );
-      // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
-      await this.webgalFs.deleteFileOrDirectory(
-        `${electronExportDir}/resources/app/public/game/`,
-      );
-      await this.webgalFs.copy(
-        gameDir,
-        `${electronExportDir}/resources/app/public/game/`,
-      );
-      await _open(electronExportDir);
+      if (process.platform === 'win32') {
+        const electronExportDir = this.webgalFs.getPath(
+          `${exportDir}/electron-windows`,
+        );
+        await this.webgalFs.mkdir(electronExportDir, '');
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot(
+            `/assets/templates/WebGAL_Electron_Template/`,
+          ),
+          `${electronExportDir}/`,
+        );
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+          `${electronExportDir}/resources/app/public/`,
+        );
+        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/resources/app/public/game/`,
+        );
+        await this.webgalFs.copy(
+          gameDir,
+          `${electronExportDir}/resources/app/public/game/`,
+        );
+        await _open(electronExportDir);
+      }
+      if (process.platform === 'darwin') {
+        const electronExportDir = this.webgalFs.getPath(
+          `${exportDir}/WebGAL.app`,
+        );
+        await this.webgalFs.mkdir(electronExportDir, '');
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot(
+            `/assets/templates/WebGAL_Electron_Template/`,
+          ),
+          `${electronExportDir}/`,
+        );
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+          `${electronExportDir}/Contents/Resources/app/public/`,
+        );
+        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/Contents/Resources/app/public/game/`,
+        );
+        await this.webgalFs.copy(
+          gameDir,
+          `${electronExportDir}/Contents/Resources/app/public/game/`,
+        );
+        await _open(electronExportDir);
+      }
     }
     // 导出 android
     if (ejectPlatform === 'android') {
