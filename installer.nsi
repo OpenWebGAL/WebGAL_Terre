@@ -7,7 +7,7 @@
 
 ; 常量
 !define NAME "WebGal_Terre"
-!define VERSION "2.3.15" ; 版本号变量
+!define VERSION "4.4.0" ; 版本号变量
 !define PRODUCT_VERSION "${VERSION}.0"
 !define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; 版权信息
 !define ICON_PATH ".\assets\nsis.ico"
@@ -18,6 +18,7 @@
 ; 安装信息
 Name "${NAME} v${version} Setup" ; 安装程序名称
 OutFile "./bundle/WebGal_Terre_Setup.exe" ; 安装包输出路径
+RequestExecutionLevel admin ; 设置安装包以管理员权限运行
 ; 图标
 Icon "${ICON_PATH}"
 !define MUI_ICON "${ICON_PATH}"
@@ -78,6 +79,12 @@ Section -Install
     WriteRegStr HKLM "${UNINSTALL_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\uninstallerIcon.ico"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "${VERSION}"
+
+    ; 让程序以管理员身份运行
+    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\WebGal_Terre.exe" "RUNASADMIN"
+SectionEnd
+
+Section run_as_admin
 SectionEnd
 
 
@@ -92,6 +99,8 @@ Section -Uninstall
 
     ; delete reg item
     DeleteRegKey HKLM "${UNINSTALL_KEY}"
+
+    DeleteRegKey HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers\$INSTDIR"
 SectionEnd
 
 ; languages
