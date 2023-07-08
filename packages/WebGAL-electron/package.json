@@ -30,6 +30,7 @@
       ]
     },
     "linux": {
+      "icon": "public/icon.ico",
       "target": [
         "dir"
       ]
