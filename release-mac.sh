@@ -56,8 +56,18 @@ rm -rf assets/templates/WebGAL_Android_Template/.gitattributes
 rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
 rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
 
+cd ..
+mkdir release-mac
+mv release release-mac
+cd release-mac
+mv release WebGAL
+cd ..
+mv release-mac release
+cd release
+
 # 写脚本
 echo 'cd "$(dirname "$0")"' >> run-webgal-on-mac.command
+echo 'cd WebGAL' >> run-webgal-on-mac.command
 echo './WebGAL_Terre' >> run-webgal-on-mac.command
 chmod +x run-webgal-on-mac.command
 
