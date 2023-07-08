@@ -152,6 +152,31 @@ export class ManageGameService {
         );
         await _open(electronExportDir);
       }
+      if (process.platform === 'linux') {
+        const electronExportDir = this.webgalFs.getPath(
+          `${exportDir}/electron-linux`,
+        );
+        await this.webgalFs.mkdir(electronExportDir, '');
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot(
+            `/assets/templates/WebGAL_Electron_Template/`,
+          ),
+          `${electronExportDir}/`,
+        );
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+          `${electronExportDir}/resources/app/public/`,
+        );
+        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/resources/app/public/game/`,
+        );
+        await this.webgalFs.copy(
+          gameDir,
+          `${electronExportDir}/resources/app/public/game/`,
+        );
+        await _open(electronExportDir);
+      }
       if (process.platform === 'darwin') {
         const electronExportDir = this.webgalFs.getPath(
           `${exportDir}/WebGAL.app`,
