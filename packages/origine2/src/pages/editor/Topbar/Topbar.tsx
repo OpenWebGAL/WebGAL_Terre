@@ -98,7 +98,7 @@ export default function TopBar() {
           {
             key: "export as exe",
             text: t('commandBar.items.release.items.exe'),
-            iconProps: { iconName: "WindowsLogo" },
+            iconProps: { iconName: "Devices2" },
             onClick: () => {
               axios.get(`/api/manageGame/ejectGameAsExe/${origineStore.getState().status.editor.currentEditingGame}`);
             }
