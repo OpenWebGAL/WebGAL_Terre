@@ -175,7 +175,7 @@ export class ManageGameService {
           gameDir,
           `${electronExportDir}/Contents/Resources/app/public/game/`,
         );
-        await _open(electronExportDir);
+        await _open(exportDir);
       }
     }
     // 导出 android
