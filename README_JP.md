@@ -12,7 +12,7 @@
 
 ## すぐに体験
 
-##### ダウンロードリンク(Windows)
+##### ダウンロードリンク
 
 https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
