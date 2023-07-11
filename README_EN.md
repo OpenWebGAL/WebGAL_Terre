@@ -12,7 +12,7 @@ Multi-tab editor allows you to quickly switch between multiple scripts.
 
 ## Try it now
 
-##### Download link (Windows)
+##### Download link
 
 https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
