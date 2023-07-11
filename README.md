@@ -14,7 +14,7 @@
 
 ## 立即体验
 
-##### 下载链接( Windows )
+##### 下载链接
 
 https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
