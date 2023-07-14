@@ -7,7 +7,7 @@
 
 ; 常量
 !define NAME "WebGal_Terre"
-!define VERSION "4.4.1" ; 版本号变量
+!define VERSION "4.4.2" ; 版本号变量
 !define PRODUCT_VERSION "${VERSION}.0"
 !define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; 版权信息
 !define ICON_PATH ".\assets\nsis.ico"
