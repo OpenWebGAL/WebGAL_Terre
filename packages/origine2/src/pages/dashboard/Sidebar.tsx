@@ -1,6 +1,6 @@
 import GameElement from "./GameElement";
 import styles from "./sidebar.module.scss";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 
@@ -31,6 +31,11 @@ export default function Sidebar(props: ISidebarProps) {
   }
 
 
+  const translatedGameName = t('createNewGame.dialog.defaultName');
+  useEffect(()=>{
+    setNewGameName(translatedGameName);
+  },[translatedGameName]);
+
   return <div className={styles.sidebar_main}>
     <div className={styles.sidebar_top}>
       <span className={styles.sidebar_top_title}>{t('titles.gameList')}</span>
@@ -55,7 +60,7 @@ export default function Sidebar(props: ISidebarProps) {
           {t('createNewGame.dialog.title')}
         </Text>
         <div>
-          <TextField onChange={(event, newValue) => {
+          <TextField value={newGameName} onChange={(event, newValue) => {
             setNewGameName(newValue ?? "");
           }} defaultValue={t('createNewGame.dialog.defaultName')} label={t('createNewGame.dialog.text')} />
         </div>
