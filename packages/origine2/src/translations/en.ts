@@ -115,9 +115,7 @@ export const en = {
           packageName: 'Game package name',
           bg: 'Background image of title',
           bgm: 'BGM of title',
-          logo1: 'Logo1',
-          logo2: 'Logo2',
-          logo3: 'Logo3'
+          logoImage: 'Logo'
         }
       },
 

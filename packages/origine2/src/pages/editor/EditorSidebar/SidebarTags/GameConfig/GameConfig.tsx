@@ -3,9 +3,9 @@ import { useValue } from "../../../../../hooks/useValue";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../store/origineStore";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cloneDeep } from "lodash";
-import { ITextField, TextField } from "@fluentui/react";
+import { IconButton, ITextField, TextField } from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -14,9 +14,7 @@ interface IGameConfig {
   gameName: string;
   titleBgm: string;
   titleBackground: string;
-  logo1: string;
-  logo2: string;
-  logo3: string;
+  logoImage: string[];
   gameKey: string;
   packageName: string;
 }
@@ -30,9 +28,7 @@ export default function GameConfig() {
     gameName: "",
     titleBgm: "",
     titleBackground: "",
-    logo1: "",
-    logo2: "",
-    logo3: "",
+    logoImage: [],
     gameKey: "",
     packageName: ""
   });
@@ -66,14 +62,9 @@ export default function GameConfig() {
       case "Title_img":
         gameConfig.set({ ...gameConfig.value, titleBackground: e[1] });
         break;
-      case "logo1":
-        gameConfig.set({ ...gameConfig.value, logo1: e[1] });
-        break;
-      case "logo2":
-        gameConfig.set({ ...gameConfig.value, logo2: e[1] });
-        break;
-      case "logo3":
-        gameConfig.set({ ...gameConfig.value, logo3: e[1] });
+      case "LogoImage":
+        const logoImages = e[1].split(' ');
+        gameConfig.set({ ...gameConfig.value, logoImage: logoImages });
         break;
       case "Game_key":
         gameConfig.set({ ...gameConfig.value, gameKey: e[1] });
@@ -96,11 +87,11 @@ export default function GameConfig() {
     getGameConfig();
   }, []);
 
-  function updateGameConfig(key: keyof IGameConfig, content: string) {
+  function updateGameConfig<K extends keyof IGameConfig>(key: K, content: IGameConfig[K]) {
     const draft = cloneDeep(gameConfig.value);
     draft[key] = content;
     gameConfig.set(draft);
-    const newConfig = `Game_name:${gameConfig.value.gameName};\nGame_key:${gameConfig.value.gameKey};\nPackage_name:${gameConfig.value.packageName};\nTitle_bgm:${gameConfig.value.titleBgm};\nTitle_img:${gameConfig.value.titleBackground};\nlogo1:${gameConfig.value.logo1};\nlogo2:${gameConfig.value.logo2};\nlogo3:${gameConfig.value.logo3};\n`;
+    const newConfig = `Game_name:${gameConfig.value.gameName};\nGame_key:${gameConfig.value.gameKey};\nPackage_name:${gameConfig.value.packageName};\nTitle_bgm:${gameConfig.value.titleBgm};\nTitle_img:${gameConfig.value.titleBackground};\nLogoImage:${gameConfig.value.logoImage.join(' ')};\n`;
     const form = new URLSearchParams();
     form.append("gameName", state.currentEditingGame);
     form.append("newConfig", newConfig);
@@ -137,32 +128,14 @@ export default function GameConfig() {
             onChange={(e: string) => updateGameConfig("titleBackground", e)} />
         </div>
         <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.logo1")}</div>
-          <GameConfigEditorWithFileChoose
-            sourceBase="background"
-            extNameList={[".jpg", ".png", ".webp"]}
-            key="logo1"
-            value={gameConfig.value.logo1}
-            onChange={(e: string) => updateGameConfig("logo1", e)} />
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.logo2")}</div>
-          <GameConfigEditorWithFileChoose
-            sourceBase="background"
-            extNameList={[".jpg", ".png", ".webp"]}
-            key="logo2"
-            value={gameConfig.value.logo2}
-            onChange={(e: string) => updateGameConfig("logo2", e)} />
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.logo3")}</div>
-          <GameConfigEditorWithFileChoose
-            sourceBase="background"
-            extNameList={[".jpg", ".png", ".webp"]}
-            key="logo3"
-            value={gameConfig.value.logo3}
-            onChange={(e: string) => updateGameConfig("logo3", e)} />
-        </div>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.logoImage")}</div>
+            <GameConfigEditorWithImageFileChoose
+              sourceBase="background"
+              extNameList={[".jpg", ".png", ".webp"]}
+              key="logoImage"
+              value={gameConfig.value.logoImage}
+              onChange={(e: string[]) => updateGameConfig("logoImage", e)} />
+          </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.bgm")}</div>
           <GameConfigEditorWithFileChoose
@@ -180,6 +153,12 @@ interface IGameConfigEditor {
   key: keyof IGameConfig;
   value: string;
   onChange: Function;
+}
+
+interface IGameConfigEditorMulti {
+  key: keyof IGameConfig;
+  value: string[];
+  onChange: (value: string[]) => void;
 }
 
 function GameConfigEditor(props: IGameConfigEditor) {
@@ -200,6 +179,56 @@ function GameConfigEditor(props: IGameConfigEditor) {
       }}
     />}
   </div>;
+}
+
+function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & { sourceBase: string, extNameList: string[] }) {
+  const t = useTrans("common.");
+  const showEditBox = useValue(false);
+  const inputBoxRef = useRef<ITextField>(null);
+  
+  const [images, setImages] = useState<string[]>(props.value);
+
+  const addImage = (imageName: string) => {
+    const newImages = [...images, imageName];
+    setImages(newImages);
+    props.onChange(newImages);
+  };
+
+  const removeImage = (imageName: string) => {
+    const newImages = images.filter((image) => image !== imageName);
+    setImages(newImages);
+    props.onChange(newImages);
+  };
+
+  return (
+    <div>
+      {!showEditBox.value && props.value.join(' ')}
+      {!showEditBox.value && <div>{images.map((imageName, index) => (
+        <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton
+            iconProps={{ iconName: 'Cancel' }}
+            style={{ marginRight: '10px' }}
+            onClick={() => removeImage(imageName)}
+          />
+          <span>{imageName}</span>
+        </div>
+      ))}</div>}
+      {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+        showEditBox.set(true);
+        setTimeout(() => inputBoxRef.current?.focus(), 100);
+      }}>{t("revise")}</div>}
+      {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
+        onChange={(file) => {
+          if (file) {
+            addImage(file.name);
+            showEditBox.set(false);
+          } else {
+            showEditBox.set(false);
+          }
+        }}
+        extName={props.extNameList} />}
+    </div>
+  );
 }
 
 function GameConfigEditorWithFileChoose(props: IGameConfigEditor & { sourceBase: string, extNameList: string[] }) {

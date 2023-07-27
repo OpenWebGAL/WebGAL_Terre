@@ -115,9 +115,7 @@ export const jp = {
           packageName: 'パッケージ名',
           bg: 'タイトルの背景画像',
           bgm: 'タイトルのBGM',
-          logo1: 'ロゴ1',
-          logo2: 'ロゴ2',
-          logo3: 'ロゴ3'
+          logoImage: 'ロゴ'
         }
       },
 
