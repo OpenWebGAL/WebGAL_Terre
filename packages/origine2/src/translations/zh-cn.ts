@@ -155,8 +155,14 @@ export const zhCn = {
                 role: "角色名，留空以继承上句"
               }
             },
+            tips: {
+              edit: "提示：换行符最多可达三行",
+            },
             dialogue: {
               placeholder: "对话"
+            },
+            add: {
+              button: '添加新行'
             },
             voiceover: {
               title: "旁白模式",
