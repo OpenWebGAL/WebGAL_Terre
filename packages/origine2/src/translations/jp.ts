@@ -154,8 +154,14 @@ export const jp = {
                 role: "キャラクター名を指定"
               }
             },
+            tips: {
+              edit: "ヒント:改行は三行まで可能",
+            },
             dialogue: {
               placeholder: "ダイアログ"
+            },
+            add: {
+              button: '新しい行を追加'
             },
             voiceover: {
               title: "モードの切り替え",
