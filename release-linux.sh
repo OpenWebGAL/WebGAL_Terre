@@ -1,9 +1,12 @@
+#!/bin/bash
+set -eu
+
 echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
 # 安装依赖
-npm i
+yarn install --frozen-lockfile
 
 # 清理
-rm -rf release
+test -d release || rm -rf release
 
 mkdir release
 
@@ -29,7 +32,7 @@ cd ../../
 
 # 进入 Electron 目录
 cd packages/WebGAL-electron
-npm i
+yarn install --frozen-lockfile
 npm run build
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/linux-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
