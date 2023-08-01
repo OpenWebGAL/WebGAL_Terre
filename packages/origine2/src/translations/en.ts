@@ -154,8 +154,14 @@ export const en = {
                 role: "Role name, leave a void to extends last dialogue"
               }
             },
+            tips: {
+              edit: "Tip:Line breaks can be up to three lines",
+            },
             dialogue: {
               placeholder: "Dialogue"
+            },
+            add: {
+              button: 'Add Line'
             },
             voiceover: {
               title: "Voiceover Mode",
