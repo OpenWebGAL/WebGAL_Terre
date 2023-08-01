@@ -6,7 +6,7 @@ echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
 yarn install --frozen-lockfile
 
 # 清理
-test -d release || rm -rf release
+test -d release && rm -rf release
 
 mkdir release
 
