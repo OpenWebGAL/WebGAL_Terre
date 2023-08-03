@@ -337,15 +337,22 @@ export const zhCn = {
           descText: '清除当前舞台的特殊效果',
         },
         intro: {
-          title: "黑屏文字",
+          title: "全屏文字",
           initText: "intro:;",
-          descText: '黑屏显示一段文字，用于独白或引出场景',
+          descText: '全屏显示一段文字，用于独白或引出场景',
           options: {
             value: {
               placeholder: "Intro 文本",
             },
             add: {
               button: '添加新行'
+            },
+            colorPicker: {
+              backgroundColor:'背景颜色',
+              fontColor:'文字颜色'
+            },
+            font: {
+              size:'文字大小'
             }
           }
         },

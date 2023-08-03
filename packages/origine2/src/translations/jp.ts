@@ -336,15 +336,22 @@ export const jp = {
           descText: '現在の特殊効果を無効化する',
         },
         intro: {
-          title: "黒画面テキスト",
+          title: "全画面テキスト",
           initText: "intro:;",
-          descText: '黒画面でテキストを表示する',
+          descText: '全画面画面でテキストを表示する',
           options: {
             value: {
               placeholder: "",
             },
             add: {
               button: '新しい行を追加'
+            },
+            colorPicker: {
+              backgroundColor:'背景色',
+              fontColor:'文字色'
+            },
+            font: {
+              size:'文字サイズ'
             }
           }
         },
