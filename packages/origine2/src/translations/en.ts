@@ -336,15 +336,22 @@ export const en = {
           descText: 'Clear the effects of stage',
         },
         intro: {
-          title: "Text on Black Screen",
+          title: "Full-screen Text",
           initText: "intro:;",
-          descText: 'Show some texts on black screen',
+          descText: 'Show some texts on Full-screen',
           options: {
             value: {
               placeholder: "Intro Texts",
             },
             add: {
               button: 'Add Line'
+            },
+            colorPicker: {
+              backgroundColor:'backgroundColor',
+              fontColor:'fontColor'
+            },
+            font: {
+              size:'fontSize'
             }
           }
         },
