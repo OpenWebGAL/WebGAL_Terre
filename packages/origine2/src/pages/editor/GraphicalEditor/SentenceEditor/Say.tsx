@@ -6,7 +6,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonOptions from "../components/CommonOption";
 import useTrans from "@/hooks/useTrans";
-import {DefaultButton} from "@fluentui/react";
+import {DefaultButton, Dropdown} from "@fluentui/react";
 import {cloneDeep} from "lodash";
 import CommonTips from "../components/CommonTips";
 
@@ -17,8 +17,26 @@ export default function Say(props: ISentenceEditorProps) {
   const currentVocal = useValue(getArgByKey(props.sentence, "vocal").toString());
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
 
+  const getInitialFontSize = (): string => {
+    const fontSizeValue = getArgByKey(props.sentence, "fontSize");
+  
+    if (typeof fontSizeValue === 'string' && ["small", "medium", "large"].includes(fontSizeValue)) {
+      return fontSizeValue;
+    }
+  
+    return "medium";
+  };
+  const fontSize = useValue(getInitialFontSize());
+
+  const fontSizes = [
+    { key: "small", text: "small" },
+    { key: "medium", text: "medium" },
+    { key: "large", text: "large" },
+  ];  
+
   const submit = () => {
-    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${currentVocal.value === "" ? "" : " -" + currentVocal.value};`);
+    const selectedFontSize = fontSize.value;
+    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${currentVocal.value === "" ? "" : " -" + currentVocal.value} -fontSize=${selectedFontSize};`);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -81,9 +99,19 @@ export default function Say(props: ISentenceEditorProps) {
           }}
           extName={[".ogg", ".mp3", ".wav"]}/>
         </>
-
       </CommonOptions>
-
+    </div>
+    <div className={styles.editItem}>
+      <CommonOptions title={t('font.size')}>
+        <Dropdown
+          options={fontSizes.map(f => ({ key: f.key, text: f.text }))}
+          selectedKey={fontSize.value}
+          onChange={(event, item) =>{
+              item && fontSize.set(item.key as string);
+              submit();
+          }}
+        />
+      </CommonOptions>
     </div>
   </div>;
 }
