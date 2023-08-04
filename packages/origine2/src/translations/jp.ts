@@ -170,6 +170,9 @@ export const jp = {
             },
             vocal: {
               title: "ボイスを選択"
+            },
+            font: {
+              size:'フォントサイズ'
             }
           }
         },
