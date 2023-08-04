@@ -171,6 +171,9 @@ export const zhCn = {
             },
             vocal: {
               title: "语音"
+            },
+            font: {
+              size:'文字大小'
             }
           }
         },
