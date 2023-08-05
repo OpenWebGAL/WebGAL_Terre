@@ -20,15 +20,16 @@ export default function Say(props: ISentenceEditorProps) {
   const getInitialFontSize = (): string => {
     const fontSizeValue = getArgByKey(props.sentence, "fontSize");
   
-    if (typeof fontSizeValue === 'string' && ["small", "medium", "large"].includes(fontSizeValue)) {
+    if (typeof fontSizeValue === 'string' && ["default", "small", "medium", "large"].includes(fontSizeValue)) {
       return fontSizeValue;
     }
   
-    return "medium";
+    return "default";
   };
   const fontSize = useValue(getInitialFontSize());
 
   const fontSizes = [
+    { key: "default", text: "default" },
     { key: "small", text: "small" },
     { key: "medium", text: "medium" },
     { key: "large", text: "large" },
