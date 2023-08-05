@@ -191,6 +191,18 @@ export class WebgalFsService {
   }
 
   /**
+   * 检查文件夹是否存在
+   * @param path 文件夹路径
+   * @returns 
+   */
+  async existsDir(path: string): Promise<boolean> {
+    return await fs
+      .stat(path)
+      .then((stats) => stats.isDirectory())
+      .catch(() => false);
+  }
+
+  /**
    * 创建一个空文件
    * @param path 文件路径
    */

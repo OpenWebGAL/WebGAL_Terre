@@ -102,12 +102,15 @@ export class ManageGameService {
     const gameDir = this.webgalFs.getPathFromRoot(
       `/public/games/${gameName}/game/`,
     );
-    // 检查是否存在这个游戏
-    const checkDir = await this.webgalFs.getDirInfo(
+    // 如果导出文件夹不存在就创建
+    if (!(await this.webgalFs.existsDir('Exported_Games')))
+      await this.webgalFs.mkdir('Exported_Games', '');
+    // 检查导出文件夹是否存在这个游戏
+    const exportedGamesDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/Exported_Games`),
     );
     let isThisGameExist = false;
-    checkDir.forEach((e) => {
+    exportedGamesDir.forEach((e) => {
       const info: IFileInfo = e as IFileInfo;
       if (info.name === gameName && info.isDir) {
         isThisGameExist = true;
