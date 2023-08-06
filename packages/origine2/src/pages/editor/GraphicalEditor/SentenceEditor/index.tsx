@@ -39,6 +39,7 @@ import UnlockExtra from "./UnlockExtra";
 import SetAnimation from "./SetAnimation";
 import ChangeCallScene from "./ChangeCallScene";
 import Choose from "./Choose";
+import SetTransition from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransition";
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -217,5 +218,13 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component: Comment,
     icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
     descText: () => t(tPrefix + 'comment.descText')
+  },
+  {
+    type: commandType.setTransition,
+    title: () => t(tPrefix + 'transition.title'),
+    initialText: () => t(tPrefix + 'transition.initText'),
+    component: SetTransition,
+    icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    descText: () => t(tPrefix + 'transition.descText')
   }
 ];
