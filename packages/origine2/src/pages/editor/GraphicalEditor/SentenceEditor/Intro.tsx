@@ -6,6 +6,7 @@ import { cloneDeep } from "lodash";
 import { DefaultButton, Dropdown, ColorPicker, IColor } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import { getArgByKey } from "../utils/getArgByKey";
+import { useState } from "react";
 
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
@@ -100,13 +101,21 @@ export default function Intro(props: ISentenceEditorProps) {
   const backgroundColor = useValue(getBackgroundColor());
   const fontColor = useValue(getFontColor());
   const fontSize = useValue(getInitialFontSize());
+  const [localBackgroundColor, setLocalBackgroundColor] = useState(backgroundColor.value);
+  const [localFontColor, setLocalFontColor] = useState(fontColor.value);
 
-  const handleBackgroundColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-    backgroundColor.set(newColor);
+  const handleLocalBackgroundColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+    setLocalBackgroundColor(newColor);
   };
   
-  const handleFontColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-    fontColor.set(newColor);
+  const handleLocalFontColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+    setLocalFontColor(newColor);
+  };
+
+  const handleSubmit = () => {
+    backgroundColor.set(localBackgroundColor);
+    fontColor.set(localFontColor);
+    submit();
   };
 
   const submit = () => {
@@ -152,18 +161,18 @@ export default function Intro(props: ISentenceEditorProps) {
     <div style={{ display: 'flex'}}>
         <CommonOptions title={t('colorPicker.backgroundColor')}>
           <ColorPicker
-            color={backgroundColor.value}
-            onChange={handleBackgroundColorChange}
+            color={localBackgroundColor}
+            onChange={handleLocalBackgroundColorChange}
           />
         </CommonOptions>
         <CommonOptions title={t('colorPicker.fontColor')}>
           <ColorPicker
-            color={fontColor.value}
-            onChange={handleFontColorChange}
+            color={localFontColor}
+            onChange={handleLocalFontColorChange}
           />
         </CommonOptions>
       </div>
-    <DefaultButton style={{ display: 'flex'}} onClick={submit}>{t('colorPicker.submit')}</DefaultButton>
+    <DefaultButton style={{ display: 'flex'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
     <CommonOptions title={t('font.size')}>
       <Dropdown
         options={fontSizes.map(f => ({ key: f.key, text: f.text }))}
