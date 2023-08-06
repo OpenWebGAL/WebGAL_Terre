@@ -350,6 +350,9 @@ export const zhCn = {
             add: {
               button: '添加新行'
             },
+            option: {
+              title:'其他选项'
+            },
             colorPicker: {
               backgroundColor:'背景颜色',
               fontColor:'文字颜色',
