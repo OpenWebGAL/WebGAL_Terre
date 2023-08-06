@@ -19,11 +19,11 @@ export default function Say(props: ISentenceEditorProps) {
 
   const getInitialFontSize = (): string => {
     const fontSizeValue = getArgByKey(props.sentence, "fontSize");
-  
+
     if (typeof fontSizeValue === 'string' && ["default", "small", "medium", "large"].includes(fontSizeValue)) {
       return fontSizeValue;
     }
-  
+
     return "default";
   };
   const fontSize = useValue(getInitialFontSize());
@@ -33,7 +33,7 @@ export default function Say(props: ISentenceEditorProps) {
     { key: "small", text: "small" },
     { key: "medium", text: "medium" },
     { key: "large", text: "large" },
-  ];  
+  ];
 
   const submit = () => {
     const selectedFontSize = fontSize.value;
@@ -108,8 +108,8 @@ export default function Say(props: ISentenceEditorProps) {
           options={fontSizes.map(f => ({ key: f.key, text: f.text }))}
           selectedKey={fontSize.value}
           onChange={(event, item) =>{
-              item && fontSize.set(item.key as string);
-              submit();
+            item && fontSize.set(item.key as string);
+            submit();
           }}
         />
       </CommonOptions>
