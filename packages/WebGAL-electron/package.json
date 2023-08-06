@@ -24,10 +24,7 @@
     },
     "asar": false,
     "win": {
-      "icon": "public/icon.ico",
-      "target": [
-        "dir"
-      ]
+      "icon": "public/icon.ico"
     },
     "linux": {
       "icon": "public/icon.ico",
