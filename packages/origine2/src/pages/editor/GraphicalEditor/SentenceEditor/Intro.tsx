@@ -1,13 +1,14 @@
 import CommonOptions from "../components/CommonOption";
-import { ISentenceEditorProps } from "./index";
+import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
-import { useValue } from "../../../../hooks/useValue";
-import { cloneDeep } from "lodash";
-import { DefaultButton, Dropdown, ColorPicker, IColor } from "@fluentui/react";
+import {useValue} from "../../../../hooks/useValue";
+import {cloneDeep} from "lodash";
+import {DefaultButton, Dropdown, ColorPicker, IColor} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import { getArgByKey } from "../utils/getArgByKey";
 import { useState } from "react";
 import React from 'react';
+import {logger} from "@/utils/logger";
 
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
@@ -33,6 +34,18 @@ export default function Intro(props: ISentenceEditorProps) {
     v: 0,
     hex: 'FFFFFF',
     str: 'FFFFFF',
+  };
+
+  const fontInitialColor: IColor = {
+    r: 255,
+    g: 255,
+    b: 255,
+    a: 255,
+    h:0,
+    s:0,
+    v:100,
+    hex: 'FFFFFF',
+    str: 'FFFFFF'
   };
 
   const getBackgroundColor = (): IColor => {
@@ -94,9 +107,9 @@ export default function Intro(props: ISentenceEditorProps) {
   };
 
   const fontSizes = [
-    { key: "small", text: "small" },
-    { key: "medium", text: "medium" },
-    { key: "large", text: "large" },
+    {key: "small", text: "small"},
+    {key: "medium", text: "medium"},
+    {key: "large", text: "large"},
   ];
 
   const backgroundColor = useValue(getBackgroundColor());
@@ -128,7 +141,7 @@ export default function Intro(props: ISentenceEditorProps) {
   };
 
   const introCompList = introTextList.value.map((text, index) => {
-    return <div key={index} style={{display:"flex",padding:'0 0 6px 0'}}>
+    return <div key={index} style={{display: "flex", padding: '0 0 6px 0'}}>
       <input value={text}
         onChange={(ev) => {
           const newValue = ev.target.value;
@@ -139,12 +152,12 @@ export default function Intro(props: ISentenceEditorProps) {
         onBlur={submit}
         className={styles.sayInput}
         placeholder={t('value.placeholder')}
-        style={{ width: "100%" }}
+        style={{width: "100%"}}
       />
-      <div style={{padding:'0 0 0 8px'}}/>
-      <DefaultButton onClick={()=>{
+      <div style={{padding: '0 0 0 8px'}}/>
+      <DefaultButton onClick={() => {
         const newList = cloneDeep(introTextList.value);
-        newList.splice(index,1);
+        newList.splice(index, 1);
         introTextList.set(newList);
         submit();
       }}>{t('$common.delete')}</DefaultButton>
@@ -153,7 +166,7 @@ export default function Intro(props: ISentenceEditorProps) {
 
   return <div>
     {introCompList}
-    <DefaultButton style={{ display: 'block', textAlign: 'left' }} onClick={()=>{
+    <DefaultButton style={{display: 'block', textAlign: 'left'}} onClick={() => {
       const newList = cloneDeep(introTextList.value);
       newList.push('');
       introTextList.set(newList);
@@ -176,9 +189,9 @@ export default function Intro(props: ISentenceEditorProps) {
     <DefaultButton style={{ display: 'flex'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
     <CommonOptions title={t('font.size')}>
       <Dropdown
-        options={fontSizes.map(f => ({ key: f.key, text: f.text }))}
+        options={fontSizes.map(f => ({key: f.key, text: f.text}))}
         selectedKey={fontSize.value}
-        onChange={(event, item) =>{
+        onChange={(event, item) => {
           item && fontSize.set(item.key as string);
           submit();
         }}
