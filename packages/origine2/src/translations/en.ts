@@ -348,7 +348,8 @@ export const en = {
             },
             colorPicker: {
               backgroundColor:'backgroundColor',
-              fontColor:'fontColor'
+              fontColor:'fontColor',
+              submit: 'Apply color changes'
             },
             font: {
               size:'fontSize'
