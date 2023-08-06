@@ -459,6 +459,42 @@ export const zhCn = {
             }
           }
         },
+        transition: {
+          title: "设置转场",
+          initText: "setTransition:;",
+          descText: '设置转场效果',
+          options: {
+            enterfile: {
+              title: "选择进入动画"
+            },
+            exitfile: {
+              title: "选择退出动画"
+            },
+            preparedTarget: {
+              title: "使用预设目标",
+              on: "使用预设的作用目标，如果设置了id则不生效",
+              off: "手动输入 ID",
+              choose: {
+                title: "选择预设目标",
+                options: {
+                  figLeft: "左侧立绘",
+                  figCenter: "中间立绘",
+                  figRight: "右侧立绘",
+                  bgMain: "背景图片"
+                }
+              }
+            },
+            targetId: {
+              title: "输入目标 ID",
+              placeholder: "立绘 ID",
+            }
+          }
+        },
+        transform: {
+          title: "设置变换",
+          initText: "setTransform:;",
+          descText: '设置变换效果',
+        },
         end: {
           title: "结束游戏",
           initText: "end;",
