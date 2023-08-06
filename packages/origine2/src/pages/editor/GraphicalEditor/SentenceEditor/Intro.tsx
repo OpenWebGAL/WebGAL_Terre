@@ -7,6 +7,7 @@ import { DefaultButton, Dropdown, ColorPicker, IColor } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import { getArgByKey } from "../utils/getArgByKey";
 import { useState } from "react";
+import React from 'react';
 
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
@@ -16,7 +17,7 @@ export default function Intro(props: ISentenceEditorProps) {
     g: 0,
     b: 0,
     a: 100,
-    h: 0, 
+    h: 0,
     s: 0,
     v: 0,
     hex: '000000',
@@ -27,7 +28,7 @@ export default function Intro(props: ISentenceEditorProps) {
     g: 255,
     b: 255,
     a: 100,
-    h: 0, 
+    h: 0,
     s: 0,
     v: 0,
     hex: 'FFFFFF',
@@ -36,10 +37,10 @@ export default function Intro(props: ISentenceEditorProps) {
 
   const getBackgroundColor = (): IColor => {
     let colorValue = props.sentence.args.find(arg => arg.key === 'backgroundColor')?.value;
-  
+
     if (typeof colorValue === 'string') {
       const match = colorValue.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d*(?:\.\d+)?)\)/);
-  
+
       if (match && match.length === 5) {
         const [_, r, g, b, a] = match.map(Number);
         return {
@@ -60,10 +61,10 @@ export default function Intro(props: ISentenceEditorProps) {
 
   const getFontColor = (): IColor => {
     let colorValue = props.sentence.args.find(arg => arg.key === 'fontColor')?.value;
-  
+
     if (typeof colorValue === 'string') {
       const match = colorValue.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d*(?:\.\d+)?)\)/);
-  
+
       if (match && match.length === 5) {
         const [_, r, g, b, a] = match.map(Number);
         return {
@@ -84,11 +85,11 @@ export default function Intro(props: ISentenceEditorProps) {
 
   const getInitialFontSize = (): string => {
     const fontSizeValue = getArgByKey(props.sentence, "fontSize");
-  
+
     if (typeof fontSizeValue === 'string' && ["small", "medium", "large"].includes(fontSizeValue)) {
       return fontSizeValue;
     }
-  
+
     return "medium";
   };
 
@@ -107,7 +108,7 @@ export default function Intro(props: ISentenceEditorProps) {
   const handleLocalBackgroundColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
     setLocalBackgroundColor(newColor);
   };
-  
+
   const handleLocalFontColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
     setLocalFontColor(newColor);
   };
@@ -159,27 +160,27 @@ export default function Intro(props: ISentenceEditorProps) {
       submit();
     }}>{t('add.button')}</DefaultButton>
     <div style={{ display: 'flex'}}>
-        <CommonOptions title={t('colorPicker.backgroundColor')}>
-          <ColorPicker
-            color={localBackgroundColor}
-            onChange={handleLocalBackgroundColorChange}
-          />
-        </CommonOptions>
-        <CommonOptions title={t('colorPicker.fontColor')}>
-          <ColorPicker
-            color={localFontColor}
-            onChange={handleLocalFontColorChange}
-          />
-        </CommonOptions>
-      </div>
+      <CommonOptions title={t('colorPicker.backgroundColor')}>
+        <ColorPicker
+          color={localBackgroundColor}
+          onChange={handleLocalBackgroundColorChange}
+        />
+      </CommonOptions>
+      <CommonOptions title={t('colorPicker.fontColor')}>
+        <ColorPicker
+          color={localFontColor}
+          onChange={handleLocalFontColorChange}
+        />
+      </CommonOptions>
+    </div>
     <DefaultButton style={{ display: 'flex'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
     <CommonOptions title={t('font.size')}>
       <Dropdown
         options={fontSizes.map(f => ({ key: f.key, text: f.text }))}
         selectedKey={fontSize.value}
         onChange={(event, item) =>{
-            item && fontSize.set(item.key as string);
-            submit();
+          item && fontSize.set(item.key as string);
+          submit();
         }}
       />
     </CommonOptions>
