@@ -9,7 +9,8 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
-    "build-universal": "electron-builder --universal"
+    "build-universal": "electron-builder --universal",
+    "build:arm64": "electron-builder --arm64"
   },
   "devDependencies": {
     "electron": "^18.3.7",
