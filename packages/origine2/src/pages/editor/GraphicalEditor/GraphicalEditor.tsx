@@ -100,6 +100,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               {parsedScene.sentenceList.map((sentence, i) => {
                 // 实际显示的行数
                 const index = i + 1;
+                console.log(sentence.command);
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
                 return <Draggable key={sentence.content + sentence.commandRaw + i}
