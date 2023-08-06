@@ -142,6 +142,10 @@ export class ManageGameService {
           this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
           `${electronExportDir}/resources/app/public/`,
         );
+        // 删掉 Service Worker
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
+        );
         // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
         await this.webgalFs.deleteFileOrDirectory(
           `${electronExportDir}/resources/app/public/game/`,
@@ -167,6 +171,10 @@ export class ManageGameService {
           this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
           `${electronExportDir}/resources/app/public/`,
         );
+        // 删掉 Service Worker
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
+        );
         // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
         await this.webgalFs.deleteFileOrDirectory(
           `${electronExportDir}/resources/app/public/game/`,
@@ -191,6 +199,10 @@ export class ManageGameService {
         await this.webgalFs.copy(
           this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
           `${electronExportDir}/Contents/Resources/app/public/`,
+        );
+        // 删掉 Service Worker
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
         );
         // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
         await this.webgalFs.deleteFileOrDirectory(
