@@ -6625,7 +6625,7 @@
     "react-i18next" "^12.2.2"
     "react-redux" "^8.0.1"
     "sass" "^1.51.0"
-    "webgal-parser" "^4.3.13-10"
+    "webgal-parser" "^4.4.3"
 
 "webgal-parser@^4.4.3":
   "integrity" "sha512-FYSLjzhL0Iq307y4XFK0zfwaKywi5w6KEB+gCrhTARVzyVGvvT1vDElBWWjI8laOY0tVUgEvmK/4OF+ysR/djw=="
