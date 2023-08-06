@@ -12,8 +12,8 @@ mkdir release
 
 # 进入 Terre 目录
 cd packages/terre2
-npm run build
-npm run pkg
+yarn run build
+yarn run pkg
 cd dist
 cp -r WebGAL_Terre  ../../../release
 rm WebGAL_Terre
@@ -26,14 +26,14 @@ cd ../../
 cd packages/origine2
 # 低内存，使用下一行限制内存使用
 # export NODE_OPTIONS=--max_old_space_size=512000
-npm run build
+yarn run build
 cp -rf dist/* ../../release/public/
 cd ../../
 
 # 进入 Electron 目录
 cd packages/WebGAL-electron
 yarn install --frozen-lockfile
-npm run build
+yarn run build
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/linux-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
