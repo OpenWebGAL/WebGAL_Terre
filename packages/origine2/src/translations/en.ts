@@ -170,6 +170,9 @@ export const en = {
             },
             vocal: {
               title: "Vocal"
+            },
+            font: {
+              size: "FontSize"
             }
           }
         },
