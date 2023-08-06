@@ -349,7 +349,8 @@ export const zhCn = {
             },
             colorPicker: {
               backgroundColor:'背景颜色',
-              fontColor:'文字颜色'
+              fontColor:'文字颜色',
+              submit: '应用颜色变化'
             },
             font: {
               size:'文字大小'

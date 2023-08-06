@@ -348,7 +348,8 @@ export const jp = {
             },
             colorPicker: {
               backgroundColor:'背景色',
-              fontColor:'文字色'
+              fontColor:'文字色',
+              submit: '色の変更を適用'
             },
             font: {
               size:'文字サイズ'
