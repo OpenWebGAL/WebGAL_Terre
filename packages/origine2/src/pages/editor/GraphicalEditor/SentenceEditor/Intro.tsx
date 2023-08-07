@@ -5,13 +5,15 @@ import {useValue} from "../../../../hooks/useValue";
 import {cloneDeep} from "lodash";
 import {DefaultButton, Dropdown, ColorPicker, IColor} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
+import { getArgByKey } from "../utils/getArgByKey";
+import { useState } from "react";
+import React from 'react';
 import {logger} from "@/utils/logger";
-import {getArgByKey} from "../utils/getArgByKey";
 
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
   const introTextList = useValue(props.sentence.content.split("|"));
-  const initialColor: IColor = {
+  const initialBackgroundColor: IColor = {
     r: 0,
     g: 0,
     b: 0,
@@ -22,17 +24,16 @@ export default function Intro(props: ISentenceEditorProps) {
     hex: '000000',
     str: '000000',
   };
-
-  const fontInitialColor: IColor = {
+  const initialFontColor: IColor = {
     r: 255,
     g: 255,
     b: 255,
-    a: 255,
-    h:0,
-    s:0,
-    v:100,
+    a: 100,
+    h: 0,
+    s: 0,
+    v: 0,
     hex: 'FFFFFF',
-    str: 'FFFFFF'
+    str: 'FFFFFF',
   };
 
   const getBackgroundColor = (): IColor => {
@@ -56,7 +57,7 @@ export default function Intro(props: ISentenceEditorProps) {
         };
       }
     }
-    return initialColor;
+    return initialBackgroundColor;
   };
 
   const getFontColor = (): IColor => {
@@ -80,8 +81,7 @@ export default function Intro(props: ISentenceEditorProps) {
         };
       }
     }
-    const fontInitialColor = {initialColor};
-    return initialColor;
+    return initialFontColor;
   };
 
   const getInitialFontSize = (): string => {
@@ -103,14 +103,36 @@ export default function Intro(props: ISentenceEditorProps) {
   const backgroundColor = useValue(getBackgroundColor());
   const fontColor = useValue(getFontColor());
   const fontSize = useValue(getInitialFontSize());
-
-  const handleBackgroundColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-    backgroundColor.set(newColor);
-    submit();
+  const [localBackgroundColor, setLocalBackgroundColor] = useState(backgroundColor.value);
+  const [localFontColor, setLocalFontColor] = useState(fontColor.value);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const toggleAccordion = () => {
+      setIsAccordionOpen(!isAccordionOpen);
+  };
+  const optionButtonStyles = {
+    root: {
+        backgroundColor: '#0078d4',
+        color: 'white',
+        margin: '6px 0 0 0',
+        display: 'flex'
+    },
+    rootHovered: {
+        backgroundColor: '#005a9e',
+        color: 'white'
+    },
   };
 
-  const handleFontColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-    fontColor.set(newColor);
+  const handleLocalBackgroundColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+    setLocalBackgroundColor(newColor);
+  };
+
+  const handleLocalFontColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+    setLocalFontColor(newColor);
+  };
+
+  const handleSubmit = () => {
+    backgroundColor.set(localBackgroundColor);
+    fontColor.set(localFontColor);
     submit();
   };
 
@@ -154,29 +176,37 @@ export default function Intro(props: ISentenceEditorProps) {
       introTextList.set(newList);
       submit();
     }}>{t('add.button')}</DefaultButton>
-    <div style={{display: 'flex'}}>
-      <CommonOptions title={t('colorPicker.backgroundColor')}>
-        <ColorPicker
-          color={backgroundColor.value}
-          onChange={handleBackgroundColorChange}
-        />
-      </CommonOptions>
-      <CommonOptions title={t('colorPicker.fontColor')}>
-        <ColorPicker
-          color={fontColor.value}
-          onChange={handleFontColorChange}
-        />
-      </CommonOptions>
-    </div>
-    <CommonOptions title={t('font.size')}>
-      <Dropdown
-        options={fontSizes.map(f => ({key: f.key, text: f.text}))}
-        selectedKey={fontSize.value}
-        onChange={(event, item) => {
-          item && fontSize.set(item.key as string);
-          submit();
-        }}
-      />
-    </CommonOptions>
+    <DefaultButton onClick={toggleAccordion} styles={optionButtonStyles}>
+      {t('option.title')}
+    </DefaultButton>
+    {isAccordionOpen && (
+      <div>
+        <div style={{ display: 'flex'}}>
+          <CommonOptions title={t('colorPicker.backgroundColor')}>
+            <ColorPicker
+              color={localBackgroundColor}
+              onChange={handleLocalBackgroundColorChange}
+            />
+          </CommonOptions>
+          <CommonOptions title={t('colorPicker.fontColor')}>
+            <ColorPicker
+              color={localFontColor}
+              onChange={handleLocalFontColorChange}
+            />
+          </CommonOptions>
+        </div>
+        <DefaultButton style={{ display: 'flex'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
+        <CommonOptions title={t('font.size')}>
+          <Dropdown
+            options={fontSizes.map(f => ({key: f.key, text: f.text}))}
+            selectedKey={fontSize.value}
+            onChange={(event, item) => {
+              item && fontSize.set(item.key as string);
+              submit();
+            }}
+          />
+        </CommonOptions>
+      </div>
+    )}
   </div>;
 }
