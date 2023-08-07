@@ -349,9 +349,13 @@ export const en = {
             add: {
               button: 'Add Line'
             },
+            option: {
+              title:'other option'
+            },
             colorPicker: {
               backgroundColor:'backgroundColor',
-              fontColor:'fontColor'
+              fontColor:'fontColor',
+              submit: 'Apply color changes'
             },
             font: {
               size:'fontSize'
