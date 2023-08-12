@@ -32,6 +32,9 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           { key: "unlockBgm", text: t('type.options.bgm') }
         ]}
         selectedKey={unlockType.value} onChange={(event, option) => {
+          if(option?.key != unlockType.value) {
+            fileName.set("");
+          }
           unlockType.set(option?.key?.toString() ?? "");
           submit();
         }} />
