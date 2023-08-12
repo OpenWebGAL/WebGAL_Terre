@@ -42,6 +42,7 @@ export default function EditorSideBar() {
     const prevX = document.body.style.getPropertyValue("--sidebar-width");
     prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
     isMouseDown = true;
+    document.getElementById("gamePreviewIframe")!.style.zIndex = '-1';
   };
 
   const handleDrag = (event: MouseEvent) => {
@@ -60,6 +61,7 @@ export default function EditorSideBar() {
       localStorage.setItem('sidebar-width', prevXvalue.toString());
     },10);
     isMouseDown = false;
+    document.getElementById("gamePreviewIframe")!.style.zIndex = '0';
   };
 
   useEffect(() => {
