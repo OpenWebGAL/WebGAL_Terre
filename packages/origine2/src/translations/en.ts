@@ -171,6 +171,10 @@ export const en = {
             vocal: {
               title: "Vocal"
             },
+            volume: {
+              title: 'Vocal Volume',
+              placeholder: 'Percentage. 0-100 valid',
+            },
             font: {
               size: "FontSize"
             }
@@ -200,7 +204,7 @@ export const en = {
               title: 'File of the BGM',
             },
             volume: {
-              title: 'volume',
+              title: 'BGM volume',
               placeholder: 'Percentage. 0-100 valid',
             },
             enter: {

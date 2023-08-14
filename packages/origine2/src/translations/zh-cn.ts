@@ -172,6 +172,10 @@ export const zhCn = {
             vocal: {
               title: "语音"
             },
+            volume: {
+              title: '语音 音量',
+              placeholder: '百分比。 0-100 有效',
+            },
             font: {
               size:'文字大小'
             }
@@ -201,7 +205,7 @@ export const zhCn = {
               title: '背景音乐文件',
             },
             volume: {
-              title: '音量',
+              title: 'BGM 音量',
               placeholder: '百分比。 0-100 有效',
             },
             enter: {
