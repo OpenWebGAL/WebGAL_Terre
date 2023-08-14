@@ -198,6 +198,14 @@ export const en = {
             },
             file: {
               title: 'File of the BGM',
+            },
+            volume: {
+              title: 'volume',
+              placeholder: 'Percentage. 0-100 valid',
+            },
+            enter: {
+              title: 'Fade in and out',
+              placeholder: 'Milliseconds. 0~ valid',
             }
           }
         },
