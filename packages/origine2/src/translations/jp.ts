@@ -198,6 +198,14 @@ export const jp = {
             },
             file: {
               title: 'BGMファイルを選択',
+            },
+            volume: {
+              title: '音量',
+              placeholder: '百分率。 0-100 有効',
+            },
+            enter: {
+              title: 'フェードインとアウト',
+              placeholder: 'ミリ秒単位。 0~ 有効',
             }
           }
         },
