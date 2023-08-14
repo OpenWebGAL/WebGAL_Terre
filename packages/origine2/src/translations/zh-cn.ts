@@ -428,6 +428,10 @@ export const zhCn = {
             id: {
               title: "效果音 ID（输入以使效果音循环，后面再用这个 id 来关闭）",
               placeholder: "效果音 ID"
+            },
+            volume: {
+              title: '效果音 音量',
+              placeholder: '百分比。 0-100 有效',
             }
           }
         },

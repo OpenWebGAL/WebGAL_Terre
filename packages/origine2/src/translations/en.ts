@@ -427,6 +427,10 @@ export const en = {
             id: {
               title: "Effect ID (Input ID makes this effect loop, you can\'t stop it by this ID after)",
               placeholder: "Effect ID"
+            },
+            volume: {
+              title: 'Sound Effect Volume',
+              placeholder: 'Percentage. 0-100 valid',
             }
           }
         },
