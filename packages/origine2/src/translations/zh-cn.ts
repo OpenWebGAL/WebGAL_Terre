@@ -199,6 +199,14 @@ export const zhCn = {
             },
             file: {
               title: '背景音乐文件',
+            },
+            volume: {
+              title: '音量',
+              placeholder: '百分比。 0-100 有效',
+            },
+            enter: {
+              title: '淡入淡出',
+              placeholder: '单位毫秒。 0~ 有效',
             }
           }
         },
