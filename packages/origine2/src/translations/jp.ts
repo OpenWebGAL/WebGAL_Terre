@@ -427,6 +427,10 @@ export const jp = {
             id: {
               title: "効果音ID(効果音をループし、このIDを使用して後ほど停止可能)",
               placeholder: "効果音ID"
+            },
+            volume: {
+              title: '効果音 音量',
+              placeholder: '百分率。 0-100 有効',
             }
           }
         },
