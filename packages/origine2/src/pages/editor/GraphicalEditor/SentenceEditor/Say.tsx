@@ -14,7 +14,8 @@ export default function Say(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.say.options.');
   const currentValue = useValue(props.sentence.content.split("|"));
   const currentSpeaker = useValue(getArgByKey(props.sentence, "speaker").toString());
-  const currentVocal = useValue(getArgByKey(props.sentence, "vocal").toString());
+  const vocal = useValue(getArgByKey(props.sentence, "vocal").toString() ?? "");
+  const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
 
   const getInitialFontSize = (): string => {
@@ -37,7 +38,9 @@ export default function Say(props: ISentenceEditorProps) {
 
   const submit = () => {
     const selectedFontSize = fontSize.value;
-    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${currentVocal.value === "" ? "" : " -" + currentVocal.value} -fontSize=${selectedFontSize};`);
+    const vocalStr = vocal.value !== "" ? ` -${vocal.value}` : "";
+    const volumeStr = volume.value !== "" ? ` -volume=${volume.value}` : "";
+    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${vocalStr}${volumeStr} -fontSize=${selectedFontSize};`);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -93,13 +96,27 @@ export default function Say(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="Vocal" title={t('vocal.title')}>
         <>
-          {currentVocal.value !== "" ? `${currentVocal.value}\u00a0\u00a0` : ""}
+          {vocal.value !== "" ? `${vocal.value}\u00a0\u00a0` : ""}
           <ChooseFile sourceBase="vocal" onChange={(newName) => {
-            currentVocal.set(newName?.name ?? "");
+            vocal.set(newName?.name ?? "");
+            vocal.value === "" ? volume.set("") : volume.set(volume.value);
             submit();
           }}
           extName={[".ogg", ".mp3", ".wav"]}/>
         </>
+      </CommonOptions>
+      <CommonOptions key="volume" title={t('volume.title')}>
+        <input value={volume.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            volume.set(newValue ?? "");
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          placeholder={t('volume.placeholder')}
+          style={{ width: "100%" }}
+          disabled={vocal.value === ""}
+        />
       </CommonOptions>
     </div>
     <div className={styles.editItem}>

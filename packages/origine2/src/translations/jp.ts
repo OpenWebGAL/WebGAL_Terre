@@ -171,6 +171,10 @@ export const jp = {
             vocal: {
               title: "ボイスを選択"
             },
+            volume: {
+              title: 'ボイス 音量',
+              placeholder: '百分率。 0-100 有効',
+            },
             font: {
               size:'フォントサイズ'
             }
@@ -200,7 +204,7 @@ export const jp = {
               title: 'BGMファイルを選択',
             },
             volume: {
-              title: '音量',
+              title: 'BGM 音量',
               placeholder: '百分率。 0-100 有効',
             },
             enter: {
