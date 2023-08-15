@@ -173,6 +173,18 @@ export const en = {
             },
             font: {
               size: "FontSize"
+            },
+            position: {
+              title: "Position of Figure",
+              options: {
+                left: 'Left',
+                center: 'Center',
+                right: 'Right'
+              }
+            },
+            id: {
+              title: "Figure ID",
+              placeholder: "Figure ID"
             }
           }
         },
