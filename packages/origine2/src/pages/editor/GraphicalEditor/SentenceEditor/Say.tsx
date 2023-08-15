@@ -9,6 +9,7 @@ import useTrans from "@/hooks/useTrans";
 import {DefaultButton, Dropdown} from "@fluentui/react";
 import {cloneDeep} from "lodash";
 import CommonTips from "../components/CommonTips";
+import { useEffect } from "react";
 
 export default function Say(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.say.options.');
@@ -16,6 +17,19 @@ export default function Say(props: ISentenceEditorProps) {
   const currentSpeaker = useValue(getArgByKey(props.sentence, "speaker").toString());
   const currentVocal = useValue(getArgByKey(props.sentence, "vocal").toString());
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
+  const figurePosition = useValue<"left" | "" | "right">("");
+  const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
+  useEffect(() => {
+    /**
+     * 初始化立绘位置
+     */
+    if (getArgByKey(props.sentence, "left")) {
+      figurePosition.set("left");
+    }
+    if (getArgByKey(props.sentence, "right")) {
+      figurePosition.set("right");
+    }
+  }, []);
 
   const getInitialFontSize = (): string => {
     const fontSizeValue = getArgByKey(props.sentence, "fontSize");
@@ -37,7 +51,9 @@ export default function Say(props: ISentenceEditorProps) {
 
   const submit = () => {
     const selectedFontSize = fontSize.value;
-    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${currentVocal.value === "" ? "" : " -" + currentVocal.value} -fontSize=${selectedFontSize};`);
+    const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
+    const idStr = id.value !== "" ? ` -id=${id.value}` : "";
+    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${currentVocal.value === "" ? "" : " -" + currentVocal.value} -fontSize=${selectedFontSize}${pos}${idStr};`);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -100,6 +116,32 @@ export default function Say(props: ISentenceEditorProps) {
           }}
           extName={[".ogg", ".mp3", ".wav"]}/>
         </>
+      </CommonOptions>
+      <CommonOptions title={t('position.title')}>
+          <Dropdown
+            selectedKey={figurePosition.value}
+            options={[
+              { key: "left", text: t('position.options.left') },
+              { key: "", text: t('position.options.center') },
+              { key: "right", text: t('position.options.right') }
+            ]}
+            onChange={(ev, newValue: any) => {
+              figurePosition.set(newValue?.key?.toString() ?? "");
+              submit();
+            }}
+          />
+      </CommonOptions>
+      <CommonOptions title={t('id.title')}>
+        <input value={id.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            id.set(newValue ?? "");
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          placeholder={t('id.placeholder')}
+          style={{ width: "100%" }}
+        />
       </CommonOptions>
     </div>
     <div className={styles.editItem}>
