@@ -174,6 +174,18 @@ export const zhCn = {
             },
             font: {
               size:'文字大小'
+            },
+            position: {
+              title: "立绘位置",
+              options: {
+                left: '左侧',
+                center: '中间',
+                right: '右侧'
+              }
+            },
+            id: {
+              title: "立绘ID",
+              placeholder: "立绘 ID"
             }
           }
         },
