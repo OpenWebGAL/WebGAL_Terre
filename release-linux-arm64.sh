@@ -13,7 +13,7 @@ mkdir release
 # 进入 Terre 目录
 cd packages/terre2
 yarn run build
-yarn run pkg
+yarn run pkg:linux-arm64
 cd dist
 cp -r WebGAL_Terre  ../../../release
 rm WebGAL_Terre
@@ -33,9 +33,9 @@ cd ../../
 # 进入 Electron 目录
 cd packages/WebGAL-electron
 yarn install --frozen-lockfile
-yarn run build
+yarn run build:arm64
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
-cp -rf build/linux-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
+cp -rf build/linux-arm64-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
 
 # 克隆 WebGAL Android 模板
