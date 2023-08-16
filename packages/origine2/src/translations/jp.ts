@@ -154,8 +154,14 @@ export const jp = {
                 role: "キャラクター名を指定"
               }
             },
+            tips: {
+              edit: "ヒント:改行は三行まで可能",
+            },
             dialogue: {
               placeholder: "ダイアログ"
+            },
+            add: {
+              button: '新しい行を追加'
             },
             voiceover: {
               title: "モードの切り替え",
@@ -164,6 +170,9 @@ export const jp = {
             },
             vocal: {
               title: "ボイスを選択"
+            },
+            font: {
+              size:'フォントサイズ'
             }
           }
         },
@@ -330,15 +339,26 @@ export const jp = {
           descText: '現在の特殊効果を無効化する',
         },
         intro: {
-          title: "黒画面テキスト",
+          title: "全画面テキスト",
           initText: "intro:;",
-          descText: '黒画面でテキストを表示する',
+          descText: '全画面画面でテキストを表示する',
           options: {
             value: {
               placeholder: "",
             },
             add: {
               button: '新しい行を追加'
+            },
+            option: {
+              title:'その他のオプション'
+            },
+            colorPicker: {
+              backgroundColor:'背景色',
+              fontColor:'文字色',
+              submit: '色の変更を適用'
+            },
+            font: {
+              size:'文字サイズ'
             }
           }
         },
