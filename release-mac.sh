@@ -1,6 +1,6 @@
 echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
 # 安装依赖
-npm i
+yarn install --frozen-lockfile
 
 # 清理
 rm -rf release
@@ -9,8 +9,8 @@ mkdir release
 
 # 进入 Terre 目录
 cd packages/terre2
-npm run build
-npm run pkg
+yarn run build
+yarn run pkg
 cd dist
 cp -r WebGAL_Terre  ../../../release
 rm WebGAL_Terre
@@ -22,14 +22,14 @@ cd ../../
 # 进入 Origine 目录
 cd packages/origine2
 #npm install esbuild-darwin-arm64
-npm run build
+yarn run build
 cp -rf dist/* ../../release/public/
 cd ../../
 
 # 进入 Electron 目录
 cd packages/WebGAL-electron
-npm i
-npm run build-universal
+yarn install --frozen-lockfile
+yarn run build-universal
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/mac-universal/WebGAL.app/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../

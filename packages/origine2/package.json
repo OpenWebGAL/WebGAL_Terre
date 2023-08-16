@@ -1,7 +1,7 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.4.2",
+  "version": "4.4.3",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
@@ -32,7 +32,7 @@
     "react-i18next": "^12.2.2",
     "react-redux": "^8.0.1",
     "sass": "^1.51.0",
-    "webgal-parser": "^4.3.13-10"
+    "webgal-parser": "^4.4.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",

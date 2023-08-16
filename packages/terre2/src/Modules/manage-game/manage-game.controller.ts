@@ -29,6 +29,9 @@ export class ManageGameController {
 
   @Get('gameList')
   async testReadDir() {
+    // 如果游戏文件夹不存在就创建
+    if (!(await this.webgalFs.existsDir('public/games')))
+      await this.webgalFs.mkdir('public', 'games');
     return await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot('/public/games'),
     );

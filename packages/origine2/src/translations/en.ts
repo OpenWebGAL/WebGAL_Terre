@@ -154,8 +154,14 @@ export const en = {
                 role: "Role name, leave a void to extends last dialogue"
               }
             },
+            tips: {
+              edit: "Tip:Line breaks can be up to three lines",
+            },
             dialogue: {
               placeholder: "Dialogue"
+            },
+            add: {
+              button: 'Add Line'
             },
             voiceover: {
               title: "Voiceover Mode",
@@ -164,6 +170,9 @@ export const en = {
             },
             vocal: {
               title: "Vocal"
+            },
+            font: {
+              size: "FontSize"
             }
           }
         },
@@ -330,15 +339,26 @@ export const en = {
           descText: 'Clear the effects of stage',
         },
         intro: {
-          title: "Text on Black Screen",
+          title: "Full-screen Text",
           initText: "intro:;",
-          descText: 'Show some texts on black screen',
+          descText: 'Show some texts on Full-screen',
           options: {
             value: {
               placeholder: "Intro Texts",
             },
             add: {
               button: 'Add Line'
+            },
+            option: {
+              title:'other option'
+            },
+            colorPicker: {
+              backgroundColor:'backgroundColor',
+              fontColor:'fontColor',
+              submit: 'Apply color changes'
+            },
+            font: {
+              size:'fontSize'
             }
           }
         },

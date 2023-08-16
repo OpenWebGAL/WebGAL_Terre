@@ -155,8 +155,14 @@ export const zhCn = {
                 role: "角色名，留空以继承上句"
               }
             },
+            tips: {
+              edit: "提示：换行符最多可达三行",
+            },
             dialogue: {
               placeholder: "对话"
+            },
+            add: {
+              button: '添加新行'
             },
             voiceover: {
               title: "旁白模式",
@@ -165,6 +171,9 @@ export const zhCn = {
             },
             vocal: {
               title: "语音"
+            },
+            font: {
+              size:'文字大小'
             }
           }
         },
@@ -331,15 +340,26 @@ export const zhCn = {
           descText: '清除当前舞台的特殊效果',
         },
         intro: {
-          title: "黑屏文字",
+          title: "全屏文字",
           initText: "intro:;",
-          descText: '黑屏显示一段文字，用于独白或引出场景',
+          descText: '全屏显示一段文字，用于独白或引出场景',
           options: {
             value: {
               placeholder: "Intro 文本",
             },
             add: {
               button: '添加新行'
+            },
+            option: {
+              title:'其他选项'
+            },
+            colorPicker: {
+              backgroundColor:'背景颜色',
+              fontColor:'文字颜色',
+              submit: '应用颜色变化'
+            },
+            font: {
+              size:'文字大小'
             }
           }
         },
@@ -442,6 +462,42 @@ export const zhCn = {
               tip: '注释仅在编辑时可见，游戏中不会执行',
             }
           }
+        },
+        transition: {
+          title: "设置转场",
+          initText: "setTransition:;",
+          descText: '设置转场效果',
+          options: {
+            enterfile: {
+              title: "选择进入动画"
+            },
+            exitfile: {
+              title: "选择退出动画"
+            },
+            preparedTarget: {
+              title: "使用预设目标",
+              on: "使用预设的作用目标，如果设置了id则不生效",
+              off: "手动输入 ID",
+              choose: {
+                title: "选择预设目标",
+                options: {
+                  figLeft: "左侧立绘",
+                  figCenter: "中间立绘",
+                  figRight: "右侧立绘",
+                  bgMain: "背景图片"
+                }
+              }
+            },
+            targetId: {
+              title: "输入目标 ID",
+              placeholder: "立绘 ID",
+            }
+          }
+        },
+        transform: {
+          title: "设置变换",
+          initText: "setTransform:;",
+          descText: '设置变换效果',
         },
         end: {
           title: "结束游戏",
