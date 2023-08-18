@@ -9,7 +9,7 @@ async function bootstrap() {
 }
 
 bootstrap().then(() => {
-  console.log(`WebGAL Terre 4.4.3 starting at ${process.cwd()}`);
+  console.log(`WebGAL Terre 4.4.3.2 starting at ${process.cwd()}`);
   if ((process?.env?.NODE_ENV ?? '') !== 'development')
     _open('http://localhost:3001');
 });
