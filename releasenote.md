@@ -22,6 +22,8 @@
 
 (4.4.3.1修复)文本框名称显示异常
 
+(4.4.3.2修复)Safari 浏览器由于文字阴影导致的异常
+
 其他已知问题
 
 ## Release Notes: WebGAL Terre 4.4.3.1
@@ -47,6 +49,8 @@ Inability to properly handle symbols at the beginning of dialogues
 Dialogues display abnormally when using -concat -notend parameters
 
 (4.4.3.1 fixed) Text box name displays abnormally
+
+(4.4.3.2 fixed) Safari browser exception due to text shadows
 
 Other known issues
 
@@ -74,6 +78,8 @@ Other known issues
 
 (4.4.3.1修正)テキストボックス名が異常に表示される
 
+(4.4.3.2 修正) テキストシャドウによる Safari ブラウザの例外
+
 その他の既知の問題
 
 ## Notes de version : WebGAL Terre 4.4.3.1
@@ -98,6 +104,8 @@ Incapacité à gérer correctement les symboles au début des dialogues
 
 Affichage anormal des dialogues lors de l'utilisation des paramètres -concat -notend
 
-(4.4.3.1 corrigé) Affichage anormal du nom de la boîte de texte
+(4.4.3.1 Correction) Affichage anormal du nom de la boîte de texte
+
+(4.4.3.2 Correction) Exception du navigateur Safari due aux ombres du texte
 
 Autres problèmes connus
