@@ -359,7 +359,9 @@ export const zhCn = {
               submit: '应用颜色变化'
             },
             font: {
-              size:'文字大小'
+              size:'文字大小',
+              animation: '动画',
+              delayTime: '延迟时间（秒）'
             }
           }
         },

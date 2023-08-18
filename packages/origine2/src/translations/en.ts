@@ -358,7 +358,9 @@ export const en = {
               submit: 'Apply color changes'
             },
             font: {
-              size:'fontSize'
+              size: 'fontSize',
+              animation: 'animation',
+              delayTime: 'delayTime(sec)'
             }
           }
         },
