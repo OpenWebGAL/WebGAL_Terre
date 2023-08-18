@@ -26,7 +26,7 @@
 
 其他已知问题
 
-## Release Notes: WebGAL Terre 4.4.3.1
+## Release Notes: WebGAL Terre 4.4.3.2
 
 ### In this version
 
@@ -54,7 +54,7 @@ Dialogues display abnormally when using -concat -notend parameters
 
 Other known issues
 
-## リリースノート: WebGAL Terre 4.4.3.1
+## リリースノート: WebGAL Terre 4.4.3.2
 
 ### このバージョンで
 
@@ -82,7 +82,7 @@ Other known issues
 
 その他の既知の問題
 
-## Notes de version : WebGAL Terre 4.4.3.1
+## Notes de version : WebGAL Terre 4.4.3.2
 
 ### Dans cette version
 
