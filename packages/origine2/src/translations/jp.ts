@@ -358,7 +358,9 @@ export const jp = {
               submit: '色の変更を適用'
             },
             font: {
-              size:'文字サイズ'
+              size:'文字サイズ',
+              animation: 'アニメーション',
+              delayTime: '遅延時間（秒）'
             }
           }
         },
