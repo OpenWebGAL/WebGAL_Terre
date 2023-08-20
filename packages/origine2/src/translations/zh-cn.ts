@@ -172,6 +172,10 @@ export const zhCn = {
             vocal: {
               title: "语音"
             },
+            volume: {
+              title: '语音 音量',
+              placeholder: '百分比。 0-100 有效',
+            },
             font: {
               size:'文字大小'
             }
@@ -199,6 +203,14 @@ export const zhCn = {
             },
             file: {
               title: '背景音乐文件',
+            },
+            volume: {
+              title: 'BGM 音量',
+              placeholder: '百分比。 0-100 有效',
+            },
+            enter: {
+              title: '淡入淡出',
+              placeholder: '单位毫秒。 0~ 有效',
             }
           }
         },
@@ -422,6 +434,10 @@ export const zhCn = {
             id: {
               title: "效果音 ID（输入以使效果音循环，后面再用这个 id 来关闭）",
               placeholder: "效果音 ID"
+            },
+            volume: {
+              title: '效果音 音量',
+              placeholder: '百分比。 0-100 有效',
             }
           }
         },
