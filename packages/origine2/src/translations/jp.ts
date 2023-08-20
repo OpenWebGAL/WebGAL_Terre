@@ -177,6 +177,19 @@ export const jp = {
             },
             font: {
               size:'フォントサイズ'
+            },
+            position: {
+              title: "関連する立ち絵の位置",
+              options: {
+                left: '左',
+                center: '中央',
+                right: '右',
+                id: "立ち絵のID"
+              }
+            },
+            id: {
+              title: "関連する立ち絵のID",
+              placeholder: "立ち絵のID"
             }
           }
         },
