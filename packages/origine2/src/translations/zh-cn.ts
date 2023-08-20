@@ -178,6 +178,19 @@ export const zhCn = {
             },
             font: {
               size:'文字大小'
+            },
+            position: {
+              title: "关联立绘",
+              options: {
+                left: '左侧立绘',
+                center: '中间立绘',
+                right: '右侧立绘',
+                id: '使用立绘ID'
+              }
+            },
+            id: {
+              title: "立绘插图的ID",
+              placeholder: "立绘 ID"
             }
           }
         },
