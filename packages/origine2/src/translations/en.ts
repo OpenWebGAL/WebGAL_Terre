@@ -171,6 +171,10 @@ export const en = {
             vocal: {
               title: "Vocal"
             },
+            volume: {
+              title: 'Vocal Volume',
+              placeholder: 'Percentage. 0-100 valid',
+            },
             font: {
               size: "FontSize"
             },
@@ -211,6 +215,14 @@ export const en = {
             },
             file: {
               title: 'File of the BGM',
+            },
+            volume: {
+              title: 'BGM volume',
+              placeholder: 'Percentage. 0-100 valid',
+            },
+            enter: {
+              title: 'Fade in and out',
+              placeholder: 'Milliseconds. 0~ valid',
             }
           }
         },
@@ -371,7 +383,9 @@ export const en = {
               submit: 'Apply color changes'
             },
             font: {
-              size:'fontSize'
+              size: 'fontSize',
+              animation: 'animation',
+              delayTime: 'delayTime(sec)'
             }
           }
         },
@@ -432,6 +446,10 @@ export const en = {
             id: {
               title: "Effect ID (Input ID makes this effect loop, you can\'t stop it by this ID after)",
               placeholder: "Effect ID"
+            },
+            volume: {
+              title: 'Sound Effect Volume',
+              placeholder: 'Percentage. 0-100 valid',
             }
           }
         },

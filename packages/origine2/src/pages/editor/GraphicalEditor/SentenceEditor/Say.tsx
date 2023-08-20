@@ -15,7 +15,8 @@ export default function Say(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.say.options.');
   const currentValue = useValue(props.sentence.content.split("|"));
   const currentSpeaker = useValue(getArgByKey(props.sentence, "speaker").toString());
-  const currentVocal = useValue(getArgByKey(props.sentence, "vocal").toString());
+  const vocal = useValue(getArgByKey(props.sentence, "vocal").toString() ?? "");
+  const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
   const figurePosition = useValue<"left" | "" | "right" | "id">("");
   const figureId = useValue(getArgByKey(props.sentence, "figureId").toString() ?? "");
@@ -112,9 +113,10 @@ export default function Say(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="Vocal" title={t('vocal.title')}>
         <>
-          {currentVocal.value !== "" ? `${currentVocal.value}\u00a0\u00a0` : ""}
+          {vocal.value !== "" ? `${vocal.value}\u00a0\u00a0` : ""}
           <ChooseFile sourceBase="vocal" onChange={(newName) => {
-            currentVocal.set(newName?.name ?? "");
+            vocal.set(newName?.name ?? "");
+            vocal.value === "" ? volume.set("") : volume.set(volume.value);
             submit();
           }}
           extName={[".ogg", ".mp3", ".wav"]}/>
