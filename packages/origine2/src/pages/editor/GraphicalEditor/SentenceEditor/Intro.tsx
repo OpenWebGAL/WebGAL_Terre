@@ -94,15 +94,57 @@ export default function Intro(props: ISentenceEditorProps) {
     return "medium";
   };
 
+  
+  const getInitialAnimation = (): string => {
+    const animationValue = getArgByKey(props.sentence, "animation");
+
+    if (typeof animationValue === 'string' && ["fadeIn","slideIn","typingEffect","pixelateEffect","revealAnimation"].includes(animationValue)) {
+      return animationValue;
+    }
+
+    return "fadeIn";
+  };
+
+  
+  const getInitialDelayTime = (): string => {
+    const delayTimeValue = getArgByKey(props.sentence, "delayTime");
+
+    if (typeof delayTimeValue === 'number' && [1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000].includes(delayTimeValue)) {
+      return delayTimeValue.toString();
+    }
+    return "1500";
+  };
+
   const fontSizes = [
     {key: "small", text: "small"},
     {key: "medium", text: "medium"},
     {key: "large", text: "large"},
   ];
 
+  const animations = [
+    { key: "fadeIn", text: "fadeIn" },
+    { key: "slideIn", text: "slideIn" },
+    { key: "typingEffect", text: "typingEffect" },
+    { key: "pixelateEffect", text: "pixelateEffect" },
+    { key: "revealAnimation", text: "revealAnimation" },
+  ];
+
+  const delayTimes = [
+    { key: "1500", text: "1.5" },
+    { key: "2000", text: "2" },
+    { key: "2500", text: "2.5" },
+    { key: "3000", text: "3" },
+    { key: "3500", text: "3.5" },
+    { key: "4000", text: "4" },
+    { key: "4500", text: "4.5" },
+    { key: "5000", text: "5" },
+  ];
+
   const backgroundColor = useValue(getBackgroundColor());
   const fontColor = useValue(getFontColor());
   const fontSize = useValue(getInitialFontSize());
+  const animation = useValue(getInitialAnimation());
+  const delayTime = useValue(getInitialDelayTime());
   const [localBackgroundColor, setLocalBackgroundColor] = useState(backgroundColor.value);
   const [localFontColor, setLocalFontColor] = useState(fontColor.value);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
@@ -139,9 +181,11 @@ export default function Intro(props: ISentenceEditorProps) {
   const submit = () => {
     const introText = introTextList.value.join("|");
     const selectedFontSize = fontSize.value;
+    const selectedAnimation = animation.value;
+    const selectedDelayTime = delayTime.value;
     const backgroundRgbaColor = `rgba(${backgroundColor.value.r}, ${backgroundColor.value.g}, ${backgroundColor.value.b}, ${backgroundColor.value.a ? backgroundColor.value.a / 100 : 1})`;
     const fontRgbaColor = `rgba(${fontColor.value.r}, ${fontColor.value.g}, ${fontColor.value.b}, ${fontColor.value.a ? fontColor.value.a / 100 : 1})`;
-    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor};`);
+    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime};`);
   };
 
   const introCompList = introTextList.value.map((text, index) => {
@@ -182,6 +226,38 @@ export default function Intro(props: ISentenceEditorProps) {
     {isAccordionOpen && (
       <div>
         <div style={{ display: 'flex'}}>
+          <CommonOptions title={t('font.size')}>
+            <Dropdown
+              options={fontSizes.map(f => ({key: f.key, text: f.text}))}
+              selectedKey={fontSize.value}
+              onChange={(event, item) => {
+                item && fontSize.set(item.key as string);
+                submit();
+              }}
+            />
+          </CommonOptions>
+          <CommonOptions title={t('font.animation')}>
+            <Dropdown
+              selectedKey={animation.value}
+              options={animations.map(f => ({key: f.key, text: f.text}))}
+              onChange={(ev, newValue: any) => {
+                animation.set(newValue?.key?.toString() ?? "");
+                submit();
+              }}
+            />
+          </CommonOptions>
+          <CommonOptions title={t('font.delayTime')}>
+            <Dropdown
+              selectedKey={delayTime.value}
+              options={delayTimes.map(f => ({key: f.key, text: f.text}))}
+              onChange={(ev, newValue: any) => {
+                delayTime.set(newValue?.key?.toString() ?? "");
+                submit();
+              }}
+            />
+          </CommonOptions>
+        </div>
+        <div style={{ display: 'flex'}}>
           <CommonOptions title={t('colorPicker.backgroundColor')}>
             <ColorPicker
               color={localBackgroundColor}
@@ -196,16 +272,6 @@ export default function Intro(props: ISentenceEditorProps) {
           </CommonOptions>
         </div>
         <DefaultButton style={{ display: 'flex'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
-        <CommonOptions title={t('font.size')}>
-          <Dropdown
-            options={fontSizes.map(f => ({key: f.key, text: f.text}))}
-            selectedKey={fontSize.value}
-            onChange={(event, item) => {
-              item && fontSize.set(item.key as string);
-              submit();
-            }}
-          />
-        </CommonOptions>
       </div>
     )}
   </div>;
