@@ -175,15 +175,16 @@ export const jp = {
               size:'フォントサイズ'
             },
             position: {
-              title: "描画位置",
+              title: "関連する立ち絵の位置",
               options: {
                 left: '左',
                 center: '中央',
-                right: '右'
+                right: '右',
+                id: "立ち絵のID"
               }
             },
             id: {
-              title: "立ち絵のID",
+              title: "関連する立ち絵のID",
               placeholder: "立ち絵のID"
             }
           }

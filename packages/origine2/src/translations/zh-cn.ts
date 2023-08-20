@@ -176,15 +176,16 @@ export const zhCn = {
               size:'文字大小'
             },
             position: {
-              title: "立绘位置",
+              title: "立绘插图的位置",
               options: {
                 left: '左侧',
                 center: '中间',
-                right: '右侧'
+                right: '右侧',
+                id: '立绘ID'
               }
             },
             id: {
-              title: "立绘ID",
+              title: "立绘插图的ID",
               placeholder: "立绘 ID"
             }
           }
