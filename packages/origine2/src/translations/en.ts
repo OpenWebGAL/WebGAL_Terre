@@ -175,15 +175,16 @@ export const en = {
               size: "FontSize"
             },
             position: {
-              title: "Position of Figure",
+              title: "Position of Associated Figure",
               options: {
                 left: 'Left',
                 center: 'Center',
-                right: 'Right'
+                right: 'Right',
+                id: 'Figure ID'
               }
             },
             id: {
-              title: "Figure ID",
+              title: "Associated Figure ID",
               placeholder: "Figure ID"
             }
           }

@@ -17,8 +17,8 @@ export default function Say(props: ISentenceEditorProps) {
   const currentSpeaker = useValue(getArgByKey(props.sentence, "speaker").toString());
   const currentVocal = useValue(getArgByKey(props.sentence, "vocal").toString());
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
-  const figurePosition = useValue<"left" | "" | "right">("");
-  const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
+  const figurePosition = useValue<"left" | "" | "right" | "id">("");
+  const figureId = useValue(getArgByKey(props.sentence, "figureId").toString() ?? "");
   useEffect(() => {
     /**
      * 初始化立绘位置
@@ -28,6 +28,9 @@ export default function Say(props: ISentenceEditorProps) {
     }
     if (getArgByKey(props.sentence, "right")) {
       figurePosition.set("right");
+    }
+    if (getArgByKey(props.sentence, "id")) {
+      figurePosition.set("id");
     }
   }, []);
 
@@ -52,7 +55,7 @@ export default function Say(props: ISentenceEditorProps) {
   const submit = () => {
     const selectedFontSize = fontSize.value;
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
-    const idStr = id.value !== "" ? ` -id=${id.value}` : "";
+    const idStr = figureId.value !== "" ? ` -figureId=${figureId.value}` : "";
     props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${currentVocal.value === "" ? "" : " -" + currentVocal.value} -fontSize=${selectedFontSize}${pos}${idStr};`);
   };
 
@@ -123,7 +126,8 @@ export default function Say(props: ISentenceEditorProps) {
             options={[
               { key: "left", text: t('position.options.left') },
               { key: "", text: t('position.options.center') },
-              { key: "right", text: t('position.options.right') }
+              { key: "right", text: t('position.options.right') },
+              { key: "id", text: t('position.options.id') }
             ]}
             onChange={(ev, newValue: any) => {
               figurePosition.set(newValue?.key?.toString() ?? "");
@@ -131,18 +135,18 @@ export default function Say(props: ISentenceEditorProps) {
             }}
           />
       </CommonOptions>
-      <CommonOptions title={t('id.title')}>
-        <input value={id.value}
+      {figurePosition.value == 'id' && <CommonOptions title={t('id.title')}>
+        <input value={figureId.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
-            id.set(newValue ?? "");
+            figureId.set(newValue ?? "");
           }}
           onBlur={submit}
           className={styles.sayInput}
           placeholder={t('id.placeholder')}
           style={{ width: "100%" }}
         />
-      </CommonOptions>
+      </CommonOptions>}
     </div>
     <div className={styles.editItem}>
       <CommonOptions title={t('font.size')}>
