@@ -9,6 +9,8 @@ import React, {useEffect, useRef} from "react";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
+import { CommandBarButton } from '@fluentui/react/lib/Button';
+import { IIconProps } from "@fluentui/react";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -18,6 +20,11 @@ export default function EditorSideBar() {
   const t = useTrans("editor.sideBar.preview.");
   const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
+
+  // 获取FluentUI的icon
+  const refreshIcon: IIconProps = { iconName: 'Refresh' };
+  const openInNewTabIcon: IIconProps = { iconName: 'OpenInNewTab' };
+
   useEffect(() => {
     if (ifRef.current) {
       // @ts-ignore
@@ -86,21 +93,17 @@ export default function EditorSideBar() {
       />
       {state.showPreview && <div className={styles.preview_container}>
         <TagTitleWrapper title={t("title")} extra={<>
-          <div onClick={() => {
-            // @ts-ignore
-            (ifRef.current as HTMLIFrameElement).contentWindow.location.reload();
-          }
-          }
-          className="tag_title_button">
-            {t("refresh")}
-          </div>
-          <div onClick={() => {
-            window.open(`/games/${state.currentEditingGame}`, "_blank");
-          }
-          }
-          className="tag_title_button">
-            {t("previewInNewTab")}
-          </div>
+          <CommandBarButton iconProps={refreshIcon} text={t("refresh")}
+            onClick={() => {
+              // @ts-ignore
+              (ifRef.current as HTMLIFrameElement).contentWindow.location.reload();
+            }}
+          />
+          <CommandBarButton iconProps={openInNewTabIcon} text={t("previewInNewTab")}
+            onClick={() => {
+              window.open(`/games/${state.currentEditingGame}`, "_blank");
+            }}
+          />
         </>}/>
         <div className={styles.livePreviewNotice}>
           <TerreToggle title={t('livePreview')} isChecked={isEnableLivePreview} onChange={(v)=>{dispatch(setIsLivePreview(v));}} onText="" offText=""/>
@@ -112,12 +115,11 @@ export default function EditorSideBar() {
         <iframe ref={ifRef} id="gamePreviewIframe" frameBorder="0" className={styles.previewWindow}
           src={`/games/${state.currentEditingGame}`}/>
       </div>}
-      <div style={{flex: 1, overflow: "auto"}}>
+      <div className={styles.currentSidebar} style={{flex: 1, overflow: "auto"}}>
         {state.currentSidebarTag === sidebarTag.gameconfig && <GameConfig/>}
         {state.currentSidebarTag === sidebarTag.assets && <Assets/>}
         {state.currentSidebarTag === sidebarTag.scenes && <Scenes/>}
       </div>
-
     </div>
     }
   </>;

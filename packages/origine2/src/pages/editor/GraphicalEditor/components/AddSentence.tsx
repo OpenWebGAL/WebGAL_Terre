@@ -1,8 +1,7 @@
 import { sentenceEditorConfig } from "../SentenceEditor";
 import { useValue } from "../../../../hooks/useValue";
 import { useId } from "@fluentui/react-hooks";
-import { Dialog, DialogType } from "@fluentui/react";
-import { Add } from "@icon-park/react";
+import { CommandBarButton, Dialog, DialogType, IIconProps } from "@fluentui/react";
 import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
@@ -54,11 +53,13 @@ export default function AddSentence(props: IAddSentenceProps) {
     subText: props.type ? t('dialogs.add.text.backward') : t('dialogs.add.text.forward')
   };
 
+  // 获取 Fluent UI 的 icon
+  const addIcon: IIconProps = { iconName: 'CirclePlus' };
+
   return <>
-    <div id={addButtonId} className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
-      <Add strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16" fill="#333" />
-      {props.titleText}
-    </div>
+    <CommandBarButton id={addButtonId} iconProps={addIcon} text={props.titleText} className={stylesGe.optionButton}
+      onClick={() => isShowCallout.set(!isShowCallout.value)}
+    />
     {/* @ts-ignore */}
     {isShowCallout.value && <Dialog
       hidden={!isShowCallout.value}

@@ -8,7 +8,7 @@
   display: flex;
   //align-items: center;
   align-items: stretch;
-  margin: 4px 0 0 0;
+  // margin: 4px 0 0 0;
   width: 100%;
   flex-wrap: wrap;
   gap: 8px;
@@ -22,7 +22,7 @@
   box-shadow: none;
   appearance: none;
   outline: none;
-  background: rgba(0, 0, 0, 0.05);
+  // background: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.075);
   padding: 6px 6px 6px 6px;
   border-radius: 4px;
@@ -31,7 +31,7 @@
 }
 
 .sayArea {
-  background: rgba(0, 0, 0, 0.05);
+  // background: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.075);
   width: 50%;
   font-family: inherit;
@@ -42,5 +42,5 @@
   border-radius: 4px;
   font-size: 90%;
   height: 2.5em;
-  color: black;
+  // color: black;
 }

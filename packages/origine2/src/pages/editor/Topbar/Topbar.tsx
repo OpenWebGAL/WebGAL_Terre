@@ -1,12 +1,10 @@
 import styles from "./topbar.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { origineStore, RootState } from "../../../store/origineStore";
-import { LeftSmall } from "@icon-park/react";
-import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
+import { CommandBar, ICommandBarItemProps, IIconProps, CommandBarButton, getTheme, Label } from "@fluentui/react";
 import { registerIcons } from "@fluentui/react/lib/Styling";
-import { AndroidLogoIcon } from "@fluentui/react-icons-mdl2";
 import axios from "axios";
-import { language, setEditMode } from "../../../store/statusReducer";
+import { language, setEditMode, theme } from "../../../store/statusReducer";
 import TerreToggle from "../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
@@ -17,7 +15,11 @@ import GithubIcon from './github.svg';
 export default function TopBar() {
   const t = useTrans('editor.topBar.');
   const setLanguage = useLanguage();
+  const theme = getTheme();
   const editingGame: string = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+
+  // 获取 Fluent UI 的 icon
+  const backIcon: IIconProps = { iconName: 'Back' };
 
   const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode); // false 是脚本模式 true 是图形化模式
   const dispatch = useDispatch();
@@ -113,29 +115,36 @@ export default function TopBar() {
           }
         ]
       }
-    }];
+    }
+  ];
 
-  return <div className={styles.editor_topbar}>
-    <a href="/" className={styles.home_btn}>
-      <LeftSmall theme="outline" size="24" fill="#005caf" />
-      <div className={styles.editor_title}>WebGAL Origine</div>
-    </a>
+  
+  const styles_editor_title = {
+    root: [
+      {
+        color: theme.palette.themePrimary
+      }
+    ]
+  };
 
-    <div className={styles.editor_editingGame}>{t('editing')}<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
-    <div style={{ display: "flex", justifyItems: "center", padding: '0 0 0 12px' }}>
-      <TerreToggle
-        isChecked={isCodeMode}
-        title={t('editMode.title')} onText={t('editMode.onText')} offText={t('editMode.offText')}
-        onChange={handleChange} />
+  return (
+    <div className={styles.editor_topbar}>
+      <CommandBarButton href="/" primary={true} className={styles.editor_title} styles={styles_editor_title} iconProps={backIcon} text="WebGAL Terre"/>
+      <Label className={styles.editor_editingGame} styles={{root:[{background: theme.palette.themePrimary, color: theme.palette.white}]}}>{t('editing')}<span style={{ fontWeight: "bold" }}>{editingGame}</span></Label>
+      <div style={{ display: "flex", justifyItems: "center", padding: '0 0 0 12px' }}>
+        <TerreToggle
+          isChecked={isCodeMode}
+          title={t('editMode.title')} onText={t('editMode.onText')} offText={t('editMode.offText')}
+          onChange={handleChange} />
+      </div>
+      <div style={{ margin: "0 5px 0 auto" }}>
+        <CommandBar
+          items={_items}
+          ariaLabel="Inbox actions"
+          primaryGroupAriaLabel="Email actions"
+          farItemsGroupAriaLabel="More actions"
+        />
+      </div>
     </div>
-
-    <div style={{ margin: "0 5px 0 auto" }}>
-      <CommandBar
-        items={_items}
-        ariaLabel="Inbox actions"
-        primaryGroupAriaLabel="Email actions"
-        farItemsGroupAriaLabel="More actions"
-      />
-    </div>
-  </div>;
+  );
 }

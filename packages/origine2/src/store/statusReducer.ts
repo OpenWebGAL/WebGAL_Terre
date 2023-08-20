@@ -7,6 +7,7 @@ const dashboardInitState = {
 
 export enum sidebarTag {
   none,
+  theme,
   gameconfig,
   assets,
   scenes
@@ -15,6 +16,11 @@ export enum language {
   zhCn,
   en,
   jp,
+}
+
+export enum theme {
+  light,
+  dark,
 }
 
 export interface ITag {
@@ -33,7 +39,9 @@ interface IEditorState {
   tags: Array<ITag>,
   selectedTagTarget: string,
   isCodeMode: boolean,
-  language: language
+  language: language,
+  darkMode: boolean,
+  theme: theme,
 }
 
 // tag的假数据，用于测试
@@ -52,7 +60,9 @@ export const editorInitState: IEditorState = {
   tags: [],
   selectedTagTarget: "",
   isCodeMode: (localStorage.getItem("isCodeMode") ?? "") === "true",
-  language: language.zhCn
+  language: language.zhCn,
+  darkMode: false,
+  theme: theme.light,
 };
 
 const initialState = {
@@ -138,6 +148,15 @@ const statusSlice = createSlice({
       state.editor.language = action.payload;
       window?.localStorage?.setItem('editor-lang', action.payload.toString());
     },
+    /**
+     * 设置主题
+     * @param state
+     * @param action
+     */
+    setTheme: (state, action: PayloadAction<theme>) => {
+      state.editor.theme = action.payload;
+      window?.localStorage?.setItem('editor-theme', action.payload.toString());
+    },
 
     setIsLivePreview:(state,action:PayloadAction<boolean>)=>{
       state.editor.isEnableLivePreview = action.payload;
@@ -155,6 +174,7 @@ export const {
   setCurrentTagTarget,
   setEditMode,
   setLanguage,
+  setTheme,
   setIsLivePreview
 } = statusSlice.actions;
 

@@ -2,18 +2,28 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styles from "./tagsManager.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
-import { ITag, resetTagOrder, setCurrentTagTarget } from "../../../store/statusReducer";
+import { ITag, resetTagOrder, setCurrentTagTarget, theme } from "../../../store/statusReducer";
 import { cloneDeep } from "lodash";
-import { CloseSmall, FileCodeOne } from "@icon-park/react";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import { getFileIcon } from "@/utils/getFileIcon";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { IIconProps, IconButton } from "@fluentui/react";
 
 export default function TagsManager() {
   // 获取 Tags 数据
   const tags = useSelector((state: RootState) => state.status.editor.tags);
   const tagSelected = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const dispatch = useDispatch();
+
+  // 获取 Fluent UI 的 icon
+  const closeIcon: IIconProps = { iconName: 'StatusCircleErrorX' };
+
+  // Tag 颜色主题
+  const currentTheme = useSelector((state: RootState) => state.status.editor.theme);
+  const [tagTheme, setTagTheme] = useState('light-theme');
+  useEffect(() => {
+    currentTheme === theme.light ? setTagTheme('light-theme') : setTagTheme('dark-theme');
+  }, [currentTheme]);
 
   // 重新记录数组顺序
   const reorder = (list: Array<ITag>, startIndex: number, endIndex: number): Array<ITag> => {
@@ -80,7 +90,7 @@ export default function TagsManager() {
     <Droppable droppableId="droppable" direction="horizontal">
       {(provided, snapshot) => (
         // 下面开始书写容器
-        <div className={styles.tagsContainer}
+        <div className={`${styles[tagTheme]} ${styles.tagsContainer}`}
           id="tags-container"
           onWheel={handleScroll}
           // provided.droppableProps应用的相同元素.
@@ -99,18 +109,16 @@ export default function TagsManager() {
                       closeTag(event, item.tagTarget);
                     }
                   }}
-                  className={item.tagTarget === tagSelected ? `${styles.tag} ${styles.tag_active}` : styles.tag}
+                  className={item.tagTarget === tagSelected ? `${styles[tagTheme]} ${styles.tag} ${styles.tag_active}` : `${styles[tagTheme]} ${styles.tag}`}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
-                  <IconWrapper src={getFileIcon(item.tagTarget)} size={24} iconSize={18}/>
-                  <div>
+                  <div style={{paddingTop: '0.23em', display: 'flex'}}>
+                    <IconWrapper src={getFileIcon(item.tagTarget)} size={24} iconSize={18}/>
                     {item.tagName}
                   </div>
-                  <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
-                    <CloseSmall theme="outline" size="15" fill="#000" strokeWidth={3} />
-                  </div>
+                  <IconButton iconProps={closeIcon} title="close" ariaLabel="close" onClick={(event: any) => closeTag(event, item.tagTarget)}/>
                 </div>
               )}
             </Draggable>

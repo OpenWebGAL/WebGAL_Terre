@@ -1,8 +1,7 @@
-import { DeleteOne, Editor } from "@icon-park/react";
 import { ReactElement } from "react";
 import styles from "./sidebarComponents.module.scss";
 import { useValue } from "../../../../hooks/useValue";
-import { Callout, DefaultButton, PrimaryButton, Text, TextField } from "@fluentui/react";
+import { Callout, DefaultButton, IIconProps, IconButton, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import useTrans from "@/hooks/useTrans";
 import documentLogo from "material-icon-theme/icons/document.svg";
@@ -22,7 +21,11 @@ export interface IFileElementProps {
 export default function FileElement(props: IFileElementProps) {
   const t = useTrans("editor.sideBar.file.dialogs.");
 
-  const icon = props.icon ?? <IconWrapper src={documentLogo} size={22} iconSize={20} />;
+  const icon = props.icon ?? <IconWrapper src={documentLogo} />;
+
+  // 获取 Fluent UI 的 icon
+  const editNameIcon: IIconProps = { iconName: 'PageEdit' };
+  const deleteIcon: IIconProps = { iconName: 'Delete' };
 
   // 修改文件名部分
   const showEditNameCallout = useValue(false);
@@ -61,7 +64,6 @@ export default function FileElement(props: IFileElementProps) {
   const editNameButtonId = useId(`editNameButton`);
   const deleteButtonId = useId("deleteButton");
 
-
   // @ts-ignore
   // @ts-ignore
   return <div className={styles.fileElement} onClick={clickCallback}>
@@ -73,7 +75,7 @@ export default function FileElement(props: IFileElementProps) {
       e.stopPropagation();
       switchEditNameCallout();
     }}>
-      <Editor id={editNameButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />
+      <IconButton id={editNameButtonId} iconProps={editNameIcon} title="edit name" ariaLabel="edit name"/>
       {showEditNameCallout.value && <Callout
         className={styles.callout}
         ariaLabelledBy="editName"
@@ -102,7 +104,7 @@ export default function FileElement(props: IFileElementProps) {
       e.stopPropagation();
       showDeleteCalllout.set(!showDeleteCalllout.value);
     }}>
-      {!props?.undeletable && <DeleteOne id={deleteButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />}
+      {!props?.undeletable && <IconButton id={deleteButtonId} iconProps={deleteIcon} title="delete file" ariaLabel="delete file"/>}
       {!props?.undeletable && showDeleteCalllout.value && <Callout
         className={styles.callout}
         ariaLabelledBy="deleteFile"

@@ -7,9 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { getFileList, IFileDescription } from "../../../ChooseFile/ChooseFile";
 import { dirnameToDisplayNameMap, dirNameToExtNameMap } from "../../../ChooseFile/chooseFileConfig";
-import { DeleteOne, Editor, FolderPlus, LeftSmall, Upload } from "@icon-park/react";
 import { useId } from "@fluentui/react-hooks";
-import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
+import { Callout, CommandBarButton, IconButton, IIconProps, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
 import { extractPathAfterPublic } from "../../../ResourceDisplay/ResourceDisplay";
 import useTrans from "@/hooks/useTrans";
@@ -19,6 +18,12 @@ import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 
 export default function Assets() {
   const t = useTrans("editor.sideBar.assets.");
+
+  // 获取 Fluent UI 的 icon
+  const backIcon: IIconProps = { iconName: 'Back' };
+  const uploadFileIcon: IIconProps = { iconName: 'MoveToFolder' };
+  const creatFolderIcon: IIconProps = { iconName: 'NewFolder' };
+  const openFolderIcon: IIconProps = { iconName: 'FolderOpen' };
 
   function open_assets() {
     axios.get(`/api/manageGame/openGameAssetsDict/${origineStore.getState().status.editor.currentEditingGame}`).then();
@@ -112,7 +117,6 @@ export default function Assets() {
         onClick={() => {
           currentChildDir.set([...currentChildDir.value, fileDesc.name]);
           const targetDirExtName = dirNameToExtNameMap.get(fileDesc.name) ?? [];
-          console.log(123);
           currentDirExtName.set(targetDirExtName);
         }} />;
     });
@@ -153,28 +157,25 @@ export default function Assets() {
     });
   }
 
-
   return (
     <div style={{ height: "100%", overflow: "auto", display: "flex", flexFlow: "column" }}>
-      <TagTitleWrapper title={t("title")} extra={<div className="tag_title_button" onClick={open_assets}>
-        {t("buttons.openFolder")}
-      </div>} />
+      <TagTitleWrapper title={t("title")} extra={<CommandBarButton iconProps={openFolderIcon} text={t("buttons.openFolder")} onClick={open_assets}/>}/>
       <div className={assetsStyles.controlHead}>
-        <div className={assetsStyles.controlCommonButton} onClick={goBack}>
-          <LeftSmall theme="outline" strokeWidth={3} size="18" fill="#333" />
+        <div onClick={goBack}>
+          <IconButton iconProps={backIcon} title="back" ariaLabel="back"/>
         </div>
         <div className={assetsStyles.controlDirnameDisplay}>
           {currentDirName === "" ? "/" : currentDirName}
         </div>
         {currentDirName !== "" &&
           <>
-            <div id={buttonId} className={assetsStyles.controlCommonButton}
+            <div id={buttonId}
               onClick={() => isShowUploadCallout.set(!isShowUploadCallout.value)}>
-              <Upload theme="outline" size="18" strokeWidth={3} fill="#333" />
+              <IconButton iconProps={uploadFileIcon} title="upload file" ariaLabel="upload file"/>
             </div>
-            <div id={mkdirButtonId} className={assetsStyles.controlCommonButton}
+            <div id={mkdirButtonId}
               onClick={() => isShowMkdirCallout.set(!isShowMkdirCallout.value)}>
-              <FolderPlus theme="outline" size="18" strokeWidth={3} fill="#333" />
+              <IconButton iconProps={creatFolderIcon} title="creat folder" ariaLabel="creat folder"/>
             </div>
           </>
         }
@@ -248,6 +249,10 @@ function CommonFileButton(props: IFileDescription & {
 }) {
   const t = useTrans("editor.sideBar.assets.");
 
+  // 获取 Fluent UI 的 icon
+  const editNameIcon: IIconProps = { iconName: 'PageEdit' };
+  const deleteIcon: IIconProps = { iconName: 'Delete' };
+
   const showConformDeleteCallout = useValue(false);
   const showRenameCallout = useValue(false);
   const newFileName = useValue("");
@@ -268,7 +273,7 @@ function CommonFileButton(props: IFileDescription & {
       }} id={renameButtonId} className={assetsStyles.deleteButton} style={{
         display: showRenameCallout.value ? "block" : undefined
       }}>
-        <Editor theme="outline" size="18" fill="#333" strokeWidth={3} />
+        <IconButton iconProps={editNameIcon} title="edit name" ariaLabel="edit name"/>
       </div>
       <div onClick={(e) => {
         e.stopPropagation();
@@ -276,7 +281,7 @@ function CommonFileButton(props: IFileDescription & {
       }} id={deleteButtonId} className={assetsStyles.deleteButton} style={{
         display: showRenameCallout.value ? "block" : undefined
       }}>
-        <DeleteOne theme="outline" size="18" fill="#333" strokeWidth={3} />
+        <IconButton iconProps={deleteIcon} title="delete file" ariaLabel="delete file"/>
       </div>
       {showRenameCallout.value && <Callout
         className={assetsStyles.uploadCallout}

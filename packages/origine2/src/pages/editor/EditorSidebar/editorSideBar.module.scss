@@ -25,7 +25,7 @@
 }
 
 .editor_sidebar_control_button {
-  padding: 6px 6px 3px 6px;
+  // padding: 6px 6px 3px 6px;
   border-radius: 3px;
   //border: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -35,13 +35,13 @@
 .editor_sidebar_control_button_active {
   //border: 1px solid rgba(0, 0, 0, 0.15);
   //box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .preview_title {
   font-weight: bold;
   font-size: 115%;
-  color: #005caf;
+  // color: #005caf;
 }
 
 .preview_container {
@@ -82,12 +82,12 @@
 
 .divider:hover {
   width: 2px;
-  background-color: #005caf;
+  //background-color: #005caf;
 }
 
 .divider:active {
   width: 2px;
-  background-color: #005caf;
+  //background-color: #005caf;
 
 }
 
@@ -96,10 +96,37 @@
 }
 
 .livePreviewNotice{
-  color: #005caf;
+  //color: #005caf;
   margin: 5px;
   padding: 5px;
   background: rgba(0, 92, 175, 0.05);
   border-radius: 4px;
   font-size: 85%;
+}
+
+.currentSidebar{
+  //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    //background-color: rgba(0, 0, 0, 0.5);
+    background-color: #c8c8c8;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    //background-color: rgba(0, 0, 0, 0.5);
+    background-color: #808080;
+    &:hover {
+      //background-color: rgba(0, 0, 0, 0.75);
+      background-color: #b4b4b4;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+  & {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #808080 #c8c8c8; /* Firefox */
+  }
 }

@@ -6,12 +6,14 @@ import { Message, TestRefRef } from "../../components/message/Message";
 import styles from "./dashboard.module.scss";
 import Sidebar from "./Sidebar";
 import { GamePreview } from "./GamePreview";
-import { useSelector } from "react-redux";
-import { origineStore, RootState } from "../../store/origineStore";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/origineStore";
 import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
-import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
-import { language } from "@/store/statusReducer";
+import { CommandBar, ICommandBarItemProps, IIconProps, IconButton, Label, getTheme } from "@fluentui/react";
+import { language, setTheme, theme as stateTheme } from "@/store/statusReducer";
+import { useColorMode } from "theme-ui";
+import useTheme from "@/hooks/useTheme";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -23,7 +25,12 @@ export default function DashBoard() {
 
   const t = useTrans('editor.topBar.');
   const setLanguage = useLanguage();
+  const dispatch = useDispatch();
   const trans = useTrans('dashBoard.');
+  const theme = getTheme();
+  const currentTheme = useSelector((state: RootState) => state.status.editor.theme);
+  const { getColorFromTheme, loadThemeForFluentUI } = useTheme();
+  const [colorMode, setColorMode] = useColorMode();
 
   const isDashboardShow:boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
 
@@ -59,6 +66,18 @@ export default function DashBoard() {
     });
   }
 
+  // 获取 Fluent UI的icon
+  const lightModeIcon: IIconProps = { iconName: 'Sunny' };
+  const darkModeIcon: IIconProps = { iconName: 'ClearNight' };
+
+  // 在主题样式中循环切换
+  const switchTheme = () => {
+    const selectedTheme = ( currentTheme + 1 ) % ( Object.keys(stateTheme).length / 2);
+    setColorMode(selectedTheme === stateTheme.light ? 'light' : 'dark');
+    dispatch(setTheme(selectedTheme));
+    loadThemeForFluentUI(selectedTheme);
+  }
+
   useEffect(() => {
     refreashDashboard();
   }, []);
@@ -91,11 +110,10 @@ export default function DashBoard() {
     },
   ];
 
-
   return <>
     { isDashboardShow && (<div className={styles.dashboard_container}>
       <div className={styles.topBar}>
-        WebGAL Origine
+        <Label className={styles.topBarText} styles={{root:[{color: theme.palette.themePrimary}]}}>WebGAL Terre</Label>
         <div>
           <CommandBar
             items={_items}
@@ -103,6 +121,12 @@ export default function DashBoard() {
             primaryGroupAriaLabel="Email actions"
             farItemsGroupAriaLabel="More actions"
           />
+        </div>
+        <div onClick={switchTheme}>
+          <>
+            {currentTheme === stateTheme.dark && <IconButton iconProps={darkModeIcon} title="dark" ariaLabel="dark"/>}
+            {currentTheme === stateTheme.light && <IconButton iconProps={lightModeIcon} title="light" ariaLabel="light"/>}
+          </>
         </div>
       </div>
       <div className={styles.dashboard_main}>

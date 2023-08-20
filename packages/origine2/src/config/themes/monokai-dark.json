@@ -2,23 +2,23 @@
     "inherit": false,
     "base": "vs",
     "colors": {
-        "editor.foreground": "#000000",
-        "editor.background": "#fafafa",
-        "editor.lineHighlightBackground": "#e6e3c3",
-        "editor.selectionBackground": "#ccc9ad",
-        "editorCursor.foreground": "#666663",
-        "editorIndentGuide.background": "#D3D4D5",
-        "editorLineNumber.foreground": "#a2a19c",
-        "editorLineNumber.activeForeground": "#0b216f",
+        "editor.foreground": "#abb2bf",
+        "editor.background": "#282c34",
+        "editor.lineHighlightBackground": "#282c34",
+        "editor.selectionBackground": "#404859",
+        "editorCursor.foreground": "#528bff",
+        "editorIndentGuide.background": "#282c34",
+        "editorLineNumber.foreground": "#495162",
+        "editorLineNumber.activeForeground": "#abb2bf",
         "editorWhitespace.foreground": "#bbbbb7"
     },
     "rules": [
         {
-            "foreground": "#75715E",
+            "foreground": "#7f848e",
             "token": "comment"
         },
         {
-            "foreground": "#998f2f",
+            "foreground": "#98c379",
             "token": "string"
         },
         {
@@ -39,90 +39,90 @@
         },
         {
             "fontStyle": "",
-            "foreground": "#49483e",
+            "foreground": "#e06c75",
             "token": "variable"
         },
         {
-            "foreground": "#f9005a",
+            "foreground": "#abb2bf",
             "token": "keyword"
         },
         {
             "fontStyle": "",
-            "foreground": "#f9005a",
+            "foreground": "#abb2bf",
             "token": "storage"
         },
         {
             "fontStyle": "italic",
-            "foreground": "#0089b3",
+            "foreground": "#56b6c2",
             "token": "storage.type"
         },
         {
             "fontStyle": "underline",
-            "foreground": "#679c00",
+            "foreground": "#e5c07b",
             "token": "entity.name.class"
         },
         {
             "fontStyle": "underline",
-            "foreground": "#679c00",
+            "foreground": "#e5c07b",
             "token": "entity.name.type"
         },
         {
             "fontStyle": "italic underline",
-            "foreground": "#679c00",
+            "foreground": "#e5c07b",
             "token": "entity.other.inherited-class"
         },
         {
             "fontStyle": "",
-            "foreground": "#679c00",
+            "foreground": "#e5c07b",
             "token": "entity.name.function"
         },
         {
             "fontStyle": "",
-            "foreground": "#cf7000",
+            "foreground": "#e06c75",
             "token": "variable.parameter"
         },
         {
             "fontStyle": "",
-            "foreground": "#f9005a",
+            "foreground": "#abb2bf",
             "token": "entity.name.tag"
         },
         {
             "fontStyle": "",
-            "foreground": "#679c00",
+            "foreground": "#e5c07b",
             "token": "entity.other.attribute-name"
         },
         {
             "fontStyle": "",
-            "foreground": "#0089b3",
+            "foreground": "#56b6c2",
             "token": "support.function"
         },
         {
             "fontStyle": "",
-            "foreground": "#0089b3",
+            "foreground": "#56b6c2",
             "token": "support.constant"
         },
         {
             "fontStyle": "italic",
-            "foreground": "#0089b3",
+            "foreground": "#56b6c2",
             "token": "support.type"
         },
         {
             "fontStyle": "italic",
-            "foreground": "#0089b3",
+            "foreground": "#56b6c2",
             "token": "support.class"
         },
         {
             "fontStyle": "",
-            "foreground": "#49483e",
+            "foreground": "#e06c75",
             "token": "support.other.variable"
         },
         {
-            "background": "#F92672",
+            "background": "#282c34",
             "foreground": "#F8F8F0",
             "token": "invalid"
         },
         {
-            "background": "#AE81FF",
+            "background": "#282c34",
             "foreground": "#F8F8F0",
             "token": "invalid.deprecated"
         },
@@ -165,7 +165,7 @@
             "token": "markup.inline.raw"
         },
         {
-            "foreground": "#cf7000",
+            "foreground": "#e06c75",
             "token": "markup.heading"
         },
         {

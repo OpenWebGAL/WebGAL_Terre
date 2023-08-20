@@ -65,7 +65,7 @@
 }
 
 .commonFileButton:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .fileName {
@@ -91,14 +91,34 @@
   display: block;
 }
 
-.deleteButton:hover {
-  background: rgba(0, 0, 0, 0.1);
-}
-
 .fileList {
   overflow: auto;
   margin: 3px 0 0 0;
   padding: 0 3px 0 0;
+  //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    //background-color: rgba(0, 0, 0, 0.5);
+    background-color: #c8c8c8;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    //background-color: rgba(0, 0, 0, 0.5);
+    background-color: #808080;
+    &:hover {
+      //background-color: rgba(0, 0, 0, 0.75);
+      background-color: #b4b4b4;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+  & {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #808080 #c8c8c8; /* Firefox */
+  }
 }
 
 .uploadCallout {

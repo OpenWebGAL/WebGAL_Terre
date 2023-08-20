@@ -1,6 +1,6 @@
 import * as monaco from "monaco-editor";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./textEditor.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
@@ -13,10 +13,12 @@ import { Registry } from "monaco-textmate"; // peer dependency
 import { wireTmGrammars } from "monaco-editor-textmate";
 // 语法高亮文件
 import hljson from "../../../config/highlighting/hl.json";
-import theme from "../../../config/themes/monokai-light.json";
+import lightTheme from "../../../config/themes/monokai-light.json";
+import darkTheme from "../../../config/themes/monokai-dark.json";
 import { WG_ORIGINE_RUNTIME } from "../../../runtime/WG_ORIGINE_RUNTIME";
 import { WsUtil } from "../../../utils/wsUtil";
 import { lspSceneName } from "../../../App";
+import { theme } from "@/store/statusReducer";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -27,10 +29,11 @@ export default function TextEditor(props: ITextEditorProps) {
   const target = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const tags = useSelector((state: RootState) => state.status.editor.tags);
   const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const currentTheme = useSelector((state: RootState) => state.status.editor.theme);
   // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = { value: "Loading Scene Data......" };
   const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
-
+  const [editorTheme, setEditorTheme] = useState("webgal-theme-light");
 
   // 准备获取 Monaco
   // 建立 Ref
@@ -57,6 +60,18 @@ export default function TextEditor(props: ITextEditorProps) {
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
     liftOff(editor).then();
+
+    // 切换 Fluent UI 主题
+    switch (currentTheme) {
+    case theme.light:
+      setEditorTheme("webgal-theme-light");
+      break;
+    case theme.dark:
+      setEditorTheme("webgal-theme-dark");
+      break;
+    default:
+      setEditorTheme("webgal-theme-light");
+    }
   }
 
   /**
@@ -98,10 +113,25 @@ export default function TextEditor(props: ITextEditorProps) {
     };
   });
 
+  useEffect(() => {
+    // 切换 Fluent UI 主题
+    switch (currentTheme) {
+    case theme.light:
+      setEditorTheme("webgal-theme-light");
+      break;
+    case theme.dark:
+      setEditorTheme("webgal-theme-dark");
+      break;
+    default:
+      setEditorTheme("webgal-theme-light");
+    }
+  }, [currentTheme]);
+
   return <div style={{ display: props.isHide ? "none" : "block" }} className={styles.textEditor_main}>
     <Editor height="100%" width="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="webgal"
       language="webgal"
       defaultValue={currentText.value}
+      theme={editorTheme}
     />
   </div>;
 }
@@ -129,8 +159,9 @@ async function liftOff(editor: monaco.editor.IStandaloneCodeEditor) {
 
   // monaco's built-in themes aren't powereful enough to handle TM tokens
   // https://github.com/Nishkalkashyap/monaco-vscode-textmate-theme-converter#monaco-vscode-textmate-theme-converter
-  monaco.editor.defineTheme("webgal-theme", theme as any);
-  editor.updateOptions({ theme: "webgal-theme" });
+  monaco.editor.defineTheme("webgal-theme-dark", darkTheme as any);
+  monaco.editor.defineTheme("webgal-theme-light", lightTheme as any);
+  // editor.updateOptions({ theme: "webgal-theme-light" });
 
   await wireTmGrammars(monaco, registry, grammars, editor);
 }

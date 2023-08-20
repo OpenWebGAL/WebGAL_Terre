@@ -29,8 +29,8 @@
   font-size: smaller;
   box-sizing: border-box;
   padding: 0.2em 0.5em 0.2em 0.5em;
-  background: rgba(0,92,175,0.1);
-  color: #005caf;
+  // background: rgba(0,92,175,0.1);
+  // color: #005caf;
   border-radius: 4px;
   cursor: pointer;
   margin: 0 1em 0 1em;
@@ -44,4 +44,31 @@
   color: #0B346E;
   border-radius: 4px;
   margin: 0 0 0 auto;
+}
+
+.sceneList {
+  //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    //background-color: rgba(0, 0, 0, 0.5);
+    background-color: #c8c8c8;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    //background-color: rgba(0, 0, 0, 0.5);
+    background-color: #808080;
+    &:hover {
+      //background-color: rgba(0, 0, 0, 0.75);
+      background-color: #b4b4b4;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+  & {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #808080 #c8c8c8; /* Firefox */
+  }
 }

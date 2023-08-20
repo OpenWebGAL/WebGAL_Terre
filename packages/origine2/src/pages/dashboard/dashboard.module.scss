@@ -15,10 +15,15 @@
 .topBar {
   padding: 0.5em 0.5em 0.5em 0.75em;
   text-align: left;
-  font-family: Georgia, serif;
-  font-size: 150%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: #005caf;
+  // color: #005caf;
   display: flex;
   align-items: center;
+}
+
+.topBarText {
+  font-family: Georgia, serif;
+  font-size: 150%;
+  padding-left: 0.2em;
+  padding-right: 1em;
 }

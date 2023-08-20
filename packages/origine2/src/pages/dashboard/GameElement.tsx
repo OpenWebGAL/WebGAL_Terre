@@ -1,6 +1,5 @@
 import styles from "./gameElement.module.scss";
-import { Delete } from "@icon-park/react";
-import { DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton } from "@fluentui/react";
+import { DefaultButton, Dialog, DialogFooter, DialogType, IIconProps, IconButton, PrimaryButton } from "@fluentui/react";
 import { useValue } from "../../hooks/useValue";
 import axios from "axios";
 import useVarTrans from "@/hooks/useVarTrans";
@@ -21,6 +20,9 @@ export default function GameElement(props: IGameElementProps) {
 
   const t = useVarTrans('dashBoard.');
 
+  // 获取 Fluent UI 的 icon
+  const deleteIcon: IIconProps = { iconName: 'Delete' };
+
   const isShowDialog = useValue(false);
   const dialogContentProps = {
     type: DialogType.normal,
@@ -37,23 +39,23 @@ export default function GameElement(props: IGameElementProps) {
     );
   };
 
-  // @ts-ignore
-  return <div onClick={props.onClick} className={className}>
-    {props.gameName}
-    <div style={{ marginLeft: "auto" }}>
-      <Delete onClick={() => isShowDialog.set(true)} />
+  return (
+    <div className={styles.gameElement_container}>
+      {/* @ts-ignore */}
+      <DefaultButton text={props.gameName} className={styles.gameElement} onClick={props.onClick}/>
+      <IconButton iconProps={deleteIcon} style={{ marginLeft: "auto" }} title="delete" ariaLabel="delete" onClick={() => isShowDialog.set(true)} />
+      {/* @ts-ignore */}
+      <Dialog
+        hidden={!isShowDialog.value}
+        onDismiss={() => isShowDialog.set(false)}
+        dialogContentProps={dialogContentProps}
+        // modalProps={modalProps}
+      >
+        <DialogFooter>
+          <PrimaryButton onClick={deleteThisGame} text={t('$common.delete')} />
+          <DefaultButton onClick={() => isShowDialog.set(false)} text={t('$common.exit')} />
+        </DialogFooter>
+      </Dialog>
     </div>
-    {/* @ts-ignore */}
-    <Dialog
-      hidden={!isShowDialog.value}
-      onDismiss={() => isShowDialog.set(false)}
-      dialogContentProps={dialogContentProps}
-      // modalProps={modalProps}
-    >
-      <DialogFooter>
-        <PrimaryButton onClick={deleteThisGame} text={t('$common.delete')} />
-        <DefaultButton onClick={() => isShowDialog.set(false)} text={t('$common.exit')} />
-      </DialogFooter>
-    </Dialog>
-  </div>;
+  )
 };

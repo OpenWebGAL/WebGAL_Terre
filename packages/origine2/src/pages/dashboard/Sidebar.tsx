@@ -1,6 +1,6 @@
 import GameElement from "./GameElement";
 import styles from "./sidebar.module.scss";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 
@@ -39,10 +39,9 @@ export default function Sidebar(props: ISidebarProps) {
   return <div className={styles.sidebar_main}>
     <div className={styles.sidebar_top}>
       <span className={styles.sidebar_top_title}>{t('titles.gameList')}</span>
-      { /* @ts-ignore} */}
-      <span id="new-game-button" onClick={() => {
+      <PrimaryButton text={t('createNewGame.button')} onClick={() => {
         setShowCreateGameCallout(!showCreateGameCallout);
-      }} className={styles.createGameButton}>{t('createNewGame.button')}</span>
+      }} className={styles.createGameButton} />
       {showCreateGameCallout && <Callout
         className={styles.callout}
         ariaLabelledBy="createNewSceneCallout"

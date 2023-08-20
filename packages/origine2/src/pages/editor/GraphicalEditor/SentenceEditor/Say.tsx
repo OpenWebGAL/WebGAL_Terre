@@ -6,7 +6,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonOptions from "../components/CommonOption";
 import useTrans from "@/hooks/useTrans";
-import {DefaultButton, Dropdown} from "@fluentui/react";
+import {DefaultButton, Dropdown, TextField} from "@fluentui/react";
 import {cloneDeep} from "lodash";
 import CommonTips from "../components/CommonTips";
 
@@ -46,8 +46,10 @@ export default function Say(props: ISentenceEditorProps) {
   return <div className={styles.sentenceEditorContent}>
     <CommonTips text={t('tips.edit')}/>
     <div className={styles.editItem} style={{marginBottom: '6px'}}>
-      <input value={isNoSpeaker.value ? "" : currentSpeaker.value}
-        onChange={(ev) => {
+      <TextField
+        label=""
+        value={isNoSpeaker.value ? "" : currentSpeaker.value}
+        onChange={(ev: any) => {
           const newValue = ev.target.value;
           currentSpeaker.set(newValue ?? "");
         }}

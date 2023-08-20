@@ -20,7 +20,7 @@
   //box-shadow: 0 0 5px rgba(0,0,0,0.15);
   //padding: 2px 4px 2px 4px;
   //border: 1px solid rgba(0,0,0,0.15);
-  background: rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.1);
 }
 
 .fileElement_name{
@@ -45,8 +45,4 @@
 }
 .fileElement:hover .fileElement_interactable_icon{
   display: block;
-}
-
-.fileElement_interactable_icon:hover{
-  background-color: rgba(0,0,0,0.1);
 }

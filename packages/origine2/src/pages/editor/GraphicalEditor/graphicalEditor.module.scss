@@ -8,8 +8,8 @@
   display: flex;
   padding: 6px 12px 6px 12px;
   border-bottom: 4px solid rgba(0, 0, 0, 0.1);
-  background: white;
-  color: rgba(0, 0, 0, 0.5);
+  // background: white;
+  // color: rgba(0, 0, 0, 0.5);
   font-weight: bold;
   font-size: 90%;
 }
@@ -21,7 +21,7 @@
   box-sizing: border-box;
   padding: 8px 6px 0 0;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  // color: rgba(0, 0, 0, 0.5);
 }
 
 .seArea {
@@ -37,7 +37,7 @@
 }
 
 .title {
-  color: rgba(0, 92, 175, 1);
+  // color: rgba(0, 92, 175, 1);
   //background: rgba(0, 92, 175, 0.1);
   padding: 1px 4px 0 0;
   box-sizing: border-box;
@@ -64,12 +64,6 @@
   //  border-left: 1px solid rgba(0, 0, 0, 0);
   //}
   transition: background-color 0.33s;
-}
-
-.optionButton:hover {
-  //background: white;
-  //border: 1px solid rgba(0,0,0,0.1);
-  background: rgba(0, 0, 0, 0.05)
 }
 
 .topBar {

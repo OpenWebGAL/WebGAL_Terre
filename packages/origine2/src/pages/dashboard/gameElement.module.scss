@@ -1,20 +1,18 @@
-.gameElement_main {
-  font-size: 105%;
-  padding: 0.75em 0.5em 0.75em 0.75em;
-  //background: rgba(0, 92, 175, 0.025);
-  margin: 0.65em 0.5em 0 0.5em;
+.gameElement {
   border-radius: 4px;
   cursor: pointer;
-  //color: white;
-  color: #0B346E;
+  width: 28em;
   text-align: left;
   border: 1px solid rgba(0,0,0,0.15);
-  //box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.05);
   transition: all 0.33s;
   display: flex;
 }
 
-.gameElement_checked {
-  color: white;
-  background: #005caf;
+.gameElement_container {
+  margin: 0.65em 0.5em 0 0.5em;
+  border-radius: 4px;
+  text-align: left;
+  border: 1px solid rgba(0,0,0,0.15);
+  transition: all 0.33s;
+  display: flex;
 }

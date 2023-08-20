@@ -12,6 +12,7 @@ import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
 import { DeleteFive, Sort } from "@icon-park/react";
 import AddSentence, { addSentenceType } from "./components/AddSentence";
 import useTrans from "@/hooks/useTrans";
+import { CommandBarButton, IIconProps } from "@fluentui/react";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -83,6 +84,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       result.destination.index
     );
   }
+  
+  // 获取 FluentUI 的 icon
+  const deleteIcon: IIconProps = { iconName: 'Delete' };
 
   const parsedScene = (sceneText.value === "" ? { sentenceList: [] } : parseScene(sceneText.value));
   return <div className={styles.main}>
@@ -110,24 +114,19 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                     >
-                      <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
+                      <div className={styles.lineNumber}>
+                        <span style={{ padding: "0px 4px 0px 0px" }}>{index}</span>
                         <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
-                          strokeWidth={3}
-                          fill="rgba(0,0,0,0.5)" />
+                          strokeWidth={3}/>
                       </div>
                       <div className={styles.seArea}>
                         <div className={styles.head}>
                           <div className={styles.title}>
                             {sentenceConfig.title()}
                           </div>
-                          <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
-                            onClick={() => deleteOneSentence(i)}>
-                            <DeleteFive strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"
-                              fill="#333" />
-                            <div>
-                              {t("delete")}
-                            </div>
-                          </div>
+                          <CommandBarButton iconProps={deleteIcon} text={t("delete")} style={{ margin: "0 0 0 auto" }}
+                            onClick={() => deleteOneSentence(i)}
+                          />
                           <AddSentence titleText={t("addForward")} type={addSentenceType.forward}
                             onChoose={(newSentence) => addOneSentence(newSentence, i)} />
                         </div>

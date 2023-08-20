@@ -5,10 +5,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../../store/origineStore";
 import { useEffect, useRef } from "react";
 import { cloneDeep } from "lodash";
-import { ITextField, TextField } from "@fluentui/react";
+import { IIconProps, ITextField, TextField } from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
+import { DefaultButton, CommandBarButton } from '@fluentui/react/lib/Button';
 
 interface IGameConfig {
   gameName: string;
@@ -145,12 +146,19 @@ function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
 
+  // 获取 Fluent UI 的 icon
+  const editStringIcon: IIconProps = { iconName: 'Edit' };
+
   return <div>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <div className={styles.editButton} onClick={() => {
-      showEditBox.set(true);
-      setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t("revise")}</div>}
+    {!showEditBox.value && 
+      <CommandBarButton iconProps={editStringIcon} text={t("revise")} style={{top: '0.2em', height: '2em'}}
+        onClick={() => {
+          showEditBox.set(true);
+          setTimeout(() => inputBoxRef.current?.focus(), 100);
+        }}
+      />
+    }
     {showEditBox.value && <TextField componentRef={inputBoxRef} defaultValue={props.value}
       onBlur={() => {
         props.onChange(inputBoxRef!.current!.value);
@@ -164,12 +172,20 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & { sourceBase:
   const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
+
+  // 获取 Fluent UI 的 icon
+  const editStringIcon: IIconProps = { iconName: 'DocumentManagement' };
+
   return <div>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <div className={styles.editButton} onClick={() => {
-      showEditBox.set(true);
-      setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t("revise")}</div>}
+    {!showEditBox.value &&
+      <CommandBarButton iconProps={editStringIcon} text={t("revise")} style={{top: '0.3em', height: '2em'}}
+        onClick={() => {
+          showEditBox.set(true);
+          setTimeout(() => inputBoxRef.current?.focus(), 100);
+        }}
+      />
+    }
     {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
       onChange={(file) => {
         if (file) {

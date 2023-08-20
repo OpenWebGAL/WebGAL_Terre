@@ -6,7 +6,7 @@ import { RootState } from "../../../../../store/origineStore";
 import axios from "axios";
 import { IFileInfo } from "webgal-terre-2/dist/Modules/webgal-fs/webgal-fs.service";
 import FileElement from "../../sidebarComponents/FileElement";
-import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
+import { Callout, CommandBarButton, DefaultButton, IIconProps, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -17,6 +17,9 @@ export default function Scenes() {
   const state = useSelector((state: RootState) => state.status.editor);
   const dispatch = useDispatch();
   const currentGameName = state.currentEditingGame;
+  // 获取FluentUI的icon
+  const addSceneIcon: IIconProps = { iconName: 'PageAdd' };
+
   // 场景文件的列表
   const sceneList = useValue<IFileInfo[]>([]);
 
@@ -107,12 +110,9 @@ export default function Scenes() {
   });
 
   return (
-    <div style={{ height: "100%", overflow: "auto" }}>
-      <TagTitleWrapper title={t('title')} extra={<><div
-        id="createSceneButton"
-        className="tag_title_button"
-        onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
-      >{t('dialogs.create.button')}</div>
+    <div style={{ height: "96%", overflow: "none" }}>
+      <TagTitleWrapper title={t('title')} extra={<>
+      <CommandBarButton id="createSceneButton" iconProps={addSceneIcon} text={t('dialogs.create.button')} onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}/>
       {showCreateSceneCallout.value && (
         <Callout
           className={styles.callout}
@@ -139,7 +139,7 @@ export default function Scenes() {
           </div>
         </Callout>
       )}</>} />
-      <div style={{ overflow: "auto", maxHeight: "calc(100% - 35px)" }}>{showSceneList}</div>
+      <div className={styles.sceneList} style={{ overflow: "auto", maxHeight: "calc(100% - 35px)" }}>{showSceneList}</div>
     </div>
   );
 }

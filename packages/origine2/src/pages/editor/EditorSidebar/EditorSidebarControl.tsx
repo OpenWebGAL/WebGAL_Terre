@@ -2,8 +2,11 @@ import styles from "./editorSideBar.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { ReactElement } from "react";
-import { FolderOpen, PlayTwo, PreviewCloseOne, PreviewOpen, SettingConfig } from "@icon-park/react";
-import { setEditorPreviewShow, setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
+import { setEditorPreviewShow, setEditorSidebarTag, setTheme, sidebarTag, theme } from "@/store/statusReducer";
+import { useColorMode } from 'theme-ui';
+import useTheme from "@/hooks/useTheme";
+import { IIconProps } from '@fluentui/react';
+import { IconButton } from '@fluentui/react/lib/Button';
 
 interface ISidebarIconsProps {
   children: ReactElement;
@@ -23,9 +26,28 @@ function SidebarIcons(props: ISidebarIconsProps) {
 export default function EditorSidebarControl() {
   const state = useSelector((state: RootState) => state.status.editor);
   const dispatch = useDispatch();
+  const [colorMode, setColorMode] = useColorMode();
+  const { loadThemeForFluentUI } = useTheme();
+
+  // 获取 Fluent UI 的 icon
+  const previewOpenIcon: IIconProps = { iconName: 'Video' };
+  const previewCloseIcon: IIconProps = { iconName: 'VideoOff' };
+  const lightModeIcon: IIconProps = { iconName: 'Sunny' };
+  const darkModeIcon: IIconProps = { iconName: 'ClearNight' };
+  const configIcon: IIconProps = { iconName: 'Settings' };
+  const assetLibraryIcon: IIconProps = { iconName: 'Media' };
+  const sceneLibraryIcon: IIconProps = { iconName: 'MyMoviesTV' };
 
   function switchPreview() {
     dispatch(setEditorPreviewShow(!state.showPreview));
+  }
+
+  // 在主题样式中循环切换
+  const switchTheme = () => {
+    const selectedTheme = ( state.theme + 1 ) % ( Object.keys(theme).length / 2);
+    setColorMode(selectedTheme === theme.light ? 'light' : 'dark');
+    dispatch(setTheme(selectedTheme));
+    loadThemeForFluentUI(selectedTheme);
   }
 
   function switchSidebarTag(currentTag: sidebarTag) {
@@ -40,29 +62,30 @@ export default function EditorSidebarControl() {
     <div onClick={switchPreview}>
       <SidebarIcons isActive={state.showPreview}>
         <>
-          {state.showPreview && <PreviewOpen theme="outline" size="24" fill="#0B346E" strokeWidth={3} />}
-          {!state.showPreview && <PreviewCloseOne theme="outline" size="24" fill="#666" strokeWidth={3} />}
+          {state.showPreview && <IconButton iconProps={previewOpenIcon} title="showPreview" ariaLabel="showPreview"/>}
+          {!state.showPreview && <IconButton iconProps={previewCloseIcon} title="closePreview" ariaLabel="closePreview"/>}
         </>
       </SidebarIcons>
     </div>
+    <div onClick={switchTheme}>
+      <>
+        {state.theme === theme.dark && <IconButton iconProps={darkModeIcon} title="dark" ariaLabel="dark"/>}
+        {state.theme === theme.light && <IconButton iconProps={lightModeIcon} title="light" ariaLabel="light"/>}
+      </>
+    </div>
     <div onClick={() => switchSidebarTag(sidebarTag.gameconfig)} style={{ margin: "auto 0 0 0" }}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.gameconfig}>
-        <SettingConfig theme="outline" size="24"
-          fill={state.currentSidebarTag === sidebarTag.gameconfig ? "#0B346E" : "#666"} strokeWidth={3} />
+        <IconButton iconProps={configIcon} title="config" ariaLabel="config"/>
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.assets)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.assets}>
-        <FolderOpen theme="outline" size="24"
-          fill={state.currentSidebarTag === sidebarTag.assets ? "#0B346E" : "#666"}
-          strokeWidth={3} />
+        <IconButton iconProps={assetLibraryIcon} title="asset library" ariaLabel="asset library"/>
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.scenes)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.scenes}>
-        <PlayTwo theme="outline" size="24"
-          fill={state.currentSidebarTag === sidebarTag.scenes ? "#0B346E" : "#666"}
-          strokeWidth={3} />
+        <IconButton iconProps={sceneLibraryIcon} title="scene library" ariaLabel="scene library"/>
       </SidebarIcons>
     </div>
   </div>;

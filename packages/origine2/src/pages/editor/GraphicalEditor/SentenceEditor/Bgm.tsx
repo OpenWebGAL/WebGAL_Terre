@@ -6,6 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
 import { getArgByKey } from "../utils/getArgByKey";
+import { TextField } from "@fluentui/react";
 
 export default function Bgm(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.bgm.');
@@ -41,25 +42,25 @@ export default function Bgm(props: ISentenceEditorProps) {
         </>
       </CommonOptions>}
       <CommonOptions title={t('options.volume.title')} key="2">
-        <input value={volume.value}
-          onChange={(ev) => {
+        <TextField
+          value={volume.value}
+          onChange={(ev: any) => {
             const newValue = ev.target.value;
             volume.set(newValue ?? "");
           }}
           onBlur={submit}
-          className={styles.sayInput}
           placeholder={t('options.volume.placeholder')}
           style={{ width: "100%" }}
         />
       </CommonOptions>
       <CommonOptions title={t('options.enter.title')} key="3">
-        <input value={enter.value}
-          onChange={(ev) => {
+        <TextField
+          value={enter.value}
+          onChange={(ev: any) => {
             const newValue = ev.target.value;
             enter.set(newValue ?? "");
           }}
           onBlur={submit}
-          className={styles.sayInput}
           placeholder={t('options.enter.placeholder')}
           style={{ width: "100%" }}
         />
