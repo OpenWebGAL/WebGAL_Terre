@@ -57,7 +57,7 @@ export default function Say(props: ISentenceEditorProps) {
     const selectedFontSize = fontSize.value;
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = figureId.value !== "" ? ` -figureId=${figureId.value}` : "";
-    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${currentVocal.value === "" ? "" : " -" + currentVocal.value} -fontSize=${selectedFontSize}${pos}${idStr};`);
+    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${vocal.value === "" ? "" : " -" + vocal.value} -fontSize=${selectedFontSize}${pos}${idStr};`);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -123,21 +123,21 @@ export default function Say(props: ISentenceEditorProps) {
         </>
       </CommonOptions>
       <CommonOptions title={t('position.title')}>
-          <Dropdown
-            selectedKey={figurePosition.value}
-            options={[
-              { key: "left", text: t('position.options.left') },
-              { key: "", text: t('position.options.center') },
-              { key: "right", text: t('position.options.right') },
-              { key: "id", text: t('position.options.id') }
-            ]}
-            onChange={(ev, newValue: any) => {
-              figurePosition.set(newValue?.key?.toString() ?? "");
-              submit();
-            }}
-          />
+        <Dropdown
+          selectedKey={figurePosition.value}
+          options={[
+            { key: "left", text: t('position.options.left') },
+            { key: "", text: t('position.options.center') },
+            { key: "right", text: t('position.options.right') },
+            { key: "id", text: t('position.options.id') }
+          ]}
+          onChange={(ev, newValue: any) => {
+            figurePosition.set(newValue?.key?.toString() ?? "");
+            submit();
+          }}
+        />
       </CommonOptions>
-      {figurePosition.value == 'id' && <CommonOptions title={t('id.title')}>
+      {figurePosition.value === 'id' && <CommonOptions title={t('id.title')}>
         <input value={figureId.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
