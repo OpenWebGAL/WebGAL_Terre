@@ -12,8 +12,11 @@ export default function PlayEffect(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
+  const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const submit = () => {
-    props.onSubmit(`playEffect:${fileName.value}${id.value === "" ? "" : " -id=" + id.value};`);
+    const idStr = id.value !== "" ? ` -id=${id.value}` : "";
+    const volumeStr = volume.value !== "" ? ` -volume=${volume.value}` : "";
+    props.onSubmit(`playEffect:${fileName.value}${volumeStr}${idStr};`);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -37,7 +40,19 @@ export default function PlayEffect(props: ISentenceEditorProps) {
           extName={[".mp3", ".ogg", ".wav"]} />
         </>
       </CommonOptions>}
-      <CommonOptions title={t('id.title')} key="4">
+      <CommonOptions title={t('volume.title')} key="2">
+        <input value={volume.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            volume.set(newValue ?? "");
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          placeholder={t('volume.placeholder')}
+          style={{ width: "100%" }}
+        />
+      </CommonOptions>
+      <CommonOptions title={t('id.title')} key="3">
         <input value={id.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
