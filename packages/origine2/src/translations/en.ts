@@ -223,6 +223,10 @@ export const en = {
             enter: {
               title: 'Fade in and out',
               placeholder: 'Milliseconds. 0~ valid',
+            },
+            name: {
+              title: "Name of BGM Unlocking",
+              placeholder: "Name of BGM unlocking"
             }
           }
         },
@@ -239,6 +243,10 @@ export const en = {
             },
             file: {
               title: 'File of BackGround'
+            },
+            name: {
+              title: "Name of CG Unlocking",
+              placeholder: "Name of CG unlocking"
             }
           }
         },
