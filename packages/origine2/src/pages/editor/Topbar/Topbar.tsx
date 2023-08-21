@@ -75,7 +75,7 @@ export default function TopBar() {
       text: t('commandBar.items.help.text'),
       cacheKey: "help", // changing this key will invalidate this item's cache
       onClick: () => {
-        window.open("https://docs.openwebgal.com/guide/", "_blank");
+        window.open("https://docs.openwebgal.com/", "_blank");
       },
       iconProps: { iconName: "DocumentSearch" }
     },
