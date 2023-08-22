@@ -224,6 +224,10 @@ export const zhCn = {
             enter: {
               title: '淡入淡出',
               placeholder: '单位毫秒。 0~ 有效',
+            },
+            name: {
+              title: "解锁名称",
+              placeholder: "解锁的 BGM 名称"
             }
           }
         },
@@ -240,6 +244,10 @@ export const zhCn = {
             },
             file: {
               title: '背景文件'
+            },
+            name: {
+              title: "解锁名称",
+              placeholder: "解锁的 CG 名称"
             }
           }
         },
