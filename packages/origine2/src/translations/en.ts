@@ -176,7 +176,13 @@ export const en = {
               placeholder: 'Percentage. 0-100 valid',
             },
             font: {
-              size: "FontSize"
+              size: "FontSize",
+              options:{
+                default:'Default',
+                small:'Small',
+                medium:'Medium',
+                large:'Large',
+              }
             },
             position: {
               title: "Position of Associated Figure",
