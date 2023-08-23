@@ -13,9 +13,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 16
+          cache: 'yarn'
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -34,7 +35,8 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16
+          cache: 'yarn'
       - name: Build Stage 1
         run: |
           echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
@@ -120,9 +122,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 16
+          cache: 'yarn'
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -139,9 +142,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: 16
+          cache: 'yarn'
       - name: Build
         shell: bash
         run: ./release.sh
@@ -157,9 +161,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: 16
+          cache: 'yarn'
       - name: Build
         shell: bash
         run: ./release.sh

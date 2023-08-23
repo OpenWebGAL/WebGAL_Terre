@@ -172,8 +172,25 @@ export const zhCn = {
             vocal: {
               title: "语音"
             },
+            volume: {
+              title: '语音 音量',
+              placeholder: '百分比。 0-100 有效',
+            },
             font: {
               size:'文字大小'
+            },
+            position: {
+              title: "关联立绘",
+              options: {
+                left: '左侧立绘',
+                center: '中间立绘',
+                right: '右侧立绘',
+                id: '使用立绘ID'
+              }
+            },
+            id: {
+              title: "立绘插图的ID",
+              placeholder: "立绘 ID"
             }
           }
         },
@@ -199,6 +216,18 @@ export const zhCn = {
             },
             file: {
               title: '背景音乐文件',
+            },
+            volume: {
+              title: 'BGM 音量',
+              placeholder: '百分比。 0-100 有效',
+            },
+            enter: {
+              title: '淡入淡出',
+              placeholder: '单位毫秒。 0~ 有效',
+            },
+            name: {
+              title: "解锁名称",
+              placeholder: "解锁的 BGM 名称"
             }
           }
         },
@@ -215,6 +244,10 @@ export const zhCn = {
             },
             file: {
               title: '背景文件'
+            },
+            name: {
+              title: "解锁名称",
+              placeholder: "解锁的 CG 名称"
             }
           }
         },
@@ -359,7 +392,9 @@ export const zhCn = {
               submit: '应用颜色变化'
             },
             font: {
-              size:'文字大小'
+              size:'文字大小',
+              animation: '动画',
+              delayTime: '延迟时间（秒）'
             }
           }
         },
@@ -420,6 +455,10 @@ export const zhCn = {
             id: {
               title: "效果音 ID（输入以使效果音循环，后面再用这个 id 来关闭）",
               placeholder: "效果音 ID"
+            },
+            volume: {
+              title: '效果音 音量',
+              placeholder: '百分比。 0-100 有效',
             }
           }
         },
