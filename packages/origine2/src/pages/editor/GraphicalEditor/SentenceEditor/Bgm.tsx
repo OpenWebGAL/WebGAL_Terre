@@ -5,7 +5,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
-import { getArgByKey } from "../utils/getArgByKey";
+import {getArgByKey} from "../utils/getArgByKey";
 
 export default function Bgm(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.bgm.');
@@ -13,10 +13,16 @@ export default function Bgm(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
   const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const enter = useValue(getArgByKey(props.sentence, "enter").toString() ?? "");
+  const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");
+  const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const submit = () => {
     const volumeStr = volume.value !== "" ? ` -volume=${volume.value}` : "";
     const enterStr = enter.value !== "" ? ` -enter=${enter.value}` : "";
-    props.onSubmit(`bgm:${bgmFile.value}${volumeStr}${enterStr};`);
+    if(bgmFile.value != "none"){
+      props.onSubmit(`bgm:${bgmFile.value}${volumeStr}${enterStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
+    } else {
+      props.onSubmit(`bgm:${bgmFile.value}${enterStr};`);
+    }
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -40,7 +46,7 @@ export default function Bgm(props: ISentenceEditorProps) {
           extName={[".mp3", ".ogg", ".wav"]} />
         </>
       </CommonOptions>}
-      <CommonOptions title={t('options.volume.title')} key="2">
+      {!isNoFile && <CommonOptions title={t('options.volume.title')} key="2">
         <input value={volume.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -51,7 +57,7 @@ export default function Bgm(props: ISentenceEditorProps) {
           placeholder={t('options.volume.placeholder')}
           style={{ width: "100%" }}
         />
-      </CommonOptions>
+      </CommonOptions>}
       <CommonOptions title={t('options.enter.title')} key="3">
         <input value={enter.value}
           onChange={(ev) => {
@@ -64,6 +70,18 @@ export default function Bgm(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>
+      {!isNoFile && <CommonOptions key="4" title={t('options.name.title')}>
+        <input value={unlockName.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            unlockName.set(newValue);
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{ width: "200px" }}
+          placeholder={t('options.name.placeholder')}
+        />
+      </CommonOptions>}
     </div>
   </div>;
 }
