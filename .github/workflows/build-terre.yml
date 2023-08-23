@@ -150,3 +150,25 @@ jobs:
         with:
           name: WebGAL_Terre_Windows
           path: release
+  build-windows-nsis:
+    name: Build Windows Setup
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+      - name: Build
+        shell: bash
+        run: ./release.sh
+      - name: Build Setup
+        shell: bash
+        run: yarn nsis-bundle
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebGAL_Terre_Windows_Setup
+          path: bundle/WebGal_Terre_Setup.exe
+
