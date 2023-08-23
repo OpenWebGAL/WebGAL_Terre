@@ -223,6 +223,10 @@ export const jp = {
             enter: {
               title: 'フェードインとアウト',
               placeholder: 'ミリ秒単位。 0~ 有効',
+            },
+            name: {
+              title: "BGMの名前",
+              placeholder: ""
             }
           }
         },
@@ -239,6 +243,10 @@ export const jp = {
             },
             file: {
               title: '背景画像ファイルを選択'
+            },
+            name: {
+              title: "CGの名前",
+              placeholder: ""
             }
           }
         },
