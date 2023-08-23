@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-linux:
-    name: Build Binary
+    name: Build Linux Binary
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,7 +28,7 @@ jobs:
           name: WebGAL_Terre_Linux
           path: release
   build-arm64:
-    name: Build ARM64 Binary
+    name: Build Linux ARM64 Binary
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -116,7 +116,7 @@ jobs:
           name: WebGAL_Terre_Linux_Arm64
           path: release
   build-mac:
-    name: Build Binary
+    name: Build MacOS Binary
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -135,7 +135,7 @@ jobs:
           name: WebGAL_Terre_Mac
           path: release
   build-windows:
-    name: Build Binary
+    name: Build Windows Binary
     runs-on: windows-latest
     steps:
       - name: Checkout
