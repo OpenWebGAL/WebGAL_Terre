@@ -1,8 +1,6 @@
 echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
 # 安装依赖
-rm yarn.lock
-rm package-lock.json
-yarn install --frozen-lockfile
+yarn install --frozen-lockfile --network-timeout=300000
 
 # 清理
 rm -rf release
