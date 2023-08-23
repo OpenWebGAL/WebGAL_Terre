@@ -177,7 +177,13 @@ export const zhCn = {
               placeholder: '百分比。 0-100 有效',
             },
             font: {
-              size:'文字大小'
+              size:'文字大小',
+              options:{
+                default:'默认',
+                small:'小',
+                medium:'中',
+                large:'大',
+              }
             },
             position: {
               title: "关联立绘",
