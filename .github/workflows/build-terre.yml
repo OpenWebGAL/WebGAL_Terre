@@ -1,14 +1,31 @@
-name: Build Check Linux (ARM64)
+name: Build WebGAL Terre
 
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  build-linux:
+    name: Build Binary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: sh release-linux.sh
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebGAL_Terre_Linux
+          path: release
+  build-arm64:
     name: Build ARM64 Binary
     runs-on: ubuntu-latest
     steps:
@@ -94,5 +111,42 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: WebGAL_Terre
+          name: WebGAL_Terre_Linux_Arm64
+          path: release
+  build-mac:
+    name: Build Binary
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: sh release-mac.sh
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebGAL_Terre_Mac
+          path: release
+  build-windows:
+    name: Build Binary
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+      - name: Build
+        shell: bash
+        run: ./release.sh
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebGAL_Terre_Windows
           path: release
