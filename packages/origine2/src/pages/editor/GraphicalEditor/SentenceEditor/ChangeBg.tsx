@@ -12,9 +12,15 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const bgFile = useValue(props.sentence.content);
+  const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");
+  const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
-    props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr};`);
+    if(bgFile.value != "none"){
+      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
+    } else {
+      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr};`);
+    }
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -44,6 +50,18 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           submit();
         }} onText={t('$editor.graphical.sentences.common.options.goNext.on')} offText={t('$editor.graphical.sentences.common.options.goNext.off')} isChecked={isGoNext.value} />
       </CommonOptions>
+      {!isNoFile && <CommonOptions key="3" title={t('options.name.title')}>
+        <input value={unlockName.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            unlockName.set(newValue);
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{ width: "200px" }}
+          placeholder={t('options.name.placeholder')}
+        />
+      </CommonOptions>}
     </div>
   </div>;
 }
