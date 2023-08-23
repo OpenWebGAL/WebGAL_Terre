@@ -171,8 +171,25 @@ export const jp = {
             vocal: {
               title: "ボイスを選択"
             },
+            volume: {
+              title: 'ボイス 音量',
+              placeholder: '百分率。 0-100 有効',
+            },
             font: {
               size:'フォントサイズ'
+            },
+            position: {
+              title: "関連する立ち絵の位置",
+              options: {
+                left: '左',
+                center: '中央',
+                right: '右',
+                id: "立ち絵のID"
+              }
+            },
+            id: {
+              title: "関連する立ち絵のID",
+              placeholder: "立ち絵のID"
             }
           }
         },
@@ -198,6 +215,18 @@ export const jp = {
             },
             file: {
               title: 'BGMファイルを選択',
+            },
+            volume: {
+              title: 'BGM 音量',
+              placeholder: '百分率。 0-100 有効',
+            },
+            enter: {
+              title: 'フェードインとアウト',
+              placeholder: 'ミリ秒単位。 0~ 有効',
+            },
+            name: {
+              title: "BGMの名前",
+              placeholder: ""
             }
           }
         },
@@ -214,6 +243,10 @@ export const jp = {
             },
             file: {
               title: '背景画像ファイルを選択'
+            },
+            name: {
+              title: "CGの名前",
+              placeholder: ""
             }
           }
         },
@@ -358,7 +391,9 @@ export const jp = {
               submit: '色の変更を適用'
             },
             font: {
-              size:'文字サイズ'
+              size:'文字サイズ',
+              animation: 'アニメーション',
+              delayTime: '遅延時間（秒）'
             }
           }
         },
@@ -419,6 +454,10 @@ export const jp = {
             id: {
               title: "効果音ID(効果音をループし、このIDを使用して後ほど停止可能)",
               placeholder: "効果音ID"
+            },
+            volume: {
+              title: '効果音 音量',
+              placeholder: '百分率。 0-100 有効',
             }
           }
         },

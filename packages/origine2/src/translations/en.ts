@@ -171,8 +171,25 @@ export const en = {
             vocal: {
               title: "Vocal"
             },
+            volume: {
+              title: 'Vocal Volume',
+              placeholder: 'Percentage. 0-100 valid',
+            },
             font: {
               size: "FontSize"
+            },
+            position: {
+              title: "Position of Associated Figure",
+              options: {
+                left: 'Left',
+                center: 'Center',
+                right: 'Right',
+                id: 'Figure ID'
+              }
+            },
+            id: {
+              title: "Associated Figure ID",
+              placeholder: "Figure ID"
             }
           }
         },
@@ -198,6 +215,18 @@ export const en = {
             },
             file: {
               title: 'File of the BGM',
+            },
+            volume: {
+              title: 'BGM volume',
+              placeholder: 'Percentage. 0-100 valid',
+            },
+            enter: {
+              title: 'Fade in and out',
+              placeholder: 'Milliseconds. 0~ valid',
+            },
+            name: {
+              title: "Name of BGM Unlocking",
+              placeholder: "Name of BGM unlocking"
             }
           }
         },
@@ -214,6 +243,10 @@ export const en = {
             },
             file: {
               title: 'File of BackGround'
+            },
+            name: {
+              title: "Name of CG Unlocking",
+              placeholder: "Name of CG unlocking"
             }
           }
         },
@@ -358,7 +391,9 @@ export const en = {
               submit: 'Apply color changes'
             },
             font: {
-              size:'fontSize'
+              size: 'fontSize',
+              animation: 'animation',
+              delayTime: 'delayTime(sec)'
             }
           }
         },
@@ -419,6 +454,10 @@ export const en = {
             id: {
               title: "Effect ID (Input ID makes this effect loop, you can\'t stop it by this ID after)",
               placeholder: "Effect ID"
+            },
+            volume: {
+              title: 'Sound Effect Volume',
+              placeholder: 'Percentage. 0-100 valid',
             }
           }
         },
