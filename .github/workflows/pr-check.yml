@@ -15,9 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 16
+          cache: 'yarn'
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -36,7 +37,8 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16
+          cache: 'yarn'
       - name: Build Stage 1
         run: |
           echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
@@ -122,9 +124,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 16
+          cache: 'yarn'
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -141,9 +144,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: 16
+          cache: 'yarn'
       - name: Build
         shell: bash
         run: ./release.sh
@@ -152,3 +156,26 @@ jobs:
         with:
           name: WebGAL_Terre_Windows
           path: release
+  build-windows-nsis:
+    name: Build Windows Setup
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - name: Build
+        shell: bash
+        run: ./release.sh
+      - name: Build Setup
+        shell: bash
+        run: mkdir bundle && yarn nsis-bundle
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebGAL_Terre_Windows_Setup
+          path: bundle/WebGal_Terre_Setup.exe
+
