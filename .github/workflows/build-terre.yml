@@ -165,7 +165,7 @@ jobs:
         run: ./release.sh
       - name: Build Setup
         shell: bash
-        run: yarn nsis-bundle
+        run: mkdir bundle && yarn nsis-bundle
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
