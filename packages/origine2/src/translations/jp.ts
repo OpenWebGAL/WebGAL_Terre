@@ -176,7 +176,13 @@ export const jp = {
               placeholder: '百分率。 0-100 有効',
             },
             font: {
-              size:'フォントサイズ'
+              size:'フォントサイズ',
+              options:{
+                default:'デフォルト',
+                small:'小さい',
+                medium:'中くらい',
+                large:'大きい',
+              }
             },
             position: {
               title: "関連する立ち絵の位置",
