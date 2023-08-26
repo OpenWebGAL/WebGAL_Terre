@@ -40,6 +40,7 @@ import SetAnimation from "./SetAnimation";
 import ChangeCallScene from "./ChangeCallScene";
 import Choose from "./Choose";
 import SetTransition from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransition";
+import SetTransform from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransform";
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -226,5 +227,14 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component: SetTransition,
     icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
     descText: () => t(tPrefix + 'transition.descText')
+  },
+  {
+    type:commandType.setTransform,
+    title:()=>{return '设置效果';},
+    initialText:()=>{
+      return `setTransform: -duration=0;`;
+    },component:SetTransform,
+    icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    descText: () => ('为立绘或背景设置一个效果')
   }
 ];
