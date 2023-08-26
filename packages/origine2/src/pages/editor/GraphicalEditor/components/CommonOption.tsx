@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
+import {ReactElement, ReactNode} from "react";
 import styles from './commonOption.module.scss';
 
 interface ICommonOptionProps{
   title:string,
-  children:ReactElement
+  children:ReactNode
 }
 
 export default function CommonOptions(props:ICommonOptionProps){
