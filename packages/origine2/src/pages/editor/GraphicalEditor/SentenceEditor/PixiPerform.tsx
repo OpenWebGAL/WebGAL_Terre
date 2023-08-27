@@ -8,7 +8,7 @@ import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import useTrans from "@/hooks/useTrans";
 
 export default function PixiPerform(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.effect.options.');
+  const t = useTrans('editor.graphical.sentences.specialEffect.options.');
 
   const isSetEffectsOff = useValue(props.sentence.command === commandType.pixiInit);
   const effectName = useValue(props.sentence.content);
