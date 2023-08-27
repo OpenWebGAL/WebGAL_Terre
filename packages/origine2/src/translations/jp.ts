@@ -253,6 +253,11 @@ export const jp = {
             name: {
               title: "CGの名前",
               placeholder: ""
+            },
+            displayEffect: {
+              title: "エフェクト",
+              on: "使う",
+              off: "使わない"
             }
           }
         },
@@ -296,6 +301,11 @@ export const jp = {
             id: {
               title: "立ち絵のID(オプション)",
               placeholder: "立ち絵のID"
+            },
+            displayEffect: {
+              title: "エフェクト",
+              on: "使う",
+              off: "使わない"
             }
           }
         },
@@ -333,6 +343,9 @@ export const jp = {
             targetId: {
               title: "ターゲットIDを入力",
               placeholder: "立ち絵ID",
+            },
+            duration: {
+              title: "期間 (ミリ秒)",
             }
           }
         },
@@ -346,7 +359,7 @@ export const jp = {
             }
           }
         },
-        effect: {
+        specialEffect: {
           title: "特殊効果を使う",
           initText: "pixiPerform:snow;",
           descText: '現在のステージに特殊効果を追加する',
@@ -372,7 +385,7 @@ export const jp = {
 
           }
         },
-        clearEffect: {
+        clearSpecialEffect: {
           title: "特殊効果を無効化",
           initText: "pixiInit;",
           descText: '現在の特殊効果を無効化する',
@@ -507,6 +520,67 @@ export const jp = {
             }
           }
         },
+        transition: {
+          title: "トランジションを使う",
+          initText: "setTransition:;",
+          descText: 'トランジション効果を使うする',
+          options: {
+            enterfile: {
+              title: "入るアニメーションを選択",
+            },
+            exitfile: {
+              title: "出るアニメーションを選択",
+            },
+            preparedTarget: {
+              title: "事前設定されたターゲットを使用",
+              on: "以前に設定されたアクションターゲットを使用",
+              off: "IDを手動で設定",
+              choose: {
+                title: "ターゲットを選択",
+                options: {
+                  figLeft: "左の立ち絵",
+                  figCenter: "中央の立ち絵",
+                  figRight: "右の立ち絵",
+                  bgMain: "背景画像"
+                }
+              }
+            },
+            targetId: {
+              title: "ターゲットIDを入力",
+              placeholder: "立ち絵ID",
+            }
+          }
+        },
+        transform: {
+          title: "エフェクトを使う",
+          initText: "setTransform: -duration=0;",
+          descText: '立ち絵や背景画像のエフェクトを使う',
+          transform: {
+            title: "トランスフォーム",
+            x: " X軸位移：",
+            y: " Y軸位移：",
+          },
+          scale: {
+            title: "スケール",
+            x: " X軸スケール：",
+            y: " Y軸スケール：",
+          },
+          effect: {
+            title: "エフェクト",
+            alpha: "透明度（０－１）：",
+            rotation: "回転：",
+            blur: "ぼかし：",
+          },
+          filter: {
+            title: "フィルター",
+            oldFilm: "古い映画",
+            dotFilm: "ドット映画",
+            reflectionFilm: "反射映画",
+            glitchFilm: "グリッチ映画",
+            rgbFilm: "RGB映画",
+            godrayFilm: "ゴッドレイ映画",
+          },
+        },
         end: {
           title: "ゲーム終了",
           initText: "end;",
@@ -545,6 +619,7 @@ export const jp = {
     fileChoose: {
       cancel: "キャンセル",
       choose: "ファイル選択",
+      fileSearch: 'ファイル検索'
     }
   }
 };
