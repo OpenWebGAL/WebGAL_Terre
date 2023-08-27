@@ -6,6 +6,9 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
+import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
+import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
+import {TextField} from "@fluentui/react";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.changeBg.');
@@ -14,10 +17,15 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const bgFile = useValue(props.sentence.content);
   const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
+  const isShowEffectEditor = useValue(false);
+  const json = useValue<string>(getArgByKey(props.sentence,'transform') as string);
+  const duration = useValue<number|string>(getArgByKey(props.sentence,'duration') as number);
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
-    if(bgFile.value != "none"){
-      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
+    const durationStr = duration.value===""?'':` -duration=${duration.value}`;
+    const transformStr = json.value===""?'':` -transform=${json.value}`;
+    if(bgFile.value !== "none"){
+      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${durationStr}${transformStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
     } else {
       props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr};`);
     }
@@ -62,6 +70,32 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           placeholder={t('options.name.placeholder')}
         />
       </CommonOptions>}
+      <CommonOptions key="23" title="显示效果选项">
+        <TerreToggle title="" onChange={(newValue) => {
+          isShowEffectEditor.set(newValue);
+        }} onText="显示" offText="不显示" isChecked={isShowEffectEditor.value} />
+      </CommonOptions>
+      {isShowEffectEditor.value &&
+        <div>
+          <CommonTips text="提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"/>
+          <EffectEditor json={json.value.toString()} onChange={(newJson)=>{
+            json.set(newJson );
+            submit();
+          }}/>
+          <CommonOptions key="10" title="持续时间（单位为毫秒）">
+            <div>
+              <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+                const newDuration = Number(newValue);
+                if (isNaN(newDuration) || newValue === '')
+                  duration.set("");
+                else
+                  duration.set(newDuration);
+                submit();
+              }}/>
+            </div>
+          </CommonOptions>
+        </div>
+      }
     </div>
   </div>;
 }
