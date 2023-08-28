@@ -40,6 +40,7 @@ import SetAnimation from "./SetAnimation";
 import ChangeCallScene from "./ChangeCallScene";
 import Choose from "./Choose";
 import SetTransition from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransition";
+import SetTransform from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransform";
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -117,19 +118,19 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   },
   {
     type: commandType.pixi,
-    title: () => t(tPrefix + 'effect.title'),
-    initialText: () => t(tPrefix + 'effect.initText'),
+    title: () => t(tPrefix + 'specialEffect.title'),
+    initialText: () => t(tPrefix + 'specialEffect.initText'),
     component: PixiPerform,
     icon: <Effects theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText: () => t(tPrefix + 'effect.descText')
+    descText: () => t(tPrefix + 'specialEffect.descText')
   },
   {
     type: commandType.pixiInit,
-    title: () => t(tPrefix + 'clearEffect.title'),
-    initialText: () => t(tPrefix + 'clearEffect.initText'),
+    title: () => t(tPrefix + 'clearSpecialEffect.title'),
+    initialText: () => t(tPrefix + 'clearSpecialEffect.initText'),
     component: PixiPerform,
     icon: <Erase theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
-    descText: () => t(tPrefix + 'clearEffect.descText')
+    descText: () => t(tPrefix + 'clearSpecialEffect.descText')
   },
   {
     type: commandType.intro,
@@ -226,5 +227,13 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component: SetTransition,
     icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
     descText: () => t(tPrefix + 'transition.descText')
+  },
+  {
+    type:commandType.setTransform,
+    title:() => t(tPrefix + 'transform.title'),
+    initialText: () => t(tPrefix + 'transform.initText'),
+    component:SetTransform,
+    icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    descText: () => t(tPrefix + 'transform.descText')
   }
 ];
