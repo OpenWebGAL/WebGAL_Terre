@@ -6,8 +6,10 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { useEffect } from "react";
-import { Dropdown } from "@fluentui/react";
+import {Dropdown, TextField} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
+import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
+import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.changeFigure.');
@@ -16,6 +18,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const figurePosition = useValue<"left" | "" | "right">("");
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
+  const isShowEffectEditor = useValue(false);
+  const json = useValue<string>(getArgByKey(props.sentence,'transform') as string);
+  const duration = useValue<number|string>(getArgByKey(props.sentence,'duration') as number);
   useEffect(() => {
     /**
      * 初始化立绘位置
@@ -31,7 +36,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const isGoNextStr = isGoNext.value ? " -next" : "";
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = id.value !== "" ? ` -id=${id.value}` : "";
-    props.onSubmit(`changeFigure:${figureFile.value}${pos}${isGoNextStr}${idStr};`);
+    const durationStr = duration.value===""?'':` -duration=${duration.value}`;
+    const transformStr = json.value===""?'':` -transform=${json.value}`;
+    props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr};`);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -88,6 +95,32 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>
+      <CommonOptions key="23" title={t("options.displayEffect.title")}>
+        <TerreToggle title="" onChange={(newValue) => {
+          isShowEffectEditor.set(newValue);
+        }} onText={t("options.displayEffect.on")} offText={t("options.displayEffect.off")} isChecked={isShowEffectEditor.value} />
+      </CommonOptions>
+      {isShowEffectEditor.value &&
+        <div>
+          <CommonTips text="提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令"/>
+          <EffectEditor json={json.value.toString()} onChange={(newJson)=>{
+            json.set(newJson );
+            submit();
+          }}/>
+          <CommonOptions key="10" title="持续时间（单位为毫秒）">
+            <div>
+              <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+                const newDuration = Number(newValue);
+                if (isNaN(newDuration) || newValue === '')
+                  duration.set("");
+                else
+                  duration.set(newDuration);
+                submit();
+              }}/>
+            </div>
+          </CommonOptions>
+        </div>
+      }
     </div>
   </div>;
 }
