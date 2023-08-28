@@ -47,10 +47,10 @@ export default function Say(props: ISentenceEditorProps) {
   const fontSize = useValue(getInitialFontSize());
 
   const fontSizes = [
-    { key: "default", text: "default" },
-    { key: "small", text: "small" },
-    { key: "medium", text: "medium" },
-    { key: "large", text: "large" },
+    { key: "default", text: t('font.options.default')},
+    { key: "small", text: t('font.options.small') },
+    { key: "medium", text: t('font.options.medium') },
+    { key: "large", text: t('font.options.large') },
   ];
 
   const submit = () => {
@@ -149,8 +149,6 @@ export default function Say(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-    </div>
-    <div className={styles.editItem}>
       <CommonOptions title={t('font.size')}>
         <Dropdown
           options={fontSizes.map(f => ({ key: f.key, text: f.text }))}
