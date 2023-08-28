@@ -3,10 +3,13 @@ import CommonOptions from "@/pages/editor/GraphicalEditor/components/CommonOptio
 import {TextField} from "@fluentui/react";
 import { Checkbox } from '@fluentui/react';
 import {useValue} from "@/hooks/useValue";
+import useTrans from "@/hooks/useTrans";
 
 export function EffectEditor(props:{
   json:string,onChange:(newJson:string)=>void
 }){
+  const t = useTrans('editor.graphical.sentences.transform.');
+
   const effectObject = (()=>{
     try {
       return JSON.parse(props.json);
@@ -62,44 +65,44 @@ export function EffectEditor(props:{
 
 
   return <>
-    <CommonOptions key={1} title="变换">
-      X轴位移：<TextField value={x.value} onChange={(_, newValue) => {
+    <CommonOptions key={1} title={t('transform.title')}>
+      {t('transform.x')}<TextField value={x.value} onChange={(_, newValue) => {
         x.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      Y轴位移：<TextField value={y.value} onChange={(_, newValue) => {
+      {t('transform.y')}<TextField value={y.value} onChange={(_, newValue) => {
         y.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
-    <CommonOptions key={2} title="缩放">
-      X轴缩放：<TextField value={scaleX.value} onChange={(_, newValue) => {
+    <CommonOptions key={2} title={t('scale.title')}>
+      {t('scale.x')}<TextField value={scaleX.value} onChange={(_, newValue) => {
         scaleX.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      Y轴缩放：<TextField value={scaleY.value} onChange={(_, newValue) => {
+      {t('scale.y')}<TextField value={scaleY.value} onChange={(_, newValue) => {
         scaleY.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
-    <CommonOptions key={3} title="效果">
-      透明度（0-1）：<TextField value={alpha.value} onChange={(_, newValue) => {
+    <CommonOptions key={3} title={t('effect.title')}>
+      {t('effect.alpha')}<TextField value={alpha.value} onChange={(_, newValue) => {
         alpha.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      旋转角度：<TextField value={rotation.value} onChange={(_, newValue) => {
+      {t('effect.rotation')}<TextField value={rotation.value} onChange={(_, newValue) => {
         rotation.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      高斯模糊：<TextField value={blur.value} onChange={(_, newValue) => {
+      {t('effect.blur')}<TextField value={blur.value} onChange={(_, newValue) => {
         blur.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
-    <CommonOptions key={4} title="滤镜">
-      <Checkbox checked={oldFilm.value === 1} onChange={(_, newValue) => { oldFilm.set(newValue ? 1 : 0); submit(); }} /> 老电影滤镜{'\u00a0'}
-      <Checkbox checked={dotFilm.value === 1} onChange={(_, newValue) => { dotFilm.set(newValue ? 1 : 0); submit(); }} /> 点状电影滤镜{'\u00a0'}
-      <Checkbox checked={reflectionFilm.value === 1} onChange={(_, newValue) => { reflectionFilm.set(newValue ? 1 : 0); submit(); }} /> 反射电影滤镜{'\u00a0'}
-      <Checkbox checked={glitchFilm.value === 1} onChange={(_, newValue) => { glitchFilm.set(newValue ? 1 : 0); submit(); }} /> 故障电影滤镜{'\u00a0'}
-      <Checkbox checked={rgbFilm.value === 1} onChange={(_, newValue) => { rgbFilm.set(newValue ? 1 : 0); submit(); }} /> RGB电影滤镜{'\u00a0'}
-      <Checkbox checked={godrayFilm.value === 1} onChange={(_, newValue) => { godrayFilm.set(newValue ? 1 : 0); submit(); }} /> 光辉电影滤镜
+    <CommonOptions key={4} title={t('filter.title')}>
+      <Checkbox checked={oldFilm.value === 1} onChange={(_, newValue) => { oldFilm.set(newValue ? 1 : 0); submit(); }} />{t('filter.oldFilm')}{'\u00a0'}
+      <Checkbox checked={dotFilm.value === 1} onChange={(_, newValue) => { dotFilm.set(newValue ? 1 : 0); submit(); }} />{t('filter.dotFilm')}{'\u00a0'}
+      <Checkbox checked={reflectionFilm.value === 1} onChange={(_, newValue) => { reflectionFilm.set(newValue ? 1 : 0); submit(); }} />{t('filter.reflectionFilm')}{'\u00a0'}
+      <Checkbox checked={glitchFilm.value === 1} onChange={(_, newValue) => { glitchFilm.set(newValue ? 1 : 0); submit(); }} />{t('filter.glitchFilm')}{'\u00a0'}
+      <Checkbox checked={rgbFilm.value === 1} onChange={(_, newValue) => { rgbFilm.set(newValue ? 1 : 0); submit(); }} />{t('filter.rgbFilm')}{'\u00a0'}
+      <Checkbox checked={godrayFilm.value === 1} onChange={(_, newValue) => { godrayFilm.set(newValue ? 1 : 0); submit(); }} />{t('filter.godrayFilm')}
     </CommonOptions>
   </>;
 }

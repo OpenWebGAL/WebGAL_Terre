@@ -70,10 +70,10 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           placeholder={t('options.name.placeholder')}
         />
       </CommonOptions>}
-      <CommonOptions key="23" title="显示效果选项">
+      <CommonOptions key="23" title={t("options.displayEffect.title")}>
         <TerreToggle title="" onChange={(newValue) => {
           isShowEffectEditor.set(newValue);
-        }} onText="显示" offText="不显示" isChecked={isShowEffectEditor.value} />
+        }} onText={t("options.displayEffect.on")} offText={t("options.displayEffect.off")} isChecked={isShowEffectEditor.value} />
       </CommonOptions>
       {isShowEffectEditor.value &&
         <div>
