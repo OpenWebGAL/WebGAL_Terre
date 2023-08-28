@@ -32,7 +32,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
         transform.set(newJson);
         submit();
       }}/>
-      <CommonOptions key="10" title="持续时间（单位为毫秒）">
+      <CommonOptions key="10" title={tTarget('duration.title')}>
         <div>
           <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
             const newDuration = Number(newValue);
