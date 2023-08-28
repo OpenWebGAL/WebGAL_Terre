@@ -14,8 +14,9 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const isPresetTarget = ["bg-main", "fig-left", "fig-center", "fig-right"].includes(target.value);
-  const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const isUsePreset = useValue(isPresetTarget);
+  const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
+
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
     props.onSubmit(`setAnimation:${fileName.value} -target=${target.value}${isGoNextStr};`);
