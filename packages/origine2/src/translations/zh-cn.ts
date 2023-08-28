@@ -254,6 +254,11 @@ export const zhCn = {
             name: {
               title: "解锁名称",
               placeholder: "解锁的 CG 名称"
+            },
+            displayEffect: {
+              title: "显示效果",
+              on: "显示",
+              off: "不显示"
             }
           }
         },
@@ -297,6 +302,11 @@ export const zhCn = {
             id: {
               title: "立绘ID（可选）",
               placeholder: "立绘 ID"
+            },
+            displayEffect: {
+              title: "显示效果",
+              on: "显示",
+              off: "不显示"
             }
           }
         },
@@ -334,6 +344,9 @@ export const zhCn = {
             targetId: {
               title: "输入目标 ID",
               placeholder: "立绘 ID",
+            },
+            duration: {
+              title: "持续时间（单位为毫秒）",
             }
           }
         },
@@ -347,7 +360,7 @@ export const zhCn = {
             }
           }
         },
-        effect: {
+        specialEffect: {
           title: "使用特效",
           initText: "pixiPerform:snow;",
           descText: '为当前的舞台添加特殊效果',
@@ -373,7 +386,7 @@ export const zhCn = {
 
           }
         },
-        clearEffect: {
+        clearSpecialEffect: {
           title: "清除特效",
           initText: "pixiInit;",
           descText: '清除当前舞台的特殊效果',
@@ -540,9 +553,34 @@ export const zhCn = {
           }
         },
         transform: {
-          title: "设置变换",
-          initText: "setTransform:;",
-          descText: '设置变换效果',
+          title: "设置效果",
+          initText: "setTransform: -duration=0;",
+          descText: '为立绘或背景图片设置效果',
+          transform: {
+            title: "变换",
+            x: " X轴位移：",
+            y: " Y轴位移：",
+          },
+          scale: {
+            title: "缩放",
+            x: " X轴缩放：",
+            y: " Y轴缩放：",
+          },
+          effect: {
+            title: "效果",
+            alpha: "透明度（0-1）：",
+            rotation: "旋转角度：",
+            blur: "高斯模糊：",
+          },
+          filter: {
+            title: "滤镜",
+            oldFilm: "老电影滤镜",
+            dotFilm: "点状电影滤镜",
+            reflectionFilm: "反射电影滤镜",
+            glitchFilm: "故障电影滤镜",
+            rgbFilm: "RGB电影滤镜",
+            godrayFilm: "光辉电影滤镜",
+          },
         },
         end: {
           title: "结束游戏",
