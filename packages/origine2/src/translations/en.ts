@@ -9,26 +9,26 @@ export const en = {
 
   dashBoard: {
     createNewGame: {
-      button: 'New Game',
+      button: 'New game',
       dialog: {
-        title: 'Create New Game',
+        title: 'Create new game',
         text: 'Name of new game',
-        defaultName: 'New Game',
+        defaultName: 'New game',
       }
     },
     preview: {
-      noneChecked: 'No Game Selected',
-      editGame: 'Edit Game'
+      noneChecked: 'No game selected',
+      editGame: 'Edit game'
     },
     titles: {
-      gameList: 'Game List',
+      gameList: 'Game list',
     },
     msgs: {
       created: 'Created'
     },
     dialogs: {
       deleteGame: {
-        title: "Delete Game",
+        title: "Delete game",
         subtext: `Are you sure you want to delete "{{gameName}}"?`
       },
     }
@@ -38,13 +38,13 @@ export const en = {
     topBar: {
       editing: 'Editing:',
       editMode: {
-        title: 'Script Editing Mode',
+        title: 'Script editing mode',
         onText: 'On, use script editing',
         offText: 'Off, use graphical editing'
       },
       commandBar: {
         items: {
-          source:"Source Code",
+          source:"Source code",
           language: {
             text: 'Language'
           },
@@ -52,7 +52,7 @@ export const en = {
             text: 'Guide'
           },
           release: {
-            text: "Export Game",
+            text: "Export game",
             items: {
               web: "Export as Web",
               exe: "Export as Windows App",
@@ -65,17 +65,17 @@ export const en = {
 
     sideBar: {
       preview: {
-        title: 'Game Preview',
+        title: 'Game preview',
         refresh: 'Refresh',
         previewInNewTab: 'Preview in new tab',
-        livePreview:'Live Preview',
+        livePreview:'Live preview',
         notice:'Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won\'t be reflected in the preview.'
       },
 
       file: {
         dialogs: {
           editName: {
-            title: 'Edit File Name',
+            title: 'Edit file name',
             text: 'New file name',
           },
           delete: {
@@ -85,15 +85,15 @@ export const en = {
       },
 
       assets: {
-        title: 'Assets Management',
+        title: 'Assets management',
         supportFileTypes: 'File types supported by this folder',
         buttons: {
-          createNewFolder: 'New Folder',
-          openFolder: 'Open Assets Folder by Game',
+          createNewFolder: 'New folder',
+          openFolder: 'Open assets folder by game',
           rename: 'Rename',
-          deleteSure: 'Sure to Delete',
+          deleteSure: 'Sure to delete',
           upload: 'Upload',
-          uploadAsset: 'Upload Asset'
+          uploadAsset: 'Upload asset'
         },
         folders: {
           animation: 'Animation',
@@ -108,7 +108,7 @@ export const en = {
       },
 
       gameConfigs: {
-        title: 'Game Configs',
+        title: 'Game configs',
         options: {
           name: 'Game name',
           id: 'Game ID',
@@ -119,11 +119,11 @@ export const en = {
       },
 
       scenes: {
-        title: 'Scene Management',
+        title: 'Scene management',
         dialogs: {
           create: {
-            button: 'New Scene',
-            title: 'Create New Scene',
+            button: 'New scene',
+            title: 'Create new scene',
             text: 'Name of new scene',
           }
         }
@@ -138,13 +138,13 @@ export const en = {
     graphical: {
       buttons: {
         delete: 'Delete',
-        addForward: 'Add Sentence Forward This',
-        add: 'Add Sentence'
+        addForward: 'Add sentence forward this',
+        add: 'Add sentence'
       },
 
       sentences: {
         say: {
-          title: 'General Dialogue',
+          title: 'General dialogue',
           initText: "Role name, leave a void to extends last dialogue: Dialogue;",
           descText: 'Add a dialogue, can be accompanied by voice',
           options: {
@@ -164,7 +164,7 @@ export const en = {
               button: 'Add Line'
             },
             voiceover: {
-              title: "Voiceover Mode",
+              title: "Voiceover mode",
               on: "Hide the role name",
               off: "Show the role name"
             },
@@ -172,7 +172,7 @@ export const en = {
               title: "Vocal"
             },
             volume: {
-              title: 'Vocal Volume',
+              title: 'Vocal volume',
               placeholder: 'Percentage. 0-100 valid',
             },
             font: {
@@ -185,7 +185,7 @@ export const en = {
               }
             },
             position: {
-              title: "Position of Associated Figure",
+              title: "Position of associated figure",
               options: {
                 left: 'Left',
                 center: 'Center',
@@ -194,7 +194,7 @@ export const en = {
               }
             },
             id: {
-              title: "Associated Figure ID",
+              title: "Associated figure ID",
               placeholder: "Figure ID"
             }
           }
@@ -202,7 +202,7 @@ export const en = {
         common: {
           options: {
             goNext: {
-              title: "Go Next",
+              title: "Go next",
               on: "Play next sentence after this",
               off: "Wait after this"
             }
@@ -231,62 +231,67 @@ export const en = {
               placeholder: 'Milliseconds. 0~ valid',
             },
             name: {
-              title: "Name of BGM Unlocking",
+              title: "Name of BGM unlocking",
               placeholder: "Name of BGM unlocking"
             }
           }
         },
         changeBg: {
-          title: "Change BackGround",
-          initText: 'changeBg: Choose a BackGround;',
+          title: "Change background",
+          initText: 'changeBg: Choose a background;',
           descText: 'Change background image',
           options: {
             hide: {
-              title: "Hide the Background",
+              title: "Hide the background",
               on: "Hide the background",
               off: "Show the background",
               choose: "Choose a background image",
             },
             file: {
-              title: 'File of BackGround'
+              title: 'File of background'
             },
             name: {
-              title: "Name of CG Unlocking",
+              title: "Name of CG unlocking",
               placeholder: "Name of CG unlocking"
+            },
+            displayEffect: {
+              title: "Effect",
+              on: "On",
+              off: "Off"
             }
           }
         },
         changeCallScene: {
-          title: "Call Scene",
+          title: "Call scene",
           initText: "callScene: Choose a scene;",
           descText: 'Call a scene, back to parent scene when it end',
           options: {
             file: {
-              title: "File of Scene",
+              title: "File of scene",
             },
             call: {
-              title: 'Call/Change Scene',
+              title: 'Call/Change scene',
               on: "Call scene, back to parent scene when it end",
               off: "Change scene, new scene will replace old scene"
             }
           }
         },
         changeFigure: {
-          title: 'Change Figure',
+          title: 'Change figure',
           initText: "changeFigure: Choose a file of figure;",
           descText: 'Add or change the figure which is at somewhere',
           options: {
             hide: {
-              title: "Hide the Figure",
+              title: "Hide the figure",
               on: "Hide the figure",
               off: 'Show the figure',
               choose: 'Choose the file of figure'
             },
             file: {
-              title: 'File of Figure',
+              title: 'File of figure',
             },
             position: {
-              title: "Position of Figure",
+              title: "Position of figure",
               options: {
                 left: 'Left',
                 center: 'Center',
@@ -296,16 +301,21 @@ export const en = {
             id: {
               title: "Figure ID (optional)",
               placeholder: "Figure ID"
+            },
+            displayEffect: {
+              title: "Effect",
+              on: "On",
+              off: "Off"
             }
           }
         },
         changeScene: {
-          title: "Change Scene",
+          title: "Change scene",
           initText: "changeScene: Choose a file of scene;",
           descText: 'Turn to new scene, and clear this scene',
         },
         setAnime: {
-          title: "Set Animation",
+          title: "Set animation",
           initText: "setAnimation: Choose a file of animation;",
           descText: 'Set the animation effect for the figure or background',
           options: {
@@ -314,18 +324,18 @@ export const en = {
               select: "Choose a animation file to apply, one of the animation files named \"animationTable\" is animation definition file, don\'t choose it"
             },
             file: {
-              title: "File of Animation"
+              title: "File of animation"
             },
             preparedTarget: {
-              title: "Use Prepared Target",
+              title: "Use prepared target",
               on: "Use prepared apply target, if target set the ID, it won't apply",
               off: "Input ID",
               choose: {
-                title: "Choose Prepared Target",
+                title: "Choose prepared target",
                 options: {
-                  figLeft: "Figure at Left",
-                  figCenter: "Figure at Center",
-                  figRight: "Figure at Right",
+                  figLeft: "Figure at left",
+                  figCenter: "Figure at center",
+                  figRight: "Figure at right",
                   bgMain: "Background image"
                 }
               }
@@ -333,33 +343,36 @@ export const en = {
             targetId: {
               title: "Input the target ID",
               placeholder: "Figure ID",
+            },
+            duration: {
+              title: "Duration (Milliseconds)",
             }
           }
         },
         video: {
-          title: "Play Video",
+          title: "Play video",
           initText: "playVideo: Choose a video file;",
           descText: 'Play video',
           options: {
             file: {
-              title: "Video File"
+              title: "Video file"
             }
           }
         },
-        effect: {
-          title: "Apply Effect",
+        specialEffect: {
+          title: "Apply special effect",
           initText: "pixiPerform:snow;",
-          descText: 'Apply the effect for stage',
+          descText: 'Apply the special effect for stage',
           options: {
             clear: {
-              title: "Clear Effect",
-              on: "Clear effect",
-              off: "Apply effect"
+              title: "Clear special effect",
+              on: "Clear special effect",
+              off: "Apply special effect"
             },
             usePrepared: {
-              title: "Use Prepared Effects",
-              on: "Use the effects prepared in engine",
-              off: "Use the effects defined by user",
+              title: "Use prepared special effects",
+              on: "Use the special effects prepared in engine",
+              off: "Use the special effects defined by user",
               effects: {
                 snow: "Snow",
                 rain: "Rain",
@@ -367,49 +380,49 @@ export const en = {
               }
             },
             useUser: {
-              title: "Name of User Defined Effect",
+              title: "Name of user defined special effect",
             },
 
           }
         },
-        clearEffect: {
-          title: "Clear Effect",
+        clearSpecialEffect: {
+          title: "Clear special effect",
           initText: "pixiInit;",
-          descText: 'Clear the effects of stage',
+          descText: 'Clear the special effects of stage',
         },
         intro: {
-          title: "Full-screen Text",
+          title: "Full-screen text",
           initText: "intro:;",
           descText: 'Show some texts on Full-screen',
           options: {
             value: {
-              placeholder: "Intro Texts",
+              placeholder: "Intro texts",
             },
             add: {
-              button: 'Add Line'
+              button: 'Add line'
             },
             option: {
-              title:'other option'
+              title:'Other option'
             },
             colorPicker: {
-              backgroundColor:'backgroundColor',
-              fontColor:'fontColor',
+              backgroundColor:'Background color',
+              fontColor:'Font color',
               submit: 'Apply color changes'
             },
             font: {
-              size: 'fontSize',
-              animation: 'animation',
-              delayTime: 'delayTime(sec)'
+              size: 'Font size',
+              animation: 'Animation',
+              delayTime: 'Delay time(sec)'
             }
           }
         },
         miniAvatar: {
-          title: "Avatar at The Corner",
+          title: "Avatar at the corner",
           initText: "miniAvatar: Choose a file of avatar;",
-          descText: 'Show a Avatar at the left bottom corner',
+          descText: 'Show a avatar at the left bottom corner',
           options: {
             close: {
-              title: "Hide Avatar",
+              title: "Hide avatar",
               on: "Hide the avatar",
               off: "Show the avatar",
               choose: 'Choose a avatar'
@@ -420,49 +433,49 @@ export const en = {
           }
         },
         setTextBox: {
-          title: "Text Box",
+          title: "Text box",
           initText: "setTextbox:hide;",
           descText: 'Control the text box\'s display',
           options: {
             hide: {
-              title: "Hide Text Box",
+              title: "Hide text box",
               on: "Hide text box",
               off: "Show text box"
             }
           }
         },
         choose: {
-          title: "Choose Branch",
+          title: "Choose branch",
           initText: "choose: Choose a scene file;",
           descText: 'Turn to different scene by different option',
           delete: 'Delete',
           option: {
-            name: 'Name of Option',
+            name: 'Name of option',
             option: 'Option',
-            chooseFile: 'Choose Scene'
+            chooseFile: 'Choose scene'
           },
           add: 'Add',
         },
         soundEffect: {
-          title: "Sound Effect",
+          title: "Sound effect",
           initText: "playEffect: Choose a sound effect file;",
           descText: 'Play a sound effect',
           options: {
             stop: {
-              title: "Stop Sound Effect",
+              title: "Stop sound effect",
               on: "Stop the sound effect",
               off: "Play the sound effect",
               choose: "Choose a sound effect file"
             },
             file: {
-              title: 'Sound Effect File',
+              title: 'Sound effect file',
             },
             id: {
               title: "Effect ID (Input ID makes this effect loop, you can\'t stop it by this ID after)",
               placeholder: "Effect ID"
             },
             volume: {
-              title: 'Sound Effect Volume',
+              title: 'Sound effect volume',
               placeholder: 'Percentage. 0-100 valid',
             }
           }
@@ -473,20 +486,20 @@ export const en = {
           descText: 'Add a picture to CG extra guide',
           options: {
             tips: {
-              afterEdit: "tip: If there are CG/BGM ineffective after edited, clear them in \"Clear All Data\" in options of WebGAL Game"
+              afterEdit: "Tip: If there are CG/BGM ineffective after edited, clear them in \"Clear All Data\" in options of WebGAL Game"
             },
             type: {
-              title: "Unlock CG Type",
+              title: "Unlock CG type",
               options: {
                 cg: "CG",
                 bgm: "BGM"
               }
             },
             file: {
-              title: "CG File"
+              title: "CG file"
             },
             name: {
-              title: "Name of CG Unlocking",
+              title: "Name of CG unlocking",
               placeholder: "Name of CG/BGM unlocking"
             }
           }
@@ -497,7 +510,7 @@ export const en = {
           descText: 'Add a BGM to extra guide',
         },
         comment: {
-          title: "Line Comment",
+          title: "Line comment",
           initText: ";Comment",
           descText: 'Add a line comment',
           options: {
@@ -507,8 +520,69 @@ export const en = {
             }
           }
         },
+        transition: {
+          title: "Set transition",
+          initText: "setTransition:;",
+          descText: 'Set transition effects',
+          options: {
+            enterfile: {
+              title: "Select animation for entering",
+            },
+            exitfile: {
+              title: "Select animation for exiting",
+            },
+            preparedTarget: {
+              title: "Use prepared target",
+              on: "Use prepared apply target, if target set the ID, it won't apply",
+              off: "Input ID",
+              choose: {
+                title: "Choose prepared target",
+                options: {
+                  figLeft: "Figure at left",
+                  figCenter: "Figure at center",
+                  figRight: "Figure at right",
+                  bgMain: "Background image"
+                }
+              }
+            },
+            targetId: {
+              title: "Input the target ID",
+              placeholder: "Figure ID",
+            }
+          }
+        },
+        transform: {
+          title: "Set effect",
+          initText: "setTransform: -duration=0;",
+          descText: 'Set effect for figure or background',
+          transform: {
+            title: "Transform",
+            x: " X：",
+            y: " Y：",
+          },
+          scale: {
+            title: "Scale",
+            x: " Scale x：",
+            y: " Scale y：",
+          },
+          effect: {
+            title: "Effect",
+            alpha: "Alpha (0-1)：",
+            rotation: "Rotation：",
+            blur: "Blur：",
+          },
+          filter: {
+            title: "Filter",
+            oldFilm: "Old film",
+            dotFilm: "Dot film",
+            reflectionFilm: "Reflection film",
+            glitchFilm: "Glitch film",
+            rgbFilm: "RGB film",
+            godrayFilm: "Godray film",
+          },
+        },
         end: {
-          title: "End Game",
+          title: "End game",
           initText: "end;",
           descText: 'End game and turn to title guide',
           tip: 'This command will end game',
@@ -543,8 +617,9 @@ export const en = {
     },
 
     fileChoose: {
-      cancel: "Cancel Choose",
-      choose: "Choose File",
+      cancel: "Cancel choose",
+      choose: "Choose file",
+      fileSearch: 'Search file'
     }
   }
 };
