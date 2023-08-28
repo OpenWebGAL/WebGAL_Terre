@@ -237,8 +237,8 @@ export const en = {
           }
         },
         changeBg: {
-          title: "Change backGround",
-          initText: 'changeBg: Choose a backGround;',
+          title: "Change background",
+          initText: 'changeBg: Choose a background;',
           descText: 'Change background image',
           options: {
             hide: {
@@ -248,7 +248,7 @@ export const en = {
               choose: "Choose a background image",
             },
             file: {
-              title: 'File of backGround'
+              title: 'File of background'
             },
             name: {
               title: "Name of CG unlocking",
@@ -486,7 +486,7 @@ export const en = {
           descText: 'Add a picture to CG extra guide',
           options: {
             tips: {
-              afterEdit: "tip: If there are CG/BGM ineffective after edited, clear them in \"Clear All Data\" in options of WebGAL Game"
+              afterEdit: "Tip: If there are CG/BGM ineffective after edited, clear them in \"Clear All Data\" in options of WebGAL Game"
             },
             type: {
               title: "Unlock CG type",
