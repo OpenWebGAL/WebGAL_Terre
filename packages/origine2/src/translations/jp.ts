@@ -258,6 +258,13 @@ export const jp = {
               title: "エフェクト",
               on: "使う",
               off: "使わない"
+            },
+            tips: {
+              setEffect: "ヒント: エフェクトは、別の背景に切り替えた場合、または前の背景を閉じて再度追加した場合にのみ有効になります。 既存の背景に効果を設定する場合は、別の「エフェクトを使う」コマンドを使用してください",
+            },
+            duration: {
+              title: "所要時間",
+              placeholder: "所要時間 (ミリ秒)",
             }
           }
         },
@@ -306,6 +313,13 @@ export const jp = {
               title: "エフェクト",
               on: "使う",
               off: "使わない"
+            },
+            tips: {
+              setEffect: "ヒント: エフェクトは、別の立ち絵に切り替えた場合、または前の立ち絵を閉じて再度追加した場合にのみ有効になります。 既存の立ち絵に効果を設定する場合は、別の「エフェクトを使う」コマンドを使用してください",
+            },
+            duration: {
+              title: "所要時間",
+              placeholder: "所要時間 (ミリ秒)",
             }
           }
         },
@@ -345,7 +359,8 @@ export const jp = {
               placeholder: "立ち絵ID",
             },
             duration: {
-              title: "期間 (ミリ秒)",
+              title: "所要時間",
+              placeholder: "所要時間 (ミリ秒)",
             }
           }
         },
@@ -556,29 +571,29 @@ export const jp = {
           initText: "setTransform: -duration=0;",
           descText: '立ち絵や背景画像のエフェクトを使う',
           transform: {
-            title: "トランスフォーム",
-            x: " X軸位移：",
-            y: " Y軸位移：",
+            title: "位置",
+            x: " 水平方向：",
+            y: " 垂直方向：",
           },
           scale: {
-            title: "スケール",
-            x: " X軸スケール：",
-            y: " Y軸スケール：",
+            title: "サイズ変更",
+            x: " 水平方向：",
+            y: " 垂直方向：",
           },
           effect: {
             title: "エフェクト",
-            alpha: "透明度（０－１）：",
+            alpha: "不透明度（０－１）：",
             rotation: "回転：",
             blur: "ぼかし：",
           },
           filter: {
             title: "フィルター",
-            oldFilm: "古い映画",
-            dotFilm: "ドット映画",
-            reflectionFilm: "反射映画",
-            glitchFilm: "グリッチ映画",
-            rgbFilm: "RGB映画",
-            godrayFilm: "ゴッドレイ映画",
+            oldFilm: "オールド",
+            dotFilm: "ドット",
+            reflectionFilm: "リフレクション",
+            glitchFilm: "グリッチ",
+            rgbFilm: "RGB",
+            godrayFilm: "ゴッドレイ",
           },
         },
         end: {
