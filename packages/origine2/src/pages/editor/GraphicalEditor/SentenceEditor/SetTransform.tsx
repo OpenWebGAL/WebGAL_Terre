@@ -34,7 +34,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
       }}/>
       <CommonOptions key="10" title={tTarget('duration.title')}>
         <div>
-          <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+          <TextField placeholder={tTarget('duration.placeholder')} value={duration.value.toString()} onChange={(_, newValue) => {
             const newDuration = Number(newValue);
             if (isNaN(newDuration))
               duration.set(0);
