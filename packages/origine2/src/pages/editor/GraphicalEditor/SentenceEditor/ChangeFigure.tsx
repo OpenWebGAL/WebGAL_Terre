@@ -102,14 +102,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {isShowEffectEditor.value &&
         <div>
-          <CommonTips text="提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令"/>
+          <CommonTips text={t("options.tips.setEffect")}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson)=>{
             json.set(newJson );
             submit();
           }}/>
-          <CommonOptions key="10" title="持续时间（单位为毫秒）">
+          <CommonOptions key="10" title={t("options.duration.title")}>
             <div>
-              <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+              <TextField placeholder={t("options.duration.placeholder")} value={duration.value.toString()} onChange={(_, newValue) => {
                 const newDuration = Number(newValue);
                 if (isNaN(newDuration) || newValue === '')
                   duration.set("");
