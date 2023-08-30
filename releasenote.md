@@ -1,4 +1,4 @@
-## 发布日志：WebGAL Terre 4.4.4
+## 发布日志：WebGAL Terre 
 
 ### 在此版本中
 
@@ -14,7 +14,7 @@
 
 其他已知问题
 
-## Release Notes: WebGAL Terre 4.4.4
+## Release Notes: WebGAL Terre 
 
 ### In This Version
 
@@ -31,7 +31,7 @@ Some engine errors
 Other known issues
 
 ---
-## リリースノート：WebGAL Terre 4.4.4
+## リリースノート：WebGAL Terre 
 
 ### このバージョンで
 
@@ -48,7 +48,7 @@ Other known issues
 その他の既知の問題
 
 ---
-## Notes de version : WebGAL Terre 4.4.4
+## Notes de version : WebGAL Terre 
 
 ### Dans cette version
 
