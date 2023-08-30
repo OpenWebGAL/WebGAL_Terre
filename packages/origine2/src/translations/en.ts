@@ -258,6 +258,13 @@ export const en = {
               title: "Effect",
               on: "On",
               off: "Off"
+            },
+            tips: {
+              setEffect: "Tip: Effects only take effect when you switch to a different background or close the previous background and re-add it. If you want to set an effect for an existing background, use a separate Set Effect command",
+            },
+            duration: {
+              title: "Duration",
+              placeholder: "Duration (Milliseconds)"
             }
           }
         },
@@ -306,6 +313,13 @@ export const en = {
               title: "Effect",
               on: "On",
               off: "Off"
+            },
+            tips: {
+              setEffect: "Tip: Effects only take effect when you switch to a different figure or close the previous figure and re-add it. If you want to set an effect for an existing figure, use a separate Set Effect command",
+            },
+            duration: {
+              title: "Duration",
+              placeholder: "Duration (Milliseconds)"
             }
           }
         },
@@ -345,7 +359,8 @@ export const en = {
               placeholder: "Figure ID",
             },
             duration: {
-              title: "Duration (Milliseconds)",
+              title: "Duration",
+              placeholder: "Duration (Milliseconds)"
             }
           }
         },
@@ -556,14 +571,14 @@ export const en = {
           initText: "setTransform: -duration=0;",
           descText: 'Set effect for figure or background',
           transform: {
-            title: "Transform",
+            title: "Position",
             x: " X：",
             y: " Y：",
           },
           scale: {
             title: "Scale",
-            x: " Scale x：",
-            y: " Scale y：",
+            x: " x：",
+            y: " y：",
           },
           effect: {
             title: "Effect",
