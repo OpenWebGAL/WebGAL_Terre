@@ -259,6 +259,13 @@ export const zhCn = {
               title: "显示效果",
               on: "显示",
               off: "不显示"
+            },
+            tips: {
+              setEffect: "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令",
+            },
+            duration: {
+              title: "动画所需时间",
+              placeholder: "动画所需时间（毫秒）"
             }
           }
         },
@@ -307,6 +314,13 @@ export const zhCn = {
               title: "显示效果",
               on: "显示",
               off: "不显示"
+            },
+            tips: {
+              setEffect: "提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令",
+            },
+            duration: {
+              title: "动画所需时间",
+              placeholder: "动画所需时间（毫秒）"
             }
           }
         },
@@ -346,7 +360,8 @@ export const zhCn = {
               placeholder: "立绘 ID",
             },
             duration: {
-              title: "持续时间（单位为毫秒）",
+              title: "动画所需时间",
+              placeholder: "动画所需时间（毫秒）"
             }
           }
         },
@@ -557,18 +572,18 @@ export const zhCn = {
           initText: "setTransform: -duration=0;",
           descText: '为立绘或背景图片设置效果',
           transform: {
-            title: "变换",
-            x: " X轴位移：",
-            y: " Y轴位移：",
+            title: "位置",
+            x: " 水平方向：",
+            y: " 垂直方向：",
           },
           scale: {
             title: "缩放",
-            x: " X轴缩放：",
-            y: " Y轴缩放：",
+            x: " 水平方向：",
+            y: " 垂直方向：",
           },
           effect: {
             title: "效果",
-            alpha: "透明度（0-1）：",
+            alpha: "不透明度（0-1）：",
             rotation: "旋转角度：",
             blur: "高斯模糊：",
           },
