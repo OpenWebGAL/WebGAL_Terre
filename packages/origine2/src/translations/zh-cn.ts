@@ -188,6 +188,7 @@ export const zhCn = {
             position: {
               title: "关联立绘",
               options: {
+                none: '未指定',
                 left: '左侧立绘',
                 center: '中间立绘',
                 right: '右侧立绘',
@@ -321,6 +322,21 @@ export const zhCn = {
             duration: {
               title: "动画所需时间",
               placeholder: "动画所需时间（毫秒）"
+            },
+            animationType: {
+              title: "动画设置",
+              flag: "有或没有动画",
+              lipSync: {
+                 title:"唇形同步",
+                 mouthOpen: "张开",
+                 mouthHalfOpen: "半张嘴",
+                 mouthClose: "闭上嘴”",
+                },
+              blink: {
+                title:"眨眼",
+                eyesOpen:"睁开眼睛",
+                eyesClose:"闭上眼睛”",
+              },
             }
           }
         },

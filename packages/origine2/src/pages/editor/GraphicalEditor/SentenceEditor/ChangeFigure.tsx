@@ -6,10 +6,11 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { useEffect } from "react";
-import {Dropdown, TextField} from "@fluentui/react";
+import {DefaultButton, Dropdown, TextField} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
+import { useState } from "react";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.changeFigure.');
@@ -21,6 +22,28 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const isShowEffectEditor = useValue(false);
   const json = useValue<string>(getArgByKey(props.sentence,'transform') as string);
   const duration = useValue<number|string>(getArgByKey(props.sentence,'duration') as number);
+  const mouthOpen = useValue(getArgByKey(props.sentence, "mouthOpen").toString() ?? "");
+  const mouthHalfOpen = useValue(getArgByKey(props.sentence, "mouthHalfOpen").toString() ?? "");
+  const mouthClose = useValue(getArgByKey(props.sentence, "mouthClose").toString() ?? "");
+  const eyesOpen = useValue(getArgByKey(props.sentence, "eyesOpen").toString() ?? "");
+  const eyesClose = useValue(getArgByKey(props.sentence, "eyesClose").toString() ?? "");
+  const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const toggleAccordion = () => {
+      setIsAccordionOpen(!isAccordionOpen);
+  };
+  const optionButtonStyles = {
+    root: {
+        backgroundColor: '#0078d4',
+        color: 'white',
+        margin: '6px 0 0 0',
+        display: 'flex'
+    },
+    rootHovered: {
+        backgroundColor: '#005a9e',
+        color: 'white'
+    },
+  };
   useEffect(() => {
     /**
      * 初始化立绘位置
@@ -38,8 +61,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const idStr = id.value !== "" ? ` -id=${id.value}` : "";
     const durationStr = duration.value===""?'':` -duration=${duration.value}`;
     const transformStr = json.value===""?'':` -transform=${json.value}`;
-    props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr};`);
-  };
+    const animationStr = animationFlag.value !== "" ? ` -animationFlag=${animationFlag.value}` : "";
+    const mouthOpenFile = mouthOpen.value !== "" ? ` -mouthOpen=${mouthOpen.value}` : "";
+    const mouthHalfOpenFile = mouthHalfOpen.value !== "" ? ` -mouthHalfOpen=${mouthHalfOpen.value}` : "";
+    const mouthCloseFile = mouthClose.value !== "" ? ` -mouthClose=${mouthClose.value}` : "";
+    const eyesOpenFile = eyesOpen.value !== "" ? ` -eyesOpen=${eyesOpen.value}` : "";
+    const eyesCloseFile = eyesClose.value !== "" ? ` -eyesClose=${eyesClose.value}` : "";
+    if(animationFlag.value === "" ){
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr};`);
+    } else {
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile};`);
+    }
+  } 
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
@@ -121,6 +154,78 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           </CommonOptions>
         </div>
       }
+      <div className={styles.editItem}>
+        <DefaultButton onClick={toggleAccordion} styles={optionButtonStyles}>
+          {t('options.animationType.title')}
+        </DefaultButton>
+        {isAccordionOpen && (
+          <div className={styles.editItem} style={{ display: 'flex'}}>
+            <CommonOptions title={t('options.animationType.flag')} key="5">
+              <Dropdown
+                selectedKey={animationFlag.value}
+                options={[
+                  { key: "", text: 'Off' },
+                  { key: "on", text: 'ON' },
+                ]}
+                onChange={(ev, newValue: any) => {
+                  animationFlag.set(newValue?.key?.toString() ?? "");
+                  submit();
+                }}
+              />
+            </CommonOptions>
+            {animationFlag.value === "on" && <CommonOptions key="6" title={t("options.animationType.lipSync.mouthOpen")}>
+              <>
+                {mouthOpen.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  mouthOpen.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]} />
+              </>
+            </CommonOptions>}
+            {animationFlag.value === "on" && <CommonOptions key="7" title={t("options.animationType.lipSync.mouthHalfOpen")}>
+              <>
+                {mouthHalfOpen.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  mouthHalfOpen.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]} />
+              </>
+            </CommonOptions>}
+            {animationFlag.value === "on" && <CommonOptions key="8" title={t("options.animationType.lipSync.mouthClose")}>
+              <>
+                {mouthClose.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  mouthClose.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]} />
+              </>
+            </CommonOptions>}
+            {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
+              <>
+                {eyesOpen.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  eyesOpen.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]} />
+              </>
+            </CommonOptions>}
+            {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
+              <>
+                {eyesClose.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  eyesClose.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]} />
+              </>
+            </CommonOptions>}
+            </div>
+          )}
+        </div>
     </div>
   </div>;
 }

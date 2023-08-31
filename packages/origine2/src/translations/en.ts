@@ -187,6 +187,7 @@ export const en = {
             position: {
               title: "Position of associated figure",
               options: {
+                none: 'None',
                 left: 'Left',
                 center: 'Center',
                 right: 'Right',
@@ -320,6 +321,21 @@ export const en = {
             duration: {
               title: "Duration",
               placeholder: "Duration (Milliseconds)"
+            },
+            animationType: {
+              title: "AnimationSetting",
+              flag: "AnimationFlag",
+              lipSync: {
+                 title:"LipSync",
+                 mouthOpen: "mouthOpen",
+                 mouthHalfOpen: "mouthHalfOpen",
+                 mouthClose: "mouthClose",
+                },
+              blink: {
+                title:"Blink",
+                eyesOpen:"eyesOpen",
+                eyesClose:"eyesClose",
+              },
             }
           }
         },
