@@ -57,7 +57,11 @@ export default function Say(props: ISentenceEditorProps) {
     const selectedFontSize = fontSize.value;
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = figureId.value !== "" ? ` -figureId=${figureId.value}` : "";
-    props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${vocal.value === "" ? "" : " -" + vocal.value} -fontSize=${selectedFontSize}${pos}${idStr};`);
+    if(figurePosition.value === "id"){
+      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${vocal.value === "" ? "" : " -" + vocal.value} -fontSize=${selectedFontSize}${pos}${idStr};`);
+    } else {
+      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${currentValue.value.join("|")}${vocal.value === "" ? "" : " -" + vocal.value} -fontSize=${selectedFontSize}${pos};`);
+    }
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -126,8 +130,9 @@ export default function Say(props: ISentenceEditorProps) {
         <Dropdown
           selectedKey={figurePosition.value}
           options={[
+            { key: "", text: t('position.options.none') } ,
             { key: "left", text: t('position.options.left') },
-            { key: "", text: t('position.options.center') },
+            { key: "center", text: t('position.options.center') },
             { key: "right", text: t('position.options.right') },
             { key: "id", text: t('position.options.id') }
           ]}
