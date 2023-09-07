@@ -3,14 +3,15 @@ import { useValue } from "../../../../../hooks/useValue";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../store/origineStore";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cloneDeep } from "lodash";
-import { ITextField, TextField } from "@fluentui/react";
+import { IconButton, ITextField, TextField } from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
+import { logger } from "@/utils/logger";
 
 
 export default function GameConfig() {
@@ -48,14 +49,26 @@ export default function GameConfig() {
     return gameConfig.value.find(e=>e.command === key)?.args??[];
   }
 
-  function updateGameConfigSimpleByKey(key:string,value:string){
+  function updateGameConfigSimpleByKey(key: string, value: string | string[]) {
     const newConfig = cloneDeep(gameConfig.value);
-    const index = newConfig.findIndex(e=>e.command === key);
-    if(index>=0){
-      newConfig[index].args = [value];
-    }else{
-      newConfig.push({command:key,args:[value],options:[]});
+    const index = newConfig.findIndex(e => e.command === key);
+  
+    let newArgs;
+  
+    if (Array.isArray(value)) {
+      newArgs = value;
+    } else if (typeof value === 'string' && value.includes(' | ')) {
+      newArgs = value.split(' | ');
+    } else {
+      newArgs = [value];
     }
+  
+    if (index >= 0) {
+      newConfig[index].args = newArgs;
+    } else {
+      newConfig.push({ command: key, args: newArgs, options: [] });
+    }
+  
     gameConfig.set(newConfig);
     updateGameConfig();
   }
@@ -106,6 +119,15 @@ export default function GameConfig() {
             value={getConfigContentAsString('Title_bgm')}
             onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)} />
         </div>
+        <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.logoImage")}</div>
+            <GameConfigEditorWithImageFileChoose
+              sourceBase="background"
+              extNameList={[".jpg", ".png", ".webp"]}
+              key="logoImage"
+              value={getConfigContentAsStringArray('Game_Logo')}
+              onChange={(e: string[]) => updateGameConfigSimpleByKey('Game_Logo', e)} />
+          </div>
       </div>
     </div>
   );
@@ -114,6 +136,12 @@ export default function GameConfig() {
 interface IGameConfigEditor {
   key: string;
   value: string;
+  onChange: Function;
+}
+
+interface IGameConfigEditorMulti {
+  key: string;
+  value: string[];
   onChange: Function;
 }
 
@@ -158,4 +186,54 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & { sourceBase:
       }}
       extName={props.extNameList} />}
   </div>;
+}
+
+function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & { sourceBase: string, extNameList: string[] }) {
+  const t = useTrans("common.");
+  const showEditBox = useValue(false);
+  const inputBoxRef = useRef<ITextField>(null);
+  
+  const [images, setImages] = useState<string[]>(props.value);
+
+  const addImage = (imageName: string) => {
+    const newImages = [...images, imageName];
+    setImages(newImages);
+    props.onChange(newImages);
+  };
+
+  const removeImage = (imageName: string) => {
+    const newImages = images.filter((image) => image !== imageName);
+    setImages(newImages);
+    props.onChange(newImages);
+  };
+
+  return (
+    <div>
+      {!showEditBox.value && props.value.join(' | ')}
+      {!showEditBox.value && <div>{images.map((imageName, index) => (
+        <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton
+            iconProps={{ iconName: 'Cancel' }}
+            style={{ marginRight: '10px' }}
+            onClick={() => removeImage(imageName)}
+          />
+          <span>{imageName}</span>
+        </div>
+      ))}</div>}
+      {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+        showEditBox.set(true);
+        setTimeout(() => inputBoxRef.current?.focus(), 100);
+      }}>{t("revise")}</div>}
+      {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
+        onChange={(file) => {
+          if (file) {
+            addImage(file.name);
+            showEditBox.set(false);
+          } else {
+            showEditBox.set(false);
+          }
+        }}
+        extName={props.extNameList} />}
+    </div>
+  );
 }
