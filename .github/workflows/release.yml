@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -127,7 +127,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -149,7 +149,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -170,7 +170,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -193,7 +193,7 @@ jobs:
     needs: ['build-linux','build-arm64','build-mac','build-windows','build-windows-nsis']
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Download artifacts
         uses: actions/download-artifact@v2
