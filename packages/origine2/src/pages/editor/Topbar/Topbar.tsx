@@ -29,8 +29,8 @@ export default function TopBar() {
   // 注册 Android svg 图标
   registerIcons({
     icons: {
-      AndroidLogo: <IconWrapper src={AndroidIcon}/>,
-      GitHub: <IconWrapper src={GithubIcon}/>
+      AndroidLogo: <IconWrapper src={AndroidIcon} />,
+      GitHub: <IconWrapper src={GithubIcon} />
     }
   });
 
@@ -48,23 +48,23 @@ export default function TopBar() {
       key: "language",
       text: t('commandBar.items.language.text'),
       cacheKey: 'language',
-      iconProps: { iconName: 'LocaleLanguage'},
+      iconProps: { iconName: 'LocaleLanguage' },
       subMenuProps: {
         items: [
           {
             key: 'zhCn',
             text: '简体中文',
-            onClick() {setLanguage(language.zhCn);}
+            onClick() { setLanguage(language.zhCn); }
           },
           {
             key: 'en',
             text: 'English',
-            onClick() {setLanguage(language.en);}
+            onClick() { setLanguage(language.en); }
           },
           {
             key: 'jp',
             text: '日本語',
-            onClick() {setLanguage(language.jp);}
+            onClick() { setLanguage(language.jp); }
           }
         ]
       }
@@ -118,7 +118,7 @@ export default function TopBar() {
   return <div className={styles.editor_topbar}>
     <a href="/" className={styles.home_btn}>
       <LeftSmall theme="outline" size="24" fill="#005caf" />
-      <div className={styles.editor_title}>WebGAL Origine</div>
+      <div className={styles.editor_title}>WebGAL Terre</div>
     </a>
 
     <div className={styles.editor_editingGame}>{t('editing')}<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>

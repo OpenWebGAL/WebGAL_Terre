@@ -1,0 +1,29 @@
+.button {
+  height: 44px;
+}
+
+.callout {
+  max-width: 90%;
+  padding: 20px 24px;
+}
+
+.title {
+  margin-bottom: 12px;
+}
+
+.info {
+  line-height: 1.5;
+}
+
+.link {
+  display: block;
+  // margin-top: 20px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.link_group {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}

@@ -12,6 +12,7 @@ import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { language } from "@/store/statusReducer";
+import About from "./About";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -25,7 +26,9 @@ export default function DashBoard() {
   const setLanguage = useLanguage();
   const trans = useTrans('dashBoard.');
 
-  const isDashboardShow:boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
+  const isDashboardShow: boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
+
+
 
   const messageRef = useRef<TestRefRef>(null);
 
@@ -38,7 +41,7 @@ export default function DashBoard() {
     return await axios.get("/api/manageGame/gameList").then(r => r.data);
   }
 
-  async function createGame(gameName:string) {
+  async function createGame(gameName: string) {
     const res = await axios.post("/api/manageGame/createGame", { gameName: gameName }).then(r => r.data);
     logger.info("创建结果：", res);
     messageRef.current!.showMessage(`${gameName} ` + trans('msgs.created'), 2000);
@@ -68,23 +71,23 @@ export default function DashBoard() {
       key: "language",
       text: t('commandBar.items.language.text'),
       cacheKey: 'language',
-      iconProps: { iconName: 'LocaleLanguage'},
+      iconProps: { iconName: 'LocaleLanguage' },
       subMenuProps: {
         items: [
           {
             key: 'zhCn',
             text: '简体中文',
-            onClick() {setLanguage(language.zhCn);}
+            onClick() { setLanguage(language.zhCn); }
           },
           {
             key: 'en',
             text: 'English',
-            onClick() {setLanguage(language.en);}
+            onClick() { setLanguage(language.en); }
           },
           {
             key: 'jp',
             text: '日本語',
-            onClick() {setLanguage(language.jp);}
+            onClick() { setLanguage(language.jp); }
           }
         ]
       }
@@ -93,9 +96,9 @@ export default function DashBoard() {
 
 
   return <>
-    { isDashboardShow && (<div className={styles.dashboard_container}>
+    {isDashboardShow && (<div className={styles.dashboard_container}>
       <div className={styles.topBar}>
-        WebGAL Origine
+        WebGAL Terre
         <div>
           <CommandBar
             items={_items}
@@ -104,10 +107,11 @@ export default function DashBoard() {
             farItemsGroupAriaLabel="More actions"
           />
         </div>
+        <About />
       </div>
       <div className={styles.dashboard_main}>
         <Message ref={messageRef} />
-        <Sidebar onDeleteGame={()=>{refreashDashboard();setCurrent('');}} createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value}
+        <Sidebar onDeleteGame={() => { refreashDashboard(); setCurrent(''); }} createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value}
           gameList={dirInfo.value} />
         <GamePreview gameName={currentGame.value} />
         {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}
