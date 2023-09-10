@@ -2,7 +2,7 @@ import styles from "./editorSideBar.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { ReactElement } from "react";
-import { FolderOpen, PlayTwo, PreviewCloseOne, PreviewOpen, SettingConfig } from "@icon-park/react";
+import { FolderOpen, PlayTwo, PreviewCloseOne, PreviewOpen, SettingConfig, Comments } from "@icon-park/react";
 import { setEditorPreviewShow, setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
 
 interface ISidebarIconsProps {
@@ -45,6 +45,12 @@ export default function EditorSidebarControl() {
         </>
       </SidebarIcons>
     </div>
+    <div onClick={() => switchSidebarTag(sidebarTag.aichat)} style={{ margin: "auto 0 0 0" }}>
+      <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.aichat}>
+        <Comments theme="outline" size="24"
+          fill={state.currentSidebarTag === sidebarTag.aichat ? "#0B346E" : "#666"} strokeWidth={3} />
+      </SidebarIcons>
+    </div>    
     <div onClick={() => switchSidebarTag(sidebarTag.gameconfig)} style={{ margin: "auto 0 0 0" }}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.gameconfig}>
         <SettingConfig theme="outline" size="24"

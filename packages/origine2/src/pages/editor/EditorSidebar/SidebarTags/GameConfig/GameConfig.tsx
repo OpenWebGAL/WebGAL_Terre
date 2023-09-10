@@ -19,7 +19,7 @@ export default function GameConfig() {
 
   // 拿到游戏配置
   const gameConfig = useValue<WebgalConfig>([]);
-  console.log(gameConfig);
+  //console.log(gameConfig);
   const getGameConfig = () => {
     axios
       .get(`/api/manageGame/getGameConfig/${state.currentEditingGame}`)
@@ -61,7 +61,7 @@ export default function GameConfig() {
   }
 
   function parseAndSetGameConfigState(data: string) {
-    console.log(data);
+    //console.log(data);
     gameConfig.set(WebgalParser.parseConfig(data));
     if (getConfigContentAsString('Game_key') ==='') {
       // 设置默认识别码
@@ -105,6 +105,11 @@ export default function GameConfig() {
             sourceBase="bgm" key="titleBgm"
             value={getConfigContentAsString('Title_bgm')}
             onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)} />
+        </div>
+        <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>ChatGPT APIKey</div>
+          <GameConfigEditor key="apiKey" value={getConfigContentAsString('Api_Key')}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Api_Key', e)} />
         </div>
       </div>
     </div>
