@@ -5,8 +5,8 @@
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
-    "build": "tsc && vite build --base=./",
-    "build-lowram": "tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
+    "build": "node version-sync.js && tsc && vite build --base=./",
+    "build-lowram": "node version-sync.js && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
     "lint": "eslint src/** --fix"
   },
