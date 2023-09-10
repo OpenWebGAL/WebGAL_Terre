@@ -95,7 +95,7 @@ export default function DashBoard() {
   return <>
     { isDashboardShow && (<div className={styles.dashboard_container}>
       <div className={styles.topBar}>
-        WebGAL Origine
+        WebGAL Terre
         <div>
           <CommandBar
             items={_items}
