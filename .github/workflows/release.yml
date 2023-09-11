@@ -43,7 +43,7 @@ jobs:
           cache: 'yarn'
       - name: Build Stage 1
         run: |
-          echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
+          echo "Welcome to build WebGAL Terre, the editor of WebGAL platform."
           # 安装依赖
           yarn install --frozen-lockfile
           # 清理
@@ -113,7 +113,7 @@ jobs:
           rm -rf assets/templates/WebGAL_Android_Template/.gitattributes
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
-          echo "WebGAL Origine is now ready to be deployed."
+          echo "WebGAL Terre is now ready to be deployed."
 
       - name: Compress
         run: 7z a -tzip WebGAL_Terre_Linux_Arm64.zip release/*
