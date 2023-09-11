@@ -1,4 +1,4 @@
-echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
+echo "Welcome to build WebGAL Terre, the editor of WebGAL platform."
 # 安装依赖
 yarn install --frozen-lockfile --network-timeout=300000
 
@@ -55,4 +55,4 @@ rm -rf assets/templates/WebGAL_Android_Template/.gitattributes
 rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
 rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
 
-echo "WebGAL Origine is now ready to be deployed."
+echo "WebGAL Terre is now ready to be deployed."
