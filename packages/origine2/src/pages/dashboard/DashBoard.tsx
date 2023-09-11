@@ -12,6 +12,7 @@ import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { language } from "@/store/statusReducer";
+import About from "./About";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -104,6 +105,7 @@ export default function DashBoard() {
             farItemsGroupAriaLabel="More actions"
           />
         </div>
+        <About />
       </div>
       <div className={styles.dashboard_main}>
         <Message ref={messageRef} />
