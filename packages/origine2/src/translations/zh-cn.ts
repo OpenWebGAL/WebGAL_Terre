@@ -335,13 +335,13 @@ export const zhCn = {
             },
             animationType: {
               title: "动画设置",
-              flag: "有或没有动画",
+              flag: "唇形同步与眨眼",
               lipSync: {
-                 title:"唇形同步",
-                 mouthOpen: "张开",
-                 mouthHalfOpen: "半张嘴",
-                 mouthClose: "闭上嘴”",
-                },
+                title:"唇形同步",
+                mouthOpen: "张开",
+                mouthHalfOpen: "半张嘴",
+                mouthClose: "闭上嘴”",
+              },
               blink: {
                 title:"眨眼",
                 eyesOpen:"睁开眼睛",
