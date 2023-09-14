@@ -44,7 +44,7 @@ export const zhCn = {
       },
       commandBar: {
         items: {
-          source:"源代码",
+          source: "源代码",
           language: {
             text: '语言'
           },
@@ -60,7 +60,17 @@ export const zhCn = {
             }
           }
         }
-      }
+      },
+      about: {
+        about: '关于',
+        checkedForNewVersion: '检测到新版本',
+        slogan: '视觉小说编辑，再进化',
+        currentVersion: '当前版本',
+        latestVersion: '最新版本',
+        homePage: '项目主页',
+        document: '文档',
+        downloadLatest: '下载最新版本',
+      },
     },
 
     sideBar: {
@@ -68,8 +78,8 @@ export const zhCn = {
         title: '游戏预览',
         refresh: '刷新',
         previewInNewTab: '在新标签页预览',
-        livePreview:'实时预览',
-        notice:'实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。',
+        livePreview: '实时预览',
+        notice: '实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。',
       },
 
       file: {
@@ -177,12 +187,12 @@ export const zhCn = {
               placeholder: '百分比。 0-100 有效',
             },
             font: {
-              size:'文字大小',
-              options:{
-                default:'默认',
-                small:'小',
-                medium:'中',
-                large:'大',
+              size: '文字大小',
+              options: {
+                default: '默认',
+                small: '小',
+                medium: '中',
+                large: '大',
               }
             },
             position: {
@@ -434,15 +444,15 @@ export const zhCn = {
               button: '添加新行'
             },
             option: {
-              title:'其他选项'
+              title: '其他选项'
             },
             colorPicker: {
-              backgroundColor:'背景颜色',
-              fontColor:'文字颜色',
+              backgroundColor: '背景颜色',
+              fontColor: '文字颜色',
               submit: '应用颜色变化'
             },
             font: {
-              size:'文字大小',
+              size: '文字大小',
               animation: '动画',
               delayTime: '延迟时间（秒）'
             }

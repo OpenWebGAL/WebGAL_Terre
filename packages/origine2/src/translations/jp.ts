@@ -44,7 +44,7 @@ export const jp = {
       },
       commandBar: {
         items: {
-          source:'ソースコード',
+          source: 'ソースコード',
           language: {
             text: '言語選択'
           },
@@ -60,7 +60,17 @@ export const jp = {
             }
           }
         }
-      }
+      },
+      about: {
+        about: 'About',
+        checkedForNewVersion: 'Checked for new version',
+        slogan: 'Galgame Editing. Redefined',
+        currentVersion: 'Current Version',
+        latestVersion: 'Latest Version',
+        homePage: 'Project HomePage',
+        document: 'Document',
+        downloadLatest: 'Download Latest Version',
+      },
     },
 
     sideBar: {
@@ -68,8 +78,8 @@ export const jp = {
         title: 'ゲームプレビュー',
         refresh: '再読み込み',
         previewInNewTab: '新しいタブでプレビュー',
-        livePreview:'ライブ・プレビュー',
-        notice:'ライブプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。'
+        livePreview: 'ライブ・プレビュー',
+        notice: 'ライブプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。'
       },
 
       file: {
@@ -176,12 +186,12 @@ export const jp = {
               placeholder: '百分率。 0-100 有効',
             },
             font: {
-              size:'フォントサイズ',
-              options:{
-                default:'デフォルト',
-                small:'小',
-                medium:'中',
-                large:'大',
+              size: 'フォントサイズ',
+              options: {
+                default: 'デフォルト',
+                small: '小さい',
+                medium: '中くらい',
+                large: '大きい',
               }
             },
             position: {
@@ -433,15 +443,15 @@ export const jp = {
               button: '新しい行を追加'
             },
             option: {
-              title:'その他のオプション'
+              title: 'その他のオプション'
             },
             colorPicker: {
-              backgroundColor:'背景色',
-              fontColor:'文字色',
+              backgroundColor: '背景色',
+              fontColor: '文字色',
               submit: '色の変更を適用'
             },
             font: {
-              size:'文字サイズ',
+              size: '文字サイズ',
               animation: 'アニメーション',
               delayTime: '遅延時間（秒）'
             }
