@@ -1,4 +1,4 @@
-echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
+echo "Welcome to build WebGAL Terre, the editor of WebGAL platform."
 # 安装依赖
 yarn install --frozen-lockfile --network-timeout=300000
 
@@ -71,4 +71,4 @@ echo 'cd WebGAL' >> run-webgal-on-mac.command
 echo './WebGAL_Terre' >> run-webgal-on-mac.command
 chmod +x run-webgal-on-mac.command
 
-echo "WebGAL Origine is now ready to be deployed."
+echo "WebGAL Terre is now ready to be deployed."
