@@ -18,7 +18,7 @@ export default function Say(props: ISentenceEditorProps) {
   const vocal = useValue(getArgByKey(props.sentence, "vocal").toString() ?? "");
   const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
-  const figurePosition = useValue<"left" | "" | "right" | "id">("");
+  const figurePosition = useValue<"left" | "" | "right" | "center" | "id">("");
   const figureId = useValue(getArgByKey(props.sentence, "figureId").toString() ?? "");
   useEffect(() => {
     /**
@@ -29,6 +29,9 @@ export default function Say(props: ISentenceEditorProps) {
     }
     if (getArgByKey(props.sentence, "right")) {
       figurePosition.set("right");
+    }
+    if (getArgByKey(props.sentence, "center")) {
+      figurePosition.set("center");
     }
     if (getArgByKey(props.sentence, "id")) {
       figurePosition.set("id");
