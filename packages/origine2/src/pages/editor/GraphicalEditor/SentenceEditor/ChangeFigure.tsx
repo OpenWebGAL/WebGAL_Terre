@@ -55,6 +55,13 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       figurePosition.set("right");
     }
   }, []);
+  useEffect(() => {
+    if (animationFlag.value === "on") {
+      setIsAccordionOpen(true);
+    } else {
+      setIsAccordionOpen(false);
+    }
+  }, [animationFlag.value]);
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
