@@ -12,7 +12,7 @@ import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import { logger } from "@/utils/logger";
-
+import { Image } from "@fluentui/react";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -26,8 +26,6 @@ export default function GameConfig() {
       .get(`/api/manageGame/getGameConfig/${state.currentEditingGame}`)
       .then((r) => parseAndSetGameConfigState(r.data));
   };
-
-
 
   useEffect(() => {
     getGameConfig();
@@ -192,7 +190,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & { s
   const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
-  
+  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   const [images, setImages] = useState<string[]>(props.value);
 
   const addImage = (imageName: string) => {
@@ -210,14 +208,27 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & { s
   return (
     <div>
       {!showEditBox.value && props.value.join(' | ')}
-      {!showEditBox.value && <div>{images.map((imageName, index) => (
-        <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton
-            iconProps={{ iconName: 'Cancel' }}
-            style={{ marginRight: '10px' }}
-            onClick={() => removeImage(imageName)}
-          />
-          <span>{imageName}</span>
+      {!showEditBox.value && <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+        {images.map((imageName, index) => (
+          <div key={index} style={{ position: 'relative', margin: '5px' }}>
+            <IconButton
+                iconProps={{ iconName: 'Cancel' }}
+                style={{
+                  position: 'absolute',
+                  top: '0',
+                  right: '0',
+                  zIndex: 1,
+                  backgroundColor: 'red',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '20px',
+                  height: '20px',
+                  padding: '5px',
+                }}
+                onClick={() => removeImage(imageName)}
+              />
+          <Image src={`games/${gameName}/game/${props.sourceBase}/${imageName}`} width={100} height={100} alt={`logo-${index}`} />
+          <div style={{ textAlign: 'center' }}>{imageName}</div>
         </div>
       ))}</div>}
       {!showEditBox.value && <div className={styles.editButton} onClick={() => {
