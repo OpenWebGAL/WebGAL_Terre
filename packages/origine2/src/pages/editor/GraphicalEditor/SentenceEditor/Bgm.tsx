@@ -18,7 +18,7 @@ export default function Bgm(props: ISentenceEditorProps) {
   const submit = () => {
     const volumeStr = volume.value !== "" ? ` -volume=${volume.value}` : "";
     const enterStr = enter.value !== "" ? ` -enter=${enter.value}` : "";
-    if(bgmFile.value != "none"){
+    if(bgmFile.value !== "none"){
       props.onSubmit(`bgm:${bgmFile.value}${volumeStr}${enterStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
     } else {
       props.onSubmit(`bgm:${bgmFile.value}${enterStr};`);

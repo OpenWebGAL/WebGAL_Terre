@@ -30,18 +30,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const toggleAccordion = () => {
-      setIsAccordionOpen(!isAccordionOpen);
+    setIsAccordionOpen(!isAccordionOpen);
   };
   const optionButtonStyles = {
     root: {
-        backgroundColor: '#0078d4',
-        color: 'white',
-        margin: '6px 0 0 0',
-        display: 'flex'
+      backgroundColor: '#0078d4',
+      color: 'white',
+      margin: '6px 0 0 0',
+      display: 'flex'
     },
     rootHovered: {
-        backgroundColor: '#005a9e',
-        color: 'white'
+      backgroundColor: '#005a9e',
+      color: 'white'
     },
   };
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     } else {
       props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile};`);
     }
-  } 
+  };
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
@@ -230,9 +230,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 extName={[".png", ".jpg", ".webp"]} />
               </>
             </CommonOptions>}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
     </div>
   </div>;
 }

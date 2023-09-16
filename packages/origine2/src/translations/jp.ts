@@ -336,10 +336,10 @@ export const jp = {
               title: "アニメーション設定",
               flag: "アニメーションの有無",
               lipSync: {
-                 title: "口パク",
-                 mouthOpen: "開いた",
-                 mouthHalfOpen:  "半分開いた口",
-                 mouthClose:  "閉じた口",
+                title: "口パク",
+                mouthOpen: "開いた",
+                mouthHalfOpen:  "半分開いた口",
+                mouthClose:  "閉じた口",
               },
               blink: {
                 title: "まばたき",

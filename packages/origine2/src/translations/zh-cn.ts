@@ -338,9 +338,9 @@ export const zhCn = {
               flag: "唇形同步与眨眼",
               lipSync: {
                 title:"唇形同步",
-                mouthOpen: "张开",
+                mouthOpen: "张开嘴",
                 mouthHalfOpen: "半张嘴",
-                mouthClose: "闭上嘴”",
+                mouthClose: "闭上嘴",
               },
               blink: {
                 title:"眨眼",
