@@ -198,6 +198,7 @@ export const jp = {
             position: {
               title: "関連する立ち絵の位置",
               options: {
+                none: '指定なし',
                 left: '左',
                 center: '中央',
                 right: '右',
@@ -331,6 +332,21 @@ export const jp = {
             duration: {
               title: "所要時間",
               placeholder: "所要時間 (ミリ秒)",
+            },
+            animationType: {
+              title: "アニメーション設定",
+              flag: "アニメーションの有無",
+              lipSync: {
+                title: "口パク",
+                mouthOpen: "開いた",
+                mouthHalfOpen:  "半分開いた口",
+                mouthClose:  "閉じた口",
+              },
+              blink: {
+                title: "まばたき",
+                eyesOpen: "開いた目",
+                eyesClose:  "閉じた目",
+              },
             }
           }
         },
