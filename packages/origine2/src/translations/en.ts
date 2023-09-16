@@ -336,11 +336,11 @@ export const en = {
               title: "AnimationSetting",
               flag: "AnimationFlag",
               lipSync: {
-                 title:"LipSync",
-                 mouthOpen: "mouthOpen",
-                 mouthHalfOpen: "mouthHalfOpen",
-                 mouthClose: "mouthClose",
-                },
+                title:"LipSync",
+                mouthOpen: "mouthOpen",
+                mouthHalfOpen: "mouthHalfOpen",
+                mouthClose: "mouthClose",
+              },
               blink: {
                 title:"Blink",
                 eyesOpen:"eyesOpen",
