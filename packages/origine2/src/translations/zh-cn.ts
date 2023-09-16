@@ -125,6 +125,7 @@ export const zhCn = {
           packageName: '游戏包名',
           bg: '标题背景图片',
           bgm: '标题背景音乐',
+          logoImage: '启动图',
         }
       },
 
