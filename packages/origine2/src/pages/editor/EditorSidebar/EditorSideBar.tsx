@@ -76,6 +76,99 @@ export default function EditorSideBar() {
   const isEnableLivePreview = useSelector((state:RootState)=>state.status.editor.isEnableLivePreview);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+  
+  
+    const iframe = document.getElementById('gamePreviewIframe') as HTMLIFrameElement;
+    if (!iframe) {
+      return;
+    }
+    
+    const innerDoc = iframe?.contentDocument || iframe?.contentWindow?.document;
+    
+    if (!innerDoc) {
+      return;
+    }
+    
+    const innerDocument = iframe.contentDocument;
+    if (!innerDocument) return;
+    
+    const tooltip = innerDocument.createElement("div");
+    tooltip.style.position = "absolute";
+    tooltip.style.backgroundColor = "#333";
+    tooltip.style.color = "#fff";
+    tooltip.style.padding = "5px";
+    tooltip.style.borderRadius = "3px";
+    tooltip.style.display = "none";
+    innerDocument.body.appendChild(tooltip);
+    
+    const contextMenuListener = (event: MouseEvent) => {
+      if (!isEnableLivePreview) return;
+  
+      console.log('contextMenuHandler called');
+      event.preventDefault();
+  
+      const x = event.clientX;
+      const y = event.clientY;
+  
+      tooltip.innerText = `X: ${x}, Y: ${y}`;
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+      tooltip.style.display = 'block';
+    };
+    
+    const clickListener = () => {
+      if (!isEnableLivePreview) return;
+  
+      console.log('clickHandler called');
+      tooltip.style.display = 'none';
+    };
+    
+    const drawGridLines = () => {
+      if (!isEnableLivePreview) return;
+    
+      const targetWidth = 1440;
+      const targetHeight = 2560;
+    
+      for (let x = 0; x <= targetWidth; x += 50) {
+        const tickLine = innerDocument.createElement("div");
+        tickLine.className = "tick-line";
+        tickLine.style.width = "1px";
+        tickLine.style.height = `${targetHeight}px`;
+        tickLine.style.left = `${x}px`;
+        tickLine.style.top = "0px";
+        tickLine.style.position = "absolute";
+        tickLine.style.background = "rgba(0, 0, 0, 0.2)";
+        innerDocument.body.appendChild(tickLine);
+      }
+    
+      for (let y = 0; y <= targetHeight; y += 50) {
+        const tickLine = innerDocument.createElement("div");
+        tickLine.className = "tick-line";
+        tickLine.style.width = `${targetWidth}px`;
+        tickLine.style.height = "1px";
+        tickLine.style.left = "0px";
+        tickLine.style.top = `${y}px`;
+        tickLine.style.position = "absolute";
+        tickLine.style.background = "rgba(0, 0, 0, 0.2)";
+        innerDocument.body.appendChild(tickLine);
+      }
+    };
+    
+    drawGridLines();
+    
+    innerDocument.addEventListener('contextmenu', contextMenuListener);
+    innerDocument.addEventListener('click', clickListener);
+
+    return () => {
+      const tickLines = innerDocument.querySelectorAll('.tick-line');
+        tickLines.forEach((line) => {
+          line.remove();
+      });
+    };
+
+
+  }, [isEnableLivePreview]);
 
   return <>
     {(state.currentSidebarTag !== sidebarTag.none || state.showPreview) && <div className={styles.editor_sidebar}>
