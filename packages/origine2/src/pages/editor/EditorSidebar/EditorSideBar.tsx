@@ -104,16 +104,25 @@ export default function EditorSideBar() {
     
     const contextMenuListener = (event: MouseEvent) => {
       if (!isEnableLivePreview) return;
-  
+    
       console.log('contextMenuHandler called');
       event.preventDefault();
-  
-      const x = event.clientX;
-      const y = event.clientY;
-  
+    
+      const currentWidth = iframe.clientWidth;
+      const currentHeight = iframe.clientHeight;
+    
+      const centerX = currentWidth / 2;
+      const centerY = currentHeight / 2;
+    
+      const dx = event.clientX - centerX;
+      const dy = event.clientY - centerY;
+    
+      const x = Math.round((dx / currentWidth) * 2560);
+      const y = Math.round((dy / currentHeight) * 1440);
+    
       tooltip.innerText = `X: ${x}, Y: ${y}`;
-      tooltip.style.left = `${x}px`;
-      tooltip.style.top = `${y}px`;
+      tooltip.style.left = `${event.clientX}px`;
+      tooltip.style.top = `${event.clientY}px`;
       tooltip.style.display = 'block';
     };
     
@@ -127,8 +136,8 @@ export default function EditorSideBar() {
     const drawGridLines = () => {
       if (!isEnableLivePreview) return;
     
-      const targetWidth = 1440;
-      const targetHeight = 2560;
+      const targetWidth = 2560;
+      const targetHeight = 1440;
     
       for (let x = 0; x <= targetWidth; x += 50) {
         const tickLine = innerDocument.createElement("div");
