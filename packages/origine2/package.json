@@ -32,7 +32,7 @@
     "react-i18next": "^12.2.2",
     "react-redux": "^8.0.1",
     "sass": "^1.51.0",
-    "webgal-parser": "^4.4.5-fix1"
+    "webgal-parser": "^4.4.5-fix2"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",

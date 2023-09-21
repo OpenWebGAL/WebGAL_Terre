@@ -6955,10 +6955,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-parser@^4.4.5-fix1:
-  version "4.4.5-fix1"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.4.5-fix1.tgz#fbe5f9d4dc65032e6bbfbc9022c4d0b8e2a50f1c"
-  integrity sha512-cX7quA9SptpIi06IA3OT0Bw9IvA6sayWMfWdXU3W67QOmm11OM3kjjzW4TJSsHSupyw+ffu5WKC3eNs8bSvNng==
+webgal-parser@^4.4.5-fix2:
+  version "4.4.5-fix2"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.4.5-fix2.tgz#4a77cf0c2b8a2be0e73813ff8e77dc2cd664e62b"
+  integrity sha512-O/8HW75ExANS/rbgu7TF3Snml7D/8gWWKKfnrpuasnUINWHIWhfcyLMjz8vK8nm9/7LmA0Epg1yJ1RQrs3Txew==
   dependencies:
     chevrotain "^10.5.0"
     cloudlogjs "^1.0.11"
