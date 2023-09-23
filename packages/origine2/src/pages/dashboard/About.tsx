@@ -25,7 +25,7 @@ const About: React.FunctionComponent = () => {
   const latestRelease = useRelease();
   const versionToNumber = (version: string) => Number(version.replace(/\./g, ''));
   // 是否有新版本
-  const isNewRelease = versionToNumber(latestRelease.version) > versionToNumber(__INFO.version);
+  const isNewRelease = versionToNumber(latestRelease.version) !== versionToNumber(__INFO.version);
   isNewRelease && logger.info(`发现新版本：${latestRelease.version}`, latestRelease);
 
   const dateTimeOptions: DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
