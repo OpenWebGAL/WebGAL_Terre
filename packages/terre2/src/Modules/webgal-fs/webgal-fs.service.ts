@@ -227,13 +227,34 @@ export class WebgalFsService {
    * @param text 要替换的文本
    * @param newText 替换后的文本
    */
-  async replaceTextFile(_path: string, text: string, newText: string) {
+  async replaceTextFile(
+    _path: string,
+    text: string | string[],
+    newText: string | string[],
+  ) {
     try {
       const path = decodeURI(_path);
 
       const textFile: string | unknown = await this.readTextFile(path);
+
       if (typeof textFile === 'string') {
-        const newTextFile = textFile.replace(new RegExp(text, 'g'), newText);
+        let newTextFile: string = textFile;
+        if (typeof text === 'string' && typeof newText === 'string') {
+          newTextFile = newTextFile.replace(new RegExp(text, 'g'), newText);
+        } else if (typeof text === 'object' && typeof newText === 'string') {
+          text.map((item) => {
+            newTextFile = newTextFile.replace(new RegExp(item, 'g'), newText);
+          });
+        } else if (
+          typeof text === 'object' &&
+          typeof newText === 'object' &&
+          text.length === newText.length
+        ) {
+          text.map((item, index) => {
+            newTextFile = newTextFile.replace(new RegExp(item, 'g'), newText[index]);
+          });
+        } else return false;
+
         return await new Promise((resolve) => {
           fs.writeFile(path, newTextFile)
             .then(() => resolve('Replaced.'))
