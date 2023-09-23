@@ -1,19 +1,17 @@
 import "./App.css";
-import { logger } from "./utils/logger";
+import {logger} from "./utils/logger";
 import DashBoard from "./pages/dashboard/DashBoard";
-import { Provider } from "react-redux";
-import { origineStore } from "./store/origineStore";
+import {Provider} from "react-redux";
+import {origineStore} from "./store/origineStore";
 import Editor from "./pages/editor/Editor";
-import { useEffect } from "react";
+import {useEffect} from "react";
 import "@icon-park/react/styles/index.css";
 import axios from "axios";
-import { mapLspKindToMonacoKind } from "./pages/editor/TextEditor/convert";
+import {mapLspKindToMonacoKind} from "./pages/editor/TextEditor/convert";
 import * as monaco from "monaco-editor";
 import Translation from "./components/translation/Translation";
+import {lspSceneName} from "@/runtime/WG_ORIGINE_RUNTIME";
 
-
-// 当前要发给 LSP 的场景名称
-export const lspSceneName = { value: "" };
 
 function App() {
   useEffect(() => {

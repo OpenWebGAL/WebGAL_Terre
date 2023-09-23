@@ -44,7 +44,7 @@ export const en = {
       },
       commandBar: {
         items: {
-          source:"Source code",
+          source: "Source code",
           language: {
             text: 'Language'
           },
@@ -60,7 +60,17 @@ export const en = {
             }
           }
         }
-      }
+      },
+      about: {
+        about: 'About',
+        checkedForNewVersion: 'Checked for new version',
+        slogan: 'Galgame Editing. Redefined',
+        currentVersion: 'Current Version',
+        latestVersion: 'Latest Version',
+        homePage: 'Project HomePage',
+        document: 'Document',
+        downloadLatest: 'Download Latest Version',
+      },
     },
 
     sideBar: {
@@ -68,8 +78,8 @@ export const en = {
         title: 'Game preview',
         refresh: 'Refresh',
         previewInNewTab: 'Preview in new tab',
-        livePreview:'Live preview',
-        notice:'Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won\'t be reflected in the preview.'
+        livePreview: 'Live preview',
+        notice: 'Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won\'t be reflected in the preview.'
       },
 
       file: {
@@ -115,6 +125,7 @@ export const en = {
           packageName: 'Game package name',
           bg: 'Background image of title',
           bgm: 'BGM of title',
+          logoImage: 'Logo',
         }
       },
 
@@ -177,16 +188,17 @@ export const en = {
             },
             font: {
               size: "FontSize",
-              options:{
-                default:'Default',
-                small:'Small',
-                medium:'Medium',
-                large:'Large',
+              options: {
+                default: 'Default',
+                small: 'Small',
+                medium: 'Medium',
+                large: 'Large',
               }
             },
             position: {
               title: "Position of associated figure",
               options: {
+                none: 'None',
                 left: 'Left',
                 center: 'Center',
                 right: 'Right',
@@ -306,6 +318,28 @@ export const en = {
               title: "Effect",
               on: "On",
               off: "Off"
+            },
+            tips: {
+              setEffect: "Tip: Effects only take effect when you switch to a different figure or close the previous figure and re-add it. If you want to set an effect for an existing figure, use a separate Set Effect command",
+            },
+            duration: {
+              title: "Duration",
+              placeholder: "Duration (Milliseconds)"
+            },
+            animationType: {
+              title: "AnimationSetting",
+              flag: "AnimationFlag",
+              lipSync: {
+                title:"LipSync",
+                mouthOpen: "mouthOpen",
+                mouthHalfOpen: "mouthHalfOpen",
+                mouthClose: "mouthClose",
+              },
+              blink: {
+                title:"Blink",
+                eyesOpen:"eyesOpen",
+                eyesClose:"eyesClose",
+              },
             }
           }
         },
@@ -402,11 +436,11 @@ export const en = {
               button: 'Add line'
             },
             option: {
-              title:'Other option'
+              title: 'Other option'
             },
             colorPicker: {
-              backgroundColor:'Background color',
-              fontColor:'Font color',
+              backgroundColor: 'Background color',
+              fontColor: 'Font color',
               submit: 'Apply color changes'
             },
             font: {
