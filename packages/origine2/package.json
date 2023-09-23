@@ -1,12 +1,12 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.4.4",
+  "version": "4.4.5",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
-    "build": "tsc && vite build --base=./",
-    "build-lowram": "tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
+    "build": "node version-sync.js && tsc && vite build --base=./",
+    "build-lowram": "node version-sync.js && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
     "lint": "eslint src/** --fix"
   },
@@ -32,7 +32,7 @@
     "react-i18next": "^12.2.2",
     "react-redux": "^8.0.1",
     "sass": "^1.51.0",
-    "webgal-parser": "^4.4.3"
+    "webgal-parser": "^4.4.5-fix2"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",

@@ -37,17 +37,17 @@ const SCRIPT_CONFIG = [
   { scriptString: 'setTransform', scriptType: commandType.setTransform },
 ];
 
+export const WebgalParser = new SceneParser(() => {
+}, (fileName, assetType) => {
+  return fileName;
+}, [], SCRIPT_CONFIG);
 /**
  * 场景解析器 - 编辑器版
  * @param rawScene 原始场景
  * @return {IScene} 解析后的场景
  */
 export const parseScene = (rawScene: string): IScene => {
-  const parser = new SceneParser(() => {
-  }, (fileName, assetType) => {
-    return fileName;
-  }, [], SCRIPT_CONFIG);
-  const parsedScene = parser.parse(rawScene, 'editing', 'editing.txt');
+  const parsedScene = WebgalParser.parse(rawScene, 'editing', 'editing.txt');
   logger.info(`解析场景：${'editing'}，数据为：`, parsedScene);
   return parsedScene;
 };

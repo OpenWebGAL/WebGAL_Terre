@@ -1,116 +1,106 @@
 import styles from "../sidebarTags.module.scss";
-import { useValue } from "../../../../../hooks/useValue";
+import {useValue} from "../../../../../hooks/useValue";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../store/origineStore";
-import { useEffect, useRef } from "react";
-import { cloneDeep } from "lodash";
-import { ITextField, TextField } from "@fluentui/react";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../../../store/origineStore";
+import {useState, useEffect, useRef} from "react";
+import {cloneDeep} from "lodash";
+import {IconButton, ITextField, TextField} from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
-
-interface IGameConfig {
-  gameName: string;
-  titleBgm: string;
-  titleBackground: string;
-  gameKey: string;
-  packageName: string;
-}
+import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
+import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
+import {logger} from "@/utils/logger";
+import {Image} from "@fluentui/react";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
   const state = useSelector((state: RootState) => state.status.editor);
 
   // 拿到游戏配置
-  const gameConfig = useValue<IGameConfig>({
-    gameName: "",
-    titleBgm: "",
-    titleBackground: "",
-    gameKey: "",
-    packageName: ""
-  });
+  const gameConfig = useValue<WebgalConfig>([]);
+  console.log(gameConfig);
   const getGameConfig = () => {
     axios
       .get(`/api/manageGame/getGameConfig/${state.currentEditingGame}`)
       .then((r) => parseAndSetGameConfigState(r.data));
   };
 
-  function parseAndSetGameConfigState(data: string) {
-    // 开始解析
-    // 先拆行，拆行之前把\r 换成 \n
-    let newData = data.replace(/\r/g, "\n");
-    const dataArray: string[] = newData.split("\n");
-    // 对于每一行，，截取分号，找出键值
-    let dataWithKeyValue = dataArray.map((e: string) => {
-      let commandText = e.replaceAll(/[;；]/g, "");
-      const i = commandText.indexOf(":");
-      return [commandText.slice(0, i), commandText.slice(i + 1)];
-    });
-    dataWithKeyValue = dataWithKeyValue.filter((e) => e.length >= 2);
-    // 开始修改
-    dataWithKeyValue.forEach((e) => {
-      switch (e[0]) {
-      case "Game_name":
-        gameConfig.set({ ...gameConfig.value, gameName: e[1] });
-        break;
-      case "Title_bgm":
-        gameConfig.set({ ...gameConfig.value, titleBgm: e[1] });
-        break;
-      case "Title_img":
-        gameConfig.set({ ...gameConfig.value, titleBackground: e[1] });
-        break;
-      case "Game_key":
-        gameConfig.set({ ...gameConfig.value, gameKey: e[1] });
-        break;
-      case "Package_name":
-        gameConfig.set({ ...gameConfig.value, packageName: e[1] });
-        break;
-      default:
-        console.log("NOT PARSED");
-      }
-    });
-    if (gameConfig.value.gameKey === "") {
-      // 设置默认识别码
-      const randomCode = (Math.random() * 100000).toString(16).replace(".", "d");
-      updateGameConfig("gameKey", randomCode);
-    }
-  }
-
   useEffect(() => {
     getGameConfig();
   }, []);
 
-  function updateGameConfig(key: keyof IGameConfig, content: string) {
-    const draft = cloneDeep(gameConfig.value);
-    draft[key] = content;
-    gameConfig.set(draft);
-    const newConfig = `Game_name:${gameConfig.value.gameName};\nGame_key:${gameConfig.value.gameKey};\nPackage_name:${gameConfig.value.packageName};\nTitle_bgm:${gameConfig.value.titleBgm};\nTitle_img:${gameConfig.value.titleBackground};\n`;
+  function updateGameConfig() {
+    const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
     const form = new URLSearchParams();
     form.append("gameName", state.currentEditingGame);
     form.append("newConfig", newConfig);
     axios.post(`/api/manageGame/setGameConfig/`, form).then(getGameConfig);
   }
 
+  function getConfigContentAsString(key: string) {
+    return gameConfig.value.find(e => e.command === key)?.args?.join('') ?? '';
+  }
+
+  function getConfigContentAsStringArray(key: string) {
+    return gameConfig.value.find(e => e.command === key)?.args ?? [];
+  }
+
+  function updateGameConfigSimpleByKey(key: string, value: string) {
+    const newConfig = cloneDeep(gameConfig.value);
+    const index = newConfig.findIndex(e => e.command === key);
+    if (index >= 0) {
+      newConfig[index].args = [value];
+    } else {
+      newConfig.push({command: key, args: [value], options: []});
+    }
+    gameConfig.set(newConfig);
+    updateGameConfig();
+  }
+
+  function updateGameConfigArrayByKey(key: string, value: string[]) {
+    const newConfig = cloneDeep(gameConfig.value);
+    const index = newConfig.findIndex(e => e.command === key);
+
+    if (index >= 0) {
+      newConfig[index].args = value;
+    } else {
+      newConfig.push({command: key, args: value, options: []});
+    }
+
+    gameConfig.set(newConfig);
+    updateGameConfig();
+  }
+
+  function parseAndSetGameConfigState(data: string) {
+    console.log(data);
+    gameConfig.set(WebgalParser.parseConfig(data));
+    if (getConfigContentAsString('Game_key') === '') {
+      // 设置默认识别码
+      const randomCode = (Math.random() * 100000).toString(16).replace(".", "d");
+      updateGameConfigSimpleByKey("Game_key", randomCode);
+    }
+  }
 
   return (
     <div>
-      <TagTitleWrapper title={t("title")} />
-      <div style={{ paddingLeft: "10px" }}>
+      <TagTitleWrapper title={t("title")}/>
+      <div style={{paddingLeft: "10px"}}>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.name")}</div>
-          <GameConfigEditor key="gameName" value={gameConfig.value.gameName}
-            onChange={(e: string) => updateGameConfig("gameName", e)} />
+          <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
+            onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.id")}</div>
-          <GameConfigEditor key="gameKey" value={gameConfig.value.gameKey}
-            onChange={(e: string) => updateGameConfig("gameKey", e)} />
+          <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.packageName")}</div>
-          <GameConfigEditor key="packageName" value={gameConfig.value.packageName}
-            onChange={(e: string) => updateGameConfig("packageName", e)} />
+          <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.bg")}</div>
@@ -118,16 +108,25 @@ export default function GameConfig() {
             sourceBase="background"
             extNameList={[".jpg", ".png", ".webp"]}
             key="titleBackground"
-            value={gameConfig.value.titleBackground}
-            onChange={(e: string) => updateGameConfig("titleBackground", e)} />
+            value={getConfigContentAsString('Title_img')}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.bgm")}</div>
           <GameConfigEditorWithFileChoose
             extNameList={[".mp3", ".ogg", ".wav"]}
             sourceBase="bgm" key="titleBgm"
-            value={gameConfig.value.titleBgm}
-            onChange={(e: string) => updateGameConfig("titleBgm", e)} />
+            value={getConfigContentAsString('Title_bgm')}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
+        </div>
+        <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.logoImage")}</div>
+          <GameConfigEditorWithImageFileChoose
+            sourceBase="background"
+            extNameList={[".jpg", ".png", ".webp"]}
+            key="logoImage"
+            value={getConfigContentAsStringArray('Game_Logo')}
+            onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
         </div>
       </div>
     </div>
@@ -135,8 +134,14 @@ export default function GameConfig() {
 }
 
 interface IGameConfigEditor {
-  key: keyof IGameConfig;
+  key: string;
   value: string;
+  onChange: Function;
+}
+
+interface IGameConfigEditorMulti {
+  key: string;
+  value: string[];
   onChange: Function;
 }
 
@@ -160,7 +165,10 @@ function GameConfigEditor(props: IGameConfigEditor) {
   </div>;
 }
 
-function GameConfigEditorWithFileChoose(props: IGameConfigEditor & { sourceBase: string, extNameList: string[] }) {
+function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
+  sourceBase: string,
+  extNameList: string[]
+}) {
   const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
@@ -179,6 +187,61 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & { sourceBase:
           showEditBox.set(false);
         }
       }}
-      extName={props.extNameList} />}
+      extName={props.extNameList}/>}
   </div>;
+}
+
+function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
+  sourceBase: string,
+  extNameList: string[]
+}) {
+  const t = useTrans("common.");
+  const showEditBox = useValue(false);
+  const inputBoxRef = useRef<ITextField>(null);
+  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const images = props.value;
+
+  const addImage = (imageName: string) => {
+    const newImages = [...images, imageName];
+    // setImages(newImages);
+    props.onChange(newImages);
+  };
+
+  const removeImage = (imageName: string) => {
+    const newImages = images.filter((image) => image !== imageName);
+    // setImages(newImages);
+    props.onChange(newImages);
+  };
+
+  return (
+    <div>
+      {/* {props.value.join(' | ')} */}
+      <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+        {images.map((imageName, index) => (
+          <div key={index} className={styles.imageChooseItem}>
+            <img className={styles.imageChooseItemImage} src={`games/${gameName}/game/${props.sourceBase}/${imageName}`}
+              alt={`logo-${index}`}/>
+            <div className={styles.imageChooseItemText}>{imageName}</div>
+            <IconButton
+              iconProps={{iconName: 'Cancel'}}
+              onClick={() => removeImage(imageName)}
+            />
+          </div>
+        ))}</div>
+      {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+        showEditBox.set(true);
+        setTimeout(() => inputBoxRef.current?.focus(), 100);
+      }}>{t("revise")}</div>}
+      {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
+        onChange={(file) => {
+          if (file) {
+            addImage(file.name);
+            showEditBox.set(false);
+          } else {
+            showEditBox.set(false);
+          }
+        }}
+        extName={props.extNameList}/>}
+    </div>
+  );
 }
