@@ -5,5 +5,5 @@ export interface Info {
 
 export const __INFO: Info = {
   version: '4.4.5',
-  buildTime: '2023-09-23T05:19:16.868Z',
+  buildTime: '2023-09-23T05:28:26.398Z',
 };
