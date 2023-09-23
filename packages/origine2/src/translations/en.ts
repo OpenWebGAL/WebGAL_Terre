@@ -122,6 +122,7 @@ export const en = {
         options: {
           name: 'Game name',
           id: 'Game ID',
+          description: 'Game description',
           packageName: 'Game package name',
           bg: 'Background image of title',
           bgm: 'BGM of title',
