@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -43,7 +43,7 @@ jobs:
           cache: 'yarn'
       - name: Build Stage 1
         run: |
-          echo "Welcome to build WebGAL Origine, the editor of WebGAL platform."
+          echo "Welcome to build WebGAL Terre, the editor of WebGAL platform."
           # 安装依赖
           yarn install --frozen-lockfile
           # 清理
@@ -113,7 +113,7 @@ jobs:
           rm -rf assets/templates/WebGAL_Android_Template/.gitattributes
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
-          echo "WebGAL Origine is now ready to be deployed."
+          echo "WebGAL Terre is now ready to be deployed."
 
       - name: Compress
         run: 7z a -tzip WebGAL_Terre_Linux_Arm64.zip release/*
@@ -127,7 +127,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -149,7 +149,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -170,7 +170,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -193,7 +193,7 @@ jobs:
     needs: ['build-linux','build-arm64','build-mac','build-windows','build-windows-nsis']
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Download artifacts
         uses: actions/download-artifact@v2

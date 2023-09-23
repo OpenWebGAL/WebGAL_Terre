@@ -118,7 +118,7 @@ export default function TopBar() {
   return <div className={styles.editor_topbar}>
     <a href="/" className={styles.home_btn}>
       <LeftSmall theme="outline" size="24" fill="#005caf" />
-      <div className={styles.editor_title}>WebGAL Origine</div>
+      <div className={styles.editor_title}>WebGAL Terre</div>
     </a>
 
     <div className={styles.editor_editingGame}>{t('editing')}<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>

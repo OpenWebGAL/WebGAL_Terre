@@ -44,7 +44,7 @@ export const zhCn = {
       },
       commandBar: {
         items: {
-          source:"源代码",
+          source: "源代码",
           language: {
             text: '语言'
           },
@@ -60,7 +60,17 @@ export const zhCn = {
             }
           }
         }
-      }
+      },
+      about: {
+        about: '关于',
+        checkedForNewVersion: '检测到新版本',
+        slogan: '视觉小说编辑，再进化',
+        currentVersion: '当前版本',
+        latestVersion: '最新版本',
+        homePage: '项目主页',
+        document: '文档',
+        downloadLatest: '下载最新版本',
+      },
     },
 
     sideBar: {
@@ -68,8 +78,8 @@ export const zhCn = {
         title: '游戏预览',
         refresh: '刷新',
         previewInNewTab: '在新标签页预览',
-        livePreview:'实时预览',
-        notice:'实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。',
+        livePreview: '实时预览',
+        notice: '实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。',
       },
 
       file: {
@@ -115,6 +125,7 @@ export const zhCn = {
           packageName: '游戏包名',
           bg: '标题背景图片',
           bgm: '标题背景音乐',
+          logoImage: '启动图',
         }
       },
 
@@ -177,17 +188,18 @@ export const zhCn = {
               placeholder: '百分比。 0-100 有效',
             },
             font: {
-              size:'文字大小',
-              options:{
-                default:'默认',
-                small:'小',
-                medium:'中',
-                large:'大',
+              size: '文字大小',
+              options: {
+                default: '默认',
+                small: '小',
+                medium: '中',
+                large: '大',
               }
             },
             position: {
               title: "关联立绘",
               options: {
+                none: '未指定',
                 left: '左侧立绘',
                 center: '中间立绘',
                 right: '右侧立绘',
@@ -307,6 +319,28 @@ export const zhCn = {
               title: "显示效果",
               on: "显示",
               off: "不显示"
+            },
+            tips: {
+              setEffect: "提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令",
+            },
+            duration: {
+              title: "动画所需时间",
+              placeholder: "动画所需时间（毫秒）"
+            },
+            animationType: {
+              title: "动画设置",
+              flag: "唇形同步与眨眼",
+              lipSync: {
+                title:"唇形同步",
+                mouthOpen: "张开嘴",
+                mouthHalfOpen: "半张嘴",
+                mouthClose: "闭上嘴",
+              },
+              blink: {
+                title:"眨眼",
+                eyesOpen:"睁开眼睛",
+                eyesClose:"闭上眼睛”",
+              },
             }
           }
         },
@@ -403,15 +437,15 @@ export const zhCn = {
               button: '添加新行'
             },
             option: {
-              title:'其他选项'
+              title: '其他选项'
             },
             colorPicker: {
-              backgroundColor:'背景颜色',
-              fontColor:'文字颜色',
+              backgroundColor: '背景颜色',
+              fontColor: '文字颜色',
               submit: '应用颜色变化'
             },
             font: {
-              size:'文字大小',
+              size: '文字大小',
               animation: '动画',
               delayTime: '延迟时间（秒）'
             }

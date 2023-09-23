@@ -44,7 +44,7 @@ export const jp = {
       },
       commandBar: {
         items: {
-          source:'ソースコード',
+          source: 'ソースコード',
           language: {
             text: '言語選択'
           },
@@ -60,7 +60,17 @@ export const jp = {
             }
           }
         }
-      }
+      },
+      about: {
+        about: 'About',
+        checkedForNewVersion: 'Checked for new version',
+        slogan: 'Galgame Editing. Redefined',
+        currentVersion: 'Current Version',
+        latestVersion: 'Latest Version',
+        homePage: 'Project HomePage',
+        document: 'Document',
+        downloadLatest: 'Download Latest Version',
+      },
     },
 
     sideBar: {
@@ -68,8 +78,8 @@ export const jp = {
         title: 'ゲームプレビュー',
         refresh: '再読み込み',
         previewInNewTab: '新しいタブでプレビュー',
-        livePreview:'ライブ・プレビュー',
-        notice:'ライブプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。'
+        livePreview: 'ライブ・プレビュー',
+        notice: 'ライブプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。'
       },
 
       file: {
@@ -115,6 +125,7 @@ export const jp = {
           packageName: 'パッケージ名',
           bg: 'タイトルの背景画像',
           bgm: 'タイトルのBGM',
+          logoImage: 'ロゴ',
         }
       },
 
@@ -176,17 +187,18 @@ export const jp = {
               placeholder: '百分率。 0-100 有効',
             },
             font: {
-              size:'フォントサイズ',
-              options:{
-                default:'デフォルト',
-                small:'小さい',
-                medium:'中くらい',
-                large:'大きい',
+              size: 'フォントサイズ',
+              options: {
+                default: 'デフォルト',
+                small: '小さい',
+                medium: '中くらい',
+                large: '大きい',
               }
             },
             position: {
               title: "関連する立ち絵の位置",
               options: {
+                none: '指定なし',
                 left: '左',
                 center: '中央',
                 right: '右',
@@ -306,6 +318,28 @@ export const jp = {
               title: "エフェクト",
               on: "使う",
               off: "使わない"
+            },
+            tips: {
+              setEffect: "ヒント: エフェクトは、別の立ち絵に切り替えた場合、または前の立ち絵を閉じて再度追加した場合にのみ有効になります。 既存の立ち絵に効果を設定する場合は、別の「エフェクトを使う」コマンドを使用してください",
+            },
+            duration: {
+              title: "所要時間",
+              placeholder: "所要時間 (ミリ秒)",
+            },
+            animationType: {
+              title: "アニメーション設定",
+              flag: "アニメーションの有無",
+              lipSync: {
+                title: "口パク",
+                mouthOpen: "開いた",
+                mouthHalfOpen:  "半分開いた口",
+                mouthClose:  "閉じた口",
+              },
+              blink: {
+                title: "まばたき",
+                eyesOpen: "開いた目",
+                eyesClose:  "閉じた目",
+              },
             }
           }
         },
@@ -402,15 +436,15 @@ export const jp = {
               button: '新しい行を追加'
             },
             option: {
-              title:'その他のオプション'
+              title: 'その他のオプション'
             },
             colorPicker: {
-              backgroundColor:'背景色',
-              fontColor:'文字色',
+              backgroundColor: '背景色',
+              fontColor: '文字色',
               submit: '色の変更を適用'
             },
             font: {
-              size:'文字サイズ',
+              size: '文字サイズ',
               animation: 'アニメーション',
               delayTime: '遅延時間（秒）'
             }
