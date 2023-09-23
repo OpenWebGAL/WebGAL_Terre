@@ -48,10 +48,8 @@ export default function EditorSidebarControl() {
   return <div className={styles.editor_sidebar_control}>
     <div onClick={switchPreview}>
       <SidebarIcons isActive={state.showPreview}>
-        <>
-          {state.showPreview && <IconButton iconProps={previewOpenIcon} title="showPreview" ariaLabel="showPreview" />}
-          {!state.showPreview && <IconButton iconProps={previewCloseIcon} title="closePreview" ariaLabel="closePreview" />}
-        </>
+        <IconButton iconProps={state.showPreview ? previewOpenIcon : previewCloseIcon}
+          title={t("preview.title")} ariaLabel={t("preview.title")} />
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.gameconfig)} style={{ margin: "auto 0 0 0" }}>
