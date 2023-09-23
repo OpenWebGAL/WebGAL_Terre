@@ -2,8 +2,10 @@ import styles from "./editorSideBar.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { ReactElement } from "react";
-import { FolderOpen, PlayTwo, PreviewCloseOne, PreviewOpen, SettingConfig } from "@icon-park/react";
 import { setEditorPreviewShow, setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
+import useTrans from "@/hooks/useTrans";
+import { IIconProps } from '@fluentui/react';
+import { IconButton } from '@fluentui/react/lib/Button';
 
 interface ISidebarIconsProps {
   children: ReactElement;
@@ -22,7 +24,14 @@ function SidebarIcons(props: ISidebarIconsProps) {
 
 export default function EditorSidebarControl() {
   const state = useSelector((state: RootState) => state.status.editor);
+  const t = useTrans("editor.sideBar.");
   const dispatch = useDispatch();
+
+  const previewOpenIcon: IIconProps = { iconName: 'Video', style: { transform: "scale(1.2)" } };
+  const previewCloseIcon: IIconProps = { iconName: 'VideoOff', style: { transform: "scale(1.2)" } };
+  const gameConfigIcon: IIconProps = { iconName: 'Settings', style: { transform: "scale(1.2)" } };
+  const assetsIcon: IIconProps = { iconName: 'Media', style: { transform: "scale(1.2)" } };
+  const scenesIcon: IIconProps = { iconName: 'MyMoviesTV', style: { transform: "scale(1.2)" } };
 
   function switchPreview() {
     dispatch(setEditorPreviewShow(!state.showPreview));
@@ -40,29 +49,24 @@ export default function EditorSidebarControl() {
     <div onClick={switchPreview}>
       <SidebarIcons isActive={state.showPreview}>
         <>
-          {state.showPreview && <PreviewOpen theme="outline" size="24" fill="#0B346E" strokeWidth={3} />}
-          {!state.showPreview && <PreviewCloseOne theme="outline" size="24" fill="#666" strokeWidth={3} />}
+          {state.showPreview && <IconButton iconProps={previewOpenIcon} title="showPreview" ariaLabel="showPreview" />}
+          {!state.showPreview && <IconButton iconProps={previewCloseIcon} title="closePreview" ariaLabel="closePreview" />}
         </>
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.gameconfig)} style={{ margin: "auto 0 0 0" }}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.gameconfig}>
-        <SettingConfig theme="outline" size="24"
-          fill={state.currentSidebarTag === sidebarTag.gameconfig ? "#0B346E" : "#666"} strokeWidth={3} />
+        <IconButton iconProps={gameConfigIcon} title={t("gameConfigs.title")} ariaLabel={t("gameConfigs.title")} />
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.assets)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.assets}>
-        <FolderOpen theme="outline" size="24"
-          fill={state.currentSidebarTag === sidebarTag.assets ? "#0B346E" : "#666"}
-          strokeWidth={3} />
+        <IconButton iconProps={assetsIcon} title={t("assets.title")} ariaLabel={t("assets.title")} />
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.scenes)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.scenes}>
-        <PlayTwo theme="outline" size="24"
-          fill={state.currentSidebarTag === sidebarTag.scenes ? "#0B346E" : "#666"}
-          strokeWidth={3} />
+        <IconButton iconProps={scenesIcon} title={t("scenes.title")} ariaLabel={t("scenes.title")} />
       </SidebarIcons>
     </div>
   </div>;
