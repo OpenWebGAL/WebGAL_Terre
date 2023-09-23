@@ -1,12 +1,14 @@
-## 发布日志：WebGAL Terre 4.4.4
+## 发布日志
 
 ### 在此版本中
 
 #### 新功能
 
-可以为立绘和背景便捷地设定效果
+可以设置启动图
 
-可以为已经存在的立绘和背景设置一个新效果，并自动生成一个从当前效果转换到目标效果的动画，使制作更简单。
+可以设置唇形同步和眨眼动画
+
+版本信息显示和检查更新
 
 #### 修复
 
@@ -14,15 +16,18 @@
 
 其他已知问题
 
-## Release Notes: WebGAL Terre 4.4.4
+<!-- English Translation -->
+## Release Notes
 
 ### In This Version
 
 #### New Features
 
-Easily set effects for character sprites and backgrounds
+Ability to set startup image
 
-You can set a new effect for existing character sprites and background objects and automatically generate an animation that transitions from the current effect to the target effect, making production easier.
+Ability to set lip sync and blinking animations
+
+Version information display and update checking
 
 #### Fixes
 
@@ -30,16 +35,18 @@ Some engine errors
 
 Other known issues
 
----
-## リリースノート：WebGAL Terre 4.4.4
+<!-- Japanese Translation -->
+## リリースノート
 
 ### このバージョンで
 
 #### 新機能
 
-キャラクタースプライトと背景に簡単にエフェクトを設定
+起動画像を設定可能
 
-既存のキャラクタースプライトと背景オブジェクトに新しいエフェクトを設定し、現在のエフェクトから目標エフェクトに遷移するアニメーションを自動的に生成できるようになりました。これにより、制作が簡単になります。
+リップシンクとまばたきアニメーションを設定可能
+
+バージョン情報の表示と更新の確認
 
 #### 修正
 
@@ -47,16 +54,18 @@ Other known issues
 
 その他の既知の問題
 
----
-## Notes de version : WebGAL Terre 4.4.4
+<!-- French Translation -->
+## Notes de version
 
 ### Dans cette version
 
 #### Nouvelles fonctionnalités
 
-Définir facilement des effets pour les sprites de personnages et les arrière-plans
+Possibilité de définir une image de démarrage
 
-Vous pouvez désormais définir un nouvel effet pour les sprites de personnages et objets d'arrière-plan existants et générer automatiquement une animation qui passe de l'effet actuel à l'effet cible, ce qui facilite la production.
+Possibilité de définir des animations de synchronisation labiale et de clignement
+
+Affichage des informations de version et vérification des mises à jour
 
 #### Corrections
 

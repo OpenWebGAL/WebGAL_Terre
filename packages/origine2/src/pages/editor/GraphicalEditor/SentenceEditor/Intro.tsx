@@ -149,18 +149,18 @@ export default function Intro(props: ISentenceEditorProps) {
   const [localFontColor, setLocalFontColor] = useState(fontColor.value);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const toggleAccordion = () => {
-      setIsAccordionOpen(!isAccordionOpen);
+    setIsAccordionOpen(!isAccordionOpen);
   };
   const optionButtonStyles = {
     root: {
-        backgroundColor: '#0078d4',
-        color: 'white',
-        margin: '6px 0 0 0',
-        display: 'flex'
+      backgroundColor: '#0078d4',
+      color: 'white',
+      margin: '6px 0 0 0',
+      display: 'flex'
     },
     rootHovered: {
-        backgroundColor: '#005a9e',
-        color: 'white'
+      backgroundColor: '#005a9e',
+      color: 'white'
     },
   };
 

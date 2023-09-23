@@ -14,9 +14,8 @@ import { wireTmGrammars } from "monaco-editor-textmate";
 // 语法高亮文件
 import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
-import { WG_ORIGINE_RUNTIME } from "../../../runtime/WG_ORIGINE_RUNTIME";
+import {lspSceneName, WG_ORIGINE_RUNTIME} from "../../../runtime/WG_ORIGINE_RUNTIME";
 import { WsUtil } from "../../../utils/wsUtil";
-import { lspSceneName } from "../../../App";
 
 interface ITextEditorProps {
   targetPath: string;

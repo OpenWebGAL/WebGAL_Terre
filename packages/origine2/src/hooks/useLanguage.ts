@@ -8,12 +8,12 @@ import { setLanguage } from '@/store/statusReducer';
 
 export function getLanguageName(lang: language): string {
   switch (lang) {
-    case language.zhCn:
-      return 'zhCn';
-    case language.en:
-      return 'en';
-    case language.jp:
-      return 'jp';
+  case language.zhCn:
+    return 'zhCn';
+  case language.en:
+    return 'en';
+  case language.jp:
+    return 'jp';
   }
 }
 
