@@ -122,6 +122,7 @@ export const zhCn = {
         options: {
           name: '游戏名称',
           id: '游戏识别码',
+          description: '游戏简介',
           packageName: '游戏包名',
           bg: '标题背景图片',
           bgm: '标题背景音乐',
