@@ -10,7 +10,7 @@ export function useRelease() {
 
   const webgalTerreLatestApiUrl = 'https://api.github.com/repos/MakinoharaShoko/WebGAL_Terre/releases/latest';
 
-  const [latestRelease, setLatestRelease] = useState<latestRelease>({ version: __INFO.version, releaseTime: __INFO.buildTime });
+  const [latestRelease, setLatestRelease] = useState<latestRelease | null>(null);
 
   const getRelease = async () => {
     const response = await fetch(webgalTerreLatestApiUrl);
