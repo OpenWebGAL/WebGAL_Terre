@@ -24,7 +24,12 @@ const About: React.FunctionComponent = () => {
 
   const latestRelease = useRelease();
 
-  // 是否有新版本
+  /**
+   * 比较版本号
+   * @param latestVersion 最新版本
+   * @param currentVersion 当前版本
+   * @returns 1: 最新版本比当前版本高, -1: 最新版本比当前版本低，0: 版本相同
+   */
   const compareVersion = (latestVersion: string, currentVersion: string) => {
     const versionToArray = (version: string) => version.split('.').map(v => Number(v));
     
@@ -82,7 +87,7 @@ const About: React.FunctionComponent = () => {
             <small>
               {t('about.currentVersion')}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
               {
-                isNewRelease &&
+                latestRelease &&
                 <span>
                   {t('about.latestVersion')}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
                 </span>
