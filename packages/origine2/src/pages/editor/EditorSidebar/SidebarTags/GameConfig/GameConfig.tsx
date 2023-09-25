@@ -99,7 +99,7 @@ export default function GameConfig() {
         </div>
         <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.description")}</div>
-          <GameConfigEditor key="gameName" value={getConfigContentAsString('Description')}
+          <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
             onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>
         </div>
         <div className={styles.sidebar_gameconfig_container}>
