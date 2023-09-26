@@ -53,11 +53,13 @@ export class ManageGameService {
   async getGameConfig(gameName: string) {
     interface Config {
       Game_name: string;
+      Description: string;
       Game_key: string;
       Package_name: string;
     }
     const config: Config = {
       Game_name: '',
+      Description: '',
       Game_key: '',
       Package_name: '',
     };
@@ -81,8 +83,8 @@ export class ManageGameService {
         });
     }
     return {
-      gameName: config.Game_name === '' ? 'WebGAL' : config.Game_name,
-      packageName:
+      ...config,
+      Package_name:
         config.Package_name === ''
           ? 'com.openwebgal.demo'
           : config.Package_name,
@@ -145,6 +147,12 @@ export class ManageGameService {
           this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
           `${electronExportDir}/resources/app/public/`,
         );
+        // 修改 manifest.json
+        await this.webgalFs.replaceTextFile(
+          `${electronExportDir}/resources/app/public/manifest.json`,
+          ['WebGAL DEMO', 'WebGAL'],
+          [gameConfig.Description, gameConfig.Game_name],
+        );
         // 删掉 Service Worker
         await this.webgalFs.deleteFileOrDirectory(
           `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
@@ -174,6 +182,12 @@ export class ManageGameService {
           this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
           `${electronExportDir}/resources/app/public/`,
         );
+        // 修改 manifest.json
+        await this.webgalFs.replaceTextFile(
+          `${electronExportDir}/resources/app/public/manifest.json`,
+          ['WebGAL DEMO', 'WebGAL'],
+          [gameConfig.Description, gameConfig.Game_name],
+        );
         // 删掉 Service Worker
         await this.webgalFs.deleteFileOrDirectory(
           `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
@@ -202,6 +216,12 @@ export class ManageGameService {
         await this.webgalFs.copy(
           this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
           `${electronExportDir}/Contents/Resources/app/public/`,
+        );
+        // 修改 manifest.json
+        await this.webgalFs.replaceTextFile(
+          `${electronExportDir}/Contents/Resources/app/public/manifest.json`,
+          ['WebGAL DEMO', 'WebGAL'],
+          [gameConfig.Description, gameConfig.Game_name],
         );
         // 删掉 Service Worker
         await this.webgalFs.deleteFileOrDirectory(
@@ -236,6 +256,12 @@ export class ManageGameService {
         this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
         `${androidExportDir}/app/src/main/assets/webgal/`,
       );
+      // 修改 manifest.json
+      await this.webgalFs.replaceTextFile(
+        `${androidExportDir}/app/src/main/assets/webgal/manifest.json`,
+        ['WebGAL DEMO', 'WebGAL'],
+        [gameConfig.Description, gameConfig.Game_name],
+      );
       // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
       await this.webgalFs.deleteFileOrDirectory(
         `${androidExportDir}/app/src/main/assets/webgal/game/`,
@@ -253,27 +279,27 @@ export class ManageGameService {
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/src/main/res/values/strings.xml`,
         'WebGAL',
-        gameConfig.gameName,
+        gameConfig.Game_name,
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/build.gradle`,
         'com.openwebgal.demo',
-        gameConfig.packageName,
+        gameConfig.Package_name,
       );
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/src/main/java/MainActivity.kt`,
         'com.openwebgal.demo',
-        gameConfig.packageName,
+        gameConfig.Package_name,
       );
       await this.webgalFs.mkdir(
         // eslint-disable-next-line prettier/prettier
-        `${androidExportDir}/app/src/main/java/${gameConfig.packageName.replace(/\./g, '/')}`,
+        `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}`,
         '',
       );
       await this.webgalFs.copy(
         `${androidExportDir}/app/src/main/java/MainActivity.kt`,
         // eslint-disable-next-line prettier/prettier
-        `${androidExportDir}/app/src/main/java/${gameConfig.packageName.replace(/\./g, '/')}/MainActivity.kt`
+        `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}/MainActivity.kt`
       );
       await this.webgalFs.deleteFileOrDirectory(
         `${androidExportDir}/app/src/main/java/MainActivity.kt`,
@@ -288,6 +314,12 @@ export class ManageGameService {
         this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
         `${webExportDir}/`,
       );
+    // 修改 manifest.json
+    await this.webgalFs.replaceTextFile(
+      `${webExportDir}/manifest.json`,
+      ['WebGAL DEMO', 'WebGAL'],
+      [gameConfig.Description, gameConfig.Game_name],
+    );
       // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
       await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
       await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
