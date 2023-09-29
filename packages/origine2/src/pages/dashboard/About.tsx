@@ -23,9 +23,38 @@ const About: React.FunctionComponent = () => {
   const t = useTrans('editor.topBar.');
 
   const latestRelease = useRelease();
-  const versionToNumber = (version: string) => Number(version.replace(/\./g, ''));
-  // 是否有新版本
-  const isNewRelease = versionToNumber(latestRelease.version) !== versionToNumber(__INFO.version);
+
+  /**
+   * 比较版本号
+   * @param latestVersion 最新版本
+   * @param currentVersion 当前版本
+   * @returns 1: 最新版本比当前版本高, -1: 最新版本比当前版本低，0: 版本相同
+   */
+  const compareVersion = (latestVersion: string, currentVersion: string) => {
+    const versionToArray = (version: string) => version?.split('.')?.map(v => Number(v))??[0];
+
+    const latestVersionArray = versionToArray(latestVersion);
+    const currentVersionArray = versionToArray(currentVersion);
+    const length = Math.max(latestVersionArray.length, currentVersionArray.length);
+
+    for (let i = 0; i < length; i++) {
+      if (!latestVersionArray[i]){
+        latestVersionArray[i] = 0;
+      }
+      if (!currentVersionArray[i]){
+        currentVersionArray[i] = 0;
+      }
+      if (latestVersionArray[i] > currentVersionArray[i]) {
+        return 1;
+      } else if (latestVersionArray[i] < currentVersionArray[i]) {
+        return -1;
+      }
+    }
+    return 0;
+  };
+
+  const isNewRelease = latestRelease && compareVersion(latestRelease.version, __INFO.version) === 1;
+
   isNewRelease && logger.info(`发现新版本：${latestRelease.version}`, latestRelease);
 
   const dateTimeOptions: DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -58,7 +87,7 @@ const About: React.FunctionComponent = () => {
             <small>
               {t('about.currentVersion')}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
               {
-                isNewRelease &&
+                latestRelease &&
                 <span>
                   {t('about.latestVersion')}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
                 </span>
