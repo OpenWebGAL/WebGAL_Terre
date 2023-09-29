@@ -23,8 +23,8 @@ export function useRelease() {
       getRelease().then(
         releasedata => setLatestRelease(
           {
-            version: releasedata.tag_name,
-            releaseTime: releasedata.published_at,
+            version: releasedata?.tag_name,
+            releaseTime: releasedata?.published_at,
           }
         )
       );
