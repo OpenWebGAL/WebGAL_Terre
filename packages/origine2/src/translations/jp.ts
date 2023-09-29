@@ -122,6 +122,7 @@ export const jp = {
         options: {
           name: 'ゲーム名',
           id: 'ゲームID',
+          description: 'ゲーム概要',
           packageName: 'パッケージ名',
           bg: 'タイトルの背景画像',
           bgm: 'タイトルのBGM',
