@@ -31,8 +31,8 @@ const About: React.FunctionComponent = () => {
    * @returns 1: 最新版本比当前版本高, -1: 最新版本比当前版本低，0: 版本相同
    */
   const compareVersion = (latestVersion: string, currentVersion: string) => {
-    const versionToArray = (version: string) => version.split('.').map(v => Number(v));
-    
+    const versionToArray = (version: string) => version?.split('.')?.map(v => Number(v))??[0];
+
     const latestVersionArray = versionToArray(latestVersion);
     const currentVersionArray = versionToArray(currentVersion);
     const length = Math.max(latestVersionArray.length, currentVersionArray.length);
