@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Body,
   ConsoleLogger,
   Controller,
   Get,
+  Param,
   Post,
   Req,
   UploadedFiles,
@@ -17,8 +19,30 @@ import { ManageGameService } from './manage-game.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { LspService } from '../lsp/lsp.service';
 import { logger } from 'webgal-origine-2/src/utils/logger';
+import {
+  // ... (其他的导入)
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiQuery,
+  ApiParam,
+} from '@nestjs/swagger';
+import {
+  CreateGameDto,
+  CreateNewSceneDto,
+  DeleteFileDto,
+  DeleteFileOrDirDto,
+  EditFileNameDto,
+  EditSceneDto,
+  GameConfigDto,
+  MkDirDto,
+  RenameDto,
+  UploadFilesDto,
+} from './manage-game.dto';
 
 @Controller('api/manageGame')
+@ApiTags('Manage Game')
 export class ManageGameController {
   constructor(
     private readonly webgalFs: WebgalFsService,
@@ -28,7 +52,10 @@ export class ManageGameController {
   ) {}
 
   @Get('gameList')
-  async testReadDir() {
+  @Get('gameList')
+  @ApiOperation({ summary: 'Retrieve game list' })
+  @ApiResponse({ status: 200, description: 'Returned game list.' })
+  async getGameList() {
     // 如果游戏文件夹不存在就创建
     if (!(await this.webgalFs.existsDir('public/games')))
       await this.webgalFs.mkdir('public', 'games');
@@ -38,168 +65,259 @@ export class ManageGameController {
   }
 
   @Post('createGame')
-  async createGame(@Req() request: Request) {
-    const gameName = request.body.gameName;
-    const createResult = await this.manageGame.createGame(gameName);
+  @ApiOperation({ summary: 'Create a new game' })
+  @ApiResponse({ status: 200, description: 'Game creation result.' })
+  @ApiBody({ type: CreateGameDto, description: 'Game creation data' })
+  async createGame(@Body() createGameData: CreateGameDto) {
+    const createResult = await this.manageGame.createGame(
+      createGameData.gameName,
+    );
     if (createResult) {
       return { status: 'success' };
     } else {
-      return { status: 'filed' };
+      return { status: 'failed' }; // Note: Typo correction 'filed' -> 'failed'
     }
   }
 
-  @Get('openGameAssetsDict/*')
-  async openGameAssetsDict(@Req() request: Request) {
-    const requestUrl = request.url;
-    // 截取出有关要阅读的目录的信息
-    const gameName = decodeURI(requestUrl.split('openGameAssetsDict/')[1]);
+  @Get('openGameAssetsDict/:gameName') // <-- Define the route parameter using :gameName
+  @ApiOperation({ summary: 'Open Game Assets Dictionary' })
+  @ApiResponse({
+    status: 200,
+    description: 'Opens the assets dictionary for a specified game.',
+  })
+  @ApiParam({
+    name: 'gameName',
+    type: String,
+    description: 'Name of the game.',
+  }) // <-- Swagger description for the route parameter
+  async openGameAssetsDict(@Param('gameName') gameName: string) {
+    // <-- Use @Param decorator to fetch the gameName
+    gameName = decodeURI(gameName); // Optionally decode the URI if necessary
     this.manageGame.openAssetsDictionary(gameName).then();
   }
 
-  @Get('ejectGameAsWeb/*')
-  async ejectGameAsWeb(@Req() request: Request) {
-    const requestUrl = request.url;
-    // 截取出有关要阅读的目录的信息
-    const gameName = decodeURI(requestUrl.split('ejectGameAsWeb/')[1]);
+  @Get('ejectGameAsWeb/:gameName') // Use :gameName to define the route parameter
+  @ApiOperation({ summary: 'Eject Game As Web App' })
+  @ApiResponse({
+    status: 200,
+    description: 'Exports the specified game as a web app.',
+  })
+  @ApiParam({
+    name: 'gameName',
+    type: String,
+    description: 'Name of the game to be exported as web app.',
+  }) // Swagger description for the route parameter
+  async ejectGameAsWeb(@Param('gameName') gameName: string) {
+    // Fetch gameName using @Param decorator
+    gameName = decodeURI(gameName); // Optionally decode the URI
     this.manageGame
       .exportGame(gameName, 'web')
       .then(() => this.logger.log(`${gameName} export as web app`));
   }
 
-  @Get('ejectGameAsExe/*')
-  async ejectGameAsExe(@Req() request: Request) {
-    const requestUrl = request.url;
-    // 截取出有关要阅读的目录的信息
-    const gameName = decodeURI(requestUrl.split('ejectGameAsExe/')[1]);
+  @Get('ejectGameAsExe/:gameName')
+  @ApiOperation({ summary: 'Eject Game As EXE' })
+  @ApiResponse({
+    status: 200,
+    description: 'Exports the specified game as an EXE (Windows Electron App).',
+  })
+  @ApiParam({
+    name: 'gameName',
+    type: String,
+    description: 'Name of the game to be exported as EXE.',
+  })
+  async ejectGameAsExe(@Param('gameName') gameName: string) {
+    gameName = decodeURI(gameName);
     this.manageGame
       .exportGame(gameName, 'electron-windows')
       .then(() => this.logger.log(`${gameName} export as exe`));
   }
 
-  @Get('ejectGameAsAndroid/*')
-  async ejectGameAsAndroid(@Req() request: Request) {
-    const requestUrl = request.url;
-    // 截取出有关要阅读的目录的信息
-    const gameName = decodeURI(requestUrl.split('ejectGameAsAndroid/')[1]);
+  @Get('ejectGameAsAndroid/:gameName')
+  @ApiOperation({ summary: 'Eject Game As Android App' })
+  @ApiResponse({
+    status: 200,
+    description: 'Exports the specified game as an Android app.',
+  })
+  @ApiParam({
+    name: 'gameName',
+    type: String,
+    description: 'Name of the game to be exported as an Android app.',
+  })
+  async ejectGameAsAndroid(@Param('gameName') gameName: string) {
+    gameName = decodeURI(gameName);
     this.manageGame
       .exportGame(gameName, 'android')
       .then(() => this.logger.log(`${gameName} export as android`));
   }
 
-  @Get('readGameAssets/*')
-  async readGameAssets(@Req() request: Request) {
-    const requestUrl = request.url;
-    // 截取出有关要阅读的目录的信息
-    const readDirName = decodeURI(requestUrl.split('readGameAssets/')[1]);
+  @Get('readGameAssets/:readDirPath(*)')
+  @ApiOperation({ summary: 'Read Game Assets' })
+  @ApiResponse({
+    status: 200,
+    description: 'Retrieve the assets of the specified game directory.',
+  })
+  @ApiParam({
+    name: 'readDirPath',
+    type: String,
+    description:
+      'Path of the game directory to read assets from, including subdirectories.',
+  })
+  async readGameAssets(@Param('readDirPath') readDirPath: string) {
+    readDirPath = decodeURI(readDirPath);
     const dirPath = this.webgalFs.getPathFromRoot(
-      `public/games/${readDirName}`,
+      `public/games/${readDirPath}`,
     );
     const dirInfo = await this.webgalFs.getDirInfo(dirPath);
-    return { readDirName, dirPath, dirInfo };
+    return { readDirPath, dirPath, dirInfo };
   }
 
-  @Post('editFileName/*')
-  async editFileName(@Req() request: Request) {
-    const requestBody = request.body;
+  @Post('editFileName')
+  @ApiOperation({ summary: 'Edit File Name' })
+  @ApiResponse({ status: 200, description: 'Successfully renamed the file.' })
+  @ApiResponse({ status: 400, description: 'Failed to rename the file.' })
+  @ApiBody({ type: EditFileNameDto, description: 'File renaming data' })
+  async editFileName(@Body() editFileNameData: EditFileNameDto) {
     return await this.webgalFs.renameFile(
-      requestBody.path,
-      requestBody.newName,
+      editFileNameData.path,
+      editFileNameData.newName,
     );
   }
 
-  @Post('deleteFile/*')
-  async deleteFile(@Req() request: Request) {
-    const requestBody = request.body;
-    return await this.webgalFs.deleteFile(requestBody.path);
+  @Post('deleteFile')
+  @ApiOperation({ summary: 'Delete File' })
+  @ApiResponse({ status: 200, description: 'Successfully deleted the file.' })
+  @ApiResponse({ status: 400, description: 'Failed to delete the file.' })
+  @ApiBody({ type: DeleteFileDto, description: 'File deletion data' })
+  async deleteFile(@Body() deleteFileData: DeleteFileDto) {
+    return await this.webgalFs.deleteFile(deleteFileData.path);
   }
 
-  @Post('createNewScene/*')
-  async createNewScene(@Req() request: Request) {
-    return new Promise(async (resolve, reject) => {
-      const requestBody = request.body;
-      const gameName: string = requestBody.gameName;
-      const sceneName: string = requestBody.sceneName;
-      const path = this.webgalFs.getPathFromRoot(
-        `/public/games/${gameName}/game/scene/${sceneName}.txt`,
-      );
-
-      if (await this.webgalFs.exists(path)) return reject('Scene existed');
-
-      resolve(await this.webgalFs.createEmptyFile(path));
-    });
-  }
-
-  @Post('editScene/*')
-  async editScene(@Req() request: Request) {
-    const requestBody = request.body;
-    const gameName: string = requestBody.gameName;
-    const sceneName: string = requestBody.sceneName;
-    const content: { value: string } = JSON.parse(requestBody.sceneData);
+  @Post('createNewScene')
+  @ApiOperation({ summary: 'Create a New Scene' })
+  @ApiResponse({ status: 200, description: 'Successfully created the scene.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to create the scene or scene already exists.',
+  })
+  @ApiBody({ type: CreateNewSceneDto, description: 'Scene creation data' })
+  async createNewScene(
+    @Body() createNewSceneData: CreateNewSceneDto,
+  ): Promise<string | void> {
     const path = this.webgalFs.getPathFromRoot(
-      `/public/games/${gameName}/game/scene/${sceneName}`,
+      `/public/games/${createNewSceneData.gameName}/game/scene/${createNewSceneData.sceneName}.txt`,
     );
-    // await this.lspServerce.updateDocument(sceneName, content.value);
-    return await this.webgalFs.updateTextFile(path, content.value);
+
+    if (await this.webgalFs.exists(path)) {
+      throw new BadRequestException('Scene already exists');
+    }
+
+    return this.webgalFs.createEmptyFile(path);
   }
 
-  @Get('getGameConfig/*')
-  async getGameConfig(@Req() request: Request) {
-    // 截取出游戏名称
-    const gameNameFromUrl: string = request.url.split('getGameConfig/')[1];
-    const gameName = decodeURI(gameNameFromUrl);
-    const configFilePath = this.webgalFs.getPathFromRoot(
-      `/public/games/${gameName}/game/config.txt`,
+  @Post('editScene')
+  @ApiOperation({ summary: 'Edit Scene' })
+  @ApiResponse({ status: 200, description: 'Scene edited successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to edit the scene.' })
+  async editScene(@Body() editSceneData: EditSceneDto) {
+    const path = this.webgalFs.getPathFromRoot(
+      `/public/games/${editSceneData.gameName}/game/scene/${editSceneData.sceneName}`,
     );
-    return await this.webgalFs.readTextFile(configFilePath);
+    const sceneData = JSON.parse(editSceneData.sceneData) as { value: string };
+    return this.webgalFs.updateTextFile(path, sceneData.value);
   }
 
-  @Post('setGameConfig/*')
-  async setGameConfig(@Req() request: Request) {
-    // 将新的配置文件写入
-    const body = request.body;
-    const gameName = body.gameName;
-    const newConfig = body.newConfig;
+  @Get('getGameConfig/:gameName')
+  @ApiOperation({ summary: 'Get Game Configuration' })
+  @ApiResponse({ status: 200, description: 'Returned game configuration.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to get the game configuration.',
+  })
+  async getGameConfig(@Param('gameName') gameName: string) {
     const configFilePath = this.webgalFs.getPathFromRoot(
-      `/public/games/${gameName}/game/config.txt`,
+      `/public/games/${decodeURI(gameName)}/game/config.txt`,
     );
-    return await this.webgalFs.updateTextFile(configFilePath, newConfig);
+    return this.webgalFs.readTextFile(configFilePath);
+  }
+
+  @Post('setGameConfig')
+  @ApiOperation({ summary: 'Set Game Configuration' })
+  @ApiResponse({
+    status: 200,
+    description: 'Game configuration set successfully.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to set the game configuration.',
+  })
+  async setGameConfig(@Body() gameConfigData: GameConfigDto) {
+    const configFilePath = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameConfigData.gameName}/game/config.txt`,
+    );
+    return this.webgalFs.updateTextFile(
+      configFilePath,
+      gameConfigData.newConfig,
+    );
   }
 
   @Post('uploadFiles')
   @UseInterceptors(FilesInterceptor('files'))
+  @ApiOperation({ summary: 'Upload Files' })
+  @ApiResponse({ status: 200, description: 'Files uploaded successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to upload files.' })
   async uploadFiles(
     @UploadedFiles() files,
-    @Body('targetDirectory') targetDirectory: string,
+    @Body() uploadFilesDto: UploadFilesDto,
   ) {
-    console.log(`Target directory: ${targetDirectory}`);
     const fileInfos: IUploadFileInfo[] = files.map((file) => {
       return { fileName: file.originalname, file: file.buffer };
     });
-    return await this.webgalFs.writeFiles(targetDirectory, fileInfos);
+    return this.webgalFs.writeFiles(uploadFilesDto.targetDirectory, fileInfos);
   }
 
   @Post('mkdir')
-  async mkDir(@Body('source') source: string, @Body('name') name: string) {
-    await this.webgalFs.mkdir(this.webgalFs.getPathFromRoot(source), name);
+  @ApiOperation({ summary: 'Create Directory' })
+  @ApiResponse({ status: 200, description: 'Directory created successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to create directory.' })
+  async mkDir(@Body() fileOperationDto: MkDirDto) {
+    await this.webgalFs.mkdir(
+      this.webgalFs.getPathFromRoot(fileOperationDto.source),
+      fileOperationDto.name,
+    );
     return true;
   }
 
   @Post('delete')
-  async deleteFileOrDir(@Body('source') source: string) {
-    this.logger.log(source);
-    return await this.webgalFs.deleteFileOrDirectory(
-      this.webgalFs.getPathFromRoot(source),
+  @ApiOperation({ summary: 'Delete File or Directory' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully deleted the file or directory.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to delete the file or directory.',
+  })
+  async deleteFileOrDir(@Body() fileOperationDto: DeleteFileOrDirDto) {
+    return this.webgalFs.deleteFileOrDirectory(
+      this.webgalFs.getPathFromRoot(fileOperationDto.source),
     );
   }
 
   @Post('rename')
-  async rename(
-    @Body('source') source: string,
-    @Body('newName') newName: string,
-  ) {
-    return await this.webgalFs.renameFile(
-      this.webgalFs.getPathFromRoot(source),
-      newName,
+  @ApiOperation({ summary: 'Rename File or Directory' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully renamed the file or directory.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to rename the file or directory.',
+  })
+  async rename(@Body() fileOperationDto: RenameDto) {
+    return this.webgalFs.renameFile(
+      this.webgalFs.getPathFromRoot(fileOperationDto.source),
+      fileOperationDto.newName,
     );
   }
 }
