@@ -2,15 +2,18 @@ import styles from "./gamepreview.module.scss";
 import { useDispatch } from "react-redux";
 import { setDashboardShow, setEditingGame } from "../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
+import { GameInfo } from "./DashBoard";
+import { IconButton } from "@fluentui/react";
 
 interface IGamePreviewProps {
-  gameName: string;
+  currentGame: GameInfo;
+  setCurrentGame: (currentGame: GameInfo | null) => void;
 }
 
 export function GamePreview(props: IGamePreviewProps) {
   const t = useTrans('dashBoard.preview.');
   const dispatch = useDispatch();
-  if (props.gameName === "") {
+  if (props.currentGame === null) {
     return <div className={styles.noneChecked}>
       {t('noneChecked')}
     </div>;
@@ -23,10 +26,12 @@ export function GamePreview(props: IGamePreviewProps) {
 
   return <div className={styles.preview_main}>
     <div className={styles.preview_title}>
-      <span className={styles.preview_title_text}>{props.gameName}</span>
-      <span onClick={() => enterEditor(props.gameName)} className={styles.editGameButton}>{t('editGame')}</span>
+      <IconButton iconProps={{iconName: 'ChromeClose'}} onClick={() => props.setCurrentGame(null)} />
+      {/* <span onClick={() => enterEditor(props.currentGame.dir)} className={styles.editGameButton}>{t('editGame')}</span> */}
+      <span className={styles.preview_title_text}>{props.currentGame.title}</span>
+
     </div>
     {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-    <iframe id="gamePreviewIframe" frameBorder="0" className={styles.previewWindow} src={`/games/${props.gameName}`} />
+    <iframe id="gamePreviewIframe" frameBorder="0" className={styles.previewWindow} src={`/games/${props.currentGame.dir}`} />
   </div>;
 }
