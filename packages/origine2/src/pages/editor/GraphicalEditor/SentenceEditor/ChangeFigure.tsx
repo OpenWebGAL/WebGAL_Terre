@@ -11,8 +11,13 @@ import useTrans from "@/hooks/useTrans";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import {useState} from "react";
+import {api} from "@/api";
+import axios from "axios";
+import {useSelector} from "react-redux";
+import {RootState} from "@/store/origineStore";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
+  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   const t = useTrans('editor.graphical.sentences.changeFigure.');
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
@@ -29,6 +34,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const eyesClose = useValue(getArgByKey(props.sentence, "eyesClose").toString() ?? "");
   const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
+  const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
+  useEffect(() => {
+    if (figureFile.value.includes('json')) {
+      // 找到对应的文件读取
+      axios.get(`/games/${gameName}/game/figure/${figureFile.value}`).then(resp => {
+        const data = resp.data;
+        const motions = Object.keys(data.motions);
+        setL2dMotionsList(motions);
+      });
+    }
+  }, [figureFile]);
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
   };
@@ -74,10 +91,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const mouthCloseFile = mouthClose.value !== "" ? ` -mouthClose=${mouthClose.value}` : "";
     const eyesOpenFile = eyesOpen.value !== "" ? ` -eyesOpen=${eyesOpen.value}` : "";
     const eyesCloseFile = eyesClose.value !== "" ? ` -eyesClose=${eyesClose.value}` : "";
+    const motionArgs = currentMotion.value !== '' ? ` -motion=${currentMotion.value}` : "";
     if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs};`);
     } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs};`);
     }
   };
 
@@ -110,6 +128,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         }} onText={t('$editor.graphical.sentences.common.options.goNext.on')}
         offText={t('$editor.graphical.sentences.common.options.goNext.off')} isChecked={isGoNext.value}/>
       </CommonOptions>
+      {figureFile.value.includes('.json') && <CommonOptions key="24" title="live2D Motion">
+        <Dropdown
+          selectedKey={currentMotion.value}
+          dropdownWidth={100}
+          style={{width: 100}}
+          options={l2dMotionsList.map(e => ({key: e, text: e}))}
+          onChange={(ev, newValue: any) => {
+            currentMotion.set(newValue.key);
+            submit();
+          }}
+        />
+      </CommonOptions>}
       <CommonOptions title={t('options.position.title')} key="3">
         <Dropdown
           selectedKey={figurePosition.value}
