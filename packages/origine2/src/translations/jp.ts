@@ -4,7 +4,9 @@ export const jp = {
     exit: '戻る',
     create: '作成',
     revise: '変更',
-    cancel: 'キャンセル'
+    cancel: 'キャンセル',
+    rename: 'Rename',
+    renameDir: 'Rename dir',
   },
 
   dashBoard: {
