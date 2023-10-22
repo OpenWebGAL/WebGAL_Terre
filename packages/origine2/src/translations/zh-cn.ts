@@ -4,7 +4,9 @@ export const zhCn = {
     exit: '返回',
     create: '创建',
     revise: '修改',
-    cancel: '取消'
+    cancel: '取消',
+    rename: '重命名',
+    renameDir: '重命名文件夹',
   },
 
   dashBoard: {
