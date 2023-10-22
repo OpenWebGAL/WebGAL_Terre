@@ -392,6 +392,11 @@ export const zhCn = {
           options: {
             file: {
               title: "视频文件"
+            },
+            video: {
+              option: "视频选项",
+              skipOff: "禁止跳过视频",
+              skipOn: "启用视频跳过"
             }
           }
         },
