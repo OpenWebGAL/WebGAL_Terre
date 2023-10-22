@@ -391,6 +391,11 @@ export const en = {
           options: {
             file: {
               title: "Video file"
+            },
+            video: {
+              option: "Video Option",
+              skipOff: "Disable skipping of videos",
+              skipOn: "Enable video skipping"
             }
           }
         },
