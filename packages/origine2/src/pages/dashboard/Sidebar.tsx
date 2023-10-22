@@ -10,7 +10,7 @@ interface ISidebarProps {
   currentSetGame: string | null;
   setCurrentGame: (currentGame: string) => void;
   createGame: (name: string) => void;
-  onDeleteGame?: () => void;
+  refreash?: () => void;
 }
 
 export default function Sidebar(props: ISidebarProps) {
@@ -20,8 +20,10 @@ export default function Sidebar(props: ISidebarProps) {
   const [newGameName, setNewGameName] = useState(t('createNewGame.dialog.defaultName') || "新的游戏");
 
   function createNewGame() {
-    props.createGame(newGameName);
-    setShowCreateGameCallout(false);
+    if (newGameName && newGameName.trim() !== '' && !props.gameList.find((item) => item.dir === newGameName.trim())) {
+      props.createGame(newGameName);
+      setShowCreateGameCallout(false);
+    }
   }
 
   const translatedGameName = t('createNewGame.dialog.defaultName');
@@ -53,9 +55,12 @@ export default function Sidebar(props: ISidebarProps) {
           {t('createNewGame.dialog.title')}
         </Text>
         <div>
-          <TextField value={newGameName} onChange={(event, newValue) => {
-            setNewGameName(newValue ?? "");
-          }} defaultValue={t('createNewGame.dialog.defaultName')} label={t('createNewGame.dialog.text')} />
+          <TextField 
+            value={newGameName}
+            onChange={(event, newValue) => setNewGameName(newValue ?? "")}
+            onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
+            defaultValue={t('createNewGame.dialog.defaultName')}
+            label={t('createNewGame.dialog.text')} />
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
           <PrimaryButton text={t('$common.create')} onClick={createNewGame} allowDisabledFocus />
@@ -66,8 +71,13 @@ export default function Sidebar(props: ISidebarProps) {
       {
         props.gameList.map(e => {
           const checked = props.currentSetGame === e.dir;
-          return <GameElement onDeleteGame={() => props.onDeleteGame?.()} onClick={() => props.setCurrentGame(e.dir)} gameInfo={e}
-            key={e.dir} checked={checked} />;
+          return <GameElement
+            onClick={() => props.setCurrentGame(e.dir)}
+            refreash={props.refreash}
+            gameInfo={e}
+            key={e.dir}
+            checked={checked} 
+          />;
         })
       }
     </div>

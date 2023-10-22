@@ -1,5 +1,5 @@
 import styles from "./gameElement.module.scss";
-import { CommandBarButton, DefaultButton, Dialog, DialogFooter, DialogType, IContextualMenuProps, PrimaryButton, Stack } from "@fluentui/react";
+import { CommandBarButton, DefaultButton, Dialog, DialogFooter, DialogType, IContextualMenuProps, PrimaryButton, Stack, TextField } from "@fluentui/react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setDashboardShow, setEditingGame } from "../../store/statusReducer";
@@ -12,13 +12,19 @@ interface IGameElementProps {
   gameInfo: GameInfo;
   checked: boolean;
   onClick: Function;
-  onDeleteGame?: () => void;
+  refreash?: () => void;
 }
 
 export default function GameElement(props: IGameElementProps) {
 
+  const soureBase = "background";
   const t = useVarTrans('dashBoard.');
   const dispatch = useDispatch();
+
+  function enterEditor(gameName: string) {
+    dispatch(setEditingGame(gameName));
+    dispatch(setDashboardShow(false));
+  }
 
   let className = styles.gameElement_main;
   if (props.checked) {
@@ -36,27 +42,34 @@ export default function GameElement(props: IGameElementProps) {
     [props.gameInfo.dir, props.checked]
   );
 
-  const isShowDialog = useValue(false);
-  const dialogContentProps = {
+  const isShowDeleteDialog = useValue(false);
+  const isShowRenameDialog = useValue(false);
+  const newGameName = useValue(props.gameInfo.dir);
+
+  const deleteDialogContentProps = {
     type: DialogType.normal,
     title: t('dialogs.deleteGame.title'),
     subText: t('dialogs.deleteGame.subtext', {gameName: props.gameInfo.dir}),
   };
 
-  const soureBase = "background";
-
-  function enterEditor(gameName: string) {
-    dispatch(setEditingGame(gameName));
-    dispatch(setDashboardShow(false));
-  }
+  const renameDialogContentProps = {
+    type: DialogType.normal,
+    title: t('$common.renameDir'),
+  };
   
   const menuProps: IContextualMenuProps = {
     items: [
       {
+        key: 'renameGame',
+        text: t('$common.renameDir'),
+        iconProps: { iconName: 'Rename' },
+        onClick: () => isShowRenameDialog.set(true),
+      },
+      {
         key: 'deleteGame',
         text: t('$common.delete'),
         iconProps: { iconName: 'Delete' },
-        onClick: () => isShowDialog.set(true),
+        onClick: () => isShowDeleteDialog.set(true),
       },
     ],
   };
@@ -64,10 +77,19 @@ export default function GameElement(props: IGameElementProps) {
   const deleteThisGame = () => {
     axios.post("/api/manageGame/delete", { source: `public/games/${props.gameInfo.dir}` }).then(() =>
     {
-      props.onDeleteGame?.();
-      isShowDialog.set(false);
+      props.refreash?.();
+      isShowDeleteDialog.set(false);
     }
     );
+  };
+
+  const renameThisGame = (gameName:string, newGameName:string) => {
+    axios.post("/api/manageGame/rename",
+      { source: `public/games/${gameName}/`, newName: newGameName }
+    ).then(() => {
+      props.refreash?.();
+      isShowRenameDialog.set(false);
+    });
   };
 
   // @ts-ignore
@@ -92,16 +114,33 @@ export default function GameElement(props: IGameElementProps) {
         </Stack>
       </div>
     </div>
-    {/* @ts-ignore */}
+    {/* 删除对话框 */}
     <Dialog
-      hidden={!isShowDialog.value}
-      onDismiss={() => isShowDialog.set(false)}
-      dialogContentProps={dialogContentProps}
+      hidden={!isShowDeleteDialog.value}
+      onDismiss={() => isShowDeleteDialog.set(false)}
+      dialogContentProps={deleteDialogContentProps}
       // modalProps={modalProps}
     >
       <DialogFooter>
         <PrimaryButton onClick={deleteThisGame} text={t('$common.delete')} />
-        <DefaultButton onClick={() => isShowDialog.set(false)} text={t('$common.exit')} />
+        <DefaultButton onClick={() => isShowDeleteDialog.set(false)} text={t('$common.exit')} />
+      </DialogFooter>
+    </Dialog>
+    {/* 重命名对话框 */}
+    <Dialog
+      hidden={!isShowRenameDialog.value}
+      onDismiss={() => isShowRenameDialog.set(false)}
+      dialogContentProps={renameDialogContentProps}
+      // modalProps={modalProps}
+    >
+      <TextField 
+        defaultValue={props.gameInfo.dir}
+        onChange={(event, value) => newGameName.set(value ? value.trim() : props.gameInfo.dir)}
+        onKeyDown={(event) => (event.key === 'Enter') && renameThisGame(props.gameInfo.dir, newGameName.value)}
+      />
+      <DialogFooter>
+        <PrimaryButton onClick={() => renameThisGame(props.gameInfo.dir, newGameName.value)} text={t('$common.rename')} />
+        <DefaultButton onClick={() => isShowRenameDialog.set(false)} text={t('$common.exit')} />
       </DialogFooter>
     </Dialog>
   </div>;
