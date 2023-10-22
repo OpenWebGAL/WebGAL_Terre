@@ -38,9 +38,9 @@ export default function DashBoard() {
   const messageRef = useRef<TestRefRef>(null);
 
   // 当前选中的游戏
-  const currentGame = useValue<GameInfo | null>(null);
+  const currentGame = useValue<string | null>(null);
   
-  const setCurrentGame = (e: GameInfo | null) => currentGame.set(e);
+  const setCurrentGame = (e: string | null) => currentGame.set(e);
 
   // 游戏列表
   const gameInfoList = useValue<Array<GameInfo>>([]);
@@ -54,6 +54,7 @@ export default function DashBoard() {
     logger.info("创建结果：", res);
     messageRef.current!.showMessage(`${gameName} ` + trans('msgs.created'), 2000);
     refreashDashboard();
+    setCurrentGame(null);
   }
 
   function refreashDashboard() {
@@ -132,7 +133,11 @@ export default function DashBoard() {
           setCurrentGame={setCurrentGame} 
           currentSetGame={currentGame.value}
           gameList={gameInfoList.value} />
-        {currentGame.value && <GamePreview currentGame={currentGame.value} setCurrentGame={setCurrentGame}/>}
+        {currentGame.value && 
+          <GamePreview 
+            currentGame={currentGame.value} 
+            setCurrentGame={setCurrentGame} 
+            gameInfo={gameInfoList.value.find(e => e.dir === currentGame.value)!}/>}
         {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}
       </div>
     </div>)}

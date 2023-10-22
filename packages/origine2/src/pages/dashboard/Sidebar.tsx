@@ -7,8 +7,8 @@ import { GameInfo } from "./DashBoard";
 
 interface ISidebarProps {
   gameList: GameInfo[];
-  currentSetGame: GameInfo | null;
-  setCurrentGame: (currentGame: GameInfo) => void;
+  currentSetGame: string | null;
+  setCurrentGame: (currentGame: string) => void;
   createGame: (name: string) => void;
   onDeleteGame?: () => void;
 }
@@ -65,8 +65,8 @@ export default function Sidebar(props: ISidebarProps) {
     <div className={styles.game_list}>
       {
         props.gameList.map(e => {
-          const checked = props.currentSetGame?.dir === e.dir;
-          return <GameElement onDeleteGame={() => props.onDeleteGame?.()} onClick={() => props.setCurrentGame(e)} gameInfo={e}
+          const checked = props.currentSetGame === e.dir;
+          return <GameElement onDeleteGame={() => props.onDeleteGame?.()} onClick={() => props.setCurrentGame(e.dir)} gameInfo={e}
             key={e.dir} checked={checked} />;
         })
       }
