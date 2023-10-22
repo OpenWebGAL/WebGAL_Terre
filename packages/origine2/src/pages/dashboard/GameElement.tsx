@@ -6,6 +6,7 @@ import { setDashboardShow, setEditingGame } from "../../store/statusReducer";
 import { useValue } from "../../hooks/useValue";
 import useVarTrans from "@/hooks/useVarTrans";
 import { GameInfo } from "./DashBoard";
+import { useMemo } from "react";
 
 interface IGameElementProps {
   gameInfo: GameInfo;
@@ -22,11 +23,18 @@ export default function GameElement(props: IGameElementProps) {
   let className = styles.gameElement_main;
   if (props.checked) {
     className = className + " " + styles.gameElement_checked;
-    // 滚动到当前游戏
-    setTimeout(() => {
-      document.getElementById(props.gameInfo.dir)?.scrollIntoView({behavior: 'smooth', block: 'center'});
-    }, 50);
   }
+
+  // 滚动到当前选择的游戏
+  useMemo(
+    () => {
+      props.checked &&
+        setTimeout(() => {
+          document.getElementById(props.gameInfo.dir)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 50);
+    },
+    [props.gameInfo.dir, props.checked]
+  );
 
   const isShowDialog = useValue(false);
   const dialogContentProps = {
