@@ -5,15 +5,19 @@
 }
 
 .previewWindow {
-  flex: 1;
-  //max-height: 50%;
+  // flex: 1;
+  max-height: calc(100vh - 10em);
   width: 100%;
-  padding: 1em 1em 1em 1em;
   box-sizing: border-box;
+  aspect-ratio: 16 / 9;
 }
 
 .preview_title{
   display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
   text-align: left;
   padding: 1em 1em 1em 1em ;
   //border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -27,7 +31,7 @@
 }
 
 .editGameButton{
-  margin: 0 0 0 auto;
+  // margin: 0 0 0 auto;
   font-size: 100%;
   background: #005caf;
   color: white;
