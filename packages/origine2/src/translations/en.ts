@@ -4,7 +4,9 @@ export const en = {
     exit: 'Exit',
     create: 'Create',
     revise: 'Modify',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    rename: 'Rename',
+    renameDir: 'Rename dir',
   },
 
   dashBoard: {
