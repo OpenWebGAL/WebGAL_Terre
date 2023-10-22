@@ -1,7 +1,14 @@
 .sidebar_main{
-  width: 20em;
+  width: 30%;
+  min-width: 20rem;
   height: 100%;
   border-right: 1px solid rgba(0,0,0,0.1);
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+.sidebar_main_fullwidth {
+  width: 100%;
 }
 
 .sidebar_top{
@@ -26,4 +33,11 @@
   border-radius: 2px;
   padding: 0.25em 1em 0.25em 1em;
   cursor: pointer;
+}
+
+.game_list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr) );
+  grid-gap: 0.5rem;
+  margin: 0 1rem;
 }
