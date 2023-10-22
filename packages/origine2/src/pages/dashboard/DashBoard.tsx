@@ -111,6 +111,10 @@ export default function DashBoard() {
     },
   ];
 
+  const refreash = () => {
+    refreashDashboard();
+    setCurrentGame(null);
+  };
 
   return <>
     { isDashboardShow && (<div className={styles.dashboard_container}>
@@ -128,13 +132,14 @@ export default function DashBoard() {
       </div>
       <div className={styles.dashboard_main}>
         <Message ref={messageRef} />
-        <Sidebar onDeleteGame={()=>{refreashDashboard();setCurrentGame(null);}} 
+        <Sidebar 
+          refreash={refreash}
           createGame={createGame} 
           setCurrentGame={setCurrentGame} 
           currentSetGame={currentGame.value}
           gameList={gameInfoList.value} />
         {currentGame.value && 
-          <GamePreview 
+          <GamePreview
             currentGame={currentGame.value} 
             setCurrentGame={setCurrentGame} 
             gameInfo={gameInfoList.value.find(e => e.dir === currentGame.value)!}/>}
