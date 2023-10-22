@@ -42,7 +42,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       axios.get(`/games/${gameName}/game/figure/${figureFile.value}`).then(resp => {
         const data = resp.data;
         const motions = Object.keys(data.motions);
-        setL2dMotionsList(motions);
+        setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
       });
     }
   }, [figureFile]);
