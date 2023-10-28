@@ -35,14 +35,25 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
+  const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
+
   const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
+  const currentExpression = useValue(
+    getArgByKey(props.sentence, "expression").toString() ?? ""
+  );
+
   useEffect(() => {
     if (figureFile.value.includes('json')) {
-      // 找到对应的文件读取
       axios.get(`/games/${gameName}/game/figure/${figureFile.value}`).then(resp => {
         const data = resp.data;
+
+        // 处理 motions
         const motions = Object.keys(data.motions);
         setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+
+        // 处理 expressions
+        const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
+        setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
       });
     }
   }, [figureFile]);
@@ -92,10 +103,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const eyesOpenFile = eyesOpen.value !== "" ? ` -eyesOpen=${eyesOpen.value}` : "";
     const eyesCloseFile = eyesClose.value !== "" ? ` -eyesClose=${eyesClose.value}` : "";
     const motionArgs = currentMotion.value !== '' ? ` -motion=${currentMotion.value}` : "";
+    const expressionArgs = currentExpression.value !== '' ? ` -expression=${currentExpression.value}` : "";
+
     if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs};`);
     } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs};`);
     }
   };
 
@@ -128,18 +141,36 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         }} onText={t('$editor.graphical.sentences.common.options.goNext.on')}
         offText={t('$editor.graphical.sentences.common.options.goNext.off')} isChecked={isGoNext.value}/>
       </CommonOptions>
-      {figureFile.value.includes('.json') && <CommonOptions key="24" title="live2D Motion">
-        <Dropdown
-          selectedKey={currentMotion.value}
-          dropdownWidth={100}
-          style={{width: 100}}
-          options={l2dMotionsList.map(e => ({key: e, text: e}))}
-          onChange={(ev, newValue: any) => {
-            currentMotion.set(newValue.key);
-            submit();
-          }}
-        />
-      </CommonOptions>}
+      {figureFile.value.includes('.json') && (
+        <>
+          <CommonOptions key="24" title="live2D Motion">
+            <Dropdown
+              selectedKey={currentMotion.value}
+              dropdownWidth={100}
+              style={{width: 100}}
+              options={l2dMotionsList.map(e => ({key: e, text: e}))}
+              onChange={(ev, newValue: any) => {
+                currentMotion.set(newValue.key);
+                submit();
+              }}
+            />
+          </CommonOptions>
+
+          <CommonOptions key="25" title="live2D Expression">
+            <Dropdown
+              selectedKey={currentExpression.value}
+              dropdownWidth={100}
+              style={{width: 100}}
+              options={l2dExpressionsList.map(e => ({key: e, text: e}))}
+              onChange={(ev, newValue: any) => {
+                currentExpression.set(newValue.key);
+                submit();
+              }}
+            />
+          </CommonOptions>
+        </>
+      )}
+
       <CommonOptions title={t('options.position.title')} key="3">
         <Dropdown
           selectedKey={figurePosition.value}
