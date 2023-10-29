@@ -1,10 +1,12 @@
 import React from "react";
 import styles from "./resourceDisplay.module.scss";
+import {JsonResourceDisplay} from "@/pages/editor/ResourceDisplay/JsonResourceDisplay/JsonResourceDisplay";
 
 export enum ResourceType {
   Image = "image",
   Video = "video",
-  Audio = "audio"
+  Audio = "audio",
+  Animation = "animation"
 }
 
 export interface IResourceDisplayProps {
@@ -18,32 +20,34 @@ function getComponent(resourceType: ResourceType, resourceUrl: string) {
 
   switch (resourceType) {
   case ResourceType.Image:
-    return () => <img className={styles.asset} src={url} alt="Resource" />;
+    return () => <img className={styles.asset} src={url} alt="Resource"/>;
   case ResourceType.Video:
     return () => (
       <video className={styles.asset} controls>
-        <source src={url} type="video/mp4" />
+        <source src={url} type="video/mp4"/>
           Your browser does not support the video tag.
       </video>
     );
   case ResourceType.Audio:
     return () => (
       <audio controls>
-        <source src={url} type="audio/mpeg" />
+        <source src={url} type="audio/mpeg"/>
           Your browser does not support the audio tag.
       </audio>
     );
+  case ResourceType.Animation:
+    return () => <JsonResourceDisplay url={url} />;
   default:
     return () => <div>Invalid resource type</div>;
   }
 }
 
-const ResourceDisplay: React.FC<IResourceDisplayProps> = ({ resourceType, resourceUrl, isHidden = false }) => {
+const ResourceDisplay: React.FC<IResourceDisplayProps> = ({resourceType, resourceUrl, isHidden = false}) => {
   const Component = getComponent(resourceType, resourceUrl);
 
   return (
     <div className={`${styles.resourceDisplay} ${isHidden ? styles.hidden : ""}`}>
-      <Component />
+      <Component/>
     </div>
   );
 };
