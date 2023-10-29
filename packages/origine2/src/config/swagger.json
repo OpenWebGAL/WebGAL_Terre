@@ -324,6 +324,34 @@
         ]
       }
     },
+    "/api/manageGame/editTextFile": {
+      "post": {
+        "operationId": "ManageGameController_editTextFile",
+        "summary": "Edit TextFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditTextFileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File edited successfully."
+          },
+          "400": {
+            "description": "Failed to edit the file."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
     "/api/manageGame/getGameConfig/{gameName}": {
       "get": {
         "operationId": "ManageGameController_getGameConfig",
@@ -598,6 +626,23 @@
           "gameName",
           "sceneName",
           "sceneData"
+        ]
+      },
+      "EditTextFileDto": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The path of textfile"
+          },
+          "textFile": {
+            "type": "string",
+            "description": "Text data content"
+          }
+        },
+        "required": [
+          "path",
+          "textFile"
         ]
       },
       "GameConfigDto": {

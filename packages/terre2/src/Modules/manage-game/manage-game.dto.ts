@@ -41,6 +41,17 @@ export class EditSceneDto {
   sceneData: string;
 }
 
+export class EditTextFileDto {
+  @ApiProperty({ description: 'The path of textfile' })
+  path: string;
+
+  @ApiProperty({
+    description: 'Text data content',
+    type: 'string',
+  })
+  textFile: string;
+}
+
 // game-config.dto.ts
 export class GameConfigDto {
   @ApiProperty({ description: 'The name of the game' })
