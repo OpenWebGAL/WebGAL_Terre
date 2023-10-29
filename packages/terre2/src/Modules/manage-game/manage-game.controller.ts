@@ -35,6 +35,7 @@ import {
   DeleteFileOrDirDto,
   EditFileNameDto,
   EditSceneDto,
+  EditTextFileDto,
   GameConfigDto,
   MkDirDto,
   RenameDto,
@@ -225,6 +226,16 @@ export class ManageGameController {
     );
     const sceneData = JSON.parse(editSceneData.sceneData) as { value: string };
     return this.webgalFs.updateTextFile(path, sceneData.value);
+  }
+
+  @Post('editTextFile')
+  @ApiOperation({ summary: 'Edit TextFile' })
+  @ApiResponse({ status: 200, description: 'File edited successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to edit the file.' })
+  async editTextFile(@Body() editTextFileData: EditTextFileDto) {
+    const path = editTextFileData.path;
+    const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
+    return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
   }
 
   @Get('getGameConfig/:gameName')

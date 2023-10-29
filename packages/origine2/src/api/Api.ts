@@ -52,6 +52,13 @@ export interface EditSceneDto {
   sceneData: string;
 }
 
+export interface EditTextFileDto {
+  /** The path of textfile */
+  path: string;
+  /** Text data content */
+  textFile: string;
+}
+
 export interface GameConfigDto {
   /** The name of the game */
   gameName: string;
@@ -423,6 +430,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     manageGameControllerEditScene: (data: EditSceneDto, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/api/manageGame/editScene`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerEditTextFile
+     * @summary Edit TextFile
+     * @request POST:/api/manageGame/editTextFile
+     */
+    manageGameControllerEditTextFile: (data: EditTextFileDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageGame/editTextFile`,
         method: 'POST',
         body: data,
         type: ContentType.Json,
