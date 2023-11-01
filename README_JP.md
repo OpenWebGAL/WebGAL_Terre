@@ -32,6 +32,16 @@ WebGALはオープンソースソフトウェアであり、MPL-2.0オープン�
 
 ## Gold Sponsors
 
-| <img src="https://avatars.githubusercontent.com/u/91712707?v=4" alt="T2" style="zoom:25%;" /> |
+| <img src="https://avatars.githubusercontent.com/u/91712707?v=4" alt="T2"   width="150px" height="150px" /> | <img src="https://avatars.githubusercontent.com/u/36291011?v=4" alt="Alex Shan"   width="150px" height="150px" /> |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [T2-official(T2)](https://github.com/T2-official)            | [Alex Shan](https://github.com/Shan-mx)            |
+
+## Silver Sponsors
+| <img src="https://avatars.githubusercontent.com/u/103700780?v=4" alt="IdrilK"  width="150px" height="150px" /> |
 | ------------------------------------------------------------ |
-| [T2-official(T2)](https://github.com/T2-official)            |
+| [IdrilK](https://github.com/IdrilK)            |
+
+## Sponsors
+| <img src="https://avatars.githubusercontent.com/u/71590526?v=4" alt="Yuji Sakai"  width="150px" height="150px" /> | <img src="https://avatars.githubusercontent.com/u/49630998?v=4" alt="Iara"  width="150px" height="150px" /> |
+| ------------------------------------------------------------ |------------------------------------------------------------ |
+| [Yuji Sakai (generalfreed)](https://github.com/generalfreed) |[Iara (labiker)](https://github.com/labiker) |
