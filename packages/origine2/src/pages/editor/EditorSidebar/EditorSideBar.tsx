@@ -5,6 +5,7 @@ import {setIsLivePreview, sidebarTag} from "../../../store/statusReducer";
 import GameConfig from "./SidebarTags/GameConfig/GameConfig";
 import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
+import AiChat from "./SidebarTags/AiChat/AiChat";
 import React, {useEffect, useRef} from "react";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -113,6 +114,7 @@ export default function EditorSideBar() {
           src={`/games/${state.currentEditingGame}`}/>
       </div>}
       <div style={{flex: 1, overflow: "auto"}}>
+        {state.currentSidebarTag === sidebarTag.aichat && <AiChat/>}
         {state.currentSidebarTag === sidebarTag.gameconfig && <GameConfig/>}
         {state.currentSidebarTag === sidebarTag.assets && <Assets/>}
         {state.currentSidebarTag === sidebarTag.scenes && <Scenes/>}

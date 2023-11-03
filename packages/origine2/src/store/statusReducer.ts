@@ -7,6 +7,7 @@ const dashboardInitState = {
 
 export enum sidebarTag {
   none,
+  aichat,
   gameconfig,
   assets,
   scenes
