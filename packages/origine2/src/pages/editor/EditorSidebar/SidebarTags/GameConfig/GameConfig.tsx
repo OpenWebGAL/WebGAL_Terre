@@ -176,8 +176,9 @@ function GameConfigEditor(props: IGameConfigEditor) {
   </div>;
 }
 
-function GameConfigEditorWithSelector(props:IGameConfigEditor & {selectItems:{key:string,text:string}[]}){
-  return <Dropdown onChange={(event,item)=>{
+function GameConfigEditorWithSelector(props:IGameConfigEditor & {selectItems:{key:string,text:string}[],width?:number}){
+  const {width = 200} = props;
+  return <Dropdown dropdownWidth={width} style={{width}} onChange={(event,item)=>{
     const key = item?.key??'';
     props.onChange(key);
   }} selectedKey={props.value} options={props.selectItems}/>;
