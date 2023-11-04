@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../../../store/origineStore";
 import {useState, useEffect, useRef} from "react";
 import {cloneDeep} from "lodash";
-import {IconButton, ITextField, TextField} from "@fluentui/react";
+import {Dropdown, IconButton, ITextField, TextField} from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -13,6 +13,7 @@ import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
 import {Image} from "@fluentui/react";
+import {textboxThemes} from "@/pages/editor/EditorSidebar/SidebarTags/GameConfig/constants";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -108,6 +109,11 @@ export default function GameConfig() {
             onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
         </div>
         <div className={styles.sidebar_gameconfig_container}>
+          <div className={styles.sidebar_gameconfig_title}>{t("options.textboxTheme")}</div>
+          <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} selectItems={textboxThemes}/>
+        </div>
+        <div className={styles.sidebar_gameconfig_container}>
           <div className={styles.sidebar_gameconfig_title}>{t("options.bg")}</div>
           <GameConfigEditorWithFileChoose
             sourceBase="background"
@@ -168,6 +174,13 @@ function GameConfigEditor(props: IGameConfigEditor) {
       }}
     />}
   </div>;
+}
+
+function GameConfigEditorWithSelector(props:IGameConfigEditor & {selectItems:{key:string,text:string}[]}){
+  return <Dropdown onChange={(event,item)=>{
+    const key = item?.key??'';
+    props.onChange(key);
+  }} selectedKey={props.value} options={props.selectItems}/>;
 }
 
 function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
