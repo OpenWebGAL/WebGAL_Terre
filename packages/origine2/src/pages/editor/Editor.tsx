@@ -1,6 +1,6 @@
 import TopBar from "./Topbar/Topbar";
 import styles from "./editor.module.scss";
-import EditorSideBar from "./EditorSidebar/EditorSideBar";
+import EditorSideBar from "./EditorSidebar/EditorSideb";
 import EditorSidebarControl from "./EditorSidebar/EditorSidebarControl";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/origineStore";
