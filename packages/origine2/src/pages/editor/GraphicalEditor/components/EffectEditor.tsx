@@ -36,17 +36,17 @@ export function EffectEditor(props:{
 
   const updateObject = () => {
     return {
-      alpha: !isNaN(Number(alpha.value)) ? alpha.value : 1, // 添加 alpha 字段检查
+      alpha: !isNaN(Number(alpha.value)) ? Number(alpha.value) : 1, // Convert alpha to number
       position: {
-        x: !isNaN(Number(x.value)) ? x.value : 0,
-        y: !isNaN(Number(y.value)) ? y.value : 0
+        x: !isNaN(Number(x.value)) ? Number(x.value) : 0, // Convert x to number
+        y: !isNaN(Number(y.value)) ? Number(y.value) : 0  // Convert y to number
       },
       scale: {
-        x: !isNaN(Number(scaleX.value)) ? scaleX.value : 1,
-        y: !isNaN(Number(scaleY.value)) ? scaleY.value : 1
+        x: !isNaN(Number(scaleX.value)) ? Number(scaleX.value) : 1, // Convert scaleX to number
+        y: !isNaN(Number(scaleY.value)) ? Number(scaleY.value) : 1  // Convert scaleY to number
       },
-      rotation: !isNaN(Number(rotation.value)) ? rotation.value : 0, // 添加 rotation 字段检查
-      blur: !isNaN(Number(blur.value)) ? blur.value : 0 ,// 添加 blur 字段检查
+      rotation: !isNaN(Number(rotation.value)) ? Number(rotation.value) : 0, // Convert rotation to number
+      blur: !isNaN(Number(blur.value)) ? Number(blur.value) : 0 , // Convert blur to number
       oldFilm: oldFilm.value ? 1 : 0,
       dotFilm: dotFilm.value ? 1 : 0,
       reflectionFilm: reflectionFilm.value ? 1 : 0,

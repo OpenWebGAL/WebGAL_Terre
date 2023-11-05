@@ -1,0 +1,725 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/test": {
+      "get": {
+        "operationId": "AppController_apiTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Test Server"
+        ]
+      }
+    },
+    "/api/lsp/compile": {
+      "post": {
+        "operationId": "LspController_compile",
+        "summary": "Get code completions based on given input",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompletionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully fetched the completion list."
+          },
+          "400": {
+            "description": "Failed to fetch the completion list."
+          }
+        },
+        "tags": [
+          "LSP"
+        ]
+      }
+    },
+    "/api/manageGame/gameList": {
+      "get": {
+        "operationId": "ManageGameController_getGameList",
+        "summary": "Retrieve game list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returned game list."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/createGame": {
+      "post": {
+        "operationId": "ManageGameController_createGame",
+        "summary": "Create a new game",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Game creation data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGameDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Game creation result."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/openGameAssetsDict/{gameName}": {
+      "get": {
+        "operationId": "ManageGameController_openGameAssetsDict",
+        "summary": "Open Game Assets Dictionary",
+        "parameters": [
+          {
+            "name": "gameName",
+            "required": true,
+            "in": "path",
+            "description": "Name of the game.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Opens the assets dictionary for a specified game."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/ejectGameAsWeb/{gameName}": {
+      "get": {
+        "operationId": "ManageGameController_ejectGameAsWeb",
+        "summary": "Eject Game As Web App",
+        "parameters": [
+          {
+            "name": "gameName",
+            "required": true,
+            "in": "path",
+            "description": "Name of the game to be exported as web app.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exports the specified game as a web app."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/ejectGameAsExe/{gameName}": {
+      "get": {
+        "operationId": "ManageGameController_ejectGameAsExe",
+        "summary": "Eject Game As EXE",
+        "parameters": [
+          {
+            "name": "gameName",
+            "required": true,
+            "in": "path",
+            "description": "Name of the game to be exported as EXE.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exports the specified game as an EXE (Windows Electron App)."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/ejectGameAsAndroid/{gameName}": {
+      "get": {
+        "operationId": "ManageGameController_ejectGameAsAndroid",
+        "summary": "Eject Game As Android App",
+        "parameters": [
+          {
+            "name": "gameName",
+            "required": true,
+            "in": "path",
+            "description": "Name of the game to be exported as an Android app.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exports the specified game as an Android app."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/readGameAssets/{readDirPath}": {
+      "get": {
+        "operationId": "ManageGameController_readGameAssets",
+        "summary": "Read Game Assets",
+        "parameters": [
+          {
+            "name": "readDirPath",
+            "required": true,
+            "in": "path",
+            "description": "Path of the game directory to read assets from, including subdirectories.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve the assets of the specified game directory."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/editFileName": {
+      "post": {
+        "operationId": "ManageGameController_editFileName",
+        "summary": "Edit File Name",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "File renaming data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditFileNameDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully renamed the file."
+          },
+          "400": {
+            "description": "Failed to rename the file."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/deleteFile": {
+      "post": {
+        "operationId": "ManageGameController_deleteFile",
+        "summary": "Delete File",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "File deletion data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteFileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the file."
+          },
+          "400": {
+            "description": "Failed to delete the file."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/createNewScene": {
+      "post": {
+        "operationId": "ManageGameController_createNewScene",
+        "summary": "Create a New Scene",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Scene creation data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNewSceneDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created the scene."
+          },
+          "400": {
+            "description": "Failed to create the scene or scene already exists."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/editScene": {
+      "post": {
+        "operationId": "ManageGameController_editScene",
+        "summary": "Edit Scene",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditSceneDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scene edited successfully."
+          },
+          "400": {
+            "description": "Failed to edit the scene."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/editTextFile": {
+      "post": {
+        "operationId": "ManageGameController_editTextFile",
+        "summary": "Edit TextFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditTextFileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File edited successfully."
+          },
+          "400": {
+            "description": "Failed to edit the file."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/getGameConfig/{gameName}": {
+      "get": {
+        "operationId": "ManageGameController_getGameConfig",
+        "summary": "Get Game Configuration",
+        "parameters": [
+          {
+            "name": "gameName",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned game configuration."
+          },
+          "400": {
+            "description": "Failed to get the game configuration."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/setGameConfig": {
+      "post": {
+        "operationId": "ManageGameController_setGameConfig",
+        "summary": "Set Game Configuration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameConfigDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Game configuration set successfully."
+          },
+          "400": {
+            "description": "Failed to set the game configuration."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/uploadFiles": {
+      "post": {
+        "operationId": "ManageGameController_uploadFiles",
+        "summary": "Upload Files",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadFilesDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Files uploaded successfully."
+          },
+          "400": {
+            "description": "Failed to upload files."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/mkdir": {
+      "post": {
+        "operationId": "ManageGameController_mkDir",
+        "summary": "Create Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MkDirDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Directory created successfully."
+          },
+          "400": {
+            "description": "Failed to create directory."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/delete": {
+      "post": {
+        "operationId": "ManageGameController_deleteFileOrDir",
+        "summary": "Delete File or Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteFileOrDirDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the file or directory."
+          },
+          "400": {
+            "description": "Failed to delete the file or directory."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/rename": {
+      "post": {
+        "operationId": "ManageGameController_rename",
+        "summary": "Rename File or Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully renamed the file or directory."
+          },
+          "400": {
+            "description": "Failed to rename the file or directory."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "WebGAL Terre API",
+    "description": "API Refrence of WebGAL Terre Editor",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CompletionDto": {
+        "type": "object",
+        "properties": {
+          "editorValue": {
+            "type": "string",
+            "description": "Editor input value for which the completion is required"
+          },
+          "params": {
+            "type": "object",
+            "description": "Parameters required for completion"
+          }
+        },
+        "required": [
+          "editorValue",
+          "params"
+        ]
+      },
+      "CreateGameDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game to be created"
+          }
+        },
+        "required": [
+          "gameName"
+        ]
+      },
+      "EditFileNameDto": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The path to the file to be renamed"
+          },
+          "newName": {
+            "type": "string",
+            "description": "The new name for the file"
+          }
+        },
+        "required": [
+          "path",
+          "newName"
+        ]
+      },
+      "DeleteFileDto": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The path to the file to be deleted"
+          }
+        },
+        "required": [
+          "path"
+        ]
+      },
+      "CreateNewSceneDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game"
+          },
+          "sceneName": {
+            "type": "string",
+            "description": "The name of the scene"
+          }
+        },
+        "required": [
+          "gameName",
+          "sceneName"
+        ]
+      },
+      "EditSceneDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game"
+          },
+          "sceneName": {
+            "type": "string",
+            "description": "The name of the scene"
+          },
+          "sceneData": {
+            "type": "string",
+            "description": "Scene data content",
+            "format": "{ value: string }"
+          }
+        },
+        "required": [
+          "gameName",
+          "sceneName",
+          "sceneData"
+        ]
+      },
+      "EditTextFileDto": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The path of textfile"
+          },
+          "textFile": {
+            "type": "string",
+            "description": "Text data content"
+          }
+        },
+        "required": [
+          "path",
+          "textFile"
+        ]
+      },
+      "GameConfigDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game"
+          },
+          "newConfig": {
+            "type": "string",
+            "description": "New game configuration"
+          }
+        },
+        "required": [
+          "gameName",
+          "newConfig"
+        ]
+      },
+      "UploadFilesDto": {
+        "type": "object",
+        "properties": {
+          "targetDirectory": {
+            "type": "string",
+            "description": "Target directory for the uploaded files"
+          }
+        },
+        "required": [
+          "targetDirectory"
+        ]
+      },
+      "MkDirDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path where the directory will be created"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name for the new directory"
+          }
+        },
+        "required": [
+          "source",
+          "name"
+        ]
+      },
+      "DeleteFileOrDirDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file or directory to be deleted"
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "RenameDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file or directory to be renamed"
+          },
+          "newName": {
+            "type": "string",
+            "description": "New name for renaming the file or directory"
+          }
+        },
+        "required": [
+          "source",
+          "newName"
+        ]
+      }
+    }
+  }
+}

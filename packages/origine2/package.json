@@ -1,14 +1,15 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.4.5",
+  "version": "4.4.6",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host=3000",
     "build": "node version-sync.js && tsc && vite build --base=./",
     "build-lowram": "node version-sync.js && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
-    "lint": "eslint src/** --fix"
+    "lint": "eslint src/** --fix",
+    "openapi": "tsx openapi.ts"
   },
   "dependencies": {
     "@fluentui/react": "^8.77.3",
@@ -32,6 +33,7 @@
     "react-i18next": "^12.2.2",
     "react-redux": "^8.0.1",
     "sass": "^1.51.0",
+    "swr": "^2.2.4",
     "webgal-parser": "^4.4.5-fix2"
   },
   "devDependencies": {
@@ -48,6 +50,8 @@
     "eslint-plugin-react": "^7.29.4",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.2",
+    "swagger-typescript-api": "^13.0.3",
+    "tsx": "^3.14.0",
     "typescript": "^4.6.3",
     "vite": "^2.9.7"
   }
