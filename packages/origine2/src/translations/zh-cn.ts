@@ -4,7 +4,9 @@ export const zhCn = {
     exit: '返回',
     create: '创建',
     revise: '修改',
-    cancel: '取消'
+    cancel: '取消',
+    rename: '重命名',
+    renameDir: '重命名文件夹',
   },
 
   dashBoard: {
@@ -124,6 +126,7 @@ export const zhCn = {
           id: '游戏识别码',
           description: '游戏简介',
           packageName: '游戏包名',
+          textboxTheme:'文本框主题',
           bg: '标题背景图片',
           bgm: '标题背景音乐',
           logoImage: '启动图',
@@ -392,6 +395,11 @@ export const zhCn = {
           options: {
             file: {
               title: "视频文件"
+            },
+            video: {
+              option: "视频选项",
+              skipOff: "禁止跳过视频",
+              skipOn: "启用视频跳过"
             }
           }
         },
