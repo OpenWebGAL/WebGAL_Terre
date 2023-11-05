@@ -1,4 +1,4 @@
-import styles from "./editorSideb.module.scss";
+import styles from "./editorSidebar.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/origineStore";
 import {ReactElement} from "react";
