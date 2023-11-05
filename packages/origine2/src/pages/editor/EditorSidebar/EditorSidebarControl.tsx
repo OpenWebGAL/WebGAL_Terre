@@ -1,13 +1,12 @@
 import styles from "./editorSidebar.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/origineStore";
-import {ReactElement} from "react";
 import {FolderOpen, PlayTwo, PreviewCloseOne, PreviewOpen, SettingConfig} from "@icon-park/react";
 import {setEditorPreviewShow, setEditorSidebarTag, sidebarTag} from "../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
 import {registerIcons} from '@fluentui/react/lib/Styling';
-import { EditorSidebarIcon } from "./EditorSidebarIcon";
-import { IIconProps } from "@fluentui/react";
+import {EditorSidebarIcon} from "./EditorSidebarIcon";
+import {IIconProps} from "@fluentui/react";
 import * as defaultTheme from "../../../config/themes/white.json";
 
 export default function EditorSidebarControl() {
