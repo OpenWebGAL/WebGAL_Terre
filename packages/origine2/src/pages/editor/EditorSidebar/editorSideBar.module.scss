@@ -25,7 +25,6 @@
 }
 
 .editor_sidebar_control_button {
-  padding: 6px 6px 3px 6px;
   border-radius: 3px;
   //border: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -91,11 +90,11 @@
 
 }
 
- .editor_sidebar {
+.editor_sidebar {
   user-select: none;
 }
 
-.livePreviewNotice{
+.livePreviewNotice {
   color: #005caf;
   margin: 5px;
   padding: 5px;
