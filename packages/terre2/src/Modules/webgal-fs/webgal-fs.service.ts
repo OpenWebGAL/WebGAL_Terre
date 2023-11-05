@@ -193,7 +193,7 @@ export class WebgalFsService {
   /**
    * 检查文件夹是否存在
    * @param path 文件夹路径
-   * @returns 
+   * @returns
    */
   async existsDir(path: string): Promise<boolean> {
     return await fs
@@ -251,7 +251,10 @@ export class WebgalFsService {
           text.length === newText.length
         ) {
           text.map((item, index) => {
-            newTextFile = newTextFile.replace(new RegExp(item, 'g'), newText[index]);
+            newTextFile = newTextFile.replace(
+              new RegExp(item, 'g'),
+              newText[index],
+            );
           });
         } else return false;
 
