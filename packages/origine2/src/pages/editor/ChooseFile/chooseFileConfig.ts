@@ -1,4 +1,4 @@
-import { t } from 'i18next';
+import {t} from 'i18next';
 
 export const dirnameToDisplayNameMap = new Map<string, () => string>();
 const tPrefix = 'editor.sideBar.assets.folders.';
@@ -17,7 +17,7 @@ export const dirNameToExtNameMap = new Map();
 dirNameToExtNameMap.set('animation', ['.json']);
 dirNameToExtNameMap.set('background', ['.jpg', '.png', '.webp']);
 dirNameToExtNameMap.set('bgm', ['.mp3', '.ogg', '.wav']);
-dirNameToExtNameMap.set('figure', ['.png', '.webp']);
+dirNameToExtNameMap.set('figure', ['.png', '.webp', '.json']);
 dirNameToExtNameMap.set('scene', ['.txt']);
 dirNameToExtNameMap.set('tex', ['.png', '.webp']);
 dirNameToExtNameMap.set('video', ['.mp4']);

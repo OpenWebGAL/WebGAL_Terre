@@ -13,11 +13,18 @@ import useLanguage from "@/hooks/useLanguage";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { language } from "@/store/statusReducer";
 import About from "./About";
+import { WebgalParser } from "../editor/GraphicalEditor/parser";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
   name: string;
   isDir: boolean;
+}
+// 游戏信息
+export interface GameInfo {
+  dir: string;
+  title: string;
+  cover: string;
 }
 
 export default function DashBoard() {
@@ -30,10 +37,13 @@ export default function DashBoard() {
 
   const messageRef = useRef<TestRefRef>(null);
 
-  // 文件目录信息（游戏名为名称的游戏目录）
-  const dirInfo = useValue<Array<string>>([]);
   // 当前选中的游戏
-  const currentGame = useValue<string>("");
+  const currentGame = useValue<string | null>(null);
+  
+  const setCurrentGame = (e: string | null) => currentGame.set(e);
+
+  // 游戏列表
+  const gameInfoList = useValue<Array<GameInfo>>([]);
 
   async function getDirInfo() {
     return await axios.get("/api/manageGame/gameList").then(r => r.data);
@@ -44,10 +54,7 @@ export default function DashBoard() {
     logger.info("创建结果：", res);
     messageRef.current!.showMessage(`${gameName} ` + trans('msgs.created'), 2000);
     refreashDashboard();
-  }
-
-  function setCurrent(e: string) {
-    currentGame.set(e);
+    setCurrentGame(null);
   }
 
   function refreashDashboard() {
@@ -56,7 +63,19 @@ export default function DashBoard() {
         .filter(e => e.isDir)
         .map(e => e.name);
       logger.info("返回的游戏列表", gameList);
-      dirInfo.set(gameList);
+
+      const getGameInfoList = gameList.map(
+        async (gameName) : Promise<GameInfo> => {
+          const gameConfigData = (await axios.get(`/api/manageGame/getGameConfig/${gameName}`)).data;
+          const gameConfig = WebgalParser.parseConfig(gameConfigData);
+          return {
+            dir: gameName,
+            title: gameConfig.find(e => e.command === "Game_name")?.args?.join('') ?? "",
+            cover: gameConfig.find(e => e.command === "Title_img")?.args?.join('') ?? "",
+          };
+        });
+
+      Promise.all(getGameInfoList).then(list => gameInfoList.set(list));
     });
   }
 
@@ -92,6 +111,10 @@ export default function DashBoard() {
     },
   ];
 
+  const refreash = () => {
+    refreashDashboard();
+    setCurrentGame(null);
+  };
 
   return <>
     { isDashboardShow && (<div className={styles.dashboard_container}>
@@ -109,9 +132,17 @@ export default function DashBoard() {
       </div>
       <div className={styles.dashboard_main}>
         <Message ref={messageRef} />
-        <Sidebar onDeleteGame={()=>{refreashDashboard();setCurrent('');}} createGame={createGame} setCurrentGame={setCurrent} currentSetGame={currentGame.value}
-          gameList={dirInfo.value} />
-        <GamePreview gameName={currentGame.value} />
+        <Sidebar 
+          refreash={refreash}
+          createGame={createGame} 
+          setCurrentGame={setCurrentGame} 
+          currentSetGame={currentGame.value}
+          gameList={gameInfoList.value} />
+        {currentGame.value && 
+          <GamePreview
+            currentGame={currentGame.value} 
+            setCurrentGame={setCurrentGame} 
+            gameInfo={gameInfoList.value.find(e => e.dir === currentGame.value)!}/>}
         {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}
       </div>
     </div>)}

@@ -4,7 +4,9 @@ export const jp = {
     exit: '戻る',
     create: '作成',
     revise: '変更',
-    cancel: 'キャンセル'
+    cancel: 'キャンセル',
+    rename: 'Rename',
+    renameDir: 'Rename dir',
   },
 
   dashBoard: {
@@ -391,6 +393,11 @@ export const jp = {
           options: {
             file: {
               title: "動画ファイルを選択"
+            },
+            video: {
+              option: "動画のオプション",
+              skipOff: "動画のスキップを無効にする",
+              skipOn: "動画のスキップを有効にする"
             }
           }
         },

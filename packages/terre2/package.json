@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre-2",
-  "version": "4.4.5",
+  "version": "4.4.6",
   "description": "",
   "author": "",
   "private": true,
@@ -27,10 +27,12 @@
     "@nestjs/core": "^9.0.5",
     "@nestjs/platform-express": "^9.0.5",
     "@nestjs/serve-static": "^3.0.1",
+    "@nestjs/swagger": "^7.1.13",
     "open": "^8.4.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "swagger-ui-express": "^5.0.0",
     "vscode-languageserver": "^8.1.0",
     "ws": "^8.8.1"
   },
