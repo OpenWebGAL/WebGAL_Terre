@@ -1,4 +1,4 @@
-import styles from "./editorSideb.module.scss";
+import styles from "./editorSidebar.module.scss";
 import { IIconProps } from '@fluentui/react';
 import { IconButton } from '@fluentui/react/lib/Button';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
