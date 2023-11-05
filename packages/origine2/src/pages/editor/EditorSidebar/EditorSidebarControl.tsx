@@ -2,10 +2,13 @@ import styles from "./editorSideBar.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
 import { ReactElement } from "react";
+import { FolderOpen, PlayTwo, PreviewCloseOne, PreviewOpen, SettingConfig } from "@icon-park/react";
 import { setEditorPreviewShow, setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
 import { IIconProps } from '@fluentui/react';
 import { IconButton } from '@fluentui/react/lib/Button';
+import { registerIcons } from '@fluentui/react/lib/Styling';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 
 interface ISidebarIconsProps {
   children: ReactElement;
@@ -27,11 +30,22 @@ export default function EditorSidebarControl() {
   const t = useTrans("editor.sideBar.");
   const dispatch = useDispatch();
 
-  const previewOpenIcon: IIconProps = { iconName: 'Video', style: { transform: "scale(1.2)" } };
-  const previewCloseIcon: IIconProps = { iconName: 'VideoOff', style: { transform: "scale(1.2)" } };
-  const gameConfigIcon: IIconProps = { iconName: 'Settings', style: { transform: "scale(1.2)" } };
-  const assetsIcon: IIconProps = { iconName: 'Media', style: { transform: "scale(1.2)" } };
-  const scenesIcon: IIconProps = { iconName: 'MyMoviesTV', style: { transform: "scale(1.2)" } };
+  // Register custom SVG icons
+  registerIcons({
+    icons: {
+      previewOpen: <PreviewOpen/>,
+      previewClose: <PreviewCloseOne/>,
+      gameConfig: <SettingConfig/>,
+      assets: <FolderOpen/>,
+      scenes: <PlayTwo/>,
+    }
+  });
+
+  const previewOpenIcon: IIconProps = { iconName: 'previewOpen', style: { transform: "scale(1.2)" } };
+  const previewCloseIcon: IIconProps = { iconName: 'previewClose', style: { transform: "scale(1.2)" } };
+  const gameConfigIcon: IIconProps = { iconName: 'gameConfig', style: { transform: "scale(1.2)" } };
+  const assetsIcon: IIconProps = { iconName: 'assets', style: { transform: "scale(1.2)" } };
+  const scenesIcon: IIconProps = { iconName: 'scenes', style: { transform: "scale(1.2)" } };
 
   function switchPreview() {
     dispatch(setEditorPreviewShow(!state.showPreview));
@@ -48,23 +62,30 @@ export default function EditorSidebarControl() {
   return <div className={styles.editor_sidebar_control}>
     <div onClick={switchPreview}>
       <SidebarIcons isActive={state.showPreview}>
-        <IconButton iconProps={state.showPreview ? previewOpenIcon : previewCloseIcon}
-          title={t("preview.title")} ariaLabel={t("preview.title")} />
+        <TooltipHost content={t("preview.title")}>
+          <IconButton iconProps={state.showPreview ? previewOpenIcon : previewCloseIcon}/>
+        </TooltipHost>
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.gameconfig)} style={{ margin: "auto 0 0 0" }}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.gameconfig}>
-        <IconButton iconProps={gameConfigIcon} title={t("gameConfigs.title")} ariaLabel={t("gameConfigs.title")} />
+        <TooltipHost content={t("gameConfigs.title")}>
+          <IconButton iconProps={gameConfigIcon}/>
+        </TooltipHost>
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.assets)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.assets}>
-        <IconButton iconProps={assetsIcon} title={t("assets.title")} ariaLabel={t("assets.title")} />
+        <TooltipHost content={t("assets.title")}>
+          <IconButton iconProps={assetsIcon}/>
+        </TooltipHost>
       </SidebarIcons>
     </div>
     <div onClick={() => switchSidebarTag(sidebarTag.scenes)}>
       <SidebarIcons isActive={state.currentSidebarTag === sidebarTag.scenes}>
-        <IconButton iconProps={scenesIcon} title={t("scenes.title")} ariaLabel={t("scenes.title")} />
+        <TooltipHost content={t("scenes.title")}>
+          <IconButton iconProps={scenesIcon}/>
+        </TooltipHost>
       </SidebarIcons>
     </div>
   </div>;
