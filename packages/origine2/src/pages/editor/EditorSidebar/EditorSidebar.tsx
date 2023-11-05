@@ -1,4 +1,4 @@
-import styles from "./editorSideBar.module.scss";
+import styles from "./editorSidebar.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/origineStore";
 import {setIsLivePreview, sidebarTag} from "../../../store/statusReducer";
