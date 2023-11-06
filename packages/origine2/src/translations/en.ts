@@ -126,6 +126,7 @@ export const en = {
           id: 'Game ID',
           description: 'Game description',
           packageName: 'Game package name',
+          textboxTheme:'Textbox theme',
           bg: 'Background image of title',
           bgm: 'BGM of title',
           logoImage: 'Logo',
