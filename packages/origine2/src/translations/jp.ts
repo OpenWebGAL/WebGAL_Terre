@@ -126,6 +126,7 @@ export const jp = {
           id: 'ゲームID',
           description: 'ゲーム概要',
           packageName: 'パッケージ名',
+          textboxTheme:'テキストボックスの種類',
           bg: 'タイトルの背景画像',
           bgm: 'タイトルのBGM',
           logoImage: 'ロゴ',
