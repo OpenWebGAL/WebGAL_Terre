@@ -17,7 +17,7 @@
     "@icon-park/react": "^1.4.2",
     "@monaco-editor/react": "^4.4.5",
     "@reduxjs/toolkit": "^1.8.1",
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "cloudlogjs": "^1.0.11",
     "i18next": "^22.4.15",
     "lodash": "^4.17.21",
