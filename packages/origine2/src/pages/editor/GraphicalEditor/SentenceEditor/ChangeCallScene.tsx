@@ -26,7 +26,7 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
           }} extName={[".txt"]} />
         </>
       </CommonOptions>
-      <CommonOptions key="1" title={t('options.call.title')}>
+      <CommonOptions key="2" title={t('options.call.title')}>
         <TerreToggle title="" onChange={(newValue) => {
           isCallScene.set(newValue);
           submit();
