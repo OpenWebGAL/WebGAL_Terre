@@ -104,9 +104,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
                 return <Draggable key={sentence.content + sentence.commandRaw + i}
-                  draggableId={sentence.content + sentence.commandRaw + i} index={i}>
+                  draggableId={sentence.content + sentence.commandRaw + i}  index={i}>
                   {(provided, snapshot) => (
-                    <div className={styles.sentenceEditorWrapper} key={sentence.commandRaw + sentence.content + i}
+                    <div className={styles.sentenceEditorWrapper} key={sentence.commandRaw + sentence.content + i + 'inner'}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                     >
