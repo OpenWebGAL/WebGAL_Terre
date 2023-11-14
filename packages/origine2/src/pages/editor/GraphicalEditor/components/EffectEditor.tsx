@@ -80,33 +80,33 @@ export function EffectEditor(props:{
 
   return <>
     <CommonOptions key={1} title={t('transform.title')}>
-      {t('transform.x')}<TextField value={!isNaN(x.value)?x.value:null} placeholder={t('transform.x.placeholder')} onChange={(_, newValue) => {
+      {t('transform.x')}<TextField value={!isNaN(x.value)?x.value:null} placeholder={'默认值0'} onChange={(_, newValue) => {
         x.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('transform.y')}<TextField value={!isNaN(y.value)?y.value:null} placeholder={t('transform.y.placeholder')} onChange={(_, newValue) => {
+      {t('transform.y')}<TextField value={!isNaN(y.value)?y.value:null} placeholder={'默认值0'} onChange={(_, newValue) => {
         y.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
     <CommonOptions key={2} title={t('scale.title')}>
-      {t('scale.x')}<TextField value={!isNaN(scaleX.value)?scaleX.value:null} placeholder={t('scale.x.placeholder')} onChange={(_, newValue) => {
+      {t('scale.x')}<TextField value={!isNaN(scaleX.value)?scaleX.value:null} placeholder={'默认值0'} onChange={(_, newValue) => {
         scaleX.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('scale.y')}<TextField value={!isNaN(scaleY.value)?scaleY.value:null} placeholder={t('scale.y.placeholder')} onChange={(_, newValue) => {
+      {t('scale.y')}<TextField value={!isNaN(scaleY.value)?scaleY.value:null} placeholder={'默认值0'} onChange={(_, newValue) => {
         scaleY.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
     <CommonOptions key={3} title={t('effect.title')}>
-      {t('effect.alpha')}<TextField value={!isNaN(alpha.value)?alpha.value:null} placeholder={t('effect.alpha.placeholder')} onChange={(_, newValue) => {
+      {t('effect.alpha')}<TextField value={!isNaN(alpha.value)?alpha.value:null} placeholder={'默认值1'} onChange={(_, newValue) => {
         alpha.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('effect.rotation')}<TextField value={!isNaN(rotation.value)?rotation.value:null} placeholder={t('effect.rotation.placeholder')} onChange={(_, newValue) => {
+      {t('effect.rotation')}<TextField value={!isNaN(rotation.value)?rotation.value:null} placeholder={'默认值0'} onChange={(_, newValue) => {
         rotation.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('effect.blur')}<TextField value={!isNaN(blur.value)?blur.value:null} placeholder={t('effect.blur.placeholder')} onChange={(_, newValue) => {
+      {t('effect.blur')}<TextField value={!isNaN(blur.value)?blur.value:null} placeholder={'默认值0'} onChange={(_, newValue) => {
         blur.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
