@@ -24,9 +24,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const figurePosition = useValue<"left" | "" | "right">("");
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
-  const isShowEffectEditor = useValue(false);
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
+  const isShowEffectEditor = useValue(!!(json.value||duration.value));
   const mouthOpen = useValue(getArgByKey(props.sentence, "mouthOpen").toString() ?? "");
   const mouthHalfOpen = useValue(getArgByKey(props.sentence, "mouthHalfOpen").toString() ?? "");
   const mouthClose = useValue(getArgByKey(props.sentence, "mouthClose").toString() ?? "");
@@ -52,8 +52,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
 
         // 处理 expressions
-        const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
-        setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+        if(data.expressions){
+          const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
+          setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+        }
+
       });
     }
   }, [figureFile]);
@@ -95,7 +98,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = id.value !== "" ? ` -id=${id.value}` : "";
     const durationStr = duration.value === "" ? '' : ` -duration=${duration.value}`;
-    const transformStr = json.value === "" ? '' : ` -transform=${json.value}`;
+    const transformStr = json.value === ""||json.value === "{}" ? '' : ` -transform=${json.value}`;
     const animationStr = animationFlag.value !== "" ? ` -animationFlag=${animationFlag.value}` : "";
     const mouthOpenFile = mouthOpen.value !== "" ? ` -mouthOpen=${mouthOpen.value}` : "";
     const mouthHalfOpenFile = mouthHalfOpen.value !== "" ? ` -mouthHalfOpen=${mouthHalfOpen.value}` : "";
