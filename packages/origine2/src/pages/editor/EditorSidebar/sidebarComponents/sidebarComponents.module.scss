@@ -1,7 +1,6 @@
 .fileElement {
   padding: 5px 5px 5px 10px;
   margin: 5px 0 0 0;
-  //background: rgba(0, 0, 0, 0.05);
   //border-radius: 4px;
   flex: 1;
   cursor: pointer;
@@ -12,15 +11,12 @@
   align-items: center;
   font-size: 14px;
   border-radius: 4px;
-  //border-bottom: 1px solid rgba(0,0,0,0.1);
   height: 25px;
 }
 
 .fileElement:hover{
-  //box-shadow: 0 0 5px rgba(0,0,0,0.15);
   //padding: 2px 4px 2px 4px;
-  //border: 1px solid rgba(0,0,0,0.15);
-  background: rgba(0,0,0,0.05);
+  background: var(--sidebarComponents-fileElement-hover-background);
 }
 
 .fileElement_name{
@@ -48,5 +44,9 @@
 }
 
 .fileElement_interactable_icon:hover{
-  background-color: rgba(0,0,0,0.1);
+  background-color: var(--sidebarComponents-fileElement-interactable-icon-hover-background);
+}
+
+.fileElement_interactable_icon > span > svg > path{
+  stroke: var(--iconPark-icon-fill);
 }

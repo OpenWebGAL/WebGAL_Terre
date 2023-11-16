@@ -3,7 +3,7 @@ import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
 import {useValue} from "../../../../hooks/useValue";
 import {cloneDeep} from "lodash";
-import {DefaultButton, Dropdown, ColorPicker, IColor} from "@fluentui/react";
+import {DefaultButton, PrimaryButton, Dropdown, ColorPicker, IColor} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import { getArgByKey } from "../utils/getArgByKey";
 import { useState } from "react";
@@ -153,14 +153,8 @@ export default function Intro(props: ISentenceEditorProps) {
   };
   const optionButtonStyles = {
     root: {
-      backgroundColor: '#0078d4',
-      color: 'white',
       margin: '6px 0 0 0',
       display: 'flex'
-    },
-    rootHovered: {
-      backgroundColor: '#005a9e',
-      color: 'white'
     },
   };
 
@@ -220,9 +214,9 @@ export default function Intro(props: ISentenceEditorProps) {
       introTextList.set(newList);
       submit();
     }}>{t('add.button')}</DefaultButton>
-    <DefaultButton onClick={toggleAccordion} styles={optionButtonStyles}>
+    <PrimaryButton onClick={toggleAccordion} styles={optionButtonStyles}>
       {t('option.title')}
-    </DefaultButton>
+    </PrimaryButton>
     {isAccordionOpen && (
       <div>
         <div style={{ display: 'flex'}}>

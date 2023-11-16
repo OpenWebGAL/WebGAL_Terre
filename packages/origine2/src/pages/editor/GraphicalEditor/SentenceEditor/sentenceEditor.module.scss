@@ -22,8 +22,8 @@
   box-shadow: none;
   appearance: none;
   outline: none;
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.075);
+  background: var(--sentenceEditor-sayInput-background);
+  border: 1px solid var(--sentenceEditor-sayInput-border);
   padding: 6px 6px 6px 6px;
   border-radius: 4px;
   font-size: 90%;
@@ -31,8 +31,8 @@
 }
 
 .sayArea {
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.075);
+  background: var(--sentenceEditor-sayArea-background);
+  border: 1px solid var(--sentenceEditor-sayArea-border);
   width: 50%;
   font-family: inherit;
   box-shadow: none;
@@ -42,5 +42,25 @@
   border-radius: 4px;
   font-size: 90%;
   height: 2.5em;
-  color: black;
+  color: var(--sentenceEditor-sayArea);
+}
+
+.iconParkIcon > svg > path{
+  stroke: var(--iconPark-icon-fill);
+}
+
+.iconSvg > svg > path:nth-child(1) {
+  /* 你的样式，例如： */
+  fill: var(--iconPark-icon-chooseFile-fill);
+  stroke: var(--iconPark-icon-chooseFile-stroke-first);
+}
+
+.iconSvg > svg > path:nth-child(2) {
+  /* 你的样式，例如： */
+  stroke: var(--iconPark-icon-chooseFile-stroke-second);
+}
+
+.iconSvg > svg > path:nth-child(3) {
+  /* 你的样式，例如： */
+  stroke: var(--iconPark-icon-chooseFile-stroke-third);
 }
