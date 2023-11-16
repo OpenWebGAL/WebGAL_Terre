@@ -72,13 +72,13 @@ export default function ChooseFile(props: IChooseFile) {
     .map(file => {
       if (file.isDir) {
         return <div key={file.path} className={styles.choseFileButton} onClick={() => onEnterChildDir(file.name)}>
-          <FolderOpen theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+          <FolderOpen theme="multi-color" size="24"/>
           {'\u00a0\u00a0'}
           {file.name}
         </div>;
       }
       return <div key={file.path} className={styles.choseFileButton} onClick={() => onChooseFile(file)}>
-        <Notes theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+        <Notes theme="multi-color" size="24"/>
         {'\u00a0\u00a0'}
         {file.name}
       </div>;
@@ -114,7 +114,7 @@ export default function ChooseFile(props: IChooseFile) {
           <div className={styles.chooseFileFileListWarpper}>
             {currentChildDir.value.length > 0 && (
               <div className={styles.choseFileButton} onClick={onBack}>
-                <FolderWithdrawal theme="multi-color" size="24" fill={['#333' ,'#2F88FF' ,'#FFF' ,'#43CCF8']}/>
+                <FolderWithdrawal theme="multi-color" size="24"/>
                 {'\u00a0\u00a0'}
                 ...
               </div>)}

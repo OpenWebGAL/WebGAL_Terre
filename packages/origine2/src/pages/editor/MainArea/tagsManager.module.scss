@@ -3,9 +3,8 @@
   cursor: pointer !important;
   user-select: none !important;
   display: flex;
-  //background: white;
-  background: rgba(248, 248, 248, 1);
-  border-top: 1px solid rgba(0, 0, 0, 0);
+  background: var(--tagManager-tag-background);
+  border-top: 1px solid var(--tagManager-tag-border-top);
   transition: all 0.33s;
   align-items: flex-start;
   flex-shrink: 0;
@@ -13,24 +12,23 @@
 
 .tagsContainer {
   display: flex;
-  background: rgba(248, 248, 248, 1);
+  background: var(--tagManager-tagsContainer-background);
   overflow: auto;
   width: 100%;
   max-width: 100%;
-  //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
   &::-webkit-scrollbar {
     width: 2px;
     height: 2px;
-    background-color: #f2f2f2;
+    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-background);
   }
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #ccc;
+    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-background);
 
     &:hover {
-      background-color: #999;
+      background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-hover-background);
     }
   }
 
@@ -41,18 +39,17 @@
 
   & {
     scrollbar-width: thin; /* Firefox */
-    scrollbar-color: #ccc #f2f2f2; /* Firefox */
+    scrollbar-color: var(--tagManager-tagsContainer-Firefox-scrollbar-first) var(--tagManager-tagsContainer-Firefox-scrollbar-second); /* Firefox */
   }
 }
 
 .tag_active {
-  //background: rgb(240, 247, 253) !important;
-  background: rgb(255, 255, 255) !important;
-  border-top: 1px solid #0B346E;
+  background: var(--tagManager-tag-active-background) !important;
+  border-top: 1px solid var(--tagManager-tag-active-border-top);
 }
 
 .tag:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--tagManager-tag-hover-background);
 }
 
 .closeIcon {
@@ -63,5 +60,9 @@
 }
 
 .closeIcon:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--tagManager-closeIcon-hover-background);
+}
+
+.closeIcon > span > svg > path{
+  stroke: var(--iconPark-closeIcon-fill);
 }

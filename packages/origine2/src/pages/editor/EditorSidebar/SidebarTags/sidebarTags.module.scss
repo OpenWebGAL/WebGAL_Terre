@@ -2,7 +2,7 @@
   font-size: 115%;
   padding: 0.15em 0 0 0;
   font-weight: bold;
-  color: #005caf;
+  color: var(--terre-primary-color);
 }
 
 .sidebar_tag_head {
@@ -29,8 +29,8 @@
   font-size: smaller;
   box-sizing: border-box;
   padding: 0.2em 0.5em 0.2em 0.5em;
-  background: rgba(0, 92, 175, 0.1);
-  color: #005caf;
+  background: var(--sidebarTags-editButton-background);
+  color: var(--terre-primary-color);
   border-radius: 4px;
   cursor: pointer;
   margin: 0 1em 0 1em;
@@ -38,10 +38,10 @@
 
 .open_assets {
   cursor: pointer;
-  background: rgba(0, 92, 175, 0.1);
+  background: var(--sidebarTags-open-assets-background);
   padding: 5px 10px 5px 10px;
   box-sizing: border-box;
-  color: #0B346E;
+  color: var(--sidebarTags-open-assets);
   border-radius: 4px;
   margin: 0 0 0 auto;
 }
@@ -58,7 +58,7 @@
 }
 
 .imageChooseItem:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--sidebarTags-imageChooseItem-hover-background);
 }
 
 .imageChooseItemImage {
