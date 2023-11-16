@@ -117,7 +117,7 @@ export default function TopBar() {
 
   return <div className={styles.editor_topbar}>
     <a href="/" className={styles.home_btn}>
-      <LeftSmall theme="outline" size="24" fill="#005caf" />
+      <LeftSmall theme="outline" size="24"/>
       <div className={styles.editor_title}>WebGAL Terre</div>
     </a>
 

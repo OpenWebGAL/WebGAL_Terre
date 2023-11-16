@@ -4,7 +4,7 @@
 }
 .none_text{
   font-size: large;
-  color: rgba(0,0,0,0.35);
+  color: var(--editArea-none-text);
   padding: 1em 0 0 0;
   font-weight: bold;
 }

@@ -41,6 +41,7 @@ import ChangeCallScene from "./ChangeCallScene";
 import Choose from "./Choose";
 import SetTransition from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransition";
 import SetTransform from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransform";
+import styles from "./sentenceEditor.module.scss";
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -63,7 +64,7 @@ export const sentenceEditorDefault: ISentenceEditorConfig = {
   title: () => t(tPrefix + 'unknown.title'),
   initialText: () => "",
   component: Unrecognized,
-  icon: <CommentOne theme="outline" size="24" fill="#333" />,
+  icon: <CommentOne theme="outline" size="24" className={styles.iconParkIcon}/>,
   descText: () => ""
 };
 
@@ -73,7 +74,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'say.title'),
     initialText: () => t(tPrefix + 'say.initText'),
     component: Say,
-    icon: <CommentOne theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <CommentOne className={styles.iconSvg} theme="multi-color" size="24"/>,
     descText: () => t(tPrefix + 'say.descText')
   },
   {
@@ -81,7 +82,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'changeBg.title'),
     initialText: () => t(tPrefix + 'changeBg.initText'),
     component: ChangeBg,
-    icon: <NewPicture theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <NewPicture theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'changeBg.descText')
   },
   {
@@ -89,7 +90,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'changeFigure.title'),
     initialText: () => t(tPrefix + 'changeFigure.initText'),
     component: ChangeFigure,
-    icon: <People theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <People theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'changeFigure.descText')
   },
   {
@@ -97,7 +98,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'setAnime.title'),
     initialText: () => t(tPrefix + 'setAnime.initText'),
     component: SetAnimation,
-    icon: <AutoWidth theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <AutoWidth theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'setAnime.descText')
   },
   {
@@ -105,7 +106,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'bgm.title'),
     initialText: () => t(tPrefix + 'bgm.initText'),
     component: Bgm,
-    icon: <Music theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Music theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'bgm.descText')
   },
   {
@@ -113,7 +114,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'video.title'),
     initialText: () => t(tPrefix + 'video.initText'),
     component: PlayVideo,
-    icon: <VideoTwo theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <VideoTwo theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'video.descText')
   },
   {
@@ -121,7 +122,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'specialEffect.title'),
     initialText: () => t(tPrefix + 'specialEffect.initText'),
     component: PixiPerform,
-    icon: <Effects theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Effects theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'specialEffect.descText')
   },
   {
@@ -129,7 +130,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'clearSpecialEffect.title'),
     initialText: () => t(tPrefix + 'clearSpecialEffect.initText'),
     component: PixiPerform,
-    icon: <Erase theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Erase theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'clearSpecialEffect.descText')
   },
   {
@@ -137,7 +138,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'intro.title'),
     initialText: () => t(tPrefix + 'intro.initText'),
     component: Intro,
-    icon: <AlignLeftTwo theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <AlignLeftTwo theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'intro.descText')
   },
   {
@@ -145,7 +146,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'changeCallScene.title'),
     initialText: () => t(tPrefix + 'changeCallScene.initText'),
     component: ChangeCallScene,
-    icon: <CornerRightUp theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <CornerRightUp theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'changeCallScene.descText')
   },
   {
@@ -153,7 +154,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'changeScene.title'),
     initialText: () => t(tPrefix + 'changeScene.initText'),
     component: ChangeCallScene,
-    icon: <SwitchThemes theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <SwitchThemes theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'changeScene.descText')
   },
   {
@@ -161,7 +162,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'choose.title'),
     initialText: () => t(tPrefix + 'choose.initText'),
     component: Choose,
-    icon: <ListCheckbox theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <ListCheckbox theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'choose.descText')
   },
   {
@@ -169,7 +170,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'miniAvatar.title'),
     initialText: () => t(tPrefix + 'miniAvatar.initText'),
     component: MiniAvatar,
-    icon: <Avatar theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Avatar theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'miniAvatar.descText')
   },
   {
@@ -177,7 +178,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'soundEffect.title'),
     initialText: () => t(tPrefix + 'soundEffect.initText'),
     component: PlayEffect,
-    icon: <Acoustic theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Acoustic theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'soundEffect.descText')
   },
   {
@@ -185,7 +186,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'unlockCg.title'),
     initialText: () => t(tPrefix + 'unlockCg.initText'),
     component: UnlockExtra,
-    icon: <AddPicture theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <AddPicture theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'unlockCg.descText')
   },
   {
@@ -193,7 +194,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'unlockBgm.title'),
     initialText: () => t(tPrefix + 'unlockBgm.initText'),
     component: UnlockExtra,
-    icon: <AddMusic theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <AddMusic theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'unlockBgm.descText')
   },
   {
@@ -201,7 +202,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'setTextBox.title'),
     initialText: () => t(tPrefix + 'setTextBox.initText'),
     component: SetTextbox,
-    icon: <AlignTextBottomOne theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <AlignTextBottomOne theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'setTextBox.descText')
   },
   {
@@ -209,7 +210,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'end.title'),
     initialText: () => t(tPrefix + 'end.initText'),
     component: End,
-    icon: <Logout theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Logout theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'end.descText')
   },
   {
@@ -217,7 +218,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'comment.title'),
     initialText: () => t(tPrefix + 'comment.initText'),
     component: Comment,
-    icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'comment.descText')
   },
   {
@@ -225,7 +226,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'transition.title'),
     initialText: () => t(tPrefix + 'transition.initText'),
     component: SetTransition,
-    icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'transition.descText')
   },
   {
@@ -233,7 +234,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title:() => t(tPrefix + 'transform.title'),
     initialText: () => t(tPrefix + 'transform.initText'),
     component:SetTransform,
-    icon: <Code theme="multi-color" size="24" fill={["#333", "#2F88FF", "#FFF", "#43CCF8"]} />,
+    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'transform.descText')
   }
 ];
