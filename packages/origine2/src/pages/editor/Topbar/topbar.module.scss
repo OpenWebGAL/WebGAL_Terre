@@ -1,21 +1,21 @@
 .editor_topbar{
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid var(--topbar-border-bottom);
 }
 
 .editor_title{
   font-size: 135%;
-  color: #005caf;
+  color: var(--terre-primary);
   font-family: Georgia, serif;
   padding: 0.5em 0.5em 0.5em 0.35em;
   text-decoration: none;
 }
 
 .editor_editingGame{
-  color: #005caf;
+  color: var(--terre-primary);
   padding: 0.2em 1em 0.2em 1em;
-  background-color: rgba(0,92,175,0.1);
+  background-color: var(--topbar-editingGame-background);
   border-radius: 2px;
 }
 
@@ -29,5 +29,9 @@
 }
 
 .home_btn:hover{
-  background: rgba(0,0,0,0.075);
+  background: var(--topbar-home-btn-hover-background);
+}
+
+.home_btn > span > svg > path{
+  stroke: var(--terre-primary);
 }
