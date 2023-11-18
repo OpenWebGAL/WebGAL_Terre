@@ -38,23 +38,23 @@ export function EffectEditor(props:{
 
   const updateObject = () => {
     const result:{[key: string]: any;} = {};
-    console.log(x.value)
-    console.log(!isNaN(Number(x.value))&&x.value!=='')
-    if(!isNaN(Number(x.value))&&x.value!==''){result.position = result.position??{};result.position.x = Number(x.value)};
-    if(!isNaN(Number(y.value))&&y.value!==''){result.position = result.position??{};result.position.y = Number(y.value)};
-    if(!isNaN(Number(scaleX.value))&&scaleX.value!==''){result.scale = result.scale??{};result.scale.x = Number(scaleX.value)};
-    if(!isNaN(Number(scaleY.value))&&scaleY.value!==''){result.scale = result.scale??{};result.scale.y = Number(scaleY.value)};
-    if(!isNaN(Number(alpha.value))&&alpha.value!==''){result.alpha = Number(alpha.value)};
-    if(!isNaN(Number(rotation.value))&&rotation.value!==''){result.rotation = Number(rotation.value)};
-    if(!isNaN(Number(blur.value))&&blur.value!==''){result.blur = Number(blur.value)};
-    if(oldFilm.value){result.oldFilm = 1};
-    if(dotFilm.value){result.dotFilm = 1};
-    if(reflectionFilm.value){result.reflectionFilm = 1};
-    if(glitchFilm.value){result.glitchFilm = 1};
-    if(rgbFilm.value){result.rgbFilm = 1};
-    if(godrayFilm.value){result.godrayFilm = 1};
-    console.log(result)
-    return result
+    console.log(x.value);
+    console.log(!isNaN(Number(x.value))&&x.value!=='');
+    if(!isNaN(Number(x.value))&&x.value!==''){result.position = result.position??{};result.position.x = Number(x.value);};
+    if(!isNaN(Number(y.value))&&y.value!==''){result.position = result.position??{};result.position.y = Number(y.value);};
+    if(!isNaN(Number(scaleX.value))&&scaleX.value!==''){result.scale = result.scale??{};result.scale.x = Number(scaleX.value);};
+    if(!isNaN(Number(scaleY.value))&&scaleY.value!==''){result.scale = result.scale??{};result.scale.y = Number(scaleY.value);};
+    if(!isNaN(Number(alpha.value))&&alpha.value!==''){result.alpha = Number(alpha.value);};
+    if(!isNaN(Number(rotation.value))&&rotation.value!==''){result.rotation = Number(rotation.value);};
+    if(!isNaN(Number(blur.value))&&blur.value!==''){result.blur = Number(blur.value);};
+    if(oldFilm.value){result.oldFilm = 1;};
+    if(dotFilm.value){result.dotFilm = 1;};
+    if(reflectionFilm.value){result.reflectionFilm = 1;};
+    if(glitchFilm.value){result.glitchFilm = 1;};
+    if(rgbFilm.value){result.rgbFilm = 1;};
+    if(godrayFilm.value){result.godrayFilm = 1;};
+    console.log(result);
+    return result;
 
     // return {
     //   alpha: !isNaN(Number(alpha.value)) ? Number(alpha.value) : 1, // Convert alpha to number
@@ -74,7 +74,7 @@ export function EffectEditor(props:{
     //   glitchFilm: glitchFilm.value ? 1 : 0,
     //   rgbFilm: rgbFilm.value ? 1 : 0,
     //   godrayFilm: godrayFilm.value ? 1 : 0,
-    // }; 
+    // };
   };
 
   const submit = ()=>{
@@ -85,33 +85,33 @@ export function EffectEditor(props:{
 
   return <>
     <CommonOptions key={1} title={t('transform.title')}>
-      {t('transform.x')}<TextField value={x.value} placeholder={'默认值0'} onChange={(_, newValue) => {
+      {t('transform.x')}<TextField value={x.value} placeholder="默认值0" onChange={(_, newValue) => {
         x.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('transform.y')}<TextField value={y.value} placeholder={'默认值0'} onChange={(_, newValue) => {
+      {t('transform.y')}<TextField value={y.value} placeholder="默认值0" onChange={(_, newValue) => {
         y.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
     <CommonOptions key={2} title={t('scale.title')}>
-      {t('scale.x')}<TextField value={scaleX.value} placeholder={'默认值0'} onChange={(_, newValue) => {
+      {t('scale.x')}<TextField value={scaleX.value} placeholder="默认值0" onChange={(_, newValue) => {
         scaleX.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('scale.y')}<TextField value={scaleY.value} placeholder={'默认值0'} onChange={(_, newValue) => {
+      {t('scale.y')}<TextField value={scaleY.value} placeholder="默认值0" onChange={(_, newValue) => {
         scaleY.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
     <CommonOptions key={3} title={t('effect.title')}>
-      {t('effect.alpha')}<TextField value={alpha.value} placeholder={'默认值1'} onChange={(_, newValue) => {
+      {t('effect.alpha')}<TextField value={alpha.value} placeholder="默认值1" onChange={(_, newValue) => {
         alpha.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('effect.rotation')}<TextField value={rotation.value} placeholder={'默认值0'} onChange={(_, newValue) => {
+      {t('effect.rotation')}<TextField value={rotation.value} placeholder="默认值0" onChange={(_, newValue) => {
         rotation.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('effect.blur')}<TextField value={blur.value} placeholder={'默认值0'} onChange={(_, newValue) => {
+      {t('effect.blur')}<TextField value={blur.value} placeholder="默认值0" onChange={(_, newValue) => {
         blur.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
