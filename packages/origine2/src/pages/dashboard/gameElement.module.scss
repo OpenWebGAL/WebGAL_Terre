@@ -21,7 +21,7 @@
 
 .gameElement_checked {
   box-shadow: var(--gameElement-box-shadow) 0 0 3px 2px;
-  outline: 3px solid var(--terre-primary-color);
+  outline: 3px solid var(--terre-primary);
 }
 
 .gameElement_cover {
@@ -67,7 +67,7 @@
 .editGameButton{
   margin: 0 0 0 auto;
   font-size: medium;
-  background: var(--terre-primary-color);
+  background: var(--terre-primary);
   color: var(--gamePreview-editGameButton);
   box-sizing: border-box;
   border-radius: 2px;

@@ -29,7 +29,7 @@
 }
 
 .sentenceTypeButton:hover {
-  border: 1px solid var(--terre-primary-color);
+  border: 1px solid var(--terre-primary);
   background: var(--addSentence-sentenceTypeButton-hover-background);
 }
 
@@ -41,7 +41,7 @@
 .title {
   font-size: 115%;
   font-weight: bold;
-  color: var(--terre-primary-color);
+  color: var(--terre-primary);
 }
 
 .text{
