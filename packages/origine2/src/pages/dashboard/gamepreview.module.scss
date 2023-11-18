@@ -20,7 +20,7 @@
   gap: 1rem;
   text-align: left;
   padding: 1em 1em 1em 1em ;
-  color: var(--terre-primary-color);
+  color: var(--terre-primary);
 }
 
 .preview_title_text{
@@ -32,7 +32,7 @@
 .editGameButton{
   // margin: 0 0 0 auto;
   font-size: 100%;
-  background: var(--terre-primary-color);
+  background: var(--terre-primary);
   color: var(--gamePreview-editGameButton);
   box-sizing: border-box;
   border-radius: 2px;

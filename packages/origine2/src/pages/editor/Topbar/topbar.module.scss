@@ -6,14 +6,14 @@
 
 .editor_title{
   font-size: 135%;
-  color: var(--terre-primary-color);
+  color: var(--terre-primary);
   font-family: Georgia, serif;
   padding: 0.5em 0.5em 0.5em 0.35em;
   text-decoration: none;
 }
 
 .editor_editingGame{
-  color: var(--terre-primary-color);
+  color: var(--terre-primary);
   padding: 0.2em 1em 0.2em 1em;
   background-color: var(--topbar-editingGame-background);
   border-radius: 2px;
@@ -33,5 +33,5 @@
 }
 
 .home_btn > span > svg > path{
-  stroke: var(--terre-primary-color);
+  stroke: var(--terre-primary);
 }
