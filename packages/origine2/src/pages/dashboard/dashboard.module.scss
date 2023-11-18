@@ -17,8 +17,8 @@
   text-align: left;
   font-family: Georgia, serif;
   font-size: 150%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: #005caf;
+  border-bottom: 1px solid var(--dashboard-topBar-border-bottom);
+  color: var(--terre-primary);
   display: flex;
   align-items: center;
 }

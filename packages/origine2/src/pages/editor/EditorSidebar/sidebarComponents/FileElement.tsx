@@ -61,8 +61,6 @@ export default function FileElement(props: IFileElementProps) {
   const editNameButtonId = useId(`editNameButton`);
   const deleteButtonId = useId("deleteButton");
 
-
-  // @ts-ignore
   // @ts-ignore
   return <div className={styles.fileElement} onClick={clickCallback}>
     <div className={styles.fileElement_icon}>{icon}</div>
@@ -73,7 +71,7 @@ export default function FileElement(props: IFileElementProps) {
       e.stopPropagation();
       switchEditNameCallout();
     }}>
-      <Editor id={editNameButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />
+      <Editor id={editNameButtonId} theme="outline" size="18" strokeWidth={3} />
       {showEditNameCallout.value && <Callout
         className={styles.callout}
         ariaLabelledBy="editName"
@@ -102,7 +100,7 @@ export default function FileElement(props: IFileElementProps) {
       e.stopPropagation();
       showDeleteCalllout.set(!showDeleteCalllout.value);
     }}>
-      {!props?.undeletable && <DeleteOne id={deleteButtonId} theme="outline" size="18" fill="#333" strokeWidth={3} />}
+      {!props?.undeletable && <DeleteOne id={deleteButtonId} theme="outline" size="18" strokeWidth={3} />}
       {!props?.undeletable && showDeleteCalllout.value && <Callout
         className={styles.callout}
         ariaLabelledBy="deleteFile"
