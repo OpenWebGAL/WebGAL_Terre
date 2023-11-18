@@ -48,19 +48,3 @@
 .iconParkIcon > svg > path{
   stroke: var(--iconPark-icon-fill);
 }
-
-.iconSvg > svg > path:nth-child(1) {
-  /* 你的样式，例如： */
-  fill: var(--iconPark-icon-chooseFile-fill);
-  stroke: var(--iconPark-icon-chooseFile-stroke-first);
-}
-
-.iconSvg > svg > path:nth-child(2) {
-  /* 你的样式，例如： */
-  stroke: var(--iconPark-icon-chooseFile-stroke-second);
-}
-
-.iconSvg > svg > path:nth-child(3) {
-  /* 你的样式，例如： */
-  stroke: var(--iconPark-icon-chooseFile-stroke-third);
-}
