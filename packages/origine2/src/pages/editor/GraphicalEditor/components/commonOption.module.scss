@@ -1,5 +1,4 @@
 .item {
-  //border-left: 1px solid rgba(0, 0, 0, 0.1);
   padding: 6px 8px 6px 8px;
   //margin: 0 0 0 8px;
   display: flex;
@@ -8,12 +7,12 @@
 }
 
 .item:hover{
-  background: rgba(0,0,0,0.05);
+  background: var(--commonOption-item-hover-background);
 }
 
 .title {
   text-align: left;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--commonOption-title);
   padding: 0 0 5px 0;
   font-weight: bold;
   font-size: 95%;

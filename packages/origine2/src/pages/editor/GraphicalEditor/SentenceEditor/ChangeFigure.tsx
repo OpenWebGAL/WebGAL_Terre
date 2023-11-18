@@ -6,7 +6,7 @@ import {useValue} from "../../../../hooks/useValue";
 import {getArgByKey} from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {useEffect} from "react";
-import {DefaultButton, Dropdown, TextField} from "@fluentui/react";
+import {PrimaryButton, Dropdown, TextField} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
@@ -65,14 +65,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   };
   const optionButtonStyles = {
     root: {
-      backgroundColor: '#0078d4',
-      color: 'white',
       margin: '6px 0 0 0',
       display: 'flex'
-    },
-    rootHovered: {
-      backgroundColor: '#005a9e',
-      color: 'white'
     },
   };
   useEffect(() => {
@@ -229,9 +223,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         </div>
       }
       <div className={styles.editItem}>
-        <DefaultButton onClick={toggleAccordion} styles={optionButtonStyles}>
+        <PrimaryButton onClick={toggleAccordion} styles={optionButtonStyles}>
           {t('options.animationType.title')}
-        </DefaultButton>
+        </PrimaryButton>
         {isAccordionOpen && (
           <div className={styles.editItem} style={{display: 'flex'}}>
             <CommonOptions title={t('options.animationType.flag')} key="5">

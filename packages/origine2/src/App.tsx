@@ -11,7 +11,7 @@ import {mapLspKindToMonacoKind} from "./pages/editor/TextEditor/convert";
 import * as monaco from "monaco-editor";
 import Translation from "./components/translation/Translation";
 import {lspSceneName} from "@/runtime/WG_ORIGINE_RUNTIME";
-
+import './config/themes/theme.css';
 
 function App() {
   useEffect(() => {
