@@ -36,7 +36,7 @@
 .preview_title {
   font-weight: bold;
   font-size: 115%;
-  color: var(--terre-primary-color);
+  color: var(--terre-primary);
 }
 
 .preview_container {
@@ -77,12 +77,12 @@
 
 .divider:hover {
   width: 2px;
-  background-color: var(--terre-primary-color);
+  background-color: var(--terre-primary);
 }
 
 .divider:active {
   width: 2px;
-  background-color: var(--terre-primary-color);
+  background-color: var(--terre-primary);
 
 }
 
@@ -91,7 +91,7 @@
 }
 
 .livePreviewNotice {
-  color: var(--terre-primary-color);
+  color: var(--terre-primary);
   margin: 5px;
   padding: 5px;
   background: var(--editorSidebar-livePreviewNotice-background);
@@ -99,18 +99,18 @@
   font-size: 85%;
 }
 
-.editor_sidebar_control_button > span > svg > rect {
+.editor_sidebar_control_button span > svg > rect {
   stroke: var(--sideBarIcon-pressUp);
 }
 
-.editor_sidebar_control_button > span > svg > path {
+.editor_sidebar_control_button span > svg > path {
   stroke: var(--sideBarIcon-pressUp);
 }
 
-.editor_sidebar_control_button_active > span > svg > rect {
+.editor_sidebar_control_button_active span > svg > rect {
   stroke: var(--sideBarIcon-pressDown);
 }
 
-.editor_sidebar_control_button_active > span > svg > path {
+.editor_sidebar_control_button_active span > svg > path {
   stroke: var(--sideBarIcon-pressDown);
 }
