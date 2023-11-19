@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/origineStore";
 import MainArea from "./MainArea/MainArea";
 import { Splitter, SplitterPanel } from "primereact/splitter";
+import {useHashRoute} from "@/hooks/useHashRoute";
 
 
 export default function Editor() {
@@ -13,6 +14,7 @@ export default function Editor() {
   const editorState = useSelector((state: RootState) => state.status.editor);
   const isShowPreview = editorState.showPreview;
   const currentTag = editorState.currentSidebarTag;
+  useHashRoute();
   return <>
     {!isShowDashboard && <div className={styles.editor}>
       <TopBar />
