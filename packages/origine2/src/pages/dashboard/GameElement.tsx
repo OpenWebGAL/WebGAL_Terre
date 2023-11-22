@@ -7,6 +7,7 @@ import { useValue } from "../../hooks/useValue";
 import useVarTrans from "@/hooks/useVarTrans";
 import { GameInfo } from "./DashBoard";
 import { useMemo } from "react";
+import {api} from "@/api";
 
 interface IGameElementProps {
   gameInfo: GameInfo;
@@ -56,7 +57,7 @@ export default function GameElement(props: IGameElementProps) {
     type: DialogType.normal,
     title: t('dialogs.renameDir.title'),
   };
-  
+
   const menuProps: IContextualMenuProps = {
     items: [
       {
@@ -87,9 +88,9 @@ export default function GameElement(props: IGameElementProps) {
   };
 
   const openInFileExplorer = () => {
-    axios.get(`/api/manageGame/openGameDict/${props.gameInfo.dir}`);
+    api.manageGameControllerOpenGameDict(props.gameInfo.dir);
   };
-  
+
   const previewInNewTab = () => {
     window.open(`/games/${props.gameInfo.dir}`, "_blank");
   };
@@ -115,7 +116,7 @@ export default function GameElement(props: IGameElementProps) {
   // @ts-ignore
   return <div onClick={props.onClick} className={className} id={props.gameInfo.dir}>
     <img
-      src={`/games/${props.gameInfo.dir}/game/${soureBase}/${props.gameInfo.cover}`} 
+      src={`/games/${props.gameInfo.dir}/game/${soureBase}/${props.gameInfo.cover}`}
       alt={props.gameInfo.title}
       className={styles.gameElement_cover}
     />
@@ -153,7 +154,7 @@ export default function GameElement(props: IGameElementProps) {
       dialogContentProps={renameDialogContentProps}
       // modalProps={modalProps}
     >
-      <TextField 
+      <TextField
         defaultValue={props.gameInfo.dir}
         onChange={(event, value) => newGameName.set(value ? value.trim() : props.gameInfo.dir)}
         onKeyDown={(event) => (event.key === 'Enter') && renameThisGame(props.gameInfo.dir, newGameName.value)}
