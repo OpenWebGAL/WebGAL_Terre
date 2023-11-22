@@ -11,12 +11,21 @@ export class ManageGameService {
   ) {}
 
   /**
+   * 打开游戏文件夹
+   */
+  async openGameDictionary(gameName: string) {
+    const path = this.webgalFs.getPathFromRoot(`public/games/${gameName}`);
+    await _open(path);
+  }
+
+  /**
    * 打开游戏资源文件夹
    */
   async openAssetsDictionary(gameName: string) {
     const path = this.webgalFs.getPathFromRoot(`public/games/${gameName}/game`);
     await _open(path);
   }
+
   /**
    * 从模板创建游戏
    * @param gameName
