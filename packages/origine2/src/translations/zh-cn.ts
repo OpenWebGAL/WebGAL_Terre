@@ -6,7 +6,6 @@ export const zhCn = {
     revise: '修改',
     cancel: '取消',
     rename: '重命名',
-    renameDir: '重命名文件夹',
   },
 
   dashBoard: {
@@ -28,7 +27,16 @@ export const zhCn = {
     msgs: {
       created: '已创建'
     },
+    menu: {
+      openInFileExplorer: '在文件管理器中打开',
+      previewInNewTab: '在新标签页中预览',
+      renameDir: '重命名文件夹',
+      deleteGame: '删除游戏',
+    },
     dialogs: {
+      renameDir: {
+        title: '重命名文件夹'
+      },
       deleteGame: {
         title: "删除游戏",
         subtext: `是否要删除 "{{gameName}}" ？`
