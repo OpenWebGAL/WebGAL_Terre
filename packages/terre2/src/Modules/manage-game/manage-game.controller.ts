@@ -80,6 +80,23 @@ export class ManageGameController {
     }
   }
 
+  @Get('openGameDict/:gameName') // <-- Define the route parameter using :gameName
+  @ApiOperation({ summary: 'Open Game Dictionary' })
+  @ApiResponse({
+    status: 200,
+    description: 'Opens the dictionary for a specified game.',
+  })
+  @ApiParam({
+    name: 'gameName',
+    type: String,
+    description: 'Name of the game.',
+  }) // <-- Swagger description for the route parameter
+  async openGameDict(@Param('gameName') gameName: string) {
+    // <-- Use @Param decorator to fetch the gameName
+    gameName = decodeURI(gameName); // Optionally decode the URI if necessary
+    this.manageGame.openGameDictionary(gameName).then();
+  }
+
   @Get('openGameAssetsDict/:gameName') // <-- Define the route parameter using :gameName
   @ApiOperation({ summary: 'Open Game Assets Dictionary' })
   @ApiResponse({

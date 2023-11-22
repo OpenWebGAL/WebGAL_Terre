@@ -6,7 +6,6 @@ export const en = {
     revise: 'Modify',
     cancel: 'Cancel',
     rename: 'Rename',
-    renameDir: 'Rename dir',
   },
 
   dashBoard: {
@@ -28,7 +27,16 @@ export const en = {
     msgs: {
       created: 'Created'
     },
+    menu: {
+      openInFileExplorer: 'Open in File Explorer',
+      previewInNewTab: 'Preview in new tab',
+      renameDir: 'Rename dir',
+      deleteGame: 'Delete game',
+    },
     dialogs: {
+      renameDir: {
+        title: 'Rename dir'
+      },
       deleteGame: {
         title: "Delete game",
         subtext: `Are you sure you want to delete "{{gameName}}"?`
