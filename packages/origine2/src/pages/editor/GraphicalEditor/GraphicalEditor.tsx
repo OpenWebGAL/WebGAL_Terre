@@ -88,15 +88,19 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   useEffect(() => {
-    setTimeout(()=>{
-      const targetLine = editorLineHolder.getSceneLine(props.targetPath);
-      if(targetLine!==0){
-        setTimeout(()=>{
-          const targetBlock = document.querySelector(`.sentence-block-${targetLine}`);
-          targetBlock?.scrollIntoView?.({behavior:'smooth'});
-        },100);
+    const targetLine = editorLineHolder.getSceneLine(props.targetPath);
+    const scroolToFunc = ()=>{
+      const targetBlock = document.querySelector(`.sentence-block-${targetLine}`);
+      if(targetBlock){
+        targetBlock?.scrollIntoView?.({behavior:'auto'});
+      }else{
+        console.log('Retry scroll to in 50ms');
+        setTimeout(()=>scroolToFunc(),50);
       }
-    });
+    };
+    if(targetLine!==0){
+      scroolToFunc();
+    }
   }, []);
 
   const parsedScene = (sceneText.value === "" ? { sentenceList: [] } : parseScene(sceneText.value));
@@ -115,7 +119,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               {parsedScene.sentenceList.map((sentence, i) => {
                 // 实际显示的行数
                 const index = i + 1;
-                console.log(sentence.command);
+                // console.log(sentence.command);
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
                 return <Draggable key={sentence.content + sentence.commandRaw + i}
