@@ -44,8 +44,7 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} monaco
    */
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
-    logger.debug("编辑器挂载");
-
+    logger.debug("脚本编辑器挂载");
     lspSceneName.value = sceneName;
     editorRef.current = editor;
     editor.onDidChangeCursorPosition((event) => {
@@ -61,6 +60,8 @@ export default function TextEditor(props: ITextEditorProps) {
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
     liftOff(editor).then();
+    isAfterMount = true;
+    updateEditData();
   }
 
   /**
@@ -95,7 +96,7 @@ export default function TextEditor(props: ITextEditorProps) {
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
       currentText.value = data.toString();
-      editorRef.current!.getModel()!.setValue(currentText.value);
+      editorRef.current?.getModel()?.setValue(currentText.value);
       if(isAfterMount){
         const targetLine = editorLineHolder.getSceneLine(props.targetPath);
         editorRef?.current?.setPosition({ lineNumber: targetLine, column: 0 });
@@ -106,13 +107,12 @@ export default function TextEditor(props: ITextEditorProps) {
     });
   }
 
-  useEffect(() => {
-    isAfterMount = true;
-    updateEditData();
-    return () => {
-
-    };
-  });
+  // useEffect(() => {
+  //
+  //   return () => {
+  //
+  //   };
+  // });
 
   return <div style={{ display: props.isHide ? "none" : "block" }} className={styles.textEditor_main}>
     <Editor height="100%" width="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="webgal"
