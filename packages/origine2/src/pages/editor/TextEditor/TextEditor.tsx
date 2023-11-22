@@ -14,13 +14,15 @@ import { wireTmGrammars } from "monaco-editor-textmate";
 // 语法高亮文件
 import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
-import {lspSceneName, WG_ORIGINE_RUNTIME} from "../../../runtime/WG_ORIGINE_RUNTIME";
+import {editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME} from "../../../runtime/WG_ORIGINE_RUNTIME";
 import { WsUtil } from "../../../utils/wsUtil";
 
 interface ITextEditorProps {
   targetPath: string;
   isHide: boolean;
 }
+
+let isAfterMount = false;
 
 export default function TextEditor(props: ITextEditorProps) {
   const target = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
@@ -52,6 +54,9 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = editorValue.split("\n")[lineNumber - 1];
       // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
       const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
+      if(!isAfterMount){
+        editorLineHolder.recordSceneEdittingLine(props.targetPath,lineNumber);
+      }
       WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
     });
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
@@ -66,6 +71,10 @@ export default function TextEditor(props: ITextEditorProps) {
   function handleChange(value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) {
     logger.debug("编辑器提交更新");
     const lineNumber = ev.changes[0].range.startLineNumber;
+    if(!isAfterMount){
+      editorLineHolder.recordSceneEdittingLine(props.targetPath,lineNumber);
+    }
+
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     const gameName = currentEditingGame;
     if (value)
@@ -87,10 +96,18 @@ export default function TextEditor(props: ITextEditorProps) {
       // currentText.set(data);
       currentText.value = data.toString();
       editorRef.current!.getModel()!.setValue(currentText.value);
+      if(isAfterMount){
+        const targetLine = editorLineHolder.getSceneLine(props.targetPath);
+        editorRef?.current?.setPosition({ lineNumber: targetLine, column: 0 });
+        editorRef?.current?.revealLineInCenter(targetLine,0);
+        isAfterMount = false;
+      }
+
     });
   }
 
   useEffect(() => {
+    isAfterMount = true;
     updateEditData();
     return () => {
 
