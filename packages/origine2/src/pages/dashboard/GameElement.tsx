@@ -54,33 +54,44 @@ export default function GameElement(props: IGameElementProps) {
 
   const renameDialogContentProps = {
     type: DialogType.normal,
-    title: t('$common.renameDir'),
+    title: t('dialogs.renameDir.title'),
   };
   
   const menuProps: IContextualMenuProps = {
     items: [
       {
-        key: 'renameGame',
-        text: t('$common.renameDir'),
+        key: 'openInFileExplorer',
+        text: t('menu.openInFileExplorer'),
+        iconProps: { iconName: 'OpenFolderHorizontal' },
+        onClick: () => openInFileExplorer(),
+      },
+      {
+        key: 'previewInNewTab',
+        text: t('menu.previewInNewTab'),
+        iconProps: { iconName: 'OpenInNewTab' },
+        onClick: () => previewInNewTab(),
+      },
+      {
+        key: 'renameDir',
+        text: t('menu.renameDir'),
         iconProps: { iconName: 'Rename' },
         onClick: () => isShowRenameDialog.set(true),
       },
       {
         key: 'deleteGame',
-        text: t('$common.delete'),
+        text: t('menu.deleteGame'),
         iconProps: { iconName: 'Delete' },
         onClick: () => isShowDeleteDialog.set(true),
       },
     ],
   };
 
-  const deleteThisGame = () => {
-    axios.post("/api/manageGame/delete", { source: `public/games/${props.gameInfo.dir}` }).then(() =>
-    {
-      props.refreash?.();
-      isShowDeleteDialog.set(false);
-    }
-    );
+  const openInFileExplorer = () => {
+    axios.get(`/api/manageGame/openGameDict/${props.gameInfo.dir}`);
+  };
+  
+  const previewInNewTab = () => {
+    window.open(`/games/${props.gameInfo.dir}`, "_blank");
   };
 
   const renameThisGame = (gameName:string, newGameName:string) => {
@@ -90,6 +101,15 @@ export default function GameElement(props: IGameElementProps) {
       props.refreash?.();
       isShowRenameDialog.set(false);
     });
+  };
+
+  const deleteThisGame = () => {
+    axios.post("/api/manageGame/delete", { source: `public/games/${props.gameInfo.dir}` }).then(() =>
+    {
+      props.refreash?.();
+      isShowDeleteDialog.set(false);
+    }
+    );
   };
 
   // @ts-ignore
