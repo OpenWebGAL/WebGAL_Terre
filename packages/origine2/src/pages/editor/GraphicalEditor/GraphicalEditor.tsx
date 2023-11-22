@@ -12,6 +12,7 @@ import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
 import { DeleteFive, Sort } from "@icon-park/react";
 import AddSentence, { addSentenceType } from "./components/AddSentence";
 import useTrans from "@/hooks/useTrans";
+import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -36,6 +37,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   function submitSceneAndUpdate(newScene: string, index: number) {
     const updateIndex = index + 1;
+    editorLineHolder.recordSceneEdittingLine(props.targetPath,updateIndex);
     sceneText.set(newScene);
     const params = new URLSearchParams();
     params.append("gameName", currentEditingGame);
@@ -78,11 +80,24 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     if (!result.destination) {
       return;
     }
+    editorLineHolder.recordSceneEdittingLine(props.targetPath,result.destination.index);
     reorder(
       result.source.index,
       result.destination.index
     );
   }
+
+  useEffect(() => {
+    setTimeout(()=>{
+      const targetLine = editorLineHolder.getSceneLine(props.targetPath);
+      if(targetLine!==0){
+        setTimeout(()=>{
+          const targetBlock = document.querySelector(`.sentence-block-${targetLine}`);
+          targetBlock?.scrollIntoView?.({behavior:'smooth'});
+        },100);
+      }
+    });
+  }, []);
 
   const parsedScene = (sceneText.value === "" ? { sentenceList: [] } : parseScene(sceneText.value));
   return <div className={styles.main}>
@@ -106,7 +121,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 return <Draggable key={sentence.content + sentence.commandRaw + i}
                   draggableId={sentence.content + sentence.commandRaw + i}  index={i}>
                   {(provided, snapshot) => (
-                    <div className={styles.sentenceEditorWrapper} key={sentence.commandRaw + sentence.content + i + 'inner'}
+                    <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`} key={sentence.commandRaw + sentence.content + i + 'inner'}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                     >
