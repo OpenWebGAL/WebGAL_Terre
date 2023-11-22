@@ -6,7 +6,6 @@ export const jp = {
     revise: '変更',
     cancel: 'キャンセル',
     rename: 'Rename',
-    renameDir: 'Rename dir',
   },
 
   dashBoard: {
@@ -28,7 +27,16 @@ export const jp = {
     msgs: {
       created: 'を作成した'
     },
+    menu: {
+      openInFileExplorer: 'ファイルエクスプローラーで開く',
+      previewInNewTab: '新しいタブでプレビュー',
+      renameDir: 'ディレクトリ名の変更',
+      deleteGame: 'ゲームの削除',
+    },
     dialogs: {
+      renameDir: {
+        title: 'ディレクトリ名の変更'
+      },
       deleteGame: {
         title: "ゲームの削除",
         subtext: `"{{gameName}}"を削除してもよろしいですか？`
