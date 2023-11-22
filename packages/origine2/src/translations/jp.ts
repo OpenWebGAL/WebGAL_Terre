@@ -35,7 +35,7 @@ export const jp = {
     },
     dialogs: {
       renameDir: {
-        title: 'Rename dir'
+        title: 'ディレクトリ名の変更'
       },
       deleteGame: {
         title: "ゲームの削除",
