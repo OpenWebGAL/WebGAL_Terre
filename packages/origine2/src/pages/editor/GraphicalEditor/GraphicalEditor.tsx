@@ -158,13 +158,13 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
                             onClick={() => changeShowSentence(i)}>
                             {showSentence.value[i]?
-                            <DownOne strokeWidth={2} theme="outline" size="24" fill="#333"/>:
-                            <RightOne strokeWidth={2} theme="outline" size="24" fill="#333"/>}
+                              <DownOne strokeWidth={2} theme="outline" style={{ padding: "0px 2px 0 0" }}  size="18" fill="#333"/>:
+                              <RightOne strokeWidth={2} theme="outline" style={{ padding: "0px 2px 0 0" }} size="18" fill="#333"/>}
                             <div>
-                            {showSentence.value[i]?"折叠":"展开"}
+                              {showSentence.value[i]?"折叠":"展开"}
                             </div>
                           </div>
-                          <div className={styles.optionButton} style={{ margin: "0 0 0 0" }}
+                          <div className={styles.optionButton} style={{ margin: "0 4px 0 4px" }}
                             onClick={() => deleteOneSentence(i)}>
                             <DeleteFive strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"/>
                             <div>
