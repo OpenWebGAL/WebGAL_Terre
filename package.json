@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre",
-  "version": "4.4.6",
+  "version": "4.4.7",
   "private": true,
   "scripts": {
     "dev": "concurrently \"yarn dev:terre\" \"yarn dev:origine\" \"yarn dev:start-dev-server\"",
@@ -9,6 +9,7 @@
     "dev:terre": "cd packages/terre2 && yarn start:debug",
     "dev:origine": "cd packages/origine2 && vite --host=3002",
     "dev:start-dev-server": "cd packages/dev-server && node index.js",
+    "openapi": "cd packages/origine2 && yarn openapi",
     "lint:terre": "cd packages/terre2 && yarn lint",
     "lint:origine": "cd packages/origine2 && yarn lint"
   },

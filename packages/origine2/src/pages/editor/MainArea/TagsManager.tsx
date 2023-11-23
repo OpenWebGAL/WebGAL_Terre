@@ -109,7 +109,7 @@ export default function TagsManager() {
                     {item.tagName}
                   </div>
                   <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
-                    <CloseSmall theme="outline" size="15" fill="#000" strokeWidth={3} />
+                    <CloseSmall theme="outline" size="15" strokeWidth={3} />
                   </div>
                 </div>
               )}

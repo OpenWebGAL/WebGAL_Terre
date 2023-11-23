@@ -7,9 +7,9 @@
 .sentenceEditorWrapper {
   display: flex;
   padding: 6px 12px 6px 12px;
-  border-bottom: 4px solid rgba(0, 0, 0, 0.1);
-  background: white;
-  color: rgba(0, 0, 0, 0.5);
+  border-bottom: 4px solid var(--graphicalEditor-sentenceEditorWrapper-border-bottom);
+  background: var(--graphicalEditor-sentenceEditorWrapper-background);
+  color: var(--graphicalEditor-sentenceEditorWrapper);
   font-weight: bold;
   font-size: 90%;
 }
@@ -21,7 +21,11 @@
   box-sizing: border-box;
   padding: 8px 6px 0 0;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--graphicalEditor-lineNumber);
+}
+
+.lineNumber > span > svg > path {
+  stroke: var(--graphicalEditor-lineNumber);
 }
 
 .seArea {
@@ -37,8 +41,7 @@
 }
 
 .title {
-  color: rgba(0, 92, 175, 1);
-  //background: rgba(0, 92, 175, 0.1);
+  color: var(--terre-primary);
   padding: 1px 4px 0 0;
   box-sizing: border-box;
   font-weight: bold;
@@ -53,23 +56,18 @@
   align-items: center;
   box-sizing: border-box;
   padding: 3px 6px 3px 6px;
-  //background: rgba(0,0,0,0.05);
   border-radius: 4px;
   cursor: pointer;
   margin: 0 4px 0 4px;
-  //border: 1px solid rgba(0,0,0,0);
-  //border-left: 1px solid rgba(0, 0, 0, 0.1);
   //
   //&:first-child {
-  //  border-left: 1px solid rgba(0, 0, 0, 0);
+  //  border-left: 1px solid;
   //}
   transition: background-color 0.33s;
 }
 
 .optionButton:hover {
-  //background: white;
-  //border: 1px solid rgba(0,0,0,0.1);
-  background: rgba(0, 0, 0, 0.05)
+  background: var(--graphicalEditor-optionButton-hover-background)
 }
 
 .topBar {
@@ -78,8 +76,6 @@
   padding: 8px 6px 6px 6px;
   box-sizing: border-box;
   justify-content: center;
-  //border-bottom: 2px solid rgba(0,0,0,0.1);
-  //box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .addWrapper{
@@ -88,4 +84,12 @@
   padding: 30px 16px 30px 16px;
   box-sizing: border-box;
   justify-content: center;
+}
+
+.lineNumber > svg > path{
+  stroke: var(--graphicalEditor-lineNumber);
+}
+
+.optionButton > span > svg > path{
+  stroke: var(--iconPark-icon-fill);
 }

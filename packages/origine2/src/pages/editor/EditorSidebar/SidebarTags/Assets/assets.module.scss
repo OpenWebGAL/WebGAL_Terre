@@ -12,8 +12,7 @@
 
 .controlCommonButton {
   //padding: 4px 3px 2px 3px;
-  //background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--assets-controlCommonButton-border);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.33s;
@@ -26,14 +25,13 @@
 }
 
 .controlCommonButton:hover {
-  background: rgba(0, 92, 175, 0.1);
+  background: var(--assets-controlCommonButton-hover-border);
 }
 
 .controlDirnameDisplay {
   padding: 0 0 0 10px;
   font-family: Consolas, "Courier New", monospace;
-  //background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--assets-controlDirnameDisplay-border);
   border-radius: 4px;
   flex: 1;
   font-size: 14px;
@@ -49,7 +47,6 @@
 .commonFileButton {
   padding: 5px 5px 5px 10px;
   margin: 5px 0 0 0;
-  //background: rgba(0, 0, 0, 0.05);
   //border-radius: 4px;
   flex: 1;
   cursor: pointer;
@@ -60,12 +57,11 @@
   align-items: center;
   font-size: 14px;
   border-radius: 4px;
-  //border-bottom: 1px solid rgba(0,0,0,0.1);
   height: 25px;
 }
 
 .commonFileButton:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--assets-commonFileButton-hover-background);
 }
 
 .fileName {
@@ -79,7 +75,6 @@
 
 
 .deleteButton {
-  //background:rgba(0,0,0,0.05);
   padding: 2px 2px 1px 2px;
   margin: 0 4px 0 0;
   border-radius: 4px;
@@ -92,7 +87,7 @@
 }
 
 .deleteButton:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--assets-deleteButton-hover-background);
 }
 
 .fileList {
@@ -120,8 +115,8 @@
 }
 
 .fileSelectButton {
-  background-color: #0078D4;
-  color: #FFFFFF;
+  background-color: var(--assets-fileSelectButton-background);
+  color: var(--assets-fileSelectButton);
   padding: 8px 16px;
   border-radius: 4px;
   border: none;
@@ -132,12 +127,12 @@
 }
 
 .fileSelectButton:hover {
-  background-color: #005a9e;
+  background-color: var(--assets-fileSelectButton-hover-background);
 }
 
 .fileSelectInput {
   width: 300px;
-  border: 1px solid #0078D4;
+  border: 1px solid var(--assets-fileSelectInput-border);
   border-radius: 4px;
   padding: 15px;
   font-size: 16px;
@@ -146,14 +141,18 @@
 }
 
 .fileSelectInput:focus {
-  border-color: #005a9e;
-  box-shadow: 0 0 0 2px rgba(0, 90, 158, 0.2);
+  border-color: var(--assets-fileSelectInput-focus-border);
+  box-shadow: 0 0 0 2px var(--assets-fileSelectInput-focus-box-shadow);
 }
 
 .extNameShow {
-  background: rgba(0, 120, 212, 0.1);
-  color: #0078D4;
+  background: var(--assets-extNameShow-background);
+  color: var(--assets-extNameShow);
   padding: 1px 5px 4px 5px;
   border-radius: 4px;
   margin: 0 0 0 4px;
+}
+
+.iconParkIcon > svg > path{
+  stroke: var(--iconPark-icon-fill);
 }

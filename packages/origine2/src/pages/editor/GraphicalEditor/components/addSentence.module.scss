@@ -3,11 +3,9 @@
 //  align-items: center;
 //  box-sizing: border-box;
 //  padding: 3px 6px 3px 6px;
-//  background: rgba(0, 0, 0, 0.05);
 //  border-radius: 4px;
 //  cursor: pointer;
 //  margin: 0 4px 0 4px;
-//  //border: 1px solid rgba(0,0,0,0.05);
 //}
 
 .sentenceTypeButtonList {
@@ -22,7 +20,7 @@
   align-items: center;
   padding: 6px 6px 6px 10px;
   box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--addSentence-sentenceTypeButton-background);
   border-radius: 4px;
   margin: 0 4px 6px 2px;
   cursor: pointer;
@@ -31,8 +29,8 @@
 }
 
 .sentenceTypeButton:hover {
-  border: 1px solid #005CAF;
-  background: rgba(0, 0, 0, 0);
+  border: 1px solid var(--terre-primary);
+  background: var(--addSentence-sentenceTypeButton-hover-background);
 }
 
 
@@ -43,7 +41,7 @@
 .title {
   font-size: 115%;
   font-weight: bold;
-  color: #005caf;
+  color: var(--terre-primary);
 }
 
 .text{
