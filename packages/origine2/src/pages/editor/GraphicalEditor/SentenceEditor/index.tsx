@@ -7,20 +7,21 @@ import {
   AddMusic,
   AddPicture,
   AlignLeftTwo,
-  AlignTextBottomOne,
+  AlignTextBottomOne, ApplicationEffect,
   AutoWidth,
   Avatar,
   Code,
   CommentOne,
   CornerRightUp,
   Effects,
+  EnterTheKeyboard,
   Erase,
   ListCheckbox,
   Logout,
   Music,
   NewPicture,
   People,
-  SwitchThemes,
+  SwitchThemes, Transform,
   VideoTwo
 } from "@icon-park/react";
 import ChangeBg from "./ChangeBg";
@@ -42,6 +43,7 @@ import Choose from "./Choose";
 import SetTransition from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransition";
 import SetTransform from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransform";
 import styles from "./sentenceEditor.module.scss";
+import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput";
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -226,7 +228,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title: () => t(tPrefix + 'transition.title'),
     initialText: () => t(tPrefix + 'transition.initText'),
     component: SetTransition,
-    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
+    icon: <Transform theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'transition.descText')
   },
   {
@@ -234,7 +236,15 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     title:() => t(tPrefix + 'transform.title'),
     initialText: () => t(tPrefix + 'transform.initText'),
     component:SetTransform,
-    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
+    icon: <ApplicationEffect theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t(tPrefix + 'transform.descText')
+  },
+  {
+    type:commandType.getUserInput,
+    title:() => t(tPrefix + 'getUserInput.title'),
+    initialText: () => t(tPrefix + 'getUserInput.initText'),
+    component:GetUserInput,
+    icon: <EnterTheKeyboard theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t(tPrefix + 'getUserInput.descText')
   }
 ];

@@ -7436,10 +7436,10 @@ web-streams-polyfill@^3.0.3:
   resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.2.1.tgz#71c2718c52b45fd49dbeee88634b3a60ceab42a6"
   integrity sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==
 
-webgal-parser@^4.4.5-fix2:
-  version "4.4.5-fix2"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.4.5-fix2.tgz#4a77cf0c2b8a2be0e73813ff8e77dc2cd664e62b"
-  integrity sha512-O/8HW75ExANS/rbgu7TF3Snml7D/8gWWKKfnrpuasnUINWHIWhfcyLMjz8vK8nm9/7LmA0Epg1yJ1RQrs3Txew==
+webgal-parser@^4.4.7:
+  version "4.4.7"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.4.7.tgz#e77cf469ef224ac70fda06dfc790e2a9f427bfc4"
+  integrity sha512-cJF6rVRigCSrdEPl7RvVd1QmaHyIKqJbK23JaMudw84Lwy90YQ83QSB+MmCoUlRTe5QYErj9Zr3ATkM+Z553NA==
   dependencies:
     chevrotain "^10.5.0"
     cloudlogjs "^1.0.11"
