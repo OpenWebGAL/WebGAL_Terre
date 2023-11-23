@@ -6,7 +6,6 @@ export const zhCn = {
     revise: '修改',
     cancel: '取消',
     rename: '重命名',
-    renameDir: '重命名文件夹',
   },
 
   dashBoard: {
@@ -28,7 +27,16 @@ export const zhCn = {
     msgs: {
       created: '已创建'
     },
+    menu: {
+      openInFileExplorer: '在文件管理器中打开',
+      previewInNewTab: '在新标签页中预览',
+      renameDir: '重命名文件夹',
+      deleteGame: '删除游戏',
+    },
     dialogs: {
+      renameDir: {
+        title: '重命名文件夹'
+      },
       deleteGame: {
         title: "删除游戏",
         subtext: `是否要删除 "{{gameName}}" ？`
@@ -352,6 +360,14 @@ export const zhCn = {
           title: "切换场景",
           initText: "changeScene:选择场景文件;",
           descText: '切换到另一个场景文件，并清除当前场景',
+        },
+        getUserInput: {
+          title: "获取输入",
+          initText: "getUserInput:;",
+          titleOption:"对话框标题",
+          varOption:"写入变量",
+          buttonText:"确认按钮文本",
+          descText: '获取来自用户的字符输入',
         },
         setAnime: {
           title: "设置动画",

@@ -20,8 +20,6 @@
         "activityBarBadge.background": "#54a3ff",
         "sideBar.foreground": "#586069",
         "sideBar.border": "#e1e4e8",
-        "sideBarIcon.pressDown": "#0B346E",
-        "sideBarIcon.pressUp": "#666",
         "sideBarTitle.foreground": "#24292e",
         "sideBarSectionHeader.background": "#F1F2F3",
         "sideBarSectionHeader.foreground": "#24292e",

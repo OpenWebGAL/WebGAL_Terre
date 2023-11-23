@@ -7,7 +7,6 @@ import useTrans from "@/hooks/useTrans";
 import {registerIcons} from '@fluentui/react/lib/Styling';
 import {EditorSidebarIcon} from "./EditorSidebarIcon";
 import {IIconProps} from "@fluentui/react";
-import * as defaultTheme from "../../../config/themes/white.json";
 
 export default function EditorSidebarControl() {
   const state = useSelector((state: RootState) => state.status.editor);
@@ -18,20 +17,18 @@ export default function EditorSidebarControl() {
   const theme = "outline";
   const strokeWidth = 3;
   const sizeStr = `${size}px`;
-  const iconPressDownFill = defaultTheme.colors["sideBarIcon.pressDown"];
-  const iconPressUpffill = defaultTheme.colors["sideBarIcon.pressUp"];
 
   // Register custom SVG icons
   registerIcons({
     icons: {
-      previewOpen: <PreviewOpen size={size} theme={theme} fill={iconPressDownFill} strokeWidth={strokeWidth}/>,
-      previewClose: <PreviewCloseOne size={size} theme={theme} fill={iconPressUpffill} strokeWidth={strokeWidth}/>,
-      gameConfigOpen: <SettingConfig size={size} theme={theme} fill={iconPressDownFill} strokeWidth={strokeWidth}/>,
-      gameConfigClose: <SettingConfig size={size} theme={theme} fill={iconPressUpffill} strokeWidth={strokeWidth}/>,
-      assetsOpen: <FolderOpen size={size} theme={theme} fill={iconPressDownFill} strokeWidth={strokeWidth}/>,
-      assetsClose: <FolderOpen size={size} theme={theme} fill={iconPressUpffill} strokeWidth={strokeWidth}/>,
-      scenesOpen: <PlayTwo size={size} theme={theme} fill={iconPressDownFill} strokeWidth={strokeWidth}/>,
-      scenesClose: <PlayTwo size={size} theme={theme} fill={iconPressUpffill} strokeWidth={strokeWidth}/>
+      previewOpen: <PreviewOpen size={size} theme={theme} strokeWidth={strokeWidth}/>,
+      previewClose: <PreviewCloseOne size={size} theme={theme} strokeWidth={strokeWidth}/>,
+      gameConfigOpen: <SettingConfig size={size} theme={theme} strokeWidth={strokeWidth}/>,
+      gameConfigClose: <SettingConfig size={size} theme={theme} strokeWidth={strokeWidth}/>,
+      assetsOpen: <FolderOpen size={size} theme={theme} strokeWidth={strokeWidth}/>,
+      assetsClose: <FolderOpen size={size} theme={theme} strokeWidth={strokeWidth}/>,
+      scenesOpen: <PlayTwo size={size} theme={theme} strokeWidth={strokeWidth}/>,
+      scenesClose: <PlayTwo size={size} theme={theme} strokeWidth={strokeWidth}/>
     }
   });
 

@@ -35,6 +35,7 @@ const SCRIPT_CONFIG = [
   { scriptString: 'playEffect', scriptType: commandType.playEffect },
   { scriptString: 'setTransition', scriptType: commandType.setTransition },
   { scriptString: 'setTransform', scriptType: commandType.setTransform },
+  { scriptString: 'getUserInput', scriptType: commandType.getUserInput },
 ];
 
 export const WebgalParser = new SceneParser(() => {
