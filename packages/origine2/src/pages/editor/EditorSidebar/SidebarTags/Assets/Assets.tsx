@@ -161,7 +161,7 @@ export default function Assets() {
       </div>} />
       <div className={assetsStyles.controlHead}>
         <div className={assetsStyles.controlCommonButton} onClick={goBack}>
-          <LeftSmall theme="outline" strokeWidth={3} size="18" fill="#333" />
+          <LeftSmall theme="outline" strokeWidth={3} size="18" className={assetsStyles.iconParkIcon}/>
         </div>
         <div className={assetsStyles.controlDirnameDisplay}>
           {currentDirName === "" ? "/" : currentDirName}
@@ -170,11 +170,11 @@ export default function Assets() {
           <>
             <div id={buttonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowUploadCallout.set(!isShowUploadCallout.value)}>
-              <Upload theme="outline" size="18" strokeWidth={3} fill="#333" />
+              <Upload theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon}/>
             </div>
             <div id={mkdirButtonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowMkdirCallout.set(!isShowMkdirCallout.value)}>
-              <FolderPlus theme="outline" size="18" strokeWidth={3} fill="#333" />
+              <FolderPlus theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon}/>
             </div>
           </>
         }
@@ -268,7 +268,7 @@ function CommonFileButton(props: IFileDescription & {
       }} id={renameButtonId} className={assetsStyles.deleteButton} style={{
         display: showRenameCallout.value ? "block" : undefined
       }}>
-        <Editor theme="outline" size="18" fill="#333" strokeWidth={3} />
+        <Editor theme="outline" size="18" className={assetsStyles.iconParkIcon} strokeWidth={3} />
       </div>
       <div onClick={(e) => {
         e.stopPropagation();
@@ -276,7 +276,7 @@ function CommonFileButton(props: IFileDescription & {
       }} id={deleteButtonId} className={assetsStyles.deleteButton} style={{
         display: showRenameCallout.value ? "block" : undefined
       }}>
-        <DeleteOne theme="outline" size="18" fill="#333" strokeWidth={3} />
+        <DeleteOne theme="outline" size="18" className={assetsStyles.iconParkIcon} strokeWidth={3} />
       </div>
       {showRenameCallout.value && <Callout
         className={assetsStyles.uploadCallout}
