@@ -361,6 +361,14 @@ export const zhCn = {
           initText: "changeScene:选择场景文件;",
           descText: '切换到另一个场景文件，并清除当前场景',
         },
+        getUserInput: {
+          title: "获取输入",
+          initText: "getUserInput:;",
+          titleOption:"对话框标题",
+          varOption:"写入变量",
+          buttonText:"确认按钮文本",
+          descText: '获取来自用户的字符输入',
+        },
         setAnime: {
           title: "设置动画",
           initText: "setAnimation:选择动画文件;",
