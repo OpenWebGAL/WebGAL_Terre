@@ -29,11 +29,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const url = `/games/${currentEditingGame}/game/scene/${props.targetName}`;
     axios.get(url).then(res => res.data).then((data) => {
       sceneText.set(data.toString());
+      const arr = splitToArray(sceneText.value);
+      if(showSentence.value.length!==arr.length){
+        showSentence.set(new Array(arr.length).fill(true));
+      }
     });
-    const arr = splitToArray(sceneText.value);
-    if(showSentence.value.length!==arr.length){
-      showSentence.set(new Array(arr.length).fill(true));
-    }
   }
 
   useEffect(() => {
