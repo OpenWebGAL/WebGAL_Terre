@@ -297,6 +297,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Manage Game
+     * @name ManageGameControllerOpenGameDict
+     * @summary Open Game Dictionary
+     * @request GET:/api/manageGame/openGameDict/{gameName}
+     */
+    manageGameControllerOpenGameDict: (gameName: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/manageGame/openGameDict/${gameName}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
      * @name ManageGameControllerOpenGameAssetsDict
      * @summary Open Game Assets Dictionary
      * @request GET:/api/manageGame/openGameAssetsDict/{gameName}
