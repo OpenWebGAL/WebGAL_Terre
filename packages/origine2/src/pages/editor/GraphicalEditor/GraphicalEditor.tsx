@@ -32,7 +32,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     });
     const arr = splitToArray(sceneText.value);
     if(showSentence.value.length!==arr.length){
-      showSentence.set(new Array(arr.length).fill(true))
+      showSentence.set(new Array(arr.length).fill(true));
     }
   }
 
@@ -66,8 +66,8 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     arr.splice(updateIndex, 0, newSentence);
     submitSceneAndUpdate(mergeToString(arr), updateIndex);
     const showSentenceList = [...showSentence.value];
-    showSentenceList.splice(updateIndex,0,true)
-    showSentence.set(showSentenceList)
+    showSentenceList.splice(updateIndex,0,true);
+    showSentence.set(showSentenceList);
   }
 
   function deleteOneSentence(index: number) {
@@ -75,14 +75,14 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     arr.splice(index, 1);
     submitSceneAndUpdate(mergeToString(arr), index);
     const showSentenceList = [...showSentence.value];
-    showSentenceList.splice(index,1)
-    showSentence.set(showSentenceList)
+    showSentenceList.splice(index,1);
+    showSentence.set(showSentenceList);
   }
 
   function changeShowSentence(index: number) {
-    const showSentenceList = [...showSentence.value]
-    showSentenceList[index] = !showSentenceList[index]
-    showSentence.set(showSentenceList)
+    const showSentenceList = [...showSentence.value];
+    showSentenceList[index] = !showSentenceList[index];
+    showSentence.set(showSentenceList);
   }
 
   // 重新记录数组顺序
