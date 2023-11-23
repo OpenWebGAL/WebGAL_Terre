@@ -9,7 +9,7 @@ import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
-import { DeleteFive, Sort } from "@icon-park/react";
+import { DeleteFive, Sort, DownOne, RightOne } from "@icon-park/react";
 import AddSentence, { addSentenceType } from "./components/AddSentence";
 import useTrans from "@/hooks/useTrans";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
@@ -23,11 +23,16 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const t = useTrans("editor.graphical.buttons.");
   const sceneText = useValue("");
   const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const showSentence = useValue<Array<boolean>>([]);
 
   function updateScene() {
     const url = `/games/${currentEditingGame}/game/scene/${props.targetName}`;
     axios.get(url).then(res => res.data).then((data) => {
       sceneText.set(data.toString());
+      const arr = splitToArray(sceneText.value);
+      if(showSentence.value.length!==arr.length){
+        showSentence.set(new Array(arr.length).fill(true));
+      }
     });
   }
 
@@ -60,12 +65,24 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const arr = sceneText.value === "" ? [] : splitToArray(sceneText.value);
     arr.splice(updateIndex, 0, newSentence);
     submitSceneAndUpdate(mergeToString(arr), updateIndex);
+    const showSentenceList = [...showSentence.value];
+    showSentenceList.splice(updateIndex,0,true);
+    showSentence.set(showSentenceList);
   }
 
   function deleteOneSentence(index: number) {
     const arr = splitToArray(sceneText.value);
     arr.splice(index, 1);
     submitSceneAndUpdate(mergeToString(arr), index);
+    const showSentenceList = [...showSentence.value];
+    showSentenceList.splice(index,1);
+    showSentence.set(showSentenceList);
+  }
+
+  function changeShowSentence(index: number) {
+    const showSentenceList = [...showSentence.value];
+    showSentenceList[index] = !showSentenceList[index];
+    showSentence.set(showSentenceList);
   }
 
   // 重新记录数组顺序
@@ -139,6 +156,15 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                             {sentenceConfig.title()}
                           </div>
                           <div className={styles.optionButton} style={{ margin: "0 0 0 auto" }}
+                            onClick={() => changeShowSentence(i)}>
+                            {showSentence.value[i]?
+                              <DownOne strokeWidth={2} theme="outline" style={{ padding: "0px 2px 0 0" }}  size="18" fill="#333"/>:
+                              <RightOne strokeWidth={2} theme="outline" style={{ padding: "0px 2px 0 0" }} size="18" fill="#333"/>}
+                            <div>
+                              {showSentence.value[i]?"折叠":"展开"}
+                            </div>
+                          </div>
+                          <div className={styles.optionButton} style={{ margin: "0 4px 0 4px" }}
                             onClick={() => deleteOneSentence(i)}>
                             <DeleteFive strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"/>
                             <div>
@@ -148,9 +174,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           <AddSentence titleText={t("addForward")} type={addSentenceType.forward}
                             onChoose={(newSentence) => addOneSentence(newSentence, i)} />
                         </div>
-                        <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
+                        {showSentence.value[i] && <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
                           updateSentenceByIndex(newSentence, i);
-                        }} />
+                        }} />}
                       </div>
                     </div>
                   )}
