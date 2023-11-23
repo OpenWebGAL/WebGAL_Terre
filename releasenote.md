@@ -4,25 +4,21 @@
 
 #### 新功能
 
-编辑器主页的游戏列表 UI 视觉升级，游戏重命名
+添加了获取用户输入的功能
 
-动画文件编辑
+添加了为对话注音的功能
 
-文本框主题选择
+添加了变量插值的功能
 
-视频禁止跳过的选项
+编辑器可以记住当前正在编辑的场景，刷新后打开
 
-（引擎）变量插值
+优化了游戏列表界面的 UI
 
-Live2D 的表情和动作设置
-
-编辑器侧边栏的功能提示
+切换正在编辑的场景或图形编辑模式与代码编辑模式时，可以记住正在编辑的行数，并跳转
 
 #### 修复
 
-立绘变换编辑组件
-
-引擎的一些错误
+立绘和背景变换效果序列化结果过长的问题
 
 其他已知问题
 
@@ -33,27 +29,24 @@ Live2D 的表情和动作设置
 
 #### New Features
 
-UI visual upgrade for the game list on the editor homepage, game renaming
+Added the ability to capture user input
 
-Animation file editing
+Added the feature to annotate dialogues
 
-Textbox theme selection
+Added the functionality for variable interpolation
 
-Option to prohibit skipping videos
+The editor can remember the scene currently being edited and open it after refreshing
 
-(Engine) Variable interpolation
+Optimized the UI of the game list interface
 
-Live2D expression and motion settings
-
-Function tips in the editor sidebar
+When switching the scene being edited or between graphic editing mode and code editing mode, it can remember the line number being edited and jump to it
 
 #### Fixes
 
-Standing picture transformation editing component
-
-Some engine errors
+The issue with the serialization result of character and background transition effects being too long
 
 Other known issues
+
 
 
 <!-- Japanese Translation -->
@@ -63,23 +56,23 @@ Other known issues
 
 #### 新機能
 
-エディタホームページのゲームリストのUIビジュアルアップグレード、ゲームの名前変更
+ユーザー入力を取得する機能を追加
 
-アニメーションファイルの編集
+ダイアログに注釈を加える機能を追加
 
-テキストボックスのテーマ選択
+変数のインターポレーション機能を追加
 
-ビデオのスキップ禁止オプション
+エディターが編集中のシーンを記憶し、更新後に開く
 
-（エンジン）変数の補間
+ゲームリストインターフェイスのUIを最適化
 
-Live2Dの表情とモーションの設定
-
-エディタサイドバーの機能ヒント
+編集中のシーンの切り替え、またはグラフィック編集モードとコード編集モード間で、編集中の行番号を記憶し、ジャンプする
 
 #### 修正
 
-立ち絵の変形編集コンポーネ
+キャラクターと背景の遷移効果のシリアライゼーション結果が長すぎる問題
+
+その他の既知の問題
 
 
 <!-- French Translation -->
@@ -89,24 +82,20 @@ Live2Dの表情とモーションの設定
 
 #### Nouvelles fonctionnalités
 
-Mise à jour visuelle de l'UI pour la liste des jeux sur la page d'accueil de l'éditeur, renommage des jeux
+Ajout de la capacité de capturer l'entrée de l'utilisateur
 
-Édition des fichiers d'animation
+Ajout de la fonctionnalité pour annoter les dialogues
 
-Sélection du thème de la boîte de texte
+Ajout de la fonctionnalité d'interpolation de variables
 
-Option pour interdire le saut des vidéos
+L'éditeur peut se souvenir de la scène en cours d'édition et l'ouvrir après actualisation
 
-(Moteur) Interpolation des variables
+Optimisation de l'interface UI de la liste des jeux
 
-Paramètres d'expression et de mouvement Live2D
-
-Conseils de fonction dans la barre latérale de l'éditeur
+Lors du changement de la scène en cours d'édition ou entre le mode d'édition graphique et le mode d'édition de code, il peut se souvenir du numéro de ligne en cours d'édition et y sauter
 
 #### Corrections
 
-Composant d'édition de transformation de l'image debout
-
-Certaines erreurs du moteur
+Le problème de la longueur excessive du résultat de sérialisation des effets de transition de personnages et d'arrière-plan
 
 Autres problèmes connus
