@@ -1,7 +1,9 @@
 .editor_topbar{
   display: flex;
-  align-items: center;
+  flex-flow: column;
   border-bottom: 1px solid var(--topbar-border-bottom);
+  background: #F5F5F5;
+  padding: 0 8px 4px 8px;
 }
 
 .editor_title{
@@ -34,4 +36,42 @@
 
 .home_btn > span > svg > path{
   stroke: var(--terre-primary);
+}
+
+.topbar_tags{
+  display: flex;
+  width: 100%;
+  height: 35px;
+  align-items: center;
+}
+
+.topbar_btn{
+  border: none;
+  border-radius: 2px 2px 0 0;
+  background: transparent;
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+  font-style: normal;
+  line-height: normal;
+  cursor: pointer;
+  font-weight: 400;
+  padding: 0 10px 0 10px;
+  height: 30px;
+  align-self: flex-end;
+}
+
+.topbar_btn_active{
+  color:var(--terre-primary);
+  background: #FFF;
+  font-weight: 700;
+}
+
+.topbar_gamename{
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0 auto 0 auto;
 }
