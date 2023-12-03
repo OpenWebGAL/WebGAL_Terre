@@ -13,6 +13,8 @@ import useLanguage from "@/hooks/useLanguage";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import AndroidIcon from 'material-icon-theme/icons/android.svg';
 import GithubIcon from './github.svg';
+import TopbarTagButton from "@/pages/editor/Topbar/TopbarTagButton";
+import TopbarTag from "@/pages/editor/Topbar/tags/TopbarTag";
 
 export default function TopBar() {
   const t = useTrans('editor.topBar.');
@@ -115,27 +117,44 @@ export default function TopBar() {
       }
     }];
 
-  return <div className={styles.editor_topbar}>
-    <a href="/" className={styles.home_btn}>
-      <LeftSmall theme="outline" size="24"/>
-      <div className={styles.editor_title}>WebGAL Terre</div>
-    </a>
+  // const legacy = <>
+  //   <a href="/" className={styles.home_btn}>
+  //     <LeftSmall theme="outline" size="24"/>
+  //     <div className={styles.editor_title}>WebGAL Terre</div>
+  //   </a>
+  //
+  //   <div className={styles.editor_editingGame}>{t('editing')}<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
+  //   <div style={{ display: "flex", justifyItems: "center", padding: '0 0 0 12px' }}>
+  //     <TerreToggle
+  //       isChecked={isCodeMode}
+  //       title={t('editMode.title')} onText={t('editMode.onText')} offText={t('editMode.offText')}
+  //       onChange={handleChange} />
+  //   </div>
+  //
+  //   <div style={{ margin: "0 5px 0 auto" }}>
+  //     <CommandBar
+  //       items={_items}
+  //       ariaLabel="Inbox actions"
+  //       primaryGroupAriaLabel="Email actions"
+  //       farItemsGroupAriaLabel="More actions"
+  //     />
+  //   </div></>;
 
-    <div className={styles.editor_editingGame}>{t('editing')}<span style={{ fontWeight: "bold" }}>{editingGame}</span></div>
-    <div style={{ display: "flex", justifyItems: "center", padding: '0 0 0 12px' }}>
-      <TerreToggle
-        isChecked={isCodeMode}
-        title={t('editMode.title')} onText={t('editMode.onText')} offText={t('editMode.offText')}
-        onChange={handleChange} />
+  return <div className={styles.editor_topbar} >
+    <div className={styles.topbar_tags}>
+      {/* 标签页 */}
+      <TopbarTagButton text="文件" isActive={false}/>
+      <TopbarTagButton text="配置" isActive={true}/>
+      <TopbarTagButton text="视图" isActive={false}/>
+      <TopbarTagButton text="设置" isActive={false}/>
+      <TopbarTagButton text="帮助" isActive={false}/>
+      <TopbarTagButton text="导出" isActive={false}/>
+      <div className={styles.topbar_gamename}>
+        WebGAL Demo Game
+      </div>
     </div>
-
-    <div style={{ margin: "0 5px 0 auto" }}>
-      <CommandBar
-        items={_items}
-        ariaLabel="Inbox actions"
-        primaryGroupAriaLabel="Email actions"
-        farItemsGroupAriaLabel="More actions"
-      />
-    </div>
+    <TopbarTag>
+      123
+    </TopbarTag>
   </div>;
 }
