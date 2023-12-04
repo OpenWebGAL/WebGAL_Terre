@@ -1,0 +1,31 @@
+.toolbar {
+  border-top: 1px solid var(--divide, #D1D1D1);
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 8px;
+  gap: 8px;
+  background: rgba(245, 245, 245, 1);
+}
+
+.tollbar_button {
+  padding: 0 6px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+  cursor: pointer;
+}
+
+.tollbar_button:hover {
+  background: #E1E1E1;
+}
+
+.active {
+  background: #c8c8c8;
+}
