@@ -1,4 +1,4 @@
-.editor_topbar{
+.editor_topbar {
   display: flex;
   flex-flow: column;
   border-bottom: 1px solid var(--topbar-border-bottom);
@@ -6,7 +6,7 @@
   padding: 0 8px 4px 8px;
 }
 
-.editor_title{
+.editor_title {
   font-size: 135%;
   color: var(--terre-primary);
   font-family: Georgia, serif;
@@ -14,14 +14,14 @@
   text-decoration: none;
 }
 
-.editor_editingGame{
+.editor_editingGame {
   color: var(--terre-primary);
   padding: 0.2em 1em 0.2em 1em;
   background-color: var(--topbar-editingGame-background);
   border-radius: 2px;
 }
 
-.home_btn{
+.home_btn {
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -30,22 +30,22 @@
   border-radius: 5px;
 }
 
-.home_btn:hover{
+.home_btn:hover {
   background: var(--topbar-home-btn-hover-background);
 }
 
-.home_btn > span > svg > path{
+.home_btn > span > svg > path {
   stroke: var(--terre-primary);
 }
 
-.topbar_tags{
+.topbar_tags {
   display: flex;
   width: 100%;
   height: 35px;
   align-items: center;
 }
 
-.topbar_btn{
+.topbar_btn {
   border: none;
   border-radius: 2px 2px 0 0;
   background: transparent;
@@ -61,17 +61,34 @@
   align-self: flex-end;
 }
 
-.topbar_btn_active{
-  color:var(--terre-primary);
+.topbar_btn_active {
+  color: var(--terre-primary);
   background: #FFF;
   font-weight: 700;
 }
 
-.topbar_gamename{
+.topbar_gamename {
   color: #000;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   margin: 0 auto 0 auto;
+}
+
+.topbar_link {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8px 0 8px;
+  cursor: pointer;
+}
+
+.topbar_link:hover{
+  background: var(--gray-204);
+}
+
+.topbar_link_text{
+  padding: 0 4px;
+  font-size: 14px;
 }
