@@ -108,7 +108,7 @@ export default function Scenes() {
 
   return (
     <div style={{ height: "100%", overflow: "auto" }}>
-      <TagTitleWrapper title={t('title')} extra={<><div
+      <TagTitleWrapper title="" extra={<><div
         id="createSceneButton"
         className="tag_title_button"
         onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
