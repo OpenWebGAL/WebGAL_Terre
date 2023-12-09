@@ -21,8 +21,10 @@ export class ManageGameService {
   /**
    * 打开游戏资源文件夹
    */
-  async openAssetsDictionary(gameName: string) {
-    const path = this.webgalFs.getPathFromRoot(`public/games/${gameName}/game`);
+  async openAssetsDictionary(gameName: string, subFolder?: string) {
+    const path = this.webgalFs.getPathFromRoot(
+      `public/games/${gameName}/game/${subFolder}`,
+    );
     await _open(path);
   }
 
