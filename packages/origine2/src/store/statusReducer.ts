@@ -59,7 +59,7 @@ export const editorInitState: IEditorState = {
   currentEditingGame: "",
   isEnableLivePreview: false,
   showPreview: true,
-  currentSidebarTag: sidebarTag.gameconfig,
+  currentSidebarTag: sidebarTag.assets,
   tags: [],
   selectedTagTarget: "",
   isCodeMode: (localStorage.getItem("isCodeMode") ?? "") === "true",

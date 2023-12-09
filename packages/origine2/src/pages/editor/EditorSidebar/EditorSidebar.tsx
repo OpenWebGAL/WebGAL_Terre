@@ -1,21 +1,22 @@
 import styles from "./editorSidebar.module.scss";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../store/origineStore";
-import {setIsLivePreview, sidebarTag} from "../../../store/statusReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/origineStore";
+import { setEditorSidebarTag, setIsLivePreview, sidebarTag } from "../../../store/statusReducer";
 import GameConfig from "./SidebarTags/GameConfig/GameConfig";
 import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
+import { IconButton, TooltipHost } from "@fluentui/react";
 
 let startX = 0;
 let prevXvalue = 0;
 let isMouseDown = false;
 
 export default function EditorSideBar() {
-  const t = useTrans("editor.sideBar.preview.");
+  const t = useTrans("editor.sideBar.");
   const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
   useEffect(() => {
@@ -43,8 +44,8 @@ export default function EditorSideBar() {
     prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
     isMouseDown = true;
     const previewFrame = document.getElementById("gamePreviewIframe");
-    if(previewFrame)
-      previewFrame.style.zIndex = '-1';
+    if (previewFrame)
+      previewFrame.style.pointerEvents = 'none';
   };
 
   const handleDrag = (event: MouseEvent) => {
@@ -57,72 +58,103 @@ export default function EditorSideBar() {
   };
 
   const handleDragEnd = (event: MouseEvent) => {
-    setTimeout(()=>{
+    setTimeout(() => {
       const prevX = document.body.style.getPropertyValue("--sidebar-width");
       prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
       localStorage.setItem('sidebar-width', prevXvalue.toString());
-    },10);
+    }, 10);
     isMouseDown = false;
     const previewFrame = document.getElementById("gamePreviewIframe");
-    if(previewFrame)
-      previewFrame.style.zIndex = '0';
+    if (previewFrame)
+      previewFrame.style.pointerEvents = 'auto';
   };
 
   useEffect(() => {
     window.addEventListener('mousemove', handleDrag);
-    window.addEventListener('mouseup',handleDragEnd);
+    window.addEventListener('mouseup', handleDragEnd);
     return () => {
       window.removeEventListener('mousemove', handleDrag);
-      window.removeEventListener('mouseup',handleDragEnd);
+      window.removeEventListener('mouseup', handleDragEnd);
     };
   }, []);
 
-  const isEnableLivePreview = useSelector((state:RootState)=>state.status.editor.isEnableLivePreview);
+  const isEnableLivePreview = useSelector((state: RootState) => state.status.editor.isEnableLivePreview);
   const dispatch = useDispatch();
 
+  const setSidebarTab = (currentTag: sidebarTag) => {
+    dispatch(setEditorSidebarTag(currentTag));
+  };
 
   return <>
     {(state.currentSidebarTag !== sidebarTag.none || state.showPreview) && <div className={styles.editor_sidebar}>
       <div className={styles.divider}
         onMouseDown={handleDragStart}
-        // onMouseUp={handleDragEnd}
-        // onMouseLeave={handleDragEnd}
+      // onMouseUp={handleDragEnd}
+      // onMouseLeave={handleDragEnd}
       />
-      {state.showPreview && <div className={styles.preview_container}>
-        <TagTitleWrapper title={t("title")} extra={<>
-          <div onClick={() => {
-            // @ts-ignore
-            (ifRef.current as HTMLIFrameElement).contentWindow.location.reload();
-          }
-          }
-          className="tag_title_button">
-            {t("refresh")}
-          </div>
-          <div onClick={() => {
-            window.open(`/games/${state.currentEditingGame}`, "_blank");
-          }
-          }
-          className="tag_title_button">
-            {t("previewInNewTab")}
-          </div>
-        </>}/>
+      {
+        state.showPreview &&
+        <div className={styles.preview_container} id="gamePreview">
+          {/* 
         <div className={styles.livePreviewNotice}>
           <TerreToggle title={t('livePreview')} isChecked={isEnableLivePreview} onChange={(v)=>{dispatch(setIsLivePreview(v));}} onText="" offText=""/>
           <div>
             {t('notice')}
           </div>
+        </div> */}
+          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
+          <iframe
+            ref={ifRef}
+            id="gamePreviewIframe"
+            frameBorder="0"
+            className={styles.previewWindow}
+            src={`/games/${state.currentEditingGame}`}
+          />
+          <div className={styles.gamePreviewButons}>
+            <IconButton
+              iconProps={{ iconName: 'Refresh' }}
+              title={t("preview.refresh")}
+              onClick={() => (ifRef?.current as unknown as HTMLIFrameElement).contentWindow?.location.reload()}
+            />
+            <IconButton
+              iconProps={{ iconName: 'OpenInNewWindow' }}
+              title={t("preview.previewInNewTab")}
+              onClick={() => window.open(`/games/${state.currentEditingGame}`, "_blank")}
+            />
+
+          </div>
         </div>
-        {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-        <iframe ref={ifRef} id="gamePreviewIframe" frameBorder="0" className={styles.previewWindow}
-          src={`/games/${state.currentEditingGame}`}/>
-      </div>}
-      <div style={{flex: 1, overflow: "auto"}}>
-        {state.currentSidebarTag === sidebarTag.gameconfig && <GameConfig/>}
-        {state.currentSidebarTag === sidebarTag.assets && <Assets/>}
-        {state.currentSidebarTag === sidebarTag.scenes && <Scenes/>}
+      }
+
+      <div className={styles.sidebarTab}>
+        <input
+          type="radio"
+          id="sidebarTabAssets"
+          name="sidebarTab"
+          value={sidebarTag.assets}
+          checked={state.currentSidebarTag === sidebarTag.assets}
+          onChange={() => setSidebarTab(sidebarTag.assets)}
+        />
+        <label htmlFor="sidebarTabAssets">{t('assets.title')}</label>
+
+        <input
+          type="radio"
+          id="sidebarTabScenes"
+          name="sidebarTab"
+          value={sidebarTag.scenes}
+          checked={state.currentSidebarTag === sidebarTag.scenes}
+          onChange={() => setSidebarTab(sidebarTag.scenes)}
+        />
+        <label htmlFor="sidebarTabScenes">{t('scenes.title')}</label>
       </div>
 
-    </div>
+      <div className={styles.sidebarContent}>
+        {/* {state.currentSidebarTag === sidebarTag.gameconfig && <GameConfig />} */}
+        {state.currentSidebarTag === sidebarTag.assets && <Assets />}
+        {state.currentSidebarTag === sidebarTag.scenes && <Scenes />}
+      </div>
+
+    </div >
     }
   </>;
 }
