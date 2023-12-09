@@ -16,13 +16,11 @@ import useTrans from "@/hooks/useTrans";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import { getDirIcon, getFileIcon } from "@/utils/getFileIcon";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
+import { api } from "@/api";
+import { RequestParams } from "@/api/Api";
 
 export default function Assets() {
   const t = useTrans("editor.sideBar.assets.");
-
-  function open_assets() {
-    axios.get(`/api/manageGame/openGameAssetsDict/${origineStore.getState().status.editor.currentEditingGame}`).then();
-  }
 
   /**
    * 上传文件
@@ -42,6 +40,10 @@ export default function Assets() {
   const currentDirExtNameKey = currentDirExtName.value.toString();
   const dispatch = useDispatch();
   const tags = useSelector((state: RootState) => state.status.editor.tags);
+
+  function open_assets() {
+    api.manageGameControllerOpenGameAssetsDict( gameName, { subFolder: currentDirName }).then();
+  }
 
   /**
    * 新建文件夹
