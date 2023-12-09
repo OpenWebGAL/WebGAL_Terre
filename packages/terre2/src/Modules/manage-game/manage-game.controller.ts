@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
   UploadedFiles,
   UseInterceptors,
@@ -107,11 +108,13 @@ export class ManageGameController {
     name: 'gameName',
     type: String,
     description: 'Name of the game.',
-  }) // <-- Swagger description for the route parameter
-  async openGameAssetsDict(@Param('gameName') gameName: string) {
-    // <-- Use @Param decorator to fetch the gameName
+  })
+  async openGameAssetsDict(
+    @Param('gameName') gameName: string,
+    @Query('subFolder') subFolder: string,
+  ) {
     gameName = decodeURI(gameName); // Optionally decode the URI if necessary
-    this.manageGame.openAssetsDictionary(gameName).then();
+    this.manageGame.openAssetsDictionary(gameName, subFolder).then();
   }
 
   @Get('ejectGameAsWeb/:gameName') // Use :gameName to define the route parameter
