@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { getFileList, IFileDescription } from "../../../ChooseFile/ChooseFile";
 import { dirnameToDisplayNameMap, dirNameToExtNameMap } from "../../../ChooseFile/chooseFileConfig";
-import { DeleteOne, Editor, FolderPlus, LeftSmall, Upload } from "@icon-park/react";
+import { DeleteOne, Editor, FolderOpen, FolderPlus, LeftSmall, Upload } from "@icon-park/react";
 import { useId } from "@fluentui/react-hooks";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
@@ -156,13 +156,16 @@ export default function Assets() {
 
   return (
     <div style={{ height: "100%", overflow: "auto", display: "flex", flexFlow: "column" }}>
-      <TagTitleWrapper title={t("title")} extra={<div className="tag_title_button" onClick={open_assets}>
+      {/* <TagTitleWrapper title={t("title")} extra={<div className="tag_title_button" onClick={open_assets}>
         {t("buttons.openFolder")}
-      </div>} />
+      </div>} /> */}
       <div className={assetsStyles.controlHead}>
-        <div className={assetsStyles.controlCommonButton} onClick={goBack}>
-          <LeftSmall theme="outline" strokeWidth={3} size="18" className={assetsStyles.iconParkIcon}/>
-        </div>
+        {
+          currentDirName &&
+          <div className={assetsStyles.controlCommonButton} onClick={goBack}>
+            <LeftSmall theme="outline" strokeWidth={3} size="18" className={assetsStyles.iconParkIcon} />
+          </div>
+        }
         <div className={assetsStyles.controlDirnameDisplay}>
           {currentDirName === "" ? "/" : currentDirName}
         </div>
@@ -170,11 +173,11 @@ export default function Assets() {
           <>
             <div id={buttonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowUploadCallout.set(!isShowUploadCallout.value)}>
-              <Upload theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon}/>
+              <Upload theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
             </div>
             <div id={mkdirButtonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowMkdirCallout.set(!isShowMkdirCallout.value)}>
-              <FolderPlus theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon}/>
+              <FolderPlus theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
             </div>
           </>
         }
@@ -221,9 +224,13 @@ export default function Assets() {
             </div>
           </Callout>
         )}
+        <div className={assetsStyles.controlCommonButton}
+          onClick={() => open_assets()}>
+          <FolderOpen theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
+        </div>
       </div>
       <div className={assetsStyles.fileList}>
-        {currentDirName !== "" && <div style={{ display: "flex", alignItems: "center" }}>
+        {currentDirName !== "" && <div style={{ display: "flex", alignItems: "center", padding: "0 8px" }}>
           {t("supportFileTypes")} {currentDirExtName.value.map(e => {
             return <span key={e} className={assetsStyles.extNameShow}>{e}</span>;
           })}

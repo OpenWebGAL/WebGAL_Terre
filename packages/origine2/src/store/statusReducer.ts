@@ -27,7 +27,7 @@ export interface ITag {
 
 interface IEditorState {
   currentEditingGame: string,
-  isEnableLivePreview:boolean,
+  isEnableLivePreview: boolean,
   showPreview: boolean,
   currentSidebarTag: sidebarTag
   tags: Array<ITag>,
@@ -46,9 +46,9 @@ interface IEditorState {
 
 export const editorInitState: IEditorState = {
   currentEditingGame: "",
-  isEnableLivePreview:false,
+  isEnableLivePreview: false,
   showPreview: true,
-  currentSidebarTag: sidebarTag.gameconfig,
+  currentSidebarTag: sidebarTag.assets,
   tags: [],
   selectedTagTarget: "",
   isCodeMode: (localStorage.getItem("isCodeMode") ?? "") === "true",
@@ -139,7 +139,7 @@ const statusSlice = createSlice({
       window?.localStorage?.setItem('editor-lang', action.payload.toString());
     },
 
-    setIsLivePreview:(state,action:PayloadAction<boolean>)=>{
+    setIsLivePreview: (state, action: PayloadAction<boolean>) => {
       state.editor.isEnableLivePreview = action.payload;
     }
 
