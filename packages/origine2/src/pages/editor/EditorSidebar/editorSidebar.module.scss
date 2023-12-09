@@ -40,6 +40,11 @@
   box-sizing: border-box;
   aspect-ratio: 16 / 9;
   //margin: 4px 0 4px 0;
+  border-radius: 2px;
+}
+
+.preview_container:hover .previewWindow {
+  border-radius: 2px 0 2px 2px;
 }
 
 .gamePreviewButons {
@@ -51,7 +56,7 @@
   border-radius: 0 2px 2px 0;
   border: solid 1px #DDD;
   border-left: none;
-  box-shadow: 1px 1px 1px #00000010;
+  box-shadow: 1px 1px 1px #00000005;
 }
 
 .preview_container:hover .gamePreviewButons {
@@ -97,6 +102,10 @@
   border-radius: 2px;
 }
 
+.sidebarTab:has(input[type="radio"]:first-child:checked)+.sidebarContent {
+  border-radius: 0 2px 2px 2px;
+}
+
 .divider {
   height: 100%;
   width: 2px;
@@ -109,13 +118,15 @@
 }
 
 .divider:hover {
-  width: 2px;
-  background-color: var(--terre-primary);
+  border: solid 2px var(--terre-primary);
 }
 
 .divider:active {
-  width: 2px;
-  background-color: var(--terre-primary);
+  border: solid 2px var(--terre-primary);
+}
+
+.divider:active+.preview_container {
+  pointer-events: none;
 }
 
 .editor_sidebar {
