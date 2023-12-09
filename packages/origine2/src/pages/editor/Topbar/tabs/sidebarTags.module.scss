@@ -1,6 +1,6 @@
 .tab{
   display: flex;
-  overflow: auto;
+  //overflow: auto;
 }
 
 .sidebar_tag_title {
@@ -37,6 +37,11 @@
   display: flex;
   flex-flow: column;
   border-right: 1px solid #c8c6c4;
+  flex-shrink: 0;
+}
+
+.sidebar_gameconfig_container:last-child{
+  border-right: none;
 }
 
 .editButton {

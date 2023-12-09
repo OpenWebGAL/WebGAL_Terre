@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { cloneDeep } from "lodash";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {cloneDeep} from "lodash";
 
 const dashboardInitState = {
   showDashBoard: true
@@ -11,6 +11,7 @@ export enum sidebarTag {
   assets,
   scenes
 }
+
 export enum language {
   zhCn,
   en,
@@ -25,14 +26,23 @@ export interface ITag {
   tagTarget: string
 }
 
+export enum TopbarTabs {
+  Config,
+  View,
+  Settings,
+  Help,
+  Export
+}
+
 interface IEditorState {
   currentEditingGame: string,
-  isEnableLivePreview:boolean,
+  isEnableLivePreview: boolean,
   showPreview: boolean,
   currentSidebarTag: sidebarTag
   tags: Array<ITag>,
   selectedTagTarget: string,
   isCodeMode: boolean,
+  currentTopbarTab: TopbarTabs | undefined,
   language: language
 }
 
@@ -45,8 +55,9 @@ interface IEditorState {
 // ];
 
 export const editorInitState: IEditorState = {
+  currentTopbarTab: TopbarTabs.Config,
   currentEditingGame: "",
-  isEnableLivePreview:false,
+  isEnableLivePreview: false,
   showPreview: true,
   currentSidebarTag: sidebarTag.gameconfig,
   tags: [],
@@ -64,6 +75,9 @@ const statusSlice = createSlice({
   name: "status",
   initialState,
   reducers: {
+    setCurrentTopbarTab: (state, action: PayloadAction<TopbarTabs | undefined>) => {
+      state.editor.currentTopbarTab = action.payload;
+    },
     /**
      * 设置是否显示 DashBoard
      * @param state
@@ -139,7 +153,7 @@ const statusSlice = createSlice({
       window?.localStorage?.setItem('editor-lang', action.payload.toString());
     },
 
-    setIsLivePreview:(state,action:PayloadAction<boolean>)=>{
+    setIsLivePreview: (state, action: PayloadAction<boolean>) => {
       state.editor.isEnableLivePreview = action.payload;
     }
 
