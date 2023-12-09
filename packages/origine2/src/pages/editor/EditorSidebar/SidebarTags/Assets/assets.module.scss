@@ -6,7 +6,8 @@
 .controlHead {
   display: flex;
   align-items: center;
-  margin: 4px 2px 0 0;
+  margin: 8px;
+  gap: 4px;
   height: 25px;
 }
 
@@ -16,7 +17,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.33s;
-  margin: 0 0 0 4px;
+  // margin: 0 0 0 4px;
   height: 25px;
   width: 25px;
   display: flex;
@@ -41,7 +42,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin: 0 0 0 4px;
+  // margin: 0 0 0 4px;
 }
 
 .commonFileButton {
@@ -92,8 +93,7 @@
 
 .fileList {
   overflow: auto;
-  margin: 3px 0 0 0;
-  padding: 0 3px 0 0;
+  // margin: 3px 0 0 0;
 }
 
 .uploadCallout {
@@ -153,6 +153,6 @@
   margin: 0 0 0 4px;
 }
 
-.iconParkIcon > svg > path{
+.iconParkIcon>svg>path {
   stroke: var(--iconPark-icon-fill);
 }

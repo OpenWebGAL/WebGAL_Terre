@@ -316,10 +316,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Open Game Assets Dictionary
      * @request GET:/api/manageGame/openGameAssetsDict/{gameName}
      */
-    manageGameControllerOpenGameAssetsDict: (gameName: string, params: RequestParams = {}) =>
+    manageGameControllerOpenGameAssetsDict: (
+      gameName: string,
+      query: {
+        subFolder: string;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/api/manageGame/openGameAssetsDict/${gameName}`,
         method: 'GET',
+        query: query,
         ...params,
       }),
 
