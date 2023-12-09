@@ -1,7 +1,7 @@
 .editor_sidebar {
   //width: 30%;
   //min-width: 30%;
-  //padding: 15px 15px 15px 15px;
+  padding: 8px;
   width: var(--sidebar-width);
   box-sizing: border-box;
   text-align: left;
@@ -11,26 +11,7 @@
   max-height: 100%;
   min-height: 100%;
   position: relative;
-  margin-right: 2px;
-}
-
-.editor_sidebar_control {
-  width: 50px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  padding: 15px 0 15px 0;
-  box-sizing: border-box;
-}
-
-.editor_sidebar_control_button {
-  border-radius: 3px;
-  cursor: pointer;
-  margin: 4px 0 4px 0;
-}
-
-.editor_sidebar_control_button_active {
-  background: var(--editorSidebar-control-button-active-background);
+  // margin-right: 2px;
 }
 
 .preview_title {
@@ -40,6 +21,7 @@
 }
 
 .preview_container {
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   flex-flow: column;
@@ -52,16 +34,76 @@
 .previewWindow {
   flex: 1;
   flex-shrink: 0;
-  min-height: calc(var(--sidebar-width) * (9 / 16));
-  height: calc(var(--sidebar-width) * (9 / 16));
+  // min-height: calc(var(--sidebar-width) * (9 / 16));
+  // height: calc(var(--sidebar-width) * (9 / 16));
   width: 100%;
   box-sizing: border-box;
+  aspect-ratio: 16 / 9;
   //margin: 4px 0 4px 0;
+  border-radius: 2px;
+}
+
+.preview_container:hover .previewWindow {
+  border-radius: 2px 0 2px 2px;
+}
+
+.gamePreviewButons {
+  display: none;
+  position: absolute;
+  left: calc(var(--sidebar-width) - 8px);
+  top: 8px;
+  background: #FFF;
+  border-radius: 0 2px 2px 0;
+  border: solid 1px #DDD;
+  border-left: none;
+  box-shadow: 1px 1px 1px #00000005;
+}
+
+.preview_container:hover .gamePreviewButons {
+  display: block;
+}
+
+.gamePreviewButons>button:hover {
+  background: #EEE;
 }
 
 .preview_top_title_container {
   display: flex;
   align-items: center;
+}
+
+.sidebarTab {
+  background: none;
+  padding-top: 8px;
+}
+
+.sidebarTab>input[type="radio"] {
+  display: none;
+}
+
+.sidebarTab>input[type="radio"]+label {
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 90%;
+  border-radius: 2px 2px 0 0;
+}
+
+.sidebarTab>input[type="radio"]:checked+label {
+  background: #FFF;
+  color: var(--terre-primary);
+  font-weight: bold;
+}
+
+.sidebarContent {
+  flex: 1;
+  overflow: auto;
+  background-color: #FFF;
+  border-radius: 2px;
+}
+
+.sidebarTab:has(input[type="radio"]:first-child:checked)+.sidebarContent {
+  border-radius: 0 2px 2px 2px;
 }
 
 .divider {
@@ -76,17 +118,19 @@
 }
 
 .divider:hover {
-  width: 2px;
-  background-color: var(--terre-primary);
+  border: solid 2px var(--terre-primary);
 }
 
 .divider:active {
-  width: 2px;
-  background-color: var(--terre-primary);
+  border: solid 2px var(--terre-primary);
+}
 
+.divider:active+.preview_container {
+  pointer-events: none;
 }
 
 .editor_sidebar {
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -97,20 +141,4 @@
   background: var(--editorSidebar-livePreviewNotice-background);
   border-radius: 4px;
   font-size: 85%;
-}
-
-.editor_sidebar_control_button span > svg > rect {
-  stroke: var(--sideBarIcon-pressUp);
-}
-
-.editor_sidebar_control_button span > svg > path {
-  stroke: var(--sideBarIcon-pressUp);
-}
-
-.editor_sidebar_control_button_active span > svg > rect {
-  stroke: var(--sideBarIcon-pressDown);
-}
-
-.editor_sidebar_control_button_active span > svg > path {
-  stroke: var(--sideBarIcon-pressDown);
 }

@@ -1,12 +1,11 @@
 import TopBar from "./Topbar/Topbar";
 import styles from "./editor.module.scss";
 import EditorSideBar from "./EditorSidebar/EditorSidebar";
-import EditorSidebarControl from "./EditorSidebar/EditorSidebarControl";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/origineStore";
 import MainArea from "./MainArea/MainArea";
 import { Splitter, SplitterPanel } from "primereact/splitter";
-import {useHashRoute} from "@/hooks/useHashRoute";
+import { useHashRoute } from "@/hooks/useHashRoute";
 
 
 export default function Editor() {
@@ -19,7 +18,6 @@ export default function Editor() {
     {!isShowDashboard && <div className={styles.editor}>
       <TopBar />
       <div className={styles.container}>
-        <EditorSidebarControl />
         {/* <Splitter style={{ height: "100%", flex: 1 }}> */}
         {/*  <SplitterPanel size={15} minSize={15} */}
         {/*    style={{ display: (isShowPreview || currentTag !== 0) ? undefined : "none" }}><EditorSideBar /></SplitterPanel> */}
