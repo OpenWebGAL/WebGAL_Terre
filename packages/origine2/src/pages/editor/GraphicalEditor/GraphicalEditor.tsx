@@ -13,6 +13,7 @@ import { DeleteFive, Sort, DownOne, RightOne } from "@icon-park/react";
 import AddSentence, { addSentenceType } from "./components/AddSentence";
 import useTrans from "@/hooks/useTrans";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
+import {eventBus} from "@/utils/eventBus";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -29,6 +30,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const url = `/games/${currentEditingGame}/game/scene/${props.targetName}`;
     axios.get(url).then(res => res.data).then((data) => {
       sceneText.set(data.toString());
+      eventBus.emit('update-scene',data.toString());
       const arr = splitToArray(sceneText.value);
       if(showSentence.value.length!==arr.length){
         showSentence.set(new Array(arr.length).fill(true));

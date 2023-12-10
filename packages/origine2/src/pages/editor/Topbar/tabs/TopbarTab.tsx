@@ -7,7 +7,7 @@ export default function TopbarTab(props:{children:ReactNode}){
 
   const handleScroll = (event: React.WheelEvent<HTMLDivElement>) => {
     const deltaY = event.deltaY;
-    console.log(`滚动距离：${deltaY}px`);
+    // console.log(`滚动距离：${deltaY}px`);
     const element = topbarTag.current;
     if(element){
       const x = element.scrollLeft;

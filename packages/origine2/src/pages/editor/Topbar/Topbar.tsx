@@ -18,7 +18,7 @@ import React, {useState} from "react";
 import TopbarTab from "@/pages/editor/Topbar/tabs/TopbarTab";
 import TopbarTabButton from "@/pages/editor/Topbar/TopbarTabButton";
 import ConfigTab from "@/pages/editor/Topbar/tabs/ConfigTab";
-
+import {setAutoHideToolbar} from "@/store/userDataReducer";
 
 
 export default function TopBar() {
@@ -34,14 +34,25 @@ export default function TopBar() {
   };
 
 
-  const currentTopbarTab = useSelector((state:RootState)=>state.status.editor.currentTopbarTab);
-  function setCurrentTopbarTab(tab:TopbarTabs|undefined){
+  const currentTopbarTab = useSelector((state: RootState) => state.status.editor.currentTopbarTab);
+
+  function setCurrentTopbarTab(tab: TopbarTabs | undefined) {
     dispatch(statusActions.setCurrentTopbarTab(tab));
   }
 
   const handleTabClick = (tab: TopbarTabs) => {
     setCurrentTopbarTab(tab);
   };
+
+  function setAlwaysShowToolbarCallback() {
+    setCurrentTopbarTab(TopbarTabs.Config);
+    dispatch(setAutoHideToolbar(false));
+  }
+
+  function setAutoHideToolbarCallback() {
+    setCurrentTopbarTab(undefined);
+    dispatch(setAutoHideToolbar(true));
+  }
 
   const items: ICommandBarItemProps[] = [
     {
@@ -54,13 +65,13 @@ export default function TopBar() {
             key: 'item1',
             iconProps: {iconName: 'ThumbnailView'},
             text: '一直显示功能区',
-            onClick: () => setCurrentTopbarTab(TopbarTabs.Config),
+            onClick: setAlwaysShowToolbarCallback,
           },
           {
             key: 'item2',
             iconProps: {iconName: 'Hide3'},
             text: '自动隐藏功能区',
-            onClick: () => setCurrentTopbarTab(undefined),
+            onClick: setAutoHideToolbarCallback,
           },
         ],
       },

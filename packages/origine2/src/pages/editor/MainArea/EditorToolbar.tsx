@@ -1,18 +1,62 @@
 import {DataSheet, FileCodeOne, ListView} from '@icon-park/react';
 import s from './editorToolbar.module.scss';
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store/origineStore";
+import {setEditMode} from "@/store/statusReducer";
+import {useEffect, useState} from "react";
+import {eventBus} from "@/utils/eventBus";
 
 export default function EditorToolbar() {
+  const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode);
+  const dispatch = useDispatch();
+
+  const [textNum,setTextNum] = useState(0);
+  const [lineNum,setLineNum] = useState(0);
+
+  // 函数用于格式化数字，添加千分位分隔符
+  function formatNumberWithCommas(num:number) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  // 创建两个字符串
+  const textNumString = formatNumberWithCommas(textNum);
+  const lineNumString = formatNumberWithCommas(lineNum);
+
+  function handleSetCodeMode(){
+    dispatch(setEditMode(true));
+  }
+
+  function handleSetGraphMode(){
+    dispatch(setEditMode(false));
+  }
+
+  useEffect(() => {
+
+    const handleUpdagteScene = (scene:string)=>{
+      const wordsAndChars = scene.match(/[\w]+|[^\s\w]/g) || [];
+      setTextNum(wordsAndChars.length);
+      setLineNum(scene.split('\n').length);
+    };
+
+    // @ts-ignore
+    eventBus.on('update-scene',handleUpdagteScene);
+    return ()=>{
+      // @ts-ignore
+      eventBus.off('update-scene',handleUpdagteScene);
+    };
+  }, []);
+
   return <div className={s.toolbar}>
-    <div className={s.tollbar_button}>
+    <div className={s.toolbar_button}>
       <DataSheet theme="outline" size="20" fill="#333" strokeWidth={3}/>
-      364 行脚本，1,126 个字
+      {lineNumString} 行脚本，{textNumString} 个字
     </div>
-    <div className={s.tollbar_button} style={{marginLeft: 'auto'}}>
-      <FileCodeOne theme="outline" size="20" fill="#333" strokeWidth={3}/>
+    <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode ? s.toolbar_button_active : '')} style={{marginLeft: 'auto'}}>
+      <FileCodeOne theme="outline" size="20" fill={isCodeMode?'#005CAF' :"#333"} strokeWidth={3}/>
       脚本编辑器
     </div>
-    <div className={s.tollbar_button}>
-      <ListView theme="outline" size="20" fill="#333" strokeWidth={3}/>
+    <div onClick={handleSetGraphMode} className={s.toolbar_button + ' ' + (!isCodeMode ? s.toolbar_button_active : '')}>
+      <ListView theme="outline" size="20" fill={isCodeMode?"#333":'#005CAF'} strokeWidth={3}/>
       图形编辑器
     </div>
   </div>;

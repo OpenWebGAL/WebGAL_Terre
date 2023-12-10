@@ -8,7 +8,7 @@
   background: rgba(245, 245, 245, 1);
 }
 
-.tollbar_button {
+.toolbar_button {
   padding: 0 6px;
   height: 100%;
   display: flex;
@@ -22,8 +22,13 @@
   cursor: pointer;
 }
 
-.tollbar_button:hover {
+.toolbar_button:hover {
   background: #E1E1E1;
+}
+
+.toolbar_button_active {
+  background: rgba(233, 238, 242, 1);
+  color: var(--terre-primary);
 }
 
 .active {
