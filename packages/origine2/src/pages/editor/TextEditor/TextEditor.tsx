@@ -16,6 +16,7 @@ import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
 import {editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME} from "../../../runtime/WG_ORIGINE_RUNTIME";
 import { WsUtil } from "../../../utils/wsUtil";
+import {eventBus} from "@/utils/eventBus";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -84,6 +85,7 @@ export default function TextEditor(props: ITextEditorProps) {
     params.append("gameName", gameName);
     params.append("sceneName", sceneName);
     params.append("sceneData", JSON.stringify({ value: currentText.value }));
+    eventBus.emit('update-scene',currentText.value);
     axios.post("/api/manageGame/editScene/", params).then((res) => {
       const targetValue = currentText.value.split("\n")[lineNumber - 1];
       WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
@@ -96,6 +98,7 @@ export default function TextEditor(props: ITextEditorProps) {
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
       currentText.value = data.toString();
+      eventBus.emit('update-scene',data.toString());
       editorRef.current?.getModel()?.setValue(currentText.value);
       if(isAfterMount){
         const targetLine = editorLineHolder.getSceneLine(props.targetPath);
