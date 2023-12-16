@@ -40,6 +40,10 @@
   flex-shrink: 0;
 }
 
+.topbarTabItemContainer{
+  display: flex;
+}
+
 .sidebar_gameconfig_container:last-child{
   border-right: none;
 }

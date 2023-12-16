@@ -13,7 +13,7 @@ export interface UserData {
 const initialState: UserData = {
   isAutoHideToolbar: false,
   isEnableLivePreview: false,
-  isShowSidebar: false,
+  isShowSidebar: true,
 };
 
 // 创建 userSlice

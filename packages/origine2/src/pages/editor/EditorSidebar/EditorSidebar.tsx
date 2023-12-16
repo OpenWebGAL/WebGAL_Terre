@@ -1,14 +1,11 @@
 import styles from "./editorSidebar.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
-import { setEditorSidebarTag, setIsLivePreview, sidebarTag } from "../../../store/statusReducer";
-import GameConfig from "./SidebarTags/GameConfig/GameConfig";
+import { setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
 import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
 import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
-import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
-import TerreToggle from "@/components/terreToggle/TerreToggle";
 import { IconButton, TooltipHost } from "@fluentui/react";
 
 let startX = 0;
@@ -85,8 +82,10 @@ export default function EditorSideBar() {
     dispatch(setEditorSidebarTag(currentTag));
   };
 
+  const isShowSidebar = useSelector((state:RootState)=>state.userData.isShowSidebar);
+
   return <>
-    {(state.currentSidebarTag !== sidebarTag.none || state.showPreview) && <div className={styles.editor_sidebar}>
+    {isShowSidebar && <div className={styles.editor_sidebar}>
       <div className={styles.divider}
         onMouseDown={handleDragStart}
       // onMouseUp={handleDragEnd}
@@ -95,7 +94,7 @@ export default function EditorSideBar() {
       {
         state.showPreview &&
         <div className={styles.preview_container} id="gamePreview">
-          {/* 
+          {/*
         <div className={styles.livePreviewNotice}>
           <TerreToggle title={t('livePreview')} isChecked={isEnableLivePreview} onChange={(v)=>{dispatch(setIsLivePreview(v));}} onText="" offText=""/>
           <div>
