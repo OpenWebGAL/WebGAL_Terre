@@ -1,0 +1,24 @@
+.wrapper{
+  cursor: pointer;
+  padding: 10px 7px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.wrapper:hover{
+  background: var(--black-5pct);
+}
+
+.icon{
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text{
+  font-size: 13px;
+  margin-top: 3px;
+}

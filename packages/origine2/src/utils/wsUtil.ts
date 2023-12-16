@@ -5,7 +5,7 @@ import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
 export class WsUtil {
   public static sendSyncCommand(sceneName: string, lineNumber: number, lineCommandString: string) {
 
-    if (!origineStore.getState().status.editor.isEnableLivePreview) {
+    if (!origineStore.getState().userData.isEnableLivePreview) {
       return;
     }
 

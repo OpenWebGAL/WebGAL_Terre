@@ -15,10 +15,14 @@ import AndroidIcon from 'material-icon-theme/icons/android.svg';
 import GithubIcon from './github.svg';
 import TerreIcon from './wgfav-new-blue.png';
 import React, {useState} from "react";
-import TopbarTab from "@/pages/editor/Topbar/tabs/TopbarTab";
+import TopbarTab from "@/pages/editor/Topbar/components/TopbarTab";
 import TopbarTabButton from "@/pages/editor/Topbar/TopbarTabButton";
-import ConfigTab from "@/pages/editor/Topbar/tabs/ConfigTab";
+import ConfigTab from "@/pages/editor/Topbar/tabs/GameConfig/ConfigTab";
 import {setAutoHideToolbar} from "@/store/userDataReducer";
+import {ViewTab} from "@/pages/editor/Topbar/tabs/ViewConfig/ViewTab";
+import {SettingsTab} from "@/pages/editor/Topbar/tabs/Settings/SettingsTab";
+import {HelpTab} from "@/pages/editor/Topbar/tabs/Help/HelpTab";
+import {ExportTab} from "@/pages/editor/Topbar/tabs/Export/ExportTab";
 
 
 export default function TopBar() {
@@ -102,15 +106,21 @@ export default function TopBar() {
         {editingGame}
       </div>
       <CommandBar items={items} styles={{root: {backgroundColor: 'rgba(255,255,255,0)', height: 35, flexShrink: 0}}}/>
-      <div className={styles.topbar_link}>
+      <div className={styles.topbar_link}
+        onClick={() => window.open("https://openwebgal.com", "_blank")}>
         <img src={TerreIcon} height={24} width={24} alt="WebGAL Homepage"/>
         <div className={styles.topbar_link_text}>WebGAL 主页</div>
       </div>
-      <div className={styles.topbar_link}>
+      <div className={styles.topbar_link}
+        onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}>
         <img src={GithubIcon} height={24} width={24} alt="GitHub Repo"/>
         <div className={styles.topbar_link_text}>源代码</div>
       </div>
     </div>
     {currentTopbarTab === TopbarTabs.Config && <ConfigTab/>}
+    {currentTopbarTab === TopbarTabs.View && <ViewTab/>}
+    {currentTopbarTab === TopbarTabs.Settings && <SettingsTab/>}
+    {currentTopbarTab === TopbarTabs.Help && <HelpTab/>}
+    {currentTopbarTab === TopbarTabs.Export && <ExportTab/>}
   </div>;
 }
