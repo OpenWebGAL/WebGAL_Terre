@@ -1,4 +1,4 @@
-import styles from "../sidebarTags.module.scss";
+import styles from "../topbarTabs.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
 import axios from "axios";
 import {useSelector} from "react-redux";
@@ -13,7 +13,7 @@ import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
 import {Image} from "@fluentui/react";
-import {textboxThemes} from "@/pages/editor/EditorSidebar/SidebarTags/GameConfig/constants";
+import {textboxThemes} from "./constants";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
