@@ -10,10 +10,7 @@ import {IconWithTextItem} from "@/pages/editor/Topbar/components/IconWithTextIte
 import {eventBus} from "@/utils/eventBus";
 
 export function ViewTab() {
-
-  const tSidebar = useTrans("editor.sideBar.");
   const dispatch = useDispatch();
-  const isEnableLivePreview = useSelector((state: RootState) => state.userData.isEnableLivePreview);
   const isShowSidebar = useSelector((state: RootState) => state.userData.isShowSidebar);
   const currentEditGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
 
@@ -32,20 +29,6 @@ export function ViewTab() {
         icon={<FontIcon iconName="Refresh" className={s.iconColor}/>}
         text="刷新游戏"
       />
-      <TooltipHost
-        delay={TooltipDelay.zero}
-        content={<div className={s.previewTips}>
-          {tSidebar('preview.notice')}
-        </div>}
-      >
-        <IconWithTextItem
-          onClick={() => {
-            dispatch(setEnableLivePreview(!isEnableLivePreview));
-          }}
-          icon={<FontIcon iconName={isEnableLivePreview ? "Streaming" : "StreamingOff"} className={s.iconColor}/>}
-          text={isEnableLivePreview ? '实时预览' : '实时预览关闭'}
-        />
-      </TooltipHost>
       <IconWithTextItem
         onClick={() => {
           window.open(`/games/${currentEditGame}`, "_blank");
