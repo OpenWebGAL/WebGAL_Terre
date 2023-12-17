@@ -4,9 +4,10 @@ import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
 import {getArgByKey} from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
 import {useValue} from "@/hooks/useValue";
-import {Dropdown, TextField} from "@fluentui/react";
+import {DefaultButton, Dropdown, PrimaryButton, TextField} from "@fluentui/react";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
+import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
@@ -26,12 +27,21 @@ export default function SetTransform(props: ISentenceEditorProps) {
     props.onSubmit(str);
   };
 
+  const isShowEffectEditor = useValue(false);
+
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <EffectEditor json={transform.value} onChange={(newJson)=>{
-        transform.set(newJson);
-        submit();
-      }}/>
+      <CommonOptions title="效果编辑">
+        <DefaultButton onClick={() => {
+          isShowEffectEditor.value = true;
+        }}>打开效果编辑器</DefaultButton>
+        <TerrePanel onDismiss={()=>isShowEffectEditor.set(false)} isOpen={isShowEffectEditor.value} title="效果编辑器">
+          <EffectEditor json={transform.value} onChange={(newJson)=>{
+            transform.set(newJson);
+            submit();
+          }}/>
+        </TerrePanel>
+      </CommonOptions>
       <CommonOptions key="10" title={tTarget('duration.title')}>
         <div>
           <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
