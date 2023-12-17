@@ -1,5 +1,6 @@
-import React, {ReactNode, useRef} from "react";
+import React, {ReactNode, useEffect, useRef} from "react";
 import s from './topbarTab.module.scss';
+import {eventBus} from "@/utils/eventBus";
 
 export default function TopbarTab(props:{children:ReactNode}){
 
@@ -15,6 +16,20 @@ export default function TopbarTab(props:{children:ReactNode}){
       element.scrollTo(toX,0);
     }
   };
+
+  const handleToEnd = ()=>{
+    const element = topbarTag.current;
+    if(element){
+      setTimeout(()=>element.scrollTo(10000000,0),100);
+    }
+  };
+
+  useEffect(() => {
+    eventBus.on('scrollTopbarToEnd',handleToEnd);
+    return ()=>{
+      eventBus.off('scrollTopbarToEnd',handleToEnd);
+    };
+  }, []);
 
   return <div className={s.tab} ref={topbarTag} onWheel={handleScroll}>{props.children}</div>;
 }
