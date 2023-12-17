@@ -123,7 +123,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }, []);
 
   const parsedScene = (sceneText.value === "" ? { sentenceList: [] } : parseScene(sceneText.value));
-  return <div className={styles.main}>
+  return <div className={styles.main} id="graphical-editor-main">
     <div style={{ flex: 1 }}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
