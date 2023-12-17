@@ -7,6 +7,7 @@ import Scenes from "./SidebarTags/Scenes/Scenes";
 import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
 import { IconButton, TooltipHost } from "@fluentui/react";
+import {eventBus} from "@/utils/eventBus";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -84,6 +85,15 @@ export default function EditorSideBar() {
 
   const isShowSidebar = useSelector((state:RootState)=>state.userData.isShowSidebar);
 
+  const refreshGame = () => (ifRef?.current as unknown as HTMLIFrameElement).contentWindow?.location.reload();
+
+  useEffect(() => {
+    eventBus.on('refGame',refreshGame);
+    return ()=>{
+      eventBus.off('refGame',refreshGame);
+    };
+  }, []);
+
   return <>
     {isShowSidebar && <div className={styles.editor_sidebar}>
       <div className={styles.divider}
@@ -113,7 +123,7 @@ export default function EditorSideBar() {
             <IconButton
               iconProps={{ iconName: 'Refresh' }}
               title={t("preview.refresh")}
-              onClick={() => (ifRef?.current as unknown as HTMLIFrameElement).contentWindow?.location.reload()}
+              onClick={refreshGame}
             />
             <IconButton
               iconProps={{ iconName: 'OpenInNewWindow' }}

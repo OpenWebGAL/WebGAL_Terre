@@ -14,6 +14,7 @@ import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
 import {Image} from "@fluentui/react";
 import {textboxThemes} from "./constants";
+import {eventBus} from "@/utils/eventBus";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -158,7 +159,7 @@ function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
 
-  return <div>
+  return <div style={{maxWidth:200}}>
     {!showEditBox.value && props.value}
     {!showEditBox.value && <div className={styles.editButton} onClick={() => {
       showEditBox.set(true);
@@ -230,14 +231,14 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   };
 
   return (
-    <div>
+    <div style={{display: 'flex',alignItems:'center'}}>
       {/* {props.value.join(' | ')} */}
       <div style={{display: 'flex'}}>
         {images.map((imageName, index) => (
           <div key={index} className={styles.imageChooseItem}>
             <img className={styles.imageChooseItemImage} src={`games/${gameName}/game/${props.sourceBase}/${imageName}`}
               alt={`logo-${index}`}/>
-            <div className={styles.imageChooseItemText}>{imageName}</div>
+            {/* <div className={styles.imageChooseItemText}>{imageName}</div> */}
             <IconButton
               iconProps={{iconName: 'Cancel'}}
               onClick={() => removeImage(imageName)}
@@ -246,6 +247,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
         ))}</div>
       {!showEditBox.value && <div className={styles.editButton} onClick={() => {
         showEditBox.set(true);
+        eventBus.emit('scrollTopbarToEnd');
         setTimeout(() => inputBoxRef.current?.focus(), 100);
       }}>{t("revise")}</div>}
       {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
@@ -253,6 +255,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
           if (file) {
             addImage(file.name);
             showEditBox.set(false);
+            eventBus.emit('scrollTopbarToEnd');
           } else {
             showEditBox.set(false);
           }
