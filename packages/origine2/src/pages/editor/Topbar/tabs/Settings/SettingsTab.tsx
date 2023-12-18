@@ -82,7 +82,7 @@ export function SettingsTab() {
             dispatch(setEnableLivePreview(!isEnableLivePreview));
           }}
           icon={<FontIcon iconName={isEnableLivePreview ? "Streaming" : "StreamingOff"} className={s.iconColor}/>}
-          text={isEnableLivePreview ? '实时预览' : '实时预览关闭'}
+          text={isEnableLivePreview ? '实时预览打开' : '实时预览关闭'}
         />
       </TooltipHost>
     </TabItem>
