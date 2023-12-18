@@ -25,7 +25,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
-  const isShowEffectEditor = useValue(!!(json.value || duration.value));
+  const isShowEffectEditor = useValue(false);
   const mouthOpen = useValue(getArgByKey(props.sentence, "mouthOpen").toString() ?? "");
   const mouthHalfOpen = useValue(getArgByKey(props.sentence, "mouthHalfOpen").toString() ?? "");
   const mouthClose = useValue(getArgByKey(props.sentence, "mouthClose").toString() ?? "");
