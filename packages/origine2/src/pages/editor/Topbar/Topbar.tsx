@@ -108,12 +108,12 @@ export default function TopBar() {
       <CommandBar items={items} styles={{root: {backgroundColor: 'rgba(255,255,255,0)', height: 35, flexShrink: 0}}}/>
       <div className={styles.topbar_link}
         onClick={() => window.open("https://openwebgal.com", "_blank")}>
-        <img src={TerreIcon} height={24} width={24} alt="WebGAL Homepage"/>
+        <img src={TerreIcon} height={20} width={20} alt="WebGAL Homepage"/>
         <div className={styles.topbar_link_text}>WebGAL 主页</div>
       </div>
       <div className={styles.topbar_link}
         onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}>
-        <img src={GithubIcon} height={24} width={24} alt="GitHub Repo"/>
+        <img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>
         <div className={styles.topbar_link_text}>源代码</div>
       </div>
     </div>
