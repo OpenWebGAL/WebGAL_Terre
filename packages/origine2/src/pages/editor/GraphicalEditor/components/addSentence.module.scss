@@ -16,8 +16,7 @@
 .sentenceTypeButton {
   display: flex;
   flex: 0 0 270px;
-  //flex-flow: column;
-  align-items: center;
+  align-items: flex-start;
   padding: 6px 6px 6px 10px;
   box-sizing: border-box;
   background: var(--addSentence-sentenceTypeButton-background);
@@ -46,4 +45,60 @@
 
 .text{
   font-size: 90%;
+}
+
+.titleAdd {
+  font-size: 115%;
+  font-weight: bold;
+  color: var(--terre-primary);
+  text-align: left;
+}
+
+.addNewLargeWrapper{
+  background: #fff;
+  padding: 10px 20px;
+}
+
+.addNewLarge{
+  margin-top: 20px;
+  display: flex;
+  background: #fff;
+  justify-content: left;
+  text-align: left;
+  overflow: auto;
+  max-width: 100%;
+
+  &::-webkit-scrollbar {
+    //width: 3px;
+    height: 4px;
+    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-background);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-background);
+
+    &:hover {
+      background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-hover-background);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  & {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--tagManager-tagsContainer-Firefox-scrollbar-first) var(--tagManager-tagsContainer-Firefox-scrollbar-second); /* Firefox */
+  }
+
+}
+
+.expandAllButton{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: var(--terre-primary);
+  cursor: pointer;
 }
