@@ -36,7 +36,14 @@
   user-select: none;
   display: flex;
   flex-flow: column;
-  border-right: 1px solid #c8c6c4;
+}
+
+.tabItem {
+  padding:0;
+  margin: 4px 0 4px 0.5em;
+  user-select: none;
+  display: flex;
+  //flex-flow: column;
   flex-shrink: 0;
 }
 
@@ -44,8 +51,17 @@
   display: flex;
 }
 
-.sidebar_gameconfig_container:last-child{
-  border-right: none;
+.divider{
+  height: 90%;
+  align-self: center;
+  border-right: 2px solid #e1e5e9;
+  margin-left: 0.5em;
+}
+
+.tabItem:last-child{
+  .divider{
+    display: none;
+  }
 }
 
 .editButton {

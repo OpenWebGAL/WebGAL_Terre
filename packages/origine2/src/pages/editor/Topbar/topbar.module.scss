@@ -84,11 +84,38 @@
   cursor: pointer;
 }
 
-.topbar_link:hover{
+.topbar_link:hover {
   background: var(--gray-204);
 }
 
-.topbar_link_text{
+.topbar_link_text {
   padding: 0 6px;
   font-size: 14px;
+}
+
+.topbar_btn_special {
+  border-radius: 4px 4px 0 0;
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+  font-style: normal;
+  line-height: normal;
+  cursor: pointer;
+  font-weight: 400;
+  padding: 0 10px 0 10px;
+  height: 30px;
+  align-self: flex-end;
+  border-top: 2px solid transparent;
+  border-right: 2px solid transparent;
+  border-bottom: none;
+  border-left: 2px solid transparent;
+  background-image: linear-gradient(#F5F5F5, #F5F5F5), linear-gradient(to bottom, rgba(0,92,175,0.3), #F5F5F5), linear-gradient(to bottom, rgba(0,92,175,0.3), #F5F5F5);
+  background-origin: border-box;
+  background-clip: padding-box, border-box, border-box;
+}
+
+.topbar_btn_special_active {
+  color: var(--terre-primary);
+  background-image: linear-gradient(#FFF, #FFF), linear-gradient(to bottom, var(--terre-primary), #FFF), linear-gradient(to bottom, var(--terre-primary), #FFF);
+  font-weight: 700;
 }

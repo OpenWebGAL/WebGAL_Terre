@@ -3,7 +3,7 @@ import {useValue} from "../../../../../hooks/useValue";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../../store/origineStore";
-import {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {cloneDeep} from "lodash";
 import {Dropdown, IconButton, ITextField, TextField} from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
@@ -15,6 +15,7 @@ import {logger} from "@/utils/logger";
 import {Image} from "@fluentui/react";
 import {textboxThemes} from "./constants";
 import {eventBus} from "@/utils/eventBus";
+import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -86,59 +87,52 @@ export default function GameConfig() {
   }
 
   return (
-    <div className={styles.tab} >
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.name")}</div>
+    <>
+      <TabItem title={t("options.name")}>
         <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
           onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>
-      </div>
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.id")}</div>
+      </TabItem>
+      <TabItem title={t("options.id")}>
         <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>
-      </div>
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.description")}</div>
+      </TabItem>
+      <TabItem title={t("options.description")}>
         <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
           onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>
-      </div>
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.packageName")}</div>
+      </TabItem>
+      <TabItem title={t("options.packageName")}>
         <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
-      </div>
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.textboxTheme")}</div>
+      </TabItem>
+      <TabItem title={t("options.textboxTheme")}>
         <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} selectItems={textboxThemes}/>
-      </div>
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.bg")}</div>
+      </TabItem>
+      <TabItem title={t("options.bg")}>
         <GameConfigEditorWithFileChoose
           sourceBase="background"
           extNameList={[".jpg", ".png", ".webp"]}
           key="titleBackground"
           value={getConfigContentAsString('Title_img')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
-      </div>
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.bgm")}</div>
+      </TabItem>
+      <TabItem title={t("options.bgm")}>
+        <div className={styles.sidebar_gameconfig_title}>{}</div>
         <GameConfigEditorWithFileChoose
           extNameList={[".mp3", ".ogg", ".wav"]}
           sourceBase="bgm" key="titleBgm"
           value={getConfigContentAsString('Title_bgm')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
-      </div>
-      <div className={styles.sidebar_gameconfig_container}>
-        <div className={styles.sidebar_gameconfig_title}>{t("options.logoImage")}</div>
+      </TabItem>
+      <TabItem title={t("options.logoImage")}>
         <GameConfigEditorWithImageFileChoose
           sourceBase="background"
           extNameList={[".jpg", ".png", ".webp"]}
           key="logoImage"
           value={getConfigContentAsStringArray('Game_Logo')}
           onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
-      </div>
-    </div>
+      </TabItem>
+    </>
   );
 }
 
