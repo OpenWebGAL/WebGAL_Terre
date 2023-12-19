@@ -31,7 +31,8 @@ export enum TopbarTabs {
   View,
   Settings,
   Help,
-  Export
+  Export,
+  AddSentence
 }
 
 interface IEditorState {

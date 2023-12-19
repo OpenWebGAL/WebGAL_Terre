@@ -22,3 +22,25 @@
   font-size: 13px;
   margin-top: 3px;
 }
+
+.wrapperS{
+  cursor: pointer;
+  padding: 5px 13px;
+  display: flex;
+  align-items: center;
+}
+
+.wrapperS:hover{
+  background: var(--black-5pct);
+}
+
+.iconS{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.textS{
+  margin-left: 4px;
+  font-size: 14px;
+}

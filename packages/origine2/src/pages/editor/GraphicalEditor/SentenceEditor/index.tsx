@@ -50,7 +50,7 @@ export interface ISentenceEditorProps {
   onSubmit: (newSentence: string) => void;
 }
 
-interface ISentenceEditorConfig {
+export interface ISentenceEditorConfig {
   type: commandType,
   title: () => string,
   initialText: () => string,
