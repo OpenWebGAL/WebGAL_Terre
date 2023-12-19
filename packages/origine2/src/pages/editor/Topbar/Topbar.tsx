@@ -1,21 +1,13 @@
 import styles from "./topbar.module.scss";
 import {useDispatch, useSelector} from "react-redux";
-import {origineStore, RootState} from "../../../store/origineStore";
-import {LeftSmall} from "@icon-park/react";
+import {RootState} from "../../../store/origineStore";
 import {CommandBar, ICommandBarItemProps} from "@fluentui/react";
-import {registerIcons} from "@fluentui/react/lib/Styling";
-import {AndroidLogoIcon} from "@fluentui/react-icons-mdl2";
-import axios from "axios";
-import {language, setDashboardShow, setEditMode, statusActions, TopbarTabs} from "../../../store/statusReducer";
-import TerreToggle from "../../../components/terreToggle/TerreToggle";
+import {setDashboardShow, setEditMode, statusActions, TopbarTabs} from "../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
-import IconWrapper from "@/components/iconWrapper/IconWrapper";
-import AndroidIcon from 'material-icon-theme/icons/android.svg';
-import GithubIcon from './github.svg';
-import TerreIcon from './wgfav-new-blue.png';
-import React, {useState} from "react";
-import TopbarTab from "@/pages/editor/Topbar/components/TopbarTab";
+import GithubIcon from './assets/github.svg';
+import TerreIcon from './assets/wgfav-new-blue.png';
+import React, {useEffect} from "react";
 import TopbarTabButton from "@/pages/editor/Topbar/TopbarTabButton";
 import ConfigTab from "@/pages/editor/Topbar/tabs/GameConfig/ConfigTab";
 import {setAutoHideToolbar} from "@/store/userDataReducer";
@@ -23,6 +15,8 @@ import {ViewTab} from "@/pages/editor/Topbar/tabs/ViewConfig/ViewTab";
 import {SettingsTab} from "@/pages/editor/Topbar/tabs/Settings/SettingsTab";
 import {HelpTab} from "@/pages/editor/Topbar/tabs/Help/HelpTab";
 import {ExportTab} from "@/pages/editor/Topbar/tabs/Export/ExportTab";
+import TopbarTabButtonSpecial from "@/pages/editor/Topbar/TopbarTabButtonSpecial";
+import {AddSentenceTab} from "@/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab";
 
 
 export default function TopBar() {
@@ -32,6 +26,7 @@ export default function TopBar() {
 
   const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode); // false 是脚本模式 true 是图形化模式
   const dispatch = useDispatch();
+  const isAutoHideToolbar = useSelector((state: RootState) => state.userData.isAutoHideToolbar);
 
   const handleChange = (newValue: boolean) => {
     dispatch(setEditMode(newValue));
@@ -88,6 +83,27 @@ export default function TopBar() {
     },
   ];
 
+  const currentTab = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
+  const tabs = useSelector((state: RootState) => state.status.editor.tags);
+  const currentTabType = tabs.find(e => e.tagTarget === currentTab)?.tagType;
+
+  useEffect(() => {
+    if (currentTabType !== 'scene' && currentTopbarTab === TopbarTabs.AddSentence) {
+      if (isAutoHideToolbar) {
+        // @ts-ignore
+        handleTabClick(undefined);
+      } else {
+        handleTabClick(TopbarTabs.Config);
+      }
+    }
+
+    if (currentTabType === 'scene' && currentTopbarTab !== TopbarTabs.AddSentence) {
+      if (!isAutoHideToolbar) {
+        handleTabClick(TopbarTabs.AddSentence);
+      }
+    }
+  }, [currentTabType]);
+
   return <div className={styles.editor_topbar}>
     <div className={styles.topbar_tags}>
       {/* 标签页 */}
@@ -102,6 +118,9 @@ export default function TopBar() {
         onClick={() => handleTabClick(TopbarTabs.Help)}/>
       <TopbarTabButton text="导出" isActive={currentTopbarTab === TopbarTabs.Export}
         onClick={() => handleTabClick(TopbarTabs.Export)}/>
+      {currentTabType === 'scene' &&
+        <TopbarTabButtonSpecial text="添加语句" isActive={currentTopbarTab === TopbarTabs.AddSentence}
+          onClick={() => handleTabClick(TopbarTabs.AddSentence)}/>}
       <div className={styles.topbar_gamename}>
         {editingGame}
       </div>
@@ -122,5 +141,6 @@ export default function TopBar() {
     {currentTopbarTab === TopbarTabs.Settings && <SettingsTab/>}
     {currentTopbarTab === TopbarTabs.Help && <HelpTab/>}
     {currentTopbarTab === TopbarTabs.Export && <ExportTab/>}
+    {currentTopbarTab === TopbarTabs.AddSentence && <AddSentenceTab/>}
   </div>;
 }
