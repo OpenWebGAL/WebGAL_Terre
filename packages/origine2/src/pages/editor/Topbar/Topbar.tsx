@@ -86,7 +86,7 @@ export default function TopBar() {
   const currentTab = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const tabs = useSelector((state: RootState) => state.status.editor.tags);
   const currentTabType = tabs.find(e => e.tagTarget === currentTab)?.tagType;
-  const isShowAddSceneTab = currentTabType === 'scene' && !useSelector((state: RootState) => state.status.editor.isCodeMode);
+  const isShowAddSceneTab = currentTabType === 'scene' && !isCodeMode;
 
   useEffect(() => {
     if (!isShowAddSceneTab && currentTopbarTab === TopbarTabs.AddSentence) {

@@ -13,12 +13,12 @@ function addSentenceText(text: string) {
 }
 
 function pickSentenceType(indexes: Array<number>) {
-  return indexes.map(index => sentenceEditorConfig[index]).filter(item => item !== undefined).map(e => convertSentenceToNode(e));
+  return indexes.map(index => sentenceEditorConfig[index]).filter(item => item !== undefined).map((e, index) => convertSentenceToNode(e, index));
 }
 
-function convertSentenceToNode(sentence: ISentenceEditorConfig) {
+function convertSentenceToNode(sentence: ISentenceEditorConfig, index: number) {
   const iconSmall = cloneElement(sentence.icon, {size: "18px"});
-  return <IconWithTextItemSmall onClick={() => addSentenceText(sentence.initialText())}
+  return <IconWithTextItemSmall key={`sentenceAddSmall${index}`} onClick={() => addSentenceText(sentence.initialText())}
     icon={iconSmall}
     text={sentence.title()}/>;
 }
