@@ -86,9 +86,10 @@ export default function TopBar() {
   const currentTab = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const tabs = useSelector((state: RootState) => state.status.editor.tags);
   const currentTabType = tabs.find(e => e.tagTarget === currentTab)?.tagType;
+  const isShowAddSceneTab = currentTabType === 'scene' && !useSelector((state: RootState) => state.status.editor.isCodeMode);
 
   useEffect(() => {
-    if (currentTabType !== 'scene' && currentTopbarTab === TopbarTabs.AddSentence) {
+    if (!isShowAddSceneTab && currentTopbarTab === TopbarTabs.AddSentence) {
       if (isAutoHideToolbar) {
         // @ts-ignore
         handleTabClick(undefined);
@@ -97,12 +98,12 @@ export default function TopBar() {
       }
     }
 
-    if (currentTabType === 'scene' && currentTopbarTab !== TopbarTabs.AddSentence) {
+    if (isShowAddSceneTab && currentTopbarTab !== TopbarTabs.AddSentence) {
       if (!isAutoHideToolbar) {
         handleTabClick(TopbarTabs.AddSentence);
       }
     }
-  }, [currentTabType]);
+  }, [isShowAddSceneTab]);
 
   return <div className={styles.editor_topbar}>
     <div className={styles.topbar_tags}>
@@ -118,7 +119,7 @@ export default function TopBar() {
         onClick={() => handleTabClick(TopbarTabs.Help)}/>
       <TopbarTabButton text="导出" isActive={currentTopbarTab === TopbarTabs.Export}
         onClick={() => handleTabClick(TopbarTabs.Export)}/>
-      {currentTabType === 'scene' &&
+      {isShowAddSceneTab &&
         <TopbarTabButtonSpecial text="添加语句" isActive={currentTopbarTab === TopbarTabs.AddSentence}
           onClick={() => handleTabClick(TopbarTabs.AddSentence)}/>}
       <div className={styles.topbar_gamename}>
