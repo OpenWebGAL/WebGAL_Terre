@@ -16,6 +16,7 @@ import {Image} from "@fluentui/react";
 import {textboxThemes} from "./constants";
 import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
+import {Add, Plus} from "@icon-park/react";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -106,7 +107,8 @@ export default function GameConfig() {
       </TabItem>
       <TabItem title={t("options.textboxTheme")}>
         <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} selectItems={textboxThemes}/>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)}
+          selectItems={textboxThemes}/>
       </TabItem>
       <TabItem title={t("options.bg")}>
         <GameConfigEditorWithFileChoose
@@ -153,7 +155,7 @@ function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
 
-  return <div style={{maxWidth:200}}>
+  return <div className={styles.textEditArea} style={{maxWidth: 200}}>
     {!showEditBox.value && props.value}
     {!showEditBox.value && <div className={styles.editButton} onClick={() => {
       showEditBox.set(true);
@@ -168,10 +170,13 @@ function GameConfigEditor(props: IGameConfigEditor) {
   </div>;
 }
 
-function GameConfigEditorWithSelector(props:IGameConfigEditor & {selectItems:{key:string,text:string}[],width?:number}){
-  const {width = 200} = props;
-  return <Dropdown dropdownWidth={width} style={{width}} onChange={(event,item)=>{
-    const key = item?.key??'';
+function GameConfigEditorWithSelector(props: IGameConfigEditor & {
+  selectItems: { key: string, text: string }[],
+  width?: number
+}) {
+  const {width = 120} = props;
+  return <Dropdown dropdownWidth={width} style={{width}} onChange={(event, item) => {
+    const key = item?.key ?? '';
     props.onChange(key);
   }} selectedKey={props.value} options={props.selectItems}/>;
 }
@@ -183,7 +188,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
   const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
-  return <div>
+  return <div className={styles.textEditArea}>
     {!showEditBox.value && props.value}
     {!showEditBox.value && <div className={styles.editButton} onClick={() => {
       showEditBox.set(true);
@@ -225,7 +230,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   };
 
   return (
-    <div style={{display: 'flex',alignItems:'center'}}>
+    <div style={{display: 'flex', alignItems: 'center'}}>
       {/* {props.value.join(' | ')} */}
       <div style={{display: 'flex'}}>
         {images.map((imageName, index) => (
@@ -239,11 +244,13 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
             />
           </div>
         ))}</div>
-      {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+      {!showEditBox.value && <div onClick={() => {
         showEditBox.set(true);
         eventBus.emit('scrollTopbarToEnd');
         setTimeout(() => inputBoxRef.current?.focus(), 100);
-      }}>{t("revise")}</div>}
+      }}
+      className={styles.addIcon}
+      ><Plus theme="outline" size="20" fill="#005CAF" strokeWidth={3}/></div>}
       {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
         onChange={(file) => {
           if (file) {
