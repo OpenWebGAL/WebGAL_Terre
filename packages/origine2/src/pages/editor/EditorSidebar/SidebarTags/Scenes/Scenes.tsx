@@ -11,6 +11,7 @@ import {ITag, statusActions} from "../../../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import {Newlybuild} from "@icon-park/react";
+import s from './sceneTab.module.scss';
 
 export default function Scenes() {
   const t = useTrans('editor.sideBar.scenes.');
@@ -112,15 +113,15 @@ export default function Scenes() {
       <TagTitleWrapper title="" extra={<>
         <div
           id="createSceneButton"
-          className="tag_title_button"
+          className={s.tag_title_button}
           onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
         >
           <Newlybuild
             theme="outline"
             size="16"
             style={{paddingRight: 4, transform: 'translate(0,1px)'}}
-            fill="#005CAF"
-            strokeWidth={3}
+            fill="#FFFFFF"
+            strokeWidth={4}
           />
           {t('dialogs.create.button')}
         </div>

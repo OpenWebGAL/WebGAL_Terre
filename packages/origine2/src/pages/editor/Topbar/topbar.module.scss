@@ -115,7 +115,18 @@
 }
 
 .topbar_btn_special_active {
+  height: 32px;
   color: var(--terre-primary);
-  background-image: linear-gradient(#FFF, #FFF), linear-gradient(to bottom, var(--terre-primary), #FFF), linear-gradient(to bottom, var(--terre-primary), #FFF);
+  border: 2px solid var(--terre-primary);
+  border-bottom: none;
+  background: #FFF;
   font-weight: 700;
+  transform: translate(0,2px);
+  .specialText{
+    transform: translate(0,-2px);
+  }
+}
+
+.topbar_btn_special_active_topbar_tags{
+  border-top: 2px solid var(--terre-primary);
 }
