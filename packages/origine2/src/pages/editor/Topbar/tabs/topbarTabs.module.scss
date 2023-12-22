@@ -65,26 +65,25 @@
 }
 
 .textEditArea{
-  display: flex;
-  flex-flow: column;
-  align-items: center;
+  display: block;
+  //flex-flow: column;
+  //align-items: center;
 }
 
 .editButton {
   //display: inline-block;
   font-size: smaller;
-  width: 100px;
   box-sizing: border-box;
   padding: 0.2em 0.5em 0.2em 0.5em;
-  background: var(--sidebarTags-editButton-background);
+  //background: var(--sidebarTags-editButton-background);
   color: var(--terre-primary);
   border-radius: 4px;
   cursor: pointer;
-  margin: 0.5em 0 0 0;
+  margin: 0 0 0 0.25em;
 }
 
 .editButton:hover{
-  background: rgba(0,92,175,0.15);
+  background: var(--sidebarTags-editButton-background);
 }
 
 .addIcon{

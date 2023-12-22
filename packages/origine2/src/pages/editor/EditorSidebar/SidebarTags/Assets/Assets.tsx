@@ -32,11 +32,11 @@ export default function Assets() {
   /**
    * 当前目录，以及包含文件
    */
-  const currentChildDir = useValue<string[]>([]);
+  const currentChildDir = useValue<string[]>([],true,'current-child-dir-hold');
   const currentDirName = currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
   const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
-  const currentDirExtName = useValue<string[]>(["unset"]);
+  const currentDirExtName = useValue<string[]>(["unset"],true,'current-dir-ext-name');
   const currentDirExtNameKey = currentDirExtName.value.toString();
   const dispatch = useDispatch();
   const tags = useSelector((state: RootState) => state.status.editor.tags);
@@ -114,7 +114,6 @@ export default function Assets() {
         onClick={() => {
           currentChildDir.set([...currentChildDir.value, fileDesc.name]);
           const targetDirExtName = dirNameToExtNameMap.get(fileDesc.name) ?? [];
-          console.log(123);
           currentDirExtName.set(targetDirExtName);
         }} />;
     });

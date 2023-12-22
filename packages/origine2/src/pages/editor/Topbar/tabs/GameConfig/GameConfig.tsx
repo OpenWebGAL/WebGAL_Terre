@@ -16,7 +16,7 @@ import {Image} from "@fluentui/react";
 import {textboxThemes} from "./constants";
 import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
-import {Add, Plus} from "@icon-park/react";
+import {Add, Plus, Write} from "@icon-park/react";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -157,10 +157,10 @@ function GameConfigEditor(props: IGameConfigEditor) {
 
   return <div className={styles.textEditArea} style={{maxWidth: 200}}>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+    {!showEditBox.value && <span className={styles.editButton} onClick={() => {
       showEditBox.set(true);
       setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t("revise")}</div>}
+    }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
     {showEditBox.value && <TextField componentRef={inputBoxRef} defaultValue={props.value}
       onBlur={() => {
         props.onChange(inputBoxRef!.current!.value);
@@ -190,10 +190,10 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
   const inputBoxRef = useRef<ITextField>(null);
   return <div className={styles.textEditArea}>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+    {!showEditBox.value && <span className={styles.editButton} onClick={() => {
       showEditBox.set(true);
       setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t("revise")}</div>}
+    }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
     {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
       onChange={(file) => {
         if (file) {
