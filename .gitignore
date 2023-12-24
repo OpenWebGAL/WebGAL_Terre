@@ -1,6 +1,5 @@
 node_modules
 .idea
-.vscode
 release
 bundle
 yarn.lock
