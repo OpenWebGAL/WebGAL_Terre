@@ -153,7 +153,7 @@ export default function Intro(props: ISentenceEditorProps) {
   };
   const optionButtonStyles = {
     root: {
-      margin: '6px 0 0 0',
+      // margin: '6px 0 0 0',
       display: 'flex'
     },
   };
@@ -206,8 +206,10 @@ export default function Intro(props: ISentenceEditorProps) {
     </div>;
   });
 
-  return <div>
-    {introCompList}
+  return <div style={{display: 'flex', gap: '8px', flexWrap: 'wrap'}}>
+    <div style={{width: '100%'}}>
+      {introCompList}
+    </div>
     <DefaultButton style={{display: 'block', textAlign: 'left'}} onClick={() => {
       const newList = cloneDeep(introTextList.value);
       newList.push('');
@@ -218,7 +220,7 @@ export default function Intro(props: ISentenceEditorProps) {
       {t('option.title')}
     </PrimaryButton>
     {isAccordionOpen && (
-      <div>
+      <div style={{width: '100%'}}>
         <div style={{ display: 'flex'}}>
           <CommonOptions title={t('font.size')}>
             <Dropdown
@@ -265,7 +267,7 @@ export default function Intro(props: ISentenceEditorProps) {
             />
           </CommonOptions>
         </div>
-        <DefaultButton style={{ display: 'flex'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
+        <DefaultButton style={{ display: 'flex', marginTop: '8px'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
       </div>
     )}
   </div>;
