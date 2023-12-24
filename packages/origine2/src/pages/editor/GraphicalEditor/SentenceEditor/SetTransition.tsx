@@ -27,7 +27,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
           <ChooseFile sourceBase="animation" onChange={(file) => {
             enterFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} />
+          }} extName={[".json"]} ignoreFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="1.1" title={t('exitfile.title')}>
@@ -36,7 +36,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
           <ChooseFile sourceBase="animation" onChange={(file) => {
             exitFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} />
+          }} extName={[".json"]} ignoreFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t('preparedTarget.title')}>
