@@ -239,22 +239,21 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           </CommonOptions>
         </div>
       </TerrePanel>
-      <div className={styles.editItem}>
-        <div className={styles.editItem} style={{display: 'flex'}}>
-          <CommonOptions title={t('options.animationType.flag')} key="5">
-            <Dropdown
-              selectedKey={animationFlag.value}
-              options={[
-                {key: "", text: 'Off'},
-                {key: "on", text: 'ON'},
-              ]}
-              onChange={(ev, newValue: any) => {
-                animationFlag.set(newValue?.key?.toString() ?? "");
-                submit();
-              }}
-            />
-          </CommonOptions>
-          {animationFlag.value === "on" &&
+      <div style={{display: 'flex', flexWrap: 'wrap', gap: '8px', width: animationFlag.value !== "on" ? 'auto' : '100%'}}>
+        <CommonOptions title={t('options.animationType.flag')} key="5">
+          <Dropdown
+            selectedKey={animationFlag.value}
+            options={[
+              {key: "", text: 'Off'},
+              {key: "on", text: 'ON'},
+            ]}
+            onChange={(ev, newValue: any) => {
+              animationFlag.set(newValue?.key?.toString() ?? "");
+              submit();
+            }}
+          />
+        </CommonOptions>
+        {animationFlag.value === "on" &&
               <CommonOptions key="6" title={t("options.animationType.lipSync.mouthOpen")}>
                 <>
                   {mouthOpen.value + "\u00a0\u00a0"}
@@ -265,7 +264,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   extName={[".png", ".jpg", ".webp"]}/>
                 </>
               </CommonOptions>}
-          {animationFlag.value === "on" &&
+        {animationFlag.value === "on" &&
               <CommonOptions key="7" title={t("options.animationType.lipSync.mouthHalfOpen")}>
                 <>
                   {mouthHalfOpen.value + "\u00a0\u00a0"}
@@ -276,7 +275,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   extName={[".png", ".jpg", ".webp"]}/>
                 </>
               </CommonOptions>}
-          {animationFlag.value === "on" &&
+        {animationFlag.value === "on" &&
               <CommonOptions key="8" title={t("options.animationType.lipSync.mouthClose")}>
                 <>
                   {mouthClose.value + "\u00a0\u00a0"}
@@ -287,27 +286,26 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   extName={[".png", ".jpg", ".webp"]}/>
                 </>
               </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
-            <>
-              {eyesOpen.value + "\u00a0\u00a0"}
-              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                eyesOpen.set(fileDesc?.name ?? "");
-                submit();
-              }}
-              extName={[".png", ".jpg", ".webp"]}/>
-            </>
-          </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
-            <>
-              {eyesClose.value + "\u00a0\u00a0"}
-              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                eyesClose.set(fileDesc?.name ?? "");
-                submit();
-              }}
-              extName={[".png", ".jpg", ".webp"]}/>
-            </>
-          </CommonOptions>}
-        </div>
+        {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
+          <>
+            {eyesOpen.value + "\u00a0\u00a0"}
+            <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+              eyesOpen.set(fileDesc?.name ?? "");
+              submit();
+            }}
+            extName={[".png", ".jpg", ".webp"]}/>
+          </>
+        </CommonOptions>}
+        {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
+          <>
+            {eyesClose.value + "\u00a0\u00a0"}
+            <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+              eyesClose.set(fileDesc?.name ?? "");
+              submit();
+            }}
+            extName={[".png", ".jpg", ".webp"]}/>
+          </>
+        </CommonOptions>}
       </div>
     </div>
   </div>;
