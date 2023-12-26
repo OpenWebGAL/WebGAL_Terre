@@ -1,7 +1,7 @@
 .editor_sidebar {
   //width: 30%;
   //min-width: 30%;
-  padding: 8px;
+  padding: 4px;
   width: var(--sidebar-width);
   box-sizing: border-box;
   text-align: left;
@@ -25,17 +25,12 @@
   user-select: none;
   display: flex;
   flex-flow: column;
-  //max-height: 50%;
-  //flex: 1;
-  //height: calc(var(--sidebar-width) * (9 / 16));
   flex-shrink: 0;
 }
 
 .previewWindow {
   flex: 1;
   flex-shrink: 0;
-  // min-height: calc(var(--sidebar-width) * (9 / 16));
-  // height: calc(var(--sidebar-width) * (9 / 16));
   width: 100%;
   box-sizing: border-box;
   aspect-ratio: 16 / 9;
@@ -51,8 +46,8 @@
 .gamePreviewButons {
   display: none;
   position: absolute;
-  left: calc(var(--sidebar-width) - 8px);
-  top: 8px;
+  left: calc(var(--sidebar-width) - 4px);
+  top: 4px;
   background: #FFF;
   border-radius: 0 4px 4px 0;
   border: solid 1px #DDD;
@@ -75,7 +70,7 @@
 
 .sidebarTab {
   background: none;
-  padding-top: 8px;
+  padding-top: 4px;
 }
 
 .sidebarTab>input[type="radio"] {
@@ -86,7 +81,7 @@
   cursor: pointer;
   display: inline-block;
   padding: 4px 8px;
-  font-size: 90%;
+  font-size: 14px;
   border-radius: 4px 4px 0 0;
   border: 1px solid rgba(0,0,0,0);
   border-bottom: none;
