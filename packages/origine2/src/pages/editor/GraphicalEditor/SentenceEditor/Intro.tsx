@@ -9,6 +9,7 @@ import { getArgByKey } from "../utils/getArgByKey";
 import { useState } from "react";
 import React from 'react';
 import {logger} from "@/utils/logger";
+import { TerrePanel } from "../components/TerrePanel";
 
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
@@ -94,7 +95,7 @@ export default function Intro(props: ISentenceEditorProps) {
     return "medium";
   };
 
-  
+
   const getInitialAnimation = (): string => {
     const animationValue = getArgByKey(props.sentence, "animation");
 
@@ -105,7 +106,7 @@ export default function Intro(props: ISentenceEditorProps) {
     return "fadeIn";
   };
 
-  
+
   const getInitialDelayTime = (): string => {
     const delayTimeValue = getArgByKey(props.sentence, "delayTime");
 
@@ -216,12 +217,12 @@ export default function Intro(props: ISentenceEditorProps) {
       introTextList.set(newList);
       submit();
     }}>{t('add.button')}</DefaultButton>
-    <PrimaryButton onClick={toggleAccordion} styles={optionButtonStyles}>
-      {t('option.title')}
-    </PrimaryButton>
-    {isAccordionOpen && (
+    <DefaultButton onClick={toggleAccordion} styles={optionButtonStyles}>
+      {t('$效果选项')}
+    </DefaultButton>
+    <TerrePanel onDismiss={() => setIsAccordionOpen(!isAccordionOpen)} isOpen={isAccordionOpen} title="效果选项">
       <div style={{width: '100%'}}>
-        <div style={{ display: 'flex'}}>
+        <div style={{display: 'flex'}}>
           <CommonOptions title={t('font.size')}>
             <Dropdown
               options={fontSizes.map(f => ({key: f.key, text: f.text}))}
@@ -253,7 +254,7 @@ export default function Intro(props: ISentenceEditorProps) {
             />
           </CommonOptions>
         </div>
-        <div style={{ display: 'flex'}}>
+        <div style={{display: 'flex'}}>
           <CommonOptions title={t('colorPicker.backgroundColor')}>
             <ColorPicker
               color={localBackgroundColor}
@@ -267,8 +268,9 @@ export default function Intro(props: ISentenceEditorProps) {
             />
           </CommonOptions>
         </div>
-        <DefaultButton style={{ display: 'flex', marginTop: '8px'}} onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
+        <DefaultButton style={{display: 'flex', marginTop: '8px'}}
+          onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
       </div>
-    )}
+    </TerrePanel>
   </div>;
 }
