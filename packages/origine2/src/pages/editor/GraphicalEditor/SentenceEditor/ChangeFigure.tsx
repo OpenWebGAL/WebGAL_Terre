@@ -238,75 +238,81 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             </div>
           </CommonOptions>
         </div>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '8px',
+          width: animationFlag.value !== "on" ? 'auto' : '100%'
+        }}>
+          <CommonOptions title={t('options.animationType.flag')} key="5">
+            <Dropdown
+              selectedKey={animationFlag.value}
+              options={[
+                {key: "", text: 'Off'},
+                {key: "on", text: 'ON'},
+              ]}
+              onChange={(ev, newValue: any) => {
+                animationFlag.set(newValue?.key?.toString() ?? "");
+                submit();
+              }}
+            />
+          </CommonOptions>
+          {animationFlag.value === "on" &&
+            <CommonOptions key="6" title={t("options.animationType.lipSync.mouthOpen")}>
+              <>
+                {mouthOpen.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  mouthOpen.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]}/>
+              </>
+            </CommonOptions>}
+          {animationFlag.value === "on" &&
+            <CommonOptions key="7" title={t("options.animationType.lipSync.mouthHalfOpen")}>
+              <>
+                {mouthHalfOpen.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  mouthHalfOpen.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]}/>
+              </>
+            </CommonOptions>}
+          {animationFlag.value === "on" &&
+            <CommonOptions key="8" title={t("options.animationType.lipSync.mouthClose")}>
+              <>
+                {mouthClose.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  mouthClose.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]}/>
+              </>
+            </CommonOptions>}
+          {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
+            <>
+              {eyesOpen.value + "\u00a0\u00a0"}
+              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                eyesOpen.set(fileDesc?.name ?? "");
+                submit();
+              }}
+              extName={[".png", ".jpg", ".webp"]}/>
+            </>
+          </CommonOptions>}
+          {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
+            <>
+              {eyesClose.value + "\u00a0\u00a0"}
+              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                eyesClose.set(fileDesc?.name ?? "");
+                submit();
+              }}
+              extName={[".png", ".jpg", ".webp"]}/>
+            </>
+          </CommonOptions>}
+        </div>
       </TerrePanel>
-      <div style={{display: 'flex', flexWrap: 'wrap', gap: '8px', width: animationFlag.value !== "on" ? 'auto' : '100%'}}>
-        <CommonOptions title={t('options.animationType.flag')} key="5">
-          <Dropdown
-            selectedKey={animationFlag.value}
-            options={[
-              {key: "", text: 'Off'},
-              {key: "on", text: 'ON'},
-            ]}
-            onChange={(ev, newValue: any) => {
-              animationFlag.set(newValue?.key?.toString() ?? "");
-              submit();
-            }}
-          />
-        </CommonOptions>
-        {animationFlag.value === "on" &&
-              <CommonOptions key="6" title={t("options.animationType.lipSync.mouthOpen")}>
-                <>
-                  {mouthOpen.value + "\u00a0\u00a0"}
-                  <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                    mouthOpen.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extName={[".png", ".jpg", ".webp"]}/>
-                </>
-              </CommonOptions>}
-        {animationFlag.value === "on" &&
-              <CommonOptions key="7" title={t("options.animationType.lipSync.mouthHalfOpen")}>
-                <>
-                  {mouthHalfOpen.value + "\u00a0\u00a0"}
-                  <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                    mouthHalfOpen.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extName={[".png", ".jpg", ".webp"]}/>
-                </>
-              </CommonOptions>}
-        {animationFlag.value === "on" &&
-              <CommonOptions key="8" title={t("options.animationType.lipSync.mouthClose")}>
-                <>
-                  {mouthClose.value + "\u00a0\u00a0"}
-                  <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                    mouthClose.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extName={[".png", ".jpg", ".webp"]}/>
-                </>
-              </CommonOptions>}
-        {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
-          <>
-            {eyesOpen.value + "\u00a0\u00a0"}
-            <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-              eyesOpen.set(fileDesc?.name ?? "");
-              submit();
-            }}
-            extName={[".png", ".jpg", ".webp"]}/>
-          </>
-        </CommonOptions>}
-        {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
-          <>
-            {eyesClose.value + "\u00a0\u00a0"}
-            <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-              eyesClose.set(fileDesc?.name ?? "");
-              submit();
-            }}
-            extName={[".png", ".jpg", ".webp"]}/>
-          </>
-        </CommonOptions>}
-      </div>
+
     </div>
   </div>;
 }
