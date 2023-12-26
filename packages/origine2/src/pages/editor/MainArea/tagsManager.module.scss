@@ -4,7 +4,7 @@
   user-select: none !important;
   display: flex;
   background: var(--tagManager-tag-background);
-  border-top: 1px solid var(--tagManager-tag-border-top);
+  border-top: 2px solid var(--tagManager-tag-border-top);
   //transition: all 0.33s;
   align-items: flex-start;
   flex-shrink: 0;
@@ -45,10 +45,10 @@
 
 .tag_active {
   background: var(--tagManager-tag-active-background) !important;
-  border-top: 1px solid var(--tagManager-tag-active-border-top);
-  color: var(--terre-primary);
-  font-style: italic;
-  font-weight: 700;
+  border-top: 2px solid var(--tagManager-tag-active-border-top);
+  color: var(--tagManager-tag-active-border-top);
+  //font-style: italic;
+  //font-weight: 700;
 }
 
 .tag:hover {
