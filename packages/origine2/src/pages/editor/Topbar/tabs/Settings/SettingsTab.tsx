@@ -16,7 +16,7 @@ import {IconWithTextItem} from "@/pages/editor/Topbar/components/IconWithTextIte
 import {useCallback, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store/origineStore";
-import {setEnableLivePreview} from "@/store/userDataReducer";
+import {setEnableLivePreview, setIsWarp} from "@/store/userDataReducer";
 
 export function SettingsTab() {
 
@@ -47,6 +47,7 @@ export function SettingsTab() {
       }
     ];
 
+  const isAutoWarp = useSelector((state:RootState)=>state.userData.isWarp);
   const linkRef = useRef(null);
   const [showContextualMenu, setShowContextualMenu] = useState(false);
   const onShowContextualMenu = () => setShowContextualMenu(!showContextualMenu);
@@ -85,6 +86,14 @@ export function SettingsTab() {
           text={isEnableLivePreview ? '实时预览打开' : '实时预览关闭'}
         />
       </TooltipHost>
+    </TabItem><TabItem title="代码编辑器">
+      <IconWithTextItem
+        onClick={() => {
+          dispatch(setIsWarp(!isAutoWarp));
+        }}
+        icon={<FontIcon iconName={isAutoWarp ? "ReturnKey" : "GlobalNavButton"} className={s.iconColor}/>}
+        text={isAutoWarp ? '自动换行' : '永不换行'}
+      />
     </TabItem>
   </TopbarTab>;
 }
