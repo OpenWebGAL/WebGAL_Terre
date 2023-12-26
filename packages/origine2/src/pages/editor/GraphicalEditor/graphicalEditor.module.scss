@@ -6,12 +6,19 @@
 
 .sentenceEditorWrapper {
   display: flex;
-  padding: 6px 12px 6px 12px;
-  border-bottom: 4px solid var(--graphicalEditor-sentenceEditorWrapper-border-bottom);
-  background: var(--graphicalEditor-sentenceEditorWrapper-background);
   color: var(--graphicalEditor-sentenceEditorWrapper);
   font-weight: bold;
   font-size: 90%;
+  flex-wrap: wrap;
+}
+
+.sentenceEditorContent {
+  display: flex;
+  background: var(--graphicalEditor-sentenceEditorWrapper-background);
+  width: 100%;
+  padding: 0px 6px 6px 6px;
+  border: var(--border-md);
+  border-radius: 4px;
 }
 
 .lineNumber {
@@ -55,7 +62,7 @@
   margin-left: auto;
   opacity: 0;
   display: flex;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: var(--border-md);
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   border-radius: 4px;
   padding: 2px 0;
@@ -106,4 +113,57 @@
 
 .optionButton > span > svg > path{
   stroke: var(--iconPark-icon-fill);
+}
+
+.addForwardArea {
+  height: 5px;
+  width: 100%;
+  position: relative;
+}
+
+.addForwardArea::after {
+  content: "";
+  position: absolute;
+  top: 1.5px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  border-radius: 4px;
+  background: var(--terre-primary);
+  transition: visibility 0.2s linear, opacity 0.2s linear;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.addForwardAreaButtonGroup {
+  position: absolute;
+  top: -12.5px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  height: 0;
+  z-index: 1;
+  transition: visibility 0.1s linear, opacity 0.1s linear;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.addForwardAreaButton {
+  background-color: var(--graphicalEditor-sentenceEditorWrapper-background);
+  border: var(--border-md);
+  box-shadow: var(--box-shadow-md);
+  border-radius: 4px;
+  padding: 2px 0;
+  height: max-content;
+}
+
+.addForwardArea:hover::after {
+  opacity: 0.8;
+  visibility: visible;
+}
+
+.addForwardArea:hover .addForwardAreaButtonGroup {
+  opacity: 1;
+  visibility: visible;
 }
