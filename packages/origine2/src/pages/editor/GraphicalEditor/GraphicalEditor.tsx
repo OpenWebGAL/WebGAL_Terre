@@ -9,7 +9,7 @@ import {mergeToString, splitToArray} from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {sentenceEditorConfig, sentenceEditorDefault} from "./SentenceEditor";
-import {DeleteFive, Sort, DownOne, RightOne} from "@icon-park/react";
+import {DeleteFive, Sort, DownOne, RightOne, Play} from "@icon-park/react";
 import AddSentence, {addSentenceType} from "./components/AddSentence";
 import useTrans from "@/hooks/useTrans";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
@@ -130,6 +130,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     addNewSentenceAttach(sentence);
   }
 
+  function syncToIndex(index: number) {
+    const targetValue = sceneText.value.split("\n")[index];
+    WsUtil.sendSyncCommand(props.targetName, index + 1, targetValue,true);
+  }
+
   useEffect(() => {
     // @ts-ignore
     eventBus.on('topbar-add-sentence', handleAdd);
@@ -184,25 +189,31 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                             <div className={styles.title}>
                               {sentenceConfig.title()}
                             </div>
+                            <div className={styles.optionButton}
+                              onClick={() => changeShowSentence(i)}>
+                              {showSentence.value[i] ?
+                                <DownOne strokeWidth={3} theme="outline" size="18"
+                                  fill="#005CAF"/> :
+                                <RightOne strokeWidth={3} theme="outline" size="18"
+                                  fill="#005CAF"/>}
+                            </div>
                             <div className={styles.optionButtonContainer}>
                               <div className={styles.optionButton}
-                                onClick={() => changeShowSentence(i)}>
-                                {showSentence.value[i] ?
-                                  <DownOne strokeWidth={2} theme="outline" style={{padding: "0px 2px 0 0"}} size="18"
-                                    fill="#333"/> :
-                                  <RightOne strokeWidth={2} theme="outline" style={{padding: "0px 2px 0 0"}} size="18"
-                                    fill="#333"/>}
-                                <div>
-                                  {showSentence.value[i] ? "折叠" : "展开"}
-                                </div>
-                              </div>
-                              <div className={styles.optionButton}
                                 onClick={() => deleteOneSentence(i)}>
-                                <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"/>
+                                <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"
+                                  fill="#333"/>
                                 <div>
                                   {t("delete")}
                                 </div>
-                              </div> 
+                              </div>
+                              <div className={styles.optionButton}
+                                onClick={() => syncToIndex(i)}>
+                                <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"
+                                  fill="#333"/>
+                                <div>
+                                  {t("$执行到此句")}
+                                </div>
+                              </div>
                             </div>
                           </div>
                           {showSentence.value[i] && <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
