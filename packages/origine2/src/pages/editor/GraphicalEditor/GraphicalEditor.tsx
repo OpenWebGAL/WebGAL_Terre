@@ -141,7 +141,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   const parsedScene = (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
   return <div className={styles.main} id="graphical-editor-main">
-    <div style={{flex: 1}}>
+    <div style={{flex: 1, padding: '16px 4px 0 4px'}}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -166,42 +166,49 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                     >
-                      <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{index}</span>
-                        <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
-                          strokeWidth={3}/>
-                      </div>
-                      <div className={styles.seArea}>
-                        <div className={styles.head}>
-                          <div className={styles.title}>
-                            {sentenceConfig.title()}
-                          </div>
-                          <div className={styles.optionButtonContainer}>
-                            <div className={styles.optionButton}
-                              onClick={() => changeShowSentence(i)}>
-                              {showSentence.value[i] ?
-                                <DownOne strokeWidth={2} theme="outline" style={{padding: "0px 2px 0 0"}} size="18"
-                                  fill="#333"/> :
-                                <RightOne strokeWidth={2} theme="outline" style={{padding: "0px 2px 0 0"}} size="18"
-                                  fill="#333"/>}
-                              <div>
-                                {showSentence.value[i] ? "折叠" : "展开"}
-                              </div>
-                            </div>
-                            <div className={styles.optionButton}
-                              onClick={() => deleteOneSentence(i)}>
-                              <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"/>
-                              <div>
-                                {t("delete")}
-                              </div>
-                            </div>
+                      <div className={styles.addForwardArea}>
+                        <div className={styles.addForwardAreaButtonGroup}>
+                          <div className={styles.addForwardAreaButton}>
                             <AddSentence titleText={t("addForward")} type={addSentenceType.forward}
                               onChoose={(newSentence) => addOneSentence(newSentence, i)}/>
                           </div>
-
                         </div>
-                        {showSentence.value[i] && <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
-                          updateSentenceByIndex(newSentence, i);
-                        }}/>}
+                      </div>
+                      <div className={styles.sentenceEditorContent}>
+                        <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{index}</span>
+                          <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
+                            strokeWidth={3}/>
+                        </div>
+                        <div className={styles.seArea}>
+                          <div className={styles.head}>
+                            <div className={styles.title}>
+                              {sentenceConfig.title()}
+                            </div>
+                            <div className={styles.optionButtonContainer}>
+                              <div className={styles.optionButton}
+                                onClick={() => changeShowSentence(i)}>
+                                {showSentence.value[i] ?
+                                  <DownOne strokeWidth={2} theme="outline" style={{padding: "0px 2px 0 0"}} size="18"
+                                    fill="#333"/> :
+                                  <RightOne strokeWidth={2} theme="outline" style={{padding: "0px 2px 0 0"}} size="18"
+                                    fill="#333"/>}
+                                <div>
+                                  {showSentence.value[i] ? "折叠" : "展开"}
+                                </div>
+                              </div>
+                              <div className={styles.optionButton}
+                                onClick={() => deleteOneSentence(i)}>
+                                <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"/>
+                                <div>
+                                  {t("delete")}
+                                </div>
+                              </div> 
+                            </div>
+                          </div>
+                          {showSentence.value[i] && <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
+                            updateSentenceByIndex(newSentence, i);
+                          }}/>}
+                        </div>
                       </div>
                     </div>
                   )}
