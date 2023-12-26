@@ -31,16 +31,3 @@
   flex:1;
   overflow: auto;
 }
-
-.choseFileButton > span > svg > path:nth-child(1) {
-  fill: var(--iconPark-icon-chooseFile-fill);
-  stroke: var(--iconPark-icon-chooseFile-stroke-first);
-}
-
-.choseFileButton > span > svg > path:nth-child(2) {
-  stroke: var(--iconPark-icon-chooseFile-stroke-second);
-}
-
-.choseFileButton > span > svg > path:nth-child(3) {
-  stroke: var(--iconPark-icon-chooseFile-stroke-third);
-}

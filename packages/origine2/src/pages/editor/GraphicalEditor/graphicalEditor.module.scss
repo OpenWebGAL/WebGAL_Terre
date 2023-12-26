@@ -31,10 +31,6 @@
   color: var(--graphicalEditor-lineNumber);
 }
 
-.lineNumber > span > svg > path {
-  stroke: var(--graphicalEditor-lineNumber);
-}
-
 .seArea {
   flex: 1;
 }
@@ -49,7 +45,7 @@
 
 .title {
   color: var(--terre-primary);
-  padding: 1px 4px 0 0;
+  padding: 0 4px 0 0;
   box-sizing: border-box;
   font-weight: bold;
   border-radius: 4px;
@@ -105,14 +101,6 @@
   padding: 30px 16px 30px 16px;
   box-sizing: border-box;
   justify-content: center;
-}
-
-.lineNumber > svg > path{
-  stroke: var(--graphicalEditor-lineNumber);
-}
-
-.optionButton > span > svg > path{
-  stroke: var(--iconPark-icon-fill);
 }
 
 .addForwardArea {
