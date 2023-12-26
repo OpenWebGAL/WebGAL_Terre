@@ -1,5 +1,6 @@
 .tab{
-  border-radius: 2px;
+  border: var(--border-md);
+  border-radius: 4px;
   background: #FFF;
   min-height: 60px;
   overflow: auto;
@@ -7,22 +8,22 @@
   margin-bottom: 4px;
   &::-webkit-scrollbar {
     //width: 3px;
-    height: 4px;
-    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-background);
+    height: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 0;
     background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-background);
-
-    &:hover {
-      background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-hover-background);
-    }
+    background-clip: content-box;
+    border-radius: 4px;
+    border: 2px solid transparent;
   }
 
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
+  ::-webkit-scrollbar-track {
     background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-hover-background);
   }
 
   & {
