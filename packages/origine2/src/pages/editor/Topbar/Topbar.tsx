@@ -17,10 +17,11 @@ import {HelpTab} from "@/pages/editor/Topbar/tabs/Help/HelpTab";
 import {ExportTab} from "@/pages/editor/Topbar/tabs/Export/ExportTab";
 import TopbarTabButtonSpecial from "@/pages/editor/Topbar/TopbarTabButtonSpecial";
 import {AddSentenceTab} from "@/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab";
+import {useTranslation} from "react-i18next";
 
 
 export default function TopBar() {
-  const t = useTrans('editor.topBar.');
+  const {t} = useTranslation();
   const setLanguage = useLanguage();
   const editingGame: string = useSelector((state: RootState) => state.status.editor.currentEditingGame);
 
@@ -63,13 +64,13 @@ export default function TopBar() {
           {
             key: 'item1',
             iconProps: {iconName: 'ThumbnailView'},
-            text: '一直显示功能区',
+            text: t('一直显示功能区')??'',
             onClick: setAlwaysShowToolbarCallback,
           },
           {
             key: 'item2',
             iconProps: {iconName: 'Hide3'},
-            text: '自动隐藏功能区',
+            text: t('自动隐藏功能区')??'',
             onClick: setAutoHideToolbarCallback,
           },
         ],
@@ -108,19 +109,19 @@ export default function TopBar() {
   return <div className={styles.editor_topbar}>
     <div className={styles.topbar_tags}>
       {/* 标签页 */}
-      <TopbarTabButton text="文件" isActive={false} onClick={() => dispatch(setDashboardShow(true))}/>
-      <TopbarTabButton text="配置" isActive={currentTopbarTab === TopbarTabs.Config}
+      <TopbarTabButton text={t("文件")} isActive={false} onClick={() => dispatch(setDashboardShow(true))}/>
+      <TopbarTabButton text={t("配置")} isActive={currentTopbarTab === TopbarTabs.Config}
         onClick={() => handleTabClick(TopbarTabs.Config)}/>
-      <TopbarTabButton text="视图" isActive={currentTopbarTab === TopbarTabs.View}
+      <TopbarTabButton text={t("视图")} isActive={currentTopbarTab === TopbarTabs.View}
         onClick={() => handleTabClick(TopbarTabs.View)}/>
-      <TopbarTabButton text="设置" isActive={currentTopbarTab === TopbarTabs.Settings}
+      <TopbarTabButton text={t("设置")} isActive={currentTopbarTab === TopbarTabs.Settings}
         onClick={() => handleTabClick(TopbarTabs.Settings)}/>
-      <TopbarTabButton text="帮助" isActive={currentTopbarTab === TopbarTabs.Help}
+      <TopbarTabButton text={t("帮助")} isActive={currentTopbarTab === TopbarTabs.Help}
         onClick={() => handleTabClick(TopbarTabs.Help)}/>
-      <TopbarTabButton text="导出" isActive={currentTopbarTab === TopbarTabs.Export}
+      <TopbarTabButton text={t("导出")} isActive={currentTopbarTab === TopbarTabs.Export}
         onClick={() => handleTabClick(TopbarTabs.Export)}/>
       {isShowAddSceneTab &&
-        <TopbarTabButtonSpecial text="添加语句" isActive={currentTopbarTab === TopbarTabs.AddSentence}
+        <TopbarTabButtonSpecial text={t("添加语句")} isActive={currentTopbarTab === TopbarTabs.AddSentence}
           onClick={() => handleTabClick(TopbarTabs.AddSentence)}/>}
       <div className={styles.topbar_gamename}>
         {editingGame}
@@ -129,12 +130,12 @@ export default function TopBar() {
       <div className={styles.topbar_link}
         onClick={() => window.open("https://openwebgal.com", "_blank")}>
         <img src={TerreIcon} height={20} width={20} alt="WebGAL Homepage"/>
-        <div className={styles.topbar_link_text}>WebGAL 主页</div>
+        <div className={styles.topbar_link_text}>{t("主页")}</div>
       </div>
       <div className={styles.topbar_link}
         onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}>
         <img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>
-        <div className={styles.topbar_link_text}>源代码</div>
+        <div className={styles.topbar_link_text}>{t("源代码")}</div>
       </div>
     </div>
     {currentTopbarTab === TopbarTabs.Config && <ConfigTab/>}
