@@ -209,10 +209,10 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       <CommonOptions key="23" title={t("options.displayEffect.title")}>
         <DefaultButton onClick={() => {
           isShowEffectEditor.value = true;
-        }}>打开效果编辑器</DefaultButton>
+        }}>{t('$打开效果编辑器')}</DefaultButton>
       </CommonOptions>
       <TerrePanel
-        title="效果编辑器"
+        title={t("$效果编辑器")}
         isOpen={isShowEffectEditor.value}
         onDismiss={() => {
           isShowEffectEditor.value = false;
@@ -220,14 +220,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         <div>
           <CommonTips
-            text="提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令"/>
+            text={t("$效果提示")}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();
           }}/>
-          <CommonOptions key="10" title="持续时间（单位为毫秒）">
+          <CommonOptions key="10" title={t("$持续时间（单位为毫秒）")}>
             <div>
-              <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+              <TextField placeholder={t("$持续时间（单位为毫秒）")} value={duration.value.toString()} onChange={(_, newValue) => {
                 const newDuration = Number(newValue);
                 if (isNaN(newDuration) || newValue === '')
                   duration.set("");
