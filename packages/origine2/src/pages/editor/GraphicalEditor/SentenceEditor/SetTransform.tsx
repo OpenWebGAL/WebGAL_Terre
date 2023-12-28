@@ -34,8 +34,8 @@ export default function SetTransform(props: ISentenceEditorProps) {
       <CommonOptions title="效果编辑">
         <DefaultButton onClick={() => {
           isShowEffectEditor.value = true;
-        }}>打开效果编辑器</DefaultButton>
-        <TerrePanel onDismiss={()=>isShowEffectEditor.set(false)} isOpen={isShowEffectEditor.value} title="效果编辑器">
+        }}>{tTarget('$打开效果编辑器')}</DefaultButton>
+        <TerrePanel onDismiss={()=>isShowEffectEditor.set(false)} isOpen={isShowEffectEditor.value} title={tTarget("$效果编辑器")}>
           <EffectEditor json={transform.value} onChange={(newJson)=>{
             transform.set(newJson);
             submit();

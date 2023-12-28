@@ -6,6 +6,7 @@ import {IconWithTextItemSmall} from "@/pages/editor/Topbar/components/IconWithTe
 import {ISentenceEditorConfig, sentenceEditorConfig} from "@/pages/editor/GraphicalEditor/SentenceEditor";
 import {cloneElement} from "react";
 import {eventBus} from "@/utils/eventBus";
+import {useTranslation} from "react-i18next";
 
 function addSentenceText(text: string) {
   console.log(text);
@@ -33,9 +34,10 @@ export function AddSentenceTab() {
   const btsExtra = pickSentenceType([14, 15]);
   const btsSystem = pickSentenceType([16, 17]);
   const btsControl = pickSentenceType([3, 19, 20]);
+  const {t} = useTranslation();
 
   return <TopbarTab>
-    <TabItem title="常规演出">
+    <TabItem title={t("常规演出")}>
       <div>
         {btsCommon1}
       </div>
@@ -43,12 +45,12 @@ export function AddSentenceTab() {
         {btsCommon2}
       </div>
     </TabItem>
-    <TabItem title="舞台对象控制">
+    <TabItem title={t("舞台对象控制")}>
       <div>
         {btsControl}
       </div>
     </TabItem>
-    <TabItem title="特殊演出">
+    <TabItem title={t("特殊演出")}>
       <div>
         {btsSpecial}
       </div>
@@ -56,17 +58,17 @@ export function AddSentenceTab() {
         {btsSpecial2}
       </div>
     </TabItem>
-    <TabItem title="场景与分支">
+    <TabItem title={t("场景与分支")}>
       <div>
         {btsBranch}
       </div>
     </TabItem>
-    <TabItem title="鉴赏">
+    <TabItem title={t("鉴赏")}>
       <div>
         {btsExtra}
       </div>
     </TabItem>
-    <TabItem title="游戏控制">
+    <TabItem title={t("游戏控制")}>
       <div>
         {btsSystem}
       </div>

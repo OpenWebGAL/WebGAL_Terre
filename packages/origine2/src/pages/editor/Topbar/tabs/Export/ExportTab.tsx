@@ -12,7 +12,7 @@ export function ExportTab() {
   const t = useTrans('editor.topBar.');
   const gameName = origineStore.getState().status.editor.currentEditingGame;
   return <TopbarTab>
-    <TabItem title="导出">
+    <TabItem title={t("$导出")}>
       <IconWithTextItem onClick={() => api.manageGameControllerEjectGameAsWeb(gameName)}
         icon={<FontIcon aria-label="Export Web" iconName="Globe" className={s.iconColor}/>}
         text={t('commandBar.items.release.items.web')}/>
