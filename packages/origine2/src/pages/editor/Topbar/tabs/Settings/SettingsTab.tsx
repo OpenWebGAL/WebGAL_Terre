@@ -17,11 +17,14 @@ import {useCallback, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store/origineStore";
 import {setEnableLivePreview, setIsWarp} from "@/store/userDataReducer";
+import {useTranslation} from "react-i18next";
 
 export function SettingsTab() {
 
   const t = useTrans('editor.topBar.');
   const setLanguage = useLanguage();
+  const trans = useTranslation();
+  const t2 = trans.t;
   const _items: IContextualMenuItem[] =
     [
       {
@@ -71,7 +74,7 @@ export function SettingsTab() {
         onDismiss={onHideContextualMenu}
       />
     </TabItem>
-    <TabItem title="实时预览">
+    <TabItem title={t2("实时预览")}>
       <TooltipHost
         delay={TooltipDelay.zero}
         content={<div className={s.previewTips}>
@@ -83,16 +86,16 @@ export function SettingsTab() {
             dispatch(setEnableLivePreview(!isEnableLivePreview));
           }}
           icon={<FontIcon iconName={isEnableLivePreview ? "Streaming" : "StreamingOff"} className={s.iconColor}/>}
-          text={isEnableLivePreview ? '实时预览打开' : '实时预览关闭'}
+          text={isEnableLivePreview ? t2('实时预览打开') : t2('实时预览关闭')}
         />
       </TooltipHost>
-    </TabItem><TabItem title="代码编辑器">
+    </TabItem><TabItem title={t2("代码编辑器")}>
       <IconWithTextItem
         onClick={() => {
           dispatch(setIsWarp(!isAutoWarp));
         }}
         icon={<FontIcon iconName={isAutoWarp ? "ReturnKey" : "GlobalNavButton"} className={s.iconColor}/>}
-        text={isAutoWarp ? '自动换行' : '永不换行'}
+        text={isAutoWarp ? t2('自动换行') : t2('永不换行')}
       />
     </TabItem>
   </TopbarTab>;

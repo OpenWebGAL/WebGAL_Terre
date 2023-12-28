@@ -85,33 +85,33 @@ export function EffectEditor(props:{
 
   return <>
     <CommonOptions key={1} title={t('transform.title')}>
-      {t('transform.x')}<TextField value={x.value} placeholder="默认值0" onChange={(_, newValue) => {
+      {t('transform.x')}<TextField value={x.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
         x.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('transform.y')}<TextField value={y.value} placeholder="默认值0" onChange={(_, newValue) => {
+      {t('transform.y')}<TextField value={y.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
         y.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
     <CommonOptions key={2} title={t('scale.title')}>
-      {t('scale.x')}<TextField value={scaleX.value} placeholder="默认值0" onChange={(_, newValue) => {
+      {t('scale.x')}<TextField value={scaleX.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
         scaleX.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('scale.y')}<TextField value={scaleY.value} placeholder="默认值0" onChange={(_, newValue) => {
+      {t('scale.y')}<TextField value={scaleY.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
         scaleY.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
     <CommonOptions key={3} title={t('effect.title')}>
-      {t('effect.alpha')}<TextField value={alpha.value} placeholder="默认值1" onChange={(_, newValue) => {
+      {t('effect.alpha')}<TextField value={alpha.value} placeholder={t("$默认值1")} onChange={(_, newValue) => {
         alpha.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('effect.rotation')}<TextField value={rotation.value} placeholder="默认值0" onChange={(_, newValue) => {
+      {t('effect.rotation')}<TextField value={rotation.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
         rotation.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('effect.blur')}<TextField value={blur.value} placeholder="默认值0" onChange={(_, newValue) => {
+      {t('effect.blur')}<TextField value={blur.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
         blur.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>

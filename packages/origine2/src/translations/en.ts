@@ -7,7 +7,6 @@ export const en = {
     cancel: 'Cancel',
     rename: 'Rename',
   },
-
   dashBoard: {
     createNewGame: {
       button: 'New game',
@@ -43,7 +42,6 @@ export const en = {
       },
     }
   },
-
   editor: {
     topBar: {
       editing: 'Editing:',
@@ -82,7 +80,6 @@ export const en = {
         downloadLatest: 'Download Latest Version',
       },
     },
-
     sideBar: {
       preview: {
         title: 'Game preview',
@@ -103,7 +100,6 @@ export const en = {
           }
         }
       },
-
       assets: {
         title: 'Assets management',
         supportFileTypes: 'File types supported by this folder',
@@ -126,7 +122,6 @@ export const en = {
           vocal: 'Vocal'
         }
       },
-
       gameConfigs: {
         title: 'Game configs',
         options: {
@@ -134,13 +129,12 @@ export const en = {
           id: 'Game ID',
           description: 'Game description',
           packageName: 'Game package name',
-          textboxTheme:'Textbox theme',
+          textboxTheme: 'Textbox theme',
           bg: 'Background image of title',
           bgm: 'BGM of title',
           logoImage: 'Logo',
         }
       },
-
       scenes: {
         title: 'Scene management',
         dialogs: {
@@ -152,19 +146,16 @@ export const en = {
         }
       }
     },
-
     mainArea: {
       noFileOpened: 'No file opened, now',
       canNotPreview: 'Can\'t preview this file'
     },
-
     graphical: {
       buttons: {
         delete: 'Delete',
         addForward: 'Add sentence forward this',
         add: 'Add sentence'
       },
-
       sentences: {
         say: {
           title: 'General dialogue',
@@ -342,15 +333,15 @@ export const en = {
               title: "AnimationSetting",
               flag: "AnimationFlag",
               lipSync: {
-                title:"LipSync",
+                title: "LipSync",
                 mouthOpen: "mouthOpen",
                 mouthHalfOpen: "mouthHalfOpen",
                 mouthClose: "mouthClose",
               },
               blink: {
-                title:"Blink",
-                eyesOpen:"eyesOpen",
-                eyesClose:"eyesClose",
+                title: "Blink",
+                eyesOpen: "eyesOpen",
+                eyesClose: "eyesClose",
               },
             }
           }
@@ -359,6 +350,14 @@ export const en = {
           title: "Change scene",
           initText: "changeScene: Choose a file of scene;",
           descText: 'Turn to new scene, and clear this scene',
+        },
+        getUserInput: {
+          title: "Get Input",
+          initText: "getUserInput:;",
+          titleOption: "Dialog Title",
+          varOption: "Write Variable",
+          buttonText: "Confirm Button Text",
+          descText: 'Get Character Input from User',
         },
         setAnime: {
           title: "Set animation",
@@ -672,5 +671,46 @@ export const en = {
       choose: "Choose file",
       fileSearch: 'Search file'
     }
-  }
+  },
+  "文件": "File",
+  "配置": "Configuration",
+  "视图": "View",
+  "设置": "Settings",
+  "帮助": "Help",
+  "导出": "Export",
+  "侧边栏": "Sidebar",
+  "侧边栏游戏预览": "Sidebar Game Preview",
+  "显示侧边栏": "Show Sidebar",
+  "隐藏侧边栏": "Hide Sidebar",
+  "刷新游戏": "Refresh Game",
+  "新标签页预览": "Preview in New Tab",
+  "代码编辑器": "Code Editor",
+  "永不换行": "Never Wrap",
+  "自动换行": "Auto Wrap",
+  "常规演出": "Regular Performance",
+  "舞台对象控制": "Stage Object Control",
+  "特殊演出": "Special Performance",
+  "场景与分支": "Scenes and Branches",
+  "鉴赏": "Appreciation",
+  "游戏控制": "Game Control",
+  "执行到此句": "Execute to This Statement",
+  "打开效果编辑器": "Open Effect Editor",
+  "效果编辑器": "Effect Editor",
+  "效果选项": "Effect Options",
+  "一直显示功能区": "Always Show Toolbar",
+  "自动隐藏功能区": "Auto-hide Toolbar",
+  "源代码": "Source Code",
+  "主页": "WebGAL Home",
+  "实时预览": "Live Preview",
+  "实时预览关闭": "Live Preview Off",
+  "实时预览打开": "Live Preview On",
+  "添加语句": "Add Statement",
+  "效果提示": "Tip: Effects only take effect when switching to a different background or after closing and re-adding the previous background. If you want to set effects for an existing background, please use a separate set effect command.",
+  "脚本编辑器": "Script Editor",
+  "图形编辑器": "Graphical Editor",
+  "行脚本": "Line of Scripts, ",
+  "个字": " Words",
+  "默认值0":"Default Value is 0",
+  "默认值1":"Default Value is 1",
+  "持续时间（单位为毫秒）":"Duration (milliseconds)"
 };

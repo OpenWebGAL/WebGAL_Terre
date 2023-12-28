@@ -5,6 +5,7 @@ import {RootState} from "@/store/origineStore";
 import {setEditMode} from "@/store/statusReducer";
 import {useEffect, useState} from "react";
 import {eventBus} from "@/utils/eventBus";
+import {useTranslation} from "react-i18next";
 
 export default function EditorToolbar() {
   const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode);
@@ -46,18 +47,20 @@ export default function EditorToolbar() {
     };
   }, []);
 
+  const {t}= useTranslation();
+
   return <div className={s.toolbar}>
     <div className={s.toolbar_button}>
       <DataSheet theme="outline" size="20" fill="#333" strokeWidth={3}/>
-      {lineNumString} 行脚本，{textNumString} 个字
+      {lineNumString} {t("行脚本")}{textNumString} {t("个字")}
     </div>
     <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode ? s.toolbar_button_active : '')} style={{marginLeft: 'auto'}}>
       <FileCodeOne theme="outline" size="20" fill={isCodeMode?'#005CAF' :"#333"} strokeWidth={3}/>
-      脚本编辑器
+      {t("脚本编辑器")}
     </div>
     <div onClick={handleSetGraphMode} className={s.toolbar_button + ' ' + (!isCodeMode ? s.toolbar_button_active : '')}>
       <ListView theme="outline" size="20" fill={isCodeMode?"#333":'#005CAF'} strokeWidth={3}/>
-      图形编辑器
+      {t("图形编辑器")}
     </div>
   </div>;
 }
