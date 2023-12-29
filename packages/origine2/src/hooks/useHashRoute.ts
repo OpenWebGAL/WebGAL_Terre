@@ -37,7 +37,7 @@ export function useHashRoute() {
     const result = decodeHash();
     if (result.editingGameName !== '') {
       dispatch(setDashboardShow(false));
-      dispatch(setEditingGame(result.editingGameName));
+      dispatch(setEditingGame(decodeURIComponent(result.editingGameName)));
       if (result.currentTag !== '') {
         const currentTagJsonStr = decodeURIComponent(result.currentTag);
         let tagObj: null | ITag = null;
