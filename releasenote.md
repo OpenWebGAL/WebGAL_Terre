@@ -4,23 +4,15 @@
 
 #### 新功能
 
-添加了获取用户输入的功能
+新编辑器 UI
 
-添加了为对话注音的功能
+允许设置代码编辑器换行
 
-添加了变量插值的功能
-
-编辑器可以记住当前正在编辑的场景，刷新后打开
-
-优化了游戏列表界面的 UI
-
-切换正在编辑的场景或图形编辑模式与代码编辑模式时，可以记住正在编辑的行数，并跳转
+每一条语句都添加有“执行到本句”按钮，可以快速跳转到指定语句
 
 #### 修复
 
-立绘和背景变换效果序列化结果过长的问题
-
-其他已知问题
+补全缺失的翻译
 
 <!-- English Translation -->
 ## Release Notes
@@ -29,23 +21,15 @@
 
 #### New Features
 
-Added the ability to capture user input
+New editor UI
 
-Added the feature to annotate dialogues
+Allow to set word wrap for code editor
 
-Added the functionality for variable interpolation
+Add "Execute to this line" button for each statement, can quickly jump to the specified statement
 
-The editor can remember the scene currently being edited and open it after refreshing
+#### Bug Fixes
 
-Optimized the UI of the game list interface
-
-When switching the scene being edited or between graphic editing mode and code editing mode, it can remember the line number being edited and jump to it
-
-#### Fixes
-
-The issue with the serialization result of character and background transition effects being too long
-
-Other known issues
+Complete the missing translation
 
 
 
@@ -56,23 +40,15 @@ Other known issues
 
 #### 新機能
 
-ユーザー入力を取得する機能を追加
+新しいエディター UI
 
-ダイアログに注釈を加える機能を追加
+コードエディターの改行を設定可能に
 
-変数のインターポレーション機能を追加
-
-エディターが編集中のシーンを記憶し、更新後に開く
-
-ゲームリストインターフェイスのUIを最適化
-
-編集中のシーンの切り替え、またはグラフィック編集モードとコード編集モード間で、編集中の行番号を記憶し、ジャンプする
+各文に「この文まで実行」ボタンを追加し、指定した文まで素早くジャンプ可能に
 
 #### 修正
 
-キャラクターと背景の遷移効果のシリアライゼーション結果が長すぎる問題
-
-その他の既知の問題
+翻訳の抜け漏れを修正
 
 
 <!-- French Translation -->
@@ -82,20 +58,12 @@ Other known issues
 
 #### Nouvelles fonctionnalités
 
-Ajout de la capacité de capturer l'entrée de l'utilisateur
+Nouvelle interface utilisateur de l'éditeur
 
-Ajout de la fonctionnalité pour annoter les dialogues
+Autorise la définition des retours à la ligne dans l'éditeur de code
 
-Ajout de la fonctionnalité d'interpolation de variables
-
-L'éditeur peut se souvenir de la scène en cours d'édition et l'ouvrir après actualisation
-
-Optimisation de l'interface UI de la liste des jeux
-
-Lors du changement de la scène en cours d'édition ou entre le mode d'édition graphique et le mode d'édition de code, il peut se souvenir du numéro de ligne en cours d'édition et y sauter
+Chaque ligne de commande est accompagnée d'un bouton « Exécuter jusqu'à cette ligne », permettant de passer rapidement à la ligne de commande spécifiée
 
 #### Corrections
 
-Le problème de la longueur excessive du résultat de sérialisation des effets de transition de personnages et d'arrière-plan
-
-Autres problèmes connus
+Traduction manquante complétée
