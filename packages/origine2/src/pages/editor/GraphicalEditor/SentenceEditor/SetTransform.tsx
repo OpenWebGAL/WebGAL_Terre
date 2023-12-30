@@ -17,6 +17,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
   const duration = useValue((durationFromArgs ?? 0) as number);
+  const isShowEffectEditor = useValue(false);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const isPresetTarget = ["bg-main", "fig-left", "fig-center", "fig-right"].includes(target.value);
@@ -27,7 +28,6 @@ export default function SetTransform(props: ISentenceEditorProps) {
     props.onSubmit(str);
   };
 
-  const isShowEffectEditor = useValue(false);
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
