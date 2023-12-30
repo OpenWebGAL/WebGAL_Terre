@@ -94,11 +94,11 @@ export function EffectEditor(props:{
       }} onBlur={submit}/>
     </CommonOptions>
     <CommonOptions key={2} title={t('scale.title')}>
-      {t('scale.x')}<TextField value={scaleX.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
+      {t('scale.x')}<TextField value={scaleX.value} placeholder={t("$默认值1")} onChange={(_, newValue) => {
         scaleX.set(newValue);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('scale.y')}<TextField value={scaleY.value} placeholder={t("$默认值0")} onChange={(_, newValue) => {
+      {t('scale.y')}<TextField value={scaleY.value} placeholder={t("$默认值1")} onChange={(_, newValue) => {
         scaleY.set(newValue);
       }} onBlur={submit}/>
     </CommonOptions>
