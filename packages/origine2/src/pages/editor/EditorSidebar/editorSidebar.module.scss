@@ -26,6 +26,9 @@
   display: flex;
   flex-flow: column;
   flex-shrink: 0;
+  position: relative;
+  width: calc(var(--sidebar-width) - 8px);
+  height: calc(calc(var(--sidebar-width) - 8px) / 16 * 9);
 }
 
 .previewWindow {
@@ -33,7 +36,6 @@
   flex-shrink: 0;
   width: 100%;
   box-sizing: border-box;
-  aspect-ratio: 16 / 9;
   //margin: 4px 0 4px 0;
   border-radius: 4px;
   border: var(--border-md);
@@ -46,8 +48,8 @@
 .gamePreviewButons {
   display: none;
   position: absolute;
-  left: calc(var(--sidebar-width) - 4px);
-  top: 4px;
+  left: calc(var(--sidebar-width) - 8px);
+  top: 0px;
   background: #FFF;
   border-radius: 0 4px 4px 0;
   border: solid 1px #DDD;
