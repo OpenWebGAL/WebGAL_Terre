@@ -14,6 +14,7 @@ export interface IChooseFile {
   onChange: (choosedFileDescription: IFileDescription | null) => void;
   // 拓展名，要加.
   extName: string[];
+  ignoreFiles?: string[];
 }
 
 export interface IFileDescription {
@@ -36,7 +37,8 @@ export default function ChooseFile(props: IChooseFile) {
      * 更新当前目录内的文件
      */
     getFileList(gameName, currentDirName, props.extName).then(result => {
-      currentDirFiles.set(result);
+      const filteredFileList = result.filter(file => !props.ignoreFiles?.includes(file.name));
+      currentDirFiles.set(filteredFileList);
     });
   };
 

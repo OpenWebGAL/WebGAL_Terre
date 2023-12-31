@@ -3,9 +3,11 @@ import {origineStore} from "@/store/origineStore";
 import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
 
 export class WsUtil {
-  public static sendSyncCommand(sceneName: string, lineNumber: number, lineCommandString: string) {
+  // eslint-disable-next-line max-params
+  public static sendSyncCommand(sceneName: string, lineNumber: number, lineCommandString: string, force?: boolean) {
 
-    if (!origineStore.getState().status.editor.isEnableLivePreview) {
+    const isForce = force ?? false;
+    if (!origineStore.getState().userData.isEnableLivePreview && !force) {
       return;
     }
 
