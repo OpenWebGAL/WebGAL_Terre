@@ -5,16 +5,15 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import {useValue} from "../../../../hooks/useValue";
 import {getArgByKey} from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import {useEffect} from "react";
-import {PrimaryButton, Dropdown, TextField} from "@fluentui/react";
+import {useEffect, useState} from "react";
+import {ActionButton, DefaultButton, Dropdown, Panel, PanelType, PrimaryButton, TextField} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
-import {useState} from "react";
-import {api} from "@/api";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import {RootState} from "@/store/origineStore";
+import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
   const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
@@ -26,7 +25,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
-  const isShowEffectEditor = useValue(!!(json.value||duration.value));
+  const isShowEffectEditor = useValue(false);
   const mouthOpen = useValue(getArgByKey(props.sentence, "mouthOpen").toString() ?? "");
   const mouthHalfOpen = useValue(getArgByKey(props.sentence, "mouthHalfOpen").toString() ?? "");
   const mouthClose = useValue(getArgByKey(props.sentence, "mouthClose").toString() ?? "");
@@ -47,13 +46,26 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       axios.get(`/games/${gameName}/game/figure/${figureFile.value}`).then(resp => {
         const data = resp.data;
 
-        // 处理 motions
-        const motions = Object.keys(data.motions);
-        setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+        if(data.motions){
+          // 处理 motions
+          const motions = Object.keys(data.motions);
+          setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+        }
 
         // 处理 expressions
-        if(data.expressions){
+        if (data.expressions) {
           const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
+          setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+        }
+
+        // 处理 v3 版本的 model
+        if(data['FileReferences']['Motions']){
+          const motions = Object.keys(data['FileReferences']['Motions']);
+          setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+        }
+
+        if(data['FileReferences']['Expressions']){
+          const expressions: string[] = data['FileReferences']['Expressions'].map((exp: { Name: string }) => exp.Name);
           setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
         }
 
@@ -92,7 +104,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = id.value !== "" ? ` -id=${id.value}` : "";
     const durationStr = duration.value === "" ? '' : ` -duration=${duration.value}`;
-    const transformStr = json.value === ""||json.value === "{}" ? '' : ` -transform=${json.value}`;
+    const transformStr = json.value === "" || json.value === "{}" ? '' : ` -transform=${json.value}`;
     const animationStr = animationFlag.value !== "" ? ` -animationFlag=${animationFlag.value}` : "";
     const mouthOpenFile = mouthOpen.value !== "" ? ` -mouthOpen=${mouthOpen.value}` : "";
     const mouthHalfOpenFile = mouthHalfOpen.value !== "" ? ` -mouthHalfOpen=${mouthHalfOpen.value}` : "";
@@ -195,22 +207,27 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         />
       </CommonOptions>
       <CommonOptions key="23" title={t("options.displayEffect.title")}>
-        <TerreToggle title="" onChange={(newValue) => {
-          isShowEffectEditor.set(newValue);
-        }} onText={t("options.displayEffect.on")} offText={t("options.displayEffect.off")}
-        isChecked={isShowEffectEditor.value}/>
+        <DefaultButton onClick={() => {
+          isShowEffectEditor.value = true;
+        }}>{t('$打开效果编辑器')}</DefaultButton>
       </CommonOptions>
-      {isShowEffectEditor.value &&
+      <TerrePanel
+        title={t("$效果编辑器")}
+        isOpen={isShowEffectEditor.value}
+        onDismiss={() => {
+          isShowEffectEditor.value = false;
+        }}
+      >
         <div>
           <CommonTips
-            text="提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令"/>
+            text={t("$效果提示")}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();
           }}/>
-          <CommonOptions key="10" title="持续时间（单位为毫秒）">
+          <CommonOptions key="10" title={t("$持续时间（单位为毫秒）")}>
             <div>
-              <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+              <TextField placeholder={t("$持续时间（单位为毫秒）")} value={duration.value.toString()} onChange={(_, newValue) => {
                 const newDuration = Number(newValue);
                 if (isNaN(newDuration) || newValue === '')
                   duration.set("");
@@ -221,82 +238,81 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             </div>
           </CommonOptions>
         </div>
-      }
-      <div className={styles.editItem}>
-        <PrimaryButton onClick={toggleAccordion} styles={optionButtonStyles}>
-          {t('options.animationType.title')}
-        </PrimaryButton>
-        {isAccordionOpen && (
-          <div className={styles.editItem} style={{display: 'flex'}}>
-            <CommonOptions title={t('options.animationType.flag')} key="5">
-              <Dropdown
-                selectedKey={animationFlag.value}
-                options={[
-                  {key: "", text: 'Off'},
-                  {key: "on", text: 'ON'},
-                ]}
-                onChange={(ev, newValue: any) => {
-                  animationFlag.set(newValue?.key?.toString() ?? "");
-                  submit();
-                }}
-              />
-            </CommonOptions>
-            {animationFlag.value === "on" &&
-              <CommonOptions key="6" title={t("options.animationType.lipSync.mouthOpen")}>
-                <>
-                  {mouthOpen.value + "\u00a0\u00a0"}
-                  <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                    mouthOpen.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extName={[".png", ".jpg", ".webp"]}/>
-                </>
-              </CommonOptions>}
-            {animationFlag.value === "on" &&
-              <CommonOptions key="7" title={t("options.animationType.lipSync.mouthHalfOpen")}>
-                <>
-                  {mouthHalfOpen.value + "\u00a0\u00a0"}
-                  <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                    mouthHalfOpen.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extName={[".png", ".jpg", ".webp"]}/>
-                </>
-              </CommonOptions>}
-            {animationFlag.value === "on" &&
-              <CommonOptions key="8" title={t("options.animationType.lipSync.mouthClose")}>
-                <>
-                  {mouthClose.value + "\u00a0\u00a0"}
-                  <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                    mouthClose.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extName={[".png", ".jpg", ".webp"]}/>
-                </>
-              </CommonOptions>}
-            {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '8px',
+          width: animationFlag.value !== "on" ? 'auto' : '100%'
+        }}>
+          <CommonOptions title={t('options.animationType.flag')} key="5">
+            <Dropdown
+              selectedKey={animationFlag.value}
+              options={[
+                {key: "", text: 'Off'},
+                {key: "on", text: 'ON'},
+              ]}
+              onChange={(ev, newValue: any) => {
+                animationFlag.set(newValue?.key?.toString() ?? "");
+                submit();
+              }}
+            />
+          </CommonOptions>
+          {animationFlag.value === "on" &&
+            <CommonOptions key="6" title={t("options.animationType.lipSync.mouthOpen")}>
               <>
-                {eyesOpen.value + "\u00a0\u00a0"}
+                {mouthOpen.value + "\u00a0\u00a0"}
                 <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                  eyesOpen.set(fileDesc?.name ?? "");
+                  mouthOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
                 extName={[".png", ".jpg", ".webp"]}/>
               </>
             </CommonOptions>}
-            {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
+          {animationFlag.value === "on" &&
+            <CommonOptions key="7" title={t("options.animationType.lipSync.mouthHalfOpen")}>
               <>
-                {eyesClose.value + "\u00a0\u00a0"}
+                {mouthHalfOpen.value + "\u00a0\u00a0"}
                 <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                  eyesClose.set(fileDesc?.name ?? "");
+                  mouthHalfOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
                 extName={[".png", ".jpg", ".webp"]}/>
               </>
             </CommonOptions>}
-          </div>
-        )}
-      </div>
+          {animationFlag.value === "on" &&
+            <CommonOptions key="8" title={t("options.animationType.lipSync.mouthClose")}>
+              <>
+                {mouthClose.value + "\u00a0\u00a0"}
+                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                  mouthClose.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extName={[".png", ".jpg", ".webp"]}/>
+              </>
+            </CommonOptions>}
+          {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
+            <>
+              {eyesOpen.value + "\u00a0\u00a0"}
+              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                eyesOpen.set(fileDesc?.name ?? "");
+                submit();
+              }}
+              extName={[".png", ".jpg", ".webp"]}/>
+            </>
+          </CommonOptions>}
+          {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
+            <>
+              {eyesClose.value + "\u00a0\u00a0"}
+              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                eyesClose.set(fileDesc?.name ?? "");
+                submit();
+              }}
+              extName={[".png", ".jpg", ".webp"]}/>
+            </>
+          </CommonOptions>}
+        </div>
+      </TerrePanel>
+
     </div>
   </div>;
 }

@@ -28,7 +28,7 @@ export default function AddSentence(props: IAddSentenceProps) {
       props.onChoose(sentenceConfig.initialText());
       isShowCallout.set(false);
     }}>
-      <div style={{padding:'0 0 4px 0'}}>
+      <div style={{padding:'1px 0 0 0'}}>
         {sentenceConfig.icon}
       </div>
       <div className={stylesAs.buttonDesc}>

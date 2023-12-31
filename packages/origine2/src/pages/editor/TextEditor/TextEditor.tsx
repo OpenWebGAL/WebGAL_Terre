@@ -1,21 +1,22 @@
 import * as monaco from "monaco-editor";
-import Editor, { loader, Monaco } from "@monaco-editor/react";
-import { useEffect, useRef } from "react";
+import Editor, {loader, Monaco} from "@monaco-editor/react";
+import {useEffect, useRef} from "react";
 import styles from "./textEditor.module.scss";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/origineStore";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../store/origineStore";
 import axios from "axios";
-import { logger } from "../../../utils/logger";
+import {logger} from "../../../utils/logger";
 
 // 语法高亮相关的依赖
-import { loadWASM } from "onigasm"; // peer dependency of 'monaco-textmate'
-import { Registry } from "monaco-textmate"; // peer dependency
-import { wireTmGrammars } from "monaco-editor-textmate";
+import {loadWASM} from "onigasm"; // peer dependency of 'monaco-textmate'
+import {Registry} from "monaco-textmate"; // peer dependency
+import {wireTmGrammars} from "monaco-editor-textmate";
 // 语法高亮文件
 import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
 import {editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME} from "../../../runtime/WG_ORIGINE_RUNTIME";
-import { WsUtil } from "../../../utils/wsUtil";
+import {WsUtil} from "../../../utils/wsUtil";
+import {eventBus} from "@/utils/eventBus";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -29,14 +30,15 @@ export default function TextEditor(props: ITextEditorProps) {
   const tags = useSelector((state: RootState) => state.status.editor.tags);
   const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   // const currentText = useValue<string>("Loading Scene Data......");
-  const currentText = { value: "Loading Scene Data......" };
+  const currentText = {value: "Loading Scene Data......"};
   const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
+  const isAutoWarp = useSelector((state: RootState) => state.userData.isWarp);
 
 
   // 准备获取 Monaco
   // 建立 Ref
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
-  loader.config({ monaco });
+  loader.config({monaco});
 
   /**
    * 处理挂载事件
@@ -53,16 +55,20 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = editorValue.split("\n")[lineNumber - 1];
       // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
       const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
-      if(!isAfterMount){
-        editorLineHolder.recordSceneEdittingLine(props.targetPath,lineNumber);
+      if (!isAfterMount) {
+        editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
       }
       WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
     });
-    editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false } });
+    editor.updateOptions({unicodeHighlight: {ambiguousCharacters: false}, wordWrap: isAutoWarp ? 'on' : 'off'});
     liftOff(editor).then();
     isAfterMount = true;
     updateEditData();
   }
+
+  useEffect(() => {
+    editorRef?.current?.updateOptions?.({wordWrap: isAutoWarp ? 'on' : 'off'});
+  }, [isAutoWarp]);
 
   /**
    * handle monaco change
@@ -72,8 +78,8 @@ export default function TextEditor(props: ITextEditorProps) {
   function handleChange(value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) {
     logger.debug("编辑器提交更新");
     const lineNumber = ev.changes[0].range.startLineNumber;
-    if(!isAfterMount){
-      editorLineHolder.recordSceneEdittingLine(props.targetPath,lineNumber);
+    if (!isAfterMount) {
+      editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
     }
 
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
@@ -83,7 +89,8 @@ export default function TextEditor(props: ITextEditorProps) {
     const params = new URLSearchParams();
     params.append("gameName", gameName);
     params.append("sceneName", sceneName);
-    params.append("sceneData", JSON.stringify({ value: currentText.value }));
+    params.append("sceneData", JSON.stringify({value: currentText.value}));
+    eventBus.emit('update-scene', currentText.value);
     axios.post("/api/manageGame/editScene/", params).then((res) => {
       const targetValue = currentText.value.split("\n")[lineNumber - 1];
       WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
@@ -96,11 +103,12 @@ export default function TextEditor(props: ITextEditorProps) {
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
       currentText.value = data.toString();
+      eventBus.emit('update-scene', data.toString());
       editorRef.current?.getModel()?.setValue(currentText.value);
-      if(isAfterMount){
+      if (isAfterMount) {
         const targetLine = editorLineHolder.getSceneLine(props.targetPath);
-        editorRef?.current?.setPosition({ lineNumber: targetLine, column: 0 });
-        editorRef?.current?.revealLineInCenter(targetLine,0);
+        editorRef?.current?.setPosition({lineNumber: targetLine, column: 0});
+        editorRef?.current?.revealLineInCenter(targetLine, 0);
         isAfterMount = false;
       }
 
@@ -114,7 +122,7 @@ export default function TextEditor(props: ITextEditorProps) {
   //   };
   // });
 
-  return <div style={{ display: props.isHide ? "none" : "block" }} className={styles.textEditor_main}>
+  return <div style={{display: props.isHide ? "none" : "block"}} className={styles.textEditor_main}>
     <Editor height="100%" width="100%" onMount={handleEditorDidMount} onChange={handleChange} defaultLanguage="webgal"
       language="webgal"
       defaultValue={currentText.value}
@@ -146,7 +154,7 @@ async function liftOff(editor: monaco.editor.IStandaloneCodeEditor) {
   // monaco's built-in themes aren't powereful enough to handle TM tokens
   // https://github.com/Nishkalkashyap/monaco-vscode-textmate-theme-converter#monaco-vscode-textmate-theme-converter
   monaco.editor.defineTheme("webgal-theme", theme as any);
-  editor.updateOptions({ theme: "webgal-theme" });
+  editor.updateOptions({theme: "webgal-theme"});
 
   await wireTmGrammars(monaco, registry, grammars, editor);
 }

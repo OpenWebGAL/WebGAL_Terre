@@ -8,7 +8,8 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
-import {TextField} from "@fluentui/react";
+import {DefaultButton, PrimaryButton, TextField} from "@fluentui/react";
+import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.changeBg.');
@@ -71,20 +72,21 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         />
       </CommonOptions>}
       <CommonOptions key="23" title={t("options.displayEffect.title")}>
-        <TerreToggle title="" onChange={(newValue) => {
-          isShowEffectEditor.set(newValue);
-        }} onText={t("options.displayEffect.on")} offText={t("options.displayEffect.off")} isChecked={isShowEffectEditor.value} />
+        <DefaultButton onClick={() => {
+          isShowEffectEditor.value = true;
+        }}>{t('$打开效果编辑器')}</DefaultButton>
       </CommonOptions>
-      {isShowEffectEditor.value &&
+      <TerrePanel onDismiss={()=>isShowEffectEditor.set(false)} isOpen={isShowEffectEditor.value} title={t("$效果编辑器")}>
         <div>
-          <CommonTips text="提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"/>
-          <EffectEditor json={json.value.toString()} onChange={(newJson)=>{
-            json.set(newJson );
+          <CommonTips
+            text={t("$效果提示")}/>
+          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
+            json.set(newJson);
             submit();
           }}/>
-          <CommonOptions key="10" title="持续时间（单位为毫秒）">
+          <CommonOptions key="10" title={t("$持续时间（单位为毫秒）")}>
             <div>
-              <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+              <TextField placeholder={t("$持续时间（单位为毫秒）")} value={duration.value.toString()} onChange={(_, newValue) => {
                 const newDuration = Number(newValue);
                 if (isNaN(newDuration) || newValue === '')
                   duration.set("");
@@ -95,7 +97,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
             </div>
           </CommonOptions>
         </div>
-      }
+      </TerrePanel>
     </div>
   </div>;
 }
