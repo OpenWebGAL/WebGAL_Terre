@@ -23,7 +23,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   };
   return <div className={styles.sentenceEditorContent}>
     <CommonTips text={t('tips.set')} />
-    <CommonTips text={t('tips.select')} />
+    {/* <CommonTips text={t('tips.select')} /> */}
     <div className={styles.editItem}>
       <CommonOptions key="1" title={t('file.title')}>
         <>
@@ -31,7 +31,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           <ChooseFile sourceBase="animation" onChange={(file) => {
             fileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} />
+          }} extName={[".json"]} ignoreFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t('preparedTarget.title')}>

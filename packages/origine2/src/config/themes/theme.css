@@ -28,6 +28,8 @@
     --terre-primary: rgba(0, 92, 175, 1);
     --terre-primary-5pct: rgba(0, 92, 175, 0.05);
     --terre-primary-10pct: rgba(0, 92, 175, 0.1);
+    --border-md: 1px solid var(--black-10pct);
+    --box-shadow-md: 0 1px 2px var(--black-10pct);
     --addSentence-sentenceTypeButton-background: var(--black-5pct);
     --addSentence-sentenceTypeButton-hover-background: var(--black-0pct);
     --app-header-background: var(--gray-dark);

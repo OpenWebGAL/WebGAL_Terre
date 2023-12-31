@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { getFileList, IFileDescription } from "../../../ChooseFile/ChooseFile";
 import { dirnameToDisplayNameMap, dirNameToExtNameMap } from "../../../ChooseFile/chooseFileConfig";
-import { DeleteOne, Editor, FolderPlus, LeftSmall, Upload } from "@icon-park/react";
+import { DeleteOne, Editor, FolderOpen, FolderPlus, LeftSmall, Upload } from "@icon-park/react";
 import { useId } from "@fluentui/react-hooks";
 import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
@@ -16,13 +16,11 @@ import useTrans from "@/hooks/useTrans";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import { getDirIcon, getFileIcon } from "@/utils/getFileIcon";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
+import { api } from "@/api";
+import { RequestParams } from "@/api/Api";
 
 export default function Assets() {
   const t = useTrans("editor.sideBar.assets.");
-
-  function open_assets() {
-    axios.get(`/api/manageGame/openGameAssetsDict/${origineStore.getState().status.editor.currentEditingGame}`).then();
-  }
 
   /**
    * 上传文件
@@ -34,14 +32,18 @@ export default function Assets() {
   /**
    * 当前目录，以及包含文件
    */
-  const currentChildDir = useValue<string[]>([]);
+  const currentChildDir = useValue<string[]>([],true,'current-child-dir-hold');
   const currentDirName = currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
   const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
-  const currentDirExtName = useValue<string[]>(["unset"]);
+  const currentDirExtName = useValue<string[]>(["unset"],true,'current-dir-ext-name');
   const currentDirExtNameKey = currentDirExtName.value.toString();
   const dispatch = useDispatch();
   const tags = useSelector((state: RootState) => state.status.editor.tags);
+
+  function open_assets() {
+    api.manageGameControllerOpenGameAssetsDict( gameName, { subFolder: currentDirName }).then();
+  }
 
   /**
    * 新建文件夹
@@ -112,7 +114,6 @@ export default function Assets() {
         onClick={() => {
           currentChildDir.set([...currentChildDir.value, fileDesc.name]);
           const targetDirExtName = dirNameToExtNameMap.get(fileDesc.name) ?? [];
-          console.log(123);
           currentDirExtName.set(targetDirExtName);
         }} />;
     });
@@ -156,13 +157,16 @@ export default function Assets() {
 
   return (
     <div style={{ height: "100%", overflow: "auto", display: "flex", flexFlow: "column" }}>
-      <TagTitleWrapper title={t("title")} extra={<div className="tag_title_button" onClick={open_assets}>
+      {/* <TagTitleWrapper title={t("title")} extra={<div className="tag_title_button" onClick={open_assets}>
         {t("buttons.openFolder")}
-      </div>} />
+      </div>} /> */}
       <div className={assetsStyles.controlHead}>
-        <div className={assetsStyles.controlCommonButton} onClick={goBack}>
-          <LeftSmall theme="outline" strokeWidth={3} size="18" className={assetsStyles.iconParkIcon}/>
-        </div>
+        {
+          currentDirName &&
+          <div className={assetsStyles.controlCommonButton} onClick={goBack}>
+            <LeftSmall theme="outline" strokeWidth={3} size="18" className={assetsStyles.iconParkIcon} />
+          </div>
+        }
         <div className={assetsStyles.controlDirnameDisplay}>
           {currentDirName === "" ? "/" : currentDirName}
         </div>
@@ -170,11 +174,11 @@ export default function Assets() {
           <>
             <div id={buttonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowUploadCallout.set(!isShowUploadCallout.value)}>
-              <Upload theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon}/>
+              <Upload theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
             </div>
             <div id={mkdirButtonId} className={assetsStyles.controlCommonButton}
               onClick={() => isShowMkdirCallout.set(!isShowMkdirCallout.value)}>
-              <FolderPlus theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon}/>
+              <FolderPlus theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
             </div>
           </>
         }
@@ -221,9 +225,13 @@ export default function Assets() {
             </div>
           </Callout>
         )}
+        <div className={assetsStyles.controlCommonButton}
+          onClick={() => open_assets()}>
+          <FolderOpen theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
+        </div>
       </div>
       <div className={assetsStyles.fileList}>
-        {currentDirName !== "" && <div style={{ display: "flex", alignItems: "center" }}>
+        {currentDirName !== "" && <div style={{ display: "flex", alignItems: "center", padding: "0 8px" }}>
           {t("supportFileTypes")} {currentDirExtName.value.map(e => {
             return <span key={e} className={assetsStyles.extNameShow}>{e}</span>;
           })}

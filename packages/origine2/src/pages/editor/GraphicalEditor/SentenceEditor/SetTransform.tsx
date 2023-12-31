@@ -4,9 +4,10 @@ import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
 import {getArgByKey} from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
 import {useValue} from "@/hooks/useValue";
-import {Dropdown, TextField} from "@fluentui/react";
+import {DefaultButton, Dropdown, PrimaryButton, TextField} from "@fluentui/react";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
+import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
@@ -16,6 +17,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
   const duration = useValue((durationFromArgs ?? 0) as number);
+  const isShowEffectEditor = useValue(false);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const isPresetTarget = ["bg-main", "fig-left", "fig-center", "fig-right"].includes(target.value);
@@ -26,12 +28,20 @@ export default function SetTransform(props: ISentenceEditorProps) {
     props.onSubmit(str);
   };
 
+
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <EffectEditor json={transform.value} onChange={(newJson)=>{
-        transform.set(newJson);
-        submit();
-      }}/>
+      <CommonOptions title="效果编辑">
+        <DefaultButton onClick={() => {
+          isShowEffectEditor.value = true;
+        }}>{tTarget('$打开效果编辑器')}</DefaultButton>
+        <TerrePanel onDismiss={()=>isShowEffectEditor.set(false)} isOpen={isShowEffectEditor.value} title={tTarget("$效果编辑器")}>
+          <EffectEditor json={transform.value} onChange={(newJson)=>{
+            transform.set(newJson);
+            submit();
+          }}/>
+        </TerrePanel>
+      </CommonOptions>
       <CommonOptions key="10" title={tTarget('duration.title')}>
         <div>
           <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {

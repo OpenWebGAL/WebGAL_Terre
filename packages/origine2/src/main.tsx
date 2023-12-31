@@ -10,7 +10,6 @@ import { jp } from "./translations/jp";
 import 'primereact/resources/themes/fluent-light/theme.css';
 import "primereact/resources/primereact.min.css";
 import "./primereact.scss";
-import './common.scss';
 
 function initTranslation() {
   i18n.use(initReactI18next) // passes i18n down to react-i18next
