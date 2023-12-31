@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre",
-  "version": "4.4.7",
+  "version": "4.4.8",
   "private": true,
   "scripts": {
     "dev": "concurrently \"yarn dev:terre\" \"yarn dev:origine\" \"yarn dev:start-dev-server\"",
