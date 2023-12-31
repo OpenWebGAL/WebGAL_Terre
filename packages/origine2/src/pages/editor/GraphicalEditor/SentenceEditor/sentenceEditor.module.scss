@@ -27,13 +27,13 @@
   padding: 6px 6px 6px 6px;
   border-radius: 4px;
   font-size: 90%;
-  width: 35%;
+  width: 50%;
 }
 
 .sayArea {
   background: var(--sentenceEditor-sayArea-background);
   border: 1px solid var(--sentenceEditor-sayArea-border);
-  width: 50%;
+  width: 75%;
   font-family: inherit;
   box-shadow: none;
   outline: none;
@@ -41,7 +41,7 @@
   padding: 6px 6px 6px 6px;
   border-radius: 4px;
   font-size: 90%;
-  height: 2.5em;
+  height: 5em;
   color: var(--sentenceEditor-sayArea);
 }
 

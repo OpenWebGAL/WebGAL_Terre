@@ -1,0 +1,33 @@
+.tab{
+  border: var(--border-md);
+  border-radius: 4px;
+  background: #FFF;
+  min-height: 60px;
+  overflow: auto;
+  display: flex;
+  margin-bottom: 4px;
+  &::-webkit-scrollbar {
+    //width: 3px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-background);
+    background-clip: content-box;
+    border-radius: 4px;
+    border: 2px solid transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-hover-background);
+  }
+
+  & {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--tagManager-tagsContainer-Firefox-scrollbar-first) var(--tagManager-tagsContainer-Firefox-scrollbar-second); /* Firefox */
+  }
+}

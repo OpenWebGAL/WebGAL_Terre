@@ -1,9 +1,9 @@
-import styles from "../sidebarTags.module.scss";
+import styles from "../topbarTabs.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../../store/origineStore";
-import {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {cloneDeep} from "lodash";
 import {Dropdown, IconButton, ITextField, TextField} from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
@@ -13,7 +13,10 @@ import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
 import {Image} from "@fluentui/react";
-import {textboxThemes} from "@/pages/editor/EditorSidebar/SidebarTags/GameConfig/constants";
+import {textboxThemes} from "./constants";
+import {eventBus} from "@/utils/eventBus";
+import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
+import {Add, Plus, Write} from "@icon-park/react";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -85,62 +88,53 @@ export default function GameConfig() {
   }
 
   return (
-    <div>
-      <TagTitleWrapper title={t("title")}/>
-      <div style={{paddingLeft: "10px"}}>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.name")}</div>
-          <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
-            onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.id")}</div>
-          <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
-            onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.description")}</div>
-          <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
-            onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.packageName")}</div>
-          <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
-            onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.textboxTheme")}</div>
-          <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')}
-            onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} selectItems={textboxThemes}/>
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.bg")}</div>
-          <GameConfigEditorWithFileChoose
-            sourceBase="background"
-            extNameList={[".jpg", ".png", ".webp"]}
-            key="titleBackground"
-            value={getConfigContentAsString('Title_img')}
-            onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.bgm")}</div>
-          <GameConfigEditorWithFileChoose
-            extNameList={[".mp3", ".ogg", ".wav"]}
-            sourceBase="bgm" key="titleBgm"
-            value={getConfigContentAsString('Title_bgm')}
-            onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
-        </div>
-        <div className={styles.sidebar_gameconfig_container}>
-          <div className={styles.sidebar_gameconfig_title}>{t("options.logoImage")}</div>
-          <GameConfigEditorWithImageFileChoose
-            sourceBase="background"
-            extNameList={[".jpg", ".png", ".webp"]}
-            key="logoImage"
-            value={getConfigContentAsStringArray('Game_Logo')}
-            onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
-        </div>
-      </div>
-    </div>
+    <>
+      <TabItem title={t("options.name")}>
+        <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
+          onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>
+      </TabItem>
+      <TabItem title={t("options.id")}>
+        <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>
+      </TabItem>
+      <TabItem title={t("options.description")}>
+        <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
+          onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>
+      </TabItem>
+      <TabItem title={t("options.packageName")}>
+        <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
+      </TabItem>
+      <TabItem title={t("options.textboxTheme")}>
+        <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)}
+          selectItems={textboxThemes}/>
+      </TabItem>
+      <TabItem title={t("options.bg")}>
+        <GameConfigEditorWithFileChoose
+          sourceBase="background"
+          extNameList={[".jpg", ".png", ".webp"]}
+          key="titleBackground"
+          value={getConfigContentAsString('Title_img')}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
+      </TabItem>
+      <TabItem title={t("options.bgm")}>
+        <div className={styles.sidebar_gameconfig_title}>{}</div>
+        <GameConfigEditorWithFileChoose
+          extNameList={[".mp3", ".ogg", ".wav"]}
+          sourceBase="bgm" key="titleBgm"
+          value={getConfigContentAsString('Title_bgm')}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
+      </TabItem>
+      <TabItem title={t("options.logoImage")}>
+        <GameConfigEditorWithImageFileChoose
+          sourceBase="background"
+          extNameList={[".jpg", ".png", ".webp"]}
+          key="logoImage"
+          value={getConfigContentAsStringArray('Game_Logo')}
+          onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
+      </TabItem>
+    </>
   );
 }
 
@@ -161,12 +155,12 @@ function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
 
-  return <div>
+  return <div className={styles.textEditArea} style={{maxWidth: 200}}>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+    {!showEditBox.value && <span className={styles.editButton} onClick={() => {
       showEditBox.set(true);
       setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t("revise")}</div>}
+    }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
     {showEditBox.value && <TextField componentRef={inputBoxRef} defaultValue={props.value}
       onBlur={() => {
         props.onChange(inputBoxRef!.current!.value);
@@ -176,10 +170,13 @@ function GameConfigEditor(props: IGameConfigEditor) {
   </div>;
 }
 
-function GameConfigEditorWithSelector(props:IGameConfigEditor & {selectItems:{key:string,text:string}[],width?:number}){
-  const {width = 200} = props;
-  return <Dropdown dropdownWidth={width} style={{width}} onChange={(event,item)=>{
-    const key = item?.key??'';
+function GameConfigEditorWithSelector(props: IGameConfigEditor & {
+  selectItems: { key: string, text: string }[],
+  width?: number
+}) {
+  const {width = 120} = props;
+  return <Dropdown dropdownWidth={width} style={{width}} onChange={(event, item) => {
+    const key = item?.key ?? '';
     props.onChange(key);
   }} selectedKey={props.value} options={props.selectItems}/>;
 }
@@ -191,12 +188,12 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
   const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<ITextField>(null);
-  return <div>
+  return <div className={styles.textEditArea}>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+    {!showEditBox.value && <span className={styles.editButton} onClick={() => {
       showEditBox.set(true);
       setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}>{t("revise")}</div>}
+    }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
     {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
       onChange={(file) => {
         if (file) {
@@ -233,29 +230,33 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   };
 
   return (
-    <div>
+    <div style={{display: 'flex', alignItems: 'center'}}>
       {/* {props.value.join(' | ')} */}
-      <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+      <div style={{display: 'flex'}}>
         {images.map((imageName, index) => (
           <div key={index} className={styles.imageChooseItem}>
             <img className={styles.imageChooseItemImage} src={`games/${gameName}/game/${props.sourceBase}/${imageName}`}
               alt={`logo-${index}`}/>
-            <div className={styles.imageChooseItemText}>{imageName}</div>
+            {/* <div className={styles.imageChooseItemText}>{imageName}</div> */}
             <IconButton
               iconProps={{iconName: 'Cancel'}}
               onClick={() => removeImage(imageName)}
             />
           </div>
         ))}</div>
-      {!showEditBox.value && <div className={styles.editButton} onClick={() => {
+      {!showEditBox.value && <div onClick={() => {
         showEditBox.set(true);
+        eventBus.emit('scrollTopbarToEnd');
         setTimeout(() => inputBoxRef.current?.focus(), 100);
-      }}>{t("revise")}</div>}
+      }}
+      className={styles.addIcon}
+      ><Plus theme="outline" size="20" fill="#005CAF" strokeWidth={3}/></div>}
       {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
         onChange={(file) => {
           if (file) {
             addImage(file.name);
             showEditBox.set(false);
+            eventBus.emit('scrollTopbarToEnd');
           } else {
             showEditBox.set(false);
           }

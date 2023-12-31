@@ -6,6 +6,7 @@ import ResourceDisplay, {ResourceType} from "../ResourceDisplay/ResourceDisplay"
 import {ITag} from "../../../store/statusReducer";
 import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
 import useTrans from "@/hooks/useTrans";
+import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
 
 export default function EditArea() {
   const t = useTrans('editor.mainArea.');
@@ -16,6 +17,7 @@ export default function EditArea() {
   // 生成每个 Tag 对应的编辑器主体
 
   const tag = tags.find(tag => tag.tagTarget === selectedTagTarget);
+  const isScene = tag?.tagType === "scene";
 
   const getTagPage = (tag: ITag) => {
     if (tag.tagType === "scene") {
@@ -38,10 +40,13 @@ export default function EditArea() {
 
   const tagPage = tag ? getTagPage(tag) : "";
 
-  return <div className={styles.editArea_main}>
-    {selectedTagTarget === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
-    {selectedTagTarget !== "" && tagPage}
-  </div>;
+  return<>
+    <div className={styles.editArea_main}>
+      {selectedTagTarget === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
+      {selectedTagTarget !== "" && tagPage}
+    </div>
+    {isScene &&<EditorToolbar/>}
+  </>;
 }
 
 const imageTypes = ["png", "jpg", "jpeg", "gif", "webp"];

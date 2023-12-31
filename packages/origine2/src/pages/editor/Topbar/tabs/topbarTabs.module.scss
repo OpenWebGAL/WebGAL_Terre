@@ -1,0 +1,137 @@
+.tab{
+  display: flex;
+  //overflow: auto;
+}
+
+.sidebar_tag_title {
+  font-size: 115%;
+  padding: 0.15em 0 0 0;
+  font-weight: bold;
+  color: var(--terre-primary);
+}
+
+.sidebar_tag_head {
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+}
+
+.sidebar_tag_head_button {
+  margin: 0 0 0 auto;
+}
+
+.sidebar_gameconfig_title {
+  color: #323130;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 8px;
+}
+
+.sidebar_gameconfig_container {
+  padding: 0.5em;
+  margin: 4px 0;
+  user-select: none;
+  display: flex;
+  flex-flow: column;
+}
+
+.tabItem {
+  padding:0;
+  margin: 4px 0 4px 0.5em;
+  user-select: none;
+  display: flex;
+  //flex-flow: column;
+  flex-shrink: 0;
+}
+
+.topbarTabItemContainer{
+  display: flex;
+}
+
+.divider{
+  height: 90%;
+  align-self: center;
+  border-right: 2px solid #e1e5e9;
+  margin-left: 0.5em;
+}
+
+.tabItem:last-child{
+  .divider{
+    display: none;
+  }
+}
+
+.textEditArea{
+  display: block;
+  //flex-flow: column;
+  //align-items: center;
+}
+
+.editButton {
+  //display: inline-block;
+  font-size: smaller;
+  box-sizing: border-box;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  //background: var(--sidebarTags-editButton-background);
+  color: var(--terre-primary);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 0 0 0.25em;
+}
+
+.editButton:hover{
+  background: var(--sidebarTags-editButton-background);
+}
+
+.addIcon{
+  padding: 5px 5px 4px 5px;
+  background: var(--terre-primary-10pct);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 10px 0 0;
+}
+
+.addIcon:hover{
+  background: rgba(0,92,175,0.15);
+}
+
+.open_assets {
+  cursor: pointer;
+  background: var(--sidebarTags-open-assets-background);
+  padding: 5px 10px 5px 10px;
+  box-sizing: border-box;
+  color: var(--sidebarTags-open-assets);
+  border-radius: 4px;
+  margin: 0 0 0 auto;
+}
+
+.imageChooseItem {
+  position: relative;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  margin: 0 5px 0 0;
+  align-items: center;
+  gap: 5px;
+  border-radius: 4px;
+}
+
+.imageChooseItem:hover {
+  background: var(--sidebarTags-imageChooseItem-hover-background);
+}
+
+.imageChooseItemImage {
+  width: 96px;
+  height: 54px;
+  object-fit: cover;
+}
+
+.imageChooseItemText {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 0;
+  flex: 1;
+}
