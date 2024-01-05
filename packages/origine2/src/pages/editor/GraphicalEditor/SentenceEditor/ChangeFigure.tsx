@@ -43,6 +43,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   useEffect(() => {
     if (figureFile.value.includes('json')) {
+      console.log('loading JSON file to get motion and expression');
       axios.get(`/games/${gameName}/game/figure/${figureFile.value}`).then(resp => {
         const data = resp.data;
 
@@ -71,7 +72,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
       });
     }
-  }, [figureFile]);
+  }, [figureFile.value]);
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
   };
