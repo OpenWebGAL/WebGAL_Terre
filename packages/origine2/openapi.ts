@@ -4,9 +4,15 @@
 
 import axios from 'axios';
 import {writeFileSync} from 'fs';
-import { exec } from 'child_process';
+import { exec } from 'child_process'
+import { env } from 'process';
 
-const SWAGGER_URL = 'http://localhost:3001/api-json';
+let WEBGAL_PORT = 3000; // default port
+if (env.WEBGAL_PORT) {
+  WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
+};
+
+const SWAGGER_URL = `http://localhost:${WEBGAL_PORT + 1}/api-json`;
 const SWAGGER_JSON_PATH = './src/config/swagger.json';
 const API_OUTPUT_PATH = './src/api';
 
