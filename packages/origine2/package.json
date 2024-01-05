@@ -4,7 +4,7 @@
   "version": "4.4.8",
   "license": "MPL-2.0",
   "scripts": {
-    "dev": "vite --port=3000 --host",
+    "dev": "vite --host",
     "build": "node version-sync.js && tsc && vite build --base=./",
     "build-lowram": "node version-sync.js && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",

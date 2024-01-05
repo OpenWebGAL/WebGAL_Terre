@@ -4,6 +4,12 @@ import * as process from 'process';
 import { _open } from './util/open';
 import { urlencoded, json } from 'express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { env } from 'process';
+
+let WEBGAL_PORT = 3000; // default port
+if (env.WEBGAL_PORT) {
+  WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,11 +22,11 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3001);
+  await app.listen(WEBGAL_PORT + 1);
 }
 
 bootstrap().then(() => {
   console.log(`WebGAL Terre 4.4.8 starting at ${process.cwd()}`);
   if ((process?.env?.NODE_ENV ?? '') !== 'development')
-    _open('http://localhost:3001');
+    _open(`http://localhost:${WEBGAL_PORT + 1}`);
 });
