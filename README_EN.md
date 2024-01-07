@@ -29,20 +29,8 @@ Even so, your sponsorship can give the developers the motivation to move forward
 [Sponsor this project](https://docs.openwebgal.com/sponsor/)
 
 
-# Sponsor
+# Sponsors
 
-## Gold Sponsors
-
-| <img src="https://avatars.githubusercontent.com/u/91712707?v=4" alt="T2"   width="150px" height="150px" /> | <img src="https://avatars.githubusercontent.com/u/36291011?v=4" alt="Alex Shan"   width="150px" height="150px" /> |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [T2-official(T2)](https://github.com/T2-official)            | [Alex Shan](https://github.com/Shan-mx)            |
-
-## Silver Sponsors
-| <img src="https://avatars.githubusercontent.com/u/103700780?v=4" alt="IdrilK"  width="150px" height="150px" /> |
-| ------------------------------------------------------------ |
-| [IdrilK](https://github.com/IdrilK)            |
-
-## Sponsors
-| <img src="https://avatars.githubusercontent.com/u/71590526?v=4" alt="Yuji Sakai"  width="150px" height="150px" /> | <img src="https://avatars.githubusercontent.com/u/49630998?v=4" alt="Iara"  width="150px" height="150px" /> |
-| ------------------------------------------------------------ |------------------------------------------------------------ |
-| [Yuji Sakai (generalfreed)](https://github.com/generalfreed) |[Iara (labiker)](https://github.com/labiker) |
+<a href="https://openwebgal.com/">
+<img alt="Sponsor" src="https://raw.githubusercontent.com/OpenWebGAL/static/main/sponsors.png">
+</a>
