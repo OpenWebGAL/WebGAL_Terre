@@ -1,5 +1,4 @@
 import styles from "./gameElement.module.scss";
-import { CommandBarButton, DefaultButton, Dialog, DialogFooter, DialogType, IContextualMenuProps, PrimaryButton, Stack, TextField } from "@fluentui/react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setDashboardShow, setEditingGame } from "../../store/statusReducer";
@@ -7,12 +6,14 @@ import { useValue } from "../../hooks/useValue";
 import useVarTrans from "@/hooks/useVarTrans";
 import { GameInfo } from "./DashBoard";
 import { useMemo } from "react";
-import {api} from "@/api";
+import { api } from "@/api";
+import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
+import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
 
 interface IGameElementProps {
   gameInfo: GameInfo;
   checked: boolean;
-  onClick: Function;
+  onClick: () => void;
   refreash?: () => void;
 }
 
@@ -22,10 +23,16 @@ export default function GameElement(props: IGameElementProps) {
   const t = useVarTrans('dashBoard.');
   const dispatch = useDispatch();
 
-  function enterEditor(gameName: string) {
+  const MoreVerticalIcon = bundleIcon(MoreVertical24Filled, MoreVertical24Regular);
+  const FolderOpenIcon = bundleIcon(FolderOpen24Filled, FolderOpen24Regular);
+  const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+  const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
+  const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
+
+  const enterEditor = (gameName: string) => {
     dispatch(setEditingGame(gameName));
     dispatch(setDashboardShow(false));
-  }
+  };
 
   let className = styles.gameElement_main;
   if (props.checked) {
@@ -46,46 +53,6 @@ export default function GameElement(props: IGameElementProps) {
   const isShowDeleteDialog = useValue(false);
   const isShowRenameDialog = useValue(false);
   const newGameName = useValue(props.gameInfo.dir);
-
-  const deleteDialogContentProps = {
-    type: DialogType.normal,
-    title: t('dialogs.deleteGame.title'),
-    subText: t('dialogs.deleteGame.subtext', {gameName: props.gameInfo.dir}),
-  };
-
-  const renameDialogContentProps = {
-    type: DialogType.normal,
-    title: t('dialogs.renameDir.title'),
-  };
-
-  const menuProps: IContextualMenuProps = {
-    items: [
-      {
-        key: 'openInFileExplorer',
-        text: t('menu.openInFileExplorer'),
-        iconProps: { iconName: 'OpenFolderHorizontal' },
-        onClick: () => openInFileExplorer(),
-      },
-      {
-        key: 'previewInNewTab',
-        text: t('menu.previewInNewTab'),
-        iconProps: { iconName: 'OpenInNewTab' },
-        onClick: () => previewInNewTab(),
-      },
-      {
-        key: 'renameDir',
-        text: t('menu.renameDir'),
-        iconProps: { iconName: 'Rename' },
-        onClick: () => isShowRenameDialog.set(true),
-      },
-      {
-        key: 'deleteGame',
-        text: t('menu.deleteGame'),
-        iconProps: { iconName: 'Delete' },
-        onClick: () => isShowDeleteDialog.set(true),
-      },
-    ],
-  };
 
   const openInFileExplorer = () => {
     api.manageGameControllerOpenGameDict(props.gameInfo.dir);
@@ -113,56 +80,76 @@ export default function GameElement(props: IGameElementProps) {
     );
   };
 
-  // @ts-ignore
-  return <div onClick={props.onClick} className={className} id={props.gameInfo.dir}>
-    <img
-      src={`/games/${props.gameInfo.dir}/game/${soureBase}/${props.gameInfo.cover}`}
-      alt={props.gameInfo.title}
-      className={styles.gameElement_cover}
-    />
-    <div className={styles.gameElement_title}>
-      <span>{props.gameInfo.title}</span>
-    </div>
-    <div className={styles.gameElement_sub}>
-      <span className={styles.gameElement_dir}>{props.gameInfo.dir}</span>
-      <div className={styles.gameElement_action}>
-        <span onClick={() => enterEditor(props.gameInfo.dir)} className={styles.editGameButton}>{t('preview.editGame')}</span>
-        <Stack horizontal styles={{ root: { height: 32} }}>
-          <CommandBarButton
-            menuProps={menuProps}
-            style={{ borderRadius: "2px"}}
-          />
-        </Stack>
+  return (
+    <>
+      <div onClick={props.onClick} className={className} id={props.gameInfo.dir}>
+        <img
+          src={`/games/${props.gameInfo.dir}/game/${soureBase}/${props.gameInfo.cover}`}
+          alt={props.gameInfo.title}
+          className={styles.gameElement_cover}
+        />
+        <div className={styles.gameElement_title}>
+          <span>{props.gameInfo.title}</span>
+        </div>
+        <div className={styles.gameElement_sub}>
+          <span className={styles.gameElement_dir}>{props.gameInfo.dir}</span>
+          <div className={styles.gameElement_action} onClick={(event) => event.stopPropagation()}>
+            <Button appearance='primary' onClick={() =>enterEditor(props.gameInfo.dir)}>{t('preview.editGame')}</Button>
+            <Menu>
+              <MenuTrigger>
+                <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />
+              </MenuTrigger>
+              <MenuPopover>
+                <MenuList>
+                  <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t('menu.openInFileExplorer')}</MenuItem>
+                  <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t('menu.previewInNewTab')}</MenuItem>
+                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t('menu.renameDir')}</MenuItem>
+                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t('menu.deleteGame')}</MenuItem>
+                </MenuList>
+              </MenuPopover>
+            </Menu>
+          </div>
+        </div>
       </div>
-    </div>
-    {/* 删除对话框 */}
-    <Dialog
-      hidden={!isShowDeleteDialog.value}
-      onDismiss={() => isShowDeleteDialog.set(false)}
-      dialogContentProps={deleteDialogContentProps}
-      // modalProps={modalProps}
-    >
-      <DialogFooter>
-        <PrimaryButton onClick={deleteThisGame} text={t('$common.delete')} />
-        <DefaultButton onClick={() => isShowDeleteDialog.set(false)} text={t('$common.exit')} />
-      </DialogFooter>
-    </Dialog>
-    {/* 重命名对话框 */}
-    <Dialog
-      hidden={!isShowRenameDialog.value}
-      onDismiss={() => isShowRenameDialog.set(false)}
-      dialogContentProps={renameDialogContentProps}
-      // modalProps={modalProps}
-    >
-      <TextField
-        defaultValue={props.gameInfo.dir}
-        onChange={(event, value) => newGameName.set(value ? value.trim() : props.gameInfo.dir)}
-        onKeyDown={(event) => (event.key === 'Enter') && renameThisGame(props.gameInfo.dir, newGameName.value)}
-      />
-      <DialogFooter>
-        <PrimaryButton onClick={() => renameThisGame(props.gameInfo.dir, newGameName.value)} text={t('$common.rename')} />
-        <DefaultButton onClick={() => isShowRenameDialog.set(false)} text={t('$common.exit')} />
-      </DialogFooter>
-    </Dialog>
-  </div>;
+      {/* 重命名对话框 */}
+      <Dialog
+        open={isShowRenameDialog.value}
+        onOpenChange={() => isShowRenameDialog.set(!isShowRenameDialog.value)}
+      >
+        <DialogSurface>
+          <DialogBody>
+            <DialogTitle>{t('dialogs.renameDir.title')}</DialogTitle>
+            <DialogContent>
+              <Input
+                style={{width:'100%'}}
+                defaultValue={props.gameInfo.dir}
+                onChange={(event) => newGameName.set(event.target.value ? event.target.value.trim() : props.gameInfo.dir)}
+                onKeyDown={(event) => (event.key === 'Enter') && renameThisGame(props.gameInfo.dir, newGameName.value)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button appearance='secondary' onClick={() => isShowRenameDialog.set(false)}>{t('$common.exit')}</Button>
+              <Button appearance='primary' onClick={() => renameThisGame(props.gameInfo.dir, newGameName.value)}>{t('$common.rename')}</Button>
+            </DialogActions>
+          </DialogBody>
+        </DialogSurface>
+      </Dialog>
+      {/* 删除对话框 */}
+      <Dialog
+        open={isShowDeleteDialog.value}
+        onOpenChange={() => isShowDeleteDialog.set(!isShowDeleteDialog.value)}
+      >
+        <DialogSurface>
+          <DialogBody>
+            <DialogTitle>{t('dialogs.deleteGame.title')}</DialogTitle>
+            <DialogContent>{t('dialogs.deleteGame.subtext', { gameName: props.gameInfo.dir })}</DialogContent>
+            <DialogActions>
+              <Button appearance='secondary' onClick={() => isShowDeleteDialog.set(false)}>{t('$common.exit')}</Button>
+              <Button appearance='primary' onClick={deleteThisGame}>{t('$common.delete')}</Button>
+            </DialogActions>
+          </DialogBody>
+        </DialogSurface>
+      </Dialog>
+    </>
+  );
 };
