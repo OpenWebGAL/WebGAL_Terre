@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Callout, Link, Text } from '@fluentui/react';
-import { useBoolean, useId } from '@fluentui/react-hooks';
-import { CommandBarButton } from '@fluentui/react/lib/Button';
-import styles from './about.module.scss';
 import { __INFO } from "@/config/info";
 import { useRelease } from "../../hooks/useRelease";
 import { logger } from '@/utils/logger';
 import useTrans from '@/hooks/useTrans';
+import { Link, Popover, PopoverSurface, PopoverTrigger, Text, Title1, ToolbarButton } from '@fluentui/react-components';
+import { Info24Filled, Info24Regular, bundleIcon } from '@fluentui/react-icons';
+import { useState } from 'react';
 
 interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -15,14 +14,11 @@ interface DateTimeFormatOptions {
 }
 
 const About: React.FunctionComponent = () => {
-  const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
-  const buttonId = useId('callout-button');
-  const labelId = useId('callout-label');
-  const descriptionId = useId('callout-description');
-
+  const [open, setOpen] = useState(false);
   const t = useTrans('editor.topBar.');
-
   const latestRelease = useRelease();
+
+  const InfoIcon = bundleIcon(Info24Filled, Info24Regular);
 
   /**
    * 比较版本号
@@ -60,29 +56,23 @@ const About: React.FunctionComponent = () => {
   const dateTimeOptions: DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
   return (
-    <>
-      <CommandBarButton
-        className={styles.button}
-        id={buttonId}
-        onClick={toggleIsCalloutVisible}
-        text={`${t('about.about')} ${isNewRelease ? `(${t('about.checkedForNewVersion')})` : ''}`}
-        iconProps={{ iconName: 'Info' }}
-      />
-      {isCalloutVisible &&
-        <Callout
-          className={styles.callout}
-          ariaLabelledBy={labelId}
-          ariaDescribedBy={descriptionId}
-          role="dialog"
-          gapSpace={0}
-          target={`#${buttonId}`}
-          onDismiss={toggleIsCalloutVisible}
-          setInitialFocus
-        >
-          <Text as="h1" block variant="xLarge" className={styles.title} id={labelId}>
+    <Popover
+      withArrow
+      trapFocus
+      open={open}
+      onOpenChange={() => setOpen(!open)}
+    >
+      <PopoverTrigger disableButtonEnhancement>
+        <ToolbarButton aria-label={t('about.about')} icon={<InfoIcon />}>
+          {t('about.about')} {isNewRelease ? `(${t('about.checkedForNewVersion')})` : ''}
+        </ToolbarButton>
+      </PopoverTrigger>
+      <PopoverSurface>
+        <div>
+          <Text as='h1' block size={500}>
             WebGAL Terre
           </Text>
-          <Text block variant="medium" className={styles.info} id={descriptionId}>
+          <Text as='b' block>
             <p>{t('about.slogan')}</p>
             <small>
               {t('about.currentVersion')}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
@@ -95,7 +85,7 @@ const About: React.FunctionComponent = () => {
               <p>
                 {
                   isNewRelease &&
-                  <Link href="https://openwebgal.com/download/" target="_blank" className={styles.link}>
+                  <Link href="https://openwebgal.com/download/" target="_blank">
                     {t('about.downloadLatest')}
                   </Link>
                 }
@@ -109,20 +99,20 @@ const About: React.FunctionComponent = () => {
               </div>
             </small>
           </Text>
-          <div className={styles.link_group}>
-            <Link href="https://openwebgal.com/" target="_blank" className={styles.link}>
+          <div style={{display:'flex', gap:'0.5rem', marginTop:'1rem'}}>
+            <Link href="https://openwebgal.com/" target="_blank">
               {t('about.homePage')}
             </Link>
-            <Link href="https://docs.openwebgal.com/" target="_blank" className={styles.link}>
+            <Link href="https://docs.openwebgal.com/" target="_blank">
               {t('about.document')}
             </Link>
-            <Link href="https://github.com/MakinoharaShoko/WebGAL_Terre" target="_blank" className={styles.link}>
+            <Link href="https://github.com/MakinoharaShoko/WebGAL_Terre" target="_blank">
               GitHub
             </Link>
           </div>
-        </Callout>
-      }
-    </>
+        </div>
+      </PopoverSurface>
+    </Popover>
   );
 };
 

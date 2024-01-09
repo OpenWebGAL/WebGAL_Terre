@@ -15,7 +15,7 @@
 .preview_title{
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
   text-align: left;
@@ -27,17 +27,6 @@
   font-size: 125%;
   padding: 0.1em 0 0 0;
   font-weight: bold;
-}
-
-.editGameButton{
-  // margin: 0 0 0 auto;
-  font-size: 100%;
-  background: var(--terre-primary);
-  color: var(--gamePreview-editGameButton);
-  box-sizing: border-box;
-  border-radius: 2px;
-  padding: 0.25em 1em 0.25em 1em;
-  cursor: pointer;
 }
 
 .noneChecked{
