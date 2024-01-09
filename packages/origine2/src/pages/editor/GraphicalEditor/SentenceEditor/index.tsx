@@ -48,6 +48,7 @@ import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserI
 export interface ISentenceEditorProps {
   sentence: ISentence;
   onSubmit: (newSentence: string) => void;
+  index:number
 }
 
 export interface ISentenceEditorConfig {
