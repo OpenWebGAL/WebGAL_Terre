@@ -163,7 +163,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 // console.log(sentence.command);
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
-                return <Draggable key={JSON.stringify(sentence.sentenceAssets) + sentence.commandRaw + i}
+                return <Draggable key={JSON.stringify(sentence) + i}
                   draggableId={sentence.content + sentence.commandRaw + i} index={i}>
                   {(provided, snapshot) => (
                     <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
@@ -216,7 +216,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               </div>
                             </div>
                           </div>
-                          {showSentence.value[i] && <SentenceEditor sentence={sentence} onSubmit={(newSentence) => {
+                          {showSentence.value[i] && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
                             updateSentenceByIndex(newSentence, i);
                           }}/>}
                         </div>
