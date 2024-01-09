@@ -9,16 +9,16 @@
   width: 100%;
   height: calc(100vh - 4.5em);
   display: flex;
-  flex: 1;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .topBar {
-  padding: 0.5em 0.5em 0.5em 0.75em;
-  text-align: left;
+  padding: 0 16px;
   font-family: Georgia, serif;
   font-size: 150%;
-  border-bottom: 1px solid var(--dashboard-topBar-border-bottom);
   color: var(--terre-primary);
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
