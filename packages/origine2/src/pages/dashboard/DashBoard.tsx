@@ -5,15 +5,16 @@ import { logger } from "../../utils/logger";
 import { Message, TestRefRef } from "../../components/message/Message";
 import styles from "./dashboard.module.scss";
 import Sidebar from "./Sidebar";
-import { GamePreview } from "./GamePreview";
+import GamePreview from "./GamePreview";
 import { useSelector } from "react-redux";
-import { origineStore, RootState } from "../../store/origineStore";
+import { RootState } from "../../store/origineStore";
 import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
-import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { language } from "@/store/statusReducer";
 import About from "./About";
 import { WebgalParser } from "../editor/GraphicalEditor/parser";
+import { Card, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Toolbar, ToolbarButton } from "@fluentui/react-components";
+import { LocalLanguage24Filled, LocalLanguage24Regular, bundleIcon } from "@fluentui/react-icons";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -32,6 +33,8 @@ export default function DashBoard() {
   const t = useTrans('editor.topBar.');
   const setLanguage = useLanguage();
   const trans = useTrans('dashBoard.');
+
+  const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regular);
 
   const isDashboardShow:boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
 
@@ -83,68 +86,53 @@ export default function DashBoard() {
     refreashDashboard();
   }, []);
 
-  const _items: ICommandBarItemProps[] = [
-    {
-      key: "language",
-      text: t('commandBar.items.language.text'),
-      cacheKey: 'language',
-      iconProps: { iconName: 'LocaleLanguage'},
-      subMenuProps: {
-        items: [
-          {
-            key: 'zhCn',
-            text: '简体中文',
-            onClick() {setLanguage(language.zhCn);}
-          },
-          {
-            key: 'en',
-            text: 'English',
-            onClick() {setLanguage(language.en);}
-          },
-          {
-            key: 'jp',
-            text: '日本語',
-            onClick() {setLanguage(language.jp);}
-          }
-        ]
-      }
-    },
-  ];
-
   const refreash = () => {
     refreashDashboard();
     setCurrentGame(null);
   };
 
   return <>
-    { isDashboardShow && (<div className={styles.dashboard_container}>
-      <div className={styles.topBar}>
+    { isDashboardShow &&
+      <div className={styles.dashboard_container}>
+        <div className={styles.topBar}>
         WebGAL Terre
-        <div>
-          <CommandBar
-            items={_items}
-            ariaLabel="Inbox actions"
-            primaryGroupAriaLabel="Email actions"
-            farItemsGroupAriaLabel="More actions"
-          />
+          <Toolbar>
+            <About />
+            <Menu>
+              <MenuTrigger>
+                <ToolbarButton aria-label={t('commandBar.items.language.text')} icon={<LocalLanguageIcon />}>{t('commandBar.items.language.text')}</ToolbarButton>
+              </MenuTrigger>
+              <MenuPopover>
+                <MenuList>
+                  <MenuItem onClick={() => setLanguage(language.zhCn)}>简体中文</MenuItem>
+                  <MenuItem onClick={() => setLanguage(language.en)}>English</MenuItem>
+                  <MenuItem onClick={() => setLanguage(language.jp)}>日本语</MenuItem>
+                </MenuList>
+              </MenuPopover>
+            </Menu>
+          </Toolbar>
         </div>
-        <About />
-      </div>
-      <div className={styles.dashboard_main}>
-        <Message ref={messageRef} />
-        <Sidebar 
-          refreash={refreash}
-          createGame={createGame} 
-          setCurrentGame={setCurrentGame} 
-          currentSetGame={currentGame.value}
-          gameList={gameInfoList.value} />
-        {currentGame.value && 
-          <GamePreview
-            currentGame={currentGame.value} 
-            setCurrentGame={setCurrentGame} 
-            gameInfo={gameInfoList.value.find(e => e.dir === currentGame.value)!}/>}
-        {/* <PrimaryButton onClick={createGame}>测试新建游戏</PrimaryButton> */}
-      </div>
-    </div>)}
+        <div className={styles.dashboard_main}>
+          <Card style={{width: '100%', height: '100%'}}>
+            <div style={{width: '100%', height: '100%', display: 'flex', overflow: 'auto'}}>
+              <Message ref={messageRef} />
+              {
+                currentGame.value &&
+                <GamePreview
+                  currentGame={currentGame.value}
+                  setCurrentGame={setCurrentGame}
+                  gameInfo={gameInfoList.value.find(e => e.dir === currentGame.value)!}
+                />
+              }
+              <Sidebar
+                refreash={refreash}
+                createGame={createGame}
+                setCurrentGame={setCurrentGame}
+                currentSetGame={currentGame.value}
+                gameList={gameInfoList.value} />
+            </div>
+          </Card>
+        </div>
+      </div>}
   </>;
 }

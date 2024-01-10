@@ -8,6 +8,7 @@ import {DefaultButton, Dropdown, PrimaryButton, TextField} from "@fluentui/react
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
+import {useExpand} from "@/hooks/useExpand";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
@@ -17,7 +18,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
   const duration = useValue((durationFromArgs ?? 0) as number);
-  const isShowEffectEditor = useValue(false);
+  const {updateExpandIndex} = useExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const isPresetTarget = ["bg-main", "fig-left", "fig-center", "fig-right"].includes(target.value);
@@ -33,9 +34,9 @@ export default function SetTransform(props: ISentenceEditorProps) {
     <div className={styles.editItem}>
       <CommonOptions title="效果编辑">
         <DefaultButton onClick={() => {
-          isShowEffectEditor.value = true;
+          updateExpandIndex(props.index);
         }}>{tTarget('$打开效果编辑器')}</DefaultButton>
-        <TerrePanel onDismiss={()=>isShowEffectEditor.set(false)} isOpen={isShowEffectEditor.value} title={tTarget("$效果编辑器")}>
+        <TerrePanel sentenceIndex={props.index} title={tTarget("$效果编辑器")}>
           <EffectEditor json={transform.value} onChange={(newJson)=>{
             transform.set(newJson);
             submit();
