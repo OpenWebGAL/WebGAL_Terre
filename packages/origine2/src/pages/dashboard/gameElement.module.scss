@@ -1,33 +1,31 @@
 .gameElement_main {
   font-size: 105%;
-  // padding: 0.75em 0.5em 0.75em 0.75em;
-  // margin: 0.65em 0.5em 0 0.5em;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  color: var(--dashboard-gameElement-main);
   text-align: left;
-  border: var(--border-md);
+  border: var(--border-sm);
   transition: all 0.33s;
   display: flex;
   flex-direction: column;
-  // height: 8rem;
-  // width: 20rem;
 }
 
 .gameElement_main:hover {
-  background-color: var(--dashboard-gameElement-main-hover-background);
-  box-shadow: var(--gameElement-box-shadow) 0 0 2px 1px;
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.gameElement_main:hover:has(.gameElement_action:hover) {
+  background: none;
 }
 
 .gameElement_checked {
-  box-shadow: var(--gameElement-box-shadow) 0 0 2px 1px;
-  outline: 3px solid var(--terre-primary);
+  box-shadow: var(--shadow-sm);
+  outline: 3px solid var(--primary);
 }
 
 .gameElement_cover {
   height: auto;
-  // width: auto;
-  border-radius: 4px 4px 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   object-fit: cover;
   aspect-ratio: 16 / 9;
 }

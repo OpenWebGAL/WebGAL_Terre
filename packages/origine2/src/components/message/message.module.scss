@@ -12,13 +12,13 @@
 
 .singleMessage {
   //border: 1px solid;
-  background-color: var(--singleMessage-background);
+  background: var(--bg-card);
   font-size: 115%;
-  color: var(--singleMessage);
+  color: var(--primary);
   padding: 0.5em 0.5em 0.5em 0.5em;
   margin: 0.5em 0.5em 0.5em 0.5em;
   min-width: 350px;
   border-radius: 4px;
-  box-shadow: 0 0 10px var(--singleMessage-box-shadow);
-  border: 1px solid var(--singleMessage-border);
+  box-shadow: var(--shadow-lg);
+  border: var(--border-sm)
 }
