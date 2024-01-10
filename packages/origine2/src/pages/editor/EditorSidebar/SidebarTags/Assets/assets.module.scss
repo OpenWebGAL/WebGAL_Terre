@@ -12,12 +12,10 @@
 }
 
 .controlCommonButton {
-  //padding: 4px 3px 2px 3px;
-  border: 1px solid var(--assets-controlCommonButton-border);
-  border-radius: 4px;
+  border: var(--border-sm);
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.33s;
-  // margin: 0 0 0 4px;
   height: 25px;
   width: 25px;
   display: flex;
@@ -26,14 +24,14 @@
 }
 
 .controlCommonButton:hover {
-  background: var(--assets-controlCommonButton-hover-border);
+  background: var(--bg-button-hover);
 }
 
 .controlDirnameDisplay {
   padding: 0 0 0 10px;
   font-family: Consolas, "Courier New", monospace;
-  border: 1px solid var(--assets-controlDirnameDisplay-border);
-  border-radius: 4px;
+  border: var(--border-sm);
+  border-radius: var(--radius-md);
   flex: 1;
   font-size: 14px;
   height: 25px;
@@ -57,12 +55,12 @@
   display: flex;
   align-items: center;
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   height: 25px;
 }
 
 .commonFileButton:hover {
-  background: var(--assets-commonFileButton-hover-background);
+  background: var(--bg-button-hover);
 }
 
 .fileName {
@@ -88,7 +86,7 @@
 }
 
 .deleteButton:hover {
-  background: var(--assets-deleteButton-hover-background);
+  background: var(--bg-button-hover);
 }
 
 .fileList {
@@ -115,10 +113,10 @@
 }
 
 .fileSelectButton {
-  background-color: var(--assets-fileSelectButton-background);
-  color: var(--assets-fileSelectButton);
+  background-color: var(--primary);
+  color: var(--bg-root);
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -126,14 +124,10 @@
   margin: 4px 0 0 0;
 }
 
-.fileSelectButton:hover {
-  background-color: var(--assets-fileSelectButton-hover-background);
-}
-
 .fileSelectInput {
   width: 300px;
-  border: 1px solid var(--assets-fileSelectInput-border);
-  border-radius: 4px;
+  border: var(--border-sm);
+  border-radius: var(--radius-md);
   padding: 15px;
   font-size: 16px;
   outline: none;
@@ -141,18 +135,18 @@
 }
 
 .fileSelectInput:focus {
-  border-color: var(--assets-fileSelectInput-focus-border);
-  box-shadow: 0 0 0 2px var(--assets-fileSelectInput-focus-box-shadow);
+  border: var(--border-primary-sm);
+  box-shadow: var(--shadow-primary-sm);
 }
 
 .extNameShow {
-  background: var(--assets-extNameShow-background);
-  color: var(--assets-extNameShow);
+  background: var(--primary-5pct);
+  color: var(--primary);
   padding: 1px 5px 4px 5px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   margin: 0 0 0 4px;
 }
 
 .iconParkIcon>svg>path {
-  stroke: var(--iconPark-icon-fill);
+  stroke: var(--text);
 }

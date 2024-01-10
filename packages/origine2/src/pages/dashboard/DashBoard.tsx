@@ -113,25 +113,21 @@ export default function DashBoard() {
           </Toolbar>
         </div>
         <div className={styles.dashboard_main}>
-          <Card style={{width: '100%', height: '100%'}}>
-            <div style={{width: '100%', height: '100%', display: 'flex', overflow: 'auto'}}>
-              <Message ref={messageRef} />
-              {
-                currentGame.value &&
+          <Message ref={messageRef} />
+          {
+            currentGame.value &&
                 <GamePreview
                   currentGame={currentGame.value}
                   setCurrentGame={setCurrentGame}
                   gameInfo={gameInfoList.value.find(e => e.dir === currentGame.value)!}
                 />
-              }
-              <Sidebar
-                refreash={refreash}
-                createGame={createGame}
-                setCurrentGame={setCurrentGame}
-                currentSetGame={currentGame.value}
-                gameList={gameInfoList.value} />
-            </div>
-          </Card>
+          }
+          <Sidebar
+            refreash={refreash}
+            createGame={createGame}
+            setCurrentGame={setCurrentGame}
+            currentSetGame={currentGame.value}
+            gameList={gameInfoList.value} />
         </div>
       </div>}
   </>;
