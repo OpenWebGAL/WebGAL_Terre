@@ -10,13 +10,12 @@
   display: flex;
   align-items: center;
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   height: 25px;
 }
 
 .fileElement:hover {
-  //padding: 2px 4px 2px 4px;
-  background: var(--sidebarComponents-fileElement-hover-background);
+  background: var(--bg-button-hover);
 }
 
 .fileElement_name {
@@ -46,9 +45,9 @@
 }
 
 .fileElement_interactable_icon:hover {
-  background-color: var(--sidebarComponents-fileElement-interactable-icon-hover-background);
+  background: var(--bg-button-hover);
 }
 
 .fileElement_interactable_icon>span>svg>path {
-  stroke: var(--iconPark-icon-fill);
+  stroke: var(--text);
 }

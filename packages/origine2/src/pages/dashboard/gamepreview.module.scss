@@ -20,20 +20,11 @@
   gap: 1rem;
   text-align: left;
   padding: 1em 1em 1em 1em ;
-  color: var(--terre-primary);
+  color: var(--primary);
 }
 
 .preview_title_text{
   font-size: 125%;
   padding: 0.1em 0 0 0;
   font-weight: bold;
-}
-
-.noneChecked{
-  font-size: 115%;
-  padding: 1em 0 0 0;
-  width: 100%;
-  text-align: center;
-  color: var(--gamePreview-noneChecked);
-  flex: 1;
 }

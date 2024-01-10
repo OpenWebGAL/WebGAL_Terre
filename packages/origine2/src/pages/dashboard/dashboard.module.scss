@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
   flex-flow: column;
+  padding: 0 4px 4px 4px;
 }
 
 .dashboard_main {
@@ -11,13 +12,17 @@
   display: flex;
   flex-grow: 1;
   overflow: hidden;
+  background: var(--bg-card);
+  border: var(--border-sm);
+  border-radius: var(--radius-md);
+  padding: 4px;
 }
 
 .topBar {
   padding: 0 16px;
   font-family: Georgia, serif;
   font-size: 150%;
-  color: var(--terre-primary);
+  color: var(--primary);
   display: flex;
   justify-content: space-between;
   align-items: center;
