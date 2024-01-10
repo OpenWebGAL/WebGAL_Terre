@@ -4,15 +4,17 @@
 
 #### 新功能
 
-新编辑器 UI
-
-允许设置代码编辑器换行
-
-每一条语句都添加有“执行到本句”按钮，可以快速跳转到指定语句
+升级主界面 UI
 
 #### 修复
 
-补全缺失的翻译
+修复引擎的一些故障
+
+修复 Live2D 读取动作和表情不正常的问题
+
+修复对话编辑器无法正确处理多行文本的问题
+
+修复插入语句顺序不正确的问题
 
 <!-- English Translation -->
 ## Release Notes
@@ -21,15 +23,17 @@
 
 #### New Features
 
-New editor UI
-
-Allow to set word wrap for code editor
-
-Add "Execute to this line" button for each statement, can quickly jump to the specified statement
+Upgrade the UI of main interface
 
 #### Bug Fixes
 
-Complete the missing translation
+Fix some bugs of engine
+
+Fix the problem that Live2D can't read actions and expressions properly
+
+Fix the problem that dialogue editor can't handle multiline text correctly
+
+Fix the problem that the order of inserting statements is incorrect
 
 
 
@@ -40,15 +44,17 @@ Complete the missing translation
 
 #### 新機能
 
-新しいエディター UI
-
-コードエディターの改行を設定可能に
-
-各文に「この文まで実行」ボタンを追加し、指定した文まで素早くジャンプ可能に
+メイン画面UIをアップグレード
 
 #### 修正
 
-翻訳の抜け漏れを修正
+エンジンの不具合を修正
+
+Live2Dの動作と表情の読み込みが異常な問題を修正
+
+会話エディタが複数行のテキストを正しく処理できない問題を修正
+
+挿入する文の順番が正しくない問題を修正
 
 
 <!-- French Translation -->
@@ -58,12 +64,14 @@ Complete the missing translation
 
 #### Nouvelles fonctionnalités
 
-Nouvelle interface utilisateur de l'éditeur
-
-Autorise la définition des retours à la ligne dans l'éditeur de code
-
-Chaque ligne de commande est accompagnée d'un bouton « Exécuter jusqu'à cette ligne », permettant de passer rapidement à la ligne de commande spécifiée
+Mise à jour de l'interface utilisateur de l'écran principal
 
 #### Corrections
 
-Traduction manquante complétée
+Correction de quelques bugs du moteur
+
+Correction du problème de lecture des mouvements et des expressions Live2D
+
+Correction du problème de l'éditeur de dialogue qui ne traite pas correctement le texte sur plusieurs lignes
+
+Correction du problème de l'ordre incorrect d'insertion des lignes
