@@ -5,11 +5,12 @@ import {useValue} from "../../../../hooks/useValue";
 import {cloneDeep} from "lodash";
 import {DefaultButton, PrimaryButton, Dropdown, ColorPicker, IColor} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
-import { getArgByKey } from "../utils/getArgByKey";
-import { useState } from "react";
+import {getArgByKey} from "../utils/getArgByKey";
+import {useState} from "react";
 import React from 'react';
 import {logger} from "@/utils/logger";
-import { TerrePanel } from "../components/TerrePanel";
+import {TerrePanel} from "../components/TerrePanel";
+import {useExpand} from "@/hooks/useExpand";
 
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
@@ -99,7 +100,7 @@ export default function Intro(props: ISentenceEditorProps) {
   const getInitialAnimation = (): string => {
     const animationValue = getArgByKey(props.sentence, "animation");
 
-    if (typeof animationValue === 'string' && ["fadeIn","slideIn","typingEffect","pixelateEffect","revealAnimation"].includes(animationValue)) {
+    if (typeof animationValue === 'string' && ["fadeIn", "slideIn", "typingEffect", "pixelateEffect", "revealAnimation"].includes(animationValue)) {
       return animationValue;
     }
 
@@ -123,22 +124,22 @@ export default function Intro(props: ISentenceEditorProps) {
   ];
 
   const animations = [
-    { key: "fadeIn", text: "fadeIn" },
-    { key: "slideIn", text: "slideIn" },
-    { key: "typingEffect", text: "typingEffect" },
-    { key: "pixelateEffect", text: "pixelateEffect" },
-    { key: "revealAnimation", text: "revealAnimation" },
+    {key: "fadeIn", text: "fadeIn"},
+    {key: "slideIn", text: "slideIn"},
+    {key: "typingEffect", text: "typingEffect"},
+    {key: "pixelateEffect", text: "pixelateEffect"},
+    {key: "revealAnimation", text: "revealAnimation"},
   ];
 
   const delayTimes = [
-    { key: "1500", text: "1.5" },
-    { key: "2000", text: "2" },
-    { key: "2500", text: "2.5" },
-    { key: "3000", text: "3" },
-    { key: "3500", text: "3.5" },
-    { key: "4000", text: "4" },
-    { key: "4500", text: "4.5" },
-    { key: "5000", text: "5" },
+    {key: "1500", text: "1.5"},
+    {key: "2000", text: "2"},
+    {key: "2500", text: "2.5"},
+    {key: "3000", text: "3"},
+    {key: "3500", text: "3.5"},
+    {key: "4000", text: "4"},
+    {key: "4500", text: "4.5"},
+    {key: "5000", text: "5"},
   ];
 
   const backgroundColor = useValue(getBackgroundColor());
@@ -148,10 +149,7 @@ export default function Intro(props: ISentenceEditorProps) {
   const delayTime = useValue(getInitialDelayTime());
   const [localBackgroundColor, setLocalBackgroundColor] = useState(backgroundColor.value);
   const [localFontColor, setLocalFontColor] = useState(fontColor.value);
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-  const toggleAccordion = () => {
-    setIsAccordionOpen(!isAccordionOpen);
-  };
+  const {updateExpandIndex} = useExpand();
   const optionButtonStyles = {
     root: {
       // margin: '6px 0 0 0',
@@ -217,10 +215,10 @@ export default function Intro(props: ISentenceEditorProps) {
       introTextList.set(newList);
       submit();
     }}>{t('add.button')}</DefaultButton>
-    <DefaultButton onClick={toggleAccordion} styles={optionButtonStyles}>
+    <DefaultButton onClick={()=>updateExpandIndex(props.index)} styles={optionButtonStyles}>
       {t('$效果选项')}
     </DefaultButton>
-    <TerrePanel onDismiss={() => setIsAccordionOpen(!isAccordionOpen)} isOpen={isAccordionOpen} title="效果选项">
+    <TerrePanel sentenceIndex={props.index} title="效果选项">
       <div style={{width: '100%'}}>
         <div style={{display: 'flex'}}>
           <CommonOptions title={t('font.size')}>

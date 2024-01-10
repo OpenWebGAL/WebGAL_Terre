@@ -35,6 +35,10 @@ export enum TopbarTabs {
   AddSentence
 }
 
+interface IGraphicalEditorState {
+  currentExpandSentence: number;
+}
+
 interface IEditorState {
   currentEditingGame: string,
   isEnableLivePreview: boolean,
@@ -44,7 +48,8 @@ interface IEditorState {
   selectedTagTarget: string,
   isCodeMode: boolean,
   currentTopbarTab: TopbarTabs | undefined,
-  language: language
+  language: language,
+  graphicalEditorState: IGraphicalEditorState,
 }
 
 // tag的假数据，用于测试
@@ -64,7 +69,10 @@ export const editorInitState: IEditorState = {
   tags: [],
   selectedTagTarget: "",
   isCodeMode: (localStorage.getItem("isCodeMode") ?? "") === "true",
-  language: language.zhCn
+  language: language.zhCn,
+  graphicalEditorState: {
+    currentExpandSentence: 0
+  }
 };
 
 const initialState = {
@@ -126,6 +134,7 @@ const statusSlice = createSlice({
      */
     setCurrentTagTarget: function (state, action: PayloadAction<string>) {
       state.editor.selectedTagTarget = action.payload;
+      state.editor.graphicalEditorState.currentExpandSentence = 0;
     },
     /**
      * 添加编辑页 Tag
@@ -156,6 +165,10 @@ const statusSlice = createSlice({
 
     setIsLivePreview: (state, action: PayloadAction<boolean>) => {
       state.editor.isEnableLivePreview = action.payload;
+    },
+
+    updateGraphicalEditorCurrentExpandSentence:(state,action:PayloadAction<number>)=>{
+      state.editor.graphicalEditorState.currentExpandSentence = action.payload;
     }
 
   }
@@ -170,7 +183,8 @@ export const {
   setCurrentTagTarget,
   setEditMode,
   setLanguage,
-  setIsLivePreview
+  setIsLivePreview,
+  updateGraphicalEditorCurrentExpandSentence
 } = statusSlice.actions;
 
 export const statusActions = statusSlice.actions;
