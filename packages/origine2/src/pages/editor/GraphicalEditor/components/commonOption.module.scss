@@ -3,16 +3,16 @@
   //margin: 0 0 0 8px;
   display: flex;
   flex-flow: column;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
 }
 
 .item:hover{
-  background: var(--commonOption-item-hover-background);
+  background: var(--bg-button-hover);
 }
 
 .title {
   text-align: left;
-  color: var(--commonOption-title);
+  color: var(--text-weak);
   padding: 0 0 5px 0;
   font-weight: bold;
   font-size: 95%;
