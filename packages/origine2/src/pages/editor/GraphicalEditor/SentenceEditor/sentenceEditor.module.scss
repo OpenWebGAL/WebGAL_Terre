@@ -22,8 +22,8 @@
   box-shadow: none;
   appearance: none;
   outline: none;
-  background: var(--bg-root);
-  border: var(--border-sm);
+  background: var(--bg-input);
+  border: var(--border-md);
   padding: 6px 6px 6px 6px;
   border-radius: var(--radius-md);
   // font-size: 95%;
@@ -31,8 +31,8 @@
 }
 
 .sayArea {
-  background: var(--bg-root);
-  border: var(--border-sm);
+  background: var(--bg-input);
+  border: var(--border-md);
   width: 75%;
   font-family: inherit;
   box-shadow: none;
