@@ -3,7 +3,7 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   text-align: left;
-  border: var(--border-sm);
+  border: var(--border-md);
   transition: all 0.33s;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
 
 .gameElement_main:hover {
   background: var(--bg-card-hover);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .gameElement_main:hover:has(.gameElement_action:hover) {
@@ -19,7 +19,6 @@
 }
 
 .gameElement_checked {
-  box-shadow: var(--shadow-sm);
   outline: 3px solid var(--primary);
 }
 
