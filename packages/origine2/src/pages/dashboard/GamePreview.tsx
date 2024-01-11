@@ -1,7 +1,4 @@
 import styles from "./gamepreview.module.scss";
-import { useDispatch } from "react-redux";
-import { setDashboardShow, setEditingGame } from "../../store/statusReducer";
-import useTrans from "@/hooks/useTrans";
 import { GameInfo } from './DashBoard';
 import { Button } from "@fluentui/react-components";
 import { Dismiss48Filled, Dismiss48Regular, bundleIcon } from "@fluentui/react-icons";
@@ -13,16 +10,7 @@ interface IGamePreviewProps {
 }
 
 export default function GamePreview(props: IGamePreviewProps) {
-  const t = useTrans('dashBoard.preview.');
-  const dispatch = useDispatch();
-
   const DismissIcon = bundleIcon(Dismiss48Filled, Dismiss48Regular);
-
-  if (props.currentGame === null) {
-    return <div className={styles.noneChecked}>
-      {t('noneChecked')}
-    </div>;
-  }
 
   return <div className={styles.preview_main}>
     <div className={styles.preview_title}>
