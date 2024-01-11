@@ -17,8 +17,8 @@
   background: var(--bg-card);
   width: 100%;
   padding: 0px 6px 6px 6px;
-  border: var(--border-sm);
-  border-radius: 4px;
+  border: var(--border-md);
+  border-radius: var(--radius-md);
 }
 
 .lineNumber {
@@ -48,7 +48,7 @@
   padding: 0 4px 0 0;
   box-sizing: border-box;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   font-size: 100%;
@@ -59,8 +59,8 @@
   margin-left: auto;
   opacity: 0;
   display: flex;
-  border: var(--border-sm);
-  box-shadow: var(--shadow-sm);
+  border: var(--border-md);
+  box-shadow: var(--shadow-md);
   border-radius: var(--radius-md);
   padding: 2px;
 }
@@ -116,7 +116,7 @@
   left: 4px;
   right: 4px;
   height: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   background: var(--primary);
   transition: visibility 0.2s linear, opacity 0.2s linear;
   opacity: 0;
@@ -139,8 +139,8 @@
 
 .addForwardAreaButton {
   background-color: var(--bg-card);
-  border: var(--border-sm);
-  box-shadow: var(--shadow-sm);
+  border: var(--border-md);
+  box-shadow: var(--shadow-md);
   border-radius: var(--radius-md);
   padding: 2px;
   height: max-content;

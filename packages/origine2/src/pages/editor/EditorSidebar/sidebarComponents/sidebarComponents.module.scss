@@ -34,7 +34,7 @@
   box-sizing: border-box;
   padding: 2px 3px 1px 2px;
   margin: 1px 1px 1px 1px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   transition: all 0.33s;
   cursor: pointer;
   display: none;
@@ -50,4 +50,8 @@
 
 .fileElement_interactable_icon>span>svg>path {
   stroke: var(--text);
+}
+
+.fileElement_interactable_icon:hover>span>svg>path {
+  stroke: var(--primary);
 }

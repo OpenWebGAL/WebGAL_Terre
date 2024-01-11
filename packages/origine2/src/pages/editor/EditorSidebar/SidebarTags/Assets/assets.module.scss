@@ -12,7 +12,7 @@
 }
 
 .controlCommonButton {
-  border: var(--border-sm);
+  border: var(--border-md);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.33s;
@@ -30,7 +30,7 @@
 .controlDirnameDisplay {
   padding: 0 0 0 10px;
   font-family: Consolas, "Courier New", monospace;
-  border: var(--border-sm);
+  border: var(--border-md);
   border-radius: var(--radius-md);
   flex: 1;
   font-size: 14px;
@@ -76,7 +76,7 @@
 .deleteButton {
   padding: 2px 2px 1px 2px;
   margin: 0 4px 0 0;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   transition: all 0.33s;
   display: none;
 }
@@ -87,6 +87,10 @@
 
 .deleteButton:hover {
   background: var(--bg-button-hover);
+}
+
+.deleteButton:hover svg path {
+  stroke: var(--primary);
 }
 
 .fileList {
@@ -114,7 +118,7 @@
 
 .fileSelectButton {
   background-color: var(--primary);
-  color: var(--bg-root);
+  color: var(--bg-input);
   padding: 8px 16px;
   border-radius: var(--radius-md);
   border: none;
@@ -126,7 +130,7 @@
 
 .fileSelectInput {
   width: 300px;
-  border: var(--border-sm);
+  border: var(--border-md);
   border-radius: var(--radius-md);
   padding: 15px;
   font-size: 16px;
@@ -136,7 +140,7 @@
 
 .fileSelectInput:focus {
   border: var(--border-primary-sm);
-  box-shadow: var(--shadow-primary-sm);
+  box-shadow: var(--shadow-primary-md);
 }
 
 .extNameShow {

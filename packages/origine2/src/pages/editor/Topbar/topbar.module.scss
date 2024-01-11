@@ -1,7 +1,7 @@
 .editor_topbar {
   display: flex;
   flex-flow: column;
-  border-bottom: var(--border-sm);
+  border-bottom: var(--border-md);
   padding: 0 4px 0 4px;
 }
 
@@ -13,8 +13,8 @@
 }
 
 .topbar_btn {
-  border: 1px solid transparent;
-  border-radius: 4px 4px 0 0;
+  border: --border-trans-md;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   background: transparent;
   margin: 0;
   color: var(--text);
@@ -33,7 +33,7 @@
   color: var(--primary);
   background: var(--bg-card);
   font-weight: 700;
-  border: var(--border-sm);
+  border: var(--border-md);
   border-bottom: none;
 }
 
@@ -69,8 +69,8 @@
 }
 
 .topbar_btn_special {
-  border-radius: 4px 4px 0 0;
-  margin: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  margin-left: 4px;
   color: var(--text);
   font-size: 16px;
   font-style: normal;
@@ -98,7 +98,7 @@
   font-weight: 700;
   transform: translate(0,2px);
   .specialText{
-    transform: translate(0,-2px);
+    transform: translate(0,-1px);
   }
 }
 
