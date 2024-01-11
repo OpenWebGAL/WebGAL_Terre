@@ -18,7 +18,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--chooseFile-button-border-bottom);
+  border-bottom: var(--border-md);
 }
 
 .chooseFileCalloutContentWarpper{

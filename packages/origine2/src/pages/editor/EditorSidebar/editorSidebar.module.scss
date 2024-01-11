@@ -1,9 +1,6 @@
 .editor_sidebar {
-  //width: 30%;
-  //min-width: 30%;
   padding: 4px;
   width: var(--sidebar-width);
-  box-sizing: border-box;
   text-align: left;
   display: flex;
   flex-flow: column;
@@ -17,7 +14,7 @@
 .preview_title {
   font-weight: bold;
   font-size: 115%;
-  color: var(--terre-primary);
+  color: var(--primary);
 }
 
 .preview_container {
@@ -35,14 +32,14 @@
   flex: 1;
   flex-shrink: 0;
   width: 100%;
-  box-sizing: border-box;
   //margin: 4px 0 4px 0;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: var(--border-md);
 }
 
 .preview_container:hover .previewWindow {
-  border-radius: 4px 0 4px 4px;
+  border-radius: var(--radius-md);
+  border-top-right-radius: 0;
 }
 
 .gamePreviewButons {
@@ -50,11 +47,11 @@
   position: absolute;
   left: calc(var(--sidebar-width) - 8px);
   top: 0px;
-  background: #FFF;
-  border-radius: 0 4px 4px 0;
-  border: solid 1px #DDD;
+  background: var(--bg-card);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border: var(--border-md);
   border-left: none;
-  box-shadow: 1px 1px 1px #00000005;
+  box-shadow: var(--shadow-md);
 }
 
 .preview_container:hover .gamePreviewButons {
@@ -62,7 +59,7 @@
 }
 
 .gamePreviewButons>button:hover {
-  background: #EEE;
+  background: var(--bg-card-hover);
 }
 
 .preview_top_title_container {
@@ -84,15 +81,15 @@
   display: inline-block;
   padding: 4px 8px;
   font-size: 14px;
-  border-radius: 4px 4px 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   border: 1px solid rgba(0,0,0,0);
   border-bottom: none;
   transform: translateY(1px);
 }
 
 .sidebarTab>input[type="radio"]:checked+label {
-  background: #FFF;
-  color: var(--terre-primary);
+  background: var(--bg-card);
+  color: var(--primary);
   font-weight: bold;
   border: var(--border-md);
   border-bottom: none;
@@ -101,19 +98,20 @@
 .sidebarContent {
   flex: 1;
   overflow: auto;
-  background-color: #FFF;
-  border-radius: 4px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
   border: var(--border-md);
 }
 
 .sidebarTab:has(input[type="radio"]:first-child:checked)+.sidebarContent {
-  border-radius: 0 4px 4px 4px;
+  border-radius: var(--radius-md);
+  border-top-left-radius: 0;
 }
 
 .divider {
   height: 100%;
   width: 2px;
-  background-color: var(--editorSidebar-divider-background);
+  background-color: var(--bg-divider);
   position: absolute;
   top: 0;
   cursor: ew-resize;
@@ -122,11 +120,11 @@
 }
 
 .divider:hover {
-  border: solid 2px var(--terre-primary);
+  border: solid 2px var(--primary);
 }
 
 .divider:active {
-  border: solid 2px var(--terre-primary);
+  border: solid 2px var(--primary);
 }
 
 .divider:active+.preview_container {
@@ -136,13 +134,4 @@
 .editor_sidebar {
   -webkit-user-select: none;
   user-select: none;
-}
-
-.livePreviewNotice {
-  color: var(--terre-primary);
-  margin: 5px;
-  padding: 5px;
-  background: var(--editorSidebar-livePreviewNotice-background);
-  border-radius: 4px;
-  font-size: 85%;
 }
