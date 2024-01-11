@@ -13,7 +13,7 @@
 }
 
 .topbar_btn {
-  border: --border-trans-md;
+  border: var(--border-trans-md);
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   background: transparent;
   margin: 0;
