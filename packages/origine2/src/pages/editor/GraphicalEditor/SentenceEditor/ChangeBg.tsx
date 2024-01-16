@@ -95,8 +95,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
                     duration.set("");
                   else
                     duration.set(newDuration);
-                  submit();
-                }}/>
+                }} onBlur={submit}/>
             </div>
           </CommonOptions>
         </div>

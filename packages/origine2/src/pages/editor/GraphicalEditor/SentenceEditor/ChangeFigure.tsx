@@ -232,8 +232,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   duration.set("");
                 else
                   duration.set(newDuration);
-                submit();
-              }}/>
+              }} onBlur={submit}/>
             </div>
           </CommonOptions>
         </div>

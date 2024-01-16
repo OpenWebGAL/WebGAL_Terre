@@ -45,14 +45,13 @@ export default function SetTransform(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="10" title={tTarget('duration.title')}>
         <div>
-          <TextField placeholder="持续时间" value={duration.value.toString()} onChange={(_, newValue) => {
+          <TextField placeholder={tTarget("$持续时间（单位为毫秒）")} value={duration.value.toString()} onChange={(_, newValue) => {
             const newDuration = Number(newValue);
             if (isNaN(newDuration))
               duration.set(0);
             else
               duration.set(newDuration);
-            submit();
-          }}/>
+          }} onBlur={submit}/>
         </div>
       </CommonOptions>
       <CommonOptions key="2" title={tTarget('preparedTarget.title')}>
