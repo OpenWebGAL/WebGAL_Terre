@@ -7,12 +7,14 @@ import {ITag} from "../../../store/statusReducer";
 import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
 import useTrans from "@/hooks/useTrans";
 import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
+import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugger";
 
 export default function EditArea() {
   const t = useTrans('editor.mainArea.');
   const selectedTagTarget = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const tags = useSelector((state: RootState) => state.status.editor.tags);
   const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode);
+  const isShowDebugger = useSelector((state: RootState) => state.status.editor.isShowDebugger);
 
   // 生成每个 Tag 对应的编辑器主体
 
@@ -40,12 +42,13 @@ export default function EditArea() {
 
   const tagPage = tag ? getTagPage(tag) : "";
 
-  return<>
+  return <>
     <div className={styles.editArea_main}>
       {selectedTagTarget === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
       {selectedTagTarget !== "" && tagPage}
     </div>
-    {isScene &&<EditorToolbar/>}
+    {isScene && isShowDebugger && <EditorDebugger/>}
+    {isScene && <EditorToolbar/>}
   </>;
 }
 

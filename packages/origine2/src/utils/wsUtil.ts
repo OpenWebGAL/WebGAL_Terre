@@ -20,7 +20,27 @@ export class WsUtil {
           scene: sceneName,
           sentence: lineNumber
         },// @ts-ignore
-        stageSyncMsg: {}
+        stageSyncMsg: {},
+        message: 'Sync'
+      };
+      // @ts-ignore
+      window["currentWs"].send(JSON.stringify(message));
+    }
+  }
+
+  public static sendExeCommand(command: string) {
+
+    // @ts-ignore
+    if (window["currentWs"]) { // @ts-ignore
+      logger.debug("编辑器开始发送同步数据");
+      const message: IDebugMessage = {
+        command: DebugCommand.EXE_COMMAND,
+        sceneMsg: {
+          scene: 'temp',
+          sentence: 0
+        },// @ts-ignore
+        stageSyncMsg: {},
+        message: command
       };
       // @ts-ignore
       window["currentWs"].send(JSON.stringify(message));
