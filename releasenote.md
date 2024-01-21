@@ -4,17 +4,15 @@
 
 #### 新功能
 
-升级主界面 UI
+升级引擎
+
+`intro` 添加结束后保持功能
+
+添加更多动画选项
 
 #### 修复
 
-修复引擎的一些故障
-
-修复 Live2D 读取动作和表情不正常的问题
-
-修复对话编辑器无法正确处理多行文本的问题
-
-修复插入语句顺序不正确的问题
+修复部分样式问题
 
 <!-- English Translation -->
 ## Release Notes
@@ -23,17 +21,15 @@
 
 #### New Features
 
-Upgrade the UI of main interface
+Upgrade engine
+
+Add keep function after `intro` ends
+
+Add more animation options
 
 #### Bug Fixes
 
-Fix some bugs of engine
-
-Fix the problem that Live2D can't read actions and expressions properly
-
-Fix the problem that dialogue editor can't handle multiline text correctly
-
-Fix the problem that the order of inserting statements is incorrect
+Fix some style problems
 
 
 
@@ -44,17 +40,15 @@ Fix the problem that the order of inserting statements is incorrect
 
 #### 新機能
 
-メイン画面UIをアップグレード
+エンジンをアップグレード
+
+`intro` に終了後保持機能を追加
+
+より多くのアニメーション オプションを追加
 
 #### 修正
 
-エンジンの不具合を修正
-
-Live2Dの動作と表情の読み込みが異常な問題を修正
-
-会話エディタが複数行のテキストを正しく処理できない問題を修正
-
-挿入する文の順番が正しくない問題を修正
+一部のスタイルの問題を修正
 
 
 <!-- French Translation -->
@@ -64,14 +58,12 @@ Live2Dの動作と表情の読み込みが異常な問題を修正
 
 #### Nouvelles fonctionnalités
 
-Mise à jour de l'interface utilisateur de l'écran principal
+Moteur amélioré
+
+Ajout de la fonction de maintien après la fin de `intro`
+
+Ajout de plus d'options d'animation
 
 #### Corrections
 
-Correction de quelques bugs du moteur
-
-Correction du problème de lecture des mouvements et des expressions Live2D
-
-Correction du problème de l'éditeur de dialogue qui ne traite pas correctement le texte sur plusieurs lignes
-
-Correction du problème de l'ordre incorrect d'insertion des lignes
+Correction de quelques problèmes de style
