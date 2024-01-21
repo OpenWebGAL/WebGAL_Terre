@@ -7,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -16,7 +16,7 @@ code {
     monospace;
 }
 
-#root{
+#root {
   height: 100vh;
   width: 100vw;
   overflow: hidden;

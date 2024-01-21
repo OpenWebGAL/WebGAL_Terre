@@ -7,7 +7,6 @@ const parser = new SceneParser((assetList) => {
 }, (fileName, assetType) => {
   return fileName;
 }, ADD_NEXT_ARG_LIST, [...SCRIPT_CONFIG]);
-// TODO:没有正确读取配置，待查
 
 /**
  * 场景解析器
