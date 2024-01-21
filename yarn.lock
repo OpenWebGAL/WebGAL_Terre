@@ -8130,9 +8130,9 @@ web-streams-polyfill@^3.0.3:
   integrity sha512-3pRGuxRF5gpuZc0W+EpwQRmCD7gRqcDOMt688KmdlDAgAyaB1XlN0zq2njfDNm44XVdIouE7pZ6GzbdyH47uIQ==
 
 webgal-parser@latest:
-  version "4.4.8"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.4.8.tgz#0a894bcb55d89fdcf080f1d896e945ca9c5715d5"
-  integrity sha512-3iSYCeKP++CoE4lE+xyQeLvPo1cUvpboN9ED0pgrFnzoAFNU0z518SXs1/I+4H5n674Kwe5Il10lz+ukTEfSEA==
+  version "4.4.9-fix1"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.4.9-fix1.tgz#5bda2b7308900d9f6c9dea85f1a8d0b36e38aa45"
+  integrity sha512-jtfxkjntPo6svJPVOoqZ36r/rObk36YDvctof6apjuK8s/LgfJFi82NP9eLmvvatkI3aIFSe6mZIV2tLtTgIfQ==
   dependencies:
     chevrotain "^10.5.0"
     cloudlogjs "^1.0.11"

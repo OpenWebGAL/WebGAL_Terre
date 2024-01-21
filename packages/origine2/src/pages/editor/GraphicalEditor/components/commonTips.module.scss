@@ -1,9 +1,9 @@
 .tips {
-  background: var(--commonTips-tips-background);
+  background: var(--primary-5pct);
   margin: 0 0 3px 0;
   padding: 4px 6px 4px 6px;
-  border-radius: 4px;
-  color: var(--terre-primary);
+  border-radius: var(--radius-md);
+  color: var(--primary);
   font-size: 90%;
   font-weight: normal;
 }
