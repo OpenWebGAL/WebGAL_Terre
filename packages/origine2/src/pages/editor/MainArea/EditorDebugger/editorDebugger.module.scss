@@ -1,0 +1,51 @@
+.main {
+  width: 100%;
+  text-align: left;
+  min-height: 20%;
+  max-height: 40%;
+  overflow: auto;
+  display: flex;
+  flex-flow: column;
+}
+
+.root {
+  font-family: "JetBrains Mono", monospace !important;
+  color: var(--primary);
+}
+
+.prompt {
+  font-family: "JetBrains Mono", monospace !important;
+  color: var(--primary);
+}
+
+.command {
+  font-family: "JetBrains Mono", monospace !important;
+  color: var(--blue-deep);
+}
+
+.response {
+  font-family: "JetBrains Mono", monospace !important;
+  color: var(--blue-light);
+}
+
+.debuggerChecker {
+  display: flex;
+  padding: 3px 6px;
+}
+
+.debuggerButton {
+  border-bottom: 1px solid transparent;
+  padding: 2px;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.checked {
+  color: var(--primary);
+  font-weight: bold;
+  border-bottom: 1px solid var(--primary);
+}
+
+.debuggerContent{
+  overflow: auto;
+}

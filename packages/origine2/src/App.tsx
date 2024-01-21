@@ -13,6 +13,7 @@ import Translation from "./components/translation/Translation";
 import {lspSceneName} from "@/runtime/WG_ORIGINE_RUNTIME";
 import './config/themes/theme.css';
 import {PersistGate} from 'redux-persist/integration/react';
+import './assets/font-family.css';
 
 function App() {
   useEffect(() => {
