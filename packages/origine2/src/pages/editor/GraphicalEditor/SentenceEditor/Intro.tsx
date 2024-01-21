@@ -3,7 +3,7 @@ import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
 import {useValue} from "../../../../hooks/useValue";
 import {cloneDeep} from "lodash";
-import {DefaultButton, PrimaryButton, Dropdown, ColorPicker, IColor} from "@fluentui/react";
+import {DefaultButton, PrimaryButton, Dropdown, ColorPicker, IColor, Toggle} from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
 import {getArgByKey} from "../utils/getArgByKey";
 import {useState} from "react";
@@ -15,6 +15,8 @@ import {useExpand} from "@/hooks/useExpand";
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
   const introTextList = useValue(props.sentence.content.split("|"));
+  const isHoldFromSentence = getArgByKey(props.sentence, 'hold');
+  const isHold = useValue(!!isHoldFromSentence);
   const initialBackgroundColor: IColor = {
     r: 0,
     g: 0,
@@ -178,7 +180,8 @@ export default function Intro(props: ISentenceEditorProps) {
     const selectedDelayTime = delayTime.value;
     const backgroundRgbaColor = `rgba(${backgroundColor.value.r}, ${backgroundColor.value.g}, ${backgroundColor.value.b}, ${backgroundColor.value.a ? backgroundColor.value.a / 100 : 1})`;
     const fontRgbaColor = `rgba(${fontColor.value.r}, ${fontColor.value.g}, ${fontColor.value.b}, ${fontColor.value.a ? fontColor.value.a / 100 : 1})`;
-    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime};`);
+    const holdStr = isHold.value ? ` -hold` : '';
+    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime}${holdStr};`);
   };
 
   const introCompList = introTextList.value.map((text, index) => {
@@ -215,7 +218,7 @@ export default function Intro(props: ISentenceEditorProps) {
       introTextList.set(newList);
       submit();
     }}>{t('add.button')}</DefaultButton>
-    <DefaultButton onClick={()=>updateExpandIndex(props.index)} styles={optionButtonStyles}>
+    <DefaultButton onClick={() => updateExpandIndex(props.index)} styles={optionButtonStyles}>
       {t('$效果选项')}
     </DefaultButton>
     <TerrePanel sentenceIndex={props.index} title="效果选项">
@@ -247,6 +250,15 @@ export default function Intro(props: ISentenceEditorProps) {
               options={delayTimes.map(f => ({key: f.key, text: f.text}))}
               onChange={(ev, newValue: any) => {
                 delayTime.set(newValue?.key?.toString() ?? "");
+                submit();
+              }}
+            />
+          </CommonOptions>
+          <CommonOptions title={t('$结束后保持')}>
+            <Toggle
+              checked={isHold.value}
+              onChange={(ev, newValue) => {
+                isHold.set(newValue ?? false);
                 submit();
               }}
             />
