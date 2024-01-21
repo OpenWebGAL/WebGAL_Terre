@@ -1,34 +1,22 @@
-.tag {
-  padding: 5px 7px 3px 10px;
-  cursor: pointer !important;
-  user-select: none !important;
-  display: flex;
-  background: var(--tagManager-tag-background);
-  border-top: 2px solid var(--tagManager-tag-border-top);
-  //transition: all 0.33s;
-  align-items: flex-start;
-  flex-shrink: 0;
-}
-
 .tagsContainer {
   display: flex;
-  background: var(--tagManager-tagsContainer-background);
   overflow: auto;
   width: 100%;
   max-width: 100%;
+  border-bottom: var(--border-sm);
 
   &::-webkit-scrollbar {
     width: 2px;
     height: 2px;
-    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-background);
+    background-color: var(--bg-scrollbar);
   }
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-background);
+    background-color: var(--bg-scrollbar-thumb);
 
     &:hover {
-      background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-hover-background);
+      background-color: var(--bg-scrollbar-thumb-hover);
     }
   }
 
@@ -39,29 +27,59 @@
 
   & {
     scrollbar-width: thin; /* Firefox */
-    scrollbar-color: var(--tagManager-tagsContainer-Firefox-scrollbar-first) var(--tagManager-tagsContainer-Firefox-scrollbar-second); /* Firefox */
+    scrollbar-color: var(--bg-scrollbar-thumb) var(--bg-scrollbar); /* Firefox */
   }
 }
 
+.tag {
+  padding: 2px 4px;
+  cursor: pointer !important;
+  -webkit-user-select: none;
+  user-select: none !important;
+  display: flex;
+  border-top: var(--border-trans-lg);
+  border-right: var(--border-sm);
+  //transition: all 0.33s;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 4px;
+}
+
 .tag_active {
-  background: var(--tagManager-tag-active-background) !important;
-  border-top: 2px solid var(--tagManager-tag-active-border-top);
-  color: var(--tagManager-tag-active-border-top);
+  background: var(--bg-card) !important;
+  border-top: var(--border-primary-lg);
+  color: var(--primary);
   //font-style: italic;
   //font-weight: 700;
 }
 
 .tag:hover {
-  background: var(--tagManager-tag-hover-background);
+  background: var(--bg-card-hover);
 }
 
 .closeIcon {
   border-radius: 100px;
-  margin: 0 0 0 6px;
-  padding: 0 5px 3px 5px;
+  display: grid;
+  grid: 1 1;
   transition: all 0.33s;
+  justify-items: center;
+  align-items: center;
+  width: 22px;
+  aspect-ratio: 1 / 1;
 }
 
 .closeIcon:hover {
-  background: var(--tagManager-closeIcon-hover-background);
+  background: var(--bg-button-hover);
+}
+
+.tag>.closeIcon {
+  visibility: hidden;
+}
+
+.tag:hover>.closeIcon {
+  visibility: visible;
+}
+
+.tag_active>.closeIcon {
+  visibility: visible;
 }
