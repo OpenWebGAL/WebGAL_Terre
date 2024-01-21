@@ -7,6 +7,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { env } from 'process';
 
 let WEBGAL_PORT = 3000; // default port
+const version_number = `4.4.10`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }
@@ -26,7 +27,7 @@ async function bootstrap() {
 }
 
 bootstrap().then(() => {
-  console.log(`WebGAL Terre 4.4.9 starting at ${process.cwd()}`);
+  console.log(`WebGAL Terre ${version_number} starting at ${process.cwd()}`);
   if ((process?.env?.NODE_ENV ?? '') !== 'development')
     _open(`http://localhost:${WEBGAL_PORT + 1}`);
 });
