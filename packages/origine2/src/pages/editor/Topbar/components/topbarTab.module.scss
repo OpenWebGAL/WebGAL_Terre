@@ -1,7 +1,7 @@
 .tab{
   border: var(--border-md);
-  border-radius: 4px;
-  background: #FFF;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
   min-height: 60px;
   overflow: auto;
   display: flex;
@@ -12,9 +12,9 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-background);
+    background-color: var(--bg-scrollbar-thumb);
     background-clip: content-box;
-    border-radius: 4px;
+    border-radius: var(--radius-md);
     border: 2px solid transparent;
   }
 
@@ -23,11 +23,11 @@
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background-color: var(--tagManager-tagsContainer-webkit-scrollbar-thumb-hover-background);
+    background-color: var(--bg-scrollbar-thumb-hover);
   }
 
   & {
     scrollbar-width: thin; /* Firefox */
-    scrollbar-color: var(--tagManager-tagsContainer-Firefox-scrollbar-first) var(--tagManager-tagsContainer-Firefox-scrollbar-second); /* Firefox */
+    scrollbar-color: var(--bg-scrollbar-thumb) var(--bg-scrollbar); /* Firefox */
   }
 }

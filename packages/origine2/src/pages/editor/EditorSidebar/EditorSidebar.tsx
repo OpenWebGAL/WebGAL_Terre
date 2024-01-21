@@ -6,7 +6,7 @@ import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
 import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
-import { IconButton, TooltipHost } from "@fluentui/react";
+import { IconButton } from "@fluentui/react";
 import {eventBus} from "@/utils/eventBus";
 
 let startX = 0;
@@ -76,7 +76,6 @@ export default function EditorSideBar() {
     };
   }, []);
 
-  const isEnableLivePreview = useSelector((state: RootState) => state.status.editor.isEnableLivePreview);
   const dispatch = useDispatch();
 
   const setSidebarTab = (currentTag: sidebarTag) => {
@@ -104,13 +103,6 @@ export default function EditorSideBar() {
       {
         state.showPreview &&
         <div className={styles.preview_container} id="gamePreview">
-          {/*
-        <div className={styles.livePreviewNotice}>
-          <TerreToggle title={t('livePreview')} isChecked={isEnableLivePreview} onChange={(v)=>{dispatch(setIsLivePreview(v));}} onText="" offText=""/>
-          <div>
-            {t('notice')}
-          </div>
-        </div> */}
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
           <iframe
             ref={ifRef}
@@ -130,7 +122,6 @@ export default function EditorSideBar() {
               title={t("preview.previewInNewTab")}
               onClick={() => window.open(`/games/${state.currentEditingGame}`, "_blank")}
             />
-
           </div>
         </div>
       }

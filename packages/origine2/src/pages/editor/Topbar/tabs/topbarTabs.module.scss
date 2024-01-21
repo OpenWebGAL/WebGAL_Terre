@@ -7,7 +7,7 @@
   font-size: 115%;
   padding: 0.15em 0 0 0;
   font-weight: bold;
-  color: var(--terre-primary);
+  color: var(--primary);
 }
 
 .sidebar_tag_head {
@@ -33,6 +33,7 @@
 .sidebar_gameconfig_container {
   padding: 0.5em;
   margin: 4px 0;
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   flex-flow: column;
@@ -41,6 +42,7 @@
 .tabItem {
   padding:0;
   margin: 4px 0 4px 0.5em;
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   //flex-flow: column;
@@ -75,37 +77,26 @@
   font-size: smaller;
   box-sizing: border-box;
   padding: 0.2em 0.5em 0.2em 0.5em;
-  //background: var(--sidebarTags-editButton-background);
-  color: var(--terre-primary);
-  border-radius: 4px;
+  color: var(--primary);
+  border-radius: var(--radius-md);
   cursor: pointer;
   margin: 0 0 0 0.25em;
 }
 
 .editButton:hover{
-  background: var(--sidebarTags-editButton-background);
+  background: var(--primary-10pct);
 }
 
 .addIcon{
   padding: 5px 5px 4px 5px;
-  background: var(--terre-primary-10pct);
-  border-radius: 4px;
+  background: var(--primary-10pct);
+  border-radius: var(--radius-md);
   cursor: pointer;
   margin: 0 10px 0 0;
 }
 
 .addIcon:hover{
   background: rgba(0,92,175,0.15);
-}
-
-.open_assets {
-  cursor: pointer;
-  background: var(--sidebarTags-open-assets-background);
-  padding: 5px 10px 5px 10px;
-  box-sizing: border-box;
-  color: var(--sidebarTags-open-assets);
-  border-radius: 4px;
-  margin: 0 0 0 auto;
 }
 
 .imageChooseItem {
@@ -116,11 +107,11 @@
   margin: 0 5px 0 0;
   align-items: center;
   gap: 5px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
 }
 
 .imageChooseItem:hover {
-  background: var(--sidebarTags-imageChooseItem-hover-background);
+  background: var(--bg-button-hover);
 }
 
 .imageChooseItemImage {

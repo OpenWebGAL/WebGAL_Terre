@@ -712,5 +712,6 @@ export const en = {
   "个字": " Words",
   "默认值0":"Default Value is 0",
   "默认值1":"Default Value is 1",
-  "持续时间（单位为毫秒）":"Duration (milliseconds)"
+  "持续时间（单位为毫秒）":"Duration (milliseconds)",
+  "结束后保持":"Hold after end"
 };

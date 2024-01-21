@@ -1,27 +1,13 @@
 .tag_title_button {
   font-size: 90%;
-  //margin: 0 0 0 5px;
   padding: 3px 7px 3px 7px;
-  color: #FFF;
+  color: var(--bg-root);
   cursor: pointer;
-  //border-radius: 4px;
-  //border-left: 1px solid var(--common-tag_title_button);
-  background: var(--terre-primary);
-  border-radius: 4px;
+  background: var(--primary);
+  border-radius: var(--radius-md);
   transition: background-color 0.33s, border-left-color 0.33s;
-  border: 1px solid rgba(31, 35, 40, 0.15);
-  box-shadow: rgba(31, 35, 40, 0.1) 0 1px 0 0;
-
-  &:first-child {
-    //border-left: 1px solid var(--common-tag_title_button-first-child-border-left);
-  }
 
   &:hover {
-    //border-left: 1px solid var(--common-tag_title_button-hover-border-left);
-    background: rgba(0,92,175,0.9);
+    background: var(--primary-90pct);
   }
 }
-
-//body {
-//  //--sidebar-width: 384px;
-//}

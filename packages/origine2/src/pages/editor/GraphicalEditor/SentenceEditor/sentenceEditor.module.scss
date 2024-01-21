@@ -22,29 +22,28 @@
   box-shadow: none;
   appearance: none;
   outline: none;
-  background: var(--sentenceEditor-sayInput-background);
-  border: 1px solid var(--sentenceEditor-sayInput-border);
+  background: var(--bg-input);
+  border: var(--border-md);
   padding: 6px 6px 6px 6px;
-  border-radius: 4px;
-  font-size: 90%;
+  border-radius: var(--radius-md);
+  // font-size: 95%;
   width: 50%;
 }
 
 .sayArea {
-  background: var(--sentenceEditor-sayArea-background);
-  border: 1px solid var(--sentenceEditor-sayArea-border);
+  background: var(--bg-input);
+  border: var(--border-md);
   width: 75%;
   font-family: inherit;
   box-shadow: none;
   outline: none;
   resize: none;
   padding: 6px 6px 6px 6px;
-  border-radius: 4px;
-  font-size: 90%;
+  border-radius: var(--radius-md);
+  // font-size: 95%;
   height: 5em;
-  color: var(--sentenceEditor-sayArea);
 }
 
 .iconParkIcon > svg > path{
-  stroke: var(--iconPark-icon-fill);
+  stroke: var(--text);
 }
