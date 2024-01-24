@@ -2,11 +2,10 @@ import { DeleteOne, Editor } from "@icon-park/react";
 import { ReactElement } from "react";
 import styles from "./sidebarComponents.module.scss";
 import { useValue } from "../../../../hooks/useValue";
-import { Callout, DefaultButton, PrimaryButton, Text, TextField } from "@fluentui/react";
-import { useId } from "@fluentui/react-hooks";
 import useTrans from "@/hooks/useTrans";
 import documentLogo from "material-icon-theme/icons/document.svg";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
+import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Text } from "@fluentui/react-components";
 
 export interface IFileElementProps {
   name: string;
@@ -58,72 +57,64 @@ export default function FileElement(props: IFileElementProps) {
 
   const showDeleteCalllout = useValue(false);
 
-  const editNameButtonId = useId(`editNameButton`);
-  const deleteButtonId = useId("deleteButton");
-
-  // @ts-ignore
-  return <div className={styles.fileElement} onClick={clickCallback}>
-    <div className={styles.fileElement_icon}>{icon}</div>
-    <div className={styles.fileElement_name}>{props.name}</div>
-    <div id={`current_${props.name}`} style={{
-      display: showEditNameCallout.value ? "block" : undefined
-    }} className={styles.fileElement_interactable_icon} onClick={(e) => {
-      e.stopPropagation();
-      switchEditNameCallout();
-    }}>
-      <Editor id={editNameButtonId} theme="outline" size="18" strokeWidth={3} />
-      {showEditNameCallout.value && <Callout
-        className={styles.callout}
-        ariaLabelledBy="editName"
-        ariaDescribedBy="editName"
-        role="dialog"
-        gapSpace={0}
-        target={`#${editNameButtonId}`}
-        onDismiss={closeEditNameCallout}
-        setInitialFocus
-        style={{ width: "300px", padding: "5px 10px 5px 10px" }}
+  return (
+    <div className={styles.fileElement} onClick={clickCallback}>
+      <div className={styles.fileElement_icon}>{icon}</div>
+      <div className={styles.fileElement_name}>{props.name}</div>
+      <Popover
+        withArrow
+        open={showEditNameCallout.value}
+        onOpenChange={switchEditNameCallout}
       >
-        <Text block variant="xLarge" className={styles.title} id="editNameTitle">
-          {t("editName.title")}
-        </Text>
-        <div>
-          <TextField defaultValue={newFileName.value} onChange={updateNewFilename} label={t("editName.text")} />
-        </div>
-        <div style={{ display: "flex", justifyContent: "center", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text={t("$common.revise")} onClick={commitNewFileName} allowDisabledFocus />
-        </div>
-      </Callout>}
-    </div>
-    <div style={{
-      display: showEditNameCallout.value ? "block" : undefined
-    }} className={styles.fileElement_interactable_icon} onClick={(e) => {
-      e.stopPropagation();
-      showDeleteCalllout.set(!showDeleteCalllout.value);
-    }}>
-      {!props?.undeletable && <DeleteOne id={deleteButtonId} theme="outline" size="18" strokeWidth={3} />}
-      {!props?.undeletable && showDeleteCalllout.value && <Callout
-        className={styles.callout}
-        ariaLabelledBy="deleteFile"
-        ariaDescribedBy="deleteFile"
-        role="dialog"
-        gapSpace={0}
-        target={`#${deleteButtonId}`}
-        onDismiss={() => {
-          showDeleteCalllout.set(false);
-        }}
-        setInitialFocus
-        style={{ width: "300px", padding: "5px 10px 5px 10px" }}
+        <PopoverTrigger>
+          <div 
+            style={{display: showEditNameCallout.value ? "block" : undefined}} 
+            className={styles.fileElement_interactable_icon} 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Editor theme="outline" size="18" strokeWidth={3} />
+          </div>
+        </PopoverTrigger>
+        <PopoverSurface onClick={(e) => e.stopPropagation()}>
+          <Text as="h3" block size={500} id="editNameTitle">
+            {t("editName.title")}
+          </Text>
+          <div>
+            <Input defaultValue={newFileName.value} onChange={updateNewFilename} placeholder={t("editName.text")} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", gap: "8px", padding: "5px 0 5px 0" }}>
+            <Button appearance="primary" onClick={commitNewFileName}>{t("$common.revise")}</Button>
+          </div>
+        </PopoverSurface>
+      </Popover>
+      <Popover
+        withArrow
+        open={showDeleteCalllout.value}
+        onOpenChange={() => showDeleteCalllout.set(!showDeleteCalllout.value)}
       >
-        <Text block variant="xLarge" className={styles.title} id="editNameTitle">
-          {t({ key: "delete.text", format: { name: props.name } })}
-        </Text>
-        <div style={{ display: "flex", justifyContent: "space-evenly", padding: "5px 0 5px 0" }}>
-          <PrimaryButton text={t("$common.delete")} onClick={deleteFileCallback} allowDisabledFocus />
-          <DefaultButton text={t("$common.cancel")} onClick={() => {
-            showDeleteCalllout.set(false);
-          }} allowDisabledFocus />
-        </div>
-      </Callout>}
+        <PopoverTrigger>
+          {
+            !props?.undeletable 
+              ? <div
+                style={{ display: showEditNameCallout.value ? "block" : undefined}} 
+                className={styles.fileElement_interactable_icon} 
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DeleteOne theme="outline" size="18" strokeWidth={3} />
+              </div>
+              : <div />
+          }
+        </PopoverTrigger>
+        <PopoverSurface onClick={(e) => e.stopPropagation()}>
+          <Text as="h3" block size={500} id="editNameTitle">
+            {t({ key: "delete.text", format: { name: props.name } })}
+          </Text>
+          <div style={{ display: "flex", justifyContent: "space-evenly", gap: "8px", padding: "5px 0 5px 0" }}>
+            <Button onClick={() => showDeleteCalllout.set(false)}  > {t("$common.cancel")} </Button>
+            <Button appearance="primary" onClick={deleteFileCallback}  >{t("$common.delete")}</Button>
+          </div>
+        </PopoverSurface>
+      </Popover>
     </div>
-  </div>;
+  );
 }

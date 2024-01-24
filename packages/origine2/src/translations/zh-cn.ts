@@ -674,8 +674,8 @@ export const zhCn = {
       },
     },
     fileChoose: {
-      cancel: "取消选择",
-      choose: "选择文件",
+      cancel: "取消",
+      choose: "选择",
       fileSearch: '搜索文件'
     }
   },

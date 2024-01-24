@@ -16,7 +16,7 @@
   display: flex;
   background: var(--bg-card);
   width: 100%;
-  padding: 0px 6px 6px 6px;
+  padding: 0px 4px 4px 4px;
   border: var(--border-md);
   border-radius: var(--radius-md);
 }
@@ -40,7 +40,7 @@
   align-items: center;
   box-sizing: border-box;
   margin: 0 0 0 0;
-  padding: 2px 0 4px 0;
+  padding: 2px 0 0 0;
 }
 
 .title {
@@ -55,14 +55,13 @@
 }
 
 .optionButtonContainer{
-  margin-top: 2px;
   margin-left: auto;
   opacity: 0;
   display: flex;
   border: var(--border-md);
   box-shadow: var(--shadow-md);
   border-radius: var(--radius-md);
-  padding: 2px;
+  // padding: 2px;
 }
 
 .sentenceEditorWrapper:hover .optionButtonContainer{
@@ -73,9 +72,11 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: 3px 6px 3px 6px;
+  padding: 2px 4px;
   border-radius: var(--radius-md);
   cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
   //
   //&:first-child {
   //  border-left: 1px solid;
@@ -104,7 +105,7 @@
 }
 
 .addForwardArea {
-  height: 5px;
+  height: 4px;
   width: 100%;
   position: relative;
 }
@@ -125,7 +126,7 @@
 
 .addForwardAreaButtonGroup {
   position: absolute;
-  top: -12.5px;
+  top: -11.5px;
   display: flex;
   justify-content: center;
   gap: 16px;
@@ -142,7 +143,7 @@
   border: var(--border-md);
   box-shadow: var(--shadow-md);
   border-radius: var(--radius-md);
-  padding: 2px;
+  // padding: 2px;
   height: max-content;
 }
 

@@ -667,8 +667,8 @@ export const en = {
     },
 
     fileChoose: {
-      cancel: "Cancel choose",
-      choose: "Choose file",
+      cancel: "Cancel",
+      choose: "Choose",
       fileSearch: 'Search file'
     }
   },

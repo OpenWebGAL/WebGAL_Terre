@@ -1,6 +1,5 @@
 import TopbarTab from "@/pages/editor/Topbar/components/TopbarTab";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
-import {FontIcon} from "@fluentui/react";
 import s from './addSentence.module.scss';
 import {IconWithTextItemSmall} from "@/pages/editor/Topbar/components/IconWithTextItemSmall";
 import {ISentenceEditorConfig, sentenceEditorConfig} from "@/pages/editor/GraphicalEditor/SentenceEditor";
