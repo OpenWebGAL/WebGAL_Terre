@@ -3,17 +3,22 @@ import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import { Dropdown } from "@fluentui/react";
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import useTrans from "@/hooks/useTrans";
+import { Dropdown, Option } from "@fluentui/react-components";
 
 export default function PixiPerform(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.specialEffect.options.');
 
+  const effects = new Map([
+    ["snow", t('usePrepared.effects.snow')],
+    ["rain", t('usePrepared.effects.rain')],
+    ["cherryBlossoms", t('usePrepared.effects.cherryBlossoms')],
+  ]);
+
   const isSetEffectsOff = useValue(props.sentence.command === commandType.pixiInit);
   const effectName = useValue(props.sentence.content);
-  const isUsePreset = useValue(["snow", "rain", "cherryBlossoms"].includes(effectName.value));
-
+  const isUsePreset = useValue(Array.from(effects.keys()).includes(effectName.value));
 
   const submit = () => {
     if (isSetEffectsOff.value) {
@@ -43,14 +48,16 @@ export default function PixiPerform(props: ISentenceEditorProps) {
       </CommonOptions>}
       {isUsePreset.value && <CommonOptions title={t('usePrepared.title')} key="3">
         <Dropdown
-          selectedKey={effectName.value}
-          options={[{ key: "snow", text: t('usePrepared.effects.snow') }, { key: "rain", text: t('usePrepared.effects.rain') }, { key: "cherryBlossoms",  text: t('usePrepared.effects.cherryBlossoms') }]}
-          onChange={(ev, newValue) => {
-            effectName.set(newValue?.key?.toString() ?? "");
+          value={effects.get(effectName.value) ?? effectName.value}
+          selectedOptions={[effectName.value]}
+          onOptionSelect={(ev, data) => {
+            effectName.set(data.optionValue?.toString() ?? "");
             submit();
           }}
-          styles={{ dropdown: { width: "160px" } }}
-        />
+          style={{ minWidth: 0}}
+        >
+          { Array.from(effects.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
+        </Dropdown>
       </CommonOptions>}
       {!isUsePreset.value && !isSetEffectsOff.value && < CommonOptions title={t('useUser.title')} key="3">
         <input value={effectName.value}

@@ -1,4 +1,3 @@
-import styles from "../sidebarTags.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,12 +5,12 @@ import {RootState} from "../../../../../store/origineStore";
 import axios from "axios";
 import {IFileInfo} from "webgal-terre-2/dist/Modules/webgal-fs/webgal-fs.service";
 import FileElement from "../../sidebarComponents/FileElement";
-import {Callout, PrimaryButton, Text, TextField} from "@fluentui/react";
 import {ITag, statusActions} from "../../../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import {Newlybuild} from "@icon-park/react";
 import s from './sceneTab.module.scss';
+import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Text } from "@fluentui/react-components";
 
 export default function Scenes() {
   const t = useTrans('editor.sideBar.scenes.');
@@ -27,26 +26,25 @@ export default function Scenes() {
   // 处理新建场景的问题
   const showCreateSceneCallout = useValue(false);
   const newSceneName = useValue("");
-  const updateNewSceneName = (event: any) => {
-    const newValue = event.target.value;
-    newSceneName.set(newValue);
-  };
+
   const createNewScene = async () => {
-    const gameName = state.currentEditingGame;
-    const params = new URLSearchParams();
+    if (newSceneName.value && newSceneName.value.length !==0){
+      const gameName = state.currentEditingGame;
+      const params = new URLSearchParams();
 
-    params.append("gameName", gameName);
-    params.append("sceneName", newSceneName.value);
+      params.append("gameName", gameName);
+      params.append("sceneName", newSceneName.value);
 
-    axios.post("/api/manageGame/createNewScene/", params)
-      .then(() => {
-        showCreateSceneCallout.set(false);
-        updateSceneListView();
-        newSceneName.set("");
-      })
-      .catch(() => {
-        setErrorMessage(t('dialogs.create.sceneExisted'));
-      });
+      axios.post("/api/manageGame/createNewScene/", params)
+        .then(() => {
+          showCreateSceneCallout.set(false);
+          updateSceneListView();
+          newSceneName.set("");
+        })
+        .catch(() => {
+          setErrorMessage(t('dialogs.create.sceneExisted'));
+        });
+    }
   };
 
   // 请求场景文件的函数
@@ -110,48 +108,48 @@ export default function Scenes() {
 
   return (
     <div style={{height: "100%", overflow: "auto"}}>
-      <TagTitleWrapper title="" extra={<>
-        <div
-          id="createSceneButton"
-          className={s.tag_title_button}
-          onClick={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
-        >
-          <Newlybuild
-            theme="outline"
-            size="16"
-            style={{paddingRight: 4, transform: 'translate(0,1px)'}}
-            fill="#FFFFFF"
-            strokeWidth={4}
-          />
-          {t('dialogs.create.button')}
-        </div>
-        {showCreateSceneCallout.value && (
-          <Callout
-            className={styles.callout}
-            ariaLabelledBy="createNewSceneCallout"
-            ariaDescribedBy="createNewSceneCallout"
-            role="dialog"
-            gapSpace={0}
-            target="#createSceneButton"
-            onDismiss={() => {
-              showCreateSceneCallout.set(false);
-            }}
-            setInitialFocus
-            style={{width: "300px", padding: "5px 10px 5px 10px"}}
+      <TagTitleWrapper 
+        title=""
+        extra={
+          <Popover
+            withArrow
+            open={showCreateSceneCallout.value}
+            onOpenChange={() => showCreateSceneCallout.set(!showCreateSceneCallout.value)}
           >
-            <Text block variant="xLarge" className={styles.title}>
-              {t('dialogs.create.title')}
-            </Text>
-
-            <div>
-              <TextField defaultValue={newSceneName.value} onChange={updateNewSceneName}
-                label={t('dialogs.create.text')} errorMessage={errorMessage}/>
-            </div>
-            <div style={{display: "flex", justifyContent: "center", padding: "5px 0 5px 0"}}>
-              <PrimaryButton text={t('$common.create')} onClick={createNewScene} allowDisabledFocus/>
-            </div>
-          </Callout>
-        )}</>}/>
+            <PopoverTrigger>
+              <div
+                id="createSceneButton"
+                className={s.tag_title_button}
+              >
+                <Newlybuild
+                  theme="outline"
+                  size="16"
+                  style={{paddingRight: 4, transform: 'translate(0,1px)'}}
+                  fill="#FFFFFF"
+                  strokeWidth={4}
+                />
+                {t('dialogs.create.button')}
+              </div>
+            </PopoverTrigger>
+            <PopoverSurface>
+              <Text as="h3" block size={500}>
+                {t('dialogs.create.title')}
+              </Text>
+              <div>
+                <Input
+                  value={newSceneName.value}
+                  onChange={(e)=> newSceneName.set(e.target.value)}
+                  placeholder={t('dialogs.create.text')}
+                  onKeyDown={(event) => (event.key === "Enter") && createNewScene()}
+                />
+              </div>
+              <div style={{display: "flex", justifyContent: "center", padding: "5px 0 5px 0"}}>
+                <Button appearance="primary" onClick={createNewScene}>{t('$common.create')}</Button>
+              </div>
+            </PopoverSurface>
+          </Popover>
+        }
+      />
       <div style={{overflow: "auto", maxHeight: "calc(100% - 35px)"}}>{showSceneList}</div>
     </div>
   );

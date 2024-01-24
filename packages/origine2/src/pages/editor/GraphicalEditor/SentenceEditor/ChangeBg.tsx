@@ -8,9 +8,9 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import useTrans from "@/hooks/useTrans";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
-import {DefaultButton, PrimaryButton, TextField} from "@fluentui/react";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import {useExpand} from "@/hooks/useExpand";
+import { Button, Input } from "@fluentui/react-components";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.changeBg.');
@@ -74,9 +74,9 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         />
       </CommonOptions>}
       <CommonOptions key="23" title={t("options.displayEffect.title")}>
-        <DefaultButton onClick={() => {
+        <Button onClick={() => {
           updateExpandIndex(props.index);
-        }}>{t('$打开效果编辑器')}</DefaultButton>
+        }}>{t('$打开效果编辑器')}</Button>
       </CommonOptions>
       <TerrePanel sentenceIndex={props.index} title={t("$效果编辑器")}>
         <div>
@@ -88,14 +88,18 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           }}/>
           <CommonOptions key="10" title={t("$持续时间（单位为毫秒）")}>
             <div>
-              <TextField placeholder={t("$持续时间（单位为毫秒）")} value={duration.value.toString()}
-                onChange={(_, newValue) => {
-                  const newDuration = Number(newValue);
-                  if (isNaN(newDuration) || newValue === '')
+              <Input
+                placeholder={t("$持续时间（单位为毫秒）")}
+                value={duration.value.toString()}
+                onChange={(_, data) => {
+                  const newDuration = Number(data.value);
+                  if (isNaN(newDuration) || data.value === '')
                     duration.set("");
                   else
                     duration.set(newDuration);
-                }} onBlur={submit}/>
+                }}
+                onBlur={submit}
+              />
             </div>
           </CommonOptions>
         </div>
