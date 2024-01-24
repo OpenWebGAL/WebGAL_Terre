@@ -92,7 +92,7 @@ const About: React.FunctionComponent = () => {
               </p>
               <hr />
               <div >
-                Powered by <Link href="https://github.com/MakinoharaShoko/WebGAL" target="_blank" >WebGAL</Link> Framework
+                Powered by <Link href="https://github.com/OpenWebGAL" target="_blank" >WebGAL</Link> Framework
               </div>
               <div>
                 Made with ❤ by <Link href="https://github.com/MakinoharaShoko" target="_blank" >Mahiru</Link>

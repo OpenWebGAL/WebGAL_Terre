@@ -1,5 +1,5 @@
 .item {
-  padding: 6px 8px 6px 8px;
+  padding: 2px 4px;
   //margin: 0 0 0 8px;
   display: flex;
   flex-flow: column;
@@ -13,7 +13,6 @@
 .title {
   text-align: left;
   color: var(--text-weak);
-  padding: 0 0 5px 0;
   font-weight: bold;
   font-size: 95%;
 }

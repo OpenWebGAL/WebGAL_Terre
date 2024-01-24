@@ -676,7 +676,7 @@ export const jp = {
 
     fileChoose: {
       cancel: "キャンセル",
-      choose: "ファイル選択",
+      choose: "選択",
       fileSearch: 'ファイル検索'
     }
   },
