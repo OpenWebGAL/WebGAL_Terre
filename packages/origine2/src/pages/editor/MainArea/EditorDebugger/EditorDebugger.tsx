@@ -54,12 +54,12 @@ export default function EditorDebugger() {
   }, []);
 
   const stateEditor = <div>
-    <JsonView style={{...githubLightTheme, overflow: 'auto'}} value={editorValue.value}/>
+    <JsonView style={{...githubLightTheme, overflow: 'auto',fontFamily:'"JetBrains Mono", monospace'}} value={editorValue.value}/>
   </div>;
 
   const webgalConsole = <div>
     <Terminal
-      prompt="WebGAL Script $" pt={{
+      prompt="WebGAL Script >" pt={{
         root: {className: s.root},
         prompt: {className: s.prompt},
         command: {className: s.command},
