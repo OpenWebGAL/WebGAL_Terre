@@ -1,16 +1,21 @@
 import CommonOptions from "../components/CommonOption";
-import {ISentenceEditorProps} from "./index";
+import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
-import {useValue} from "../../../../hooks/useValue";
-import {cloneDeep} from "lodash";
-import {DefaultButton, PrimaryButton, Dropdown, ColorPicker, IColor, Toggle} from "@fluentui/react";
+import { useValue } from "../../../../hooks/useValue";
+import { cloneDeep } from "lodash";
+import { ColorPicker, IColor } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
-import {getArgByKey} from "../utils/getArgByKey";
-import {useState} from "react";
+import { getArgByKey } from "../utils/getArgByKey";
+import { useState } from "react";
 import React from 'react';
-import {logger} from "@/utils/logger";
-import {TerrePanel} from "../components/TerrePanel";
-import {useExpand} from "@/hooks/useExpand";
+import { logger } from "@/utils/logger";
+import { TerrePanel } from "../components/TerrePanel";
+import { useExpand } from "@/hooks/useExpand";
+import { Button, Dropdown, Option, Switch } from "@fluentui/react-components";
+
+type FontSize = "small" | "medium" | "large";
+type Animation = "fadeIn" | "slideIn" | "typingEffect" | "pixelateEffect" | "revealAnimation";
+type DelayTime = 1500 | 2000 | 2500 | 3000 | 3500 | 4000 | 4500 | 5000;
 
 export default function Intro(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.intro.options.');
@@ -88,61 +93,59 @@ export default function Intro(props: ISentenceEditorProps) {
     return initialFontColor;
   };
 
+  const fontSizes = new Map<FontSize, string>([
+    ["small", "small"],
+    ["medium", "medium"],
+    ["large", "large"],
+  ]);
+
+  const animations = new Map<Animation, string>([
+    ["fadeIn", "fadeIn"],
+    ["slideIn", "slideIn"],
+    ["typingEffect", "typingEffect"],
+    ["pixelateEffect", "pixelateEffect"],
+    ["revealAnimation", "revealAnimation"],
+  ]);
+
+  const delayTimes = new Map<DelayTime, string>([
+    [1500, "1.5"],
+    [2000, "2"],
+    [2500, "2.5"],
+    [3000, "3"],
+    [3500, "3.5"],
+    [4000, "4"],
+    [4500, "4.5"],
+    [5000, "5"],
+  ]);
+
   const getInitialFontSize = (): string => {
     const fontSizeValue = getArgByKey(props.sentence, "fontSize");
 
-    if (typeof fontSizeValue === 'string' && ["small", "medium", "large"].includes(fontSizeValue)) {
+    if (typeof fontSizeValue === 'string' && Array.from(fontSizes.keys()).includes(fontSizeValue as FontSize)) {
       return fontSizeValue;
     }
 
     return "medium";
   };
 
-
   const getInitialAnimation = (): string => {
     const animationValue = getArgByKey(props.sentence, "animation");
 
-    if (typeof animationValue === 'string' && ["fadeIn", "slideIn", "typingEffect", "pixelateEffect", "revealAnimation"].includes(animationValue)) {
+    if (typeof animationValue === 'string' && Array.from(animations.keys()).includes(animationValue as Animation)) {
       return animationValue;
     }
 
     return "fadeIn";
   };
 
-
   const getInitialDelayTime = (): string => {
     const delayTimeValue = getArgByKey(props.sentence, "delayTime");
 
-    if (typeof delayTimeValue === 'number' && [1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000].includes(delayTimeValue)) {
+    if (typeof delayTimeValue === 'number' && Array.from(delayTimes.keys()).includes(delayTimeValue as DelayTime)) {
       return delayTimeValue.toString();
     }
     return "1500";
   };
-
-  const fontSizes = [
-    {key: "small", text: "small"},
-    {key: "medium", text: "medium"},
-    {key: "large", text: "large"},
-  ];
-
-  const animations = [
-    {key: "fadeIn", text: "fadeIn"},
-    {key: "slideIn", text: "slideIn"},
-    {key: "typingEffect", text: "typingEffect"},
-    {key: "pixelateEffect", text: "pixelateEffect"},
-    {key: "revealAnimation", text: "revealAnimation"},
-  ];
-
-  const delayTimes = [
-    {key: "1500", text: "1.5"},
-    {key: "2000", text: "2"},
-    {key: "2500", text: "2.5"},
-    {key: "3000", text: "3"},
-    {key: "3500", text: "3.5"},
-    {key: "4000", text: "4"},
-    {key: "4500", text: "4.5"},
-    {key: "5000", text: "5"},
-  ];
 
   const backgroundColor = useValue(getBackgroundColor());
   const fontColor = useValue(getFontColor());
@@ -151,13 +154,7 @@ export default function Intro(props: ISentenceEditorProps) {
   const delayTime = useValue(getInitialDelayTime());
   const [localBackgroundColor, setLocalBackgroundColor] = useState(backgroundColor.value);
   const [localFontColor, setLocalFontColor] = useState(fontColor.value);
-  const {updateExpandIndex} = useExpand();
-  const optionButtonStyles = {
-    root: {
-      // margin: '6px 0 0 0',
-      display: 'flex'
-    },
-  };
+  const { updateExpandIndex } = useExpand();
 
   const handleLocalBackgroundColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
     setLocalBackgroundColor(newColor);
@@ -185,7 +182,18 @@ export default function Intro(props: ISentenceEditorProps) {
   };
 
   const introCompList = introTextList.value.map((text, index) => {
-    return <div key={index} style={{display: "flex", padding: '0 0 6px 0'}}>
+    return <div key={index} style={{ display: "flex" }}>
+      <Button 
+        onClick={() => {
+          const newList = cloneDeep(introTextList.value);
+          newList.splice(index, 1);
+          introTextList.set(newList);
+          submit();
+        }}
+      >
+        {t('$common.delete')}
+      </Button>
+      <div style={{ padding: '0 0 0 4px' }} />
       <input value={text}
         onChange={(ev) => {
           const newValue = ev.target.value;
@@ -196,75 +204,77 @@ export default function Intro(props: ISentenceEditorProps) {
         onBlur={submit}
         className={styles.sayInput}
         placeholder={t('value.placeholder')}
-        style={{width: "100%"}}
+        style={{ width: "100%" }}
       />
-      <div style={{padding: '0 0 0 8px'}}/>
-      <DefaultButton onClick={() => {
-        const newList = cloneDeep(introTextList.value);
-        newList.splice(index, 1);
-        introTextList.set(newList);
-        submit();
-      }}>{t('$common.delete')}</DefaultButton>
     </div>;
   });
 
-  return <div style={{display: 'flex', gap: '8px', flexWrap: 'wrap'}}>
-    <div style={{width: '100%'}}>
+  return <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '4px' }}>
       {introCompList}
     </div>
-    <DefaultButton style={{display: 'block', textAlign: 'left'}} onClick={() => {
+    <Button onClick={() => {
       const newList = cloneDeep(introTextList.value);
       newList.push('');
       introTextList.set(newList);
       submit();
-    }}>{t('add.button')}</DefaultButton>
-    <DefaultButton onClick={() => updateExpandIndex(props.index)} styles={optionButtonStyles}>
+    }}>{t('add.button')}</Button>
+    <Button onClick={() => updateExpandIndex(props.index)}>
       {t('$效果选项')}
-    </DefaultButton>
+    </Button>
     <TerrePanel sentenceIndex={props.index} title="效果选项">
-      <div style={{width: '100%'}}>
-        <div style={{display: 'flex'}}>
+      <div style={{ width: '100%' }}>
+        <div style={{ display: 'flex' }}>
           <CommonOptions title={t('font.size')}>
             <Dropdown
-              options={fontSizes.map(f => ({key: f.key, text: f.text}))}
-              selectedKey={fontSize.value}
-              onChange={(event, item) => {
-                item && fontSize.set(item.key as string);
+              value={fontSizes.get(fontSize.value as FontSize) ?? fontSize.value}
+              selectedOptions={[fontSize.value]}
+              onOptionSelect={(event, data) => {
+                data.optionValue && fontSize.set(data.optionValue as string);
                 submit();
               }}
-            />
+              style={{ minWidth: 0 }}
+            >
+              {Array.from(fontSizes.entries()).map(([key, value]) => <Option key={key} value={key} >{value}</Option>)}
+            </Dropdown>
           </CommonOptions>
           <CommonOptions title={t('font.animation')}>
             <Dropdown
-              selectedKey={animation.value}
-              options={animations.map(f => ({key: f.key, text: f.text}))}
-              onChange={(ev, newValue: any) => {
-                animation.set(newValue?.key?.toString() ?? "");
+              value={animations.get(animation.value as Animation) ?? animation.value}
+              selectedOptions={[animation.value]}
+              onOptionSelect={(ev, data) => {
+                data.optionValue && animation.set(data.optionValue.toString() ?? "");
                 submit();
               }}
-            />
+              style={{ minWidth: 0 }}
+            >
+              {Array.from(animations.entries()).map(([key, value]) => <Option key={key} value={key} >{value}</Option>)}
+            </Dropdown>
           </CommonOptions>
           <CommonOptions title={t('font.delayTime')}>
             <Dropdown
-              selectedKey={delayTime.value}
-              options={delayTimes.map(f => ({key: f.key, text: f.text}))}
-              onChange={(ev, newValue: any) => {
-                delayTime.set(newValue?.key?.toString() ?? "");
+              value={delayTimes.get(Number(delayTime.value) as DelayTime) ?? delayTime.value}
+              selectedOptions={[delayTime.value]}
+              onOptionSelect={(ev, data) => {
+                data.optionValue && delayTime.set(data.optionValue.toString() ?? "");
                 submit();
               }}
-            />
+              style={{ minWidth: 0 }}
+            >
+              {Array.from(delayTimes.entries()).map(([key, value]) => <Option key={key} value={String(key)} >{value}</Option>)}
+            </Dropdown>
           </CommonOptions>
           <CommonOptions title={t('$结束后保持')}>
-            <Toggle
+            <Switch
               checked={isHold.value}
-              onChange={(ev, newValue) => {
-                isHold.set(newValue ?? false);
+              onChange={(ev, data) => {
+                isHold.set(data.checked ?? false);
                 submit();
               }}
             />
           </CommonOptions>
         </div>
-        <div style={{display: 'flex'}}>
+        <div style={{ display: 'flex' }}>
           <CommonOptions title={t('colorPicker.backgroundColor')}>
             <ColorPicker
               color={localBackgroundColor}
@@ -278,8 +288,12 @@ export default function Intro(props: ISentenceEditorProps) {
             />
           </CommonOptions>
         </div>
-        <DefaultButton style={{display: 'flex', marginTop: '8px'}}
-          onClick={handleSubmit}>{t('colorPicker.submit')}</DefaultButton>
+        <Button
+          style={{ marginTop: '8px' }}
+          onClick={handleSubmit}
+        >
+          {t('colorPicker.submit')}
+        </Button>
       </div>
     </TerrePanel>
   </div>;

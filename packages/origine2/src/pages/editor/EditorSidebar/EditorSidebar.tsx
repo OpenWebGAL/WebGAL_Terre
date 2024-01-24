@@ -6,8 +6,9 @@ import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
 import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
-import { IconButton } from "@fluentui/react";
 import {eventBus} from "@/utils/eventBus";
+import { ArrowClockwise24Filled, ArrowClockwise24Regular, bundleIcon, Open24Filled, Open24Regular } from "@fluentui/react-icons";
+import { Button } from "@fluentui/react-components";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -15,6 +16,10 @@ let isMouseDown = false;
 
 export default function EditorSideBar() {
   const t = useTrans("editor.sideBar.");
+
+  const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Regular);
+  const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+
   const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
   useEffect(() => {
@@ -112,13 +117,15 @@ export default function EditorSideBar() {
             src={`/games/${state.currentEditingGame}`}
           />
           <div className={styles.gamePreviewButons}>
-            <IconButton
-              iconProps={{ iconName: 'Refresh' }}
+            <Button
+              appearance="subtle"
+              icon={<ArrowClockwiseIcon />}
               title={t("preview.refresh")}
               onClick={refreshGame}
             />
-            <IconButton
-              iconProps={{ iconName: 'OpenInNewWindow' }}
+            <Button
+              appearance="subtle"
+              icon={<OpenIcon />}
               title={t("preview.previewInNewTab")}
               onClick={() => window.open(`/games/${state.currentEditingGame}`, "_blank")}
             />

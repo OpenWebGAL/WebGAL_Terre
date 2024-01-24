@@ -5,18 +5,18 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../../../store/origineStore";
 import React, {useState, useEffect, useRef} from "react";
 import {cloneDeep} from "lodash";
-import {Dropdown, IconButton, ITextField, TextField} from "@fluentui/react";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
-import {Image} from "@fluentui/react";
 import {textboxThemes} from "./constants";
 import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
+import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
+import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -153,18 +153,27 @@ interface IGameConfigEditorMulti {
 function GameConfigEditor(props: IGameConfigEditor) {
   const t = useTrans("common.");
   const showEditBox = useValue(false);
-  const inputBoxRef = useRef<ITextField>(null);
 
   return <div className={styles.textEditArea} style={{maxWidth: 200}}>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <span className={styles.editButton} onClick={() => {
-      showEditBox.set(true);
-      setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
-    {showEditBox.value && <TextField componentRef={inputBoxRef} defaultValue={props.value}
-      onBlur={() => {
-        props.onChange(inputBoxRef!.current!.value);
+    {!showEditBox.value &&
+    <span className={styles.editButton} onClick={() => showEditBox.set(true)}>
+      <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
+    </span>}
+    {showEditBox.value &&
+    <Input
+      autoFocus
+      defaultValue={props.value}
+      onBlur={(event) => {
+        props.onChange(event.target.value);
         showEditBox.set(false);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          const inputElement = event.target as HTMLInputElement;
+          props.onChange(inputElement.value);
+          showEditBox.set(false);
+        }
       }}
     />}
   </div>;
@@ -172,13 +181,20 @@ function GameConfigEditor(props: IGameConfigEditor) {
 
 function GameConfigEditorWithSelector(props: IGameConfigEditor & {
   selectItems: { key: string, text: string }[],
-  width?: number
 }) {
-  const {width = 120} = props;
-  return <Dropdown dropdownWidth={width} style={{width}} onChange={(event, item) => {
-    const key = item?.key ?? '';
-    props.onChange(key);
-  }} selectedKey={props.value} options={props.selectItems}/>;
+  return (
+    <Dropdown
+      value={props.selectItems.find(item => item.key === props.value)?.text ?? props.value}
+      selectedOptions={[props.value]}
+      onOptionSelect={(event, data) => {
+        const key = data.optionValue ?? '';
+        props.onChange(key);
+      }}
+      style={{minWidth: 0}}
+    >
+      {props.selectItems.map((item) => <Option key={item.key} value={item.key}>{item.text}</Option>)}
+    </Dropdown>
+  );
 }
 
 function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
@@ -187,7 +203,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
 }) {
   const t = useTrans("common.");
   const showEditBox = useValue(false);
-  const inputBoxRef = useRef<ITextField>(null);
+  const inputBoxRef = useRef<HTMLInputElement>(null);
   return <div className={styles.textEditArea}>
     {!showEditBox.value && props.value}
     {!showEditBox.value && <span className={styles.editButton} onClick={() => {
@@ -213,9 +229,11 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
 }) {
   const t = useTrans("common.");
   const showEditBox = useValue(false);
-  const inputBoxRef = useRef<ITextField>(null);
+  const inputBoxRef = useRef<HTMLInputElement>(null);
   const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   const images = props.value;
+
+  const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
 
   const addImage = (imageName: string) => {
     const newImages = [...images, imageName];
@@ -238,8 +256,9 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
             <img className={styles.imageChooseItemImage} src={`games/${gameName}/game/${props.sourceBase}/${imageName}`}
               alt={`logo-${index}`}/>
             {/* <div className={styles.imageChooseItemText}>{imageName}</div> */}
-            <IconButton
-              iconProps={{iconName: 'Cancel'}}
+            <Button
+              appearance="subtle"
+              icon={<DismissIcon />}
               onClick={() => removeImage(imageName)}
             />
           </div>
