@@ -3,11 +3,10 @@ import { useEffect, useMemo } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/origineStore";
-import { useId } from "@fluentui/react-hooks";
-import { Callout, DefaultButton, TextField } from "@fluentui/react";
 import styles from "./chooseFile.module.scss";
 import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
 import useTrans from "@/hooks/useTrans";
+import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
 
 export interface IChooseFile {
   sourceBase: string;
@@ -47,7 +46,6 @@ export default function ChooseFile(props: IChooseFile) {
   }, [currentDirName]);
 
   const isShowChooseFileCallout = useValue(false);
-  const buttonId = useId("choosefile-callout");
 
   function toggleIsCalloutVisible() {
     updateFileList();
@@ -91,27 +89,28 @@ export default function ChooseFile(props: IChooseFile) {
     props.onChange(null);
   }
 
-  return <>
-    <DefaultButton
-      id={buttonId}
-      onClick={isShowChooseFileCallout.value ? onCancel : toggleIsCalloutVisible}
-      text={isShowChooseFileCallout.value ? t('cancel') : t('choose')}
-    />
-    {isShowChooseFileCallout.value && (
-      <Callout
-        role="dialog"
-        gapSpace={0}
-        target={`#${buttonId}`}
-        onDismiss={onCancel}
-        setInitialFocus
-        className={styles.callout}
-      >
-        <div className={styles.chooseFileCalloutContentWarpper}>
-          <div className={styles.chooseFileCalloutTitle}>
+  return (
+    <Popover
+      withArrow
+      trapFocus
+      open={isShowChooseFileCallout.value}
+      onOpenChange={isShowChooseFileCallout.value ? onCancel : toggleIsCalloutVisible}
+    >
+      <PopoverTrigger>
+        <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t('cancel') : t('choose')}</Button>
+      </PopoverTrigger>
+      <PopoverSurface>
+        <div className={styles.chooseFileContentWarpper}>
+          <div className={styles.chooseFileTitle}>
             {t('choose')}
           </div>
           <div className="file-search">
-            <TextField label={t('fileSearch')} onChange={(ev, newValue) => fileSearch.set(newValue || '')}/>
+            <Input
+              placeholder={t('fileSearch')}
+              aria-label={t('fileSearch')}
+              onChange={(ev, data) => fileSearch.set(data.value || '')}
+              style={{width: '100%'}}
+            />
           </div>
           <div className={styles.chooseFileFileListWarpper}>
             {currentChildDir.value.length > 0 && (
@@ -123,9 +122,9 @@ export default function ChooseFile(props: IChooseFile) {
             {fileSelectButtonList}
           </div>
         </div>
-      </Callout>
-    )}
-  </>;
+      </PopoverSurface>
+    </Popover>
+  );
 }
 
 /**
