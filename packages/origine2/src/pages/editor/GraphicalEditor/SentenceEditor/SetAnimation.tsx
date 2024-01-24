@@ -5,15 +5,23 @@ import { getArgByKey } from "../utils/getArgByKey";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonOptions from "../components/CommonOption";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import { Dropdown } from "@fluentui/react";
 import CommonTips from "../components/CommonTips";
 import useTrans from "@/hooks/useTrans";
+import { Dropdown, Option } from "@fluentui/react-components";
+
+type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
 export default function SetAnimation(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.setAnime.options.');
   const fileName = useValue(props.sentence.content);
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
-  const isPresetTarget = ["bg-main", "fig-left", "fig-center", "fig-right"].includes(target.value);
+  const presetTargets = new Map<PresetTarget, string>([
+    [ "fig-left", t('preparedTarget.choose.options.figLeft') ],
+    [ "fig-center", t('preparedTarget.choose.options.figCenter') ],
+    [ "fig-right", t('preparedTarget.choose.options.figRight') ],
+    [ "bg-main", t('preparedTarget.choose.options.bgMain') ],
+  ]);
+  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
 
@@ -41,15 +49,17 @@ export default function SetAnimation(props: ISentenceEditorProps) {
         isChecked={isUsePreset.value} />
       </CommonOptions>
       {isUsePreset.value && <CommonOptions key="3" title={t('preparedTarget.choose.title')}>
-        <Dropdown styles={{ dropdown: { width: "100px" } }} onChange={(event, option, index) => {
-          target.set(option?.key.toString() ?? "");
-          submit();
-        }} options={[
-          { key: "fig-left", text: t('preparedTarget.choose.options.figLeft') },
-          { key: "fig-center", text: t('preparedTarget.choose.options.figCenter') },
-          { key: "fig-right", text: t('preparedTarget.choose.options.figRight') },
-          { key: "bg-main", text: t('preparedTarget.choose.options.bgMain') }
-        ]} selectedKey={target.value} />
+        <Dropdown
+          value={presetTargets.get(target.value as PresetTarget)}
+          selectedOptions={[target.value]}
+          onOptionSelect={(event, data) => {
+            target.set(data.optionValue?.toString() ?? "");
+            submit();
+          }}
+          style={{ minWidth: 0 }}
+        >
+          {Array.from(presetTargets.entries()).map(([key, text]) => <Option key={key} value={key}>{text}</Option>)}
+        </Dropdown>
       </CommonOptions>}
       {!isUsePreset.value && <CommonOptions key="4" title={t('targetId.title')}>
         <input value={target.value}
