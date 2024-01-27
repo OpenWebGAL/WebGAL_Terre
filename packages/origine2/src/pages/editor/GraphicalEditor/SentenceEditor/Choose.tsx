@@ -3,8 +3,8 @@ import styles from "./sentenceEditor.module.scss";
 import { useValue } from "../../../../hooks/useValue";
 import { cloneDeep } from "lodash";
 import ChooseFile from "../../ChooseFile/ChooseFile";
-import { DefaultButton } from "@fluentui/react";
 import useTrans from "@/hooks/useTrans";
+import { Button } from "@fluentui/react-components";
 
 export default function Choose(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.choose.');
@@ -18,12 +18,16 @@ export default function Choose(props: ISentenceEditorProps) {
 
   const chooseList = chooseItems.value.map((item, i) => {
     return <div style={{ display: "flex", width:'100%', alignItems: "center",padding:'0 0 4px 0' }} key={i}>
-      <DefaultButton onClick={()=>{
-        const newList = cloneDeep(chooseItems.value);
-        newList.splice(i,1);
-        chooseItems.set(newList);
-        submit();
-      }}>{t('delete')}</DefaultButton>
+      <Button
+        onClick={()=>{
+          const newList = cloneDeep(chooseItems.value);
+          newList.splice(i,1);
+          chooseItems.set(newList);
+          submit();
+        }}
+      >
+        {t('delete')}
+      </Button>
       <input value={item[0]}
         onChange={(ev) => {
           const newValue = ev.target.value;
@@ -50,11 +54,14 @@ export default function Choose(props: ISentenceEditorProps) {
   });
   return <div className={styles.sentenceEditorContent}>
     {chooseList}
-    <DefaultButton onClick={() => {
-      const newList = cloneDeep(chooseItems.value);
-      newList.push(t('option.option', 'option.chooseFile'));
-      chooseItems.set(newList);
-      submit();
-    }}>{t('add')}</DefaultButton>
+    <Button
+      onClick={() => {
+        const newList = cloneDeep(chooseItems.value);
+        newList.push(t('option.option', 'option.chooseFile'));
+        chooseItems.set(newList);
+        submit();
+      }}>
+      {t('add')}
+    </Button>
   </div>;
 }

@@ -1,13 +1,12 @@
 import styles from "./topbar.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/origineStore";
-import {CommandBar, ICommandBarItemProps} from "@fluentui/react";
-import {setDashboardShow, setEditMode, statusActions, TopbarTabs} from "../../../store/statusReducer";
+import {language, setDashboardShow, setEditMode, statusActions, TopbarTabs} from "../../../store/statusReducer";
 import useTrans from "@/hooks/useTrans";
 import useLanguage from "@/hooks/useLanguage";
 import GithubIcon from './assets/github.svg';
 import TerreIcon from './assets/wgfav-new-blue.png';
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import TopbarTabButton from "@/pages/editor/Topbar/TopbarTabButton";
 import ConfigTab from "@/pages/editor/Topbar/tabs/GameConfig/ConfigTab";
 import {setAutoHideToolbar} from "@/store/userDataReducer";
@@ -18,7 +17,8 @@ import {ExportTab} from "@/pages/editor/Topbar/tabs/Export/ExportTab";
 import TopbarTabButtonSpecial from "@/pages/editor/Topbar/TopbarTabButtonSpecial";
 import {AddSentenceTab} from "@/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab";
 import {useTranslation} from "react-i18next";
-
+import {Toolbar, Menu, MenuTrigger, ToolbarButton, MenuPopover, MenuList, MenuItem} from "@fluentui/react-components";
+import {EyeOff24Filled, EyeOff24Regular, PaddingTop24Filled, PaddingTop24Regular, bundleIcon} from "@fluentui/react-icons";
 
 export default function TopBar() {
   const {t} = useTranslation();
@@ -29,10 +29,12 @@ export default function TopBar() {
   const dispatch = useDispatch();
   const isAutoHideToolbar = useSelector((state: RootState) => state.userData.isAutoHideToolbar);
 
+  const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
+  const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
+
   const handleChange = (newValue: boolean) => {
     dispatch(setEditMode(newValue));
   };
-
 
   const currentTopbarTab = useSelector((state: RootState) => state.status.editor.currentTopbarTab);
 
@@ -53,36 +55,6 @@ export default function TopBar() {
     setCurrentTopbarTab(undefined);
     dispatch(setAutoHideToolbar(true));
   }
-
-  const items: ICommandBarItemProps[] = [
-    {
-      key: 'commandBarItem',
-      iconOnly: true,
-      iconProps: {iconName: 'PaddingTop'},
-      subMenuProps: {
-        items: [
-          {
-            key: 'item1',
-            iconProps: {iconName: 'ThumbnailView'},
-            text: t('一直显示功能区')??'',
-            onClick: setAlwaysShowToolbarCallback,
-          },
-          {
-            key: 'item2',
-            iconProps: {iconName: 'Hide3'},
-            text: t('自动隐藏功能区')??'',
-            onClick: setAutoHideToolbarCallback,
-          },
-        ],
-      },
-      buttonStyles: {
-        root: {
-          backgroundColor: 'rgba(255,255,255,0)',
-          height: 35
-        }
-      }
-    },
-  ];
 
   const currentTab = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
   const tabs = useSelector((state: RootState) => state.status.editor.tags);
@@ -126,17 +98,33 @@ export default function TopBar() {
       <div className={styles.topbar_gamename}>
         {editingGame}
       </div>
-      <CommandBar items={items} styles={{root: {backgroundColor: 'rgba(255,255,255,0)', height: 35, flexShrink: 0}}}/>
-      <div className={styles.topbar_link}
-        onClick={() => window.open("https://openwebgal.com", "_blank")}>
-        <img src={TerreIcon} height={20} width={20} alt="WebGAL Homepage"/>
-        <div className={styles.topbar_link_text}>{t("主页")}</div>
-      </div>
-      <div className={styles.topbar_link}
-        onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}>
-        <img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>
-        <div className={styles.topbar_link_text}>{t("源代码")}</div>
-      </div>
+      <Toolbar>
+        <Menu>
+          <MenuTrigger>
+            <ToolbarButton icon={isAutoHideToolbar ? <EyeOffIcon /> : <PaddingTopIcon />} />
+          </MenuTrigger>
+          <MenuPopover>
+            <MenuList>
+              <MenuItem icon={<PaddingTopIcon />} onClick={setAlwaysShowToolbarCallback}>{t('一直显示功能区')??''}</MenuItem>
+              <MenuItem icon={<EyeOffIcon />} onClick={setAutoHideToolbarCallback}>{t('自动隐藏功能区')??''}</MenuItem>
+            </MenuList>
+          </MenuPopover>
+        </Menu>
+        <ToolbarButton 
+          icon={<img src={TerreIcon} height={20} width={20} alt="WebGAL Homepage"/>} 
+          onClick={() => window.open("https://openwebgal.com", "_blank")}
+          style={{fontWeight: 'normal', fontSize: '14px'}}
+        >
+          {t("主页")}
+        </ToolbarButton>
+        <ToolbarButton 
+          icon={<img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>} 
+          onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}
+          style={{fontWeight: 'normal', fontSize: '14px'}}
+        >
+          {t("源代码")}
+        </ToolbarButton>
+      </Toolbar>
     </div>
     {currentTopbarTab === TopbarTabs.Config && <ConfigTab/>}
     {currentTopbarTab === TopbarTabs.View && <ViewTab/>}

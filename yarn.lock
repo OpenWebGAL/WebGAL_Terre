@@ -2555,6 +2555,11 @@
     "@typescript-eslint/types" "5.62.0"
     eslint-visitor-keys "^3.3.0"
 
+"@uiw/react-json-view@^2.0.0-alpha.12":
+  version "2.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@uiw/react-json-view/-/react-json-view-2.0.0-alpha.12.tgz#755d688462f25d89c5dcf5fa74eadc84e133b176"
+  integrity sha512-m0h5+gcebgHKmFfhxLXc/OoSLBQsHu0b+rVO7tDNpQwS0+vM1P6LezEKTuHENoQkv2QXQ0GxpZBLNykKD3fEPw==
+
 "@ungap/structured-clone@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
