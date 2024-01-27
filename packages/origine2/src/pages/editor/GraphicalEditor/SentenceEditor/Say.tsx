@@ -6,10 +6,13 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonOptions from "../components/CommonOption";
 import useTrans from "@/hooks/useTrans";
-import {DefaultButton, Dropdown} from "@fluentui/react";
 import {cloneDeep} from "lodash";
 import CommonTips from "../components/CommonTips";
 import { useEffect } from "react";
+import { Button, Dropdown, Option } from "@fluentui/react-components";
+
+type FigurePosition = "" | "left" |  "right" | "center" | "id";
+type FontSize = "default" | "small" | "medium" | "large";
 
 export default function Say(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.say.options.');
@@ -18,8 +21,16 @@ export default function Say(props: ISentenceEditorProps) {
   const vocal = useValue(getArgByKey(props.sentence, "vocal").toString() ?? "");
   const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
-  const figurePosition = useValue<"left" | "" | "right" | "center" | "id">("");
   const figureId = useValue(getArgByKey(props.sentence, "figureId").toString() ?? "");
+  const figurePosition = useValue<FigurePosition>("");
+  const figurePositions = new Map<FigurePosition, string>([
+    [ "", t('position.options.none') ] ,
+    [ "left", t('position.options.left') ],
+    [ "center", t('position.options.center') ],
+    [ "right", t('position.options.right') ],
+    [ "id",  t('position.options.id') ],
+  ]);
+
   useEffect(() => {
     /**
      * 初始化立绘位置
@@ -38,23 +49,22 @@ export default function Say(props: ISentenceEditorProps) {
     }
   }, []);
 
-  const getInitialFontSize = (): string => {
+  const fontSizes = new Map<FontSize, string>([
+    [ "default", t('font.options.default')],
+    [ "small", t('font.options.small') ],
+    [ "medium", t('font.options.medium') ],
+    [ "large", t('font.options.large') ],
+  ]);
+  const getInitialFontSize = (): FontSize => {
     const fontSizeValue = getArgByKey(props.sentence, "fontSize");
 
-    if (typeof fontSizeValue === 'string' && ["default", "small", "medium", "large"].includes(fontSizeValue)) {
-      return fontSizeValue;
+    if (typeof fontSizeValue === 'string' && Array.from(fontSizes.keys()).includes(fontSizeValue as FontSize)) {
+      return fontSizeValue as FontSize;
     }
 
     return "default";
   };
   const fontSize = useValue(getInitialFontSize());
-
-  const fontSizes = [
-    { key: "default", text: t('font.options.default')},
-    { key: "small", text: t('font.options.small') },
-    { key: "medium", text: t('font.options.medium') },
-    { key: "large", text: t('font.options.large') },
-  ];
 
   const submit = () => {
     const selectedFontSize = fontSize.value;
@@ -70,7 +80,7 @@ export default function Say(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <CommonTips text={t('tips.edit')}/>
-    <div className={styles.editItem} style={{marginBottom: '6px'}}>
+    <div className={styles.editItem} style={{marginBottom: '4px'}}>
       <input value={isNoSpeaker.value ? "" : currentSpeaker.value}
         onChange={(ev) => {
           const newValue = ev.target.value;
@@ -83,7 +93,7 @@ export default function Say(props: ISentenceEditorProps) {
       />
     </div>
     {currentValue.value.map((text, index) => (
-      <div key={index} style={{display: "flex", padding: '0 0 6px 0', width: '100%'}}>
+      <div key={index} style={{display: "flex", padding: '0 0 4px 0', width: '100%'}}>
         <textarea value={text}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -95,23 +105,23 @@ export default function Say(props: ISentenceEditorProps) {
           className={styles.sayArea}
           placeholder={t('dialogue.placeholder')}
         />
-        <div style={{padding: '0 0 0 8px'}}/>
-        {index >= 1 && <DefaultButton onClick={() => {
+        <div style={{padding: '0 0 0 4px'}}/>
+        {index >= 1 && <Button onClick={() => {
           const newList = cloneDeep(currentValue.value);
           newList.splice(index, 1);
           currentValue.set(newList);
           submit();
-        }}>{t('$common.delete')}</DefaultButton>}
+        }}>{t('$common.delete')}</Button>}
       </div>
     ))}
-    {currentValue.value.length < 3 && <DefaultButton onClick={() => {
+    {currentValue.value.length < 3 && <Button onClick={() => {
       const newList = cloneDeep(currentValue.value);
       if (newList.length < 3) {
         newList.push('');
       }
       currentValue.set(newList);
       submit();
-    }}>{t('add.button')}</DefaultButton>}
+    }}>{t('add.button')}</Button>}
     <div className={styles.editItem}>
       <CommonOptions key="isNoDialog" title={t('voiceover.title')}>
         <TerreToggle title="" onChange={(newValue) => {
@@ -132,19 +142,16 @@ export default function Say(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions title={t('position.title')}>
         <Dropdown
-          selectedKey={figurePosition.value}
-          options={[
-            { key: "", text: t('position.options.none') } ,
-            { key: "left", text: t('position.options.left') },
-            { key: "center", text: t('position.options.center') },
-            { key: "right", text: t('position.options.right') },
-            { key: "id", text: t('position.options.id') }
-          ]}
-          onChange={(ev, newValue: any) => {
-            figurePosition.set(newValue?.key?.toString() ?? "");
+          value={figurePositions.get(figurePosition.value) ?? figurePosition.value}
+          selectedOptions={[figurePosition.value]}
+          onOptionSelect={(event, data) => {
+            figurePosition.set(data.optionValue as FigurePosition?? "");
             submit();
           }}
-        />
+          style={{ minWidth: 0}}
+        >
+          { Array.from(figurePositions.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
+        </Dropdown>
       </CommonOptions>
       {figurePosition.value === 'id' && <CommonOptions title={t('id.title')}>
         <input value={figureId.value}
@@ -160,13 +167,16 @@ export default function Say(props: ISentenceEditorProps) {
       </CommonOptions>}
       <CommonOptions title={t('font.size')}>
         <Dropdown
-          options={fontSizes.map(f => ({ key: f.key, text: f.text }))}
-          selectedKey={fontSize.value}
-          onChange={(event, item) =>{
-            item && fontSize.set(item.key as string);
+          value={fontSizes.get(fontSize.value) ?? fontSize.value}
+          selectedOptions={[fontSize.value]}
+          onOptionSelect={(event, data) =>{
+            data.optionValue && fontSize.set(data.optionValue as FontSize);
             submit();
           }}
-        />
+          style={{ minWidth: 0}}
+        >
+          { Array.from(fontSizes.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
+        </Dropdown>
       </CommonOptions>
     </div>
   </div>;

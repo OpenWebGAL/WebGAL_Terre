@@ -1,0 +1,5 @@
+@font-face {
+  font-family: 'JetBrains Mono'; /* 自定义的字体名称 */
+  /*noinspection CssUnknownTarget*/
+  src: url('fonts/JetBrainsMono-Regular.ttf') format('truetype'); /* 字体文件的路径和格式 */
+}

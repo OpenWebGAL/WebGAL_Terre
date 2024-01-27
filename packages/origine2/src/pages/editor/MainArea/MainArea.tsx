@@ -5,6 +5,7 @@ import TagsManager from "./TagsManager";
 import styles from './mainArea.module.scss';
 import { useEffect } from "react";
 import { statusActions } from "../../../store/statusReducer";
+import {eventBus} from "@/utils/eventBus";
 
 export default function MainArea() {
   // 主区域需要具有标签页管理的功能。
@@ -24,7 +25,7 @@ export default function MainArea() {
         socket.send('WebGAL Origine 已和 Terre 建立连接');
       };
       socket.onmessage = e => {
-        // console.log('收到信息', e.data);
+        eventBus.emit('get-ws-message',e.data);
       };
       // @ts-ignore
       window['currentWs'] = socket;

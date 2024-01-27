@@ -1,7 +1,7 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.4.10",
+  "version": "4.4.11",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "vite --host",
@@ -19,6 +19,7 @@
     "@icon-park/react": "^1.4.2",
     "@monaco-editor/react": "^4.4.5",
     "@reduxjs/toolkit": "^1.8.1",
+    "@uiw/react-json-view": "^2.0.0-alpha.12",
     "axios": "^1.6.0",
     "cloudlogjs": "^1.0.11",
     "i18next": "^22.4.15",
