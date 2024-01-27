@@ -1,12 +1,12 @@
 import { sentenceEditorConfig } from "../SentenceEditor";
 import { useValue } from "../../../../hooks/useValue";
-import { useId } from "@fluentui/react-hooks";
-import { Dialog, DialogType } from "@fluentui/react";
+import { Button, Dialog, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger } from "@fluentui/react-components";
 import { Add } from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import useTrans from "@/hooks/useTrans";
+import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
 
 export enum addSentenceType {
   forward,
@@ -21,8 +21,8 @@ interface IAddSentenceProps {
 
 export default function AddSentence(props: IAddSentenceProps) {
   const t = useTrans('editor.graphical.components.addSentence.');
+  const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
   const isShowCallout = useValue(false);
-  const addButtonId = useId("addbutton");
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
       props.onChoose(sentenceConfig.initialText());
@@ -39,57 +39,38 @@ export default function AddSentence(props: IAddSentenceProps) {
           {sentenceConfig.descText()}
         </div>
       </div>
-
     </div>;
   });
 
-  const modelProps = {
-    isBlocking: false,
-    // styles: { main: { maxWidth: 600 } },
-    topOffsetFixed: false
-  };
-  const dialogContentProps = {
-    type: DialogType.largeHeader,
-    title: props.titleText,
-    subText: props.type ? t('dialogs.add.text.backward') : t('dialogs.add.text.forward')
-  };
-
   return <>
-    <div id={addButtonId} className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
+    <div className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
       <Add strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"/>
       {props.titleText}
     </div>
-    {/* @ts-ignore */}
-    {isShowCallout.value && <Dialog
-      hidden={!isShowCallout.value}
-      onDismiss={() => isShowCallout.set(false)}
-      dialogContentProps={dialogContentProps}
-      modalProps={modelProps}
-      maxWidth="900px"
+    <Dialog
+      open={isShowCallout.value}
+      onOpenChange={() => isShowCallout.set(false)}
     >
-      <div className={stylesAs.sentenceTypeButtonList}>
-        {addSentenceButtons}
-      </div>
-
-    </Dialog>}
-    {/* {( */}
-    {/*  <Callout */}
-    {/*    role="dialog" */}
-    {/*    gapSpace={0} */}
-    {/*    target={`#${addButtonId}`} */}
-    {/*    // onDismiss={onCancel} */}
-    {/*    setInitialFocus */}
-    {/*    className={styles.callout} */}
-    {/*  > */}
-    {/*    <div className={styles.chooseFileCalloutContentWarpper}> */}
-    {/*      <div className={styles.chooseFileCalloutTitle}> */}
-    {/*        {props.titleText} */}
-    {/*      </div> */}
-    {/*      <div className={styles.chooseFileFileListWarpper}> */}
-    {/*        {addSentenceButtons} */}
-    {/*      </div> */}
-    {/*    </div> */}
-    {/*  </Callout> */}
-    {/* )} */}
+      <DialogSurface style={{ maxWidth: "960px"}}>
+        <DialogBody>
+          <DialogTitle
+            action={
+              <DialogTrigger action="close">
+                <Button
+                  appearance="subtle"
+                  aria-label="close"
+                  icon={<DismissIcon />}
+                />
+              </DialogTrigger>
+            }
+          >{props.titleText}</DialogTitle>
+          <DialogContent>
+            <div className={stylesAs.sentenceTypeButtonList}>
+              {addSentenceButtons}
+            </div>
+          </DialogContent>
+        </DialogBody>
+      </DialogSurface>
+    </Dialog>
   </>;
 }

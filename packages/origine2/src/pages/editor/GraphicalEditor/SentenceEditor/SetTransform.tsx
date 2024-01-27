@@ -4,11 +4,13 @@ import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
 import {getArgByKey} from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
 import {useValue} from "@/hooks/useValue";
-import {DefaultButton, Dropdown, PrimaryButton, TextField} from "@fluentui/react";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import {useExpand} from "@/hooks/useExpand";
+import { Button, Dropdown, Option } from "@fluentui/react-components";
+
+type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
@@ -21,7 +23,13 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const {updateExpandIndex} = useExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
-  const isPresetTarget = ["bg-main", "fig-left", "fig-center", "fig-right"].includes(target.value);
+  const presetTargets = new Map<PresetTarget, string>([
+    [ "fig-left", tTarget('preparedTarget.choose.options.figLeft') ],
+    [ "fig-center", tTarget('preparedTarget.choose.options.figCenter') ],
+    [ "fig-right", tTarget('preparedTarget.choose.options.figRight') ],
+    [ "bg-main", tTarget('preparedTarget.choose.options.bgMain') ],
+  ]);
+  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
@@ -29,13 +37,12 @@ export default function SetTransform(props: ISentenceEditorProps) {
     props.onSubmit(str);
   };
 
-
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
       <CommonOptions title="效果编辑">
-        <DefaultButton onClick={() => {
-          updateExpandIndex(props.index);
-        }}>{tTarget('$打开效果编辑器')}</DefaultButton>
+        <Button onClick={() => updateExpandIndex(props.index)}>
+          {tTarget('$打开效果编辑器')}
+        </Button>
         <TerrePanel sentenceIndex={props.index} title={tTarget("$效果编辑器")}>
           <EffectEditor json={transform.value} onChange={(newJson)=>{
             transform.set(newJson);
@@ -45,13 +52,20 @@ export default function SetTransform(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="10" title={tTarget('duration.title')}>
         <div>
-          <TextField placeholder={tTarget("$持续时间（单位为毫秒）")} value={duration.value.toString()} onChange={(_, newValue) => {
-            const newDuration = Number(newValue);
-            if (isNaN(newDuration))
-              duration.set(0);
-            else
-              duration.set(newDuration);
-          }} onBlur={submit}/>
+          <input
+            placeholder={tTarget("$持续时间（单位为毫秒）")}
+            value={duration.value.toString()}
+            className={styles.sayInput}
+            style={{ width: "100%" }}
+            onChange={(ev) => {
+              const newDuration = Number(ev.target.value);
+              if (isNaN(newDuration))
+                duration.set(0);
+              else
+                duration.set(newDuration);
+            }}
+            onBlur={submit}
+          />
         </div>
       </CommonOptions>
       <CommonOptions key="2" title={tTarget('preparedTarget.title')}>
@@ -61,15 +75,17 @@ export default function SetTransform(props: ISentenceEditorProps) {
         isChecked={isUsePreset.value} />
       </CommonOptions>
       {isUsePreset.value && <CommonOptions key="3" title={tTarget('preparedTarget.choose.title')}>
-        <Dropdown styles={{ dropdown: { width: "100px" } }} onChange={(event, option, index) => {
-          target.set(option?.key.toString() ?? "");
-          submit();
-        }} options={[
-          { key: "fig-left", text: tTarget('preparedTarget.choose.options.figLeft') },
-          { key: "fig-center", text: tTarget('preparedTarget.choose.options.figCenter') },
-          { key: "fig-right", text: tTarget('preparedTarget.choose.options.figRight') },
-          { key: "bg-main", text: tTarget('preparedTarget.choose.options.bgMain') }
-        ]} selectedKey={target.value} />
+        <Dropdown
+          value={presetTargets.get(target.value as PresetTarget)}
+          selectedOptions={[target.value]}
+          onOptionSelect={(event, data) => {
+            target.set(data.optionValue?.toString() ?? "");
+            submit();
+          }}
+          style={{ minWidth: 0 }}
+        >
+          {Array.from(presetTargets.entries()).map(([key, text]) => <Option key={key} value={key}>{text}</Option>)}
+        </Dropdown>
       </CommonOptions>}
       {!isUsePreset.value && <CommonOptions key="4" title={tTarget('targetId.title')}>
         <input value={target.value}

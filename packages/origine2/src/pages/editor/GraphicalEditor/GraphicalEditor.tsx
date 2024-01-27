@@ -146,7 +146,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   const parsedScene = (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
   return <div className={styles.main} id="graphical-editor-main">
-    <div style={{flex: 1, padding: '16px 4px 0 4px'}}>
+    <div style={{flex: 1, padding: '14px 4px 0 4px'}}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -200,7 +200,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                             <div className={styles.optionButtonContainer}>
                               <div className={styles.optionButton}
                                 onClick={() => deleteOneSentence(i)}>
-                                <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"
+                                <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
                                   fill="#333"/>
                                 <div>
                                   {t("delete")}
@@ -208,7 +208,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               </div>
                               <div className={styles.optionButton}
                                 onClick={() => syncToIndex(i)}>
-                                <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"
+                                <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
                                   fill="#333"/>
                                 <div>
                                   {t("$执行到此句")}

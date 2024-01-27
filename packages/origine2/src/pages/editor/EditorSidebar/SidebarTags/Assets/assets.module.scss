@@ -78,11 +78,11 @@
   margin: 0 4px 0 0;
   border-radius: var(--radius-md);
   transition: all 0.33s;
-  display: none;
+  visibility: hidden;
 }
 
 .commonFileButton:hover .deleteButton {
-  display: block;
+  visibility: visible;
 }
 
 .deleteButton:hover {

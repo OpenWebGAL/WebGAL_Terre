@@ -1,4 +1,4 @@
-import { Toggle } from "@fluentui/react";
+import { Switch } from "@fluentui/react-components";
 
 interface ITerreToggle{
   title:string,
@@ -9,8 +9,13 @@ interface ITerreToggle{
 }
 
 export default function TerreToggle(props:ITerreToggle){
-  return <Toggle styles={{ root: { margin: "0 0 0 0" } }}
-    checked={props.isChecked}
-    label={props.title} inlineLabel onText={props.onText} offText={props.offText}
-    onChange={(event, checked) => props.onChange(checked ?? false)} />;
+  return (
+    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'nowrap'}}>
+      <Switch
+        checked={props.isChecked}
+        onChange={(event, data) => props.onChange(data.checked ?? false)}
+      />
+      {props.isChecked ? props.onText : props.offText}
+    </div>
+  );
 }
