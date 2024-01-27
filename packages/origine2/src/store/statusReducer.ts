@@ -50,6 +50,7 @@ interface IEditorState {
   currentTopbarTab: TopbarTabs | undefined,
   language: language,
   graphicalEditorState: IGraphicalEditorState,
+  isShowDebugger: boolean,
 }
 
 // tag的假数据，用于测试
@@ -72,7 +73,8 @@ export const editorInitState: IEditorState = {
   language: language.zhCn,
   graphicalEditorState: {
     currentExpandSentence: 0
-  }
+  },
+  isShowDebugger: false,
 };
 
 const initialState = {
@@ -167,8 +169,12 @@ const statusSlice = createSlice({
       state.editor.isEnableLivePreview = action.payload;
     },
 
-    updateGraphicalEditorCurrentExpandSentence:(state,action:PayloadAction<number>)=>{
+    updateGraphicalEditorCurrentExpandSentence: (state, action: PayloadAction<number>) => {
       state.editor.graphicalEditorState.currentExpandSentence = action.payload;
+    },
+
+    setDebuggerOpen:(state,action:PayloadAction<boolean>)=>{
+      state.editor.isShowDebugger = action.payload;
     }
 
   }

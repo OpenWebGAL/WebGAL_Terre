@@ -1,4 +1,3 @@
-import styles from "../sidebarTags.module.scss";
 import assetsStyles from "./assets.module.scss";
 import axios from "axios";
 import { origineStore, RootState } from "../../../../../store/origineStore";
@@ -8,8 +7,6 @@ import React, { useEffect, useState } from "react";
 import { getFileList, IFileDescription } from "../../../ChooseFile/ChooseFile";
 import { dirnameToDisplayNameMap, dirNameToExtNameMap } from "../../../ChooseFile/chooseFileConfig";
 import { DeleteOne, Editor, FolderOpen, FolderPlus, LeftSmall, Upload } from "@icon-park/react";
-import { useId } from "@fluentui/react-hooks";
-import { Callout, PrimaryButton, Text, TextField } from "@fluentui/react";
 import { ITag, statusActions } from "../../../../../store/statusReducer";
 import { extractPathAfterPublic } from "../../../ResourceDisplay/ResourceDisplay";
 import useTrans from "@/hooks/useTrans";
@@ -18,6 +15,7 @@ import { getDirIcon, getFileIcon } from "@/utils/getFileIcon";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import { api } from "@/api";
 import { RequestParams } from "@/api/Api";
+import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Text } from "@fluentui/react-components";
 
 export default function Assets() {
   const t = useTrans("editor.sideBar.assets.");
@@ -27,7 +25,6 @@ export default function Assets() {
    */
 
   const isShowUploadCallout = useValue(false);
-  const buttonId = useId("upload-button");
 
   /**
    * 当前目录，以及包含文件
@@ -49,7 +46,6 @@ export default function Assets() {
    * 新建文件夹
    */
   const isShowMkdirCallout = useValue(false);
-  const mkdirButtonId = useId("mkdir-button");
   const newDirName = useValue("");
   const handleCreatNewDir = () => {
     axios.post("/api/manageGame/mkdir", {
@@ -154,7 +150,6 @@ export default function Assets() {
     });
   }
 
-
   return (
     <div style={{ height: "100%", overflow: "auto", display: "flex", flexFlow: "column" }}>
       {/* <TagTitleWrapper title={t("title")} extra={<div className="tag_title_button" onClick={open_assets}>
@@ -172,59 +167,57 @@ export default function Assets() {
         </div>
         {currentDirName !== "" &&
           <>
-            <div id={buttonId} className={assetsStyles.controlCommonButton}
-              onClick={() => isShowUploadCallout.set(!isShowUploadCallout.value)}>
-              <Upload theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
-            </div>
-            <div id={mkdirButtonId} className={assetsStyles.controlCommonButton}
-              onClick={() => isShowMkdirCallout.set(!isShowMkdirCallout.value)}>
-              <FolderPlus theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
-            </div>
+            <Popover
+              withArrow
+              open={isShowUploadCallout.value}
+              onOpenChange={() => isShowUploadCallout.set(!isShowUploadCallout.value)}
+            >
+              <PopoverTrigger>
+                <div className={assetsStyles.controlCommonButton}>
+                  <Upload theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
+                </div>
+              </PopoverTrigger>
+              <PopoverSurface>
+                <Text as="h3" block size={500}>
+                  {t("buttons.uploadAsset")}
+                </Text>
+                <FileUploader onUpload={() => {
+                  isShowUploadCallout.set(false);
+                  refreshCurrentDir();
+                }} targetDirectory={`public/games/${gameName}/game${currentDirName}`}
+                uploadUrl="/api/manageGame/uploadFiles" />
+              </PopoverSurface>
+            </Popover>
+
+            <Popover
+              withArrow
+              open={isShowMkdirCallout.value}
+              onOpenChange={() => {
+                isShowMkdirCallout.set(!isShowMkdirCallout.value);
+                newDirName.set("");
+              }}
+            >
+              <PopoverTrigger>
+                <div className={assetsStyles.controlCommonButton}>
+                  <FolderPlus theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
+                </div>
+              </PopoverTrigger>
+              <PopoverSurface>
+                <Text as="h3" block size={500}>
+                  {t("buttons.createNewFolder")}
+                </Text>
+                <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+                  <Input value={newDirName.value} onChange={(ev, data) => {
+                    newDirName.set(data.value ?? "");
+                  }} />
+                  <br />
+                  <Button appearance="primary" onClick={handleCreatNewDir}>{t("$common.create")}</Button>
+                </div>
+              </PopoverSurface>
+            </Popover>
           </>
         }
-        {isShowUploadCallout.value && (
-          <Callout
-            className={assetsStyles.uploadCallout}
-            role="dialog"
-            gapSpace={0}
-            target={`#${buttonId}`}
-            onDismiss={() => isShowUploadCallout.set(false)}
-            setInitialFocus
-          >
-            <Text as="h1" block variant="xLarge" className={styles.title}>
-              {t("buttons.uploadAsset")}
-            </Text>
-            <FileUploader onUpload={() => {
-              isShowUploadCallout.set(false);
-              refreshCurrentDir();
-            }} targetDirectory={`public/games/${gameName}/game${currentDirName}`}
-            uploadUrl="/api/manageGame/uploadFiles" />
-          </Callout>
-        )}
-        {isShowMkdirCallout.value && (
-          <Callout
-            className={assetsStyles.uploadCallout}
-            role="dialog"
-            gapSpace={0}
-            target={`#${mkdirButtonId}`}
-            onDismiss={() => {
-              isShowMkdirCallout.set(false);
-              newDirName.set("");
-            }}
-            setInitialFocus
-          >
-            <Text as="h1" block variant="xLarge" className={styles.title}>
-              {t("buttons.createNewFolder")}
-            </Text>
-            <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
-              <TextField value={newDirName.value} onChange={(ev, val) => {
-                newDirName.set(val ?? "");
-              }} />
-              <br />
-              <PrimaryButton onClick={handleCreatNewDir}>{t("$common.create")}</PrimaryButton>
-            </div>
-          </Callout>
-        )}
+
         <div className={assetsStyles.controlCommonButton}
           onClick={() => open_assets()}>
           <FolderOpen theme="outline" size="18" strokeWidth={3} className={assetsStyles.iconParkIcon} />
@@ -259,8 +252,6 @@ function CommonFileButton(props: IFileDescription & {
   const showConformDeleteCallout = useValue(false);
   const showRenameCallout = useValue(false);
   const newFileName = useValue("");
-  const renameButtonId = useId("renameBtn");
-  const deleteButtonId = useId("deleteBtn");
 
   return <div className={assetsStyles.commonFileButton} onClick={() => props.onClick()}>
     {!props.isDir && <IconWrapper src={getFileIcon(props.name)} size={22} iconSize={20} />}
@@ -268,70 +259,68 @@ function CommonFileButton(props: IFileDescription & {
     <div className={assetsStyles.fileName}>
       {props.name}
     </div>
-    {props.showOptions && <>
-      <div onClick={(e) => {
-        e.stopPropagation();
-        showRenameCallout.set(!showRenameCallout.value);
-        newFileName.set(props.name);
-      }} id={renameButtonId} className={assetsStyles.deleteButton} style={{
-        display: showRenameCallout.value ? "block" : undefined
-      }}>
-        <Editor theme="outline" size="18" className={assetsStyles.iconParkIcon} strokeWidth={3} />
-      </div>
-      <div onClick={(e) => {
-        e.stopPropagation();
-        showConformDeleteCallout.set(!showConformDeleteCallout.value);
-      }} id={deleteButtonId} className={assetsStyles.deleteButton} style={{
-        display: showRenameCallout.value ? "block" : undefined
-      }}>
-        <DeleteOne theme="outline" size="18" className={assetsStyles.iconParkIcon} strokeWidth={3} />
-      </div>
-      {showRenameCallout.value && <Callout
-        className={assetsStyles.uploadCallout}
-        role="dialog"
-        gapSpace={0}
-        target={`#${renameButtonId}`}
-        onDismiss={() => {
-          showRenameCallout.set(false);
+    {props.showOptions &&
+    <>
+      <Popover
+        withArrow
+        onOpenChange={() => {
           newFileName.set("");
         }}
-        setInitialFocus
       >
-        <Text as="h1" block variant="xLarge" className={styles.title}>
-          {t("buttons.rename")}
-        </Text>
-        <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
-          <TextField value={newFileName.value} onChange={(ev, val) => {
-            newFileName.set(val ?? "");
-          }} />
-          <br />
-          <PrimaryButton onClick={() => {
-            props.onRename(newFileName.value);
-            showRenameCallout.set(false);
-          }}>{t("buttons.rename")}</PrimaryButton>
-        </div>
-      </Callout>}
-      {showConformDeleteCallout.value && <Callout
-        className={assetsStyles.uploadCallout}
-        role="dialog"
-        gapSpace={0}
-        target={`#${deleteButtonId}`}
-        onDismiss={() => {
-          showConformDeleteCallout.set(false);
-        }}
-        setInitialFocus
+        <PopoverTrigger>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              newFileName.set(props.name);
+            }}
+            className={assetsStyles.deleteButton} 
+            style={{ display: showRenameCallout.value ? "block" : undefined }}
+          >
+            <Editor theme="outline" size="18" className={assetsStyles.iconParkIcon} strokeWidth={3} />
+          </div>
+        </PopoverTrigger>
+        <PopoverSurface onClick={(e) => e.stopPropagation()}>
+          <Text as="h3" block size={500}>
+            {t("buttons.rename")}
+          </Text>
+          <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+            <Input value={newFileName.value} onChange={(ev, data) => {
+              newFileName.set(data.value ?? "");
+            }} />
+            <br />
+            <Button appearance="primary" onClick={() => {
+              props.onRename(newFileName.value);
+              showRenameCallout.set(false);
+            }}>{t("buttons.rename")}</Button>
+          </div>
+        </PopoverSurface>
+      </Popover>
+      <Popover
+        withArrow
       >
-        <Text as="h1" block variant="xLarge" className={styles.title}>
-          {t("$common.delete")}
-        </Text>
-        <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
-          <PrimaryButton onClick={() => {
-            props.onDelete();
-            showConformDeleteCallout.set(false);
-          }}>{t("buttons.deleteSure")}</PrimaryButton>
-        </div>
-      </Callout>}
-    </>}
+        <PopoverTrigger>
+          <div
+            onClick={(e) => e.stopPropagation()} 
+            className={assetsStyles.deleteButton} 
+            style={{ display: showRenameCallout.value ? "block" : undefined}}
+          >
+            <DeleteOne theme="outline" size="18" className={assetsStyles.iconParkIcon} strokeWidth={3} />
+          </div>
+        </PopoverTrigger>
+        <PopoverSurface onClick={(e) => e.stopPropagation()}>
+          <Text as="h3" block size={500}>
+            {t("$common.delete")}
+          </Text>
+          <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+            <Button appearance="primary" onClick={() => {
+              props.onDelete();
+              showConformDeleteCallout.set(false);
+            }}>{t("buttons.deleteSure")}</Button>
+          </div>
+        </PopoverSurface>
+      </Popover>
+    </>
+    }
   </div>;
 }
 
