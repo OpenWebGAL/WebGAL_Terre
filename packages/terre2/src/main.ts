@@ -7,7 +7,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { env } from 'process';
 
 let WEBGAL_PORT = 3000; // default port
-const version_number = `4.4.10`;
+const version_number = `4.4.11`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }
