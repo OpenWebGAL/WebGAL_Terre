@@ -7,7 +7,6 @@ dirnameToDisplayNameMap.set('animation', () => t(tPrefix + 'animation'));
 dirnameToDisplayNameMap.set('background', () => t(tPrefix + 'background'));
 dirnameToDisplayNameMap.set('bgm', () => t(tPrefix + 'bgm'));
 dirnameToDisplayNameMap.set('figure', () => t(tPrefix + 'figure'));
-dirnameToDisplayNameMap.set('template', () => t(tPrefix + 'template'));
 dirnameToDisplayNameMap.set('scene', () => t(tPrefix + 'scene'));
 dirnameToDisplayNameMap.set('tex', () => t(tPrefix + 'tex'));
 dirnameToDisplayNameMap.set('video', () => t(tPrefix + 'video'));
