@@ -33,6 +33,13 @@ app.use(
 );
 
 app.use(
+    createProxyMiddleware("/template-preview", {
+        target: `http://localhost:${WEBGAL_PORT + 1}`, // http代理跨域目标接口
+        changeOrigin: true,
+    })
+);
+
+app.use(
   createProxyMiddleware("/games", {
     target: `http://localhost:${WEBGAL_PORT + 1}`, // http代理跨域目标接口
     changeOrigin: true,
