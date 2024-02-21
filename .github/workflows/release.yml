@@ -124,7 +124,7 @@ jobs:
           path: WebGAL_Terre_Linux_Arm64.zip
   build-mac:
     name: Build MacOS Binary
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Checkout
         uses: actions/checkout@v4
