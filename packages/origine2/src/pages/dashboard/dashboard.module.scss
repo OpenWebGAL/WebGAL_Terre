@@ -36,3 +36,29 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.tabListContainer {
+  padding: 0 20px;
+}
+
+.tabItem {
+  padding: 10px 15px !important;
+  margin-bottom: 10px;
+  min-width: 130px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+
+  > span {
+    font-size: 18px;
+  }
+}
+
+.active {
+  > span {
+    color: #005caf !important;
+  }
+
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
