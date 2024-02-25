@@ -6,8 +6,17 @@
   padding: 0 4px 4px 4px;
 }
 
-.dashboard_main {
+.container_main {
   width: 100%;
+  height: calc(100vh - 4.5em);
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.dashboard_main {
+  width: 80%;
   height: calc(100vh - 4.5em);
   display: flex;
   flex-grow: 1;
