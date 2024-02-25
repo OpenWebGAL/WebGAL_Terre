@@ -112,13 +112,12 @@ export default function DashBoard() {
   }
 
   async function createTemplate(templateName:string) {
-    // 需要创建模板api
-    // console.log("createTeplate:"+templateName);
-    // const res = await axios.post("/api/manageGame/createTemplate", { templateName: templateName }).then(r => r.data);
-    // logger.info("创建结果：", res);
-    // messageRef.current!.showMessage(`${templateName} ` + trans('msgs.created'), 2000);
-    // refreashDashboard();
-    // setCurrentGame(null);
+    console.log("createTeplate:"+templateName);
+    const res = await axios.post("/api/manageTemplate/createTemplate", { templateName: templateName }).then(r => r.data);
+    logger.info("创建结果：", res);
+    messageRef.current!.showMessage(`${templateName} ` + trans('msgs.created'), 2000);
+    refreashDashboard();
+    setCurrentGame(null);
   }
 
   function refreashDashboard() {
@@ -143,23 +142,22 @@ export default function DashBoard() {
     }
     if(selectedValue.value === "template")
     {
-      // 需要获取模板列表和获取模板配置api
-      // getDirInfo("/api/manageGame/templateList").then(response => {
-      //   console.log("refreash template");
-      //   const templateList = (response as Array<IFileInfo>)
-      //     .filter(e => e.isDir)
-      //     .map(e => e.name);
-      //   logger.info("返回的模板列表", templateList);
-      //   const getTemplateInfoList = templateList.map(
-      //     async (templateName) : Promise<TemplateInfo> => {
-      //       const TemplateConfigData = (await axios.get(`/api/manageGame/getTemplateConfig/${templateName}`)).data;
-      //       return {
-      //         dir: templateName,
-      //         title: TemplateConfigData.name ?? "",
-      //       };
-      //     });
-      //   Promise.all(getTemplateInfoList).then(list => TemplateInfoList.set(list));
-      // });
+      getDirInfo("/api/manageTemplate/templateList").then(response => {
+        console.log("refreash template");
+        const templateList = (response as Array<IFileInfo>)
+          .filter(e => e.isDir)
+          .map(e => e.name);
+        logger.info("返回的模板列表", templateList);
+        const getTemplateInfoList = templateList.map(
+          async (templateName) : Promise<TemplateInfo> => {
+            const TemplateConfigData = (await axios.get(`/api/manageTemplate/getTemplateConfig/${templateName}`)).data;
+            return {
+              dir: templateName,
+              title: TemplateConfigData.name ?? "",
+            };
+          });
+        Promise.all(getTemplateInfoList).then(list => TemplateInfoList.set(list));
+      });
     }
   }
 
