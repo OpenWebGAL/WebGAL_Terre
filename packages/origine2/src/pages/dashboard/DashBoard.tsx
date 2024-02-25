@@ -143,7 +143,7 @@ export default function DashBoard() {
     }
     if(selectedValue.value === "template")
     {
-      //需要获取模板列表和获取模板配置api
+      // 需要获取模板列表和获取模板配置api
       // getDirInfo("/api/manageGame/templateList").then(response => {
       //   console.log("refreash template");
       //   const templateList = (response as Array<IFileInfo>)
