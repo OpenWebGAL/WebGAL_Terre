@@ -31,7 +31,6 @@ import {
 } from '@nestjs/swagger';
 import {
   CreateGameDto,
-  CreateTemplateDto,
   CreateNewSceneDto,
   DeleteFileDto,
   DeleteFileOrDirDto,
@@ -74,33 +73,6 @@ export class ManageGameController {
   async createGame(@Body() createGameData: CreateGameDto) {
     const createResult = await this.manageGame.createGame(
       createGameData.gameName,
-    );
-    if (createResult) {
-      return { status: 'success' };
-    } else {
-      return { status: 'failed' }; // Note: Typo correction 'filed' -> 'failed'
-    }
-  }
-
-  @Get('templateList')
-  @Get('templateList')
-  @ApiOperation({ summary: 'Retrieve template list' })
-  @ApiResponse({ status: 200, description: 'Returned template list.' })
-  async getTemplateList() {
-    if (!(await this.webgalFs.existsDir('public/templates')))
-      await this.webgalFs.mkdir('public', 'templates');
-    return await this.webgalFs.getDirInfo(
-      this.webgalFs.getPathFromRoot('/public/templates'),
-    );
-  }
-
-  @Post('createTemplate')
-  @ApiOperation({ summary: 'Create a new template' })
-  @ApiResponse({ status: 200, description: 'Template creation result.' })
-  @ApiBody({ type: CreateGameDto, description: 'Template creation data' })
-  async createTemplate(@Body() createTemplateData: CreateTemplateDto) {
-    const createResult = await this.manageGame.createTemplate(
-      createTemplateData.templateName,
     );
     if (createResult) {
       return { status: 'success' };
@@ -296,21 +268,6 @@ export class ManageGameController {
   async getGameConfig(@Param('gameName') gameName: string) {
     const configFilePath = this.webgalFs.getPathFromRoot(
       `/public/games/${decodeURI(gameName)}/game/config.txt`,
-    );
-    return this.webgalFs.readTextFile(configFilePath);
-  }
-
-  @Get('getTemplateConfig/:templateName')
-  @ApiOperation({ summary: 'Get Template Configuration' })
-  @ApiResponse({ status: 200, description: 'Returned template configuration.' })
-  @ApiResponse({
-    status: 400,
-    description: 'Failed to get the template configuration.',
-  })
-  async getTemplateConfig(@Param('templateName') templateName: string) {
-    console.log("getTemplateconfig")
-    const configFilePath = this.webgalFs.getPathFromRoot(
-      `/public/templates/${decodeURI(templateName)}/template/template.json`,
     );
     return this.webgalFs.readTextFile(configFilePath);
   }
