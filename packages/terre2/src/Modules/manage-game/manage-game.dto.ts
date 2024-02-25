@@ -5,11 +5,6 @@ export class CreateGameDto {
   gameName: string;
 }
 
-export class CreateTemplateDto {
-  @ApiProperty({ description: 'The name of the game to be created' })
-  templateName: string;
-}
-
 export class EditFileNameDto {
   @ApiProperty({ description: 'The path to the file to be renamed' })
   path: string;
