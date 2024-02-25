@@ -21,11 +21,6 @@ export interface CreateGameDto {
   gameName: string;
 }
 
-export interface CreateTemplateDto {
-  /** The name of the game to be created */
-  templateName: string;
-}
-
 export interface EditFileNameDto {
   /** The path to the file to be renamed */
   path: string;
@@ -297,38 +292,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         type: ContentType.Json,
         ...params,
       }),
-    
-    /**
-     * No description
-     *
-     * @tags Manage Template
-     * @name ManageGameControllerGetGameList
-     * @summary Retrieve template list
-     * @request GET:/api/manageTemplate/templateList
-     */
-    manageGameControllerGetTemplateList: (params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/manageTemplate/templateList`,
-        method: 'GET',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Manage Template
-     * @name ManageGameControllerCreateGame
-     * @summary Create a new template
-     * @request POST:/api/manageTemplate/createTemplate
-     */
-    manageGameControllerCreateTemplate: (data: CreateTemplateDto, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/manageTemplate/createTemplate`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        ...params,
-    }),
 
     /**
      * No description
