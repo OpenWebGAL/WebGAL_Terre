@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { True } from "@uiw/react-json-view/cjs/types/True";
 import {cloneDeep} from "lodash";
 
 const dashboardInitState = {
@@ -77,9 +78,14 @@ export const editorInitState: IEditorState = {
   isShowDebugger: false,
 };
 
+export const templateeditorInitState = {
+  showtemplateeditor: true
+}
+
 const initialState = {
   dashboard: cloneDeep(dashboardInitState),
-  editor: cloneDeep(editorInitState)
+  editor: cloneDeep(editorInitState),
+  templateeditor: cloneDeep(templateeditorInitState)
 };
 
 const statusSlice = createSlice({
