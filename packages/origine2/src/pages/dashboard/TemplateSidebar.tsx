@@ -15,13 +15,13 @@ interface ITemplateSidebarProps {
 }
 
 export default function TemplateSidebar(props:ITemplateSidebarProps){
-  const t = useTrans('dashBoard.');
+  const t = useTrans('');
 
   const AddIcon = bundleIcon(Add24Filled, Add24Regular);
 
   const [createTemplateFormOpen, setCreateTemplateFormOpen] = useState(false);
-  const [newTemplateName, setNewTemplateName] = useState(t('createNewGame.dialog.defaultName') || 'NewGame');
-  
+  const [newTemplateName, setNewTemplateName] = useState(t('新的模板') || '新的模板');
+
   function createNewTemplate() {
     if (newTemplateName && newTemplateName.trim() !== '' && !props.templateList.find((item) => item.dir === newTemplateName.trim())) {
       props.createTemplate(newTemplateName);
