@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ManageGameModule } from './Modules/manage-game/manage-game.module';
+import { ManageTemplateModule } from './Modules/manage-template/manage-template.module'
 import { LspModule } from './Modules/lsp/lsp.module';
 import { TemplatePreviewModule } from './Modules/template-preview/template-preview.module';
 
@@ -12,6 +13,7 @@ import { TemplatePreviewModule } from './Modules/template-preview/template-previ
     // 代码提示
     LspModule,
     ManageGameModule,
+    ManageTemplateModule,
     TemplatePreviewModule,
     // 静态文件服务：游戏与编辑器静态资源文件
     ServeStaticModule.forRoot({
