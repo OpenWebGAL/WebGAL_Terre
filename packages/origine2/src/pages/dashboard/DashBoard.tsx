@@ -115,7 +115,6 @@ export default function DashBoard() {
     console.log("createTeplate:"+templateName);
     const res = await axios.post("/api/manageTemplate/createTemplate", { templateName: templateName }).then(r => r.data);
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`${templateName} ` + trans('msgs.created'), 2000);
     refreashDashboard();
     setCurrentGame(null);
   }
