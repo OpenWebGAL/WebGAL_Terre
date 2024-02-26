@@ -28,7 +28,7 @@ export default function TemplateElement(props: ITemplateElementProps){
   const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
 
   const enterEditor = (templateName: string) => {
-    console.log(templateName)
+    console.log(templateName);
     // dispatch(setEditingTemplate(templateName));  模板编辑界面还没做 可能需要template专用的store？
     // dispatch(setDashboardShow(false));
   };
@@ -62,7 +62,7 @@ export default function TemplateElement(props: ITemplateElementProps){
   };
 
   const renameThisTemplate = (templateName:string, newTemplateName:string) => {
-    console.log("renameThisTemplate")
+    console.log("renameThisTemplate");
     // 需要修改模板名的api
     // axios.post("/api/manageGame/rename",
     //   { source: `public/games/${templateName}/`, newTemplate: newTemplateName }
@@ -90,17 +90,17 @@ export default function TemplateElement(props: ITemplateElementProps){
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
           <div className={styles.templateElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' onClick={() =>enterEditor(props.templateInfo.dir)}>{t('编辑模板')}</Button>
+            <Button appearance='primary' onClick={() =>enterEditor(props.templateInfo.dir)}>{t('$编辑模板')}</Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />
               </MenuTrigger>
-             <MenuPopover>
+              <MenuPopover>
                 <MenuList>
                   <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t('menu.openInFileExplorer')}</MenuItem>
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t('menu.previewInNewTab')}</MenuItem>
                   <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t('menu.renameDir')}</MenuItem>
-                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t('删除模板')}</MenuItem>
+                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t('$删除模板')}</MenuItem>
                 </MenuList>
               </MenuPopover>
             </Menu>
@@ -114,7 +114,7 @@ export default function TemplateElement(props: ITemplateElementProps){
       >
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t('重命名模板')}</DialogTitle>
+            <DialogTitle>{t('$重命名模板')}</DialogTitle>
             <DialogContent>
               <Input
                 style={{width:'100%'}}
