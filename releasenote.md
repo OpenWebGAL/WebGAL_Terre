@@ -4,13 +4,15 @@
 
 #### 新功能
 
-升级整体 UI
+升级引擎到 4.4.12，进行了多项易用性改进
 
-添加“调试器”功能
+暂时移除了文本框预设选项，为下版本接入 UI 自定义功能做准备
 
 #### 修复
 
 修复引擎的一些故障
+
+为 Mac OS X 用户添加特别的操作提示
 
 <!-- English Translation -->
 ## Release Notes
@@ -19,13 +21,15 @@
 
 #### New Features
 
-Upgrade the overall UI
+Upgraded the engine to 4.4.12, made several usability improvements
 
-Add "Debugger" function
+Temporarily removed the preset options for text boxes, preparing for the UI customization feature in the next version
 
-#### Bug Fixes
+#### Fixes
 
-Fix some bugs of the engine
+Fixed some bugs in the engine
+
+Added special operation tips for Mac OS X users
 
 
 
@@ -36,13 +40,15 @@ Fix some bugs of the engine
 
 #### 新機能
 
-全体のUIをアップグレード
+エンジンを 4.4.12 にアップグレードし、使いやすさを向上させるために多くの改善を行いました。
 
-「デバッガー」機能を追加
+テキストボックスのプリセットオプションを一時的に削除し、次のバージョンで UI のカスタマイズ機能を導入できるようにしました。
 
 #### 修正
 
-エンジンのいくつかの障害を修正
+エンジンのいくつかの不具合を修正しました。
+
+Mac OS X ユーザー向けに特別な操作ヒントを追加しました。
 
 
 <!-- French Translation -->
@@ -52,10 +58,12 @@ Fix some bugs of the engine
 
 #### Nouvelles fonctionnalités
 
-Mise à niveau de l'interface utilisateur globale
+Mise à jour du moteur vers la version 4.4.12 avec de nombreuses améliorations de convivialité
 
-Ajout de la fonction « débogueur »
+Suppression temporaire des options prédéfinies de la zone de texte en vue de l'intégration de la fonctionnalité de personnalisation de l'interface utilisateur dans la prochaine version
 
-#### Résolution de bogues
+#### Corrections
 
-Résolution de certains problèmes du moteur
+Correction de quelques bugs du moteur
+
+Ajout d'instructions d'utilisation spécifiques pour les utilisateurs de Mac OS X
