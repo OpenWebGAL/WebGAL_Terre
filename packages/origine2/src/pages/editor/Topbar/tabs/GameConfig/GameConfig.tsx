@@ -105,11 +105,11 @@ export default function GameConfig() {
         <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
       </TabItem>
-      <TabItem title={t("options.textboxTheme")}>
-        <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)}
-          selectItems={textboxThemes}/>
-      </TabItem>
+      {/* <TabItem title={t("options.textboxTheme")}> */}
+      {/*  <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')} */}
+      {/*    onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} */}
+      {/*    selectItems={textboxThemes}/> */}
+      {/* </TabItem> */}
       <TabItem title={t("options.bg")}>
         <GameConfigEditorWithFileChoose
           sourceBase="background"
