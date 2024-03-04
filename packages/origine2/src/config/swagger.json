@@ -43,6 +43,168 @@
         ]
       }
     },
+    "/assets/readAssets/{readDirPath}": {
+      "get": {
+        "operationId": "AssetsController_readAssets",
+        "summary": "Read Assets",
+        "parameters": [
+          {
+            "name": "readDirPath",
+            "required": true,
+            "in": "path",
+            "description": "Path of the directory to read assets from, including subdirectories.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve the assets of the directory."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
+    "/assets/openDict": {
+      "get": {
+        "operationId": "AssetsController_openDict",
+        "summary": "Open Assets Dictionary",
+        "parameters": [
+          {
+            "name": "dirPath",
+            "required": true,
+            "in": "path",
+            "description": "Directory path to open.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Opens the assets dictionary for a specified game."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
+    "/assets/mkdir": {
+      "post": {
+        "operationId": "AssetsController_mkDir",
+        "summary": "Create Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MkDirDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Directory created successfully."
+          },
+          "400": {
+            "description": "Failed to create directory."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
+    "/assets/upload": {
+      "post": {
+        "operationId": "AssetsController_upload",
+        "summary": "Upload Files",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadFilesDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Files uploaded successfully."
+          },
+          "400": {
+            "description": "Failed to upload files."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
+    "/assets/delete": {
+      "post": {
+        "operationId": "AssetsController_deleteFileOrDir",
+        "summary": "Delete File or Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteFileOrDirDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the file or directory."
+          },
+          "400": {
+            "description": "Failed to delete the file or directory."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
+    "/assets/rename": {
+      "post": {
+        "operationId": "AssetsController_rename",
+        "summary": "Rename File or Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully renamed the file or directory."
+          },
+          "400": {
+            "description": "Failed to rename the file or directory."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
     "/api/manageGame/gameList": {
       "get": {
         "operationId": "ManageGameController_getGameList",
@@ -551,6 +713,102 @@
           "Manage Game"
         ]
       }
+    },
+    "/api/manageTemplate/templateList": {
+      "get": {
+        "operationId": "ManageTemplateController_getTemplateList",
+        "summary": "Retrieve template list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returned template list."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/createTemplate": {
+      "post": {
+        "operationId": "ManageTemplateController_createTemplate",
+        "summary": "Create a new template",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Template creation data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Template creation result."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/getTemplateConfig/{templateName}": {
+      "get": {
+        "operationId": "ManageTemplateController_getTemplateConfig",
+        "summary": "Get Template Configuration",
+        "parameters": [
+          {
+            "name": "templateName",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned template configuration."
+          },
+          "400": {
+            "description": "Failed to get the template configuration."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/template-preview/{templateName}/game/template/{path}": {
+      "get": {
+        "operationId": "TemplatePreviewController_getTemplateAsset",
+        "parameters": [
+          {
+            "name": "path",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "templateName",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "info": {
@@ -578,6 +836,64 @@
         "required": [
           "editorValue",
           "params"
+        ]
+      },
+      "MkDirDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path where the directory will be created"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name for the new directory"
+          }
+        },
+        "required": [
+          "source",
+          "name"
+        ]
+      },
+      "UploadFilesDto": {
+        "type": "object",
+        "properties": {
+          "targetDirectory": {
+            "type": "string",
+            "description": "Target directory for the uploaded files"
+          }
+        },
+        "required": [
+          "targetDirectory"
+        ]
+      },
+      "DeleteFileOrDirDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file or directory to be deleted"
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "RenameDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file or directory to be renamed"
+          },
+          "newName": {
+            "type": "string",
+            "description": "New name for renaming the file or directory"
+          }
+        },
+        "required": [
+          "source",
+          "newName"
         ]
       },
       "CreateGameDto": {
@@ -695,62 +1011,16 @@
           "newConfig"
         ]
       },
-      "UploadFilesDto": {
+      "CreateTemplateDto": {
         "type": "object",
         "properties": {
-          "targetDirectory": {
+          "templateName": {
             "type": "string",
-            "description": "Target directory for the uploaded files"
+            "description": "The name of the template to be created"
           }
         },
         "required": [
-          "targetDirectory"
-        ]
-      },
-      "MkDirDto": {
-        "type": "object",
-        "properties": {
-          "source": {
-            "type": "string",
-            "description": "The source path where the directory will be created"
-          },
-          "name": {
-            "type": "string",
-            "description": "Name for the new directory"
-          }
-        },
-        "required": [
-          "source",
-          "name"
-        ]
-      },
-      "DeleteFileOrDirDto": {
-        "type": "object",
-        "properties": {
-          "source": {
-            "type": "string",
-            "description": "The source path of the file or directory to be deleted"
-          }
-        },
-        "required": [
-          "source"
-        ]
-      },
-      "RenameDto": {
-        "type": "object",
-        "properties": {
-          "source": {
-            "type": "string",
-            "description": "The source path of the file or directory to be renamed"
-          },
-          "newName": {
-            "type": "string",
-            "description": "New name for renaming the file or directory"
-          }
-        },
-        "required": [
-          "source",
-          "newName"
+          "templateName"
         ]
       }
     }
