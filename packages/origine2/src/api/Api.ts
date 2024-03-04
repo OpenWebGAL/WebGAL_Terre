@@ -16,6 +16,30 @@ export interface CompletionDto {
   params: object;
 }
 
+export interface MkDirDto {
+  /** The source path where the directory will be created */
+  source: string;
+  /** Name for the new directory */
+  name: string;
+}
+
+export interface UploadFilesDto {
+  /** Target directory for the uploaded files */
+  targetDirectory: string;
+}
+
+export interface DeleteFileOrDirDto {
+  /** The source path of the file or directory to be deleted */
+  source: string;
+}
+
+export interface RenameDto {
+  /** The source path of the file or directory to be renamed */
+  source: string;
+  /** New name for renaming the file or directory */
+  newName: string;
+}
+
 export interface CreateGameDto {
   /** The name of the game to be created */
   gameName: string;
@@ -66,28 +90,9 @@ export interface GameConfigDto {
   newConfig: string;
 }
 
-export interface UploadFilesDto {
-  /** Target directory for the uploaded files */
-  targetDirectory: string;
-}
-
-export interface MkDirDto {
-  /** The source path where the directory will be created */
-  source: string;
-  /** Name for the new directory */
-  name: string;
-}
-
-export interface DeleteFileOrDirDto {
-  /** The source path of the file or directory to be deleted */
-  source: string;
-}
-
-export interface RenameDto {
-  /** The source path of the file or directory to be renamed */
-  source: string;
-  /** New name for renaming the file or directory */
-  newName: string;
+export interface CreateTemplateDto {
+  /** The name of the template to be created */
+  templateName: string;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from 'axios';
@@ -572,6 +577,166 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerGetTemplateList
+     * @summary Retrieve template list
+     * @request GET:/api/manageTemplate/templateList
+     */
+    manageTemplateControllerGetTemplateList: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/manageTemplate/templateList`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerCreateTemplate
+     * @summary Create a new template
+     * @request POST:/api/manageTemplate/createTemplate
+     */
+    manageTemplateControllerCreateTemplate: (data: CreateTemplateDto, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/manageTemplate/createTemplate`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerGetTemplateConfig
+     * @summary Get Template Configuration
+     * @request GET:/api/manageTemplate/getTemplateConfig/{templateName}
+     */
+    manageTemplateControllerGetTemplateConfig: (templateName: string, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/getTemplateConfig/${templateName}`,
+        method: 'GET',
+        ...params,
+      }),
+  };
+  assets = {
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerReadAssets
+     * @summary Read Assets
+     * @request GET:/assets/readAssets/{readDirPath}
+     */
+    assetsControllerReadAssets: (readDirPath: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/assets/readAssets/${readDirPath}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerOpenDict
+     * @summary Open Assets Dictionary
+     * @request GET:/assets/openDict
+     */
+    assetsControllerOpenDict: (dirPath: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/assets/openDict`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerMkDir
+     * @summary Create Directory
+     * @request POST:/assets/mkdir
+     */
+    assetsControllerMkDir: (data: MkDirDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/assets/mkdir`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerUpload
+     * @summary Upload Files
+     * @request POST:/assets/upload
+     */
+    assetsControllerUpload: (data: UploadFilesDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/assets/upload`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerDeleteFileOrDir
+     * @summary Delete File or Directory
+     * @request POST:/assets/delete
+     */
+    assetsControllerDeleteFileOrDir: (data: DeleteFileOrDirDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/assets/delete`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerRename
+     * @summary Rename File or Directory
+     * @request POST:/assets/rename
+     */
+    assetsControllerRename: (data: RenameDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/assets/rename`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
+  templatePreview = {
+    /**
+     * No description
+     *
+     * @name TemplatePreviewControllerGetTemplateAsset
+     * @request GET:/template-preview/{templateName}/game/template/{path}
+     */
+    templatePreviewControllerGetTemplateAsset: (path: string, templateName: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/template-preview/${templateName}/game/template/${path}`,
+        method: 'GET',
         ...params,
       }),
   };
