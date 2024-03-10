@@ -32,7 +32,7 @@ export class DeleteFileOrDirDto {
   source: string;
 }
 
-export class RenameDto {
+export class RenameFileDto {
   @ApiProperty({
     description: 'The source path of the file or directory to be renamed',
   })

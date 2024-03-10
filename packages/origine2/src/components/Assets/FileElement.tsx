@@ -14,6 +14,20 @@ import useTrans from "@/hooks/useTrans";
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
 
+const protectFiles = [
+  '/game/animation',
+  '/game/background',
+  '/game/bgm',
+  '/game/figure',
+  '/game/scene',
+  '/game/scene/start.txt',
+  '/game/tex',
+  '/game/video',
+  '/game/vocal',
+  '/game/config.txt',
+  '/game/userStyleSheet.css',
+];
+
 export default function FileElement(
   { file, currentPath, handleRenameFile, handleDeleteFile }
     : {
@@ -27,6 +41,9 @@ export default function FileElement(
   const tags = useSelector((state: RootState) => state.status.editor.tags);
   const newFileName = useValue(file.name);
 
+  const isScene = () => /\/public\/games\/([^\/\n]+)\/game\/scene\/([^\/\n]+).txt/.test(file.path.replaceAll('\\','/'));
+  const isProtect = protectFiles.some((item) => new RegExp(`\/public\/games\/[^\/\n]+${item.replaceAll('/','\/')}$`).test(file.path.replaceAll('\\','/')));
+  
   return (
     <div
       key={file.name}
@@ -39,7 +56,7 @@ export default function FileElement(
           const tag: ITag = {
             tagName: file.name,
             tagTarget: file.path,
-            tagType: "asset"
+            tagType: isScene() ? 'scene' : 'asset',
           };
           // 先要确定没有这个tag
           const result = tags.findIndex((e) => e.tagTarget === target);
@@ -61,48 +78,52 @@ export default function FileElement(
         {file.name}
       </div>
 
-      <Popover withArrow>
-        <PopoverTrigger>
-          <Button icon={<RenameIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
-            onClick={(e) => e.stopPropagation()} />
-        </PopoverTrigger>
-        <PopoverSurface onClick={(e) => e.stopPropagation()}>
-          <Text as="h3" block size={500}>
-            {t("$common.rename")}
-          </Text>
-          <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
-            <Input value={newFileName.value} onChange={(_, data) => {
-              newFileName.set(data.value ?? "");
-            }} />
-            <br />
-            <Button appearance="primary" onClick={() => {
-              handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value);
-              newFileName.set(file.name);
-            }}>{t("$common.rename")}</Button>
-          </div>
-        </PopoverSurface>
-      </Popover>
+      {
+        !isProtect &&
+        <>
+          <Popover withArrow>
+            <PopoverTrigger>
+              <Button icon={<RenameIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
+                onClick={(e) => e.stopPropagation()} />
+            </PopoverTrigger>
+            <PopoverSurface onClick={(e) => e.stopPropagation()}>
+              <Text as="h3" block size={500}>
+                {t("$common.rename")}
+              </Text>
+              <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+                <Input value={newFileName.value} onChange={(_, data) => {
+                  newFileName.set(data.value ?? "");
+                }} />
+                <br />
+                <Button appearance="primary" onClick={() => {
+                  handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value);
+                  newFileName.set(file.name);
+                }}>{t("$common.rename")}</Button>
+              </div>
+            </PopoverSurface>
+          </Popover>
 
-      <Popover withArrow>
-        <PopoverTrigger>
-          <Button icon={<DeleteIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
-            onClick={(e) => e.stopPropagation()} />
-        </PopoverTrigger>
-        <PopoverSurface onClick={(e) => e.stopPropagation()}>
-          <Text as="h3" block size={500}>
-            {t("$common.delete")}
-          </Text>
-          <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
-            <Button appearance="primary"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDeleteFile(`${currentPath.value.join('/')}/${file.name}`);
-              }}
-            >{t("$common.delete")}</Button>
-          </div>
-        </PopoverSurface>
-      </Popover>
-
+          <Popover withArrow>
+            <PopoverTrigger>
+              <Button icon={<DeleteIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
+                onClick={(e) => e.stopPropagation()} />
+            </PopoverTrigger>
+            <PopoverSurface onClick={(e) => e.stopPropagation()}>
+              <Text as="h3" block size={500}>
+                {t("$common.delete")}
+              </Text>
+              <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+                <Button appearance="primary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteFile(`${currentPath.value.join('/')}/${file.name}`);
+                  }}
+                >{t("$common.delete")}</Button>
+              </div>
+            </PopoverSurface>
+          </Popover>
+        </>
+      }
     </div>
   );
 }

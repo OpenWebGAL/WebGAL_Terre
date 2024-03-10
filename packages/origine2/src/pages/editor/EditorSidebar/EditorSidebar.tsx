@@ -160,9 +160,9 @@ export default function EditorSideBar() {
         {/* {state.currentSidebarTag === sidebarTag.assets && <Assets />} */}
         {state.currentSidebarTag === sidebarTag.assets &&
           <NewAssets basePath={['public','games',state.currentEditingGame,'game']} />}
-        {state.currentSidebarTag === sidebarTag.scenes && <Scenes />}
-        {/* {state.currentSidebarTag === sidebarTag.scenes &&
-          <NewAssets basePath={['public','games',state.currentEditingGame,'game','scene']} />} */}
+        {/* {state.currentSidebarTag === sidebarTag.scenes && <Scenes />} */}
+        {state.currentSidebarTag === sidebarTag.scenes &&
+          <NewAssets basePath={['public','games',state.currentEditingGame,'game','scene']} />}
       </div>
 
     </div >
