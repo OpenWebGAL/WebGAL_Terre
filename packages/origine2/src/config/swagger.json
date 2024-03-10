@@ -43,7 +43,7 @@
         ]
       }
     },
-    "/assets/readAssets/{readDirPath}": {
+    "/api/assets/readAssets/{readDirPath}": {
       "get": {
         "operationId": "AssetsController_readAssets",
         "summary": "Read Assets",
@@ -68,7 +68,7 @@
         ]
       }
     },
-    "/assets/openDict": {
+    "/api/assets/openDict/{dirPath}": {
       "get": {
         "operationId": "AssetsController_openDict",
         "summary": "Open Assets Dictionary",
@@ -93,27 +93,27 @@
         ]
       }
     },
-    "/assets/mkdir": {
+    "/api/assets/createNewFile": {
       "post": {
-        "operationId": "AssetsController_mkDir",
-        "summary": "Create Directory",
+        "operationId": "AssetsController_createNewFile",
+        "summary": "Create a New FIle",
         "parameters": [],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MkDirDto"
+                "$ref": "#/components/schemas/CreateNewFileDto"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Directory created successfully."
+            "description": "Successfully created the File."
           },
           "400": {
-            "description": "Failed to create directory."
+            "description": "Failed to create the File or file already exists."
           }
         },
         "tags": [
@@ -121,7 +121,35 @@
         ]
       }
     },
-    "/assets/upload": {
+    "/api/assets/createNewFolder": {
+      "post": {
+        "operationId": "AssetsController_createNewFolder",
+        "summary": "Create Folder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNewFolderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Folder created successfully."
+          },
+          "400": {
+            "description": "Failed to create Folder."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
+    "/api/assets/upload": {
       "post": {
         "operationId": "AssetsController_upload",
         "summary": "Upload Files",
@@ -149,7 +177,7 @@
         ]
       }
     },
-    "/assets/delete": {
+    "/api/assets/delete": {
       "post": {
         "operationId": "AssetsController_deleteFileOrDir",
         "summary": "Delete File or Directory",
@@ -177,7 +205,7 @@
         ]
       }
     },
-    "/assets/rename": {
+    "/api/assets/rename": {
       "post": {
         "operationId": "AssetsController_rename",
         "summary": "Rename File or Directory",
@@ -838,7 +866,24 @@
           "params"
         ]
       },
-      "MkDirDto": {
+      "CreateNewFileDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path where the directory will be created"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name for the new file"
+          }
+        },
+        "required": [
+          "source",
+          "name"
+        ]
+      },
+      "CreateNewFolderDto": {
         "type": "object",
         "properties": {
           "source": {
@@ -1009,6 +1054,23 @@
         "required": [
           "gameName",
           "newConfig"
+        ]
+      },
+      "MkDirDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path where the directory will be created"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name for the new directory"
+          }
+        },
+        "required": [
+          "source",
+          "name"
         ]
       },
       "CreateTemplateDto": {

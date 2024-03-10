@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -14,15 +15,16 @@ import {
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AssetsService } from './assets.service';
 import {
+  CreateNewFileDto,
   DeleteFileOrDirDto,
-  MkDirDto,
+  CreateNewFolderDto,
   RenameDto,
   UploadFilesDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { _open } from 'src/util/open';
 
-@Controller('assets')
+@Controller('api/assets')
 @ApiTags('Assets')
 export class AssetsController {
   constructor(
@@ -49,7 +51,7 @@ export class AssetsController {
     return { readDirPath, dirPath, dirInfo };
   }
 
-  @Get('openDict') // <-- Define the route parameter using :gameName
+  @Get('openDict/:dirPath(*)')
   @ApiOperation({ summary: 'Open Assets Dictionary' })
   @ApiResponse({
     status: 200,
@@ -66,14 +68,35 @@ export class AssetsController {
     await _open(path);
   }
 
-  @Post('mkdir')
-  @ApiOperation({ summary: 'Create Directory' })
-  @ApiResponse({ status: 200, description: 'Directory created successfully.' })
-  @ApiResponse({ status: 400, description: 'Failed to create directory.' })
-  async mkDir(@Body() fileOperationDto: MkDirDto) {
+  @Post('createNewFile')
+  @ApiOperation({ summary: 'Create a New FIle' })
+  @ApiResponse({ status: 200, description: 'Successfully created the File.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to create the File or file already exists.',
+  })
+  async createNewFile(
+    @Body() createNewFileData: CreateNewFileDto,
+  ): Promise<string | void> {
+    const path = this.webgalFs.getPathFromRoot(
+      `${createNewFileData.source}/${createNewFileData.name}`,
+    );
+
+    if (await this.webgalFs.exists(path)) {
+      throw new BadRequestException('Scene already exists');
+    }
+
+    return this.webgalFs.createEmptyFile(path);
+  }
+
+  @Post('createNewFolder')
+  @ApiOperation({ summary: 'Create Folder' })
+  @ApiResponse({ status: 200, description: 'Folder created successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to create Folder.' })
+  async createNewFolder(@Body() createNewFolderData: CreateNewFolderDto) {
     await this.webgalFs.mkdir(
-      this.webgalFs.getPathFromRoot(fileOperationDto.source),
-      fileOperationDto.name,
+      this.webgalFs.getPathFromRoot(createNewFolderData.source),
+      createNewFolderData.name,
     );
     return true;
   }
