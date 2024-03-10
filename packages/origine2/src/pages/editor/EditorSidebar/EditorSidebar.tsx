@@ -4,6 +4,7 @@ import { RootState } from "../../../store/origineStore";
 import { setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
 import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
+import NewAssets from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
 import {eventBus} from "@/utils/eventBus";
@@ -55,7 +56,7 @@ export default function EditorSideBar() {
     if (isMouseDown) {
       const deltaX = event.clientX - (startX);
       const newValue = prevXvalue + deltaX;
-      document.body.style.setProperty("--sidebar-width", `${newValue}px`);
+      document.body.style.setProperty("--sidebar-width", `${(newValue < 240) ? 240 : newValue}px`);
     }
 
   };
@@ -156,9 +157,12 @@ export default function EditorSideBar() {
       </div>
 
       <div className={styles.sidebarContent}>
-        {/* {state.currentSidebarTag === sidebarTag.gameconfig && <GameConfig />} */}
-        {state.currentSidebarTag === sidebarTag.assets && <Assets />}
+        {/* {state.currentSidebarTag === sidebarTag.assets && <Assets />} */}
+        {state.currentSidebarTag === sidebarTag.assets &&
+          <NewAssets basePath={['public','games',state.currentEditingGame,'game']} />}
         {state.currentSidebarTag === sidebarTag.scenes && <Scenes />}
+        {/* {state.currentSidebarTag === sidebarTag.scenes &&
+          <NewAssets basePath={['public','games',state.currentEditingGame,'game','scene']} />} */}
       </div>
 
     </div >
