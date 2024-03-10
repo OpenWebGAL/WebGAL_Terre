@@ -18,7 +18,7 @@ import {
   CreateNewFileDto,
   DeleteFileOrDirDto,
   CreateNewFolderDto,
-  RenameDto,
+  RenameFileDto,
   UploadFilesDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -139,7 +139,7 @@ export class AssetsController {
     status: 400,
     description: 'Failed to rename the file or directory.',
   })
-  async rename(@Body() fileOperationDto: RenameDto) {
+  async rename(@Body() fileOperationDto: RenameFileDto) {
     return this.webgalFs.renameFile(
       this.webgalFs.getPathFromRoot(fileOperationDto.source),
       fileOperationDto.newName,
