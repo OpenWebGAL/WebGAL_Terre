@@ -720,5 +720,13 @@ export const zhCn = {
   "默认值0":"默认值0",
   "默认值1":"默认值1",
   "持续时间（单位为毫秒）":"持续时间（单位为毫秒）",
-  "结束后保持":"结束后保持"
+  "结束后保持":"结束后保持",
+  "createNewFile":"新建文件",
+  "createNewFolder":"新建文件夹",
+  "newFileName":"新文件名",
+  "newFolderName":"新文件夹名",
+  "upload": "上传",
+  "uploadAsset":"上传资源",
+  "refresh":"刷新",
+  "openFolder":"打开文件夹",
 };
