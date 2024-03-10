@@ -5,7 +5,17 @@ export class UploadFilesDto {
   targetDirectory: string;
 }
 
-export class MkDirDto {
+export class CreateNewFileDto {
+  @ApiProperty({
+    description: 'The source path where the directory will be created',
+  })
+  source: string;
+
+  @ApiProperty({ description: 'Name for the new file' })
+  name: string;
+}
+
+export class CreateNewFolderDto {
   @ApiProperty({
     description: 'The source path where the directory will be created',
   })

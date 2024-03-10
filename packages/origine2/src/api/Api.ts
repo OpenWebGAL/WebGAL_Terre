@@ -16,7 +16,14 @@ export interface CompletionDto {
   params: object;
 }
 
-export interface MkDirDto {
+export interface CreateNewFileDto {
+  /** The source path where the directory will be created */
+  source: string;
+  /** Name for the new file */
+  name: string;
+}
+
+export interface CreateNewFolderDto {
   /** The source path where the directory will be created */
   source: string;
   /** Name for the new directory */
@@ -88,6 +95,13 @@ export interface GameConfigDto {
   gameName: string;
   /** New game configuration */
   newConfig: string;
+}
+
+export interface MkDirDto {
+  /** The source path where the directory will be created */
+  source: string;
+  /** Name for the new directory */
+  name: string;
 }
 
 export interface CreateTemplateDto {
@@ -260,6 +274,121 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     lspControllerCompile: (data: CompletionDto, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/api/lsp/compile`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerReadAssets
+     * @summary Read Assets
+     * @request GET:/api/assets/readAssets/{readDirPath}
+     */
+    assetsControllerReadAssets: (readDirPath: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/assets/readAssets/${readDirPath}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerOpenDict
+     * @summary Open Assets Dictionary
+     * @request GET:/api/assets/openDict/{dirPath}
+     */
+    assetsControllerOpenDict: (dirPath: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/assets/openDict/${dirPath}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerCreateNewFile
+     * @summary Create a New FIle
+     * @request POST:/api/assets/createNewFile
+     */
+    assetsControllerCreateNewFile: (data: CreateNewFileDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/createNewFile`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerCreateNewFolder
+     * @summary Create Folder
+     * @request POST:/api/assets/createNewFolder
+     */
+    assetsControllerCreateNewFolder: (data: CreateNewFolderDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/createNewFolder`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerUpload
+     * @summary Upload Files
+     * @request POST:/api/assets/upload
+     */
+    assetsControllerUpload: (data: UploadFilesDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/upload`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerDeleteFileOrDir
+     * @summary Delete File or Directory
+     * @request POST:/api/assets/delete
+     */
+    assetsControllerDeleteFileOrDir: (data: DeleteFileOrDirDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/delete`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerRename
+     * @summary Rename File or Directory
+     * @request POST:/api/assets/rename
+     */
+    assetsControllerRename: (data: RenameDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/rename`,
         method: 'POST',
         body: data,
         type: ContentType.Json,
@@ -624,105 +753,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<void, void>({
         path: `/api/manageTemplate/getTemplateConfig/${templateName}`,
         method: 'GET',
-        ...params,
-      }),
-  };
-  assets = {
-    /**
-     * No description
-     *
-     * @tags Assets
-     * @name AssetsControllerReadAssets
-     * @summary Read Assets
-     * @request GET:/assets/readAssets/{readDirPath}
-     */
-    assetsControllerReadAssets: (readDirPath: string, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/assets/readAssets/${readDirPath}`,
-        method: 'GET',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Assets
-     * @name AssetsControllerOpenDict
-     * @summary Open Assets Dictionary
-     * @request GET:/assets/openDict
-     */
-    assetsControllerOpenDict: (dirPath: string, params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/assets/openDict`,
-        method: 'GET',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Assets
-     * @name AssetsControllerMkDir
-     * @summary Create Directory
-     * @request POST:/assets/mkdir
-     */
-    assetsControllerMkDir: (data: MkDirDto, params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/assets/mkdir`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Assets
-     * @name AssetsControllerUpload
-     * @summary Upload Files
-     * @request POST:/assets/upload
-     */
-    assetsControllerUpload: (data: UploadFilesDto, params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/assets/upload`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Assets
-     * @name AssetsControllerDeleteFileOrDir
-     * @summary Delete File or Directory
-     * @request POST:/assets/delete
-     */
-    assetsControllerDeleteFileOrDir: (data: DeleteFileOrDirDto, params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/assets/delete`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Assets
-     * @name AssetsControllerRename
-     * @summary Rename File or Directory
-     * @request POST:/assets/rename
-     */
-    assetsControllerRename: (data: RenameDto, params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/assets/rename`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
         ...params,
       }),
   };
