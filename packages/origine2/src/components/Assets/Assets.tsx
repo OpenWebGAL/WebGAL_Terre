@@ -239,7 +239,7 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderPro
       <div>
         <input className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
       </div>
-      <Button appearance='primary' onClick={handleUpload}>{t("$common.upload")}</Button>
+      <Button appearance='primary' onClick={handleUpload}>{t("$upload")}</Button>
     </div>
   );
 }
