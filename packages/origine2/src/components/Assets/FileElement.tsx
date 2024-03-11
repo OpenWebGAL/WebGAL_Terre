@@ -1,5 +1,5 @@
 import { getFileIcon, getDirIcon } from "@/utils/getFileIcon";
-import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text } from "@fluentui/react-components";
+import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text, Subtitle1 } from "@fluentui/react-components";
 import { t } from "i18next";
 import IconWrapper from "../iconWrapper/IconWrapper";
 import { FolderType, IFile } from "./Assets";
@@ -15,10 +15,10 @@ const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
 
 export default function FileElement(
-  { file, name, currentPath, isProtected, folderType, handleRenameFile, handleDeleteFile }
+  { file, desc, currentPath, isProtected, folderType, handleRenameFile, handleDeleteFile }
     : {
       file: IFile,
-      name?: string,
+      desc?: string,
       currentPath: any,
       folderType?: FolderType,
       isProtected?: boolean,
@@ -63,30 +63,31 @@ export default function FileElement(
         whiteSpace: 'nowrap',
       }}
       >
-        {file.name} {name && <span style={{color:'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>{name}</span>}
+        {file.name} {desc && <span style={{color:'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>{desc}</span>}
       </div>
 
       {
         !isProtected &&
         <>
-          <Popover withArrow>
+          <Popover withArrow onOpenChange={() => (newFileName.value === '') && newFileName.set(file.name)}>
             <PopoverTrigger>
               <Button icon={<RenameIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
                 onClick={(e) => e.stopPropagation()} />
             </PopoverTrigger>
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
-              <Text as="h3" block size={500}>
-                {t("$common.rename")}
-              </Text>
-              <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+              <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
+                <Subtitle1>{t("$common.rename")}</Subtitle1>
                 <Input value={newFileName.value} onChange={(_, data) => {
                   newFileName.set(data.value ?? "");
                 }} />
-                <br />
-                <Button appearance="primary" onClick={() => {
-                  handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value);
-                  newFileName.set(file.name);
-                }}>{t("$common.rename")}</Button>
+                <Button
+                  appearance="primary"
+                  disabled={newFileName.value === ''}
+                  onClick={() => {
+                    handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value);
+                    newFileName.set(file.name);
+                  }}
+                >{t("$common.rename")}</Button>
               </div>
             </PopoverSurface>
           </Popover>
@@ -97,11 +98,10 @@ export default function FileElement(
                 onClick={(e) => e.stopPropagation()} />
             </PopoverTrigger>
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
-              <Text as="h3" block size={500}>
-                {t("$common.delete")}
-              </Text>
-              <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
-                <Button appearance="primary"
+              <div style={{ display: "flex", flexFlow: "column", gap: "16px"}}>
+                <Subtitle1>{t("$common.delete")}</Subtitle1>
+                <Button
+                  appearance="primary"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDeleteFile(`${currentPath.value.join('/')}/${file.name}`);
