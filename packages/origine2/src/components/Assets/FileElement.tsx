@@ -2,7 +2,7 @@ import { getFileIcon, getDirIcon } from "@/utils/getFileIcon";
 import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text } from "@fluentui/react-components";
 import { t } from "i18next";
 import IconWrapper from "../iconWrapper/IconWrapper";
-import { IFile } from "./Assets";
+import { FolderType, IFile } from "./Assets";
 import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
 import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular } from "@fluentui/react-icons";
@@ -14,25 +14,14 @@ import useTrans from "@/hooks/useTrans";
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
 
-const protectFiles = [
-  '/game/animation',
-  '/game/background',
-  '/game/bgm',
-  '/game/figure',
-  '/game/scene',
-  '/game/scene/start.txt',
-  '/game/tex',
-  '/game/video',
-  '/game/vocal',
-  '/game/config.txt',
-  '/game/userStyleSheet.css',
-];
-
 export default function FileElement(
-  { file, currentPath, handleRenameFile, handleDeleteFile }
+  { file, name, currentPath, isProtected, folderType, handleRenameFile, handleDeleteFile }
     : {
       file: IFile,
+      name?: string,
       currentPath: any,
+      folderType?: FolderType,
+      isProtected?: boolean,
       handleRenameFile: (source: string, newName: string) => Promise<void>,
       handleDeleteFile: (source: string) => Promise<void>,
     }) {
@@ -41,13 +30,12 @@ export default function FileElement(
   const tags = useSelector((state: RootState) => state.status.editor.tags);
   const newFileName = useValue(file.name);
 
-  const isScene = () => /\/public\/games\/([^\/\n]+)\/game\/scene\/([^\/\n]+).txt/.test(file.path.replaceAll('\\','/'));
-  const isProtect = protectFiles.some((item) => new RegExp(`\/public\/games\/[^\/\n]+${item.replaceAll('/','\/')}$`).test(file.path.replaceAll('\\','/')));
-  
+  const isScene = () => (folderType === 'scene') && file.name.endsWith('.txt');
+
   return (
     <div
       key={file.name}
-      onClick={() =>{ 
+      onClick={() => {
         if (file.isDir) {
           currentPath.set([...currentPath.value, file.name]);
         }
@@ -75,11 +63,11 @@ export default function FileElement(
         whiteSpace: 'nowrap',
       }}
       >
-        {file.name}
+        {file.name} {name && <span style={{color:'var(--text-weak)', fontSize: '12px'}}>({name})</span>}
       </div>
 
       {
-        !isProtect &&
+        !isProtected &&
         <>
           <Popover withArrow>
             <PopoverTrigger>
