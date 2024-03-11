@@ -63,7 +63,7 @@ export default function FileElement(
         whiteSpace: 'nowrap',
       }}
       >
-        {file.name} {name && <span style={{color:'var(--text-weak)', fontSize: '12px'}}>({name})</span>}
+        {file.name} {name && <span style={{color:'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>{name}</span>}
       </div>
 
       {
