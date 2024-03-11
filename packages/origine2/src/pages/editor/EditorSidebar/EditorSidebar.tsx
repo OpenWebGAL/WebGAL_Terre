@@ -100,17 +100,17 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: FileConfig = new Map([
-    [`public/games/${state.currentEditingGame}/game/animation`, { name: t('$animation'), folderType: 'animation', isProtected: true}],
+    [`public/games/${state.currentEditingGame}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true}],
     [`public/games/${state.currentEditingGame}/game/animation/animationTable.json`, { isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/background`, { name: t('$background'), folderType: 'background', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/bgm`, { name: t('$bgm'), folderType: 'bgm', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/figure`, { name: t('$figure'), folderType: 'figure', isProtected: true}],
-    [`public/games/${state.currentEditingGame}/game/scene`, { name: t('$scene'), folderType: 'scene', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true}],
+    [`public/games/${state.currentEditingGame}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
     [`public/games/${state.currentEditingGame}/game/scene/start.txt`, { isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/tex`, { name: t('$tex'), folderType: 'tex', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/video`, { name: t('$video'), folderType: 'video', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/vocal`, { name: t('$vocal'), folderType: 'vocal', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/config.txt`, { name: t('$gameConfig'), isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
     [`public/games/${state.currentEditingGame}/game/userStyleSheet.css`, { isProtected: true }],
   ]);
 
