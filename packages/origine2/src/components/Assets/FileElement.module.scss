@@ -1,0 +1,21 @@
+.file {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+  padding: 0 8px;
+  cursor: pointer;
+  height: 28px;
+}
+
+.file > button {
+  visibility: hidden;
+}
+
+.file:hover {
+  background: var(--bg-button-hover);
+}
+
+.file:hover > button {
+  visibility: visible;
+}

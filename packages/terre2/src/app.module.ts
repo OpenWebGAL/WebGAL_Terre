@@ -7,11 +7,14 @@ import { ManageGameModule } from './Modules/manage-game/manage-game.module';
 import { ManageTemplateModule } from './Modules/manage-template/manage-template.module'
 import { LspModule } from './Modules/lsp/lsp.module';
 import { TemplatePreviewModule } from './Modules/template-preview/template-preview.module';
+import { AssetsModule } from './Modules/assets/assets.module';
 
 @Module({
   imports: [
     // 代码提示
     LspModule,
+    // 资源管理
+    AssetsModule,
     ManageGameModule,
     ManageTemplateModule,
     TemplatePreviewModule,

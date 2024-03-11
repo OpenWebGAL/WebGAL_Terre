@@ -12,7 +12,7 @@ dirnameToDisplayNameMap.set('tex', () => t(tPrefix + 'tex'));
 dirnameToDisplayNameMap.set('video', () => t(tPrefix + 'video'));
 dirnameToDisplayNameMap.set('vocal', () => t(tPrefix + 'vocal'));
 
-export const dirNameToExtNameMap = new Map();
+export const dirNameToExtNameMap = new Map<string, string[]>();
 
 dirNameToExtNameMap.set('animation', ['.json']);
 dirNameToExtNameMap.set('background', ['.jpg', '.png', '.webp']);
