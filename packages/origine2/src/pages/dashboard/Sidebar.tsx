@@ -43,7 +43,7 @@ export default function Sidebar(props: ISidebarProps) {
           <Button appearance='primary' icon={<AddIcon />}>{t('createNewGame.button')}</Button>
         </PopoverTrigger>
         <PopoverSurface>
-          <form style={{display:"flex", flexDirection:"column", gap:'8px'}}>
+          <form style={{display:"flex", flexDirection:"column", gap:'16px'}}>
             <Subtitle1>{t('createNewGame.dialog.title')}</Subtitle1>
             <Input
               value={newGameName}
@@ -51,9 +51,7 @@ export default function Sidebar(props: ISidebarProps) {
               onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
               defaultValue={t('createNewGame.dialog.defaultName')}
               placeholder={t('createNewGame.dialog.text')} />
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Button appearance='primary' onClick={createNewGame} >{t('$common.create')}</Button>
-            </div>         
+            <Button appearance='primary' disabled={newGameName.trim() === ''} onClick={createNewGame} >{t('$common.create')}</Button>       
           </form>
         </PopoverSurface>
       </Popover>
