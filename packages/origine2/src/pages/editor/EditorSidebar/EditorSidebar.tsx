@@ -4,8 +4,8 @@ import { RootState } from "../../../store/origineStore";
 import { setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
 import Assets from "./SidebarTags/Assets/Assets";
 import Scenes from "./SidebarTags/Scenes/Scenes";
-import NewAssets from "@/components/Assets/Assets";
-import React, { useEffect, useRef } from "react";
+import NewAssets, { FileConfig } from "@/components/Assets/Assets";
+import React, { useEffect, useMemo, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
 import {eventBus} from "@/utils/eventBus";
 import { ArrowClockwise24Filled, ArrowClockwise24Regular, bundleIcon, Open24Filled, Open24Regular } from "@fluentui/react-icons";
@@ -99,6 +99,21 @@ export default function EditorSideBar() {
     };
   }, []);
 
+  const fileConfig: FileConfig = new Map([
+    [`public/games/${state.currentEditingGame}/game/animation`, { name: t('$animation'), folderType: 'animation', isProtected: true}],
+    [`public/games/${state.currentEditingGame}/game/animation/animationTable.json`, { isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/background`, { name: t('$background'), folderType: 'background', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/bgm`, { name: t('$bgm'), folderType: 'bgm', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/figure`, { name: t('$figure'), folderType: 'figure', isProtected: true}],
+    [`public/games/${state.currentEditingGame}/game/scene`, { name: t('$scene'), folderType: 'scene', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/scene/start.txt`, { isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/tex`, { name: t('$tex'), folderType: 'tex', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/video`, { name: t('$video'), folderType: 'video', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/vocal`, { name: t('$vocal'), folderType: 'vocal', isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/config.txt`, { name: t('$gameConfig'), isProtected: true }],
+    [`public/games/${state.currentEditingGame}/game/userStyleSheet.css`, { isProtected: true }],
+  ]);
+
   return <>
     {isShowSidebar && <div className={styles.editor_sidebar}>
       <div className={styles.divider}
@@ -143,7 +158,7 @@ export default function EditorSideBar() {
           checked={state.currentSidebarTag === sidebarTag.assets}
           onChange={() => setSidebarTab(sidebarTag.assets)}
         />
-        <label htmlFor="sidebarTabAssets">{t('assets.title')}</label>
+        <label htmlFor="sidebarTabAssets">{t('$assets')}</label>
 
         <input
           type="radio"
@@ -153,16 +168,22 @@ export default function EditorSideBar() {
           checked={state.currentSidebarTag === sidebarTag.scenes}
           onChange={() => setSidebarTab(sidebarTag.scenes)}
         />
-        <label htmlFor="sidebarTabScenes">{t('scenes.title')}</label>
+        <label htmlFor="sidebarTabScenes">{t('$scene')}</label>
       </div>
 
       <div className={styles.sidebarContent}>
         {/* {state.currentSidebarTag === sidebarTag.assets && <Assets />} */}
         {state.currentSidebarTag === sidebarTag.assets &&
-          <NewAssets basePath={['public','games',state.currentEditingGame,'game']} />}
+          <NewAssets
+            basePath={['public','games',state.currentEditingGame,'game']}
+            fileConfig={fileConfig}
+          />}
         {/* {state.currentSidebarTag === sidebarTag.scenes && <Scenes />} */}
         {state.currentSidebarTag === sidebarTag.scenes &&
-          <NewAssets basePath={['public','games',state.currentEditingGame,'game','scene']} />}
+          <NewAssets
+            basePath={['public','games',state.currentEditingGame,'game','scene']}
+            fileConfig={fileConfig} 
+          />}
       </div>
 
     </div >
