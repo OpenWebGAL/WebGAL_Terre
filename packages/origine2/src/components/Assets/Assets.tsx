@@ -2,7 +2,7 @@ import { api } from "@/api";
 import { useValue } from "@/hooks/useValue";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import styles from "./Assets.module.scss";
-import { Badge, Button, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Text } from "@fluentui/react-components";
+import { Badge, Button, Field, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Radio, RadioGroup, Subtitle1, Text } from "@fluentui/react-components";
 import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
 import useTrans from "@/hooks/useTrans";
 import FileElement from "./FileElement";
@@ -21,7 +21,7 @@ export type FolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene'
 export type FileConfig = Map<
 string,
 {
-  name?: string,
+  desc?: string,
   folderType?: FolderType,
   isProtected?: boolean,
 }
@@ -43,20 +43,8 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
   const isBasePath = (currentPathString === basePath.join('/'));
   const fileList = useValue<IFile[] | null>(null);
   const refresh = useValue(false);
-  const folderType = useValue<FolderType | undefined>(undefined);
-  const supportedExtName = folderType.value ? dirNameToExtNameMap.get(folderType.value) : [];
-
-  useEffect(
-    () => {
-      fileConfig?.forEach((value, key) => {
-        if (currentPathString.startsWith(key)) {
-          folderType.set(value.folderType);
-        }
-      });
-      return () => folderType.set(undefined);
-    },
-    [currentPathString]
-  );
+  const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPathString.startsWith(key))?.[1].folderType : undefined;
+  const extName = folderType ? dirNameToExtNameMap.get(folderType) : [];
 
   useEffect(
     () => {
@@ -96,6 +84,7 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
   const createNewFilePopoverOpen = useValue(false);
   const createNewFolderPopoverOpen = useValue(false);
   const newFileName = useValue('');
+  const newFileExtensionName = useValue(folderType === 'scene' ? '.txt' : '');
   const uploadAssetPopoverOpen = useValue(false);
 
   return (
@@ -117,10 +106,8 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
             <Button icon={<DocumentAddIcon />} size='small' />
           </PopoverTrigger>
           <PopoverSurface>
-            <Text as="h3" block size={500}>
-              {t("$createNewFile")}
-            </Text>
-            <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+            <div style={{ display: "flex", flexFlow: "column", gap: "16px"}}>
+              <Subtitle1>{t("$createNewFile")}</Subtitle1>
               <Input
                 value={newFileName.value}
                 placeholder={t("$newFileName")}
@@ -128,11 +115,23 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
                   newFileName.set(data.value ?? "");
                 }}
               />
-              <br />
+              <Field label={t('$extensionName')} size='small'>
+                <RadioGroup value={newFileExtensionName.value} onChange={(_, data) => newFileExtensionName.set(data.value)}>
+                  <Radio value="" label={t('$null')} />
+                  <Radio value=".txt" label="txt" />
+                  <Radio value=".json" label="json" />
+                </RadioGroup>
+              </Field>
               <Button
                 appearance="primary"
+                disabled={newFileName.value === ''}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' && newFileName.value !== ''){
+                    handleCreateNewFile(currentPathString, `${newFileName.value}${newFileExtensionName.value}`);
+                  }
+                }}
                 onClick={() => {
-                  handleCreateNewFile(currentPathString, newFileName.value);
+                  handleCreateNewFile(currentPathString, `${newFileName.value}${newFileExtensionName.value}`);
                   createNewFilePopoverOpen.set(false);
                   newFileName.set('');
                 }}
@@ -150,10 +149,8 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
             <Button icon={<FolderAddIcon />} size='small' />
           </PopoverTrigger>
           <PopoverSurface>
-            <Text as="h3" block size={500}>
-              {t("$createNewFolder")}
-            </Text>
-            <div style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
+            <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
+              <Subtitle1>{t("$createNewFolder")}</Subtitle1>
               <Input
                 value={newFileName.value} 
                 placeholder={t("$newFolderName")}
@@ -161,9 +158,9 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
                   newFileName.set(data.value ?? "");
                 }}
               />
-              <br />
               <Button
                 appearance="primary"
+                disabled={newFileName.value === ''}
                 onClick={() => {
                   handleCreateNewFolder(currentPathString, newFileName.value);
                   createNewFolderPopoverOpen.set(false);
@@ -183,13 +180,10 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
             <Button icon={<ArrowExportUpIcon />} size='small' />
           </PopoverTrigger>
           <PopoverSurface>
-            <Text as="h3" block size={500}>
-              {t("$uploadAsset")}
-            </Text>
-            <FileUploader onUpload={() => {
-              handleRefresh();
-            }} targetDirectory={currentPathString}
-            uploadUrl="/api/assets/upload" />
+            <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
+              <Subtitle1>{t("$uploadAsset")}</Subtitle1>
+              <FileUploader onUpload={handleRefresh} targetDirectory={currentPathString} uploadUrl="/api/assets/upload" />
+            </div>
           </PopoverSurface>
         </Popover>
 
@@ -206,7 +200,7 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
         </Menu>
       </div>
       <div style={{display: 'flex', padding: '4px 8px', gap: '4px'}}>
-        {supportedExtName?.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
+        {extName?.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
       </div>
       <div style={{ overflow: 'auto' }}>
         {
@@ -214,9 +208,9 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
             <FileElement
               key={file.name}
               file={file}
-              name={fileConfig?.get(`${currentPathString}/${file.name}`)?.name ?? undefined}
+              desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
               currentPath={currentPath}
-              folderType={folderType.value}
+              folderType={folderType}
               isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? false}
               handleRenameFile={handleRenameFile}
               handleDeleteFile={handleDeleteFile}

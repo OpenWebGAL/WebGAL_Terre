@@ -732,4 +732,6 @@ export const en = {
   video: 'Video',
   vocal: 'Vocal',
   gameConfig: 'Game Config',
+  extensionName: 'Extension Name',
+  null: 'Null',
 };

@@ -739,4 +739,6 @@ export const zhCn = {
   video: '视频',
   vocal: '语音',
   gameConfig: '游戏配置',
+  extensionName: '扩展名',
+  null: '无',
 };
