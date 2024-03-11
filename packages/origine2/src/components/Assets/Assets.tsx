@@ -2,11 +2,12 @@ import { api } from "@/api";
 import { useValue } from "@/hooks/useValue";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import styles from "./Assets.module.scss";
-import { Button, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Text } from "@fluentui/react-components";
+import { Badge, Button, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Text } from "@fluentui/react-components";
 import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
 import useTrans from "@/hooks/useTrans";
 import FileElement from "./FileElement";
 import axios from "axios";
+import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 
 export interface IFile {
   extName: string;
@@ -15,14 +16,16 @@ export interface IFile {
   path: string;
 }
 
-interface AssetsProps {
-  basePath: string[],
-  extra?: {
-    path: string[],
-    protect: boolean,
-    mark?: string,
-  }[]
+export type FolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'tex' | 'video' | 'vocal'
+
+export type FileConfig = Map<
+string,
+{
+  name?: string,
+  folderType?: FolderType,
+  isProtected?: boolean,
 }
+>
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 const DocumentAddIcon = bundleIcon(DocumentAddFilled, DocumentAddRegular);
@@ -32,18 +35,32 @@ const MoreVerticalIcon = bundleIcon(MoreVerticalFilled, MoreVerticalRegular);
 const ArrowExportUpIcon = bundleIcon(ArrowExportUpFilled, ArrowExportUpRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
 
-export default function Assets(props: AssetsProps) {
+export default function Assets({basePath, fileConfig}: {basePath: string[], fileConfig?: FileConfig}) {
   const t = useTrans();
 
-  const currentPath = useValue(props.basePath);
-  const currentPathName = useMemo(() => currentPath.value.join("/"), [currentPath]);
-  const isBasePath = (currentPathName === props.basePath.join('/'));
+  const currentPath = useValue(basePath);
+  const currentPathString = useMemo(() => currentPath.value.join("/"), [currentPath]);
+  const isBasePath = (currentPathString === basePath.join('/'));
   const fileList = useValue<IFile[] | null>(null);
   const refresh = useValue(false);
+  const folderType = useValue<FolderType | undefined>(undefined);
+  const supportedExtName = folderType.value ? dirNameToExtNameMap.get(folderType.value) : [];
 
   useEffect(
     () => {
-      api.assetsControllerReadAssets(currentPathName).then((res) => {
+      fileConfig?.forEach((value, key) => {
+        if (currentPathString.startsWith(key)) {
+          folderType.set(value.folderType);
+        }
+      });
+      return () => folderType.set(undefined);
+    },
+    [currentPathString]
+  );
+
+  useEffect(
+    () => {
+      api.assetsControllerReadAssets(currentPathString).then((res) => {
         const data = res.data as unknown as object;
         if ('dirInfo' in data && data.dirInfo) {
           const dirInfo = data.dirInfo as IFile[];
@@ -55,7 +72,7 @@ export default function Assets(props: AssetsProps) {
         }
       });
     },
-    [currentPathName, refresh.value]
+    [currentPathString, refresh.value]
   );
 
   const handleRefresh = () => refresh.set(!refresh.value);
@@ -68,7 +85,7 @@ export default function Assets(props: AssetsProps) {
   const handleCreateNewFolder = (source: string, name: string) =>
     api.assetsControllerCreateNewFolder({ source, name }).then(() => handleRefresh());
 
-  const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathName);
+  const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathString);
 
   const handleRenameFile = (source: string, newName: string) =>
     api.assetsControllerRename({ source, newName }).then(() => handleRefresh());
@@ -86,7 +103,7 @@ export default function Assets(props: AssetsProps) {
       <div className={styles.controll}>
         {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
         <Input
-          value={isBasePath ? '/' : currentPathName.replace(props.basePath.join('/'), '')}
+          value={isBasePath ? '/' : currentPathString.replace(basePath.join('/'), '')}
           size='small'
           style={{ flexGrow: 1, minWidth: 0 }}
         />
@@ -115,7 +132,7 @@ export default function Assets(props: AssetsProps) {
               <Button
                 appearance="primary"
                 onClick={() => {
-                  handleCreateNewFile(currentPathName, newFileName.value);
+                  handleCreateNewFile(currentPathString, newFileName.value);
                   createNewFilePopoverOpen.set(false);
                   newFileName.set('');
                 }}
@@ -148,7 +165,7 @@ export default function Assets(props: AssetsProps) {
               <Button
                 appearance="primary"
                 onClick={() => {
-                  handleCreateNewFolder(currentPathName, newFileName.value);
+                  handleCreateNewFolder(currentPathString, newFileName.value);
                   createNewFolderPopoverOpen.set(false);
                   newFileName.set('');
                 }}
@@ -171,7 +188,7 @@ export default function Assets(props: AssetsProps) {
             </Text>
             <FileUploader onUpload={() => {
               handleRefresh();
-            }} targetDirectory={currentPathName}
+            }} targetDirectory={currentPathString}
             uploadUrl="/api/assets/upload" />
           </PopoverSurface>
         </Popover>
@@ -188,13 +205,19 @@ export default function Assets(props: AssetsProps) {
           </MenuPopover>
         </Menu>
       </div>
+      <div style={{display: 'flex', padding: '4px 8px', gap: '4px'}}>
+        {supportedExtName?.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
+      </div>
       <div style={{ overflow: 'auto' }}>
         {
           fileList.value?.map(file =>
             <FileElement
               key={file.name}
               file={file}
+              name={fileConfig?.get(`${currentPathString}/${file.name}`)?.name ?? undefined}
               currentPath={currentPath}
+              folderType={folderType.value}
+              isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? false}
               handleRenameFile={handleRenameFile}
               handleDeleteFile={handleDeleteFile}
             />
