@@ -163,7 +163,7 @@ export default function DashBoard() {
 
   useEffect(() => {
     refreashDashboard();
-  }, []);
+  }, [selectedValue.value]);
 
   const refreash = () => {
     refreashDashboard();
