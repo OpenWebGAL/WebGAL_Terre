@@ -5,9 +5,10 @@ import useVarTrans from "@/hooks/useVarTrans";
 import { GameInfo } from "./DashBoard";
 import { useMemo } from "react";
 import { api } from "@/api";
-import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
+import { Button, Checkbox, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
 import { routerMap } from "@/hooks/useHashRoute";
+import { localStorageRename } from "@/utils/localStorageRename";
 
 interface IGameElementProps {
   gameInfo: GameInfo;
@@ -46,6 +47,7 @@ export default function GameElement(props: IGameElementProps) {
   const isShowDeleteDialog = useValue(false);
   const isShowRenameDialog = useValue(false);
   const newGameName = useValue(props.gameInfo.dir);
+  const deleteChecked = useValue(false);
 
   const openInFileExplorer = () => {
     api.manageGameControllerOpenGameDict(props.gameInfo.dir);
@@ -61,6 +63,7 @@ export default function GameElement(props: IGameElementProps) {
     ).then(() => {
       props.refreash?.();
       isShowRenameDialog.set(false);
+      localStorageRename(`game-editor-storage-${gameName}`, `game-editor-storage-${newGameName}`);
     });
   };
 
@@ -69,6 +72,7 @@ export default function GameElement(props: IGameElementProps) {
     {
       props.refreash?.();
       isShowDeleteDialog.set(false);
+      localStorage.removeItem(`game-editor-storage-${props.gameInfo.dir}`);
     }
     );
   };
@@ -130,15 +134,30 @@ export default function GameElement(props: IGameElementProps) {
       {/* 删除对话框 */}
       <Dialog
         open={isShowDeleteDialog.value}
-        onOpenChange={() => isShowDeleteDialog.set(!isShowDeleteDialog.value)}
+        onOpenChange={() => {
+          isShowDeleteDialog.set(!isShowDeleteDialog.value);
+          deleteChecked.set(false);
+        }}
       >
         <DialogSurface>
           <DialogBody>
             <DialogTitle>{t('dialogs.deleteGame.title')}</DialogTitle>
-            <DialogContent>{t('dialogs.deleteGame.subtext', { gameName: props.gameInfo.dir })}</DialogContent>
+            <DialogContent>
+              <div style={{display: "flex", flexDirection: 'column', gap: '1rem'}}>
+                <div>
+                  {t('dialogs.deleteGame.subtext', { gameName: props.gameInfo.dir })}
+                </div>
+                <Checkbox
+                  checked={deleteChecked.value}
+                  onChange={(ev, data) => deleteChecked.set(!deleteChecked.value)}
+                  label={t('$sureToDeleteGame')}
+                  style={{ margin: 0 }}
+                />
+              </div>
+            </DialogContent>
             <DialogActions>
-              <Button appearance='secondary' onClick={() => isShowDeleteDialog.set(false)}>{t('$common.exit')}</Button>
-              <Button appearance='primary' onClick={deleteThisGame}>{t('$common.delete')}</Button>
+              <Button appearance='secondary' onClick={deleteThisGame} disabled={!deleteChecked.value}>{t('$common.delete')}</Button>
+              <Button appearance='primary' onClick={() => {isShowDeleteDialog.set(false); deleteChecked.set(false);}}>{t('$common.exit')}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>
