@@ -741,4 +741,5 @@ export const zhCn = {
   gameConfig: '游戏配置',
   extensionName: '扩展名',
   null: '无',
+  sureToDeleteGame: '我确定要删除游戏',
 };

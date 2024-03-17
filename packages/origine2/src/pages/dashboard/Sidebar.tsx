@@ -4,7 +4,7 @@ import { useState } from "react";
 import useTrans from "@/hooks/useTrans";
 import { GameInfo } from "./DashBoard";
 import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Subtitle1 } from "@fluentui/react-components";
-import { Add24Filled, Add24Regular, bundleIcon } from "@fluentui/react-icons";
+import { AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon } from "@fluentui/react-icons";
 
 interface ISidebarProps {
   gameList: GameInfo[];
@@ -14,10 +14,11 @@ interface ISidebarProps {
   refreash?: () => void;
 }
 
+const AddIcon = bundleIcon(AddFilled, AddRegular);
+const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
+
 export default function Sidebar(props: ISidebarProps) {
   const t = useTrans('dashBoard.');
-
-  const AddIcon = bundleIcon(Add24Filled, Add24Regular);
 
   const [createGameFormOpen, setCreateGameFormOpen] = useState(false);
   const [newGameName, setNewGameName] = useState(t('createNewGame.dialog.defaultName') || 'NewGame');
@@ -33,28 +34,31 @@ export default function Sidebar(props: ISidebarProps) {
   return <div className={`${styles.sidebar_main} ${!props.currentSetGame ? styles.sidebar_main_fullwidth : ""}`}>
     <div className={styles.sidebar_top}>
       <span className={styles.sidebar_top_title}>{t('titles.gameList')}</span>
-      <Popover
-        withArrow
-        trapFocus
-        open={createGameFormOpen}
-        onOpenChange={() => setCreateGameFormOpen(!createGameFormOpen)}
-      >
-        <PopoverTrigger>
-          <Button appearance='primary' icon={<AddIcon />}>{t('createNewGame.button')}</Button>
-        </PopoverTrigger>
-        <PopoverSurface>
-          <form style={{display:"flex", flexDirection:"column", gap:'16px'}}>
-            <Subtitle1>{t('createNewGame.dialog.title')}</Subtitle1>
-            <Input
-              value={newGameName}
-              onChange={(event) => setNewGameName(event.target.value)}
-              onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
-              defaultValue={t('createNewGame.dialog.defaultName')}
-              placeholder={t('createNewGame.dialog.text')} />
-            <Button appearance='primary' disabled={newGameName.trim() === ''} onClick={createNewGame} >{t('$common.create')}</Button>       
-          </form>
-        </PopoverSurface>
-      </Popover>
+      <div className={styles.sidebar_top_buttons}>
+        <Popover
+          withArrow
+          trapFocus
+          open={createGameFormOpen}
+          onOpenChange={() => setCreateGameFormOpen(!createGameFormOpen)}
+        >
+          <PopoverTrigger>
+            <Button appearance='primary' icon={<AddIcon />}>{t('createNewGame.button')}</Button>
+          </PopoverTrigger>
+          <PopoverSurface>
+            <form style={{display:"flex", flexDirection:"column", gap:'16px'}}>
+              <Subtitle1>{t('createNewGame.dialog.title')}</Subtitle1>
+              <Input
+                value={newGameName}
+                onChange={(event) => setNewGameName(event.target.value)}
+                onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
+                defaultValue={t('createNewGame.dialog.defaultName')}
+                placeholder={t('createNewGame.dialog.text')} />
+              <Button appearance='primary' disabled={newGameName.trim() === ''} onClick={createNewGame} >{t('$common.create')}</Button>       
+            </form>
+          </PopoverSurface>
+        </Popover>
+        <Button appearance='secondary' onClick={props.refreash} icon={<ArrowSyncIcon />} />
+      </div>
     </div>
     <div className={styles.game_list}>
       {

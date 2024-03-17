@@ -43,13 +43,13 @@ export default function TagsManager() {
     // 先设法确定新的 target 是什么
     // 删除的是尾部，就是前一个，删除的不是尾部，就是后一个
     const targetIndex = tabs.findIndex((e) => e.path === tabTarget.path);
-    let newTarget = "";
+    let newTarget;
     if (tabs.length > 1) {
       // 是最后一个
       if (targetIndex === tabs.length - 1) {
-        newTarget = tabs[tabs.length - 2].path;
+        newTarget = tabs[tabs.length - 2];
       } else { // 不是最后一个
-        newTarget = tabs[targetIndex + 1].path;
+        newTarget = tabs[targetIndex + 1];
       }
     }
     const newTags = Array.from(tabs);
@@ -58,7 +58,7 @@ export default function TagsManager() {
     console.log(newTarget);
     // 关闭这个标签并设置新的激活标签
     if (tabTarget.path === currentFileTab?.path)
-      updateCurrentFileTab(currentFileTab);
+      updateCurrentFileTab(newTarget as IFileTab);
     updateFileTabs(newTags);
     ev.stopPropagation();
   }

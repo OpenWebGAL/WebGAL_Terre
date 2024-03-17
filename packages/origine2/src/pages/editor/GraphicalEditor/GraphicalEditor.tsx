@@ -116,7 +116,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
         setTimeout(() => scroolToFunc(), 50);
       }
     };
-    if (targetLine !== 0) {
+    if (targetLine > 3) {
       scroolToFunc();
     }
   }, []);
