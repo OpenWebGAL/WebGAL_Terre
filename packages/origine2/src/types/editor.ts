@@ -1,4 +1,4 @@
-export interface EditorState {
+export interface IEditorState {
   editor: 'game' | 'template' | null,
   currentEdit: string,
   expand: number,
@@ -8,12 +8,12 @@ export interface EditorState {
   isAutoWarp: boolean, // 是否开启自动换行
 }
 
-export interface EditorAction {
-  updateEditor: (editor: EditorState['editor']) => void,
-  updateCurrentEdit: (currentEdit: EditorState['currentEdit']) => void,
-  updateExpand: (index: EditorState['expand']) => void,
-  updateLanguage: (language: EditorState['language']) => void,
-  updateIisAutoHideToolbar: (isAutoHideToolbar: EditorState['isAutoHideToolbar']) => void,
-  updateIsEnableLivePreview: (isEnableLivePreview: EditorState['isEnableLivePreview']) => void,
-  updateIsAutoWarp: (isAutoWarp: EditorState['isAutoWarp']) => void,
+export interface IEditorAction {
+  updateEditor: (editor: IEditorState['editor']) => void,
+  updateCurrentEdit: (currentEdit: IEditorState['currentEdit']) => void,
+  updateExpand: (index: IEditorState['expand']) => void,
+  updateLanguage: (language: IEditorState['language']) => void,
+  updateIisAutoHideToolbar: (isAutoHideToolbar: IEditorState['isAutoHideToolbar']) => void,
+  updateIsEnableLivePreview: (isEnableLivePreview: IEditorState['isEnableLivePreview']) => void,
+  updateIsAutoWarp: (isAutoWarp: IEditorState['isAutoWarp']) => void,
 }

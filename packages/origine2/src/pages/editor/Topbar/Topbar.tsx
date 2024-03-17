@@ -15,7 +15,8 @@ import {useTranslation} from "react-i18next";
 import {Toolbar, Menu, MenuTrigger, ToolbarButton, MenuPopover, MenuList, MenuItem} from "@fluentui/react-components";
 import {EyeOff24Filled, EyeOff24Regular, PaddingTop24Filled, PaddingTop24Regular, bundleIcon} from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
-import { TopbarTabs, useGameEditorContext } from "@/store/useGameEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { IGameEditorTopbarTabs } from "@/types/gameEditor";
 
 const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
 const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
@@ -31,11 +32,11 @@ export default function TopBar() {
   const currentTopbarTab = useGameEditorContext((state) => state.currentTopbarTab);
   const updateCurrentTopbarTab = useGameEditorContext((state) => state.updateCurrentTopbarTab);
 
-  function setCurrentTopbarTab(tab: TopbarTabs | null) {
+  function setCurrentTopbarTab(tab: IGameEditorTopbarTabs | null) {
     updateCurrentTopbarTab(tab);
   }
 
-  const handleTabClick = (tab: TopbarTabs) => {
+  const handleTabClick = (tab: IGameEditorTopbarTabs) => {
     setCurrentTopbarTab(tab);
   };
 
@@ -51,8 +52,8 @@ export default function TopBar() {
 
   const currentFileTab = useGameEditorContext((state) => state.currentFileTab);
   const tabs = useGameEditorContext((state) => state.fileTabs);
-  const currentTabType = tabs.find(e => e.tabPath === currentFileTab?.tabPath)?.tabType;
-  const isShowAddSceneTab = currentTabType === 'scene' && !isCodeMode;
+  const currenttype = tabs.find(e => e.path === currentFileTab?.path)?.type;
+  const isShowAddSceneTab = currenttype === 'scene' && !isCodeMode;
 
   useEffect(() => {
     if (!isShowAddSceneTab && currentTopbarTab === 'addSentence') {
