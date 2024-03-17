@@ -1,22 +1,21 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styles from "./tagsManager.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/origineStore";
-import { ITag, resetTagOrder, setCurrentTagTarget } from "../../../store/statusReducer";
 import { cloneDeep } from "lodash";
 import { CloseSmall, FileCodeOne } from "@icon-park/react";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import { getFileIcon } from "@/utils/getFileIcon";
 import React, { useRef } from "react";
+import { FileTab, useGameEditorContext } from "@/store/useGameEditorStore";
 
 export default function TagsManager() {
   // 获取 Tags 数据
-  const tags = useSelector((state: RootState) => state.status.editor.tags);
-  const tagSelected = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
-  const dispatch = useDispatch();
+  const tabs = useGameEditorContext((state) => state.fileTabs);
+  const currentFileTab = useGameEditorContext((state) => state.currentFileTab);
+  const updateFileTabs = useGameEditorContext((state) => state.updateFileTabs);
+  const updateCurrentFileTab= useGameEditorContext((state) => state.updateCurrentFileTab);
 
   // 重新记录数组顺序
-  const reorder = (list: Array<ITag>, startIndex: number, endIndex: number): Array<ITag> => {
+  const reorder = (list: Array<FileTab>, startIndex: number, endIndex: number): Array<FileTab> => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -28,38 +27,38 @@ export default function TagsManager() {
       return;
     }
     const newList = cloneDeep(reorder(
-      tags,
+      tabs,
       result.source.index,
       result.destination.index
     ));
-    dispatch(resetTagOrder(newList));
+    updateFileTabs(newList);
   }
 
-  function selectTag(tagTarget: string) {
-    dispatch(setCurrentTagTarget(tagTarget));
+  function selectTag(fileTab: FileTab) {
+    updateCurrentFileTab(fileTab);
   }
 
-  function closeTag(ev: MouseEvent, tagTarget: string) {
+  function closeTag(ev: MouseEvent, tabTarget: FileTab) {
     // 先设法确定新的 target 是什么
     // 删除的是尾部，就是前一个，删除的不是尾部，就是后一个
-    const targetIndex = tags.findIndex((e) => e.tagTarget === tagTarget);
+    const targetIndex = tabs.findIndex((e) => e.tabPath === tabTarget.tabPath);
     let newTarget = "";
-    if (tags.length > 1) {
+    if (tabs.length > 1) {
       // 是最后一个
-      if (targetIndex === tags.length - 1) {
-        newTarget = tags[tags.length - 2].tagTarget;
+      if (targetIndex === tabs.length - 1) {
+        newTarget = tabs[tabs.length - 2].tabPath;
       } else { // 不是最后一个
-        newTarget = tags[targetIndex + 1].tagTarget;
+        newTarget = tabs[targetIndex + 1].tabPath;
       }
     }
-    const newTags = Array.from(tags);
+    const newTags = Array.from(tabs);
     newTags.splice(targetIndex, 1);
     console.log(newTags);
     console.log(newTarget);
     // 关闭这个标签并设置新的激活标签
-    if (tagTarget === tagSelected)
-      dispatch(setCurrentTagTarget(newTarget));
-    dispatch(resetTagOrder(newTags));
+    if (tabTarget.tabPath === currentFileTab?.tabPath)
+      updateCurrentFileTab(currentFileTab);
+    updateFileTabs(newTags);
     ev.stopPropagation();
   }
 
@@ -88,27 +87,27 @@ export default function TagsManager() {
           // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
           ref={provided.innerRef}
         >
-          {tags.map((item, index) => (
-            <Draggable key={item.tagTarget} draggableId={item.tagTarget} index={index}>
+          {tabs.map((item, index) => (
+            <Draggable key={item.tabPath} draggableId={item.tabPath} index={index}>
               {(provided, snapshot) => (
                 // 下面开始书写可拖拽的元素
                 <div
-                  onClick={() => selectTag(item.tagTarget)}
+                  onClick={() => selectTag(item)}
                   onMouseDown={(event:any)=>{
                     if(event.button === 1){
-                      closeTag(event, item.tagTarget);
+                      closeTag(event, item);
                     }
                   }}
-                  className={item.tagTarget === tagSelected ? `${styles.tag} ${styles.tag_active}` : styles.tag}
+                  className={item.tabPath === currentFileTab?.tabPath ? `${styles.tag} ${styles.tag_active}` : styles.tag}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
-                  <IconWrapper src={getFileIcon(item.tagTarget)} size={24} iconSize={18}/>
+                  <IconWrapper src={getFileIcon(item.tabPath)} size={24} iconSize={18}/>
                   <div>
-                    {item.tagName}
+                    {item.tabName}
                   </div>
-                  <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
+                  <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item)}>
                     <CloseSmall theme="outline" size="15" strokeWidth={3} />
                   </div>
                 </div>

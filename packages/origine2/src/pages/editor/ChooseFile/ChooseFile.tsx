@@ -1,12 +1,11 @@
 import { useValue } from "../../../hooks/useValue";
 import { useEffect, useMemo } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/origineStore";
 import styles from "./chooseFile.module.scss";
 import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
 import useTrans from "@/hooks/useTrans";
 import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
 
 export interface IChooseFile {
   sourceBase: string;
@@ -29,7 +28,8 @@ export default function ChooseFile(props: IChooseFile) {
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
   const fileSearch = useValue<string>('');
-  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const currentEdit = useEditorStore.use.currentEdit();
+  const gameName = currentEdit;
 
   const updateFileList = ()=>{
     /**

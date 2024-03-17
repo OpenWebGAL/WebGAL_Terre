@@ -11,9 +11,9 @@ export class ManageTemplateService {
   ) {}
 
   /**
- * 从模板创建游戏
- * @param templateName
- */
+   * 从模板创建游戏
+   * @param templateName
+   */
   async createTemplate(templateName: string): Promise<boolean> {
     // 检查是否存在这个游戏
     const checkDir = await this.webgalFs.getDirInfo(
@@ -36,10 +36,13 @@ export class ManageTemplateService {
     );
     // 递归复制
     await this.webgalFs.copy(
-      this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template/template/'),
-      this.webgalFs.getPathFromRoot(`/public/templates/${templateName}/template/`),
+      this.webgalFs.getPathFromRoot(
+        '/assets/templates/WebGAL_Template/template/',
+      ),
+      this.webgalFs.getPathFromRoot(
+        `/public/templates/${templateName}/template/`,
+      ),
     );
     return true;
   }
-  
 }
