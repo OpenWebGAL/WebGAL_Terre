@@ -1,7 +1,5 @@
 import styles from "./gameElement.module.scss";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setDashboardShow, setEditingGame } from "../../store/statusReducer";
 import { useValue } from "../../hooks/useValue";
 import useVarTrans from "@/hooks/useVarTrans";
 import { GameInfo } from "./DashBoard";
@@ -9,6 +7,7 @@ import { useMemo } from "react";
 import { api } from "@/api";
 import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
+import { routerMap } from "@/hooks/useHashRoute";
 
 interface IGameElementProps {
   gameInfo: GameInfo;
@@ -17,22 +16,16 @@ interface IGameElementProps {
   refreash?: () => void;
 }
 
+const MoreVerticalIcon = bundleIcon(MoreVertical24Filled, MoreVertical24Regular);
+const FolderOpenIcon = bundleIcon(FolderOpen24Filled, FolderOpen24Regular);
+const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
+const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
+
 export default function GameElement(props: IGameElementProps) {
 
   const soureBase = "background";
   const t = useVarTrans('dashBoard.');
-  const dispatch = useDispatch();
-
-  const MoreVerticalIcon = bundleIcon(MoreVertical24Filled, MoreVertical24Regular);
-  const FolderOpenIcon = bundleIcon(FolderOpen24Filled, FolderOpen24Regular);
-  const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
-  const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
-  const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
-
-  const enterEditor = (gameName: string) => {
-    dispatch(setEditingGame(gameName));
-    dispatch(setDashboardShow(false));
-  };
 
   let className = styles.gameElement_main;
   if (props.checked) {
@@ -94,7 +87,7 @@ export default function GameElement(props: IGameElementProps) {
         <div className={styles.gameElement_sub}>
           <span className={styles.gameElement_dir}>{props.gameInfo.dir}</span>
           <div className={styles.gameElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' onClick={() =>enterEditor(props.gameInfo.dir)}>{t('preview.editGame')}</Button>
+            <Button appearance='primary' as='a' href={`${routerMap.game}/${props.gameInfo.dir}`}>{t('preview.editGame')}</Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />
