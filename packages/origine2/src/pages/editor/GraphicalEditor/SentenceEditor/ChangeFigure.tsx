@@ -10,17 +10,17 @@ import useTrans from "@/hooks/useTrans";
 import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/origineStore";
 import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import { useExpand } from "@/hooks/useExpand";
 import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
-  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const currentEdit = useEditorStore.use.currentEdit();
+  const updateExpand = useEditorStore.use.updateExpand();
+  const gameName = currentEdit;
   const t = useTrans('editor.graphical.sentences.changeFigure.');
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
@@ -29,7 +29,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
-  const { updateExpandIndex } = useExpand();
   const mouthOpen = useValue(getArgByKey(props.sentence, "mouthOpen").toString() ?? "");
   const mouthHalfOpen = useValue(getArgByKey(props.sentence, "mouthHalfOpen").toString() ?? "");
   const mouthClose = useValue(getArgByKey(props.sentence, "mouthClose").toString() ?? "");
@@ -225,7 +224,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="23" title={t("options.displayEffect.title")}>
         <Button onClick={() => {
-          updateExpandIndex(props.index);
+          updateExpand(props.index);
         }}>{t('$打开效果编辑器')}</Button>
       </CommonOptions>
       <TerrePanel

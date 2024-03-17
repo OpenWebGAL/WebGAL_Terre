@@ -7,11 +7,7 @@ import styles from "./dashboard.module.scss";
 import Sidebar from "./Sidebar";
 import TemplateSidebar from "./TemplateSidebar";
 import GamePreview from "./GamePreview";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/origineStore";
 import useTrans from "@/hooks/useTrans";
-import useLanguage from "@/hooks/useLanguage";
-import {language} from "@/store/statusReducer";
 import About from "./About";
 import {WebgalParser} from "../editor/GraphicalEditor/parser";
 import {
@@ -40,6 +36,8 @@ import {
 } from "@fluentui/react-icons";
 import {useState} from "react";
 import classNames from "classnames";
+import useEditorStore from "@/store/useEditorStore";
+import { routerMap } from "@/hooks/useHashRoute";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -59,27 +57,24 @@ export interface TemplateInfo {
   title: string;
 }
 
+const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regular);
+const GameIcon = bundleIcon(GamesFilled, GamesRegular);
+const AlbumIcon = bundleIcon(AlbumFilled, AlbumRegular);
+
 export default function DashBoard() {
 
   const t = useTrans('editor.topBar.');
-  const setLanguage = useLanguage();
+  const updateLanguage = useEditorStore.use.updateLanguage();
   const trans = useTrans('dashBoard.');
-
-  const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regular);
-
-  const GameIcon = bundleIcon(GamesFilled, GamesRegular);
-
-  const AlbumIcon = bundleIcon(AlbumFilled, AlbumRegular);
-
-  const isDashboardShow: boolean = useSelector((state: RootState) => state.status.dashboard.showDashBoard);
 
   const messageRef = useRef<TestRefRef>(null);
 
+  const editor = useEditorStore.use.editor();
   // 左侧栏页签
-  const selectedValue = useValue<TabValue>("game");
+  const selectedValue = editor;
 
   const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
-    selectedValue.set(data.value);
+    window.location.hash = routerMap[data.value as string] ?? routerMap.game;
     refreashDashboard();
   };
 
@@ -120,7 +115,7 @@ export default function DashBoard() {
   }
 
   function refreashDashboard() {
-    if (selectedValue.value === "game") {
+    if (selectedValue === "game") {
       getDirInfo("/api/manageGame/gameList").then(response => {
         const gameList = (response as Array<IFileInfo>)
           .filter(e => e.isDir)
@@ -139,7 +134,7 @@ export default function DashBoard() {
         Promise.all(getGameInfoList).then(list => gameInfoList.set(list));
       });
     }
-    if(selectedValue.value === "template")
+    if(selectedValue === "template")
     {
       getDirInfo("/api/manageTemplate/templateList").then(response => {
         console.log("refreash template");
@@ -170,63 +165,62 @@ export default function DashBoard() {
     setCurrentGame(null);
   };
 
-  return <>
-    {isDashboardShow &&
-      <div className={styles.dashboard_container}>
-        <div className={styles.topBar}>
+  return(
+    <div className={styles.dashboard_container}>
+      <div className={styles.topBar}>
           WebGAL Terre
-          <Toolbar>
-            <About/>
-            <Menu>
-              <MenuTrigger>
-                <ToolbarButton aria-label={t('commandBar.items.language.text')}
-                  icon={<LocalLanguageIcon/>}>{t('commandBar.items.language.text')}</ToolbarButton>
-              </MenuTrigger>
-              <MenuPopover>
-                <MenuList>
-                  <MenuItem onClick={() => setLanguage(language.zhCn)}>简体中文</MenuItem>
-                  <MenuItem onClick={() => setLanguage(language.en)}>English</MenuItem>
-                  <MenuItem onClick={() => setLanguage(language.jp)}>日本语</MenuItem>
-                </MenuList>
-              </MenuPopover>
-            </Menu>
-          </Toolbar>
+        <Toolbar>
+          <About/>
+          <Menu>
+            <MenuTrigger>
+              <ToolbarButton aria-label={t('commandBar.items.language.text')}
+                icon={<LocalLanguageIcon/>}>{t('commandBar.items.language.text')}</ToolbarButton>
+            </MenuTrigger>
+            <MenuPopover>
+              <MenuList>
+                <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
+                <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
+                <MenuItem onClick={() => updateLanguage('jp')}>日本语</MenuItem>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
+        </Toolbar>
+      </div>
+      <div className={styles.container_main}>
+        <div className={styles.tabListContainer}>
+          <TabList selectedValue={selectedValue} onTabSelect={onTabSelect} vertical size="large">
+            <Tab className={classNames(styles.tabItem, selectedValue === 'game' ? styles.active : '')} id="Game"
+              icon={<GameIcon fontSize={24}/>} value="game">{t("$游戏")}</Tab>
+            <Tab className={classNames(styles.tabItem, selectedValue === 'template' ? styles.active : '')}
+              id="Template" icon={<AlbumIcon fontSize={24}/>} value="template">{t("$模板")}</Tab>
+          </TabList>
         </div>
-        <div className={styles.container_main}>
-          <div className={styles.tabListContainer}>
-            <TabList selectedValue={selectedValue.value} onTabSelect={onTabSelect} vertical size="large">
-              <Tab className={classNames(styles.tabItem, selectedValue.value === 'game' ? styles.active : '')} id="Game"
-                icon={<GameIcon fontSize={24}/>} value="game">{t("$游戏")}</Tab>
-              <Tab className={classNames(styles.tabItem, selectedValue.value === 'template' ? styles.active : '')}
-                id="Template" icon={<AlbumIcon fontSize={24}/>} value="template">{t("$模板")}</Tab>
-            </TabList>
-          </div>
-          {selectedValue.value === "game" && <div className={styles.dashboard_main}>
-            <Message ref={messageRef}/>
-            {
-              currentGame.value &&
+        {selectedValue === "game" && <div className={styles.dashboard_main}>
+          <Message ref={messageRef}/>
+          {
+            currentGame.value &&
               <GamePreview
                 currentGame={currentGame.value}
                 setCurrentGame={setCurrentGame}
                 gameInfo={gameInfoList.value.find(e => e.dir === currentGame.value)!}
               />
-            }
-            <Sidebar
-              refreash={refreash}
-              createGame={createGame}
-              setCurrentGame={setCurrentGame}
-              currentSetGame={currentGame.value}
-              gameList={gameInfoList.value}/>
-          </div>}
-          {selectedValue.value === "template" && <div className={styles.dashboard_main}>
-            <TemplateSidebar
-              refreash={refreash}
-              createTemplate={createTemplate}
-              setCurrentTemplate={setCurrentTemplate}
-              currentSetTemplate={currentTemplate.value}
-              templateList={TemplateInfoList.value}/>
-          </div>}
-        </div>
-      </div>}
-  </>;
+          }
+          <Sidebar
+            refreash={refreash}
+            createGame={createGame}
+            setCurrentGame={setCurrentGame}
+            currentSetGame={currentGame.value}
+            gameList={gameInfoList.value}/>
+        </div>}
+        {selectedValue === "template" && <div className={styles.dashboard_main}>
+          <TemplateSidebar
+            refreash={refreash}
+            createTemplate={createTemplate}
+            setCurrentTemplate={setCurrentTemplate}
+            currentSetTemplate={currentTemplate.value}
+            templateList={TemplateInfoList.value}/>
+        </div>}
+      </div>
+    </div>
+  );
 }

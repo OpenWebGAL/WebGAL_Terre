@@ -1,5 +1,4 @@
 import {logger} from "./logger";
-import {origineStore} from "@/store/origineStore";
 import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
 
 export class WsUtil {
@@ -7,7 +6,7 @@ export class WsUtil {
   public static sendSyncCommand(sceneName: string, lineNumber: number, lineCommandString: string, force?: boolean) {
 
     const isForce = force ?? false;
-    if (!origineStore.getState().userData.isEnableLivePreview && !force) {
+    if (!force) {
       return;
     }
 
