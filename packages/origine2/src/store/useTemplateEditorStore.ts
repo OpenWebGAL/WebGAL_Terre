@@ -1,15 +1,19 @@
-import { TemplateEditorAction, TemplateEditorState } from "@/types/templateEditor";
+import { ITemplateEditorAction, ITemplateEditorState } from "@/types/templateEditor";
 import { createContext, useContext } from "react";
 import { StoreApi, create, useStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
+const initState: ITemplateEditorState = {
+  currentTopbarTab: 'config',
+  isCodeMode: false,
+  isShowDebugger: false,
+};
+
 export const createTemplateEditorStore = (currentEdit: string) =>
-  create<TemplateEditorState & TemplateEditorAction>()(
+  create<ITemplateEditorState & ITemplateEditorAction>()(
     persist(
       (set) => ({
-        currentTopbarTab: 'config',
-        isCodeMode: false,
-        isShowDebugger: false,
+        ...initState,
         updateCurrentTopbarTab: (currentTopbarTab) => set({ currentTopbarTab }),
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
@@ -21,9 +25,9 @@ export const createTemplateEditorStore = (currentEdit: string) =>
     )
   );
 
-export const TemplateEditorContext = createContext<StoreApi<TemplateEditorState & TemplateEditorAction> | null>(null);
+export const TemplateEditorContext = createContext<StoreApi<ITemplateEditorState & ITemplateEditorAction> | null>(null);
 
-export const useTemplateEditorContext = <T>(selector: (state: TemplateEditorState & TemplateEditorAction) => T): T => {
+export const useTemplateEditorContext = <T>(selector: (state: ITemplateEditorState & ITemplateEditorAction) => T): T => {
   const store = useContext(TemplateEditorContext);
   if (!store) throw new Error('Missing TemplateEditorContext.Provider in the tree');
   return useStore(store, selector);

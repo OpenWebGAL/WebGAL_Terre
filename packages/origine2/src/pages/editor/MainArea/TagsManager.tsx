@@ -5,7 +5,8 @@ import { CloseSmall, FileCodeOne } from "@icon-park/react";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import { getFileIcon } from "@/utils/getFileIcon";
 import React, { useRef } from "react";
-import { FileTab, useGameEditorContext } from "@/store/useGameEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { IFileTab } from "@/types/gameEditor";
 
 export default function TagsManager() {
   // 获取 Tags 数据
@@ -15,7 +16,7 @@ export default function TagsManager() {
   const updateCurrentFileTab= useGameEditorContext((state) => state.updateCurrentFileTab);
 
   // 重新记录数组顺序
-  const reorder = (list: Array<FileTab>, startIndex: number, endIndex: number): Array<FileTab> => {
+  const reorder = (list: Array<IFileTab>, startIndex: number, endIndex: number): Array<IFileTab> => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -34,21 +35,21 @@ export default function TagsManager() {
     updateFileTabs(newList);
   }
 
-  function selectTag(fileTab: FileTab) {
+  function selectTag(fileTab: IFileTab) {
     updateCurrentFileTab(fileTab);
   }
 
-  function closeTag(ev: MouseEvent, tabTarget: FileTab) {
+  function closeTag(ev: MouseEvent, tabTarget: IFileTab) {
     // 先设法确定新的 target 是什么
     // 删除的是尾部，就是前一个，删除的不是尾部，就是后一个
-    const targetIndex = tabs.findIndex((e) => e.tabPath === tabTarget.tabPath);
+    const targetIndex = tabs.findIndex((e) => e.path === tabTarget.path);
     let newTarget = "";
     if (tabs.length > 1) {
       // 是最后一个
       if (targetIndex === tabs.length - 1) {
-        newTarget = tabs[tabs.length - 2].tabPath;
+        newTarget = tabs[tabs.length - 2].path;
       } else { // 不是最后一个
-        newTarget = tabs[targetIndex + 1].tabPath;
+        newTarget = tabs[targetIndex + 1].path;
       }
     }
     const newTags = Array.from(tabs);
@@ -56,7 +57,7 @@ export default function TagsManager() {
     console.log(newTags);
     console.log(newTarget);
     // 关闭这个标签并设置新的激活标签
-    if (tabTarget.tabPath === currentFileTab?.tabPath)
+    if (tabTarget.path === currentFileTab?.path)
       updateCurrentFileTab(currentFileTab);
     updateFileTabs(newTags);
     ev.stopPropagation();
@@ -88,7 +89,7 @@ export default function TagsManager() {
           ref={provided.innerRef}
         >
           {tabs.map((item, index) => (
-            <Draggable key={item.tabPath} draggableId={item.tabPath} index={index}>
+            <Draggable key={item.path} draggableId={item.path} index={index}>
               {(provided, snapshot) => (
                 // 下面开始书写可拖拽的元素
                 <div
@@ -98,14 +99,14 @@ export default function TagsManager() {
                       closeTag(event, item);
                     }
                   }}
-                  className={item.tabPath === currentFileTab?.tabPath ? `${styles.tag} ${styles.tag_active}` : styles.tag}
+                  className={item.path === currentFileTab?.path ? `${styles.tag} ${styles.tag_active}` : styles.tag}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
-                  <IconWrapper src={getFileIcon(item.tabPath)} size={24} iconSize={18}/>
+                  <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18}/>
                   <div>
-                    {item.tabName}
+                    {item.name}
                   </div>
                   <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item)}>
                     <CloseSmall theme="outline" size="15" strokeWidth={3} />

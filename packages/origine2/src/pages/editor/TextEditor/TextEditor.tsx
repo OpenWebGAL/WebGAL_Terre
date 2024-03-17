@@ -31,7 +31,7 @@ export default function TextEditor(props: ITextEditorProps) {
   const currentEdit = useEditorStore.use.currentEdit();
   // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = {value: "Loading Scene Data......"};
-  const sceneName = tabs.find((e) => e.tabPath === target?.tabPath)!.tabName;
+  const sceneName = tabs.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
 
   // 准备获取 Monaco
@@ -53,7 +53,7 @@ export default function TextEditor(props: ITextEditorProps) {
       const editorValue = editor.getValue();
       const targetValue = editorValue.split("\n")[lineNumber - 1];
       // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
-      const sceneName = tabs.find((e) => e.tabPath === target?.tabPath)!.tabName;
+      const sceneName = tabs.find((e) => e.path === target?.path)!.name;
       if (!isAfterMount) {
         editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
       }
@@ -97,7 +97,7 @@ export default function TextEditor(props: ITextEditorProps) {
   }
 
   function updateEditData() {
-    const currentEditName = tabs.find((e) => e.tabPath === target?.tabPath)!.tabName;
+    const currentEditName = tabs.find((e) => e.path === target?.path)!.name;
     const url = `/games/${currentEdit}/game/scene/${currentEditName}`;
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
