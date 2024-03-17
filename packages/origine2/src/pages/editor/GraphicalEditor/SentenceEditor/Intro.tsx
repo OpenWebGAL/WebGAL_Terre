@@ -10,8 +10,8 @@ import { useState } from "react";
 import React from 'react';
 import { logger } from "@/utils/logger";
 import { TerrePanel } from "../components/TerrePanel";
-import { useExpand } from "@/hooks/useExpand";
 import { Button, Dropdown, Option, Switch } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
 
 type FontSize = "small" | "medium" | "large";
 type Animation = "fadeIn" | "slideIn" | "typingEffect" | "pixelateEffect" | "revealAnimation";
@@ -154,7 +154,7 @@ export default function Intro(props: ISentenceEditorProps) {
   const delayTime = useValue(getInitialDelayTime());
   const [localBackgroundColor, setLocalBackgroundColor] = useState(backgroundColor.value);
   const [localFontColor, setLocalFontColor] = useState(fontColor.value);
-  const { updateExpandIndex } = useExpand();
+  const updateExpand = useEditorStore.use.updateExpand();
 
   const handleLocalBackgroundColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
     setLocalBackgroundColor(newColor);
@@ -219,7 +219,7 @@ export default function Intro(props: ISentenceEditorProps) {
       introTextList.set(newList);
       submit();
     }}>{t('add.button')}</Button>
-    <Button onClick={() => updateExpandIndex(props.index)}>
+    <Button onClick={() => updateExpand(props.index)}>
       {t('$效果选项')}
     </Button>
     <TerrePanel sentenceIndex={props.index} title="效果选项">

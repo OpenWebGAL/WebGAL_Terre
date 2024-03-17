@@ -1,51 +1,49 @@
 import styles from "./editArea.module.scss";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../store/origineStore";
 import TextEditor from "../TextEditor/TextEditor";
 import ResourceDisplay, {ResourceType} from "../ResourceDisplay/ResourceDisplay";
-import {ITag} from "../../../store/statusReducer";
 import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
 import useTrans from "@/hooks/useTrans";
 import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
 import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugger";
+import { FileTab, useGameEditorContext } from "@/store/useGameEditorStore";
 
 export default function EditArea() {
   const t = useTrans('editor.mainArea.');
-  const selectedTagTarget = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
-  const tags = useSelector((state: RootState) => state.status.editor.tags);
-  const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode);
-  const isShowDebugger = useSelector((state: RootState) => state.status.editor.isShowDebugger);
+  const currentFileTab = useGameEditorContext((state) => state.currentFileTab);
+  const fileTabs = useGameEditorContext((state) => state.fileTabs);
+  const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
+  const isShowDebugger = useGameEditorContext((state) => state.isShowDebugger);
 
-  // 生成每个 Tag 对应的编辑器主体
+  // 生成每个 Tab 对应的编辑器主体
 
-  const tag = tags.find(tag => tag.tagTarget === selectedTagTarget);
-  const isScene = tag?.tagType === "scene";
+  const tab = fileTabs.find(tab => tab.tabPath === currentFileTab?.tabPath);
+  const isScene = tab?.tabType === "scene";
 
-  const getTagPage = (tag: ITag) => {
-    if (tag.tagType === "scene") {
+  const getTagPage = (tab: FileTab) => {
+    if (tab.tabType === "scene") {
       if (isCodeMode)
-        return <TextEditor isHide={tag.tagTarget !== selectedTagTarget} key={tag.tagTarget}
-          targetPath={tag.tagTarget}/>;
-      else return <GraphicalEditor key={tag.tagTarget} targetPath={tag.tagTarget} targetName={tag.tagName}/>;
+        return <TextEditor isHide={tab.tabPath !== currentFileTab?.tabPath} key={tab.tabPath}
+          targetPath={tab.tabPath}/>;
+      else return <GraphicalEditor key={tab.tabPath} targetPath={tab.tabPath} targetName={tab.tabName}/>;
     } else {
-      const fileType = getFileType(tag.tagTarget);
+      const fileType = getFileType(tab.tabName);
       if (!fileType) {
         return <div>{t('canNotPreview')}</div>;
       }
       return <ResourceDisplay
-        isHidden={tag.tagTarget !== selectedTagTarget}
+        isHidden={tab.tabPath !== currentFileTab?.tabPath}
         resourceType={fileType}
-        resourceUrl={tag.tagTarget}
+        resourceUrl={tab.tabPath}
       />;
     }
   };
 
-  const tagPage = tag ? getTagPage(tag) : "";
+  const tabPage = tab ? getTagPage(tab) : "";
 
   return <>
     <div className={styles.editArea_main}>
-      {selectedTagTarget === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
-      {selectedTagTarget !== "" && tagPage}
+      {tab?.tabPath === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
+      {tab?.tabPath !== "" && tabPage}
     </div>
     {isScene && isShowDebugger && <EditorDebugger/>}
     {isScene && <EditorToolbar/>}

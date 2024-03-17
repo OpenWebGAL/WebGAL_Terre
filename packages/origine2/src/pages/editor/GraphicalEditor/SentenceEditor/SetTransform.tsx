@@ -7,8 +7,8 @@ import {useValue} from "@/hooks/useValue";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import {useExpand} from "@/hooks/useExpand";
 import { Button, Dropdown, Option } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -20,7 +20,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
   const duration = useValue((durationFromArgs ?? 0) as number);
-  const {updateExpandIndex} = useExpand();
+  const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const presetTargets = new Map<PresetTarget, string>([
@@ -40,7 +40,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
       <CommonOptions title="效果编辑">
-        <Button onClick={() => updateExpandIndex(props.index)}>
+        <Button onClick={() => updateExpand(props.index)}>
           {tTarget('$打开效果编辑器')}
         </Button>
         <TerrePanel sentenceIndex={props.index} title={tTarget("$效果编辑器")}>

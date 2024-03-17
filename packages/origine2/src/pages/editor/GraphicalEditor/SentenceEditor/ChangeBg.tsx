@@ -9,8 +9,8 @@ import useTrans from "@/hooks/useTrans";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import {useExpand} from "@/hooks/useExpand";
 import { Button, Input } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const t = useTrans('editor.graphical.sentences.changeBg.');
@@ -19,9 +19,9 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const bgFile = useValue(props.sentence.content);
   const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
-  const {updateExpandIndex} = useExpand();
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
+  const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
     const durationStr = duration.value === "" ? '' : ` -duration=${duration.value}`;
@@ -75,7 +75,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       </CommonOptions>}
       <CommonOptions key="23" title={t("options.displayEffect.title")}>
         <Button onClick={() => {
-          updateExpandIndex(props.index);
+          updateExpand(props.index);
         }}>{t('$打开效果编辑器')}</Button>
       </CommonOptions>
       <TerrePanel sentenceIndex={props.index} title={t("$效果编辑器")}>

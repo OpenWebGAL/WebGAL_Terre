@@ -1,8 +1,6 @@
 import {useValue} from "../../../hooks/useValue";
 import {parseScene} from "./parser";
 import axios from "axios";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../store/origineStore";
 import {useEffect} from "react";
 import {WsUtil} from "../../../utils/wsUtil";
 import {mergeToString, splitToArray} from "./utils/sceneTextProcessor";
@@ -14,6 +12,7 @@ import AddSentence, {addSentenceType} from "./components/AddSentence";
 import useTrans from "@/hooks/useTrans";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
 import {eventBus} from "@/utils/eventBus";
+import useEditorStore from "@/store/useEditorStore";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -23,11 +22,11 @@ interface IGraphicalEditorProps {
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const t = useTrans("editor.graphical.buttons.");
   const sceneText = useValue("");
-  const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const currentEdit = useEditorStore.use.currentEdit();
   const showSentence = useValue<Array<boolean>>([]);
 
   function updateScene() {
-    const url = `/games/${currentEditingGame}/game/scene/${props.targetName}`;
+    const url = `/games/${currentEdit}/game/scene/${props.targetName}`;
     axios.get(url).then(res => res.data).then((data) => {
       sceneText.set(data.toString());
       eventBus.emit('update-scene', data.toString());
@@ -47,7 +46,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     editorLineHolder.recordSceneEdittingLine(props.targetPath, updateIndex);
     sceneText.set(newScene);
     const params = new URLSearchParams();
-    params.append("gameName", currentEditingGame);
+    params.append("gameName", currentEdit);
     params.append("sceneName", props.targetName);
     params.append("sceneData", JSON.stringify({value: sceneText.value}));
     axios.post("/api/manageGame/editScene/", params).then(() => {

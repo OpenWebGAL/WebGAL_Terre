@@ -1,13 +1,7 @@
-import styles from "./templateeditor.module.scss"
-import { RootState } from "@/store/origineStore"
-import { useSelector } from "react-redux"
+import styles from "./templateeditor.module.scss";
 
 export default function TemplateEditor(){
-  const isShowTemplateEditor = useSelector((state:RootState) => state.status.templateeditor.showtemplateeditor)
-
-  return <>
-  {!isShowTemplateEditor && <div className={styles.editor}>
-    
-    </div>}
-  </>
+  return (
+    <div className={styles.editor} />
+  );
 }
