@@ -1,4 +1,4 @@
-import styles from "./templateeditor.module.scss";
+import styles from "./templateEditor.module.scss";
 
 export default function TemplateEditor(){
   return (
