@@ -6,10 +6,9 @@ interface RouterMap {
 }
 
 export const routerMap: RouterMap = {
-  game: '#game-editor',
-  template: '#template-editor',
+  game: '#game',
+  template: '#template',
 };
-
 
 export default function useHashRoute() {
   const updateEditor = useEditorStore.use.updateEditor();
@@ -19,9 +18,9 @@ export default function useHashRoute() {
     () => {
       const getHash = () => {
         const [editor, currentEdit] = window.location.hash.slice(1).split('/');
-        if (editor === 'game-editor') {
+        if (editor === 'game') {
           updateEditor('game');
-        } else if (editor === 'template-editor') {
+        } else if (editor === 'template') {
           updateEditor('template');
         } else {
           window.location.hash = routerMap.game;

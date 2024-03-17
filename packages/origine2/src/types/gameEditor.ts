@@ -1,29 +1,29 @@
-export interface FileTab {
-  tabName: string,
-  tabType: 'asset' | 'scene',
-  tabPath: string,
+export interface IFileTab {
+  name: string,
+  type: 'asset' | 'scene',
+  path: string,
 }
-export type SidebarTabs = 'asset' | 'scene';
-export type TopbarTabs = 'config' | 'view' | 'settings' | 'help' | 'export' | 'addSentence'
+export type IGameEditorSidebarTabs = 'asset' | 'scene';
+export type IGameEditorTopbarTabs = 'config' | 'view' | 'settings' | 'help' | 'export' | 'addSentence';
 
-export interface GameEditorState {
-  fileTabs: FileTab[],
-  currentFileTab: FileTab | null,
-  currentSidebarTab: SidebarTabs,
-  currentTopbarTab: TopbarTabs | null,
+export interface IGameEditorState {
+  fileTabs: IFileTab[],
+  currentFileTab: IFileTab | null,
+  currentSidebarTab: IGameEditorSidebarTabs,
+  currentTopbarTab: IGameEditorTopbarTabs | null,
   isShowSidebar: boolean,
   isCodeMode: boolean,
   isShowDebugger: boolean,
 }
 
-export interface GameEditorAction {
-  updateFileTabs: (fileTabs: FileTab[]) => void,
-  addFileTab: (fileTab: FileTab) => void,
-  removeFileTab: (fileTab: FileTab) => void,
-  updateCurrentFileTab: (currentFileTab: FileTab) => void,
-  updateCurrentSidebarTab: (sidebarTab: GameEditorState['currentSidebarTab']) => void,
-  updateCurrentTopbarTab: (currentTopbarTab: GameEditorState['currentTopbarTab']) => void,
-  updateIsShowSidebar: (isShowSidebar: GameEditorState['isShowSidebar']) => void,
-  updateIsCodeMode: (isCodeMode: GameEditorState['isCodeMode']) => void,
-  updateIsShowDebugger: (isShowDebugger: GameEditorState['isShowDebugger']) => void,
+export interface IGameEditorAction {
+  updateFileTabs: (fileTabs: IGameEditorState['fileTabs']) => void,
+  addFileTab: (fileTab: IFileTab) => void,
+  removeFileTab: (fileTab: IFileTab) => void,
+  updateCurrentFileTab: (currentFileTab: IGameEditorState['currentFileTab']) => void,
+  updateCurrentSidebarTab: (sidebarTab: IGameEditorState['currentSidebarTab']) => void,
+  updateCurrentTopbarTab: (currentTopbarTab: IGameEditorState['currentTopbarTab']) => void,
+  updateIsShowSidebar: (isShowSidebar: IGameEditorState['isShowSidebar']) => void,
+  updateIsCodeMode: (isCodeMode: IGameEditorState['isCodeMode']) => void,
+  updateIsShowDebugger: (isShowDebugger: IGameEditorState['isShowDebugger']) => void,
 }

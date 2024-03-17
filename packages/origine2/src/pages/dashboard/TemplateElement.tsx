@@ -26,7 +26,7 @@ export default function TemplateElement(props: ITemplateElementProps){
   const t = useVarTrans('dashBoard.');
 
   const enterEditor = (templateName: string) => {
-    window.location.hash = `#template-editor/${templateName}`;
+    window.location.hash = `${routerMap.template}/${templateName}`;
   };
 
   let className = styles.templateElement_main;

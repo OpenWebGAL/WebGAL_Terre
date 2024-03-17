@@ -249,7 +249,7 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderPro
   return (
     <div className={styles.fileUploadContainer}>
       <div>
-        <input className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
+        <input title={t("$upload")} className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
       </div>
       <Button appearance='primary' onClick={handleUpload}>{t("$upload")}</Button>
     </div>
