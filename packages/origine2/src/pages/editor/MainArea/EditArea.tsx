@@ -5,7 +5,8 @@ import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
 import useTrans from "@/hooks/useTrans";
 import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
 import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugger";
-import { FileTab, useGameEditorContext } from "@/store/useGameEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { IFileTab } from "@/types/gameEditor";
 
 export default function EditArea() {
   const t = useTrans('editor.mainArea.');
@@ -16,34 +17,34 @@ export default function EditArea() {
 
   // 生成每个 Tab 对应的编辑器主体
 
-  const tab = fileTabs.find(tab => tab.tabPath === currentFileTab?.tabPath);
-  const isScene = tab?.tabType === "scene";
+  const tab = fileTabs.find(tab => tab.path === currentFileTab?.path);
+  const isScene = tab?.type === "scene";
 
-  const getTagPage = (tab: FileTab) => {
-    if (tab.tabType === "scene") {
+  const getTabPage = (tab: IFileTab) => {
+    if (tab.type === "scene") {
       if (isCodeMode)
-        return <TextEditor isHide={tab.tabPath !== currentFileTab?.tabPath} key={tab.tabPath}
-          targetPath={tab.tabPath}/>;
-      else return <GraphicalEditor key={tab.tabPath} targetPath={tab.tabPath} targetName={tab.tabName}/>;
+        return <TextEditor isHide={tab.path !== currentFileTab?.path} key={tab.path}
+          targetPath={tab.path}/>;
+      else return <GraphicalEditor key={tab.path} targetPath={tab.path} targetName={tab.name}/>;
     } else {
-      const fileType = getFileType(tab.tabName);
+      const fileType = getFileType(tab.name);
       if (!fileType) {
         return <div>{t('canNotPreview')}</div>;
       }
       return <ResourceDisplay
-        isHidden={tab.tabPath !== currentFileTab?.tabPath}
+        isHidden={tab.path !== currentFileTab?.path}
         resourceType={fileType}
-        resourceUrl={tab.tabPath}
+        resourceUrl={tab.path}
       />;
     }
   };
 
-  const tabPage = tab ? getTagPage(tab) : "";
+  const tabPage = tab ? getTabPage(tab) : "";
 
   return <>
     <div className={styles.editArea_main}>
-      {tab?.tabPath === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
-      {tab?.tabPath !== "" && tabPage}
+      {tab?.path === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
+      {tab?.path !== "" && tabPage}
     </div>
     {isScene && isShowDebugger && <EditorDebugger/>}
     {isScene && <EditorToolbar/>}

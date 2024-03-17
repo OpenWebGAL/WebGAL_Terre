@@ -7,7 +7,8 @@ import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
 import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular } from "@fluentui/react-icons";
 import useTrans from "@/hooks/useTrans";
-import { FileTab, useGameEditorContext } from "@/store/useGameEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { IFileTab } from "@/types/gameEditor";
 
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
@@ -39,13 +40,13 @@ export default function FileElement(
         }
         else {
           const target = file.path;
-          const tab: FileTab = {
-            tabName: file.name,
-            tabPath: file.path,
-            tabType: isScene() ? 'scene' : 'asset',
+          const tab: IFileTab = {
+            name: file.name,
+            path: file.path,
+            type: isScene() ? 'scene' : 'asset',
           };
           // 先要确定没有这个tag
-          const result = fileTabs.findIndex((e) => e.tabPath === target);
+          const result = fileTabs.findIndex((e) => e.path === target);
           if (result < 0) addFileTab(tab);
           updateCurrentFileTab(tab);
         }

@@ -1,22 +1,26 @@
-import { GameEditorAction, GameEditorState } from "@/types/gameEditor";
+import { IGameEditorAction, IGameEditorState } from "@/types/gameEditor";
 import { createContext, useContext } from "react";
 import { StoreApi, create, useStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
+const initState: IGameEditorState = {
+  fileTabs: [],
+  currentFileTab: null,
+  currentSidebarTab: 'asset',
+  currentTopbarTab: 'config',
+  isShowSidebar: true,
+  isCodeMode: false,
+  isShowDebugger: false,
+};
+
 export const createGameEditorStore = (currentEdit: string) =>
-  create<GameEditorState & GameEditorAction>()(
+  create<IGameEditorState & IGameEditorAction>()(
     persist(
       (set) => ({
-        fileTabs: [],
-        currentFileTab: null,
-        currentSidebarTab: 'asset',
-        currentTopbarTab: 'config',
-        isShowSidebar: true,
-        isCodeMode: false,
-        isShowDebugger: false,
+        ...initState,
         updateFileTabs: (fileTabs) => set({ fileTabs }),
         addFileTab: (fileTab) => set((state) => ({ fileTabs: [...state.fileTabs, fileTab] })),
-        removeFileTab: (fileTab) => set((state) => ({ fileTabs: state.fileTabs.filter((tab) => tab.tabPath !== fileTab.tabPath) })),
+        removeFileTab: (fileTab) => set((state) => ({ fileTabs: state.fileTabs.filter((tab) => tab.path !== fileTab.path) })),
         updateCurrentFileTab: (currentFileTab) => set({ currentFileTab }),
         updateCurrentSidebarTab: (currentSidebarTab) => set({ currentSidebarTab }),
         updateCurrentTopbarTab: (currentTopbarTab) => set({ currentTopbarTab }),
@@ -31,9 +35,9 @@ export const createGameEditorStore = (currentEdit: string) =>
     )
   );
 
-export const GameEditorContext = createContext<StoreApi<GameEditorState & GameEditorAction> | null>(null);
+export const GameEditorContext = createContext<StoreApi<IGameEditorState & IGameEditorAction> | null>(null);
 
-export const useGameEditorContext = <T>(selector: (state: GameEditorState & GameEditorAction) => T): T => {
+export const useGameEditorContext = <T>(selector: (state: IGameEditorState & IGameEditorAction) => T): T => {
   const store = useContext(GameEditorContext);
   if (!store) throw new Error('Missing GameEditorContext.Provider in the tree');
   return useStore(store, selector);

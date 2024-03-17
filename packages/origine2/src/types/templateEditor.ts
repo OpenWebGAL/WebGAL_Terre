@@ -1,12 +1,12 @@
-export type TopbarTabs = 'config' | 'view' | 'settings' | 'help'
-export interface TemplateEditorState {
-  currentTopbarTab: TopbarTabs | null,
+export type ITemplateEditorTopbarTabs = 'config' | 'view' | 'settings' | 'help'
+export interface ITemplateEditorState {
+  currentTopbarTab: ITemplateEditorTopbarTabs | null,
   isCodeMode: boolean,
   isShowDebugger: boolean,
 }
 
-export interface TemplateEditorAction {
-  updateCurrentTopbarTab: (currentTopbarTab: TemplateEditorState['currentTopbarTab']) => void,
-  updateIsCodeMode: (isCodeMode: TemplateEditorState['isCodeMode']) => void,
-  updateIsShowDebugger: (isShowDebugger: TemplateEditorState['isShowDebugger']) => void,
+export interface ITemplateEditorAction {
+  updateCurrentTopbarTab: (currentTopbarTab: ITemplateEditorState['currentTopbarTab']) => void,
+  updateIsCodeMode: (isCodeMode: ITemplateEditorState['isCodeMode']) => void,
+  updateIsShowDebugger: (isShowDebugger: ITemplateEditorState['isShowDebugger']) => void,
 }

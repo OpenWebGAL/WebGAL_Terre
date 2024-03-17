@@ -1,9 +1,9 @@
-import { EditorState, EditorAction } from '@/types/editor';
+import { IEditorState, IEditorAction } from '@/types/editor';
 import createSelectors from '@/utils/createSelectors';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-const useEditorStoreBase = create<EditorState & EditorAction>()(
+const useEditorStoreBase = create<IEditorState & IEditorAction>()(
   persist(
     (set) => ({
       editor: null,
@@ -26,8 +26,8 @@ const useEditorStoreBase = create<EditorState & EditorAction>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) =>
         Object.fromEntries(
-          Object.entries(state).filter(([key]) => !['editor','currentEdit'].includes(key)),
-        ), // editor 和 currentEdit 不持久化
+          Object.entries(state).filter(([key]) => !['editor','currentEdit','expand'].includes(key)),
+        ),
     }
   )
 );

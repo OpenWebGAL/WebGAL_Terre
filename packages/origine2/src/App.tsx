@@ -14,7 +14,7 @@ import useEditorStore from "./store/useEditorStore";
 import useHashRoute from "./hooks/useHashRoute";
 import useLanguage from "./hooks/useLanguage";
 import GameEditorContextProvider from "./components/ContextProvider/GameEditorContextProvider";
-import TemplateEditorContextProvider from "./components/ContextProvider/GameEditorContextProvider copy";
+import TemplateEditorContextProvider from "./components/ContextProvider/TemplateEditorContextProvider";
 import TemplateEditor from "./pages/templateEditor/TemplateEditor";
 
 function App() {
@@ -61,25 +61,19 @@ function App() {
   const editor = useEditorStore.use.editor();
   const currentEdit = useEditorStore.use.currentEdit();
 
-  const checkRoute = () => {
+  const routers = () => {
     if (editor === 'game' && currentEdit.length !== 0) {
-      return 'game-editor';
+      return <GameEditorContextProvider><Editor /></GameEditorContextProvider>;
     } else if (editor === 'template' && currentEdit.length !== 0) {
-      return  'template-editor';
+      return <TemplateEditorContextProvider><TemplateEditor /></TemplateEditorContextProvider>;
     } else {
-      return 'dashBoard';
+      return <DashBoard />;
     }
-  };
-
-  const routers = {
-    'dashBoard': <DashBoard />,
-    'game-editor': <GameEditorContextProvider><Editor /></GameEditorContextProvider>,
-    'template-editor': <TemplateEditorContextProvider><TemplateEditor /></TemplateEditorContextProvider>,
   };
 
   return (
     <div className="App">
-      {routers[checkRoute()]}
+      {routers()}
     </div>
   );
 }
