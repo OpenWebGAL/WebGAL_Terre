@@ -6,15 +6,15 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 const useEditorStoreBase = create<IEditorState & IEditorAction>()(
   persist(
     (set) => ({
-      editor: null,
-      currentEdit: '',
+      page: 'dashboard',
+      subPage: '',
       expand: 0,
       language: 'zhCn',
       isAutoHideToolbar: false,
       isEnableLivePreview: false,
       isAutoWarp: false,
-      updateEditor: (editor) => set({editor}),
-      updateCurrentEdit: (currentEdit) => set({currentEdit}),
+      updatePage: (page) => set({page}),
+      updateSubPage: (subPage) => set({subPage}),
       updateExpand: (index) => set({expand: index}),
       updateLanguage: (language) => set({language}),
       updateIisAutoHideToolbar: (isAutoHideToolbar) => set({isAutoHideToolbar}),
@@ -26,7 +26,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) =>
         Object.fromEntries(
-          Object.entries(state).filter(([key]) => !['editor','currentEdit','expand'].includes(key)),
+          Object.entries(state).filter(([key]) => !['page','subPage','expand'].includes(key)),
         ),
     }
   )

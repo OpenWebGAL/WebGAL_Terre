@@ -25,8 +25,8 @@ const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Re
 const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
 
 export function ViewTab() {
-  const currentEdit = useEditorStore.use.currentEdit();
-  const currentEditGame = currentEdit;
+  const subPage = useEditorStore.use.subPage();
+  const currentEditGame = subPage;
   const {t} = useTranslation();
   
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);

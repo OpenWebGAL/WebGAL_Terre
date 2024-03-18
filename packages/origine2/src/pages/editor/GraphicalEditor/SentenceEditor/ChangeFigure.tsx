@@ -18,7 +18,7 @@ type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
-  const currentEdit = useEditorStore.use.currentEdit();
+  const currentEdit = useEditorStore.use.subPage();
   const updateExpand = useEditorStore.use.updateExpand();
   const gameName = currentEdit;
   const t = useTrans('editor.graphical.sentences.changeFigure.');
