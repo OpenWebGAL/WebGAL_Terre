@@ -8,6 +8,7 @@ import useTrans from "@/hooks/useTrans";
 import FileElement from "./FileElement";
 import axios from "axios";
 import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
+import useSWR, { useSWRConfig } from "swr";
 
 export interface IFile {
   extName: string;
@@ -16,16 +17,23 @@ export interface IFile {
   path: string;
 }
 
-export type FolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'tex' | 'video' | 'vocal'
+export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'tex' | 'video' | 'vocal'
 
-export type FileConfig = Map<
+export type IFileConfig = Map<
 string,
 {
   desc?: string,
-  folderType?: FolderType,
+  folderType?: IFolderType,
   isProtected?: boolean,
 }
 >
+
+export interface IFileFunction {
+  open?: (file: IFile, type: 'scene' | 'asset') => Promise<void>,
+  create?: (source: string, name: string, type: 'file' | 'dir') => Promise<void>,
+  rename?: (source: string, newName: string) => Promise<void>,
+  delete?: (source: string) => Promise<void>,
+};
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 const DocumentAddIcon = bundleIcon(DocumentAddFilled, DocumentAddRegular);
@@ -35,51 +43,68 @@ const MoreVerticalIcon = bundleIcon(MoreVerticalFilled, MoreVerticalRegular);
 const ArrowExportUpIcon = bundleIcon(ArrowExportUpFilled, ArrowExportUpRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
 
-export default function Assets({basePath, fileConfig}: {basePath: string[], fileConfig?: FileConfig}) {
+export default function Assets({basePath, fileConfig, fileFunction}:
+  {basePath: string[], fileConfig?: IFileConfig, fileFunction?: IFileFunction}) {
   const t = useTrans();
+  const {mutate} = useSWRConfig();
 
   const currentPath = useValue(basePath);
   const currentPathString = useMemo(() => currentPath.value.join("/"), [currentPath]);
   const isBasePath = (currentPathString === basePath.join('/'));
-  const fileList = useValue<IFile[] | null>(null);
-  const refresh = useValue(false);
   const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPathString.startsWith(key))?.[1].folderType : undefined;
   const extName = folderType ? dirNameToExtNameMap.get(folderType) : [];
 
-  useEffect(
-    () => {
-      api.assetsControllerReadAssets(currentPathString).then((res) => {
-        const data = res.data as unknown as object;
-        if ('dirInfo' in data && data.dirInfo) {
-          const dirInfo = data.dirInfo as IFile[];
-          const dirs = dirInfo.filter((item) => item.isDir);
-          const files = dirInfo.filter((item) => !item.isDir);
-          dirs.sort((a, b) => a.name.localeCompare(b.name));
-          files.sort((a, b) => a.name.localeCompare(b.name));
-          fileList.set([...dirs, ...files]);
-        }
-      });
-    },
-    [currentPathString, refresh.value]
-  );
+  const assetsFetcher = async () => {
+    const res = await api.assetsControllerReadAssets(currentPathString);
+    const data = res.data as unknown as object;
+    if ('dirInfo' in data && data.dirInfo) {
+      const dirInfo = data.dirInfo as IFile[];
+      const dirs = dirInfo.filter((item) => item.isDir);
+      const files = dirInfo.filter((item) => !item.isDir);
+      dirs.sort((a, b) => a.name.localeCompare(b.name));
+      files.sort((a, b) => a.name.localeCompare(b.name));
+      return [...dirs, ...files];
+    } else return [];
+  };
 
-  const handleRefresh = () => refresh.set(!refresh.value);
+  const {data: fileList} = useSWR(currentPathString, assetsFetcher);
 
+  const handleRefresh = () => mutate(currentPathString);
+  const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathString);
   const handleBack = () => !isBasePath && currentPath.set(currentPath.value.slice(0, currentPath.value.length - 1));
 
-  const handleCreateNewFile = (source: string, name: string) =>
-    api.assetsControllerCreateNewFile({ source, name }).then(() => handleRefresh());
+  const handleOpenFile = async (file: IFile) => {
+    if (file.isDir) {
+      currentPath.set([...currentPath.value, file.name]);
+    } else {
+      const isScene = (folderType === 'scene') && file.name.endsWith('.txt');
+      fileFunction?.open && fileFunction.open(file, isScene ? 'scene' : 'asset');
+    }
+  };
 
-  const handleCreateNewFolder = (source: string, name: string) =>
-    api.assetsControllerCreateNewFolder({ source, name }).then(() => handleRefresh());
+  const handleCreateNewFile = async (source: string, name: string) => {
+    await api.assetsControllerCreateNewFile({ source, name });
+    fileFunction?.create && await fileFunction.create(source, name, 'file');
+    handleRefresh();
+  };
 
-  const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathString);
+  const handleCreateNewFolder = async (source: string, name: string) => {
+    await api.assetsControllerCreateNewFolder({ source, name });
+    fileFunction?.create && await fileFunction.create(source, name, 'dir');
+    handleRefresh();
+  };
 
-  const handleRenameFile = (source: string, newName: string) =>
-    api.assetsControllerRename({ source, newName }).then(() => handleRefresh());
+  const handleRenameFile = async (source: string, newName: string) => {
+    await api.assetsControllerRename({ source, newName });
+    fileFunction?.rename && await fileFunction.rename(source, newName);
+    handleRefresh();
+  };
 
-  const handleDeleteFile = (source: string) =>
-    api.assetsControllerDeleteFileOrDir({ source }).then(() => handleRefresh());
+  const handleDeleteFile = async (source: string) =>{
+    await api.assetsControllerDeleteFileOrDir({ source });
+    fileFunction?.delete && await fileFunction.delete(source);
+    handleRefresh();
+  };
 
   const createNewFilePopoverOpen = useValue(false);
   const createNewFolderPopoverOpen = useValue(false);
@@ -199,14 +224,14 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
       </div>
       <div style={{ overflow: 'auto' }}>
         {
-          fileList.value?.map(file =>
+          fileList?.map(file =>
             <FileElement
               key={file.name}
               file={file}
               desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
               currentPath={currentPath}
-              folderType={folderType}
               isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? false}
+              handleOpenFile={handleOpenFile}
               handleRenameFile={handleRenameFile}
               handleDeleteFile={handleDeleteFile}
             />
