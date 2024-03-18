@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ManageGameModule } from './Modules/manage-game/manage-game.module';
-import { ManageTemplateModule } from './Modules/manage-template/manage-template.module'
+import { ManageTemplateModule } from './Modules/manage-template/manage-template.module';
 import { LspModule } from './Modules/lsp/lsp.module';
 import { TemplatePreviewModule } from './Modules/template-preview/template-preview.module';
 import { AssetsModule } from './Modules/assets/assets.module';

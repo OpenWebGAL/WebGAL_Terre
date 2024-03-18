@@ -2,8 +2,6 @@ import * as monaco from "monaco-editor";
 import Editor, {loader, Monaco} from "@monaco-editor/react";
 import {useEffect, useRef} from "react";
 import styles from "./textEditor.module.scss";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../store/origineStore";
 import axios from "axios";
 import {logger} from "../../../utils/logger";
 
@@ -17,6 +15,8 @@ import theme from "../../../config/themes/monokai-light.json";
 import {editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME} from "../../../runtime/WG_ORIGINE_RUNTIME";
 import {WsUtil} from "../../../utils/wsUtil";
 import {eventBus} from "@/utils/eventBus";
+import useEditorStore from "@/store/useEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -26,14 +26,13 @@ interface ITextEditorProps {
 let isAfterMount = false;
 
 export default function TextEditor(props: ITextEditorProps) {
-  const target = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
-  const tags = useSelector((state: RootState) => state.status.editor.tags);
-  const currentEditingGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const target = useGameEditorContext((state) => state.currentTag);
+  const tags = useGameEditorContext((state) => state.tags);
+  const gameName = useEditorStore.use.subPage();
   // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = {value: "Loading Scene Data......"};
-  const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
-  const isAutoWarp = useSelector((state: RootState) => state.userData.isWarp);
-
+  const sceneName = tags.find((e) => e.path === target?.path)!.name;
+  const isAutoWarp = useEditorStore.use.isAutoWarp();
 
   // 准备获取 Monaco
   // 建立 Ref
@@ -54,7 +53,7 @@ export default function TextEditor(props: ITextEditorProps) {
       const editorValue = editor.getValue();
       const targetValue = editorValue.split("\n")[lineNumber - 1];
       // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
-      const sceneName = tags.find((e) => e.tagTarget === target)!.tagName;
+      const sceneName = tags.find((e) => e.path === target?.path)!.name;
       if (!isAfterMount) {
         editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
       }
@@ -83,7 +82,6 @@ export default function TextEditor(props: ITextEditorProps) {
     }
 
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    const gameName = currentEditingGame;
     if (value)
       currentText.value = value;
     const params = new URLSearchParams();
@@ -98,8 +96,8 @@ export default function TextEditor(props: ITextEditorProps) {
   }
 
   function updateEditData() {
-    const currentEditName = tags.find((e) => e.tagTarget === target)!.tagName;
-    const url = `/games/${currentEditingGame}/game/scene/${currentEditName}`;
+    const currentEditName = tags.find((e) => e.path === target?.path)!.name;
+    const url = `/games/${gameName}/game/scene/${currentEditName}`;
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
       currentText.value = data.toString();

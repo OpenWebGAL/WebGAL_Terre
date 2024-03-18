@@ -1,25 +1,28 @@
 import styles from "./editorSidebar.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/origineStore";
-import { setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
 import Assets, { FileConfig } from "@/components/Assets/Assets";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
 import {eventBus} from "@/utils/eventBus";
 import { ArrowClockwise24Filled, ArrowClockwise24Regular, bundleIcon, Open24Filled, Open24Regular } from "@fluentui/react-icons";
 import { Button } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
 
 let startX = 0;
 let prevXvalue = 0;
 let isMouseDown = false;
 
+const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Regular);
+const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+
 export default function EditorSideBar() {
   const t = useTrans("editor.sideBar.");
+  const gameName = useEditorStore.use.subPage();
+  
+  const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
+  const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
+  const updateCurrentSidebarTab = useGameEditorContext((state) => state.updateCurrentSidebarTab);
 
-  const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Regular);
-  const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
-
-  const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
   useEffect(() => {
     if (ifRef.current) {
@@ -80,14 +83,6 @@ export default function EditorSideBar() {
     };
   }, []);
 
-  const dispatch = useDispatch();
-
-  const setSidebarTab = (currentTag: sidebarTag) => {
-    dispatch(setEditorSidebarTag(currentTag));
-  };
-
-  const isShowSidebar = useSelector((state:RootState)=>state.userData.isShowSidebar);
-
   const refreshGame = () => (ifRef?.current as unknown as HTMLIFrameElement).contentWindow?.location.reload();
 
   useEffect(() => {
@@ -98,18 +93,18 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: FileConfig = new Map([
-    [`public/games/${state.currentEditingGame}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true}],
-    [`public/games/${state.currentEditingGame}/game/animation/animationTable.json`, { isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true}],
-    [`public/games/${state.currentEditingGame}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/scene/start.txt`, { isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
-    [`public/games/${state.currentEditingGame}/game/userStyleSheet.css`, { isProtected: true }],
+    [`public/games/${gameName}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true}],
+    [`public/games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
+    [`public/games/${gameName}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
+    [`public/games/${gameName}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
+    [`public/games/${gameName}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true}],
+    [`public/games/${gameName}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
+    [`public/games/${gameName}/game/scene/start.txt`, { isProtected: true }],
+    [`public/games/${gameName}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
+    [`public/games/${gameName}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
+    [`public/games/${gameName}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
+    [`public/games/${gameName}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
+    [`public/games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
   ]);
 
   return <>
@@ -119,42 +114,39 @@ export default function EditorSideBar() {
       // onMouseUp={handleDragEnd}
       // onMouseLeave={handleDragEnd}
       />
-      {
-        state.showPreview &&
-        <div className={styles.preview_container} id="gamePreview">
-          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          <iframe
-            ref={ifRef}
-            id="gamePreviewIframe"
-            frameBorder="0"
-            className={styles.previewWindow}
-            src={`/games/${state.currentEditingGame}`}
+      <div className={styles.preview_container} id="gamePreview">
+        {/* eslint-disable-next-line react/iframe-missing-sandbox */}
+        <iframe
+          ref={ifRef}
+          id="gamePreviewIframe"
+          frameBorder="0"
+          className={styles.previewWindow}
+          src={`/games/${gameName}`}
+        />
+        <div className={styles.gamePreviewButons}>
+          <Button
+            appearance="subtle"
+            icon={<ArrowClockwiseIcon />}
+            title={t("preview.refresh")}
+            onClick={refreshGame}
           />
-          <div className={styles.gamePreviewButons}>
-            <Button
-              appearance="subtle"
-              icon={<ArrowClockwiseIcon />}
-              title={t("preview.refresh")}
-              onClick={refreshGame}
-            />
-            <Button
-              appearance="subtle"
-              icon={<OpenIcon />}
-              title={t("preview.previewInNewTab")}
-              onClick={() => window.open(`/games/${state.currentEditingGame}`, "_blank")}
-            />
-          </div>
+          <Button
+            appearance="subtle"
+            icon={<OpenIcon />}
+            title={t("preview.previewInNewTab")}
+            onClick={() => window.open(`/games/${gameName}`, "_blank")}
+          />
         </div>
-      }
+      </div>
 
       <div className={styles.sidebarTab}>
         <input
           type="radio"
           id="sidebarTabAssets"
           name="sidebarTab"
-          value={sidebarTag.assets}
-          checked={state.currentSidebarTag === sidebarTag.assets}
-          onChange={() => setSidebarTab(sidebarTag.assets)}
+          value="assets"
+          checked={currentSidebarTab === 'asset'}
+          onChange={() => updateCurrentSidebarTab('asset')}
         />
         <label htmlFor="sidebarTabAssets">{t('$assets')}</label>
 
@@ -162,22 +154,22 @@ export default function EditorSideBar() {
           type="radio"
           id="sidebarTabScenes"
           name="sidebarTab"
-          value={sidebarTag.scenes}
-          checked={state.currentSidebarTag === sidebarTag.scenes}
-          onChange={() => setSidebarTab(sidebarTag.scenes)}
+          value="scene"
+          checked={currentSidebarTab === 'scene'}
+          onChange={() => updateCurrentSidebarTab('scene')}
         />
         <label htmlFor="sidebarTabScenes">{t('$scene')}</label>
       </div>
 
       <div className={styles.sidebarContent}>
-        {state.currentSidebarTag === sidebarTag.assets &&
+        {currentSidebarTab === 'asset' &&
           <Assets
-            basePath={['public','games',state.currentEditingGame,'game']}
+            basePath={['public','games',gameName,'game']}
             fileConfig={fileConfig}
           />}
-        {state.currentSidebarTag === sidebarTag.scenes &&
+        {currentSidebarTab === 'scene' &&
           <Assets
-            basePath={['public','games',state.currentEditingGame,'game','scene']}
+            basePath={['public','games',gameName,'game','scene']}
             fileConfig={fileConfig} 
           />}
       </div>

@@ -1,9 +1,6 @@
 import TopbarTab from "@/pages/editor/Topbar/components/TopbarTab";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import useTrans from "@/hooks/useTrans";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/origineStore";
-import {setEnableLivePreview, setShowSidebar} from "@/store/userDataReducer";
 import s from './viewTab.module.scss';
 import {IconWithTextItem} from "@/pages/editor/Topbar/components/IconWithTextItem";
 import {eventBus} from "@/utils/eventBus";
@@ -19,23 +16,27 @@ import {
   PanelLeftContract24Filled,
   PanelLeftContract24Regular,
 } from "@fluentui/react-icons";
+import useEditorStore from "@/store/useEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+
+const PanelLeftIcon = bundleIcon(PanelLeft24Filled, PanelLeft24Regular);
+const PanelLeftContractIcon = bundleIcon(PanelLeftContract24Filled, PanelLeftContract24Regular);
+const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Regular);
+const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
 
 export function ViewTab() {
-  const dispatch = useDispatch();
-  const isShowSidebar = useSelector((state: RootState) => state.userData.isShowSidebar);
-  const currentEditGame = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const subPage = useEditorStore.use.subPage();
+  const currentEditGame = subPage;
   const {t} = useTranslation();
-
-  const PanelLeftIcon = bundleIcon(PanelLeft24Filled, PanelLeft24Regular);
-  const PanelLeftContractIcon = bundleIcon(PanelLeftContract24Filled, PanelLeftContract24Regular);
-  const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Regular);
-  const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+  
+  const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
+  const updateIsShowSidebar = useGameEditorContext((state) => state.updateIsShowSidebar);
 
   return <TopbarTab>
     <TabItem title={t("侧边栏")}>
       <IconWithTextItem
         onClick={() => {
-          dispatch(setShowSidebar(!isShowSidebar));
+          updateIsShowSidebar(!isShowSidebar);
         }}
         icon={isShowSidebar ? <PanelLeftIcon className={s.iconColor}/> : <PanelLeftContractIcon className={s.iconColor}/>}
         text={isShowSidebar ? t('显示侧边栏') : t('隐藏侧边栏')}
