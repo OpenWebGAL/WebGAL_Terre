@@ -28,8 +28,8 @@ export default function ChooseFile(props: IChooseFile) {
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
   const fileSearch = useValue<string>('');
-  const currentEdit = useEditorStore.use.currentEdit();
-  const gameName = currentEdit;
+  const subPage = useEditorStore.use.subPage();
+  const gameName = subPage;
 
   const updateFileList = ()=>{
     /**

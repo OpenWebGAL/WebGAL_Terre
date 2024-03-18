@@ -17,7 +17,7 @@ const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
 
 export default function EditorSideBar() {
   const t = useTrans("editor.sideBar.");
-  const currentEdit = useEditorStore.use.currentEdit();
+  const gameName = useEditorStore.use.subPage();
   
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -93,18 +93,18 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: FileConfig = new Map([
-    [`public/games/${currentEdit}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true}],
-    [`public/games/${currentEdit}/game/animation/animationTable.json`, { isProtected: true }],
-    [`public/games/${currentEdit}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
-    [`public/games/${currentEdit}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
-    [`public/games/${currentEdit}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true}],
-    [`public/games/${currentEdit}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
-    [`public/games/${currentEdit}/game/scene/start.txt`, { isProtected: true }],
-    [`public/games/${currentEdit}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
-    [`public/games/${currentEdit}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
-    [`public/games/${currentEdit}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
-    [`public/games/${currentEdit}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
-    [`public/games/${currentEdit}/game/userStyleSheet.css`, { isProtected: true }],
+    [`public/games/${gameName}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true}],
+    [`public/games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
+    [`public/games/${gameName}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
+    [`public/games/${gameName}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
+    [`public/games/${gameName}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true}],
+    [`public/games/${gameName}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
+    [`public/games/${gameName}/game/scene/start.txt`, { isProtected: true }],
+    [`public/games/${gameName}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
+    [`public/games/${gameName}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
+    [`public/games/${gameName}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
+    [`public/games/${gameName}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
+    [`public/games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
   ]);
 
   return <>
@@ -121,7 +121,7 @@ export default function EditorSideBar() {
           id="gamePreviewIframe"
           frameBorder="0"
           className={styles.previewWindow}
-          src={`/games/${currentEdit}`}
+          src={`/games/${gameName}`}
         />
         <div className={styles.gamePreviewButons}>
           <Button
@@ -134,7 +134,7 @@ export default function EditorSideBar() {
             appearance="subtle"
             icon={<OpenIcon />}
             title={t("preview.previewInNewTab")}
-            onClick={() => window.open(`/games/${currentEdit}`, "_blank")}
+            onClick={() => window.open(`/games/${gameName}`, "_blank")}
           />
         </div>
       </div>
@@ -164,12 +164,12 @@ export default function EditorSideBar() {
       <div className={styles.sidebarContent}>
         {currentSidebarTab === 'asset' &&
           <Assets
-            basePath={['public','games',currentEdit,'game']}
+            basePath={['public','games',gameName,'game']}
             fileConfig={fileConfig}
           />}
         {currentSidebarTab === 'scene' &&
           <Assets
-            basePath={['public','games',currentEdit,'game','scene']}
+            basePath={['public','games',gameName,'game','scene']}
             fileConfig={fileConfig} 
           />}
       </div>

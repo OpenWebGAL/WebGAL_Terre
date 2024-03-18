@@ -26,9 +26,9 @@ import {
 import {LocalLanguage24Filled,LocalLanguage24Regular, bundleIcon, GamesFilled, GamesRegular, AlbumFilled, AlbumRegular} from "@fluentui/react-icons";
 import classNames from "classnames";
 import useEditorStore from "@/store/useEditorStore";
-import { routerMap } from "@/hooks/useHashRoute";
 import { api } from "@/api";
 import useSWR, { useSWRConfig } from "swr";
+import { redirect } from "@/hooks/useHashRoute";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -52,21 +52,53 @@ const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regul
 const GameIcon = bundleIcon(GamesFilled, GamesRegular);
 const AlbumIcon = bundleIcon(AlbumFilled, AlbumRegular);
 
+export const gameListFetcher = async () => {
+  const data = (await api.manageGameControllerGetGameList()).data;
+  const gameList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
+  logger.info("返回的游戏列表", gameList);
+  const getGameInfoList = gameList.map(
+    async (gameName): Promise<GameInfo> => {
+      const gameConfigData = (await api.manageGameControllerGetGameConfig(gameName)).data;
+      const gameConfig = WebgalParser.parseConfig(gameConfigData as unknown as string);
+      return {
+        dir: gameName,
+        title: gameConfig.find(e => e.command === "Game_name")?.args?.join('') ?? "",
+        cover: gameConfig.find(e => e.command === "Title_img")?.args?.join('') ?? "",
+      };
+    });
+  return await Promise.all(getGameInfoList);
+};
+
+export const templateListFetcher = async () => {
+  const data = (await api.manageTemplateControllerGetTemplateList()).data;
+  const templateList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
+  logger.info("返回的模板列表", templateList);
+  const getTemplateInfoList = templateList.map(
+    async (templateName) : Promise<TemplateInfo> => {
+      const TemplateConfigData = (await api.manageTemplateControllerGetTemplateConfig(templateName)).data as unknown as object;
+      return {
+        dir: templateName,
+        title: 'name' in TemplateConfigData ? TemplateConfigData.name as string : templateName,
+      };
+    });
+  return await Promise.all(getTemplateInfoList);
+};
+
 export default function DashBoard() {
   const { mutate } = useSWRConfig();
 
   const t = useTrans('editor.topBar.');
+  const subPage = useEditorStore.use.subPage();
   const updateLanguage = useEditorStore.use.updateLanguage();
   const trans = useTrans('dashBoard.');
 
   const messageRef = useRef<TestRefRef>(null);
 
-  const editor = useEditorStore.use.editor();
   // 左侧栏页签
-  const selectedValue = editor;
+  const selectedValue = subPage;
 
   const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
-    window.location.hash = routerMap[data.value as string] ?? routerMap.game;
+    redirect('dashboard', data.value as string);
   };
 
   // 当前选中的游戏
@@ -93,45 +125,16 @@ export default function DashBoard() {
     refreash();
   }
 
-  const gameListFetcher = async () => {
-    const data = (await api.manageGameControllerGetGameList()).data;
-    const gameList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
-    logger.info("返回的游戏列表", gameList);
-    const getGameInfoList = gameList.map(
-      async (gameName): Promise<GameInfo> => {
-        const gameConfigData = (await api.manageGameControllerGetGameConfig(gameName)).data;
-        const gameConfig = WebgalParser.parseConfig(gameConfigData as unknown as string);
-        return {
-          dir: gameName,
-          title: gameConfig.find(e => e.command === "Game_name")?.args?.join('') ?? "",
-          cover: gameConfig.find(e => e.command === "Title_img")?.args?.join('') ?? "",
-        };
-      });
-    return await Promise.all(getGameInfoList);
-  };
-
-  const templateListFetcher = async () => {
-    const data = (await api.manageTemplateControllerGetTemplateList()).data;
-    const templateList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
-    logger.info("返回的模板列表", templateList);
-    const getTemplateInfoList = templateList.map(
-      async (templateName) : Promise<TemplateInfo> => {
-        const TemplateConfigData = (await api.manageTemplateControllerGetTemplateConfig(templateName)).data as unknown as object;
-        return {
-          dir: templateName,
-          title: 'name' in TemplateConfigData ? TemplateConfigData.name as string : templateName,
-        };
-      });
-    return await Promise.all(getTemplateInfoList);
-  };
-
   const { data: gameList } = useSWR("game-list", gameListFetcher);
   const { data: templateList } = useSWR("template-list", templateListFetcher);
 
   const refreash = () => {
     setCurrentGame(null);
-    mutate('game-list');
-    mutate('template-list');
+    if (selectedValue === 'game') {
+      mutate('game-list');
+    } else if (selectedValue === 'template') {
+      mutate('template-list');
+    }
   };
 
   return(

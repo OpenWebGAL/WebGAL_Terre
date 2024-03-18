@@ -17,13 +17,14 @@ import {EyeOff24Filled, EyeOff24Regular, PaddingTop24Filled, PaddingTop24Regular
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { IGameEditorTopbarTabs } from "@/types/gameEditor";
+import { redirect } from "@/hooks/useHashRoute";
 
 const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
 const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
 
 export default function TopBar() {
   const {t} = useTranslation();
-  const currentEdit = useEditorStore.use.currentEdit();
+  const gameName = useEditorStore.use.subPage();
 
   const isAutoHideToolbar = useEditorStore.use.isAutoHideToolbar();
   const updateIsAutoHideToolbar = useEditorStore.use.updateIisAutoHideToolbar();
@@ -50,9 +51,9 @@ export default function TopBar() {
     updateIsAutoHideToolbar(true);
   }
 
-  const currentFileTab = useGameEditorContext((state) => state.currentFileTab);
-  const tabs = useGameEditorContext((state) => state.fileTabs);
-  const currenttype = tabs.find(e => e.path === currentFileTab?.path)?.type;
+  const currentTag = useGameEditorContext((state) => state.currentTag);
+  const tags = useGameEditorContext((state) => state.tags);
+  const currenttype = tags.find(e => e.path === currentTag?.path)?.type;
   const isShowAddSceneTab = currenttype === 'scene' && !isCodeMode;
 
   useEffect(() => {
@@ -75,7 +76,7 @@ export default function TopBar() {
   return <div className={styles.editor_topbar}>
     <div className={styles.topbar_tags}>
       {/* 标签页 */}
-      <TopbarTabButton text={t("文件")} isActive={false} onClick={() => {window.location.hash = '';}}/>
+      <TopbarTabButton text={t("文件")} isActive={false} onClick={() => redirect('dashboard', 'game')}/>
       <TopbarTabButton text={t("配置")} isActive={currentTopbarTab === 'config'}
         onClick={() => handleTabClick('config')}/>
       <TopbarTabButton text={t("视图")} isActive={currentTopbarTab === 'view'}
@@ -90,7 +91,7 @@ export default function TopBar() {
         <TopbarTabButtonSpecial text={t("添加语句")} isActive={currentTopbarTab === 'addSentence'}
           onClick={() => handleTabClick('addSentence')}/>}
       <div className={styles.topbar_gamename}>
-        {currentEdit}
+        {gameName}
       </div>
       <Toolbar>
         <Menu>

@@ -6,45 +6,45 @@ import useTrans from "@/hooks/useTrans";
 import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
 import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugger";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
-import { IFileTab } from "@/types/gameEditor";
+import { ITag } from "@/types/gameEditor";
 
 export default function EditArea() {
   const t = useTrans('editor.mainArea.');
-  const currentFileTab = useGameEditorContext((state) => state.currentFileTab);
-  const fileTabs = useGameEditorContext((state) => state.fileTabs);
+  const currentTag = useGameEditorContext((state) => state.currentTag);
+  const tags = useGameEditorContext((state) => state.tags);
   const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
   const isShowDebugger = useGameEditorContext((state) => state.isShowDebugger);
 
-  // 生成每个 Tab 对应的编辑器主体
+  // 生成每个 Tag 对应的编辑器主体
 
-  const tab = fileTabs.find(tab => tab.path === currentFileTab?.path);
-  const isScene = tab?.type === "scene";
+  const tag = tags.find(tag => tag.path === currentTag?.path);
+  const isScene = tag?.type === "scene";
 
-  const getTabPage = (tab: IFileTab) => {
-    if (tab.type === "scene") {
+  const getTagPage = (tag: ITag) => {
+    if (tag.type === "scene") {
       if (isCodeMode)
-        return <TextEditor isHide={tab.path !== currentFileTab?.path} key={tab.path}
-          targetPath={tab.path}/>;
-      else return <GraphicalEditor key={tab.path} targetPath={tab.path} targetName={tab.name}/>;
+        return <TextEditor isHide={tag.path !== currentTag?.path} key={tag.path}
+          targetPath={tag.path}/>;
+      else return <GraphicalEditor key={tag.path} targetPath={tag.path} targetName={tag.name}/>;
     } else {
-      const fileType = getFileType(tab.name);
+      const fileType = getFileType(tag.name);
       if (!fileType) {
         return <div>{t('canNotPreview')}</div>;
       }
       return <ResourceDisplay
-        isHidden={tab.path !== currentFileTab?.path}
+        isHidden={tag.path !== currentTag?.path}
         resourceType={fileType}
-        resourceUrl={tab.path}
+        resourceUrl={tag.path}
       />;
     }
   };
 
-  const tabPage = tab ? getTabPage(tab) : "";
+  const tagPage = tag ? getTagPage(tag) : "";
 
   return <>
     <div className={styles.editArea_main}>
-      {tab?.path === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
-      {tab?.path !== "" && tabPage}
+      {tag?.path === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
+      {tag?.path !== "" && tagPage}
     </div>
     {isScene && isShowDebugger && <EditorDebugger/>}
     {isScene && <EditorToolbar/>}
