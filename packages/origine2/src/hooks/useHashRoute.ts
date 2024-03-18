@@ -1,38 +1,41 @@
+import { routers } from "@/App";
 import useEditorStore from "@/store/useEditorStore";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
-interface RouterMap {
-  [key: string]: string;
-}
+export type IPage = 'dashboard' | 'game' | 'template';
 
-export const routerMap: RouterMap = {
-  game: '#game',
-  template: '#template',
+export const redirect = (page: IPage, subPage?: string) => {
+  window.location.hash = `${routers[page].url}${subPage ? `/${subPage}` : ''}`;
 };
 
 export default function useHashRoute() {
-  const updateEditor = useEditorStore.use.updateEditor();
-  const updateCurrentEdit = useEditorStore.use.updateCurrentEdit();
+  const updatePage = useEditorStore.use.updatePage();
+  const updateSubPage = useEditorStore.use.updateSubPage();
 
   useEffect(
     () => {
-      const getHash = () => {
-        const [editor, currentEdit] = window.location.hash.slice(1).split('/');
-        if (editor === 'game') {
-          updateEditor('game');
-        } else if (editor === 'template') {
-          updateEditor('template');
+      const handleHashChange = () => {
+        const [, _page, _subPage] = window.location.hash.split('/');
+        if (['game', 'template'].includes(_page) && _subPage && _subPage.length > 0) {
+          updatePage(_page as IPage);
+          try {
+            updateSubPage(decodeURIComponent(_subPage));
+          } catch (error) {
+            updateSubPage(_page);
+            redirect('dashboard', _page);
+          }
+        } else if (_page === 'dashboard' && ['game', 'template'].includes(_subPage)) {
+          updatePage('dashboard');
+          updateSubPage(_subPage);
         } else {
-          window.location.hash = routerMap.game;
+          updateSubPage('game');
+          redirect('dashboard', 'game');
         }
-        (currentEdit && currentEdit.length > 0) 
-          ? updateCurrentEdit(decodeURIComponent(currentEdit))
-          : updateCurrentEdit('');
       };
-      getHash();
-      window.addEventListener('hashchange', getHash);
+      handleHashChange();
+      window.addEventListener('hashchange', handleHashChange);
       return () => {
-        window.removeEventListener('hashchange', getHash);
+        window.removeEventListener('hashchange', handleHashChange);
       };
     },
     []

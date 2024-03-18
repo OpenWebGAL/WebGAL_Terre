@@ -10,8 +10,8 @@ import useEditorStore from "@/store/useEditorStore";
 
 export function ExportTab() {
   const t = useTrans('editor.topBar.');
-  const currentEdit = useEditorStore.use.currentEdit();
-  const gameName = currentEdit;
+  const subPage = useEditorStore.use.subPage();
+  const gameName = subPage;
   const GlobeIcon = bundleIcon(Globe24Filled, Globe24Regular);
   const DesktopIcon = bundleIcon(Desktop24Filled, Desktop24Regular);
 

@@ -6,7 +6,7 @@ import useVarTrans from "@/hooks/useVarTrans";
 import { useMemo } from "react";
 import { useValue } from "../../hooks/useValue";
 import { api } from "@/api";
-import { routerMap } from "@/hooks/useHashRoute";
+import { routers } from "@/App";
 
 interface ITemplateElementProps {
   templateInfo: TemplateInfo;
@@ -24,10 +24,6 @@ const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
 export default function TemplateElement(props: ITemplateElementProps){
   const soureBase = "background";
   const t = useVarTrans('dashBoard.');
-
-  const enterEditor = (templateName: string) => {
-    window.location.hash = `${routerMap.template}/${templateName}`;
-  };
 
   let className = styles.templateElement_main;
   if (props.checked) {
@@ -86,7 +82,7 @@ export default function TemplateElement(props: ITemplateElementProps){
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
           <div className={styles.templateElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routerMap.template}/${props.templateInfo.dir}`}>{t('$编辑模板')}</Button>
+            <Button appearance='primary' as='a' href={`${routers.template.url}/${props.templateInfo.dir}`}>{t('$编辑模板')}</Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />

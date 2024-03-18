@@ -2,7 +2,7 @@ import "./App.css";
 import { logger } from "./utils/logger";
 import DashBoard from "./pages/dashboard/DashBoard";
 import Editor from "./pages/editor/Editor";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import "@icon-park/react/styles/index.css";
 import axios from "axios";
 import { mapLspKindToMonacoKind } from "./pages/editor/TextEditor/convert";
@@ -11,11 +11,26 @@ import { lspSceneName } from "@/runtime/WG_ORIGINE_RUNTIME";
 import './config/themes/theme.css';
 import './assets/font-family.css';
 import useEditorStore from "./store/useEditorStore";
-import useHashRoute from "./hooks/useHashRoute";
+import useHashRoute, { IPage } from "./hooks/useHashRoute";
 import useLanguage from "./hooks/useLanguage";
-import GameEditorContextProvider from "./components/ContextProvider/GameEditorContextProvider";
-import TemplateEditorContextProvider from "./components/ContextProvider/TemplateEditorContextProvider";
 import TemplateEditor from "./pages/templateEditor/TemplateEditor";
+import GameEditorProvider from "./components/Provider/GameEditorProvider";
+import TemplateEditorProvider from "./components/Provider/TemplateEditorProvider";
+
+export const routers: { [key in IPage]: { url: string, element: ReactNode } } = {
+  dashboard: {
+    url: '#/dashboard',
+    element: <DashBoard />,
+  },
+  game: {
+    url: '#/game',
+    element: <GameEditorProvider><Editor /></GameEditorProvider>,
+  },
+  template: {
+    url: '#/template',
+    element: <TemplateEditorProvider><TemplateEditor /></TemplateEditorProvider>,
+  },
+};
 
 function App() {
   useEffect(() => {
@@ -58,22 +73,11 @@ function App() {
   useHashRoute();
   useLanguage();
 
-  const editor = useEditorStore.use.editor();
-  const currentEdit = useEditorStore.use.currentEdit();
-
-  const routers = () => {
-    if (editor === 'game' && currentEdit.length !== 0) {
-      return <GameEditorContextProvider><Editor /></GameEditorContextProvider>;
-    } else if (editor === 'template' && currentEdit.length !== 0) {
-      return <TemplateEditorContextProvider><TemplateEditor /></TemplateEditorContextProvider>;
-    } else {
-      return <DashBoard />;
-    }
-  };
+  const page = useEditorStore.use.page();
 
   return (
     <div className="App">
-      {routers()}
+      {routers[page].element || routers.dashboard.element}
     </div>
   );
 }
