@@ -2,55 +2,33 @@ import { getFileIcon, getDirIcon } from "@/utils/getFileIcon";
 import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text, Subtitle1 } from "@fluentui/react-components";
 import { t } from "i18next";
 import IconWrapper from "../iconWrapper/IconWrapper";
-import { FolderType, IFile } from "./Assets";
+import { IFile } from "./Assets";
 import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
 import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular } from "@fluentui/react-icons";
 import useTrans from "@/hooks/useTrans";
-import { useGameEditorContext } from "@/store/useGameEditorStore";
-import { ITag } from "@/types/gameEditor";
 
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
 
 export default function FileElement(
-  { file, desc, currentPath, isProtected, folderType, handleRenameFile, handleDeleteFile }
+  { file, desc, currentPath, isProtected, handleOpenFile, handleRenameFile, handleDeleteFile }
     : {
       file: IFile,
       desc?: string,
       currentPath: any,
-      folderType?: FolderType,
       isProtected?: boolean,
+      handleOpenFile: (file: IFile) => Promise<void>,
       handleRenameFile: (source: string, newName: string) => Promise<void>,
       handleDeleteFile: (source: string) => Promise<void>,
     }) {
   const t = useTrans();
   const newFileName = useValue(file.name);
-  const tags = useGameEditorContext((state) => state.tags);
-  const addTag = useGameEditorContext((state) => state.addTag);
-  const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
-  const isScene = () => (folderType === 'scene') && file.name.endsWith('.txt');
 
   return (
     <div
       key={file.name}
-      onClick={() => {
-        if (file.isDir) {
-          currentPath.set([...currentPath.value, file.name]);
-        }
-        else {
-          const target = file.path;
-          const tag: ITag = {
-            name: file.name,
-            path: file.path,
-            type: isScene() ? 'scene' : 'asset',
-          };
-          // 先要确定没有这个tag
-          const result = tags.findIndex((e) => e.path === target);
-          if (result < 0) addTag(tag);
-          updateCurrentTag(tag);
-        }
-      }}
+      onClick={() => handleOpenFile(file)}
       className={styles.file}
     >
       {!file.isDir && <IconWrapper src={getFileIcon(file.name)} size={22} iconSize={20} />}
