@@ -20,6 +20,8 @@
   font-weight: 400;
   line-height: 16px; /* 133.333% */
   cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .toolbar_button:hover {

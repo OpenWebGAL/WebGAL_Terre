@@ -6,10 +6,9 @@ import { FolderType, IFile } from "./Assets";
 import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
 import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular } from "@fluentui/react-icons";
-import { ITag, statusActions } from "@/store/statusReducer";
-import { RootState } from "@/store/origineStore";
-import { useDispatch, useSelector } from "react-redux";
 import useTrans from "@/hooks/useTrans";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { ITag } from "@/types/gameEditor";
 
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
@@ -26,10 +25,10 @@ export default function FileElement(
       handleDeleteFile: (source: string) => Promise<void>,
     }) {
   const t = useTrans();
-  const dispatch = useDispatch();
-  const tags = useSelector((state: RootState) => state.status.editor.tags);
   const newFileName = useValue(file.name);
-
+  const tags = useGameEditorContext((state) => state.tags);
+  const addTag = useGameEditorContext((state) => state.addTag);
+  const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
   const isScene = () => (folderType === 'scene') && file.name.endsWith('.txt');
 
   return (
@@ -42,14 +41,14 @@ export default function FileElement(
         else {
           const target = file.path;
           const tag: ITag = {
-            tagName: file.name,
-            tagTarget: file.path,
-            tagType: isScene() ? 'scene' : 'asset',
+            name: file.name,
+            path: file.path,
+            type: isScene() ? 'scene' : 'asset',
           };
           // 先要确定没有这个tag
-          const result = tags.findIndex((e) => e.tagTarget === target);
-          if (result < 0) dispatch(statusActions.addEditAreaTag(tag));
-          dispatch(statusActions.setCurrentTagTarget(target));
+          const result = tags.findIndex((e) => e.path === target);
+          if (result < 0) addTag(tag);
+          updateCurrentTag(tag);
         }
       }}
       className={styles.file}
@@ -82,11 +81,8 @@ export default function FileElement(
                 }} />
                 <Button
                   appearance="primary"
-                  disabled={newFileName.value === ''}
-                  onClick={() => {
-                    handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value);
-                    newFileName.set(file.name);
-                  }}
+                  disabled={newFileName.value.trim() === ''}
+                  onClick={() => handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value.trim())}
                 >{t("$common.rename")}</Button>
               </div>
             </PopoverSurface>

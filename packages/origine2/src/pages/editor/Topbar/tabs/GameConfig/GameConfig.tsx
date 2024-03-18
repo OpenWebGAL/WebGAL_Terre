@@ -1,9 +1,7 @@
 import styles from "../topbarTabs.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
 import axios from "axios";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../../../store/origineStore";
-import React, {useState, useEffect, useRef} from "react";
+import  { useEffect, useRef} from "react";
 import {cloneDeep} from "lodash";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import useTrans from "@/hooks/useTrans";
@@ -17,17 +15,18 @@ import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
 import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
+import useEditorStore from "@/store/useEditorStore";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
-  const state = useSelector((state: RootState) => state.status.editor);
+  const gameName = useEditorStore.use.subPage();
 
   // 拿到游戏配置
   const gameConfig = useValue<WebgalConfig>([]);
   console.log(gameConfig);
   const getGameConfig = () => {
     axios
-      .get(`/api/manageGame/getGameConfig/${state.currentEditingGame}`)
+      .get(`/api/manageGame/getGameConfig/${gameName}`)
       .then((r) => parseAndSetGameConfigState(r.data));
   };
 
@@ -38,7 +37,7 @@ export default function GameConfig() {
   function updateGameConfig() {
     const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
     const form = new URLSearchParams();
-    form.append("gameName", state.currentEditingGame);
+    form.append("gameName", gameName);
     form.append("newConfig", newConfig);
     axios.post(`/api/manageGame/setGameConfig/`, form).then(getGameConfig);
   }
@@ -227,10 +226,10 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   sourceBase: string,
   extNameList: string[]
 }) {
+  const gameName = useEditorStore.use.subPage();
   const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
-  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   const images = props.value;
 
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);

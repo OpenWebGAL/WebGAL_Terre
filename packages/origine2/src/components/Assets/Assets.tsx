@@ -124,14 +124,9 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
               </Field>
               <Button
                 appearance="primary"
-                disabled={newFileName.value === ''}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' && newFileName.value !== ''){
-                    handleCreateNewFile(currentPathString, `${newFileName.value}${newFileExtensionName.value}`);
-                  }
-                }}
+                disabled={newFileName.value.trim() === ''}
                 onClick={() => {
-                  handleCreateNewFile(currentPathString, `${newFileName.value}${newFileExtensionName.value}`);
+                  handleCreateNewFile(currentPathString, `${newFileName.value.trim()}${newFileExtensionName.value}`);
                   createNewFilePopoverOpen.set(false);
                   newFileName.set('');
                 }}
@@ -160,9 +155,9 @@ export default function Assets({basePath, fileConfig}: {basePath: string[], file
               />
               <Button
                 appearance="primary"
-                disabled={newFileName.value === ''}
+                disabled={newFileName.value.trim() === ''}
                 onClick={() => {
-                  handleCreateNewFolder(currentPathString, newFileName.value);
+                  handleCreateNewFolder(currentPathString, newFileName.value.trim());
                   createNewFolderPopoverOpen.set(false);
                   newFileName.set('');
                 }}
@@ -254,7 +249,7 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderPro
   return (
     <div className={styles.fileUploadContainer}>
       <div>
-        <input className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
+        <input title={t("$upload")} className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
       </div>
       <Button appearance='primary' onClick={handleUpload}>{t("$upload")}</Button>
     </div>

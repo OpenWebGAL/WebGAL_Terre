@@ -3,12 +3,10 @@ import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface
 import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
 import { TemplateInfo } from "./DashBoard";
 import useVarTrans from "@/hooks/useVarTrans";
-import { useDispatch } from "react-redux";
 import { useMemo } from "react";
-import { setDashboardShow, setEditingGame } from "@/store/statusReducer";
 import { useValue } from "../../hooks/useValue";
 import { api } from "@/api";
-import axios from "axios";
+import { routers } from "@/App";
 
 interface ITemplateElementProps {
   templateInfo: TemplateInfo;
@@ -16,22 +14,16 @@ interface ITemplateElementProps {
   refreash?: () => void;
   checked: boolean;
 }
+
+const MoreVerticalIcon = bundleIcon(MoreVertical24Filled, MoreVertical24Regular);
+const FolderOpenIcon = bundleIcon(FolderOpen24Filled, FolderOpen24Regular);
+const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
+const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
+
 export default function TemplateElement(props: ITemplateElementProps){
   const soureBase = "background";
   const t = useVarTrans('dashBoard.');
-  const dispatch = useDispatch();
-
-  const MoreVerticalIcon = bundleIcon(MoreVertical24Filled, MoreVertical24Regular);
-  const FolderOpenIcon = bundleIcon(FolderOpen24Filled, FolderOpen24Regular);
-  const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
-  const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
-  const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
-
-  const enterEditor = (templateName: string) => {
-    console.log(templateName);
-    // dispatch(setEditingTemplate(templateName));  模板编辑界面还没做 可能需要template专用的store？
-    // dispatch(setDashboardShow(false));
-  };
 
   let className = styles.templateElement_main;
   if (props.checked) {
@@ -90,7 +82,7 @@ export default function TemplateElement(props: ITemplateElementProps){
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
           <div className={styles.templateElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' onClick={() =>enterEditor(props.templateInfo.dir)}>{t('$编辑模板')}</Button>
+            <Button appearance='primary' as='a' href={`${routers.template.url}/${props.templateInfo.dir}`}>{t('$编辑模板')}</Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />
