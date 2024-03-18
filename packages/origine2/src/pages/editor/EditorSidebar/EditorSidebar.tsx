@@ -1,5 +1,5 @@
 import styles from "./editorSidebar.module.scss";
-import Assets, { FileConfig } from "@/components/Assets/Assets";
+import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
 import useTrans from "@/hooks/useTrans";
 import {eventBus} from "@/utils/eventBus";
@@ -7,6 +7,7 @@ import { ArrowClockwise24Filled, ArrowClockwise24Regular, bundleIcon, Open24Fill
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { ITag } from "@/types/gameEditor";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -22,6 +23,9 @@ export default function EditorSideBar() {
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
   const updateCurrentSidebarTab = useGameEditorContext((state) => state.updateCurrentSidebarTab);
+  const tags = useGameEditorContext((state) => state.tags);
+  const addTag = useGameEditorContext((state) => state.addTag);
+  const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
 
   const ifRef = useRef(null);
   useEffect(() => {
@@ -92,7 +96,7 @@ export default function EditorSideBar() {
     };
   }, []);
 
-  const fileConfig: FileConfig = new Map([
+  const fileConfig: IFileConfig = new Map([
     [`public/games/${gameName}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true}],
     [`public/games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
     [`public/games/${gameName}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
@@ -106,6 +110,23 @@ export default function EditorSideBar() {
     [`public/games/${gameName}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
     [`public/games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
   ]);
+
+  const handleOpen: IFileFunction['open'] = async (file, type) => {
+    const target = file.path;
+    const tag: ITag = {
+      name: file.name,
+      path: file.path,
+      type: type,
+    };
+      // 先要确定没有这个tag
+    const result = tags.findIndex((e) => e.path === target);
+    if (result < 0) addTag(tag);
+    updateCurrentTag(tag);
+  };
+
+  const fileFunction: IFileFunction = {
+    open: handleOpen,
+  };
 
   return <>
     {isShowSidebar && <div className={styles.editor_sidebar}>
@@ -166,11 +187,13 @@ export default function EditorSideBar() {
           <Assets
             basePath={['public','games',gameName,'game']}
             fileConfig={fileConfig}
+            fileFunction={fileFunction}
           />}
         {currentSidebarTab === 'scene' &&
           <Assets
             basePath={['public','games',gameName,'game','scene']}
-            fileConfig={fileConfig} 
+            fileConfig={fileConfig}
+            fileFunction={fileFunction}
           />}
       </div>
 
