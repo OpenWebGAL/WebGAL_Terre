@@ -9,7 +9,7 @@ const initState: ITemplateEditorState = {
   isShowDebugger: false,
 };
 
-export const createTemplateEditorStore = (currentEdit: string) =>
+export const createTemplateEditorStore = (templateName: string) =>
   create<ITemplateEditorState & ITemplateEditorAction>()(
     persist(
       (set) => ({
@@ -19,7 +19,7 @@ export const createTemplateEditorStore = (currentEdit: string) =>
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
       }),
       {
-        name: `template-editor-storage-${currentEdit}`,
+        name: `template-editor-storage-${templateName}`,
         storage: createJSONStorage(() => localStorage),
       },
     )

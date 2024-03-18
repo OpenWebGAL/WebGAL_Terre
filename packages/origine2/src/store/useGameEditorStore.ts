@@ -4,8 +4,8 @@ import { StoreApi, create, useStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 const initState: IGameEditorState = {
-  fileTabs: [],
-  currentFileTab: null,
+  tags: [],
+  currentTag: null,
   currentSidebarTab: 'asset',
   currentTopbarTab: 'config',
   isShowSidebar: true,
@@ -13,15 +13,15 @@ const initState: IGameEditorState = {
   isShowDebugger: false,
 };
 
-export const createGameEditorStore = (currentEdit: string) =>
+export const createGameEditorStore = (gameName: string) =>
   create<IGameEditorState & IGameEditorAction>()(
     persist(
       (set) => ({
         ...initState,
-        updateFileTabs: (fileTabs) => set({ fileTabs }),
-        addFileTab: (fileTab) => set((state) => ({ fileTabs: [...state.fileTabs, fileTab] })),
-        removeFileTab: (fileTab) => set((state) => ({ fileTabs: state.fileTabs.filter((tab) => tab.path !== fileTab.path) })),
-        updateCurrentFileTab: (currentFileTab) => set({ currentFileTab }),
+        updateTags: (tags) => set({ tags }),
+        addTag: (tag) => set((state) => ({ tags: [...state.tags, tag] })),
+        removeTag: (tag) => set((state) => ({ tags: state.tags.filter((item) => item.path !== tag.path) })),
+        updateCurrentTag: (currentTag) => set({ currentTag }),
         updateCurrentSidebarTab: (currentSidebarTab) => set({ currentSidebarTab }),
         updateCurrentTopbarTab: (currentTopbarTab) => set({ currentTopbarTab }),
         updateIsShowSidebar: (isShowSidebar) => set({ isShowSidebar }),
@@ -29,7 +29,7 @@ export const createGameEditorStore = (currentEdit: string) =>
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
       }),
       {
-        name: `game-editor-storage-${currentEdit}`,
+        name: `game-editor-storage-${gameName}`,
         storage: createJSONStorage(() => localStorage),
       },
     )

@@ -22,11 +22,11 @@ interface IGraphicalEditorProps {
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const t = useTrans("editor.graphical.buttons.");
   const sceneText = useValue("");
-  const currentEdit = useEditorStore.use.currentEdit();
+  const gameName = useEditorStore.use.subPage();
   const showSentence = useValue<Array<boolean>>([]);
 
   function updateScene() {
-    const url = `/games/${currentEdit}/game/scene/${props.targetName}`;
+    const url = `/games/${gameName}/game/scene/${props.targetName}`;
     axios.get(url).then(res => res.data).then((data) => {
       sceneText.set(data.toString());
       eventBus.emit('update-scene', data.toString());
@@ -46,7 +46,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     editorLineHolder.recordSceneEdittingLine(props.targetPath, updateIndex);
     sceneText.set(newScene);
     const params = new URLSearchParams();
-    params.append("gameName", currentEdit);
+    params.append("gameName", gameName);
     params.append("sceneName", props.targetName);
     params.append("sceneData", JSON.stringify({value: sceneText.value}));
     axios.post("/api/manageGame/editScene/", params).then(() => {

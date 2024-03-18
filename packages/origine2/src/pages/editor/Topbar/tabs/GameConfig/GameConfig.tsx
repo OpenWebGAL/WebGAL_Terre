@@ -19,14 +19,14 @@ import useEditorStore from "@/store/useEditorStore";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
-  const currentEdit = useEditorStore.use.currentEdit();
+  const gameName = useEditorStore.use.subPage();
 
   // 拿到游戏配置
   const gameConfig = useValue<WebgalConfig>([]);
   console.log(gameConfig);
   const getGameConfig = () => {
     axios
-      .get(`/api/manageGame/getGameConfig/${currentEdit}`)
+      .get(`/api/manageGame/getGameConfig/${gameName}`)
       .then((r) => parseAndSetGameConfigState(r.data));
   };
 
@@ -37,7 +37,7 @@ export default function GameConfig() {
   function updateGameConfig() {
     const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
     const form = new URLSearchParams();
-    form.append("gameName", currentEdit);
+    form.append("gameName", gameName);
     form.append("newConfig", newConfig);
     axios.post(`/api/manageGame/setGameConfig/`, form).then(getGameConfig);
   }
@@ -226,11 +226,10 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   sourceBase: string,
   extNameList: string[]
 }) {
-  const currentEdit = useEditorStore.use.currentEdit();
+  const gameName = useEditorStore.use.subPage();
   const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
-  const gameName = currentEdit;
   const images = props.value;
 
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);

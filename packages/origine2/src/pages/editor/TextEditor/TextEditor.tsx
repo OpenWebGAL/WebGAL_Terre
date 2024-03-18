@@ -26,12 +26,12 @@ interface ITextEditorProps {
 let isAfterMount = false;
 
 export default function TextEditor(props: ITextEditorProps) {
-  const target = useGameEditorContext((state) => state.currentFileTab);
-  const tabs = useGameEditorContext((state) => state.fileTabs);
-  const currentEdit = useEditorStore.use.currentEdit();
+  const target = useGameEditorContext((state) => state.currentTag);
+  const tags = useGameEditorContext((state) => state.tags);
+  const gameName = useEditorStore.use.subPage();
   // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = {value: "Loading Scene Data......"};
-  const sceneName = tabs.find((e) => e.path === target?.path)!.name;
+  const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
 
   // 准备获取 Monaco
@@ -53,7 +53,7 @@ export default function TextEditor(props: ITextEditorProps) {
       const editorValue = editor.getValue();
       const targetValue = editorValue.split("\n")[lineNumber - 1];
       // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
-      const sceneName = tabs.find((e) => e.path === target?.path)!.name;
+      const sceneName = tags.find((e) => e.path === target?.path)!.name;
       if (!isAfterMount) {
         editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
       }
@@ -82,7 +82,6 @@ export default function TextEditor(props: ITextEditorProps) {
     }
 
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    const gameName = currentEdit;
     if (value)
       currentText.value = value;
     const params = new URLSearchParams();
@@ -97,8 +96,8 @@ export default function TextEditor(props: ITextEditorProps) {
   }
 
   function updateEditData() {
-    const currentEditName = tabs.find((e) => e.path === target?.path)!.name;
-    const url = `/games/${currentEdit}/game/scene/${currentEditName}`;
+    const currentEditName = tags.find((e) => e.path === target?.path)!.name;
+    const url = `/games/${gameName}/game/scene/${currentEditName}`;
     axios.get(url).then(res => res.data).then((data) => {
       // currentText.set(data);
       currentText.value = data.toString();

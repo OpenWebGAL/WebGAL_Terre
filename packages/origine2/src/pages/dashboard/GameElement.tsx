@@ -7,8 +7,8 @@ import { useMemo } from "react";
 import { api } from "@/api";
 import { Button, Checkbox, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
-import { routerMap } from "@/hooks/useHashRoute";
 import { localStorageRename } from "@/utils/localStorageRename";
+import { routers } from "@/App";
 
 interface IGameElementProps {
   gameInfo: GameInfo;
@@ -91,7 +91,7 @@ export default function GameElement(props: IGameElementProps) {
         <div className={styles.gameElement_sub}>
           <span className={styles.gameElement_dir}>{props.gameInfo.dir}</span>
           <div className={styles.gameElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routerMap.game}/${props.gameInfo.dir}`}>{t('preview.editGame')}</Button>
+            <Button appearance='primary' as='a' href={`${routers.game.url}/${props.gameInfo.dir}`}>{t('preview.editGame')}</Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />

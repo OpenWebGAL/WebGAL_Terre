@@ -1,6 +1,8 @@
+import { IPage } from "@/hooks/useHashRoute";
+
 export interface IEditorState {
-  editor: 'game' | 'template' | null,
-  currentEdit: string,
+  page: IPage,
+  subPage: string,
   expand: number,
   language: 'zhCn' | 'en' | 'jp',
   isAutoHideToolbar: boolean, // 是否自动隐藏工具栏
@@ -9,8 +11,8 @@ export interface IEditorState {
 }
 
 export interface IEditorAction {
-  updateEditor: (editor: IEditorState['editor']) => void,
-  updateCurrentEdit: (currentEdit: IEditorState['currentEdit']) => void,
+  updatePage: (editor: IEditorState['page']) => void,
+  updateSubPage: (subPage: IEditorState['subPage']) => void,
   updateExpand: (index: IEditorState['expand']) => void,
   updateLanguage: (language: IEditorState['language']) => void,
   updateIisAutoHideToolbar: (isAutoHideToolbar: IEditorState['isAutoHideToolbar']) => void,
