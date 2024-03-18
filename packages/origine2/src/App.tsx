@@ -1,26 +1,43 @@
 import "./App.css";
-import {logger} from "./utils/logger";
+import { logger } from "./utils/logger";
 import DashBoard from "./pages/dashboard/DashBoard";
-import {Provider} from "react-redux";
-import {origineStore, persistor} from "./store/origineStore";
 import Editor from "./pages/editor/Editor";
-import {useEffect} from "react";
+import { ReactNode, useEffect } from "react";
 import "@icon-park/react/styles/index.css";
 import axios from "axios";
-import {mapLspKindToMonacoKind} from "./pages/editor/TextEditor/convert";
+import { mapLspKindToMonacoKind } from "./pages/editor/TextEditor/convert";
 import * as monaco from "monaco-editor";
-import Translation from "./components/translation/Translation";
-import {lspSceneName} from "@/runtime/WG_ORIGINE_RUNTIME";
+import { lspSceneName } from "@/runtime/WG_ORIGINE_RUNTIME";
 import './config/themes/theme.css';
-import {PersistGate} from 'redux-persist/integration/react';
 import './assets/font-family.css';
+import useEditorStore from "./store/useEditorStore";
+import useHashRoute, { IPage } from "./hooks/useHashRoute";
+import useLanguage from "./hooks/useLanguage";
+import TemplateEditor from "./pages/templateEditor/TemplateEditor";
+import GameEditorProvider from "./components/Provider/GameEditorProvider";
+import TemplateEditorProvider from "./components/Provider/TemplateEditorProvider";
+
+export const routers: { [key in IPage]: { url: string, element: ReactNode } } = {
+  dashboard: {
+    url: '#/dashboard',
+    element: <DashBoard />,
+  },
+  game: {
+    url: '#/game',
+    element: <GameEditorProvider><Editor /></GameEditorProvider>,
+  },
+  template: {
+    url: '#/template',
+    element: <TemplateEditorProvider><TemplateEditor /></TemplateEditorProvider>,
+  },
+};
 
 function App() {
   useEffect(() => {
     logger.info("Welcome to WebGAL live editor!");
 
     // 防止多次注册，语言在初次进入的时候注册
-    monaco.languages.register({id: "webgal"});
+    monaco.languages.register({ id: "webgal" });
     /**
      * LSP
      */
@@ -31,7 +48,7 @@ function App() {
           textDocument: {
             uri: lspSceneName.value
           },
-          position: {line: position.lineNumber - 1, character: position.column - 1}
+          position: { line: position.lineNumber - 1, character: position.column - 1 }
         };
 
         const data = {
@@ -43,7 +60,7 @@ function App() {
             // 处理 LSP 的响应
             const result = {
               suggestions: response.data.items.map((suggestion: any) => {
-                return {...suggestion, kind: mapLspKindToMonacoKind(suggestion.kind)};
+                return { ...suggestion, kind: mapLspKindToMonacoKind(suggestion.kind) };
               })
             };
             resolve(result);
@@ -53,16 +70,14 @@ function App() {
     });
   });
 
+  useHashRoute();
+  useLanguage();
+
+  const page = useEditorStore.use.page();
+
   return (
-    // 将编辑器的根元素占满整个视口
     <div className="App">
-      <Provider store={origineStore}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Translation/>
-          <DashBoard/>
-          <Editor/>
-        </PersistGate>
-      </Provider>
+      {routers[page].element || routers.dashboard.element}
     </div>
   );
 }

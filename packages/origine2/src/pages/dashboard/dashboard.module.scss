@@ -3,7 +3,6 @@
   width: 100%;
   display: flex;
   flex-flow: column;
-  padding: 0 4px 4px 4px;
 }
 
 .container_main {
@@ -17,14 +16,13 @@
 
 .dashboard_main {
   width: 80%;
-  height: calc(100vh - 4.5em);
+  height: 100%;
   display: flex;
   flex-grow: 1;
   overflow: hidden;
   background: var(--bg-card);
   border: var(--border-md);
   border-radius: var(--radius-md);
-  padding: 4px;
 }
 
 .topBar {
@@ -38,27 +36,27 @@
 }
 
 .tabListContainer {
-  padding: 0 20px;
+  padding: 8px 18px;
 }
 
 .tabItem {
-  padding: 10px 15px !important;
-  margin-bottom: 10px;
-  min-width: 130px;
+  padding: 8px 16px !important;
+  margin-bottom: 4px;
+  min-width: 120px;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.05) !important;
+    background-color: var(--bg-button-hover) !important;
   }
 
   > span {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
 .active {
   > span {
-    color: #005caf !important;
+    color: var(--primary) !important;
   }
 
-  background-color: rgba(0, 0, 0, 0.05) !important;
+  background-color: var(--bg-button-hover) !important;
 }

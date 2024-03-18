@@ -734,4 +734,5 @@ export const en = {
   gameConfig: 'Game Config',
   extensionName: 'Extension Name',
   null: 'Null',
+  sureToDeleteGame: "I'm sure to delete the game",
 };

@@ -5,12 +5,13 @@ import useTrans from "@/hooks/useTrans";
 import s from './export.module.scss';
 import AndroidIcon from "material-icon-theme/icons/android.svg";
 import {api} from "@/api";
-import {origineStore} from "@/store/origineStore";
 import { Desktop24Filled, Desktop24Regular, Globe24Filled, Globe24Regular, bundleIcon } from "@fluentui/react-icons";
+import useEditorStore from "@/store/useEditorStore";
 
 export function ExportTab() {
   const t = useTrans('editor.topBar.');
-  const gameName = origineStore.getState().status.editor.currentEditingGame;
+  const subPage = useEditorStore.use.subPage();
+  const gameName = subPage;
   const GlobeIcon = bundleIcon(Globe24Filled, Globe24Regular);
   const DesktopIcon = bundleIcon(Desktop24Filled, Desktop24Regular);
 
