@@ -1,0 +1,53 @@
+.mainAria {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.previewWindow {
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  border: var(--border-md);
+  border-radius: var(--radius-md);
+}
+
+.editor {
+  background: var(--bg-card);
+  border: var(--border-md);
+  border-radius: var(--radius-md);
+}
+
+.divider {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+
+  & .dividerLine {
+    visibility: hidden;
+    rotate: 90deg;
+  }
+}
+
+.divider:hover {
+  height: 8px;
+  cursor: ns-resize;
+
+  & .dividerLine {
+    line-height: 8px;
+    visibility: visible;
+  }
+}
