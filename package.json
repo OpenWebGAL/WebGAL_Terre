@@ -16,7 +16,6 @@
   "workspaces": {
     "packages": [
       "packages/dev-server",
-      "packages/terre2",
       "packages/origine2"
     ],
     "nohoist": [
