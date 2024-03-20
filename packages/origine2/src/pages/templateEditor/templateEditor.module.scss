@@ -8,5 +8,33 @@
 .container {
   flex: 1;
   display: flex;
-  overflow: auto;
+  flex-direction: row;
+  overflow: hidden;
+  width: 100%;
+  padding: 4px;
+}
+
+.divider {
+  width: 4px;
+  height: 100%;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  cursor: ew-resize;
+  text-align: center;
+
+  & .dividerLine {
+    width: 100%;
+    visibility: hidden;
+  }
+}
+
+.divider:hover {
+  width: 12px;
+
+  & .dividerLine {
+    visibility: visible;
+  }
 }
