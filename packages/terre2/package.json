@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "build-standalone": "nest build --webpack --webpackPath=./standalone.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -23,11 +24,14 @@
     "pkg:linux-arm64": "cd dist && pkg main.js -o WebGAL_Terre -t node18-linux-arm64"
   },
   "dependencies": {
+    "@fastify/static": "^7.0.1",
     "@nestjs/common": "^9.0.5",
     "@nestjs/core": "^9.0.5",
     "@nestjs/platform-express": "^9.0.5",
     "@nestjs/serve-static": "^3.0.1",
     "@nestjs/swagger": "^7.1.13",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "open": "^8.4.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -51,6 +55,7 @@
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.1",
     "jest": "28.0.3",
     "pkg": "^5.8.0",
     "prettier": "^2.3.2",

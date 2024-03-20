@@ -22,7 +22,7 @@ import {
   UploadFilesDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { _open } from 'src/util/open';
+import { _open } from '../../util/open';
 
 @Controller('api/assets')
 @ApiTags('Assets')
