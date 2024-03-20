@@ -1,3 +1,4 @@
+global['isElectron'] = true;
 const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
 require('./dist/main')
 
