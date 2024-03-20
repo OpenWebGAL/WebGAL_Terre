@@ -1,7 +1,5 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { _open } from 'src/util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
-import * as process from 'process';
 
 @Injectable()
 export class ManageTemplateService {
