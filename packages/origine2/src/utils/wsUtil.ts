@@ -1,12 +1,13 @@
 import {logger} from "./logger";
 import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
+import useEditorStore from "@/store/useEditorStore";
 
 export class WsUtil {
   // eslint-disable-next-line max-params
   public static sendSyncCommand(sceneName: string, lineNumber: number, lineCommandString: string, force?: boolean) {
 
     const isForce = force ?? false;
-    if (!force) {
+    if (!useEditorStore.getState().isEnableLivePreview && !force) {
       return;
     }
 
