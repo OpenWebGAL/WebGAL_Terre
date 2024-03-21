@@ -221,7 +221,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
           {extName.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
         </div>
       }
-      <div style={{ overflow: 'auto' }}>
+      <div style={{ overflow: 'auto', padding: '4px' }}>
         {
           fileList?.map(file =>
             <FileElement
