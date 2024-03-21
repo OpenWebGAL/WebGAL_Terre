@@ -8,7 +8,7 @@ const initState: ITemplateEditorState = {
   isCodeMode: false,
   isShowDebugger: false,
   sidebarWidth: 280,
-  uiTreeHeight: 400,
+  componentTreeHeight: 400,
   editorHeight: 400,
 };
 
@@ -21,7 +21,7 @@ export const createTemplateEditorStore = (templateName: string) =>
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
         updateSidebarWidth: (sidebarWidth) => set({ sidebarWidth }),
-        updateUiTreeHeight: (uiTreeHeight) => set({ uiTreeHeight }),
+        updateComponentTreeHeight: (componentTreeHeight) => set({ componentTreeHeight }),
         updateEditorHeight: (editorHeight) => set({editorHeight}),
       }),
       {
