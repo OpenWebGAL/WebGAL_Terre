@@ -26,12 +26,20 @@
   text-align: center;
 
   & .dividerLine {
-    width: 100%;
+    width: 12px;
     visibility: hidden;
   }
 }
 
 .divider:hover {
+  width: 12px;
+
+  & .dividerLine {
+    visibility: visible;
+  }
+}
+
+.dividerActive {
   width: 12px;
 
   & .dividerLine {

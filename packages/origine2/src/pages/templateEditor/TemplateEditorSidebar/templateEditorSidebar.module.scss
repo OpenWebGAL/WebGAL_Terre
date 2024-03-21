@@ -46,11 +46,21 @@
 }
 
 .divider:hover {
-  height: 8px;
+  height: 10px;
   cursor: ns-resize;
 
   & .dividerLine {
-    line-height: 8px;
+    line-height: 10px;
+    visibility: visible;
+  }
+}
+
+.dividerActive {
+  height: 10px;
+  cursor: ns-resize;
+
+  & .dividerLine {
+    line-height: 10px;
     visibility: visible;
   }
 }
