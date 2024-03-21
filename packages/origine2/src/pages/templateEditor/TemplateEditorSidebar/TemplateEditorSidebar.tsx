@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Assets from '@/components/Assets/Assets';
-import UITree from './UITree/UITree';
+import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
 import useEditorStore from '@/store/useEditorStore';
 import { Button } from '@fluentui/react-components';
@@ -12,8 +12,8 @@ const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 export default function TemplateEditorSidebar() {
   const templateName = useEditorStore.use.subPage();
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
-  const uiTreeHeight = useTemplateEditorContext((state) => state.uiTreeHeight);
-  const updateUiTreeHeight = useTemplateEditorContext((state) => state.updateUiTreeHeight);
+  const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
+  const updateComponentTreeHeight = useTemplateEditorContext((state) => state.updateComponentTreeHeight);
 
   const minHeight = 0;
   const [isDragging, setIsDragging] = useState(false);
@@ -29,8 +29,8 @@ export default function TemplateEditorSidebar() {
       const moveHandler = (event: any) => {
         if (!isDragging) return;
         const deltaY = event.clientY - initY;
-        const newHeight = Math.max(minHeight, uiTreeHeight + deltaY);
-        updateUiTreeHeight(newHeight);
+        const newHeight = Math.max(minHeight, componentTreeHeight + deltaY);
+        updateComponentTreeHeight(newHeight);
       };
 
       const upHandler = () => {
@@ -57,8 +57,8 @@ export default function TemplateEditorSidebar() {
             {templateName}
           </span>
         </div>
-        <div className={styles.uiTree} style={{ height: `${uiTreeHeight}px` }}>
-          <UITree />
+        <div className={styles.componentTree} style={{ height: `${componentTreeHeight}px` }}>
+          <ComponentTree />
         </div>
         <div className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} onMouseDown={handleMouseDown}><div className={styles.dividerLine}>‖</div></div>
         <div className={styles.assets}>
