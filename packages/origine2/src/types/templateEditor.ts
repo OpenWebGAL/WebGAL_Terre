@@ -1,18 +1,19 @@
-export type ITemplateEditorTopbarTabs = 'config' | 'view' | 'settings' | 'help'
+import { IClassNode } from "@/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree";
+
 export interface ITemplateEditorState {
-  currentTopbarTab: ITemplateEditorTopbarTabs | null,
+  currentClassNode: IClassNode & { path: string } | null,
   isCodeMode: boolean,
   isShowDebugger: boolean,
   sidebarWidth: number,
   componentTreeHeight: number,
-  editorHeight: number,
+  previewHeight: number,
 }
 
 export interface ITemplateEditorAction {
-  updateCurrentTopbarTab: (currentTopbarTab: ITemplateEditorState['currentTopbarTab']) => void,
+  updateCurrentClassNode: (currentClassNode: ITemplateEditorState['currentClassNode']) => void,
   updateIsCodeMode: (isCodeMode: ITemplateEditorState['isCodeMode']) => void,
   updateIsShowDebugger: (isShowDebugger: ITemplateEditorState['isShowDebugger']) => void,
   updateSidebarWidth: (sidebarWidth: ITemplateEditorState['sidebarWidth']) => void,
   updateComponentTreeHeight: (componentTreeheight: ITemplateEditorState['componentTreeHeight']) => void,
-  updateEditorHeight: (editorHeight: ITemplateEditorState['editorHeight']) => void,
+  updatePreviewHeight: (previewHeight: ITemplateEditorState['previewHeight']) => void,
 }

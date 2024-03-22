@@ -1,15 +1,18 @@
 /* eslint-disable react/iframe-missing-sandbox */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useEditorStore from '@/store/useEditorStore';
 import styles from './templateEditorMainAria.module.scss';
 import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
 
 export default function TemplateMainAria() {
   const templateName = useEditorStore.use.subPage();
-  const editorHeight = useTemplateEditorContext((state) => state.editorHeight);
-  const updateEditorHeight = useTemplateEditorContext((state) => state.updateEditorHeight);
+  const previewHeight = useTemplateEditorContext((state) => state.previewHeight);
+  const updatePreviewHeight = useTemplateEditorContext((state) => state.updatePreviewHeight);
 
-  const minHeight = 0;
+  const previewRef = useRef<HTMLDivElement | null>(null);
+  const previewWidth = previewRef.current?.offsetWidth;
+  const previewMinHight = 32;
+  const previewMaxHeight =  previewWidth ? (previewWidth / 16 * 9) : innerHeight - previewMinHight;
   const [isDragging, setIsDragging] = useState(false);
   const [initY, setInitY] = useState(0);
 
@@ -27,8 +30,8 @@ export default function TemplateMainAria() {
       const moveHandler = (event: any) => {
         if (!isDragging) return;
         const deltaY = event.clientY - initY;
-        const newHeight = Math.max(minHeight, editorHeight - deltaY);
-        updateEditorHeight(newHeight);
+        const newHeight = Math.min(previewMaxHeight, Math.max(previewMinHight, previewHeight + deltaY));
+        updatePreviewHeight(newHeight);
       };
 
       const upHandler = () => {
@@ -50,9 +53,24 @@ export default function TemplateMainAria() {
     [isDragging, initY]
   );
 
+  useEffect(
+    () => {
+      previewHeight > previewMaxHeight && updatePreviewHeight(previewMaxHeight);
+    },
+    [previewMaxHeight]
+  );
+
   return (
     <div className={styles.mainAria}>
-      <div className={styles.preview}>
+      <div 
+        className={styles.preview} 
+        style={{ 
+          height: `${previewHeight}px`,
+          minHeight: `${previewMinHight}px`,
+          maxHeight: `${previewMaxHeight}px`,
+        }}
+        ref={previewRef}
+      >
         <iframe
           title={templateName}
           frameBorder={0}
@@ -62,7 +80,9 @@ export default function TemplateMainAria() {
         />
       </div>
       <div className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} onMouseDown={handleMouseDown}><div className={styles.dividerLine}>‖</div></div>
-      <div className={styles.editor} style={{ height: `${editorHeight}px` }}>Editor</div>
+      <div 
+        className={styles.editor} 
+      >Editor</div>
     </div>
   );
 }
