@@ -7,22 +7,24 @@
 }
 
 .preview {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 
 .previewWindow {
   height: 100%;
-  aspect-ratio: 16 / 9;
   max-width: 100%;
+  aspect-ratio: 16 / 9;
   border: var(--border-md);
   border-radius: var(--radius-md);
 }
 
 .editor {
+  flex: 1;
   background: var(--bg-card);
   border: var(--border-md);
   border-radius: var(--radius-md);
