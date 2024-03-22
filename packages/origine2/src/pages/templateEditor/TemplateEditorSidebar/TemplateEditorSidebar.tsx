@@ -49,21 +49,19 @@ export default function TemplateEditorSidebar() {
   );
 
   return (
-    <div className={styles.sidebar}>
-      <div className={styles.container} style={{ width: `${sidebarWidth}px` }}>
-        <div className={styles.toolbar}>
-          <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>模板列表</Button>
-          <span className={styles.title}>
-            {templateName}
-          </span>
-        </div>
-        <div className={styles.componentTree} style={{ height: `${componentTreeHeight}px` }}>
-          <ComponentTree />
-        </div>
-        <div className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} onMouseDown={handleMouseDown}><div className={styles.dividerLine}>‖</div></div>
-        <div className={styles.assets}>
-          <Assets basePath={['public', 'templates', templateName, 'template']} isProtected />
-        </div>
+    <div className={styles.sidebar} style={{ width: `${sidebarWidth}px` }}>
+      <div className={styles.toolbar}>
+        <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>模板列表</Button>
+        <span className={styles.title}>
+          {templateName}
+        </span>
+      </div>
+      <div className={styles.componentTree} style={{ height: `${componentTreeHeight}px` }}>
+        <ComponentTree />
+      </div>
+      <div className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} onMouseDown={handleMouseDown}><div className={styles.dividerLine}>‖</div></div>
+      <div className={styles.assets}>
+        <Assets basePath={['public', 'templates', templateName, 'template']} isProtected />
       </div>
     </div>
   );
