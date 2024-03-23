@@ -10,15 +10,7 @@ import { ManageTemplateService } from './manage-template.service';
 import { LspService } from '../lsp/lsp.service';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import { CreateTemplateDto } from './manage-template.dto';
-import {
-  // ... (其他的导入)
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBody,
-  ApiQuery,
-  ApiParam,
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @Controller('api/manageTemplate')
 @ApiTags('Manage Template')
 export class ManageTemplateController {
@@ -65,7 +57,7 @@ export class ManageTemplateController {
   })
   async getTemplateConfig(@Param('templateName') templateName: string) {
     const configFilePath = this.webgalFs.getPathFromRoot(
-      `/public/templates/${decodeURI(templateName)}/template/template.json`,
+      `/public/templates/${decodeURI(templateName)}/template.json`,
     );
     return this.webgalFs.readTextFile(configFilePath);
   }
