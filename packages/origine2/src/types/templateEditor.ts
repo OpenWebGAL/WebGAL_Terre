@@ -1,18 +1,25 @@
-export type ITemplateEditorTopbarTabs = 'config' | 'view' | 'settings' | 'help'
+export interface ITab {
+  name: string,
+  path: string,
+  class?: string,
+}
+
 export interface ITemplateEditorState {
-  currentTopbarTab: ITemplateEditorTopbarTabs | null,
+  tabs: ITab[],
+  currentTab: ITab | null,
   isCodeMode: boolean,
   isShowDebugger: boolean,
   sidebarWidth: number,
   componentTreeHeight: number,
-  editorHeight: number,
+  previewHeight: number,
 }
 
 export interface ITemplateEditorAction {
-  updateCurrentTopbarTab: (currentTopbarTab: ITemplateEditorState['currentTopbarTab']) => void,
+  updateTabs: (tabs: ITemplateEditorState['tabs']) => void,
+  updateCurrentTab: (currentTab: ITemplateEditorState['currentTab']) => void,
   updateIsCodeMode: (isCodeMode: ITemplateEditorState['isCodeMode']) => void,
   updateIsShowDebugger: (isShowDebugger: ITemplateEditorState['isShowDebugger']) => void,
   updateSidebarWidth: (sidebarWidth: ITemplateEditorState['sidebarWidth']) => void,
   updateComponentTreeHeight: (componentTreeheight: ITemplateEditorState['componentTreeHeight']) => void,
-  updateEditorHeight: (editorHeight: ITemplateEditorState['editorHeight']) => void,
+  updatePreviewHeight: (previewHeight: ITemplateEditorState['previewHeight']) => void,
 }
