@@ -13,7 +13,7 @@ export class ManageTemplateService {
    * @param templateName
    */
   async createTemplate(templateName: string): Promise<boolean> {
-    // 检查是否存在这个游戏
+    // 检查是否存在这个模板
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/templates`),
     );
@@ -35,11 +35,9 @@ export class ManageTemplateService {
     // 递归复制
     await this.webgalFs.copy(
       this.webgalFs.getPathFromRoot(
-        '/assets/templates/WebGAL_Template/template/',
+        '/assets/templates/WebGAL_Default_Template/',
       ),
-      this.webgalFs.getPathFromRoot(
-        `/public/templates/${templateName}/template/`,
-      ),
+      this.webgalFs.getPathFromRoot(`/public/templates/${templateName}/`),
     );
     return true;
   }

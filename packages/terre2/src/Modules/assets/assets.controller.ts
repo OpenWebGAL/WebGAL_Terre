@@ -51,7 +51,7 @@ export class AssetsController {
     return { readDirPath, dirPath, dirInfo };
   }
 
-  @Get('openDict/:dirPath(*)')
+  @Post('openDict/:dirPath(*)')
   @ApiOperation({ summary: 'Open Assets Dictionary' })
   @ApiResponse({
     status: 200,
