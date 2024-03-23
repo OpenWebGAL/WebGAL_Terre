@@ -7,7 +7,7 @@ import { Button } from '@fluentui/react-components';
 import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
 import { ArrowLeftFilled, ArrowLeftRegular, bundleIcon } from "@fluentui/react-icons";
 
-const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular); 
+const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 
 export default function TemplateEditorSidebar() {
   const templateName = useEditorStore.use.subPage();
@@ -62,7 +62,7 @@ export default function TemplateEditorSidebar() {
         </div>
         <div className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} onMouseDown={handleMouseDown}><div className={styles.dividerLine}>‖</div></div>
         <div className={styles.assets}>
-          <Assets basePath={['public', 'templates', templateName, 'template']} isProtected />
+          <Assets basePath={['public', 'templates', templateName,]} isProtected />
         </div>
       </div>
     </div>
