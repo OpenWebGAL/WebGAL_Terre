@@ -28,6 +28,6 @@ async function bootstrap() {
 
 bootstrap().then(() => {
   console.log(`WebGAL Terre ${version_number} starting at ${process.cwd()}`);
-  if ((process?.env?.NODE_ENV ?? '') !== 'development')
+  if ((process?.env?.NODE_ENV ?? '') !== 'development' && !global['isElectron'])
     _open(`http://localhost:${WEBGAL_PORT + 1}`);
 });

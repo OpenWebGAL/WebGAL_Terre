@@ -22,7 +22,7 @@ import {
   UploadFilesDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { _open } from 'src/util/open';
+import { _open } from '../../util/open';
 
 @Controller('api/assets')
 @ApiTags('Assets')
@@ -51,7 +51,7 @@ export class AssetsController {
     return { readDirPath, dirPath, dirInfo };
   }
 
-  @Get('openDict/:dirPath(*)')
+  @Post('openDict/:dirPath(*)')
   @ApiOperation({ summary: 'Open Assets Dictionary' })
   @ApiResponse({
     status: 200,
