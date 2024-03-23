@@ -46,11 +46,11 @@ export default function TemplateElement(props: ITemplateElementProps){
   const newTemplateName = useValue(props.templateInfo.dir);
 
   const openInFileExplorer = () => {
-    // api.manageGameControllerOpenTemplateDict(props.templateInfo.dir); 需要api
+    api.assetsControllerOpenDict(`public/templates/${props.templateInfo.dir}`);
   };
 
   const previewInNewTab = () => {
-    window.open(`/games/${props.templateInfo.dir}`, "_blank");
+    window.open(`/template-preview/${props.templateInfo.dir}`, "_blank");
   };
 
   const renameThisTemplate = (templateName:string, newTemplateName:string) => {
