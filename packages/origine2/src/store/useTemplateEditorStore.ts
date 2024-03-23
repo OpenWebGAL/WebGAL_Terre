@@ -4,7 +4,8 @@ import { StoreApi, create, useStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 const initState: ITemplateEditorState = {
-  currentClassNode: null,
+  tabs: [],
+  currentTab: null,
   isCodeMode: false,
   isShowDebugger: false,
   sidebarWidth: 280,
@@ -17,7 +18,8 @@ export const createTemplateEditorStore = (templateName: string) =>
     persist(
       (set) => ({
         ...initState,
-        updateCurrentClassNode: (currentClassNode) => set({ currentClassNode }),
+        updateTabs: (tabs) => set({ tabs }),
+        updateCurrentTab: (currentTab) => set({ currentTab }),
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
         updateSidebarWidth: (sidebarWidth) => set({ sidebarWidth }),
