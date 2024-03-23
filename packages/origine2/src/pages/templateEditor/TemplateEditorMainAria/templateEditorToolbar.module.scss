@@ -1,0 +1,40 @@
+.editorToolbar {
+  width: 100%;
+  border-top: var(--border-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+  font-size: 95%;
+  line-height: 24px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.toolbarButtonGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.toolbarButton {
+  height: 24px;
+  min-height: 24px;
+  line-height: 24px;
+  padding: 0 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-sub);
+
+  &:hover {
+    background: var(--bg-button-hover);
+  }
+}
+
+.toolbarButtonActive {
+  background: var(--bg-button-hover);
+  color: var(--primary);
+}

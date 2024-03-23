@@ -38,14 +38,10 @@ export default function ComponentTree() {
     },
   ];
 
-  const handleClassNodeClick = (classNode: IClassNode, path?: string) => {
-    console.log(`Clicked node: `, classNode, path);
-  };
-
   return (
     <div className={styles.componentTree}>
       {componentTree.map((componentNode) =>
-        <ComponentNode key={componentNode.name} componentNode={componentNode} handleClassNodeClick={handleClassNodeClick} />
+        <ComponentNode key={componentNode.name} componentNode={componentNode} />
       )}
     </div>
   );
