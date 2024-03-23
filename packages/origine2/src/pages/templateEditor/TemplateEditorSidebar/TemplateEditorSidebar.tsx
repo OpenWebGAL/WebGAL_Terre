@@ -1,17 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import Assets from '@/components/Assets/Assets';
+import Assets, { IFileFunction } from '@/components/Assets/Assets';
 import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
 import useEditorStore from '@/store/useEditorStore';
 import { Button } from '@fluentui/react-components';
 import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
 import { ArrowLeftFilled, ArrowLeftRegular, bundleIcon } from "@fluentui/react-icons";
+import { ITab } from '@/types/templateEditor';
 
-const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular); 
+const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 
 export default function TemplateEditorSidebar() {
   const templateName = useEditorStore.use.subPage();
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
+  const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
+
+  const tabs = useTemplateEditorContext((state) => state.tabs);
+  const updateTabs = useTemplateEditorContext((state) => state.updateTabs);
+  const updateCurrentTab = useTemplateEditorContext((state) => state.updateCurrentTab);
+
+  const handleOpen: IFileFunction['open'] = async (file, type) => {
+    const newTab: ITab = {
+      name: file.name,
+      path: file.path,
+    };
+    if (!tabs.some(tab => tab.path === newTab.path && tab.class === newTab.class)) {
+      updateTabs([...tabs, newTab]);
+    }
+    updateCurrentTab(newTab);
+  };
+
+  return (
+    <div className={styles.sidebar} style={{ width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px` }}>
+      <div className={styles.toolbar}>
+        <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>模板列表</Button>
+        <span className={styles.title}>
+          {templateName}
+        </span>
+      </div>
+      <div className={styles.componentTree} style={{ height: `${componentTreeHeight}px` }}>
+        <ComponentTree />
+      </div>
+      <ComponentTreeReSizer />
+      <div className={styles.assets}>
+        <Assets
+          basePath={['public', 'templates', templateName, 'template']}
+          isProtected
+          fileFunction={{ open: handleOpen }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ComponentTreeReSizer() {
   const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
   const updateComponentTreeHeight = useTemplateEditorContext((state) => state.updateComponentTreeHeight);
 
@@ -48,21 +90,11 @@ export default function TemplateEditorSidebar() {
     [isDragging, initY]
   );
 
-  return (
-    <div className={styles.sidebar} style={{ width: `${sidebarWidth}px` }}>
-      <div className={styles.toolbar}>
-        <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>模板列表</Button>
-        <span className={styles.title}>
-          {templateName}
-        </span>
-      </div>
-      <div className={styles.componentTree} style={{ height: `${componentTreeHeight}px` }}>
-        <ComponentTree />
-      </div>
-      <div className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} onMouseDown={handleMouseDown}><div className={styles.dividerLine}>‖</div></div>
-      <div className={styles.assets}>
-        <Assets basePath={['public', 'templates', templateName, 'template']} isProtected />
-      </div>
+  return(
+    <div 
+      className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} 
+      onMouseDown={handleMouseDown}>
+      <div className={styles.dividerLine}>‖</div>
     </div>
   );
 }

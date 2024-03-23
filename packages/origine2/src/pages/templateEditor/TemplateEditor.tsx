@@ -1,16 +1,26 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TemplateEditorSidebar from "./TemplateEditorSidebar/TemplateEditorSidebar";
 import TemplateEditorMainAria from "./TemplateEditorMainAria/TemplateEditorMainAria";
 import styles from "./templateEditor.module.scss";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 
 export default function TemplateEditor() {
+  return (
+    <div className={styles.editor}>
+      <TemplateEditorSidebar />
+      <SideberResizer />
+      <TemplateEditorMainAria />
+    </div>
+  );
+}
+
+function SideberResizer() {
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
   const updateSidebarWidth = useTemplateEditorContext((state) => state.updateSidebarWidth);
 
   const minWidth = 200;
-  const [maxWidth, setMaxWidth] = useState(window.innerWidth * 0.5 - 32);
-  
+  const [maxWidth, setMaxWidth] = useState(window.innerWidth * 0.5);
+
   const [isDragging, setIsDragging] = useState(false);
   const [initX, setInitX] = useState(0);
 
@@ -59,23 +69,22 @@ export default function TemplateEditor() {
       return () => {
         window.removeEventListener("resize", resizeHandler);
       };
-    },[]
+    }, []
   );
 
   useEffect(
     () => {
-      sidebarWidth > maxWidth && updateSidebarWidth(maxWidth);
+      sidebarWidth > maxWidth && updateSidebarWidth(Math.max(maxWidth, 200));
     },
     [maxWidth]
   );
 
   return (
-    <div className={styles.editor}>
-      <div className={styles.container}>
-        <TemplateEditorSidebar />
-        <div className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`} onMouseDown={handleMouseDown}><div className={styles.dividerLine}>‖</div></div>
-        <TemplateEditorMainAria />
-      </div>
+    <div
+      className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`}
+      onMouseDown={handleMouseDown}
+    >
+      <div className={styles.dividerLine}>‖</div>
     </div>
   );
-}
+};
