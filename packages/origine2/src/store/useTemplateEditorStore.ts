@@ -4,12 +4,13 @@ import { StoreApi, create, useStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 const initState: ITemplateEditorState = {
-  currentTopbarTab: 'config',
+  tabs: [],
+  currentTab: null,
   isCodeMode: false,
   isShowDebugger: false,
   sidebarWidth: 280,
   componentTreeHeight: 400,
-  editorHeight: 400,
+  previewHeight: 280,
 };
 
 export const createTemplateEditorStore = (templateName: string) =>
@@ -17,12 +18,13 @@ export const createTemplateEditorStore = (templateName: string) =>
     persist(
       (set) => ({
         ...initState,
-        updateCurrentTopbarTab: (currentTopbarTab) => set({ currentTopbarTab }),
+        updateTabs: (tabs) => set({ tabs }),
+        updateCurrentTab: (currentTab) => set({ currentTab }),
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
         updateSidebarWidth: (sidebarWidth) => set({ sidebarWidth }),
         updateComponentTreeHeight: (componentTreeHeight) => set({ componentTreeHeight }),
-        updateEditorHeight: (editorHeight) => set({editorHeight}),
+        updatePreviewHeight: (previewHeight) => set({previewHeight}),
       }),
       {
         name: `template-editor-storage-${templateName}`,
