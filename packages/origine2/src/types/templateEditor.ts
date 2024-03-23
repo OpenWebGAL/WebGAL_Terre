@@ -1,7 +1,12 @@
-import { IClassNode } from "@/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree";
+export interface ITab {
+  name: string,
+  path: string,
+  class?: string,
+}
 
 export interface ITemplateEditorState {
-  currentClassNode: IClassNode & { path: string } | null,
+  tabs: ITab[],
+  currentTab: ITab | null,
   isCodeMode: boolean,
   isShowDebugger: boolean,
   sidebarWidth: number,
@@ -10,7 +15,8 @@ export interface ITemplateEditorState {
 }
 
 export interface ITemplateEditorAction {
-  updateCurrentClassNode: (currentClassNode: ITemplateEditorState['currentClassNode']) => void,
+  updateTabs: (tabs: ITemplateEditorState['tabs']) => void,
+  updateCurrentTab: (currentTab: ITemplateEditorState['currentTab']) => void,
   updateIsCodeMode: (isCodeMode: ITemplateEditorState['isCodeMode']) => void,
   updateIsShowDebugger: (isShowDebugger: ITemplateEditorState['isShowDebugger']) => void,
   updateSidebarWidth: (sidebarWidth: ITemplateEditorState['sidebarWidth']) => void,
