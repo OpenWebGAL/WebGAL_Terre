@@ -38,3 +38,4 @@ lerna-debug.log*
 
 Exported_Games/*
 public/games/*
+public/templates/*
