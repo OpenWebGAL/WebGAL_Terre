@@ -69,7 +69,7 @@
       }
     },
     "/api/assets/openDict/{dirPath}": {
-      "get": {
+      "post": {
         "operationId": "AssetsController_openDict",
         "summary": "Open Assets Dictionary",
         "parameters": [
@@ -215,7 +215,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RenameDto"
+                "$ref": "#/components/schemas/RenameFileDto"
               }
             }
           }
@@ -924,7 +924,7 @@
           "source"
         ]
       },
-      "RenameDto": {
+      "RenameFileDto": {
         "type": "object",
         "properties": {
           "source": {
@@ -1071,6 +1071,23 @@
         "required": [
           "source",
           "name"
+        ]
+      },
+      "RenameDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file or directory to be renamed"
+          },
+          "newName": {
+            "type": "string",
+            "description": "New name for renaming the file or directory"
+          }
+        },
+        "required": [
+          "source",
+          "newName"
         ]
       },
       "CreateTemplateDto": {

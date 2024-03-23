@@ -40,7 +40,7 @@ export interface DeleteFileOrDirDto {
   source: string;
 }
 
-export interface RenameDto {
+export interface RenameFileDto {
   /** The source path of the file or directory to be renamed */
   source: string;
   /** New name for renaming the file or directory */
@@ -102,6 +102,13 @@ export interface MkDirDto {
   source: string;
   /** Name for the new directory */
   name: string;
+}
+
+export interface RenameDto {
+  /** The source path of the file or directory to be renamed */
+  source: string;
+  /** New name for renaming the file or directory */
+  newName: string;
 }
 
 export interface CreateTemplateDto {
@@ -301,12 +308,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Assets
      * @name AssetsControllerOpenDict
      * @summary Open Assets Dictionary
-     * @request GET:/api/assets/openDict/{dirPath}
+     * @request POST:/api/assets/openDict/{dirPath}
      */
     assetsControllerOpenDict: (dirPath: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/assets/openDict/${dirPath}`,
-        method: 'GET',
+        method: 'POST',
         ...params,
       }),
 
@@ -386,7 +393,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Rename File or Directory
      * @request POST:/api/assets/rename
      */
-    assetsControllerRename: (data: RenameDto, params: RequestParams = {}) =>
+    assetsControllerRename: (data: RenameFileDto, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/api/assets/rename`,
         method: 'POST',
