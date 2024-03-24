@@ -47,6 +47,13 @@ app.use(
 );
 
 app.use(
+    createProxyMiddleware("/templates", {
+        target: `http://localhost:${WEBGAL_PORT + 1}`, // http代理跨域目标接口
+        changeOrigin: true,
+    })
+);
+
+app.use(
   createProxyMiddleware("/", {
     target: `http://localhost:${WEBGAL_PORT}`, // http代理跨域目标接口
     ws: true,
