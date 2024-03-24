@@ -71,4 +71,10 @@ echo 'cd WebGAL' >> run-webgal-on-mac.command
 echo './WebGAL_Terre' >> run-webgal-on-mac.command
 chmod +x run-webgal-on-mac.command
 
+# readme
+echo '你需要在本目录下执行 "chmod -R +x ." 才能正确使用 WebGAL Terre' >> readme.txt
+echo 'You need to execute "chmod -R +x ." in this directory to use WebGAL Terre correctly' >> readme.txt
+echo 'WebGAL Terre を正しく使用するには、このディレクトリで "chmod -R +x ." を実行する必要があります。' >> readme.txt
+chmod -R +x .
+
 echo "WebGAL Terre is now ready to be deployed."
