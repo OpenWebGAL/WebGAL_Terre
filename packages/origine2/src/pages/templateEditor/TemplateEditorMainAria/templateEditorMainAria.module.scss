@@ -9,7 +9,8 @@
 
 .editor {
   flex: 1;
-  border: var(--border-md);
+  border-left: var(--border-md);
+  border-top: var(--border-md);
   border-radius: var(--radius-md) 0 0 0;
   display: flex;
   flex-direction: column;

@@ -74,9 +74,8 @@ export default function TabsManager() {
     }
   };
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
   return (
+    (tabs.length > 0) &&
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable" direction="horizontal">
         {(provided, snapshot) => (
