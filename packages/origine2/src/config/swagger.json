@@ -233,6 +233,34 @@
         ]
       }
     },
+    "/api/assets/editTextFile": {
+      "post": {
+        "operationId": "AssetsController_editScene",
+        "summary": "Edit Text File",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditTextFileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File edited successfully."
+          },
+          "400": {
+            "description": "Failed to edit the text."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
     "/api/manageGame/gameList": {
       "get": {
         "operationId": "ManageGameController_getGameList",
@@ -810,6 +838,61 @@
         ]
       }
     },
+    "/api/manageTemplate/delete/{templateName}": {
+      "delete": {
+        "operationId": "ManageTemplateController_deleteTemplate",
+        "summary": "Delete Template",
+        "parameters": [
+          {
+            "name": "templateName",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned delete result."
+          },
+          "400": {
+            "description": "Failed to delete."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/applyTemplateToGame": {
+      "post": {
+        "operationId": "ManageTemplateController_applyTemplateToGame",
+        "summary": "Apply template to a game",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplyTemplateToGameDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returned apply result."
+          },
+          "400": {
+            "description": "Failed to delete."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
     "/template-preview/{templateName}/game/template/{path}": {
       "get": {
         "operationId": "TemplatePreviewController_getTemplateAsset",
@@ -941,6 +1024,23 @@
           "newName"
         ]
       },
+      "EditTextFileDto": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The path of textfile"
+          },
+          "textFile": {
+            "type": "string",
+            "description": "Text data content"
+          }
+        },
+        "required": [
+          "path",
+          "textFile"
+        ]
+      },
       "CreateGameDto": {
         "type": "object",
         "properties": {
@@ -1022,23 +1122,6 @@
           "sceneData"
         ]
       },
-      "EditTextFileDto": {
-        "type": "object",
-        "properties": {
-          "path": {
-            "type": "string",
-            "description": "The path of textfile"
-          },
-          "textFile": {
-            "type": "string",
-            "description": "Text data content"
-          }
-        },
-        "required": [
-          "path",
-          "textFile"
-        ]
-      },
       "GameConfigDto": {
         "type": "object",
         "properties": {
@@ -1100,6 +1183,23 @@
         },
         "required": [
           "templateName"
+        ]
+      },
+      "ApplyTemplateToGameDto": {
+        "type": "object",
+        "properties": {
+          "templateName": {
+            "type": "string",
+            "description": "The template name to apply"
+          },
+          "gameName": {
+            "type": "string",
+            "description": "The game name to be applied."
+          }
+        },
+        "required": [
+          "templateName",
+          "gameName"
         ]
       }
     }

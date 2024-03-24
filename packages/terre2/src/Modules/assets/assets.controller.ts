@@ -20,6 +20,7 @@ import {
   CreateNewFolderDto,
   RenameFileDto,
   UploadFilesDto,
+  EditTextFileDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { _open } from '../../util/open';
@@ -144,5 +145,15 @@ export class AssetsController {
       this.webgalFs.getPathFromRoot(fileOperationDto.source),
       fileOperationDto.newName,
     );
+  }
+
+  @Post('editTextFile')
+  @ApiOperation({ summary: 'Edit Text File' })
+  @ApiResponse({ status: 200, description: 'File edited successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to edit the text.' })
+  async editScene(@Body() editTextFileData: EditTextFileDto) {
+    const path = editTextFileData.path;
+    const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
+    return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
   }
 }

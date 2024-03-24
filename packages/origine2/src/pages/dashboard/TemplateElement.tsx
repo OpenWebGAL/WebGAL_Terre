@@ -22,7 +22,6 @@ const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
 const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
 
 export default function TemplateElement(props: ITemplateElementProps){
-  const soureBase = "background";
   const t = useVarTrans('dashBoard.');
 
   let className = styles.templateElement_main;
@@ -53,25 +52,18 @@ export default function TemplateElement(props: ITemplateElementProps){
     window.open(`/template-preview/${props.templateInfo.dir}`, "_blank");
   };
 
-  const renameThisTemplate = (templateName:string, newTemplateName:string) => {
-    console.log("renameThisTemplate");
-    // 需要修改模板名的api
-    // axios.post("/api/manageGame/rename",
-    //   { source: `public/games/${templateName}/`, newTemplate: newTemplateName }
-    // ).then(() => {
-    //   props.refreash?.();
-    //   isShowRenameDialog.set(false);
-    // });
+  const renameThisTemplate = async (templateName:string, newTemplateName:string) => {
+    const source = `public/templates/${templateName}`;
+    await api.assetsControllerRename({source,newName:newTemplateName});
+    isShowRenameDialog.set(false);
+
+    props?.refreash?.();
   };
 
-  const deleteThisTemplate = () => {
-    // 需要删除模板名的api
-    // axios.post("/api/manageGame/delete", { source: `public/games/${props.templateInfo.dir}` }).then(() =>
-    // {
-    //   props.refreash?.();
-    //   isShowDeleteDialog.set(false);
-    // }
-    // );
+  const deleteThisTemplate = async (templateName:string) => {
+    await api.manageTemplateControllerDeleteTemplate(templateName);
+    isShowDeleteDialog.set(false);
+    props?.refreash?.();
   };
   return (
     <>
@@ -91,7 +83,7 @@ export default function TemplateElement(props: ITemplateElementProps){
                 <MenuList>
                   <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t('menu.openInFileExplorer')}</MenuItem>
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t('menu.previewInNewTab')}</MenuItem>
-                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t('menu.renameDir')}</MenuItem>
+                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t('$重命名模板')}</MenuItem>
                   <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t('$删除模板')}</MenuItem>
                 </MenuList>
               </MenuPopover>
@@ -129,11 +121,11 @@ export default function TemplateElement(props: ITemplateElementProps){
       >
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t('删除模板')}</DialogTitle>
-            <DialogContent>{t('确定要删除', { templateName: props.templateInfo.dir })}</DialogContent>
+            <DialogTitle>{t('$删除模板')}</DialogTitle>
+            <DialogContent>{t('$确定要删除该模板？', { templateName: props.templateInfo.dir })}</DialogContent>
             <DialogActions>
               <Button appearance='secondary' onClick={() => isShowDeleteDialog.set(false)}>{t('$common.exit')}</Button>
-              <Button appearance='primary' onClick={deleteThisTemplate}>{t('$common.delete')}</Button>
+              <Button appearance='primary' onClick={()=>deleteThisTemplate(props.templateInfo.dir)}>{t('$common.delete')}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>
