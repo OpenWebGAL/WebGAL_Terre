@@ -1,24 +1,15 @@
-import {
-  Body,
-  ConsoleLogger,
-  Controller,
-  Get,
-  Param,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ManageTemplateService } from './manage-template.service';
-import { LspService } from '../lsp/lsp.service';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import { CreateTemplateDto } from './manage-template.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApplyTemplateToGameDto } from '../assets/assets.dto';
 @Controller('api/manageTemplate')
 @ApiTags('Manage Template')
 export class ManageTemplateController {
   constructor(
     private readonly webgalFs: WebgalFsService,
     private readonly manageTemplate: ManageTemplateService,
-    private readonly logger: ConsoleLogger,
-    private readonly lspServerce: LspService,
   ) {}
 
   @Get('templateList')
@@ -60,5 +51,32 @@ export class ManageTemplateController {
       `/public/templates/${decodeURI(templateName)}/template.json`,
     );
     return this.webgalFs.readTextFile(configFilePath);
+  }
+
+  @Delete('delete/:templateName')
+  @ApiOperation({ summary: 'Delete Template' })
+  @ApiResponse({ status: 200, description: 'Returned delete result.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to delete.',
+  })
+  async deleteTemplate(@Param('templateName') templateName: string) {
+    return this.manageTemplate.deleteTemplate(templateName);
+  }
+
+  @Post('applyTemplateToGame')
+  @ApiOperation({ summary: 'Apply template to a game' })
+  @ApiResponse({ status: 200, description: 'Returned apply result.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to delete.',
+  })
+  async applyTemplateToGame(
+    @Body() applyTemplateToGame: ApplyTemplateToGameDto,
+  ) {
+    return this.manageTemplate.applyTemplateToGame(
+      applyTemplateToGame.templateName,
+      applyTemplateToGame.gameName,
+    );
   }
 }

@@ -41,3 +41,24 @@ export class RenameFileDto {
   @ApiProperty({ description: 'New name for renaming the file or directory' })
   newName: string;
 }
+
+export class EditTextFileDto {
+  @ApiProperty({ description: 'The path of textfile' })
+  path: string;
+
+  @ApiProperty({
+    description: 'Text data content',
+    type: 'string',
+  })
+  textFile: string;
+}
+
+export class ApplyTemplateToGameDto {
+  @ApiProperty({ description: 'The template name to apply' })
+  templateName: string;
+
+  @ApiProperty({
+    description: 'The game name to be applied.',
+  })
+  gameName: string;
+}
