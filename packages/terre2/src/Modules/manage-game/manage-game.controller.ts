@@ -33,7 +33,7 @@ import {
   CreateGameDto,
   CreateNewSceneDto,
   DeleteFileDto,
-  DeleteFileOrDirDto,
+  DeleteDto,
   EditFileNameDto,
   EditSceneDto,
   EditTextFileDto,
@@ -329,9 +329,9 @@ export class ManageGameController {
     status: 400,
     description: 'Failed to delete the file or directory.',
   })
-  async deleteFileOrDir(@Body() fileOperationDto: DeleteFileOrDirDto) {
+  async delete(@Body() deleteDto: DeleteDto) {
     return this.webgalFs.deleteFileOrDirectory(
-      this.webgalFs.getPathFromRoot(fileOperationDto.source),
+      this.webgalFs.getPathFromRoot(`public/games/${deleteDto.gameName}`),
     );
   }
 
@@ -347,7 +347,9 @@ export class ManageGameController {
   })
   async rename(@Body() fileOperationDto: RenameDto) {
     return this.webgalFs.renameFile(
-      this.webgalFs.getPathFromRoot(fileOperationDto.source),
+      this.webgalFs.getPathFromRoot(
+        `public/games/${fileOperationDto.gameName}`,
+      ),
       fileOperationDto.newName,
     );
   }

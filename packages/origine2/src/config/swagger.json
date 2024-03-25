@@ -235,7 +235,7 @@
     },
     "/api/assets/editTextFile": {
       "post": {
-        "operationId": "AssetsController_editScene",
+        "operationId": "AssetsController_editTextFile",
         "summary": "Edit Text File",
         "parameters": [],
         "requestBody": {
@@ -716,7 +716,7 @@
     },
     "/api/manageGame/delete": {
       "post": {
-        "operationId": "ManageGameController_deleteFileOrDir",
+        "operationId": "ManageGameController_delete",
         "summary": "Delete File or Directory",
         "parameters": [],
         "requestBody": {
@@ -724,7 +724,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DeleteFileOrDirDto"
+                "$ref": "#/components/schemas/deleteDto"
               }
             }
           }
@@ -1156,20 +1156,32 @@
           "name"
         ]
       },
-      "RenameDto": {
+      "deleteDto": {
         "type": "object",
         "properties": {
-          "source": {
+          "gameName": {
             "type": "string",
-            "description": "The source path of the file or directory to be renamed"
-          },
-          "newName": {
-            "type": "string",
-            "description": "New name for renaming the file or directory"
+            "description": "The source path of the file or directory to be deleted"
           }
         },
         "required": [
-          "source",
+          "gameName"
+        ]
+      },
+      "RenameDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "Old name for renaming the game"
+          },
+          "newName": {
+            "type": "string",
+            "description": "New name for renaming the game"
+          }
+        },
+        "required": [
+          "gameName",
           "newName"
         ]
       },

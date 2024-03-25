@@ -44,7 +44,7 @@ export default function TemplateEditorSidebar() {
       <ComponentTreeReSizer />
       <div className={styles.assets}>
         <Assets
-          basePath={['public', 'templates', templateName]}
+          basePath={['templates', templateName]}
           isProtected
           fileFunction={{ open: handleOpen }}
         />
@@ -90,7 +90,7 @@ function ComponentTreeReSizer() {
     [isDragging, initY]
   );
 
-  return(
+  return (
     <div
       className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`}
       onMouseDown={handleMouseDown}>

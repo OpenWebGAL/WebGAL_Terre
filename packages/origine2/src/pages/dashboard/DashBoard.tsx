@@ -1,6 +1,5 @@
 import {useEffect, useRef} from "react";
 import {useValue} from "../../hooks/useValue";
-import axios from "axios";
 import {logger} from "../../utils/logger";
 import {Message, TestRefRef} from "../../components/message/Message";
 import styles from "./dashboard.module.scss";
@@ -112,7 +111,7 @@ export default function DashBoard() {
   const setCurrentTemplate = (e: string | null) => currentTemplate.set(e);
 
   async function createGame(gameName: string) {
-    const res = await axios.post("/api/manageGame/createGame", {gameName: gameName}).then(r => r.data);
+    const res = await api.manageGameControllerCreateGame({gameName: gameName}).then(r => r.data);
     logger.info("创建结果：", res);
     messageRef.current!.showMessage(`${gameName} ` + trans('msgs.created'), 2000);
     refreash();
@@ -120,7 +119,7 @@ export default function DashBoard() {
 
   async function createTemplate(templateName:string) {
     console.log("createTeplate:"+templateName);
-    const res = await axios.post("/api/manageTemplate/createTemplate", { templateName: templateName }).then(r => r.data);
+    const res = await api.manageTemplateControllerCreateTemplate({ templateName: templateName }).then(r => r.data);
     logger.info("创建结果：", res);
     refreash();
   }
