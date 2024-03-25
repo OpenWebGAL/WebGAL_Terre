@@ -75,54 +75,58 @@ export default function TabsManager() {
   };
 
   return (
-    (tabs.length > 0) &&
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable" direction="horizontal">
-        {(provided, snapshot) => (
-          // 下面开始书写容器
-          <div className={styles.tabsContainer}
-            id="tabs-container"
-            onWheel={handleScroll}
-            // provided.droppableProps应用的相同元素.
-            {...provided.droppableProps}
-            // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
-            ref={provided.innerRef}
-          >
-            {tabs.map((item, index) => (
-              <Draggable key={`${item.path}${item.class}`} draggableId={`${item.path}${item.class}`} index={index}>
-                {(provided, snapshot) => (
-                  // 下面开始书写可拖拽的元素
-                  <div
-                    onClick={() => selectTab(item)}
-                    onMouseDown={(event: any) => {
-                      if (event.button === 1) {
-                        closeTab(event, item);
-                      }
-                    }}
-                    className={
-                      item.path === currentTab?.path && item.class === currentTab.class
-                        ? `${styles.tab} ${styles.tab_active}`
-                        : styles.tab
-                    }
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
-                    <div>
-                      {item.name}
-                    </div>
-                    <div className={styles.closeIcon} onClick={(event: any) => closeTab(event, item)}>
-                      <CloseSmall theme="outline" size="15" strokeWidth={3} />
-                    </div>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      {
+        (tabs.length > 0) &&
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable" direction="horizontal">
+            {(provided, snapshot) => (
+              // 下面开始书写容器
+              <div className={styles.tabsContainer}
+                id="tabs-container"
+                onWheel={handleScroll}
+                // provided.droppableProps应用的相同元素.
+                {...provided.droppableProps}
+                // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
+                ref={provided.innerRef}
+              >
+                {tabs.map((item, index) => (
+                  <Draggable key={`${item.path}${item.class}`} draggableId={`${item.path}${item.class}`} index={index}>
+                    {(provided, snapshot) => (
+                      // 下面开始书写可拖拽的元素
+                      <div
+                        onClick={() => selectTab(item)}
+                        onMouseDown={(event: any) => {
+                          if (event.button === 1) {
+                            closeTab(event, item);
+                          }
+                        }}
+                        className={
+                          item.path === currentTab?.path && item.class === currentTab.class
+                            ? `${styles.tab} ${styles.tab_active}`
+                            : styles.tab
+                        }
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
+                        <div>
+                          {item.name}
+                        </div>
+                        <div className={styles.closeIcon} onClick={(event: any) => closeTab(event, item)}>
+                          <CloseSmall theme="outline" size="15" strokeWidth={3} />
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      }
+    </>
   );
 }
