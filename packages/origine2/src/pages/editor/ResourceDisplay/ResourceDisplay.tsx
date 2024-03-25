@@ -16,7 +16,7 @@ export interface IResourceDisplayProps {
 }
 
 function getComponent(resourceType: ResourceType, resourceUrl: string) {
-  const url = processResourceUrl(resourceUrl);
+  const url = resourceUrl;
 
   switch (resourceType) {
   case ResourceType.Image:

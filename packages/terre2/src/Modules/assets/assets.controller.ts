@@ -46,7 +46,7 @@ export class AssetsController {
       'Path of the directory to read assets from, including subdirectories.',
   })
   async readAssets(@Param('readDirPath') readDirPath: string) {
-    readDirPath = decodeURI(readDirPath);
+    readDirPath = decodeURI(`public/${readDirPath}`);
     const dirPath = this.webgalFs.getPathFromRoot(`${readDirPath}`);
     const dirInfo = await this.webgalFs.getDirInfo(dirPath);
     return { readDirPath, dirPath, dirInfo };
@@ -64,7 +64,7 @@ export class AssetsController {
     description: 'Directory path to open.',
   })
   async openDict(@Param('dirPath') dirPath: string) {
-    dirPath = decodeURI(dirPath); // Optionally decode the URI if necessary
+    dirPath = decodeURI(`public/${dirPath}`); // Optionally decode the URI if necessary
     const path = this.webgalFs.getPathFromRoot(dirPath);
     await _open(path);
   }
@@ -80,7 +80,7 @@ export class AssetsController {
     @Body() createNewFileData: CreateNewFileDto,
   ): Promise<string | void> {
     const path = this.webgalFs.getPathFromRoot(
-      `${createNewFileData.source}/${createNewFileData.name}`,
+      `public/${createNewFileData.source}/${createNewFileData.name}`,
     );
 
     if (await this.webgalFs.exists(path)) {
@@ -96,7 +96,7 @@ export class AssetsController {
   @ApiResponse({ status: 400, description: 'Failed to create Folder.' })
   async createNewFolder(@Body() createNewFolderData: CreateNewFolderDto) {
     await this.webgalFs.mkdir(
-      this.webgalFs.getPathFromRoot(createNewFolderData.source),
+      this.webgalFs.getPathFromRoot(`public/${createNewFolderData.source}`),
       createNewFolderData.name,
     );
     return true;
@@ -111,7 +111,10 @@ export class AssetsController {
     const fileInfos: IUploadFileInfo[] = files.map((file) => {
       return { fileName: file.originalname, file: file.buffer };
     });
-    return this.webgalFs.writeFiles(uploadFilesDto.targetDirectory, fileInfos);
+    return this.webgalFs.writeFiles(
+      `public/${uploadFilesDto.targetDirectory}`,
+      fileInfos,
+    );
   }
 
   @Post('delete')
@@ -126,7 +129,7 @@ export class AssetsController {
   })
   async deleteFileOrDir(@Body() fileOperationDto: DeleteFileOrDirDto) {
     return this.webgalFs.deleteFileOrDirectory(
-      this.webgalFs.getPathFromRoot(fileOperationDto.source),
+      this.webgalFs.getPathFromRoot(`public/${fileOperationDto.source}`),
     );
   }
 
@@ -142,7 +145,7 @@ export class AssetsController {
   })
   async rename(@Body() fileOperationDto: RenameFileDto) {
     return this.webgalFs.renameFile(
-      this.webgalFs.getPathFromRoot(fileOperationDto.source),
+      this.webgalFs.getPathFromRoot(`public/${fileOperationDto.source}`),
       fileOperationDto.newName,
     );
   }
@@ -151,9 +154,9 @@ export class AssetsController {
   @ApiOperation({ summary: 'Edit Text File' })
   @ApiResponse({ status: 200, description: 'File edited successfully.' })
   @ApiResponse({ status: 400, description: 'Failed to edit the text.' })
-  async editScene(@Body() editTextFileData: EditTextFileDto) {
+  async editTextFile(@Body() editTextFileData: EditTextFileDto) {
     const path = editTextFileData.path;
     const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
     return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
-  }
+  };
 }

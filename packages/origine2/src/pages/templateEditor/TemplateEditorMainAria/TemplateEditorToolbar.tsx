@@ -3,11 +3,9 @@ import styles from './templateEditorToolbar.module.scss';
 import { CodeTextEditFilled, CodeTextEditRegular, SlideGridFilled, SlideGridRegular, bundleIcon } from '@fluentui/react-icons';
 import { FileCodeOne, ListView } from '@icon-park/react';
 
-const CodeTextEditIcon = bundleIcon(CodeTextEditFilled, CodeTextEditRegular);
-const SlideGridIcon = bundleIcon(SlideGridFilled, SlideGridRegular);
-
 export default function TemplateEditorToolbar() {
 
+  const currentTab = useTemplateEditorContext((state) => state.currentTab);
   const isCodeMode = useTemplateEditorContext((state) => state.isCodeMode);
   const updateIsCodeMode = useTemplateEditorContext((state) => state.updateIsCodeMode);
 

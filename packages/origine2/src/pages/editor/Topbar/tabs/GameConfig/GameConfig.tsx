@@ -1,6 +1,5 @@
 import styles from "../topbarTabs.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
-import axios from "axios";
 import  { useEffect, useRef} from "react";
 import {cloneDeep} from "lodash";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
@@ -16,6 +15,7 @@ import {Add, Plus, Write} from "@icon-park/react";
 import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
+import { api } from "@/api";
 
 export default function GameConfig() {
   const t = useTrans("editor.sideBar.gameConfigs.");
@@ -25,9 +25,8 @@ export default function GameConfig() {
   const gameConfig = useValue<WebgalConfig>([]);
   console.log(gameConfig);
   const getGameConfig = () => {
-    axios
-      .get(`/api/manageGame/getGameConfig/${gameName}`)
-      .then((r) => parseAndSetGameConfigState(r.data));
+    api.manageGameControllerGetGameConfig(gameName)
+      .then((r: any) => parseAndSetGameConfigState(r.data));
   };
 
   useEffect(() => {
@@ -36,10 +35,7 @@ export default function GameConfig() {
 
   function updateGameConfig() {
     const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
-    const form = new URLSearchParams();
-    form.append("gameName", gameName);
-    form.append("newConfig", newConfig);
-    axios.post(`/api/manageGame/setGameConfig/`, form).then(getGameConfig);
+    api.manageGameControllerSetGameConfig({gameName, newConfig}).then(getGameConfig);
   }
 
   function getConfigContentAsString(key: string) {
