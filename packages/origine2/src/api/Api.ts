@@ -104,10 +104,15 @@ export interface MkDirDto {
   name: string;
 }
 
+export interface DeleteDto {
+  /** The source path of the file or directory to be deleted */
+  gameName: string;
+}
+
 export interface RenameDto {
-  /** The source path of the file or directory to be renamed */
-  source: string;
-  /** New name for renaming the file or directory */
+  /** Old name for renaming the game */
+  gameName: string;
+  /** New name for renaming the game */
   newName: string;
 }
 
@@ -413,11 +418,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Assets
-     * @name AssetsControllerEditScene
+     * @name AssetsControllerEditTextFile
      * @summary Edit Text File
      * @request POST:/api/assets/editTextFile
      */
-    assetsControllerEditScene: (data: EditTextFileDto, params: RequestParams = {}) =>
+    assetsControllerEditTextFile: (data: EditTextFileDto, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/api/assets/editTextFile`,
         method: 'POST',
@@ -710,11 +715,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Manage Game
-     * @name ManageGameControllerDeleteFileOrDir
+     * @name ManageGameControllerDelete
      * @summary Delete File or Directory
      * @request POST:/api/manageGame/delete
      */
-    manageGameControllerDeleteFileOrDir: (data: DeleteFileOrDirDto, params: RequestParams = {}) =>
+    manageGameControllerDelete: (data: DeleteDto, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/api/manageGame/delete`,
         method: 'POST',

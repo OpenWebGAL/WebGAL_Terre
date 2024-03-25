@@ -74,7 +74,7 @@ function SideberResizer() {
 
   useEffect(
     () => {
-      sidebarWidth > maxWidth && updateSidebarWidth(Math.max(maxWidth, 200));
+      sidebarWidth > maxWidth && updateSidebarWidth(Math.max(maxWidth, minWidth));
     },
     [maxWidth]
   );

@@ -6,6 +6,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 const initState: ITemplateEditorState = {
   tabs: [],
   currentTab: null,
+  expandNode: [],
   isCodeMode: false,
   isShowDebugger: false,
   sidebarWidth: 280,
@@ -20,11 +21,12 @@ export const createTemplateEditorStore = (templateName: string) =>
         ...initState,
         updateTabs: (tabs) => set({ tabs }),
         updateCurrentTab: (currentTab) => set({ currentTab }),
+        updateExpandNode: (expandNode) => set({ expandNode }),
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
         updateSidebarWidth: (sidebarWidth) => set({ sidebarWidth }),
         updateComponentTreeHeight: (componentTreeHeight) => set({ componentTreeHeight }),
-        updatePreviewHeight: (previewHeight) => set({previewHeight}),
+        updatePreviewHeight: (previewHeight) => set({ previewHeight }),
       }),
       {
         name: `template-editor-storage-${templateName}`,
