@@ -15,7 +15,7 @@ export interface IClassNode {
 
 export default function ComponentTree() {
   const templateName = useEditorStore.use.subPage();
-  const basePath = `public/templates/${templateName}/template`;
+  const basePath = `templates/${templateName}`;
 
   const componentTree: IComponentNode[] = [
     {

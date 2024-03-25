@@ -76,19 +76,19 @@ export class MkDirDto {
   name: string;
 }
 
-export class DeleteFileOrDirDto {
+export class DeleteDto {
   @ApiProperty({
     description: 'The source path of the file or directory to be deleted',
   })
-  source: string;
+  gameName: string;
 }
 
 export class RenameDto {
   @ApiProperty({
-    description: 'The source path of the file or directory to be renamed',
+    description: 'Old name for renaming the game',
   })
-  source: string;
+  gameName: string;
 
-  @ApiProperty({ description: 'New name for renaming the file or directory' })
+  @ApiProperty({ description: 'New name for renaming the game' })
   newName: string;
 }

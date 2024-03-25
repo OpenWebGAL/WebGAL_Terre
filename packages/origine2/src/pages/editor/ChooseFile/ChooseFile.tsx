@@ -1,11 +1,11 @@
 import { useValue } from "../../../hooks/useValue";
 import { useEffect, useMemo } from "react";
-import axios from "axios";
 import styles from "./chooseFile.module.scss";
 import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
 import useTrans from "@/hooks/useTrans";
 import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
+import { api } from "@/api";
 
 export interface IChooseFile {
   sourceBase: string;
@@ -134,8 +134,8 @@ export default function ChooseFile(props: IChooseFile) {
  * @param extName 拓展名，要加.
  */
 export async function getFileList(currentGameName: string, childDir: string, extName: string[]) {
-  const url = `/api/manageGame/readGameAssets/${currentGameName}/game/${childDir}`;
-  const rawFileList: IFileDescription[] = await axios.get(url).then((r) => r.data.dirInfo);
+  const path = `games/${currentGameName}/game/${childDir}`;
+  const rawFileList: IFileDescription[] = await api.assetsControllerReadAssets(path).then((r: any) => r.data.dirInfo);
   if (extName.length === 0) {
     return rawFileList;
   }

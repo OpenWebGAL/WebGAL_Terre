@@ -1,5 +1,4 @@
 import styles from "./gameElement.module.scss";
-import axios from "axios";
 import { useValue } from "../../hooks/useValue";
 import useVarTrans from "@/hooks/useVarTrans";
 import { GameInfo } from "./DashBoard";
@@ -57,24 +56,18 @@ export default function GameElement(props: IGameElementProps) {
     window.open(`/games/${props.gameInfo.dir}`, "_blank");
   };
 
-  const renameThisGame = (gameName:string, newGameName:string) => {
-    axios.post("/api/manageGame/rename",
-      { source: `public/games/${gameName}/`, newName: newGameName }
-    ).then(() => {
-      props.refreash?.();
-      isShowRenameDialog.set(false);
-      localStorageRename(`game-editor-storage-${gameName}`, `game-editor-storage-${newGameName}`);
-    });
+  const renameThisGame = async (gameName:string, newGameName:string) => {
+    await api.manageGameControllerRename({gameName: gameName, newName: newGameName});
+    props.refreash?.();
+    isShowRenameDialog.set(false);
+    localStorageRename(`game-editor-storage-${gameName}`, `game-editor-storage-${newGameName}`);
   };
 
-  const deleteThisGame = () => {
-    axios.post("/api/manageGame/delete", { source: `public/games/${props.gameInfo.dir}` }).then(() =>
-    {
-      props.refreash?.();
-      isShowDeleteDialog.set(false);
-      localStorage.removeItem(`game-editor-storage-${props.gameInfo.dir}`);
-    }
-    );
+  const deleteThisGame = async () => {
+    await api.manageGameControllerDelete({gameName: props.gameInfo.dir});
+    props.refreash?.();
+    isShowDeleteDialog.set(false);
+    localStorage.removeItem(`game-editor-storage-${props.gameInfo.dir}`);
   };
 
   return (

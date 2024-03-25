@@ -4,6 +4,7 @@
   width: 100%;
   max-width: 100%;
   border-bottom: var(--border-sm);
+  font-size: 13px;
 
   &::-webkit-scrollbar {
     width: 2px;
@@ -26,8 +27,10 @@
   }
 
   & {
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: var(--bg-scrollbar-thumb) var(--bg-scrollbar); /* Firefox */
+    scrollbar-width: thin;
+    /* Firefox */
+    scrollbar-color: var(--bg-scrollbar-thumb) var(--bg-scrollbar);
+    /* Firefox */
   }
 }
 

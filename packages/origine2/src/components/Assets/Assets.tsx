@@ -58,7 +58,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
     const res = await api.assetsControllerReadAssets(currentPathString);
     const data = res.data as unknown as object;
     if ('dirInfo' in data && data.dirInfo) {
-      const dirInfo = data.dirInfo as IFile[];
+      const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: currentPathString + '/' + item.name }));
       const dirs = dirInfo.filter((item) => item.isDir);
       const files = dirInfo.filter((item) => !item.isDir);
       dirs.sort((a, b) => a.name.localeCompare(b.name));
