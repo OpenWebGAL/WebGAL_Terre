@@ -44,7 +44,7 @@ export default function TemplateEditorSidebar() {
       <ComponentTreeReSizer />
       <div className={styles.assets}>
         <Assets
-          basePath={['public', 'templates', templateName]}
+          basePath={['templates', templateName]}
           isProtected
           fileFunction={{ open: handleOpen }}
         />

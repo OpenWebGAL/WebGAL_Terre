@@ -45,7 +45,7 @@ export default function TemplateElement(props: ITemplateElementProps){
   const newTemplateName = useValue(props.templateInfo.dir);
 
   const openInFileExplorer = () => {
-    api.assetsControllerOpenDict(`public/templates/${props.templateInfo.dir}`);
+    api.assetsControllerOpenDict(`templates/${props.templateInfo.dir}`);
   };
 
   const previewInNewTab = () => {
@@ -53,10 +53,9 @@ export default function TemplateElement(props: ITemplateElementProps){
   };
 
   const renameThisTemplate = async (templateName:string, newTemplateName:string) => {
-    const source = `public/templates/${templateName}`;
+    const source = `templates/${templateName}`;
     await api.assetsControllerRename({source,newName:newTemplateName});
     isShowRenameDialog.set(false);
-
     props?.refreash?.();
   };
 

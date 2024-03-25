@@ -97,18 +97,18 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: IFileConfig = new Map([
-    [`public/games/${gameName}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true}],
-    [`public/games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
-    [`public/games/${gameName}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
-    [`public/games/${gameName}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
-    [`public/games/${gameName}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true}],
-    [`public/games/${gameName}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
-    [`public/games/${gameName}/game/scene/start.txt`, { isProtected: true }],
-    [`public/games/${gameName}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
-    [`public/games/${gameName}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
-    [`public/games/${gameName}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
-    [`public/games/${gameName}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
-    [`public/games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
+    [`games/${gameName}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true }],
+    [`games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
+    [`games/${gameName}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
+    [`games/${gameName}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
+    [`games/${gameName}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true }],
+    [`games/${gameName}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
+    [`games/${gameName}/game/scene/start.txt`, { isProtected: true }],
+    [`games/${gameName}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
+    [`games/${gameName}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
+    [`games/${gameName}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
+    [`games/${gameName}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
+    [`games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
   ]);
 
   const handleOpen: IFileFunction['open'] = async (file, type) => {
@@ -185,13 +185,13 @@ export default function EditorSideBar() {
       <div className={styles.sidebarContent}>
         {currentSidebarTab === 'asset' &&
           <Assets
-            basePath={['public','games',gameName,'game']}
+            basePath={['games', gameName, 'game']}
             fileConfig={fileConfig}
             fileFunction={fileFunction}
           />}
         {currentSidebarTab === 'scene' &&
           <Assets
-            basePath={['public','games',gameName,'game','scene']}
+            basePath={['games', gameName, 'game', 'scene']}
             fileConfig={fileConfig}
             fileFunction={fileFunction}
           />}
