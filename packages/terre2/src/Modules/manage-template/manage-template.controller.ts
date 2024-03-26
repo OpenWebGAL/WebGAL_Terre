@@ -1,7 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { ManageTemplateService } from './manage-template.service';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
-import { CreateTemplateDto } from './manage-template.dto';
+import {
+  CreateTemplateDto,
+  GetStyleByClassNameDto,
+} from './manage-template.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ApplyTemplateToGameDto } from '../assets/assets.dto';
 @Controller('api/manageTemplate')
@@ -77,6 +88,21 @@ export class ManageTemplateController {
     return this.manageTemplate.applyTemplateToGame(
       applyTemplateToGame.templateName,
       applyTemplateToGame.gameName,
+    );
+  }
+
+  @Post('getStyleByClassName')
+  @ApiOperation({ summary: 'Apply template to a game' })
+  @ApiResponse({ status: 200, description: 'Returned apply result.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to delete.',
+  })
+  @HttpCode(200)
+  async getStyleByClassName(@Body() getStyleDto: GetStyleByClassNameDto) {
+    return this.manageTemplate.getStyleByClass(
+      getStyleDto.filePath,
+      getStyleDto.className,
     );
   }
 }
