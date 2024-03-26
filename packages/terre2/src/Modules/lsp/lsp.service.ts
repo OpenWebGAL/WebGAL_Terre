@@ -15,6 +15,7 @@ import {
   ADD_NEXT_ARG_LIST,
   SCRIPT_CONFIG,
 } from 'webgal-parser/build/cjs/index.cjs';
+import { webgalParser } from '../../util/webgal-parser';
 
 @Injectable()
 export class LspService {
@@ -25,19 +26,9 @@ export class LspService {
   // async updateDocument(uri: string, newValue: string) {
   //   this.documents.set(uri, TextDocument.create(uri, 'webgal', 4, newValue));
   // }
-  private webgalParser = new SceneParser(
-    (assetList) => {
-      return;
-    },
-    (fileName, assetType) => {
-      return fileName;
-    },
-    ADD_NEXT_ARG_LIST,
-    [...SCRIPT_CONFIG],
-  );
 
   private parseScript(scriptString: string, url: string) {
-    return this.webgalParser.parse(scriptString, 'scene.txt', url);
+    return webgalParser.parse(scriptString, 'scene.txt', url);
   }
 
   async completion(

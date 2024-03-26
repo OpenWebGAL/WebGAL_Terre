@@ -1,5 +1,7 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
+import * as fsp from 'fs/promises';
+import { webgalParser } from '../../util/webgal-parser';
 
 @Injectable()
 export class ManageTemplateService {
@@ -81,5 +83,22 @@ export class ManageTemplateService {
       this.logger.error(e);
       return false;
     }
+  }
+
+  /**
+   * 获取某个模板文件下的类
+   * @param path path 形如 templateName/UI/xxx.scss
+   * @param className 某个类
+   */
+  async getStyleByClass(path: string, className: string): Promise<string> {
+    const targetPath = this.webgalFs.getPathFromRoot(`/public/${path}`);
+    const file = await fsp.readFile(targetPath);
+    const str = file.toString();
+    const classes = webgalParser.parseScssToWebgalStyleObj(str);
+    const classNameStyle = classes.classNameStyles?.[className];
+    if (!className) {
+      throw new NotFoundException();
+    }
+    return classNameStyle as string;
   }
 }

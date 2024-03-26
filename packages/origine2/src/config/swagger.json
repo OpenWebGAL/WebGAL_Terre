@@ -724,7 +724,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/deleteDto"
+                "$ref": "#/components/schemas/DeleteDto"
               }
             }
           }
@@ -876,6 +876,34 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ApplyTemplateToGameDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returned apply result."
+          },
+          "400": {
+            "description": "Failed to delete."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/getStyleByClassName": {
+      "post": {
+        "operationId": "ManageTemplateController_getStyleByClassName",
+        "summary": "Apply template to a game",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStyleByClassNameDto"
               }
             }
           }
@@ -1156,7 +1184,7 @@
           "name"
         ]
       },
-      "deleteDto": {
+      "DeleteDto": {
         "type": "object",
         "properties": {
           "gameName": {
@@ -1212,6 +1240,23 @@
         "required": [
           "templateName",
           "gameName"
+        ]
+      },
+      "GetStyleByClassNameDto": {
+        "type": "object",
+        "properties": {
+          "className": {
+            "type": "string",
+            "description": "The name of class to be fetched"
+          },
+          "filePath": {
+            "type": "string",
+            "description": "The name of stylesheet file to be fetched"
+          }
+        },
+        "required": [
+          "className",
+          "filePath"
         ]
       }
     }
