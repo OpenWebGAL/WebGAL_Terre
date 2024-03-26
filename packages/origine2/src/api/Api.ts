@@ -128,6 +128,13 @@ export interface ApplyTemplateToGameDto {
   gameName: string;
 }
 
+export interface GetStyleByClassNameDto {
+  /** The name of class to be fetched */
+  className: string;
+  /** The name of stylesheet file to be fetched */
+  filePath: string;
+}
+
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from 'axios';
 import axios from 'axios';
 
@@ -818,6 +825,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     manageTemplateControllerApplyTemplateToGame: (data: ApplyTemplateToGameDto, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/api/manageTemplate/applyTemplateToGame`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerGetStyleByClassName
+     * @summary Apply template to a game
+     * @request POST:/api/manageTemplate/getStyleByClassName
+     */
+    manageTemplateControllerGetStyleByClassName: (data: GetStyleByClassNameDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/getStyleByClassName`,
         method: 'POST',
         body: data,
         type: ContentType.Json,
