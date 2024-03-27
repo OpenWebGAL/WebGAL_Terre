@@ -7,6 +7,7 @@ import {eventBus} from "@/utils/eventBus";
 import {Terminal} from 'primereact/terminal';
 import {TerminalService} from 'primereact/terminalservice';
 import {WsUtil} from "@/utils/wsUtil";
+import {IDebugMessage} from "@/types/debugProtocol";
 
 export default function EditorDebugger() {
   const mode = useValue<'state' | 'console'>('console');
@@ -18,8 +19,8 @@ export default function EditorDebugger() {
     const handleMessage = (message: string) => {
       let obj = {};
       try {
-        const result = JSON.parse(message);
-        if(result) obj=result;
+        const result = JSON.parse(message) as IDebugMessage;
+        if(result) obj=result.data;
       }catch (e){
         // 什么也不做
         // 错误处理，你为什么只是看着！！！！！！
