@@ -28,6 +28,7 @@
     "@nestjs/common": "^9.0.5",
     "@nestjs/core": "^9.0.5",
     "@nestjs/platform-express": "^9.0.5",
+    "@nestjs/platform-socket.io": "^10.3.6",
     "@nestjs/platform-ws": "^10.3.6",
     "@nestjs/serve-static": "^3.0.1",
     "@nestjs/swagger": "^7.1.13",
