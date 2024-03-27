@@ -10,7 +10,7 @@ export default function MainArea() {
   useEffect(()=>{
     try {
       const loc = window.location.hostname;
-      const wsUrl =  window.location.protocol === 'http:'? `ws://${loc}:9999`: `wss://${loc}/webgalsync`;
+      const wsUrl =  window.location.protocol === 'http:'? `ws://${loc}/api/webgalsync`: `wss://${loc}/api/webgalsync`;
       console.log('正在启动socket连接位于：' + wsUrl);
       const socket = new WebSocket(wsUrl);
       socket.onopen = () => {
