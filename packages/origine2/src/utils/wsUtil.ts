@@ -15,13 +15,15 @@ export class WsUtil {
     if (window["currentWs"] && this.getIsCurrentLineJump(lineCommandString)) { // @ts-ignore
       logger.debug("编辑器开始发送同步数据");
       const message: IDebugMessage = {
-        command: DebugCommand.JUMP,
-        sceneMsg: {
-          scene: sceneName,
-          sentence: lineNumber
-        },// @ts-ignore
-        stageSyncMsg: {},
-        message: 'Sync'
+        event: 'message', data: {
+          command: DebugCommand.JUMP,
+          sceneMsg: {
+            scene: sceneName,
+            sentence: lineNumber
+          },// @ts-ignore
+          stageSyncMsg: {},
+          message: 'Sync'
+        }
       };
       // @ts-ignore
       window["currentWs"].send(JSON.stringify(message));
@@ -34,13 +36,15 @@ export class WsUtil {
     if (window["currentWs"]) { // @ts-ignore
       logger.debug("编辑器开始发送同步数据");
       const message: IDebugMessage = {
-        command: DebugCommand.EXE_COMMAND,
-        sceneMsg: {
-          scene: 'temp',
-          sentence: 0
-        },// @ts-ignore
-        stageSyncMsg: {},
-        message: command
+        event: 'message', data: {
+          command: DebugCommand.EXE_COMMAND,
+          sceneMsg: {
+            scene: 'temp',
+            sentence: 0
+          },// @ts-ignore
+          stageSyncMsg: {},
+          message: command
+        }
       };
       // @ts-ignore
       window["currentWs"].send(JSON.stringify(message));
