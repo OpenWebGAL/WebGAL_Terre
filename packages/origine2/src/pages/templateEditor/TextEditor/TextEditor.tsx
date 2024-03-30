@@ -2,6 +2,7 @@ import useSWR, { useSWRConfig } from "swr";
 import axios from "axios";
 import Editor from "@monaco-editor/react";
 import { api } from "@/api";
+import {WsUtil} from "@/utils/wsUtil";
 
 export default function TextEditor({ path }: { path: string }) {
 
@@ -17,7 +18,8 @@ export default function TextEditor({ path }: { path: string }) {
 
   const update = async (text: string) => {
     await api.assetsControllerEditTextFile({ textFile: text, path: path });
-    mutate(path);
+    await mutate(path);
+    WsUtil.sendTemplateRefetchCommand();
   };
 
   return (
