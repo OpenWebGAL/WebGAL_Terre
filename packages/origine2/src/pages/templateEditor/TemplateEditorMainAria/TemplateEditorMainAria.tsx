@@ -20,8 +20,8 @@ export default function TemplateMainAria() {
           {
             currentTab?.path &&
             (isCodeMode
-              ? <TextEditor path={currentTab?.path} key={currentTab?.path + currentTab?.class} /> 
-              : <TemplateGraphicalEditor />
+              ? <TextEditor path={currentTab?.path} key={currentTab?.path + currentTab?.class} />
+              : <TemplateGraphicalEditor path={currentTab?.path} className={currentTab?.class??''} />
             )
           }
         </div>

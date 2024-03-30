@@ -51,6 +51,26 @@ export class WsUtil {
     }
   }
 
+  public static sendTemplateRefetchCommand(){
+    // @ts-ignore
+    if (window["currentWs"]) { // @ts-ignore
+      logger.debug("编辑器开始发送同步数据");
+      const message: IDebugMessage = {
+        event: 'message', data: {
+          command: DebugCommand.REFETCH_TEMPLATE_FILES,
+          sceneMsg: {
+            scene: 'temp',
+            sentence: 0
+          },// @ts-ignore
+          stageSyncMsg: {},
+          message: ''
+        }
+      };
+      // @ts-ignore
+      window["currentWs"].send(JSON.stringify(message));
+    }
+  };
+
   private static getIsCurrentLineJump(currentLineValue: string | null): boolean {
     const command = currentLineValue?.split(":")[0] ?? "";
     if (command === "unlockCg" || command === "unlockBgm") {
@@ -59,4 +79,5 @@ export class WsUtil {
     }
     return true;
   }
+
 }
