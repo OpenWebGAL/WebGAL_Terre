@@ -8,6 +8,6 @@ export class CreateTemplateDto {
 export class GetStyleByClassNameDto {
   @ApiProperty({ description: 'The name of class to be fetched' })
   className: string;
-  @ApiProperty({ description: 'The name of stylesheet file to be fetched' })
+  @ApiProperty({ description: 'The path of stylesheet file to be fetched' })
   filePath: string;
 }
