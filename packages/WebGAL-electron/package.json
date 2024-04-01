@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "electron": "^18.3.7",
-    "electron-builder": "^23.0.3"
+    "electron-builder": "^24.13.3"
   },
   "build": {
     "productName": "WebGAL",
