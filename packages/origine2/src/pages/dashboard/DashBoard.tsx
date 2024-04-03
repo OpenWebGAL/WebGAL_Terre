@@ -28,6 +28,7 @@ import useEditorStore from "@/store/useEditorStore";
 import { api } from "@/api";
 import useSWR, { useSWRConfig } from "swr";
 import { redirect } from "@/hooks/useHashRoute";
+import { t } from "@lingui/macro";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -86,7 +87,7 @@ export const templateListFetcher = async () => {
 export default function DashBoard() {
   const { mutate } = useSWRConfig();
 
-  const t = useTrans('editor.topBar.');
+  const tLegacy = useTrans('editor.topBar.');
   const subPage = useEditorStore.use.subPage();
   const updateLanguage = useEditorStore.use.updateLanguage();
   const trans = useTrans('dashBoard.');
@@ -144,8 +145,8 @@ export default function DashBoard() {
           <About/>
           <Menu>
             <MenuTrigger>
-              <ToolbarButton aria-label={t('commandBar.items.language.text')}
-                icon={<LocalLanguageIcon/>}>{t('commandBar.items.language.text')}</ToolbarButton>
+              <ToolbarButton aria-label={tLegacy('commandBar.items.language.text')}
+                icon={<LocalLanguageIcon/>}>{tLegacy('commandBar.items.language.text')}</ToolbarButton>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
@@ -161,9 +162,9 @@ export default function DashBoard() {
         <div className={styles.tabListContainer}>
           <TabList selectedValue={selectedValue} onTabSelect={onTabSelect} vertical size="large">
             <Tab className={classNames(styles.tabItem, selectedValue === 'game' ? styles.active : '')} id="Game"
-              icon={<GameIcon fontSize={24}/>} value="game">{t("$游戏")}</Tab>
+              icon={<GameIcon fontSize={24}/>} value="game">{t`游戏`}</Tab>
             <Tab className={classNames(styles.tabItem, selectedValue === 'template' ? styles.active : '')}
-              id="Template" icon={<AlbumIcon fontSize={24}/>} value="template">{t("$模板")}</Tab>
+              id="Template" icon={<AlbumIcon fontSize={24}/>} value="template">{tLegacy("$模板")}</Tab>
           </TabList>
         </div>
         {selectedValue === "game" && <div className={styles.dashboard_main}>
@@ -183,7 +184,7 @@ export default function DashBoard() {
                         gameInfo={gameList.find(e => e.dir === currentGame.value)!}
                       />
           }
-        </div>     
+        </div>
         }
         {selectedValue === "template" && <div className={styles.dashboard_main}>
           <TemplateSidebar
