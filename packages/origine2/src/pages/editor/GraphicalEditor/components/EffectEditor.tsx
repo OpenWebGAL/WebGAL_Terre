@@ -1,13 +1,12 @@
 import {logger} from "@/utils/logger";
 import CommonOptions from "@/pages/editor/GraphicalEditor/components/CommonOption";
 import {useValue} from "@/hooks/useValue";
-import useTrans from "@/hooks/useTrans";
 import { Checkbox, Input } from "@fluentui/react-components";
+import { t } from "@lingui/macro";
 
 export function EffectEditor(props:{
   json:string,onChange:(newJson:string)=>void
 }){
-  const t = useTrans('editor.graphical.sentences.transform.');
 
   const effectObject = (()=>{
     try {
@@ -83,44 +82,44 @@ export function EffectEditor(props:{
 
 
   return <>
-    <CommonOptions key={1} title={t('transform.title')}>
-      {t('transform.x')}<Input value={x.value} placeholder={t("$默认值0")} onChange={(_, data) => {
+    <CommonOptions key={1} title={t`变换`}>
+      {t`X轴位移：`}<Input value={x.value} placeholder={t`默认值0`} onChange={(_, data) => {
         x.set(data.value);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('transform.y')}<Input value={y.value} placeholder={t("$默认值0")} onChange={(_, data) => {
+      {t`Y轴位移：`}<Input value={y.value} placeholder={t`默认值0`} onChange={(_, data) => {
         y.set(data.value);
       }} onBlur={submit}/>
     </CommonOptions>
-    <CommonOptions key={2} title={t('scale.title')}>
-      {t('scale.x')}<Input value={scaleX.value} placeholder={t("$默认值1")} onChange={(_, data) => {
+    <CommonOptions key={2} title={t`缩放`}>
+      {t`X轴缩放：`}<Input value={scaleX.value} placeholder={t`默认值1`} onChange={(_, data) => {
         scaleX.set(data.value);
       }} onBlur={submit}/>{'\u00a0'}
 
-      {t('scale.y')}<Input value={scaleY.value} placeholder={t("$默认值1")} onChange={(_, data) => {
+      {t`Y轴缩放：`}<Input value={scaleY.value} placeholder={t`默认值1`} onChange={(_, data) => {
         scaleY.set(data.value);
       }} onBlur={submit}/>
     </CommonOptions>
-    <CommonOptions key={3} title={t('effect.title')}>
-      {t('effect.alpha')}<Input value={alpha.value} placeholder={t("$默认值1")} onChange={(_, data) => {
+    <CommonOptions key={3} title={t`效果`}>
+      {t`透明度（0-1）：`}<Input value={alpha.value} placeholder={t`默认值1`} onChange={(_, data) => {
         alpha.set(data.value);
       }} onBlur={submit} style={{width: '140px'}}/>{'\u00a0'}
 
-      {t('effect.rotation')}<Input value={rotation.value} placeholder={t("$默认值0")} onChange={(_, data) => {
+      {t`旋转角度：`}<Input value={rotation.value} placeholder={t`默认值0`} onChange={(_, data) => {
         rotation.set(data.value);
       }} onBlur={submit} style={{width: '140px'}}/>{'\u00a0'}
 
-      {t('effect.blur')}<Input value={blur.value} placeholder={t("$默认值0")} onChange={(_, data) => {
+      {t`高斯模糊：`}<Input value={blur.value} placeholder={t`默认值0`} onChange={(_, data) => {
         blur.set(data.value);
       }} onBlur={submit} style={{width: '140px'}}/>
     </CommonOptions>
-    <CommonOptions key={4} title={t('filter.title')}>
-      <Checkbox checked={oldFilm.value === 1} onChange={(_, data) => { oldFilm.set(data.checked ? 1 : 0); submit(); }} label={t('filter.oldFilm')} />{'\u00a0'}
-      <Checkbox checked={dotFilm.value === 1} onChange={(_, data) => { dotFilm.set(data.checked ? 1 : 0); submit(); }} label={t('filter.dotFilm')}/>{'\u00a0'}
-      <Checkbox checked={reflectionFilm.value === 1} onChange={(_, data) => { reflectionFilm.set(data.checked ? 1 : 0); submit(); }} label={t('filter.reflectionFilm')}/>{'\u00a0'}
-      <Checkbox checked={glitchFilm.value === 1} onChange={(_, data) => { glitchFilm.set(data.checked ? 1 : 0); submit(); }} label={t('filter.glitchFilm')}/>{'\u00a0'}
-      <Checkbox checked={rgbFilm.value === 1} onChange={(_, data) => { rgbFilm.set(data.checked ? 1 : 0); submit(); }} label={t('filter.rgbFilm')}/>{'\u00a0'}
-      <Checkbox checked={godrayFilm.value === 1} onChange={(_, data) => { godrayFilm.set(data.checked ? 1 : 0); submit(); }} label={t('filter.godrayFilm')}/>
+    <CommonOptions key={4} title={t`滤镜`}>
+      <Checkbox checked={oldFilm.value === 1} onChange={(_, data) => { oldFilm.set(data.checked ? 1 : 0); submit(); }} label={t`老电影滤镜`} />{'\u00a0'}
+      <Checkbox checked={dotFilm.value === 1} onChange={(_, data) => { dotFilm.set(data.checked ? 1 : 0); submit(); }} label={t`点状电影滤镜`}/>{'\u00a0'}
+      <Checkbox checked={reflectionFilm.value === 1} onChange={(_, data) => { reflectionFilm.set(data.checked ? 1 : 0); submit(); }} label={t`反射电影滤镜`}/>{'\u00a0'}
+      <Checkbox checked={glitchFilm.value === 1} onChange={(_, data) => { glitchFilm.set(data.checked ? 1 : 0); submit(); }} label={t`故障电影滤镜`}/>{'\u00a0'}
+      <Checkbox checked={rgbFilm.value === 1} onChange={(_, data) => { rgbFilm.set(data.checked ? 1 : 0); submit(); }} label={t`RGB电影滤镜`}/>{'\u00a0'}
+      <Checkbox checked={godrayFilm.value === 1} onChange={(_, data) => { godrayFilm.set(data.checked ? 1 : 0); submit(); }} label={t`光辉电影滤镜`}/>
     </CommonOptions>
   </>;
 }

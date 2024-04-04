@@ -9,10 +9,10 @@ import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {sentenceEditorConfig, sentenceEditorDefault} from "./SentenceEditor";
 import {DeleteFive, Sort, DownOne, RightOne, Play} from "@icon-park/react";
 import AddSentence, {addSentenceType} from "./components/AddSentence";
-import useTrans from "@/hooks/useTrans";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
 import {eventBus} from "@/utils/eventBus";
 import useEditorStore from "@/store/useEditorStore";
+import { t } from "@lingui/macro";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -20,7 +20,6 @@ interface IGraphicalEditorProps {
 }
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
-  const t = useTrans("editor.graphical.buttons.");
   const sceneText = useValue("");
   const gameName = useEditorStore.use.subPage();
   const showSentence = useValue<Array<boolean>>([]);
@@ -173,7 +172,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                       <div className={styles.addForwardArea}>
                         <div className={styles.addForwardAreaButtonGroup}>
                           <div className={styles.addForwardAreaButton}>
-                            <AddSentence titleText={t("addForward")} type={addSentenceType.forward}
+                            <AddSentence titleText={t`本句前插入句子`} type={addSentenceType.forward}
                               onChoose={(newSentence) => addOneSentence(newSentence, i)}/>
                           </div>
                         </div>
@@ -202,7 +201,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                                 <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
                                   fill="#333"/>
                                 <div>
-                                  {t("delete")}
+                                  {t`删除本句`}
                                 </div>
                               </div>
                               <div className={styles.optionButton}
@@ -210,7 +209,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                                 <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
                                   fill="#333"/>
                                 <div>
-                                  {t("$执行到此句")}
+                                  {t`执行到此句`}
                                 </div>
                               </div>
                             </div>
@@ -226,7 +225,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               })}
               {provided.placeholder}
               <div className={styles.addWrapper}>
-                <AddSentence titleText={t("add")} type={addSentenceType.backward}
+                <AddSentence titleText={t`添加语句`} type={addSentenceType.backward}
                   onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)}/>
               </div>
             </div>

@@ -1,12 +1,11 @@
 import { getFileIcon, getDirIcon } from "@/utils/getFileIcon";
 import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text, Subtitle1 } from "@fluentui/react-components";
-import { t } from "i18next";
 import IconWrapper from "../iconWrapper/IconWrapper";
 import { IFile } from "./Assets";
 import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
 import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular } from "@fluentui/react-icons";
-import useTrans from "@/hooks/useTrans";
+import {t} from "@lingui/macro";
 
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
@@ -22,7 +21,6 @@ export default function FileElement(
       handleRenameFile: (source: string, newName: string) => Promise<void>,
       handleDeleteFile: (source: string) => Promise<void>,
     }) {
-  const t = useTrans();
   const newFileName = useValue(file.name);
 
   return (
@@ -53,7 +51,7 @@ export default function FileElement(
             </PopoverTrigger>
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                <Subtitle1>{t("$common.rename")}</Subtitle1>
+                <Subtitle1>{t`重命名`}</Subtitle1>
                 <Input value={newFileName.value} onChange={(_, data) => {
                   newFileName.set(data.value ?? "");
                 }} />
@@ -61,7 +59,7 @@ export default function FileElement(
                   appearance="primary"
                   disabled={newFileName.value.trim() === ''}
                   onClick={() => handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value.trim())}
-                >{t("$common.rename")}</Button>
+                >{t`重命名`}</Button>
               </div>
             </PopoverSurface>
           </Popover>
@@ -73,14 +71,14 @@ export default function FileElement(
             </PopoverTrigger>
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px"}}>
-                <Subtitle1>{t("$common.delete")}</Subtitle1>
+                <Subtitle1>{t`删除`}</Subtitle1>
                 <Button
                   appearance="primary"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDeleteFile(`${currentPath.value.join('/')}/${file.name}`);
                   }}
-                >{t("$common.delete")}</Button>
+                >{t`删除`}</Button>
               </div>
             </PopoverSurface>
           </Popover>
