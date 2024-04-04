@@ -1,37 +1,35 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import { initializeIcons } from '@fluentui/font-icons-mdl2';
+import {initializeIcons} from '@fluentui/font-icons-mdl2';
 import 'primereact/resources/themes/fluent-light/theme.css';
 import "primereact/resources/primereact.min.css";
 import "./primereact.scss";
-import { BrandVariants, createLightTheme, createDarkTheme, FluentProvider, makeStyles, Theme } from "@fluentui/react-components";
+import {
+  BrandVariants,
+  createLightTheme,
+  createDarkTheme,
+  FluentProvider,
+  makeStyles,
+  Theme
+} from "@fluentui/react-components";
 
-import { i18n } from "@lingui/core";
-import { I18nProvider } from "@lingui/react";
+import {i18n} from "@lingui/core";
+import {I18nProvider} from "@lingui/react";
+import {messages as enMessages} from "./locales/en";
+import {messages as zhCnMessages} from "./locales/zhCn";
+import {messages as jaMessages} from "./locales/ja";
 
-let isInitI18n = false;
-
-async function dynamicInit(){
-  if(isInitI18n) return;
-  // @ts-ignore
-  const zhCn = await import(`./locales/zhCn.po`);
-  i18n.load('zhCn', zhCn.messages);
-  // @ts-ignore
-  const en = await import(`./locales/en.po`);
-  i18n.load('en', en.messages);
-  // @ts-ignore
-  const ja = await import(`./locales/ja.po`);
-  i18n.load('ja', ja.messages);
-  isInitI18n = true;
-}
+i18n.load({
+  en: enMessages,
+  zhCn: zhCnMessages,
+  ja: jaMessages
+});
 
 export async function i18nActivate(locale: string) {
   console.log(`Active ${locale}`);
   i18n.activate(locale);
 }
-
-dynamicInit().then(renderApp);
 
 const terre: BrandVariants = {
   10: "#020306",
@@ -65,16 +63,14 @@ darkTheme.colorBrandForeground2 = terre[120];
 
 initializeIcons();
 
-function renderApp (){
-  i18n.activate('zhCn');
-  // 不用 StrictMode，因为会和 react-butiful-dnd 冲突
-  ReactDOM.createRoot(document.getElementById("root")!).render(
-    // <React.StrictMode>
-    <FluentProvider theme={lightTheme} style={{width: '100%', height: '100%'}}>
-      <I18nProvider i18n={i18n}>
-        <App />
-      </I18nProvider>
-    </FluentProvider>
-    // </React.StrictMode>
-  );
-};
+i18n.activate('zhCn');
+// 不用 StrictMode，因为会和 react-butiful-dnd 冲突
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  // <React.StrictMode>
+  <FluentProvider theme={lightTheme} style={{width: '100%', height: '100%'}}>
+    <I18nProvider i18n={i18n}>
+      <App/>
+    </I18nProvider>
+  </FluentProvider>
+  // </React.StrictMode>
+);
