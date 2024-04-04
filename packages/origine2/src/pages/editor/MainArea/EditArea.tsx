@@ -2,14 +2,13 @@ import styles from "./editArea.module.scss";
 import TextEditor from "../TextEditor/TextEditor";
 import ResourceDisplay, {ResourceType} from "../ResourceDisplay/ResourceDisplay";
 import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
-import useTrans from "@/hooks/useTrans";
 import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
 import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugger";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { ITag } from "@/types/gameEditor";
+import { t } from "@lingui/macro";
 
 export default function EditArea() {
-  const t = useTrans('editor.mainArea.');
   const currentTag = useGameEditorContext((state) => state.currentTag);
   const tags = useGameEditorContext((state) => state.tags);
   const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
@@ -29,7 +28,7 @@ export default function EditArea() {
     } else {
       const fileType = getFileType(tag.name);
       if (!fileType) {
-        return <div>{t('canNotPreview')}</div>;
+        return <div>{t`该文件类型不支持预览`}</div>;
       }
       return <ResourceDisplay
         isHidden={tag.path !== currentTag?.path}
@@ -43,7 +42,7 @@ export default function EditArea() {
 
   return <>
     <div className={styles.editArea_main}>
-      {tag?.path === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
+      {tag?.path === "" && <div className={styles.none_text}>{t`目前没有打开任何文件`}</div>}
       {tag?.path !== "" && tagPage}
     </div>
     {isScene && isShowDebugger && <EditorDebugger/>}

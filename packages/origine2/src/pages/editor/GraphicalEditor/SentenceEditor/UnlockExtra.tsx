@@ -6,15 +6,14 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonTips from "../components/CommonTips";
-import useTrans from "@/hooks/useTrans";
 import { Dropdown, Option } from "@fluentui/react-components";
+import {t} from "@lingui/macro";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.unlockCg.options.');
 
   const extra = new Map([
-    ["unlockCg", t('type.options.cg')],
-    ["unlockBgm", t('type.options.bgm')],
+    ["unlockCg", t`CG`],
+    ["unlockBgm", t`BGM`],
   ]);
 
   const unlockType = useValue(props.sentence.command === commandType.unlockCg ? "unlockCg" : "unlockBgm");
@@ -29,9 +28,9 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
   };
 
   return <div className={styles.sentenceEditorContent}>
-    <CommonTips text={t('tips.afterEdit')}/>
+    <CommonTips text={t`提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。`}/>
     <div className={styles.editItem}>
-      <CommonOptions key="1" title={t('type.title')}>
+      <CommonOptions key="1" title={t`解锁鉴赏类型`}>
         <Dropdown
           value={extra.get(unlockType.value)}
           selectedOptions={[unlockType.value]}
@@ -47,7 +46,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           {Array.from(extra.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>)}
         </Dropdown>
       </CommonOptions>
-      <CommonOptions key="2" title={t('file.title')}>
+      <CommonOptions key="2" title={t`鉴赏资源文件`}>
         <>
           {fileName.value}{"\u00a0"}<ChooseFile sourceBase={unlockType.value === "unlockCg" ? "background" : "bgm"}
             onChange={(newFile) => {
@@ -57,7 +56,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
             extName={unlockType.value === "unlockCg" ? [".png", ".jpg", ".webp"] : [".mp3", ".ogg", ".wav"]} />
         </>
       </CommonOptions>
-      <CommonOptions title={t('name.title')}>
+      <CommonOptions title={t`解锁名称`}>
         <input value={unlockName.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -66,7 +65,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           style={{ width: "200px" }}
-          placeholder={t('name.placeholder')}
+          placeholder={t`解锁的 CG 或 BGM 名称`}
         />
       </CommonOptions>
     </div>

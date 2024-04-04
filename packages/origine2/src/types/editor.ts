@@ -4,7 +4,7 @@ export interface IEditorState {
   page: IPage,
   subPage: string,
   expand: number,
-  language: 'zhCn' | 'en' | 'jp',
+  language: 'zhCn' | 'en' | 'ja',
   isAutoHideToolbar: boolean, // 是否自动隐藏工具栏
   isEnableLivePreview: boolean, // 是否开启实时预览
   isAutoWarp: boolean, // 是否开启自动换行
