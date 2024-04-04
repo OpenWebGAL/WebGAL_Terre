@@ -2,11 +2,11 @@ import styles from "./templateElement.module.scss";
 import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
 import { TemplateInfo } from "./DashBoard";
-import useVarTrans from "@/hooks/useVarTrans";
 import { useMemo } from "react";
 import { useValue } from "../../hooks/useValue";
 import { api } from "@/api";
 import { routers } from "@/App";
+import { t } from "@lingui/macro";
 
 interface ITemplateElementProps {
   templateInfo: TemplateInfo;
@@ -22,7 +22,6 @@ const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
 const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
 
 export default function TemplateElement(props: ITemplateElementProps){
-  const t = useVarTrans('dashBoard.');
 
   let className = styles.templateElement_main;
   if (props.checked) {
@@ -64,6 +63,9 @@ export default function TemplateElement(props: ITemplateElementProps){
     isShowDeleteDialog.set(false);
     props?.refreash?.();
   };
+
+  const templateName = props.templateInfo.dir;
+
   return (
     <>
       <div onClick={props.onClick} className={className} id={props.templateInfo.dir}>
@@ -73,17 +75,17 @@ export default function TemplateElement(props: ITemplateElementProps){
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
           <div className={styles.templateElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routers.template.url}/${props.templateInfo.dir}`}>{t('$编辑模板')}</Button>
+            <Button appearance='primary' as='a' href={`${routers.template.url}/${props.templateInfo.dir}`}>{t`编辑模板`}</Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />
               </MenuTrigger>
               <MenuPopover>
                 <MenuList>
-                  <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t('menu.openInFileExplorer')}</MenuItem>
-                  <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t('menu.previewInNewTab')}</MenuItem>
-                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t('$重命名模板')}</MenuItem>
-                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t('$删除模板')}</MenuItem>
+                  <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t`在文件管理器中打开`}</MenuItem>
+                  <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
+                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名模板`}</MenuItem>
+                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除模板`}</MenuItem>
                 </MenuList>
               </MenuPopover>
             </Menu>
@@ -97,7 +99,7 @@ export default function TemplateElement(props: ITemplateElementProps){
       >
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t('$重命名模板')}</DialogTitle>
+            <DialogTitle>{t`重命名模板`}</DialogTitle>
             <DialogContent>
               <Input
                 style={{width:'100%'}}
@@ -107,8 +109,8 @@ export default function TemplateElement(props: ITemplateElementProps){
               />
             </DialogContent>
             <DialogActions>
-              <Button appearance='secondary' onClick={() => isShowRenameDialog.set(false)}>{t('$common.exit')}</Button>
-              <Button appearance='primary' onClick={() => renameThisTemplate(props.templateInfo.dir, newTemplateName.value)}>{t('$common.rename')}</Button>
+              <Button appearance='secondary' onClick={() => isShowRenameDialog.set(false)}>{t`返回`}</Button>
+              <Button appearance='primary' onClick={() => renameThisTemplate(props.templateInfo.dir, newTemplateName.value)}>{t`重命名`}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>
@@ -120,11 +122,11 @@ export default function TemplateElement(props: ITemplateElementProps){
       >
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t('$删除模板')}</DialogTitle>
-            <DialogContent>{t('$确定要删除该模板？', { templateName: props.templateInfo.dir })}</DialogContent>
+            <DialogTitle>{t`删除模板`}</DialogTitle>
+            <DialogContent>{t`确定要删除 "${templateName}" 模板吗？`}</DialogContent>
             <DialogActions>
-              <Button appearance='secondary' onClick={() => isShowDeleteDialog.set(false)}>{t('$common.exit')}</Button>
-              <Button appearance='primary' onClick={()=>deleteThisTemplate(props.templateInfo.dir)}>{t('$common.delete')}</Button>
+              <Button appearance='secondary' onClick={() => isShowDeleteDialog.set(false)}>{t`返回`}</Button>
+              <Button appearance='primary' onClick={()=>deleteThisTemplate(props.templateInfo.dir)}>{t`删除`}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>

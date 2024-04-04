@@ -1,13 +1,13 @@
 import styles from "./editorSidebar.module.scss";
 import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
-import useTrans from "@/hooks/useTrans";
 import {eventBus} from "@/utils/eventBus";
 import { ArrowClockwise24Filled, ArrowClockwise24Regular, bundleIcon, Open24Filled, Open24Regular } from "@fluentui/react-icons";
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { ITag } from "@/types/gameEditor";
+import { t } from "@lingui/macro";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -17,9 +17,8 @@ const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Re
 const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
 
 export default function EditorSideBar() {
-  const t = useTrans("editor.sideBar.");
   const gameName = useEditorStore.use.subPage();
-  
+
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
   const updateCurrentSidebarTab = useGameEditorContext((state) => state.updateCurrentSidebarTab);
@@ -97,17 +96,17 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: IFileConfig = new Map([
-    [`games/${gameName}/game/animation`, { desc: t('$animation'), folderType: 'animation', isProtected: true }],
+    [`games/${gameName}/game/animation`, { desc: t`动画`, folderType: 'animation', isProtected: true }],
     [`games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
-    [`games/${gameName}/game/background`, { desc: t('$background'), folderType: 'background', isProtected: true }],
-    [`games/${gameName}/game/bgm`, { desc: t('$bgm'), folderType: 'bgm', isProtected: true }],
-    [`games/${gameName}/game/figure`, { desc: t('$figure'), folderType: 'figure', isProtected: true }],
-    [`games/${gameName}/game/scene`, { desc: t('$scene'), folderType: 'scene', isProtected: true }],
+    [`games/${gameName}/game/background`, { desc: t`背景`, folderType: 'background', isProtected: true }],
+    [`games/${gameName}/game/bgm`, { desc: t`音乐`, folderType: 'bgm', isProtected: true }],
+    [`games/${gameName}/game/figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
+    [`games/${gameName}/game/scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
     [`games/${gameName}/game/scene/start.txt`, { isProtected: true }],
-    [`games/${gameName}/game/tex`, { desc: t('$tex'), folderType: 'tex', isProtected: true }],
-    [`games/${gameName}/game/video`, { desc: t('$video'), folderType: 'video', isProtected: true }],
-    [`games/${gameName}/game/vocal`, { desc: t('$vocal'), folderType: 'vocal', isProtected: true }],
-    [`games/${gameName}/game/config.txt`, { desc: t('$gameConfig'), isProtected: true }],
+    [`games/${gameName}/game/tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
+    [`games/${gameName}/game/video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
+    [`games/${gameName}/game/vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
+    [`games/${gameName}/game/config.txt`, { desc: t`游戏配置`, isProtected: true }],
     [`games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
   ]);
 
@@ -148,13 +147,13 @@ export default function EditorSideBar() {
           <Button
             appearance="subtle"
             icon={<ArrowClockwiseIcon />}
-            title={t("preview.refresh")}
+            title={t`刷新`}
             onClick={refreshGame}
           />
           <Button
             appearance="subtle"
             icon={<OpenIcon />}
-            title={t("preview.previewInNewTab")}
+            title={t`在新标签页中预览`}
             onClick={() => window.open(`/games/${gameName}`, "_blank")}
           />
         </div>
@@ -169,7 +168,7 @@ export default function EditorSideBar() {
           checked={currentSidebarTab === 'asset'}
           onChange={() => updateCurrentSidebarTab('asset')}
         />
-        <label htmlFor="sidebarTabAssets">{t('$assets')}</label>
+        <label htmlFor="sidebarTabAssets">{t`资源`}</label>
 
         <input
           type="radio"
@@ -179,7 +178,7 @@ export default function EditorSideBar() {
           checked={currentSidebarTab === 'scene'}
           onChange={() => updateCurrentSidebarTab('scene')}
         />
-        <label htmlFor="sidebarTabScenes">{t('$scene')}</label>
+        <label htmlFor="sidebarTabScenes">{t`场景`}</label>
       </div>
 
       <div className={styles.sidebarContent}>

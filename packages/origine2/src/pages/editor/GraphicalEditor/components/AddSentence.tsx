@@ -5,7 +5,6 @@ import { Add } from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
-import useTrans from "@/hooks/useTrans";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
 
 export enum addSentenceType {
@@ -20,7 +19,6 @@ interface IAddSentenceProps {
 }
 
 export default function AddSentence(props: IAddSentenceProps) {
-  const t = useTrans('editor.graphical.components.addSentence.');
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
   const isShowCallout = useValue(false);
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {

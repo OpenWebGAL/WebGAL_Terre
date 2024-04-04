@@ -4,7 +4,6 @@ import styles from "./sentenceEditor.module.scss";
 import { useValue } from "../../../../hooks/useValue";
 import { cloneDeep } from "lodash";
 import { ColorPicker, IColor } from "@fluentui/react";
-import useTrans from "@/hooks/useTrans";
 import { getArgByKey } from "../utils/getArgByKey";
 import { useState } from "react";
 import React from 'react';
@@ -12,13 +11,13 @@ import { logger } from "@/utils/logger";
 import { TerrePanel } from "../components/TerrePanel";
 import { Button, Dropdown, Option, Switch } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
+import { t } from "@lingui/macro";
 
 type FontSize = "small" | "medium" | "large";
 type Animation = "fadeIn" | "slideIn" | "typingEffect" | "pixelateEffect" | "revealAnimation";
 type DelayTime = 1500 | 2000 | 2500 | 3000 | 3500 | 4000 | 4500 | 5000;
 
 export default function Intro(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.intro.options.');
   const introTextList = useValue(props.sentence.content.split("|"));
   const isHoldFromSentence = getArgByKey(props.sentence, 'hold');
   const isHold = useValue(!!isHoldFromSentence);
@@ -183,7 +182,7 @@ export default function Intro(props: ISentenceEditorProps) {
 
   const introCompList = introTextList.value.map((text, index) => {
     return <div key={index} style={{ display: "flex" }}>
-      <Button 
+      <Button
         onClick={() => {
           const newList = cloneDeep(introTextList.value);
           newList.splice(index, 1);
@@ -191,7 +190,7 @@ export default function Intro(props: ISentenceEditorProps) {
           submit();
         }}
       >
-        {t('$common.delete')}
+        {t`删除`}
       </Button>
       <div style={{ padding: '0 0 0 4px' }} />
       <input value={text}
@@ -203,7 +202,7 @@ export default function Intro(props: ISentenceEditorProps) {
         }}
         onBlur={submit}
         className={styles.sayInput}
-        placeholder={t('value.placeholder')}
+        placeholder={t`Intro 文本`}
         style={{ width: "100%" }}
       />
     </div>;
@@ -218,14 +217,14 @@ export default function Intro(props: ISentenceEditorProps) {
       newList.push('');
       introTextList.set(newList);
       submit();
-    }}>{t('add.button')}</Button>
+    }}>{t`添加新行`}</Button>
     <Button onClick={() => updateExpand(props.index)}>
-      {t('$效果选项')}
+      {t`效果选项`}
     </Button>
-    <TerrePanel sentenceIndex={props.index} title="效果选项">
+    <TerrePanel sentenceIndex={props.index} title={t`效果选项`}>
       <div style={{ width: '100%' }}>
         <div style={{ display: 'flex' }}>
-          <CommonOptions title={t('font.size')}>
+          <CommonOptions title={t`文字大小`}>
             <Dropdown
               value={fontSizes.get(fontSize.value as FontSize) ?? fontSize.value}
               selectedOptions={[fontSize.value]}
@@ -238,7 +237,7 @@ export default function Intro(props: ISentenceEditorProps) {
               {Array.from(fontSizes.entries()).map(([key, value]) => <Option key={key} value={key} >{value}</Option>)}
             </Dropdown>
           </CommonOptions>
-          <CommonOptions title={t('font.animation')}>
+          <CommonOptions title={t`动画`}>
             <Dropdown
               value={animations.get(animation.value as Animation) ?? animation.value}
               selectedOptions={[animation.value]}
@@ -251,7 +250,7 @@ export default function Intro(props: ISentenceEditorProps) {
               {Array.from(animations.entries()).map(([key, value]) => <Option key={key} value={key} >{value}</Option>)}
             </Dropdown>
           </CommonOptions>
-          <CommonOptions title={t('font.delayTime')}>
+          <CommonOptions title={t`延迟时间（秒）`}>
             <Dropdown
               value={delayTimes.get(Number(delayTime.value) as DelayTime) ?? delayTime.value}
               selectedOptions={[delayTime.value]}
@@ -264,7 +263,7 @@ export default function Intro(props: ISentenceEditorProps) {
               {Array.from(delayTimes.entries()).map(([key, value]) => <Option key={key} value={String(key)} >{value}</Option>)}
             </Dropdown>
           </CommonOptions>
-          <CommonOptions title={t('$结束后保持')}>
+          <CommonOptions title={t`结束后保持`}>
             <Switch
               checked={isHold.value}
               onChange={(ev, data) => {
@@ -275,13 +274,13 @@ export default function Intro(props: ISentenceEditorProps) {
           </CommonOptions>
         </div>
         <div style={{ display: 'flex' }}>
-          <CommonOptions title={t('colorPicker.backgroundColor')}>
+          <CommonOptions title={t`背景颜色`}>
             <ColorPicker
               color={localBackgroundColor}
               onChange={handleLocalBackgroundColorChange}
             />
           </CommonOptions>
-          <CommonOptions title={t('colorPicker.fontColor')}>
+          <CommonOptions title={t`文字颜色`}>
             <ColorPicker
               color={localFontColor}
               onChange={handleLocalFontColorChange}
@@ -292,7 +291,7 @@ export default function Intro(props: ISentenceEditorProps) {
           style={{ marginTop: '8px' }}
           onClick={handleSubmit}
         >
-          {t('colorPicker.submit')}
+          {t`应用颜色变化`}
         </Button>
       </div>
     </TerrePanel>

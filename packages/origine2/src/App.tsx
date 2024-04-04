@@ -2,7 +2,7 @@ import "./App.css";
 import { logger } from "./utils/logger";
 import DashBoard from "./pages/dashboard/DashBoard";
 import Editor from "./pages/editor/Editor";
-import { ReactNode, useEffect, useMemo } from "react";
+import {ReactNode, useEffect, useMemo, useState} from "react";
 import "@icon-park/react/styles/index.css";
 import axios from "axios";
 import { mapLspKindToMonacoKind } from "./pages/editor/TextEditor/convert";
@@ -117,9 +117,15 @@ function App() {
   const page = useEditorStore.use.page();
   const subPage = useEditorStore.use.subPage();
   document.title = useMemo(() => `${(page !== 'dashboard') ? `${subPage} - ` : ''}WebGAL Terre`, [page, subPage]);
+  const language = useEditorStore.use.language();
+  const [appKeyLang,setAppKeyLang] = useState(language);
+
+  useEffect(() => {
+    setAppKeyLang(language);
+  }, [language]);
 
   return (
-    <div className="App">
+    <div className="App" key={appKeyLang}>
       {routers[page].element || routers.dashboard.element}
     </div>
   );
