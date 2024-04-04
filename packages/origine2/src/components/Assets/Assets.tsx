@@ -4,11 +4,11 @@ import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import styles from "./Assets.module.scss";
 import { Badge, Button, Field, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Radio, RadioGroup, Subtitle1, Text } from "@fluentui/react-components";
 import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
-import useTrans from "@/hooks/useTrans";
 import FileElement from "./FileElement";
 import axios from "axios";
 import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 import useSWR, { useSWRConfig } from "swr";
+import {t} from '@lingui/macro';
 
 export interface IFile {
   extName: string;
@@ -45,7 +45,6 @@ const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
 
 export default function Assets({basePath, isProtected = false, fileConfig, fileFunction}:
   {basePath: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction}) {
-  const t = useTrans();
   const {mutate} = useSWRConfig();
 
   const currentPath = useValue(basePath);
@@ -133,16 +132,16 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
             </PopoverTrigger>
             <PopoverSurface>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                <Subtitle1>{t("$createNewFile")}</Subtitle1>
+                <Subtitle1>{t`新建文件`}</Subtitle1>
                 <Input
                   value={newFileName.value}
-                  placeholder={t("$newFileName")}
+                  placeholder={t`新文件名`}
                   onChange={(_, data) => {
                     newFileName.set(data.value ?? "");
                   } } />
-                <Field label={t('$extensionName')} size='small'>
+                <Field label={t`扩展名`} size='small'>
                   <RadioGroup value={newFileExtensionName.value} onChange={(_, data) => newFileExtensionName.set(data.value)}>
-                    <Radio value="" label={t('$null')} />
+                    <Radio value="" label={t`无`} />
                     <Radio value=".txt" label="txt" />
                     <Radio value=".json" label="json" />
                   </RadioGroup>
@@ -155,7 +154,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
                     createNewFilePopoverOpen.set(false);
                     newFileName.set('');
                   } }
-                >{t("$common.create")}</Button>
+                >{t`创建`}</Button>
               </div>
             </PopoverSurface>
           </Popover><Popover
@@ -168,10 +167,10 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
             </PopoverTrigger>
             <PopoverSurface>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                <Subtitle1>{t("$createNewFolder")}</Subtitle1>
+                <Subtitle1>{t`新建文件夹`}</Subtitle1>
                 <Input
                   value={newFileName.value}
-                  placeholder={t("$newFolderName")}
+                  placeholder={t`新文件夹名`}
                   onChange={(_, data) => {
                     newFileName.set(data.value ?? "");
                   } } />
@@ -183,7 +182,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
                     createNewFolderPopoverOpen.set(false);
                     newFileName.set('');
                   } }
-                >{t("$common.create")}</Button>
+                >{t`创建`}</Button>
               </div>
             </PopoverSurface>
           </Popover><Popover
@@ -196,7 +195,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
             </PopoverTrigger>
             <PopoverSurface>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                <Subtitle1>{t("$uploadAsset")}</Subtitle1>
+                <Subtitle1>{t`上传资源`}</Subtitle1>
                 <FileUploader onUpload={handleRefresh} targetDirectory={currentPathString} uploadUrl="/api/assets/upload" />
               </div>
             </PopoverSurface>
@@ -209,8 +208,8 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
           </MenuTrigger>
           <MenuPopover>
             <MenuList>
-              <MenuItem icon={<ArrowSyncIcon />} onClick={handleRefresh} >{t('$refresh')}</MenuItem>
-              <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder} >{t('$openFolder')}</MenuItem>
+              <MenuItem icon={<ArrowSyncIcon />} onClick={handleRefresh} >{t`刷新`}</MenuItem>
+              <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder} >{t`打开文件夹`}</MenuItem>
             </MenuList>
           </MenuPopover>
         </Menu>
@@ -248,7 +247,6 @@ interface IFileUploaderProps {
 }
 
 function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderProps) {
-  const t = useTrans();
 
   const [files, setFiles] = useState<File[]>([]);
 
@@ -273,9 +271,9 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderPro
   return (
     <div className={styles.fileUploadContainer}>
       <div>
-        <input title={t("$upload")} className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
+        <input title={t`上传`} className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
       </div>
-      <Button appearance='primary' onClick={handleUpload}>{t("$upload")}</Button>
+      <Button appearance='primary' onClick={handleUpload}>{t`上传`}</Button>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import styles from "./gameElement.module.scss";
 import { useValue } from "../../hooks/useValue";
-import useVarTrans from "@/hooks/useVarTrans";
 import { GameInfo } from "./DashBoard";
 import { useMemo } from "react";
 import { api } from "@/api";
@@ -8,6 +7,7 @@ import { Button, Checkbox, Dialog, DialogActions, DialogBody, DialogContent, Dia
 import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
 import { localStorageRename } from "@/utils/localStorageRename";
 import { routers } from "@/App";
+import { t } from "@lingui/macro";
 
 interface IGameElementProps {
   gameInfo: GameInfo;
@@ -25,7 +25,6 @@ const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
 export default function GameElement(props: IGameElementProps) {
 
   const soureBase = "background";
-  const t = useVarTrans('dashBoard.');
 
   let className = styles.gameElement_main;
   if (props.checked) {
@@ -70,6 +69,7 @@ export default function GameElement(props: IGameElementProps) {
     localStorage.removeItem(`game-editor-storage-${props.gameInfo.dir}`);
   };
 
+  const gameName = props.gameInfo.dir;
   return (
     <>
       <div onClick={props.onClick} className={className} id={props.gameInfo.dir}>
@@ -84,17 +84,17 @@ export default function GameElement(props: IGameElementProps) {
         <div className={styles.gameElement_sub}>
           <span className={styles.gameElement_dir}>{props.gameInfo.dir}</span>
           <div className={styles.gameElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routers.game.url}/${props.gameInfo.dir}`}>{t('preview.editGame')}</Button>
+            <Button appearance='primary' as='a' href={`${routers.game.url}/${props.gameInfo.dir}`}>{t`编辑游戏`}</Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />
               </MenuTrigger>
               <MenuPopover>
                 <MenuList>
-                  <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t('menu.openInFileExplorer')}</MenuItem>
-                  <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t('menu.previewInNewTab')}</MenuItem>
-                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t('menu.renameDir')}</MenuItem>
-                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t('menu.deleteGame')}</MenuItem>
+                  <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t`在文件管理器中打开`}</MenuItem>
+                  <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
+                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名文件夹`}</MenuItem>
+                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除游戏`}</MenuItem>
                 </MenuList>
               </MenuPopover>
             </Menu>
@@ -108,7 +108,7 @@ export default function GameElement(props: IGameElementProps) {
       >
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t('dialogs.renameDir.title')}</DialogTitle>
+            <DialogTitle>{t`重命名文件夹`}</DialogTitle>
             <DialogContent>
               <Input
                 style={{width:'100%'}}
@@ -118,8 +118,8 @@ export default function GameElement(props: IGameElementProps) {
               />
             </DialogContent>
             <DialogActions>
-              <Button appearance='secondary' onClick={() => isShowRenameDialog.set(false)}>{t('$common.exit')}</Button>
-              <Button appearance='primary' onClick={() => renameThisGame(props.gameInfo.dir, newGameName.value)}>{t('$common.rename')}</Button>
+              <Button appearance='secondary' onClick={() => isShowRenameDialog.set(false)}>{t`返回`}</Button>
+              <Button appearance='primary' onClick={() => renameThisGame(props.gameInfo.dir, newGameName.value)}>{t`重命名`}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>
@@ -134,23 +134,23 @@ export default function GameElement(props: IGameElementProps) {
       >
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t('dialogs.deleteGame.title')}</DialogTitle>
+            <DialogTitle>{t`删除游戏`}</DialogTitle>
             <DialogContent>
               <div style={{display: "flex", flexDirection: 'column', gap: '1rem'}}>
                 <div>
-                  {t('dialogs.deleteGame.subtext', { gameName: props.gameInfo.dir })}
+                  {t`是否要删除 "${gameName}" ？`}
                 </div>
                 <Checkbox
                   checked={deleteChecked.value}
                   onChange={(ev, data) => deleteChecked.set(!deleteChecked.value)}
-                  label={t('$sureToDeleteGame')}
+                  label={t`我确定要删除游戏`}
                   style={{ margin: 0 }}
                 />
               </div>
             </DialogContent>
             <DialogActions>
-              <Button appearance='secondary' onClick={deleteThisGame} disabled={!deleteChecked.value}>{t('$common.delete')}</Button>
-              <Button appearance='primary' onClick={() => {isShowDeleteDialog.set(false); deleteChecked.set(false);}}>{t('$common.exit')}</Button>
+              <Button appearance='secondary' onClick={deleteThisGame} disabled={!deleteChecked.value}>{t`删除`}</Button>
+              <Button appearance='primary' onClick={() => {isShowDeleteDialog.set(false); deleteChecked.set(false);}}>{t`返回`}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>

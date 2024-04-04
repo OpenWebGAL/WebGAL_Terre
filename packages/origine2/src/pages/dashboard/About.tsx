@@ -2,10 +2,10 @@ import * as React from 'react';
 import { __INFO } from "@/config/info";
 import { useRelease } from "../../hooks/useRelease";
 import { logger } from '@/utils/logger';
-import useTrans from '@/hooks/useTrans';
 import { Link, Popover, PopoverSurface, PopoverTrigger, Text, Title1, ToolbarButton } from '@fluentui/react-components';
 import { Info24Filled, Info24Regular, bundleIcon } from '@fluentui/react-icons';
 import { useState } from 'react';
+import { t } from '@lingui/macro';
 
 interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -15,7 +15,6 @@ interface DateTimeFormatOptions {
 
 const About: React.FunctionComponent = () => {
   const [open, setOpen] = useState(false);
-  const t = useTrans('editor.topBar.');
   const latestRelease = useRelease();
 
   const InfoIcon = bundleIcon(Info24Filled, Info24Regular);
@@ -63,8 +62,8 @@ const About: React.FunctionComponent = () => {
       onOpenChange={() => setOpen(!open)}
     >
       <PopoverTrigger disableButtonEnhancement>
-        <ToolbarButton aria-label={t('about.about')} icon={<InfoIcon />}>
-          {t('about.about')} {isNewRelease ? `(${t('about.checkedForNewVersion')})` : ''}
+        <ToolbarButton aria-label={t`关于`} icon={<InfoIcon />}>
+          {t`关于`} {isNewRelease ? `(${t`检测到新版本`})` : ''}
         </ToolbarButton>
       </PopoverTrigger>
       <PopoverSurface>
@@ -73,20 +72,20 @@ const About: React.FunctionComponent = () => {
             WebGAL Terre
           </Text>
           <Text as='b' block>
-            <p>{t('about.slogan')}</p>
+            <p>{t`视觉小说编辑，再进化`}</p>
             <small>
-              {t('about.currentVersion')}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
+              {t`当前版本`}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
               {
                 latestRelease &&
                 <span>
-                  {t('about.latestVersion')}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
+                  {t`最新版本`}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
                 </span>
               }
               <p>
                 {
                   isNewRelease &&
                   <Link href="https://openwebgal.com/download/" target="_blank">
-                    {t('about.downloadLatest')}
+                    {t`下载最新版本`}
                   </Link>
                 }
               </p>
@@ -101,10 +100,10 @@ const About: React.FunctionComponent = () => {
           </Text>
           <div style={{display:'flex', gap:'0.5rem', marginTop:'1rem'}}>
             <Link href="https://openwebgal.com/" target="_blank">
-              {t('about.homePage')}
+              {t`项目主页`}
             </Link>
             <Link href="https://docs.openwebgal.com/" target="_blank">
-              {t('about.document')}
+              {t`文档`}
             </Link>
             <Link href="https://github.com/MakinoharaShoko/WebGAL_Terre" target="_blank">
               GitHub

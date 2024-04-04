@@ -3,10 +3,9 @@ import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
 import {useValue} from "@/hooks/useValue";
 import {getArgByKey} from "../utils/getArgByKey";
-import useTrans from "@/hooks/useTrans";
+import { t } from "@lingui/macro";
 
 export default function GetUserInput(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.getUserInput.');
   const titleFromArgs = getArgByKey(props.sentence, "title");
   const title = useValue(((titleFromArgs === 0 ? '' : titleFromArgs) ?? '').toString());
   const buttonTextFromArgs = getArgByKey(props.sentence, "buttonText");
@@ -19,7 +18,7 @@ export default function GetUserInput(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions title={t('varOption')} key="1">
+      <CommonOptions title={t`写入变量`} key="1">
         <input value={varKey.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -30,7 +29,7 @@ export default function GetUserInput(props: ISentenceEditorProps) {
           style={{width: "100%"}}
         />
       </CommonOptions>
-      <CommonOptions title={t('titleOption')} key="2">
+      <CommonOptions title={t`对话框标题`} key="2">
         <input value={title.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -41,7 +40,7 @@ export default function GetUserInput(props: ISentenceEditorProps) {
           style={{width: "100%"}}
         />
       </CommonOptions>
-      <CommonOptions title={t('buttonText')} key="3">
+      <CommonOptions title={t`确认按钮文本`} key="3">
         <input value={buttonText.value}
           onChange={(ev) => {
             const newValue = ev.target.value;

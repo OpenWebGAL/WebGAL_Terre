@@ -5,15 +5,14 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import {useValue} from "../../../../hooks/useValue";
 import {getArgByKey} from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import useTrans from "@/hooks/useTrans";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
+import { t } from "@lingui/macro";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.changeBg.');
   const isNoFile = props.sentence.content === "";
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const bgFile = useValue(props.sentence.content);
@@ -35,16 +34,16 @@ export default function ChangeBg(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t('options.hide.title')}>
+      <CommonOptions key="isNoDialog" title={t`关闭背景`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            bgFile.set(t('options.hide.choose'));
+            bgFile.set(t`选择背景图片`);
           } else
             bgFile.set("none");
           submit();
-        }} onText={t('options.hide.on')} offText={t('options.hide.off')} isChecked={isNoFile}/>
+        }} onText={t`关闭背景`} offText={t`显示背景`} isChecked={isNoFile}/>
       </CommonOptions>
-      {!isNoFile && <CommonOptions key="1" title={t('options.file.title')}>
+      {!isNoFile && <CommonOptions key="1" title={t`背景文件`}>
         <>
           {bgFile.value + "\u00a0\u00a0"}
           <ChooseFile sourceBase="background" onChange={(fileDesc) => {
@@ -54,14 +53,14 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           extName={[".png", ".jpg", ".webp"]}/>
         </>
       </CommonOptions>}
-      <CommonOptions key="2" title={t('$editor.graphical.sentences.common.options.goNext.title')}>
+      <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
-        }} onText={t('$editor.graphical.sentences.common.options.goNext.on')}
-        offText={t('$editor.graphical.sentences.common.options.goNext.off')} isChecked={isGoNext.value}/>
+        }} onText={t`本句执行后执行下一句`}
+        offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
       </CommonOptions>
-      {!isNoFile && <CommonOptions key="3" title={t('options.name.title')}>
+      {!isNoFile && <CommonOptions key="3" title={t`解锁名称`}>
         <input value={unlockName.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -70,26 +69,26 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           style={{width: "200px"}}
-          placeholder={t('options.name.placeholder')}
+          placeholder={t`解锁的 CG 名称`}
         />
       </CommonOptions>}
-      <CommonOptions key="23" title={t("options.displayEffect.title")}>
+      <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={() => {
           updateExpand(props.index);
-        }}>{t('$打开效果编辑器')}</Button>
+        }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
-      <TerrePanel sentenceIndex={props.index} title={t("$效果编辑器")}>
+      <TerrePanel sentenceIndex={props.index} title={t`效果编辑器`}>
         <div>
           <CommonTips
-            text={t("$效果提示")}/>
+            text={t`效果提示`}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();
           }}/>
-          <CommonOptions key="10" title={t("$持续时间（单位为毫秒）")}>
+          <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
             <div>
               <Input
-                placeholder={t("$持续时间（单位为毫秒）")}
+                placeholder={t`持续时间（单位为毫秒）`}
                 value={duration.value.toString()}
                 onChange={(_, data) => {
                   const newDuration = Number(data.value);
