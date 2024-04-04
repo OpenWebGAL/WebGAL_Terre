@@ -1197,9 +1197,7 @@ msgstr "トランジション効果を使う"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Unrecognized.tsx:12
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
-msgstr "このコマンドは認識されません、スクリプト編集モードで編集してください"
-
-Here are the translations for the remaining strings:
+msgstr "このコマンドは認識されません、スクリプト編集モードで編集してくださいHere are the translations for the remaining strings:"
 
 #: src/pages/editor/MainArea/EditArea.tsx:31
 msgid "该文件类型不支持预览"
