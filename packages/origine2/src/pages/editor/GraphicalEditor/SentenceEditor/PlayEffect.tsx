@@ -5,10 +5,9 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import useTrans from "@/hooks/useTrans";
+import { t } from "@lingui/macro";
 
 export default function PlayEffect(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.soundEffect.options.');
   const fileName = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
@@ -21,16 +20,16 @@ export default function PlayEffect(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t('stop.title')}>
+      <CommonOptions key="isNoDialog" title={t`关闭效果音`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            fileName.set(t('stop.choose'));
+            fileName.set(t`选择效果音文件`);
           } else
             fileName.set("none");
           submit();
-        }} onText={t('stop.on')} offText={t('stop.off')} isChecked={isNoFile} />
+        }} onText={t`关闭效果音`} offText={t`播放效果音`} isChecked={isNoFile} />
       </CommonOptions>
-      {!isNoFile &&<CommonOptions key="1" title={t('file.title')}>
+      {!isNoFile &&<CommonOptions key="1" title={t`效果音文件`}>
         <>
           {fileName.value + "\u00a0\u00a0"}
           <ChooseFile sourceBase="vocal" onChange={(fileDesc) => {
@@ -40,7 +39,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
           extName={[".mp3", ".ogg", ".wav"]} />
         </>
       </CommonOptions>}
-      <CommonOptions title={t('volume.title')} key="2">
+      <CommonOptions title={t`效果音 音量`} key="2">
         <input value={volume.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -48,11 +47,11 @@ export default function PlayEffect(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('volume.placeholder')}
+          placeholder={t`百分比。 0-100 有效`}
           style={{ width: "100%" }}
         />
       </CommonOptions>
-      <CommonOptions title={t('id.title')} key="3">
+      <CommonOptions title={t`效果音 ID（输入以使效果音循环，后面再用这个 id 来关闭）`} key="3">
         <input value={id.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -60,7 +59,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('id.placeholder')}
+          placeholder={t`效果音 ID`}
           style={{ width: "100%" }}
         />
       </CommonOptions>

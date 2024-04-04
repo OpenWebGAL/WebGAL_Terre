@@ -6,7 +6,6 @@ import styles from "./dashboard.module.scss";
 import Sidebar from "./Sidebar";
 import TemplateSidebar from "./TemplateSidebar";
 import GamePreview from "./GamePreview";
-import useTrans from "@/hooks/useTrans";
 import About from "./About";
 import {WebgalParser} from "../editor/GraphicalEditor/parser";
 import {
@@ -87,10 +86,8 @@ export const templateListFetcher = async () => {
 export default function DashBoard() {
   const { mutate } = useSWRConfig();
 
-  const tLegacy = useTrans('editor.topBar.');
   const subPage = useEditorStore.use.subPage();
   const updateLanguage = useEditorStore.use.updateLanguage();
-  const trans = useTrans('dashBoard.');
 
   const messageRef = useRef<TestRefRef>(null);
 
@@ -114,7 +111,7 @@ export default function DashBoard() {
   async function createGame(gameName: string) {
     const res = await api.manageGameControllerCreateGame({gameName: gameName}).then(r => r.data);
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`${gameName} ` + trans('msgs.created'), 2000);
+    messageRef.current!.showMessage(`${gameName} ` + t`已创建`, 2000);
     refreash();
   }
 
@@ -145,14 +142,14 @@ export default function DashBoard() {
           <About/>
           <Menu>
             <MenuTrigger>
-              <ToolbarButton aria-label={tLegacy('commandBar.items.language.text')}
-                icon={<LocalLanguageIcon/>}>{tLegacy('commandBar.items.language.text')}</ToolbarButton>
+              <ToolbarButton aria-label={t`语言`}
+                icon={<LocalLanguageIcon/>}>{t`语言`}</ToolbarButton>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
                 <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
                 <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
-                <MenuItem onClick={() => updateLanguage('jp')}>日本语</MenuItem>
+                <MenuItem onClick={() => updateLanguage('ja')}>日本語</MenuItem>
               </MenuList>
             </MenuPopover>
           </Menu>
@@ -164,7 +161,7 @@ export default function DashBoard() {
             <Tab className={classNames(styles.tabItem, selectedValue === 'game' ? styles.active : '')} id="Game"
               icon={<GameIcon fontSize={24}/>} value="game">{t`游戏`}</Tab>
             <Tab className={classNames(styles.tabItem, selectedValue === 'template' ? styles.active : '')}
-              id="Template" icon={<AlbumIcon fontSize={24}/>} value="template">{tLegacy("$模板")}</Tab>
+              id="Template" icon={<AlbumIcon fontSize={24}/>} value="template">{t`模板`}</Tab>
           </TabList>
         </div>
         {selectedValue === "game" && <div className={styles.dashboard_main}>

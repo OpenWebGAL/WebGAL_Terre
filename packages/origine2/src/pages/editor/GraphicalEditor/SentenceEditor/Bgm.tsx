@@ -4,11 +4,10 @@ import styles from "./sentenceEditor.module.scss";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import useTrans from "@/hooks/useTrans";
 import {getArgByKey} from "../utils/getArgByKey";
+import { t } from "@lingui/macro";
 
 export default function Bgm(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.bgm.');
   const bgmFile = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
@@ -27,16 +26,16 @@ export default function Bgm(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t('options.stop.title')}>
+      <CommonOptions key="isNoDialog" title={t`停止 BGM`}>
         <TerreToggle title="" onChange={(newValue) => {
           if(!newValue){
-            bgmFile.set(t('options.stop.choose'));
+            bgmFile.set(t`选择背景音乐`);
           }else
             bgmFile.set('none');
           submit();
-        }} onText={t('options.stop.on')} offText={t('options.stop.off')} isChecked={isNoFile} />
+        }} onText={t`结束当前 BGM 的播放`} offText={t`正常播放 BGM`} isChecked={isNoFile} />
       </CommonOptions>
-      {!isNoFile && <CommonOptions key="1" title={t('options.file.title')}>
+      {!isNoFile && <CommonOptions key="1" title={t`背景音乐文件`}>
         <>
           {bgmFile.value + "\u00a0\u00a0"}
           <ChooseFile sourceBase="bgm" onChange={(fileDesc) => {
@@ -46,7 +45,7 @@ export default function Bgm(props: ISentenceEditorProps) {
           extName={[".mp3", ".ogg", ".wav"]} />
         </>
       </CommonOptions>}
-      {!isNoFile && <CommonOptions title={t('options.volume.title')} key="2">
+      {!isNoFile && <CommonOptions title={t`BGM 音量`} key="2">
         <input value={volume.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -54,11 +53,11 @@ export default function Bgm(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('options.volume.placeholder')}
+          placeholder={t`百分比。 0-100 有效`}
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-      <CommonOptions title={t('options.enter.title')} key="3">
+      <CommonOptions title={t`淡入淡出`} key="3">
         <input value={enter.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -66,11 +65,11 @@ export default function Bgm(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('options.enter.placeholder')}
+          placeholder={t`单位毫秒。 0~ 有效`}
           style={{ width: "100%" }}
         />
       </CommonOptions>
-      {!isNoFile && <CommonOptions key="4" title={t('options.name.title')}>
+      {!isNoFile && <CommonOptions key="4" title={t`解锁名称`}>
         <input value={unlockName.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -79,7 +78,7 @@ export default function Bgm(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           style={{ width: "200px" }}
-          placeholder={t('options.name.placeholder')}
+          placeholder={t`解锁的 BGM 名称`}
         />
       </CommonOptions>}
     </div>

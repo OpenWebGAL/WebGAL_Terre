@@ -6,13 +6,13 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { useEffect, useState } from "react";
-import useTrans from "@/hooks/useTrans";
 import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
 import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
+import {t} from "@lingui/macro";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -21,7 +21,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const currentEdit = useEditorStore.use.subPage();
   const updateExpand = useEditorStore.use.updateExpand();
   const gameName = currentEdit;
-  const t = useTrans('editor.graphical.sentences.changeFigure.');
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
   const figurePosition = useValue<FigurePosition>("");
@@ -45,9 +44,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   );
 
   const figurePositions = new Map<FigurePosition, string>([
-    ["", t('options.position.options.center')],
-    ["left", t('options.position.options.left')],
-    ["right", t('options.position.options.right')]
+    ["", t`中间`],
+    ["left", t`左侧`],
+    ["right", t`右侧`]
   ]);
 
   const animationFlags = new Map<AnimationFlag, string>([
@@ -138,17 +137,17 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t("options.hide.title")}>
+      <CommonOptions key="isNoDialog" title={t`关闭立绘`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            figureFile.set(t("options.hide.choose"));
+            figureFile.set(t`选择立绘文件`);
           } else
             figureFile.set("none");
           submit();
-        }} onText={t("options.hide.on")} offText={t("options.hide.off")} isChecked={isNoFile} />
+        }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
       </CommonOptions>
       {!isNoFile &&
-        <CommonOptions key="1" title={t("options.file.title")}>
+        <CommonOptions key="1" title={t`立绘文件`}>
           <>
             {figureFile.value + "\u00a0\u00a0"}
             <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
@@ -158,12 +157,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             extName={[".png", ".jpg", ".webp", ".json"]} />
           </>
         </CommonOptions>}
-      <CommonOptions key="2" title={t('$editor.graphical.sentences.common.options.goNext.title')}>
+      <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
-        }} onText={t('$editor.graphical.sentences.common.options.goNext.on')}
-        offText={t('$editor.graphical.sentences.common.options.goNext.off')} isChecked={isGoNext.value} />
+        }} onText={t`本句执行后执行下一句`}
+        offText={t`本句执行后等待`} isChecked={isGoNext.value} />
       </CommonOptions>
       {figureFile.value.includes('.json') && (
         <>
@@ -197,7 +196,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         </>
       )}
 
-      <CommonOptions title={t('options.position.title')} key="3">
+      <CommonOptions title={t`立绘位置`} key="3">
         <Dropdown
           value={figurePositions.get(figurePosition.value) ?? figurePosition.value}
           selectedOptions={[figurePosition.value]}
@@ -210,7 +209,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           {Array.from(figurePositions.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>)}
         </Dropdown>
       </CommonOptions>
-      <CommonOptions title={t('options.id.title')} key="4">
+      <CommonOptions title={t`立绘ID（可选）`} key="4">
         <input value={id.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -218,29 +217,29 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('options.id.placeholder')}
+          placeholder={t`立绘 ID`}
           style={{ width: "100%" }}
         />
       </CommonOptions>
-      <CommonOptions key="23" title={t("options.displayEffect.title")}>
+      <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={() => {
           updateExpand(props.index);
-        }}>{t('$打开效果编辑器')}</Button>
+        }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
       <TerrePanel
-        title={t("$效果编辑器")}
+        title={t`效果编辑器`}
         sentenceIndex={props.index}
       >
         <div>
           <CommonTips
-            text={t("$效果提示")} />
+            text={t`效果提示`} />
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();
           }} />
-          <CommonOptions key="10" title={t("$持续时间（单位为毫秒）")}>
+          <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
             <div>
-              <Input placeholder={t("$持续时间（单位为毫秒）")} value={duration.value.toString()} onChange={(_, data) => {
+              <Input placeholder={t`持续时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
                 const newDuration = Number(data.value);
                 if (isNaN(newDuration) || data.value === '')
                   duration.set("");
@@ -256,7 +255,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           gap: '8px',
           width: animationFlag.value !== "on" ? 'auto' : '100%'
         }}>
-          <CommonOptions title={t('options.animationType.flag')} key="5">
+          <CommonOptions title={t`唇形同步与眨眼`} key="5">
             <Dropdown
               value={animationFlags.get(animationFlag.value as AnimationFlag)}
               selectedOptions={[animationFlag.value]}
@@ -270,7 +269,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             </Dropdown>
           </CommonOptions>
           {animationFlag.value === "on" &&
-            <CommonOptions key="6" title={t("options.animationType.lipSync.mouthOpen")}>
+            <CommonOptions key="6" title={t`张开嘴`}>
               <>
                 {mouthOpen.value + "\u00a0\u00a0"}
                 <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
@@ -281,7 +280,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
-            <CommonOptions key="7" title={t("options.animationType.lipSync.mouthHalfOpen")}>
+            <CommonOptions key="7" title={t`半张嘴`}>
               <>
                 {mouthHalfOpen.value + "\u00a0\u00a0"}
                 <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
@@ -292,7 +291,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
-            <CommonOptions key="8" title={t("options.animationType.lipSync.mouthClose")}>
+            <CommonOptions key="8" title={t`闭上嘴`}>
               <>
                 {mouthClose.value + "\u00a0\u00a0"}
                 <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
@@ -302,7 +301,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 extName={[".png", ".jpg", ".webp"]} />
               </>
             </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="9" title={t("options.animationType.blink.eyesOpen")}>
+          {animationFlag.value === "on" && <CommonOptions key="9" title={t`睁开眼睛`}>
             <>
               {eyesOpen.value + "\u00a0\u00a0"}
               <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
@@ -312,7 +311,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               extName={[".png", ".jpg", ".webp"]} />
             </>
           </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="10" title={t("options.animationType.blink.eyesClose")}>
+          {animationFlag.value === "on" && <CommonOptions key="10" title={t`闭上眼睛`}>
             <>
               {eyesClose.value + "\u00a0\u00a0"}
               <ChooseFile sourceBase="figure" onChange={(fileDesc) => {

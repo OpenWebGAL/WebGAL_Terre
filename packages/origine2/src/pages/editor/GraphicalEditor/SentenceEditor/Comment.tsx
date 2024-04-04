@@ -1,10 +1,9 @@
 import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
 import { useValue } from "../../../../hooks/useValue";
-import useTrans from "@/hooks/useTrans";
+import {t} from "@lingui/macro";
 
 export default function Comment(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.comment.');
 
   const textValue = useValue(props.sentence.content);
   const submit = () => {
@@ -19,7 +18,7 @@ export default function Comment(props: ISentenceEditorProps) {
       }}
       onBlur={submit}
       className={styles.sayInput}
-      placeholder={t('options.value.title')}
-    />{t('options.value.tip')}
+      placeholder={t`注释`}
+    />{t`注释仅在编辑时可见，游戏中不会执行`}
   </div>;
 }
