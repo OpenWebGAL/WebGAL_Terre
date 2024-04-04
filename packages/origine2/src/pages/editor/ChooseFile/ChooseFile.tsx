@@ -2,10 +2,10 @@ import { useValue } from "../../../hooks/useValue";
 import { useEffect, useMemo } from "react";
 import styles from "./chooseFile.module.scss";
 import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
-import useTrans from "@/hooks/useTrans";
 import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { api } from "@/api";
+import {t} from "@lingui/macro";
 
 export interface IChooseFile {
   sourceBase: string;
@@ -23,7 +23,6 @@ export interface IFileDescription {
 }
 
 export default function ChooseFile(props: IChooseFile) {
-  const t = useTrans('editor.fileChoose.');
   const currentChildDir = useValue<string[]>([]);
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
@@ -97,17 +96,17 @@ export default function ChooseFile(props: IChooseFile) {
       onOpenChange={isShowChooseFileCallout.value ? onCancel : toggleIsCalloutVisible}
     >
       <PopoverTrigger>
-        <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t('cancel') : t('choose')}</Button>
+        <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>
       </PopoverTrigger>
       <PopoverSurface>
         <div className={styles.chooseFileContentWarpper}>
           <div className={styles.chooseFileTitle}>
-            {t('choose')}
+            {t`选择`}
           </div>
           <div className="file-search">
             <Input
-              placeholder={t('fileSearch')}
-              aria-label={t('fileSearch')}
+              placeholder={t`搜索文件`}
+              aria-label={t`搜索文件`}
               onChange={(ev, data) => fileSearch.set(data.value || '')}
               style={{width: '100%'}}
             />

@@ -4,16 +4,15 @@ import styles from "./sentenceEditor.module.scss";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
-import useTrans from "@/hooks/useTrans";
 import { Dropdown, Option } from "@fluentui/react-components";
+import {t} from "@lingui/macro";
 
 export default function PixiPerform(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.specialEffect.options.');
 
   const effects = new Map([
-    ["snow", t('usePrepared.effects.snow')],
-    ["rain", t('usePrepared.effects.rain')],
-    ["cherryBlossoms", t('usePrepared.effects.cherryBlossoms')],
+    ["snow", t`下雪`],
+    ["rain", t`下雨`],
+    ["cherryBlossoms", t`櫻花`],
   ]);
 
   const isSetEffectsOff = useValue(props.sentence.command === commandType.pixiInit);
@@ -31,22 +30,22 @@ export default function PixiPerform(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions title={t('clear.title')} key="1">
+      <CommonOptions title={t`清除特效`} key="1">
         <TerreToggle title="" onChange={(newValue) => {
           isSetEffectsOff.set(newValue);
           if (!newValue) {
             effectName.set("snow");
           }
           submit();
-        }} onText={t('clear.on')} offText={t('clear.off')} isChecked={isSetEffectsOff.value} />
+        }} onText={t`清除特效`} offText={t`使用特效`} isChecked={isSetEffectsOff.value} />
       </CommonOptions>
-      {!isSetEffectsOff.value && <CommonOptions key="2" title={t('usePrepared.title')}>
+      {!isSetEffectsOff.value && <CommonOptions key="2" title={t`使用预制特效`}>
         <TerreToggle title="" onChange={(newValue) => {
           isUsePreset.set(newValue);
         }}
-        onText={t('usePrepared.on')} offText={t('usePrepared.off')} isChecked={isUsePreset.value} />
+        onText={t`使用引擎内置的特效`} offText={t`使用自定义特效`} isChecked={isUsePreset.value} />
       </CommonOptions>}
-      {isUsePreset.value && <CommonOptions title={t('usePrepared.title')} key="3">
+      {isUsePreset.value && <CommonOptions title={t`使用预制特效`} key="3">
         <Dropdown
           value={effects.get(effectName.value) ?? effectName.value}
           selectedOptions={[effectName.value]}
@@ -59,7 +58,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
           { Array.from(effects.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
         </Dropdown>
       </CommonOptions>}
-      {!isUsePreset.value && !isSetEffectsOff.value && < CommonOptions title={t('useUser.title')} key="3">
+      {!isUsePreset.value && !isSetEffectsOff.value && < CommonOptions title={t`自定义特效名称`} key="3">
         <input value={effectName.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -67,7 +66,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('useUser.title')}
+          placeholder={t`自定义特效名称`}
           style={{ width: "100%" }}
         />
       </CommonOptions>}
