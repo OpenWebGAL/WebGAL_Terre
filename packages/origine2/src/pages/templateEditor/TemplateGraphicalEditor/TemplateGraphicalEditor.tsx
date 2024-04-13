@@ -7,6 +7,7 @@ import {formCss} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/form
 import {updateScssFile} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/updateScssFile";
 import {editorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor";
 import {WsUtil} from "@/utils/wsUtil";
+import WithStateEditor from "@/pages/templateEditor/TemplateGraphicalEditor/withStateEditor";
 
 interface ITemplateGraphicalEditorProps {
   path: string,
@@ -24,6 +25,7 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
 
   const data = classDataResp.data;
   const extracted = extractCss(data ?? '');
+  console.log(extracted);
 
   const handleSubmit = async () => {
     await updateScssFile(path, className, formCss(extracted));
@@ -41,6 +43,7 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
   return (
     <div className={styles.templateGraphicalEditor}>
       {propertiesEditors}
+      <WithStateEditor propWithState={extracted.propsWithState} onSubmit={handleSubmit}/>
     </div>
   );
 }
