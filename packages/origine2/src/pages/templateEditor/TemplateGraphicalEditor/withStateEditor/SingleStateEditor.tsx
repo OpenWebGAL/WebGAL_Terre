@@ -1,6 +1,6 @@
 import {IWebgalCssProp} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/extractCss";
 import {t} from "@lingui/macro";
-import PropertyEditor, {editorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor";
+import PropertyEditor from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor";
 import s from './singleStateEditor.module.scss';
 
 

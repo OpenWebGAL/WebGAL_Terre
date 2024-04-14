@@ -193,6 +193,10 @@ msgstr "Set the animation effect for the figure or background"
 msgid "为立绘或背景图片设置效果"
 msgstr "Set effect for figure or background"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/TemplateGraphicalEditor.tsx:40
+msgid "主要样式"
+msgstr "Main Style"
+
 #: src/pages/editor/Topbar/Topbar.tsx:111
 msgid "主页"
 msgstr "WebGAL Home"
@@ -242,6 +246,10 @@ msgstr "Sidebar"
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:43
 msgid "侧边栏游戏预览"
 msgstr "Sidebar Game Preview"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:29
+msgid "值"
+msgstr "Value"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:29
 msgid "停止 BGM"
@@ -468,6 +476,10 @@ msgstr "Scene file"
 msgid "大"
 msgstr "Large"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:16
+msgid "字重"
+msgstr "Font Weight"
+
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:57
 msgid "实时预览"
 msgstr "Live preview"
@@ -520,6 +532,10 @@ msgstr "Avatar file"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "展示小头像"
 msgstr "Show avatar"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:28
+msgid "属性"
+msgstr "Property"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:48
 msgid "左侧"
@@ -1400,3 +1416,11 @@ msgstr "Default Value is 0"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "默认值1"
 msgstr "Default Value is 1"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:9
+msgid "鼠标悬浮效果"
+msgstr "Mouse over Style"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:10
+msgid "鼠标按下效果"
+msgstr "Mouse pressed Style"
