@@ -12,13 +12,15 @@ export interface IPropertyEditorProps {
 
 type IWebGALStylePropertyEditor = React.FC<IPropertyEditorProps>
 
-export const editorTable: { propName: string, propLable: string, editor: IWebGALStylePropertyEditor }[] = [
-  {propName: 'font-weight', propLable: t`字重`, editor: WGFontWeight},
-];
+export function  geteditorTable(): { propName: string, propLable: string, editor: IWebGALStylePropertyEditor }[] {
+  return [
+    {propName: 'font-weight', propLable: t`字重`, editor: WGFontWeight},
+  ];
+}
 
 export default function PropertyEditor(props: { props: IWebgalCssProp[], onSubmit: () => void }) {
   const editors = props.props.map(property => {
-    const item = editorTable.find(e => e.propName === property.propName);
+    const item = geteditorTable().find(e => e.propName === property.propName);
     if (!item) return null;
     const PropEditor = item.editor;
     return {label: item.propLable, editor: <PropEditor prop={property} onSubmit={props.onSubmit}/>};
@@ -40,7 +42,6 @@ export default function PropertyEditor(props: { props: IWebgalCssProp[], onSubmi
               <span className={s.tableHeadText}>
                 {column.label}
               </span>
-
             </TableHeaderCell>
           ))}
         </TableRow>
