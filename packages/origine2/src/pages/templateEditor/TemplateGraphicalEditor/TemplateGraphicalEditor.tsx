@@ -5,9 +5,11 @@ import {extractCss} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/e
 import WGFontWeight from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/WGFontWeight";
 import {formCss} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/formCss";
 import {updateScssFile} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/updateScssFile";
-import {editorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor";
+import PropertyEditor, {editorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor";
 import {WsUtil} from "@/utils/wsUtil";
 import WithStateEditor from "@/pages/templateEditor/TemplateGraphicalEditor/withStateEditor";
+import {t} from "@lingui/macro";
+import s from './templateGraphicalEditor.module.scss';
 
 interface ITemplateGraphicalEditorProps {
   path: string,
@@ -25,7 +27,6 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
 
   const data = classDataResp.data;
   const extracted = extractCss(data ?? '');
-  console.log(extracted);
 
   const handleSubmit = async () => {
     await updateScssFile(path, className, formCss(extracted));
@@ -33,16 +34,12 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
     WsUtil.sendTemplateRefetchCommand();
   };
 
-  const propertiesEditors = extracted.commonProps.map(property => {
-    const item = editorTable.find(e => e.propName === property.propName);
-    if (!item) return '';
-    const PropEditor = item.editor;
-    return <PropEditor key={property.propName} prop={property} onSubmit={handleSubmit}/>;
-  });
-
   return (
     <div className={styles.templateGraphicalEditor}>
-      {propertiesEditors}
+      <div className={s.title}>
+        {t`主要样式`}
+      </div>
+      <PropertyEditor props={extracted.commonProps} onSubmit={handleSubmit}/>
       <WithStateEditor propWithState={extracted.propsWithState} onSubmit={handleSubmit}/>
     </div>
   );
