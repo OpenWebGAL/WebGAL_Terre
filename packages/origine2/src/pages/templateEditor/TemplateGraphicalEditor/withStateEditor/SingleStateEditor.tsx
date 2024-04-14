@@ -6,8 +6,8 @@ import s from './singleStateEditor.module.scss';
 
 export default function SingleStateEditor(props: { stateName: string, props: IWebgalCssProp[], onSubmit: () => void }) {
   const stateNameMap = {
-    'hover': t`鼠标悬浮效果`,
-    'active': t`鼠标按下效果`
+    'hover': t`鼠标悬浮样式`,
+    'active': t`鼠标按下样式`
   };
 
   // @ts-ignore
