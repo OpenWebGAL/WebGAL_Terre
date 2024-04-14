@@ -9,6 +9,9 @@ import {WsUtil} from "@/utils/wsUtil";
 import WithStateEditor from "@/pages/templateEditor/TemplateGraphicalEditor/withStateEditor";
 import {t} from "@lingui/macro";
 import s from './templateGraphicalEditor.module.scss';
+import React from "react";
+import {Button, Link} from "@fluentui/react-components";
+import {AddFilled} from "@fluentui/react-icons";
 
 interface ITemplateGraphicalEditorProps {
   path: string,
@@ -34,12 +37,19 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
   };
 
   return (
-    <div className={styles.templateGraphicalEditor}>
+    <div className={s.templateGraphicalEditor}>
       <div className={s.title}>
         {t`主要样式`}
       </div>
       <PropertyEditor props={extracted.commonProps} onSubmit={handleSubmit}/>
       <WithStateEditor propWithState={extracted.propsWithState} onSubmit={handleSubmit}/>
+      <div className={s.addStateWrapper}>
+        <Link style={{display:"flex",alignItems:"center"}}>
+          <AddFilled />{'\u00a0'}
+          {t`添加鼠标状态控制的样式`}
+        </Link>
+      </div>
+
     </div>
   );
 }

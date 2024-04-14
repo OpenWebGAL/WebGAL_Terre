@@ -2,7 +2,16 @@ import {IWebgalCssProp} from "@/pages/templateEditor/TemplateGraphicalEditor/uti
 import React from "react";
 import WGFontWeight from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/WGFontWeight";
 import {t} from "@lingui/macro";
-import {Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "@fluentui/react-components";
+import {
+  Button,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow
+} from "@fluentui/react-components";
 import s from './propertyEditor.module.scss';
 
 export interface IPropertyEditorProps {
@@ -59,6 +68,13 @@ export default function PropertyEditor(props: { props: IWebgalCssProp[], onSubmi
             </TableCell>
           </TableRow>
         ))}
+        <TableRow>
+          <TableCell>
+            <Link>
+              {t`添加属性`}
+            </Link>
+          </TableCell>
+        </TableRow>
       </TableBody>
     </Table>
   </div>;
