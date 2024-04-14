@@ -193,6 +193,10 @@ msgstr "为立绘或背景图片设置动画效果"
 msgid "为立绘或背景图片设置效果"
 msgstr "为立绘或背景图片设置效果"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/TemplateGraphicalEditor.tsx:40
+msgid "主要样式"
+msgstr "主要样式"
+
 #: src/pages/editor/Topbar/Topbar.tsx:111
 msgid "主页"
 msgstr "主页"
@@ -242,6 +246,10 @@ msgstr "侧边栏"
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:43
 msgid "侧边栏游戏预览"
 msgstr "侧边栏游戏预览"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:29
+msgid "值"
+msgstr "值"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:29
 msgid "停止 BGM"
@@ -468,6 +476,10 @@ msgstr "场景文件"
 msgid "大"
 msgstr "大"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:16
+msgid "字重"
+msgstr "字重"
+
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:57
 msgid "实时预览"
 msgstr "实时预览"
@@ -520,6 +532,10 @@ msgstr "小头像文件"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "展示小头像"
 msgstr "展示小头像"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:28
+msgid "属性"
+msgstr "属性"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:48
 msgid "左侧"
@@ -1400,3 +1416,11 @@ msgstr "默认值0"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "默认值1"
 msgstr "默认值1"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:9
+msgid "鼠标悬浮效果"
+msgstr "鼠标悬浮效果"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:10
+msgid "鼠标按下效果"
+msgstr "鼠标按下效果"
