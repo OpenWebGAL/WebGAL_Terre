@@ -36,6 +36,13 @@ export function extractCss(css: string): ICssExtractResult {
     }
 
     if(line.includes('}')){
+      // 状态保底
+      if(!result.propsWithState.find(e=>e.state === currentState)){
+        result.propsWithState.push({
+          state:currentState,
+          props:[]
+        });
+      }
       // 退出状态
       currentState = '';
       continue;
