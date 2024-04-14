@@ -1,11 +1,18 @@
 .propertyEditor {
   display: flex;
   align-items: center;
-  padding: 5px 10px;
 }
 
 .propertyEditorText{
-  font-weight: bold;
+  //font-weight: bold;
+  //color: var(--primary);
+}
+
+.tableHeadText{
+  //font-weight: bold;
   color: var(--primary);
-  margin-right: 5px;
+}
+
+.propertyEditorMain{
+  padding: 5px 10px;
 }
