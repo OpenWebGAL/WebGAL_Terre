@@ -12,6 +12,7 @@ import s from './templateGraphicalEditor.module.scss';
 import React from "react";
 import {Button, Link} from "@fluentui/react-components";
 import {AddFilled} from "@fluentui/react-icons";
+import {getStateNameMap} from "@/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor";
 
 interface ITemplateGraphicalEditorProps {
   path: string,
@@ -32,9 +33,26 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
 
   const handleSubmit = async () => {
     await updateScssFile(path, className, formCss(extracted));
-    await  classDataResp.mutate();
+    await classDataResp.mutate();
     WsUtil.sendTemplateRefetchCommand();
   };
+
+  function addStateToCss(state:string){
+    extracted.propsWithState.push({state,props:[]});
+    handleSubmit();
+  }
+
+  const addStateViews = Object.keys(getStateNameMap()).map(key => {
+    const stateNameMap = getStateNameMap() as any;
+
+    // 忽略已经添加的状态
+    if(extracted.propsWithState.find(e=>e.state === key)) return null;
+
+    return <Link key={key} style={{display: "flex", alignItems: "center", marginBottom: 3}} onClick={()=>addStateToCss(key)}>
+      <AddFilled/>{'\u00a0'}
+      {stateNameMap[key]}
+    </Link>;
+  });
 
   return (
     <div className={s.templateGraphicalEditor}>
@@ -44,10 +62,7 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
       <PropertyEditor props={extracted.commonProps} onSubmit={handleSubmit}/>
       <WithStateEditor propWithState={extracted.propsWithState} onSubmit={handleSubmit}/>
       <div className={s.addStateWrapper}>
-        <Link style={{display:"flex",alignItems:"center"}}>
-          <AddFilled />{'\u00a0'}
-          {t`添加鼠标状态控制的样式`}
-        </Link>
+        {addStateViews}
       </div>
 
     </div>
