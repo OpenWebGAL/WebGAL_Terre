@@ -33,12 +33,12 @@ export class WebgalFsService {
    * 获取目录下文件信息
    * @param dir 目录，需用 path 处理。
    */
-  async getDirInfo(_dir: string) {
+  async getDirInfo(_dir: string): Promise<IFileInfo[]> {
     const dir = decodeURI(_dir);
     const fileNames = await fs.readdir(dir);
     const dirInfoPromises = fileNames.map((e) => {
       const elementPath = this.getPath(`${dir}/${e}`);
-      return new Promise((resolve) => {
+      return new Promise<IFileInfo>((resolve) => {
         fs.stat(elementPath).then((result) => {
           const ret: IFileInfo = {
             name: e,
