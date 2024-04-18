@@ -7,7 +7,6 @@ import {
   Param,
   Post,
   Query,
-  Req,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -15,25 +14,21 @@ import {
   IUploadFileInfo,
   WebgalFsService,
 } from '../webgal-fs/webgal-fs.service';
-import { Request } from 'express';
 import { ManageGameService } from './manage-game.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { LspService } from '../lsp/lsp.service';
-import { logger } from 'webgal-origine-2/src/utils/logger';
 import {
-  // ... (其他的导入)
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
   ApiBody,
-  ApiQuery,
+  ApiOperation,
   ApiParam,
+  ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import {
   CreateGameDto,
   CreateNewSceneDto,
-  DeleteFileDto,
   DeleteDto,
+  DeleteFileDto,
   EditFileNameDto,
   EditSceneDto,
   EditTextFileDto,
@@ -73,6 +68,8 @@ export class ManageGameController {
   async createGame(@Body() createGameData: CreateGameDto) {
     const createResult = await this.manageGame.createGame(
       createGameData.gameName,
+      createGameData.derivative,
+      createGameData.templateName,
     );
     if (createResult) {
       return { status: 'success' };
@@ -96,6 +93,20 @@ export class ManageGameController {
     // <-- Use @Param decorator to fetch the gameName
     gameName = decodeURI(gameName); // Optionally decode the URI if necessary
     this.manageGame.openGameDictionary(gameName).then();
+  }
+
+  @Get('derivativeEngines')
+  @ApiOperation({ summary: 'Retrieve Derivative Engines' }) // <-- Provide a summary description of the endpoint's purpose
+  @ApiResponse({
+    status: 200,
+    description:
+      'Returns a list of directories representing available derivative engines.',
+  }) // <-- Describe the response and status code of this endpoint
+  async getDerivativeEngines() {
+    const readDirResult = await this.webgalFs.getDirInfo(
+      this.webgalFs.getPathFromRoot('/assets/templates/Derivative_Engine/'),
+    );
+    return readDirResult.filter((e) => e.isDir).map((e) => e.name);
   }
 
   @Get('openGameAssetsDict/:gameName') // <-- Define the route parameter using :gameName
