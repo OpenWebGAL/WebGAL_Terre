@@ -57,6 +57,10 @@ export interface EditTextFileDto {
 export interface CreateGameDto {
   /** The name of the game to be created */
   gameName: string;
+  /** The name of the derivative to be used */
+  derivative: string;
+  /** The name of the template to be applied */
+  templateName: string;
 }
 
 export interface EditFileNameDto {
@@ -131,7 +135,7 @@ export interface ApplyTemplateToGameDto {
 export interface GetStyleByClassNameDto {
   /** The name of class to be fetched */
   className: string;
-  /** The name of stylesheet file to be fetched */
+  /** The path of stylesheet file to be fetched */
   filePath: string;
 }
 
@@ -481,6 +485,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     manageGameControllerOpenGameDict: (gameName: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/manageGame/openGameDict/${gameName}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerGetDerivativeEngines
+     * @summary Retrieve Derivative Engines
+     * @request GET:/api/manageGame/derivativeEngines
+     */
+    manageGameControllerGetDerivativeEngines: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/manageGame/derivativeEngines`,
         method: 'GET',
         ...params,
       }),
