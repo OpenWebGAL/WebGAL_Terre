@@ -3,6 +3,10 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateGameDto {
   @ApiProperty({ description: 'The name of the game to be created' })
   gameName: string;
+  @ApiProperty({ description: 'The name of the derivative to be used' })
+  derivative?: string;
+  @ApiProperty({ description: 'The name of the template to be applied' })
+  templateName?: string;
 }
 
 export class EditFileNameDto {

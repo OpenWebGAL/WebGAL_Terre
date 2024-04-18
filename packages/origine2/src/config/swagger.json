@@ -327,6 +327,21 @@
         ]
       }
     },
+    "/api/manageGame/derivativeEngines": {
+      "get": {
+        "operationId": "ManageGameController_getDerivativeEngines",
+        "summary": "Retrieve Derivative Engines",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns a list of directories representing available derivative engines."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
     "/api/manageGame/openGameAssetsDict/{gameName}": {
       "get": {
         "operationId": "ManageGameController_openGameAssetsDict",
@@ -1075,10 +1090,20 @@
           "gameName": {
             "type": "string",
             "description": "The name of the game to be created"
+          },
+          "derivative": {
+            "type": "string",
+            "description": "The name of the derivative to be used"
+          },
+          "templateName": {
+            "type": "string",
+            "description": "The name of the template to be applied"
           }
         },
         "required": [
-          "gameName"
+          "gameName",
+          "derivative",
+          "templateName"
         ]
       },
       "EditFileNameDto": {
@@ -1251,7 +1276,7 @@
           },
           "filePath": {
             "type": "string",
-            "description": "The name of stylesheet file to be fetched"
+            "description": "The path of stylesheet file to be fetched"
           }
         },
         "required": [

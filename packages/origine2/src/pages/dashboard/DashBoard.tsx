@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 import {useValue} from "../../hooks/useValue";
 import {logger} from "../../utils/logger";
 import {Message, TestRefRef} from "../../components/message/Message";
@@ -14,20 +14,28 @@ import {
   MenuList,
   MenuPopover,
   MenuTrigger,
-  Toolbar,
-  ToolbarButton,
-  TabList,
-  Tab,
   SelectTabData,
-  SelectTabEvent
+  SelectTabEvent,
+  Tab,
+  TabList,
+  Toolbar,
+  ToolbarButton
 } from "@fluentui/react-components";
-import {LocalLanguage24Filled,LocalLanguage24Regular, bundleIcon, GamesFilled, GamesRegular, AlbumFilled, AlbumRegular} from "@fluentui/react-icons";
+import {
+  AlbumFilled,
+  AlbumRegular,
+  bundleIcon,
+  GamesFilled,
+  GamesRegular,
+  LocalLanguage24Filled,
+  LocalLanguage24Regular
+} from "@fluentui/react-icons";
 import classNames from "classnames";
 import useEditorStore from "@/store/useEditorStore";
-import { api } from "@/api";
-import useSWR, { useSWRConfig } from "swr";
-import { redirect } from "@/hooks/useHashRoute";
-import { t } from "@lingui/macro";
+import {api} from "@/api";
+import useSWR, {useSWRConfig} from "swr";
+import {redirect} from "@/hooks/useHashRoute";
+import {t} from "@lingui/macro";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -73,7 +81,7 @@ export const templateListFetcher = async () => {
   const templateList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
   logger.info("返回的模板列表", templateList);
   const getTemplateInfoList = templateList.map(
-    async (templateName) : Promise<TemplateInfo> => {
+    async (templateName): Promise<TemplateInfo> => {
       const TemplateConfigData = (await api.manageTemplateControllerGetTemplateConfig(templateName)).data as unknown as object;
       return {
         dir: templateName,
@@ -84,7 +92,7 @@ export const templateListFetcher = async () => {
 };
 
 export default function DashBoard() {
-  const { mutate } = useSWRConfig();
+  const {mutate} = useSWRConfig();
 
   const subPage = useEditorStore.use.subPage();
   const updateLanguage = useEditorStore.use.updateLanguage();
@@ -108,22 +116,26 @@ export default function DashBoard() {
 
   const setCurrentTemplate = (e: string | null) => currentTemplate.set(e);
 
-  async function createGame(gameName: string) {
-    const res = await api.manageGameControllerCreateGame({gameName: gameName}).then(r => r.data);
+  async function createGame(gameName: string, derivative?: string, templateName?: string) {
+    const res = await api.manageGameControllerCreateGame({
+      gameName: gameName,
+      derivative: derivative as string,
+      templateName: templateName as string
+    }).then(r => r.data);
     logger.info("创建结果：", res);
     messageRef.current!.showMessage(`${gameName} ` + t`已创建`, 2000);
     refreash();
   }
 
-  async function createTemplate(templateName:string) {
-    console.log("createTeplate:"+templateName);
-    const res = await api.manageTemplateControllerCreateTemplate({ templateName: templateName }).then(r => r.data);
+  async function createTemplate(templateName: string) {
+    console.log("createTeplate:" + templateName);
+    const res = await api.manageTemplateControllerCreateTemplate({templateName: templateName}).then(r => r.data);
     logger.info("创建结果：", res);
     refreash();
   }
 
-  const { data: gameList } = useSWR("game-list", gameListFetcher);
-  const { data: templateList } = useSWR("template-list", templateListFetcher);
+  const {data: gameList} = useSWR("game-list", gameListFetcher);
+  const {data: templateList} = useSWR("template-list", templateListFetcher);
 
   const refreash = () => {
     setCurrentGame(null);
@@ -134,10 +146,10 @@ export default function DashBoard() {
     }
   };
 
-  return(
+  return (
     <div className={styles.dashboard_container}>
       <div className={styles.topBar}>
-          WebGAL Terre
+        WebGAL Terre
         <Toolbar>
           <About/>
           <Menu>
@@ -175,11 +187,11 @@ export default function DashBoard() {
           />
           {
             currentGame.value && gameList &&
-                      <GamePreview
-                        currentGame={currentGame.value}
-                        setCurrentGame={setCurrentGame}
-                        gameInfo={gameList.find(e => e.dir === currentGame.value)!}
-                      />
+            <GamePreview
+              currentGame={currentGame.value}
+              setCurrentGame={setCurrentGame}
+              gameInfo={gameList.find(e => e.dir === currentGame.value)!}
+            />
           }
         </div>
         }
