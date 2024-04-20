@@ -49,6 +49,7 @@ export function extractCss(css: string): ICssExtractResult {
     }
 
     const [propName,propValue] = parseStyleString(line);
+    if(propName === '' || propValue ==='') continue;
     if(!currentState){
       result.commonProps.push({propName,propValue});
     } else{
