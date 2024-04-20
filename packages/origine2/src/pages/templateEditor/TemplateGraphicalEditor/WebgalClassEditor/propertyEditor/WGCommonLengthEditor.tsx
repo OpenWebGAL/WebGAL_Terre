@@ -4,7 +4,7 @@ import s from '../propertyEditor.module.scss';
 import {t} from "@lingui/macro";
 import {useState} from "react";
 
-export default function WGHeight(props: IPropertyEditorProps) {
+export default function WGCommonLengthEditor(props: IPropertyEditorProps) {
   // 使用正则表达式来分离数字和单位
   const initialValue = props.prop.propValue.match(/(\d+)(\D+)/) || ['','100','px']; // 默认为100px
   const [width, setWidth] = useState(initialValue[1]);
@@ -13,7 +13,6 @@ export default function WGHeight(props: IPropertyEditorProps) {
   const submit = () => {
     // 将宽度和单位拼接为一个字符串，不使用空格分隔
     props.prop.propValue = `${width}${unit}`;
-    console.log(width,unit);
     props.onSubmit();
   };
 
@@ -22,6 +21,7 @@ export default function WGHeight(props: IPropertyEditorProps) {
       type="number"
       value={width}
       onChange={(_, data) => setWidth(data.value)}
+      style={{marginRight:10}}
     />
     <Select
       value={unit}
