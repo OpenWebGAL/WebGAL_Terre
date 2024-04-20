@@ -8,8 +8,6 @@ import WGColorPicker
 
 export default function WGColor(props: IPropertyEditorProps) {
 
-
-
   const [color, setColor] = useState(props.prop.propValue);
   const [isShowColorPicker, setIsShowColorPicker] = useState(false);
 
