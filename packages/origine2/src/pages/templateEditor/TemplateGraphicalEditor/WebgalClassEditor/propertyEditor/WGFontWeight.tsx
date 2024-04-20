@@ -1,6 +1,6 @@
-import {IPropertyEditorProps} from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index";
+import {IPropertyEditorProps} from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable";
 import {Select, useId} from "@fluentui/react-components";
-import s from './propertyEditor.module.scss';
+import s from '../propertyEditor.module.scss';
 
 export default function WGFontWeight(props: IPropertyEditorProps) {
 
