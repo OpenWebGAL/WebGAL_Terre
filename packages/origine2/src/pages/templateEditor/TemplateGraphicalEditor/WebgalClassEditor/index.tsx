@@ -18,12 +18,18 @@ import s from './propertyEditor.module.scss';
 import AddProperty from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty";
 import {getEditorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable";
 import {IconButton} from "@fluentui/react";
+import WGCustomProperty
+  from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCustomProperty";
 
 
 export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSubmit: () => void }) {
   const editors = props.props.map(property => {
     const item = getEditorTable().find(e => e.propName === property.propName);
-    if (!item) return null;
+    if (!item) return {
+      label: property.propName,
+      editor: <WGCustomProperty prop={property} onSubmit={props.onSubmit}/>,
+      propertyName: property.propName
+    };
     const PropEditor = item.editor;
     return {
       label: item.propLable,
