@@ -3,7 +3,7 @@ import {Select, useId} from "@fluentui/react-components";
 import s from '../propertyEditor.module.scss';
 import {t} from "@lingui/macro";
 
-export default function WGFontWeight(props: IPropertyEditorProps) {
+export default function WGPosition(props: IPropertyEditorProps) {
 
   const selectId = useId();
 
@@ -12,8 +12,9 @@ export default function WGFontWeight(props: IPropertyEditorProps) {
       props.prop.propValue = data.value;
       props.onSubmit();
     }}>
-      <option value="normal">{t`正常`}</option>
-      <option value="bold">{t`加粗`}</option>
+      <option value="static">{t`静态`}</option>
+      <option value="relative">{t`相对`}</option>
+      <option value="absolute">{t`绝对`}</option>
     </Select>
   </div>;
 }
