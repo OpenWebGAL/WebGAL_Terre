@@ -1,11 +1,23 @@
 import {IWebgalCssProp} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/extractCss";
 import React, {useState} from "react";
 import {t} from "@lingui/macro";
-import {Link, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "@fluentui/react-components";
+import {
+  Button,
+  Dialog, DialogActions, DialogBody, DialogContent,
+  DialogSurface, DialogTitle,
+  DialogTrigger,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow
+} from "@fluentui/react-components";
 import s from './propertyEditor.module.scss';
 import AddProperty from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty";
 import {getEditorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable";
-
+import {IconButton} from "@fluentui/react";
 
 
 export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSubmit: () => void }) {
@@ -13,7 +25,11 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
     const item = getEditorTable().find(e => e.propName === property.propName);
     if (!item) return null;
     const PropEditor = item.editor;
-    return {label: item.propLable, editor: <PropEditor prop={property} onSubmit={props.onSubmit}/>};
+    return {
+      label: item.propLable,
+      editor: <PropEditor prop={property} onSubmit={props.onSubmit}/>,
+      propertyName: property.propName
+    };
   });
 
   const columns = [
@@ -22,10 +38,19 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
   ];
 
   const editorsAvailable = editors.filter(e => e !== null);
-  const [addPropertyDialogOpen,setAddPropertyDialogOpen] = useState(false);
+  const [addPropertyDialogOpen, setAddPropertyDialogOpen] = useState(false);
 
-  const handleAddProperty = (propName:string,propValue:string)=>{
-    props.props.push({propName,propValue});
+  const handleAddProperty = (propName: string, propValue: string) => {
+    if (!props.props.find(e => e.propName === propName))
+      props.props.push({propName, propValue});
+    props.onSubmit();
+  };
+
+  const handleDeleteProperty = (propertyName: string) => {
+    const index = props.props.findIndex(prop => prop.propName === propertyName);
+    if (index !== -1) {
+      props.props.splice(index, 1);
+    }
     props.onSubmit();
   };
 
@@ -46,9 +71,37 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
         {editorsAvailable.map((item) => (
           <TableRow key={item!.label}>
             <TableCell>
-              <span className={s.propertyEditorText}>
-                {item!.label}
-              </span>
+              <div className={s.propertyNameCell}>
+                <span className={s.propertyEditorText}>
+                  {item!.label}
+                </span>
+                <Dialog>
+                  <DialogTrigger disableButtonEnhancement>
+                    <IconButton
+                      iconProps={{iconName: 'Delete'}}
+                      title={t`删除属性`}
+                      ariaLabel={t`删除属性`}
+                    />
+                  </DialogTrigger>
+                  <DialogSurface>
+                    <DialogBody>
+                      <DialogTitle>{t`删除属性`}</DialogTitle>
+                      <DialogContent>
+                        {t`要删除属性${item?.label}吗？`}
+                      </DialogContent>
+                      <DialogActions>
+                        <DialogTrigger disableButtonEnhancement>
+                          <Button appearance="secondary">{t`返回`}</Button>
+                        </DialogTrigger>
+                        <DialogTrigger disableButtonEnhancement>
+                          <Button appearance="primary"
+                            onClick={() => handleDeleteProperty(item!.propertyName)}>{t`删除`}</Button>
+                        </DialogTrigger>
+                      </DialogActions>
+                    </DialogBody>
+                  </DialogSurface>
+                </Dialog>
+              </div>
             </TableCell>
             <TableCell>
               {item!.editor}
@@ -57,7 +110,7 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
         ))}
         <TableRow>
           <TableCell>
-            <Link onClick={()=>{
+            <Link onClick={() => {
               setAddPropertyDialogOpen(true);
             }}>
               {t`添加属性`}
@@ -66,6 +119,8 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
         </TableRow>
       </TableBody>
     </Table>
-    <AddProperty dialogOpen={addPropertyDialogOpen} onOpenChange={(state)=>{setAddPropertyDialogOpen(state);}} onAddProperty={handleAddProperty}/>
+    <AddProperty dialogOpen={addPropertyDialogOpen} onOpenChange={(state) => {
+      setAddPropertyDialogOpen(state);
+    }} onAddProperty={handleAddProperty}/>
   </div>;
 };
