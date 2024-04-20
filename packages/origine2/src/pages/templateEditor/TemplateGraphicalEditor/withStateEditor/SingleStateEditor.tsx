@@ -1,6 +1,6 @@
 import {IWebgalCssProp} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/extractCss";
 import {t} from "@lingui/macro";
-import PropertyEditor from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor";
+import WebgalClassEditor from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor";
 import s from './singleStateEditor.module.scss';
 
 export function getStateNameMap(){
@@ -21,7 +21,7 @@ export default function SingleStateEditor(props: { stateName: string, props: IWe
       {thisStateName}
     </div>
     <div>
-      <PropertyEditor props={props.props} onSubmit={props.onSubmit}/>
+      <WebgalClassEditor props={props.props} onSubmit={props.onSubmit}/>
     </div>
   </div>;
 }
