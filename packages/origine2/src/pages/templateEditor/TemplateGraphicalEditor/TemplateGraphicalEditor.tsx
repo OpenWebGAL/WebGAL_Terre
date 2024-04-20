@@ -4,7 +4,7 @@ import {api} from "@/api";
 import {extractCss} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/extractCss";
 import {formCss} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/formCss";
 import {updateScssFile} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/updateScssFile";
-import PropertyEditor from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor";
+import WebgalClassEditor from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor";
 import {WsUtil} from "@/utils/wsUtil";
 import WithStateEditor from "@/pages/templateEditor/TemplateGraphicalEditor/withStateEditor";
 import {t} from "@lingui/macro";
@@ -59,7 +59,7 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
       <div className={s.title}>
         {t`主要样式`}
       </div>
-      <PropertyEditor props={extracted.commonProps} onSubmit={handleSubmit}/>
+      <WebgalClassEditor props={extracted.commonProps} onSubmit={handleSubmit}/>
       <WithStateEditor propWithState={extracted.propsWithState} onSubmit={handleSubmit}/>
       <div className={s.addStateWrapper}>
         {addStateViews}

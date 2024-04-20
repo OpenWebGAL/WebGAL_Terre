@@ -1,35 +1,16 @@
 import {IWebgalCssProp} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/extractCss";
-import React from "react";
-import WGFontWeight from "@/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/WGFontWeight";
+import React, {useState} from "react";
 import {t} from "@lingui/macro";
-import {
-  Button,
-  Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow
-} from "@fluentui/react-components";
+import {Link, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "@fluentui/react-components";
 import s from './propertyEditor.module.scss';
+import AddProperty from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty";
+import {getEditorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable";
 
-export interface IPropertyEditorProps {
-  prop: IWebgalCssProp,
-  onSubmit: () => void;
-}
 
-type IWebGALStylePropertyEditor = React.FC<IPropertyEditorProps>
 
-export function  geteditorTable(): { propName: string, propLable: string, editor: IWebGALStylePropertyEditor }[] {
-  return [
-    {propName: 'font-weight', propLable: t`字重`, editor: WGFontWeight},
-  ];
-}
-
-export default function PropertyEditor(props: { props: IWebgalCssProp[], onSubmit: () => void }) {
+export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSubmit: () => void }) {
   const editors = props.props.map(property => {
-    const item = geteditorTable().find(e => e.propName === property.propName);
+    const item = getEditorTable().find(e => e.propName === property.propName);
     if (!item) return null;
     const PropEditor = item.editor;
     return {label: item.propLable, editor: <PropEditor prop={property} onSubmit={props.onSubmit}/>};
@@ -40,7 +21,13 @@ export default function PropertyEditor(props: { props: IWebgalCssProp[], onSubmi
     {columnKey: "value", label: t`值`},
   ];
 
-  const editorsAvailable = editors.filter(e=>e!==null);
+  const editorsAvailable = editors.filter(e => e !== null);
+  const [addPropertyDialogOpen,setAddPropertyDialogOpen] = useState(false);
+
+  const handleAddProperty = (propName:string,propValue:string)=>{
+    props.props.push({propName,propValue});
+    props.onSubmit();
+  };
 
   return <div className={s.propertyEditorMain}>
     <Table>
@@ -70,12 +57,15 @@ export default function PropertyEditor(props: { props: IWebgalCssProp[], onSubmi
         ))}
         <TableRow>
           <TableCell>
-            <Link>
+            <Link onClick={()=>{
+              setAddPropertyDialogOpen(true);
+            }}>
               {t`添加属性`}
             </Link>
           </TableCell>
         </TableRow>
       </TableBody>
     </Table>
+    <AddProperty dialogOpen={addPropertyDialogOpen} onOpenChange={(state)=>{setAddPropertyDialogOpen(state);}} onAddProperty={handleAddProperty}/>
   </div>;
 };
