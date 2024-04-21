@@ -9,6 +9,7 @@ import { LspModule } from './Modules/lsp/lsp.module';
 import { TemplatePreviewModule } from './Modules/template-preview/template-preview.module';
 import { AssetsModule } from './Modules/assets/assets.module';
 import { WebGalWebSocketGateway } from './Modules/websocket/websocketGateway';
+import { LspGateway } from './Modules/lsp/lsp.controller';
 
 @Module({
   imports: [
@@ -36,6 +37,6 @@ import { WebGalWebSocketGateway } from './Modules/websocket/websocketGateway';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, WebGalWebSocketGateway],
+  providers: [AppService, WebGalWebSocketGateway, LspGateway],
 })
 export class AppModule {}
