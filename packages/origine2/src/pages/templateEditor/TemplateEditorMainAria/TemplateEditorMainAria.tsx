@@ -9,7 +9,8 @@ import TextEditor from '@/pages/templateEditor/TextEditor/TextEditor';
 export default function TemplateMainAria() {
 
   const currentTab = useTemplateEditorContext((state) => state.currentTab);
-  const isCodeMode = useTemplateEditorContext((state) => state.isCodeMode);
+  const isClass = currentTab?.class && currentTab?.class?.length > 0;
+  const isCodeMode = useTemplateEditorContext((state) => state.isCodeMode) || !isClass;
 
   return (
     <div className={styles.mainAria}>
