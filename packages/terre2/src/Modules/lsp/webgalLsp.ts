@@ -26,16 +26,18 @@ export function createWsConnection(
 ) {
   // Create a connection for the server, using Node's IPC as a transport.
   // Also include all preview / proposed LSP features.
-  let connection = createConnection(reader, writer);
+  const connection = createConnection(reader, writer);
   // Create a simple text document manager.
-  let documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
+  const documents: TextDocuments<TextDocument> = new TextDocuments(
+    TextDocument,
+  );
 
-  let hasConfigurationCapability: boolean = false;
-  let hasWorkspaceFolderCapability: boolean = false;
-  let hasDiagnosticRelatedInformationCapability: boolean = false;
+  const hasConfigurationCapability = false;
+  let hasWorkspaceFolderCapability = false;
+  let hasDiagnosticRelatedInformationCapability = false;
 
   connection.onInitialize((params: InitializeParams) => {
-    let capabilities = params.capabilities;
+    const capabilities = params.capabilities;
 
     // Does the client support the `workspace/configuration` request?
     // If not, we fall back using global settings.
@@ -114,7 +116,7 @@ export function createWsConnection(
   let globalSettings: ExampleSettings = defaultSettings;
 
   // Cache the settings of all open documents
-  let documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
+  const documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
 
   connection.onDidChangeConfiguration((change) => {
     if (hasConfigurationCapability) {
@@ -163,17 +165,17 @@ export function createWsConnection(
     textDocument: TextDocument,
   ): Promise<void> {
     // In this simple example we get the settings for every validate run.
-    let settings = await getDocumentSettings(textDocument.uri);
+    const settings = await getDocumentSettings(textDocument.uri);
 
     // The validator creates diagnostics for all uppercase words length 2 and more
-    let text = textDocument.getText();
-    let pattern = /\b[A-Z]{2,}\b/g;
+    const text = textDocument.getText();
+    const pattern = /\b[A-Z]{2,}\b/g;
     let m: RegExpExecArray | null;
 
     connection.console.log(settings.toString());
 
-    let problems = 0;
-    let diagnostics: Diagnostic[] = [];
+    const problems = 0;
+    const diagnostics: Diagnostic[] = [];
 
     // while (
     //   (m = pattern.exec(text)) &&

@@ -22,6 +22,7 @@ import getConfigurationServiceOverride, {
   configurationRegistry,
 } from '@codingame/monaco-vscode-configuration-service-override';
 import './extension';
+import {getWsUrl} from "@/utils/getWsUrl";
 
 let initialized = false;
 
@@ -60,7 +61,7 @@ export const runClient = async () => {
     mimetypes: ['application/webgalscript'],
   });
 
-  initWebSocketAndStartClient('ws://127.0.0.1:19000/api/lsp2');
+  initWebSocketAndStartClient(getWsUrl('api/lsp2'));
 };
 
 /** parameterized version , support all languageId */
@@ -70,8 +71,8 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
     const socket = toSocket(webSocket);
     const reader = new WebSocketMessageReader(socket);
     const writer = new WebSocketMessageWriter(socket);
-    const languageClient = createLanguageClient({
-      reader,
+    const languageClient = createLanguageClient({// @ts-ignore
+      reader,// @ts-ignore
       writer,
     });
     languageClient.start();
