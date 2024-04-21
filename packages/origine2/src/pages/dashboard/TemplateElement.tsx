@@ -7,6 +7,7 @@ import { useValue } from "../../hooks/useValue";
 import { api } from "@/api";
 import { routers } from "@/App";
 import { t } from "@lingui/macro";
+import { localStorageRename } from "@/utils/localStorageRename";
 
 interface ITemplateElementProps {
   templateInfo: TemplateInfo;
@@ -54,12 +55,14 @@ export default function TemplateElement(props: ITemplateElementProps){
   const renameThisTemplate = async (templateName:string, newTemplateName:string) => {
     const source = `templates/${templateName}`;
     await api.assetsControllerRename({source,newName:newTemplateName});
+    localStorageRename(`template-editor-storage-${templateName}`, `template-editor-storage-${newTemplateName}`);
     isShowRenameDialog.set(false);
     props?.refreash?.();
   };
 
   const deleteThisTemplate = async (templateName:string) => {
     await api.manageTemplateControllerDeleteTemplate(templateName);
+    localStorage.removeItem(`template-editor-storage-${templateName}`);
     isShowDeleteDialog.set(false);
     props?.refreash?.();
   };
