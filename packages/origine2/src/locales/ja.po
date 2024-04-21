@@ -17,6 +17,26 @@ msgstr ""
 msgid ";注释"
 msgstr ";コメント"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
+msgid "（定位用）偏移右侧距离"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
+msgid "（定位用）偏移左侧距离"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
+msgid "（定位用）偏移底部距离"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
+msgid "（定位用）偏移顶部距离"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:32
+msgid "%"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:16
 msgid "BGM"
 msgstr "BGM"
@@ -52,6 +72,14 @@ msgstr "changeScene: シーンファイルを選択;"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:165
 msgid "choose:选项:选择场景文件;"
 msgstr "choose: 選択肢を設定: シーンファイルを選択;"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:42
+msgid "CSS 属性值"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:36
+msgid "CSS 属性名："
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:213
 msgid "end;"
@@ -116,6 +144,16 @@ msgstr "unlockBgm:;"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:189
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
+
+#: src/pages/dashboard/Sidebar.tsx:60
+#: src/pages/dashboard/Sidebar.tsx:65
+msgid "WebGAL Classic"
+msgstr ""
+
+#: src/pages/dashboard/Sidebar.tsx:50
+#: src/pages/dashboard/Sidebar.tsx:54
+msgid "WebGAL Standard"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:86
 msgid "X轴位移："
@@ -193,7 +231,7 @@ msgstr "立ち絵や背景画像にアニメーションを指定する"
 msgid "为立绘或背景图片设置效果"
 msgstr "立ち絵や背景画像のエフェクトを使う"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/TemplateGraphicalEditor.tsx:40
+#: src/pages/templateEditor/TemplateGraphicalEditor/TemplateGraphicalEditor.tsx:60
 msgid "主要样式"
 msgstr ""
 
@@ -247,13 +285,21 @@ msgstr "サイドバー"
 msgid "侧边栏游戏预览"
 msgstr "サイドバーゲームプレビュー"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:29
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGColor.tsx:32
+msgid "修改颜色"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:43
 msgid "值"
 msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:29
 msgid "停止 BGM"
 msgstr "BGMを停止"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:30
+msgid "像素"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:122
 msgid "光辉电影滤镜"
@@ -296,6 +342,22 @@ msgstr "立ち絵を非表示"
 msgid "关闭背景"
 msgstr "背景画像を非表示"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:33
+msgid "最大宽度"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:36
+msgid "最大高度"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:32
+msgid "最小宽度"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:35
+msgid "最小高度"
+msgstr ""
+
 #: src/pages/dashboard/About.tsx:81
 msgid "最新版本"
 msgstr "最新バージョン"
@@ -334,7 +396,7 @@ msgstr "背景画像の切り替え"
 
 #: src/components/Assets/Assets.tsx:157
 #: src/components/Assets/Assets.tsx:185
-#: src/pages/dashboard/Sidebar.tsx:55
+#: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
 msgstr "作成"
@@ -343,26 +405,33 @@ msgstr "作成"
 msgid "创建新模板"
 msgstr "新しいテンプレートを作成"
 
-#: src/pages/dashboard/Sidebar.tsx:48
+#: src/pages/dashboard/Sidebar.tsx:94
 msgid "创建新游戏"
 msgstr "新しいゲームを作成"
 
 #: src/components/Assets/FileElement.tsx:74
 #: src/components/Assets/FileElement.tsx:81
 #: src/pages/dashboard/GameElement.tsx:152
-#: src/pages/dashboard/TemplateElement.tsx:129
+#: src/pages/dashboard/TemplateElement.tsx:132
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:114
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:104
 msgid "删除"
 msgstr "削除"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:88
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:89
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:94
+msgid "删除属性"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:204
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:28
 msgid "删除本句"
 msgstr "この文を削除"
 
-#: src/pages/dashboard/TemplateElement.tsx:88
-#: src/pages/dashboard/TemplateElement.tsx:125
+#: src/pages/dashboard/TemplateElement.tsx:91
+#: src/pages/dashboard/TemplateElement.tsx:128
 msgid "删除模板"
 msgstr "テンプレートを削除"
 
@@ -379,6 +448,10 @@ msgstr "更新"
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:49
 msgid "刷新游戏"
 msgstr "ゲームをリフレッシュ"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:16
+msgid "加粗"
+msgstr ""
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:99
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:240
@@ -445,12 +518,12 @@ msgid "在对话框的左下角显示一个小头像"
 msgstr "ダイアログの左下に小さなアバターを表示します"
 
 #: src/pages/dashboard/GameElement.tsx:94
-#: src/pages/dashboard/TemplateElement.tsx:85
+#: src/pages/dashboard/TemplateElement.tsx:88
 msgid "在文件管理器中打开"
 msgstr "ファイルエクスプローラーで開く"
 
 #: src/pages/dashboard/GameElement.tsx:95
-#: src/pages/dashboard/TemplateElement.tsx:86
+#: src/pages/dashboard/TemplateElement.tsx:89
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:156
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
@@ -476,8 +549,20 @@ msgstr "シーンファイル"
 msgid "大"
 msgstr "大きい"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:16
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:27
+msgid "字体大小"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:29
+msgid "字母间距"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:28
 msgid "字重"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:37
+msgid "定位方式"
 msgstr ""
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:57
@@ -495,6 +580,10 @@ msgstr "リアルタイムプレビューはゲームを制限付きで早送り
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:31
+msgid "宽度"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:106
 msgid "对话"
@@ -533,7 +622,7 @@ msgstr "アバターファイル"
 msgid "展示小头像"
 msgstr "アバターを表示"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/propertyEditor/index.tsx:28
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:42
 msgid "属性"
 msgstr ""
 
@@ -548,7 +637,7 @@ msgstr "左"
 msgid "左侧立绘"
 msgstr "左の立ち絵"
 
-#: src/pages/dashboard/DashBoard.tsx:114
+#: src/pages/dashboard/DashBoard.tsx:126
 msgid "已创建"
 msgstr "作成済み"
 
@@ -615,9 +704,22 @@ msgstr "拡張子"
 msgid "持续时间（单位为毫秒）"
 msgstr "持続時間（ミリ秒）"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:17
+msgid "指针"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:208
 msgid "控制是否要显示文本框"
 msgstr "テキストボックスの表示を制御する"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGColor.tsx:36
+msgid "提交"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:35
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCustomProperty.tsx:20
+msgid "提交修改"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:32
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -717,6 +819,10 @@ msgstr "文字色"
 msgid "文本显示"
 msgstr "テキストボックス"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:31
+msgid "文本长度 (em)"
+msgstr ""
+
 #: src/pages/dashboard/About.tsx:106
 msgid "文档"
 msgstr "ドキュメント"
@@ -734,7 +840,7 @@ msgstr "新しいフォルダーを作成"
 msgid "新建模板"
 msgstr "新しいテンプレートを作成"
 
-#: src/pages/dashboard/Sidebar.tsx:44
+#: src/pages/dashboard/Sidebar.tsx:90
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
@@ -754,7 +860,7 @@ msgstr "新しいタブでプレビュー"
 msgid "新模板名"
 msgstr "新しいテンプレート名"
 
-#: src/pages/dashboard/Sidebar.tsx:54
+#: src/pages/dashboard/Sidebar.tsx:100
 msgid "新游戏名"
 msgstr "新しいゲーム名"
 
@@ -762,9 +868,9 @@ msgstr "新しいゲーム名"
 msgid "新的模板"
 msgstr "新しいテンプレート"
 
-#: src/pages/dashboard/Sidebar.tsx:23
-#: src/pages/dashboard/Sidebar.tsx:29
-#: src/pages/dashboard/Sidebar.tsx:53
+#: src/pages/dashboard/Sidebar.tsx:34
+#: src/pages/dashboard/Sidebar.tsx:75
+#: src/pages/dashboard/Sidebar.tsx:99
 #: src/pages/dashboard/TemplateSidebar.tsx:29
 msgid "新的游戏"
 msgstr "新しいゲーム"
@@ -782,6 +888,7 @@ msgid "旋转角度："
 msgstr "回転："
 
 #: src/components/Assets/Assets.tsx:144
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
 
@@ -856,11 +963,15 @@ msgstr "タイトルの背景画像"
 msgid "标题背景音乐"
 msgstr "タイトルのBGM"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:33
+msgid "根文本长度 (rem)"
+msgstr ""
+
 #: src/pages/dashboard/About.tsx:66
 msgid "检测到新版本"
 msgstr "新しいバージョンが見つかりました"
 
-#: src/pages/dashboard/DashBoard.tsx:164
+#: src/pages/dashboard/DashBoard.tsx:176
 msgid "模板"
 msgstr "テンプレート"
 
@@ -871,6 +982,10 @@ msgstr "テンプレートリスト"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
 msgid "櫻花"
 msgstr "桜"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:15
+msgid "正常"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:36
 msgid "正常播放 BGM"
@@ -912,6 +1027,11 @@ msgstr "コメントを追加します"
 msgid "添加一首音乐到音乐鉴赏界面"
 msgstr "BGM鑑賞に任意のBGMを追加する"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:62
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:122
+msgid "添加属性"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:96
 msgid "添加或切换指定位置的立绘"
 msgstr "立ち絵の追加・描画位置を指定する"
@@ -920,6 +1040,10 @@ msgstr "立ち絵の追加・描画位置を指定する"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:124
 msgid "添加新行"
 msgstr "新しい行を追加"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:67
+msgid "添加自定义属性"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
@@ -937,11 +1061,11 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:162
+#: src/pages/dashboard/DashBoard.tsx:174
 msgid "游戏"
 msgstr "ゲーム"
 
-#: src/pages/dashboard/Sidebar.tsx:35
+#: src/pages/dashboard/Sidebar.tsx:81
 msgid "游戏列表"
 msgstr "ゲームリスト"
 
@@ -994,11 +1118,15 @@ msgstr "百分率。 0-100 有効"
 msgid "目前没有打开任何文件"
 msgstr "現在開いているファイルはありません"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGPosition.tsx:16
+msgid "相对"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:304
 msgid "睁开眼睛"
 msgstr "開いた目"
 
-#: src/pages/dashboard/TemplateElement.tsx:126
+#: src/pages/dashboard/TemplateElement.tsx:129
 msgid "确定要删除 \"{templateName}\" 模板吗？"
 msgstr "テンプレート\"{templateName}\"を削除してもよろしいですか？"
 
@@ -1078,7 +1206,11 @@ msgstr "ゲームが終了され、タイトル画面に戻ります"
 msgid "结束游戏"
 msgstr "ゲーム終了"
 
-#: src/pages/dashboard/TemplateElement.tsx:78
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGPosition.tsx:17
+msgid "绝对"
+msgstr ""
+
+#: src/pages/dashboard/TemplateElement.tsx:81
 msgid "编辑模板"
 msgstr "テンプレートを編集"
 
@@ -1128,6 +1260,10 @@ msgstr "背景色"
 msgid "脚本编辑器"
 msgstr "スクリプトエディタ"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:15
+msgid "自动"
+msgstr ""
+
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
 msgid "自动换行"
 msgstr "自動折り返し"
@@ -1156,6 +1292,10 @@ msgstr "入力を取得"
 #: src/pages/editor/MainArea/EditorToolbar.tsx:56
 msgid "行脚本"
 msgstr " スクリプトの行、"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:96
+msgid "要删除属性{0}吗？"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:91
 msgid "角色名，留空以继承上句"
@@ -1219,8 +1359,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:145
-#: src/pages/dashboard/DashBoard.tsx:146
+#: src/pages/dashboard/DashBoard.tsx:157
+#: src/pages/dashboard/DashBoard.tsx:158
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:38
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:44
 msgid "语言"
@@ -1259,8 +1399,9 @@ msgstr "ターゲットIDを入力"
 
 #: src/pages/dashboard/GameElement.tsx:121
 #: src/pages/dashboard/GameElement.tsx:153
-#: src/pages/dashboard/TemplateElement.tsx:112
-#: src/pages/dashboard/TemplateElement.tsx:128
+#: src/pages/dashboard/TemplateElement.tsx:115
+#: src/pages/dashboard/TemplateElement.tsx:131
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:100
 msgid "返回"
 msgstr "戻る"
 
@@ -1341,7 +1482,7 @@ msgstr "設定"
 #: src/components/Assets/FileElement.tsx:54
 #: src/components/Assets/FileElement.tsx:62
 #: src/pages/dashboard/GameElement.tsx:122
-#: src/pages/dashboard/TemplateElement.tsx:113
+#: src/pages/dashboard/TemplateElement.tsx:116
 msgid "重命名"
 msgstr "名前を変更"
 
@@ -1350,8 +1491,8 @@ msgstr "名前を変更"
 msgid "重命名文件夹"
 msgstr "ディレクトリ名の変更"
 
-#: src/pages/dashboard/TemplateElement.tsx:87
-#: src/pages/dashboard/TemplateElement.tsx:102
+#: src/pages/dashboard/TemplateElement.tsx:90
+#: src/pages/dashboard/TemplateElement.tsx:105
 msgid "重命名模板"
 msgstr "テンプレート名の変更"
 
@@ -1388,6 +1529,10 @@ msgstr "サイドバーを隠す"
 msgid "隐藏文本框"
 msgstr "テキストボックスを非表示"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGPosition.tsx:15
+msgid "静态"
+msgstr ""
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:102
 msgid "音乐"
 msgstr "BGM"
@@ -1395,6 +1540,14 @@ msgstr "BGM"
 #: src/pages/dashboard/About.tsx:103
 msgid "项目主页"
 msgstr "プロジェクトホームページ"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:30
+msgid "颜色"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:34
+msgid "高度"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:112
 msgid "高斯模糊："
@@ -1418,9 +1571,21 @@ msgid "默认值1"
 msgstr "デフォルト値は1"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:9
-msgid "鼠标悬浮效果"
+#~ msgid "鼠标悬浮效果"
+#~ msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:8
+msgid "鼠标悬浮样式"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:42
+msgid "鼠标指针"
 msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:10
-msgid "鼠标按下效果"
+#~ msgid "鼠标按下效果"
+#~ msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:9
+msgid "鼠标按下样式"
 msgstr ""
