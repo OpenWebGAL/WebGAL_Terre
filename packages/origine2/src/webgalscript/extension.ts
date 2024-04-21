@@ -30,5 +30,5 @@ const manifest: IExtensionManifest = {
 
 const { registerFileUrl } = registerExtension(manifest, ExtensionHostKind.LocalProcess);
 
-registerFileUrl('/white.json', new URL('../config/themes/light-vs.json', import.meta.url).href);
+registerFileUrl('/white.json', new URL('../config/themes/monokai-light-vs.json', import.meta.url).href);
 registerFileUrl('/hl.json', new URL('../config/highlighting/hl.json', import.meta.url).href);
