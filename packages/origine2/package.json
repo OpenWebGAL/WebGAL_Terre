@@ -4,9 +4,9 @@
   "version": "4.4.12",
   "license": "MPL-2.0",
   "scripts": {
-    "dev": "lingui compile --typescript && vite --host",
-    "build": "lingui compile --typescript && node version-sync.js && tsc && vite build --base=./",
-    "build-lowram": "lingui compile --typescript && node version-sync.js && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
+    "dev": "lingui extract && lingui compile --typescript && vite --host",
+    "build": "lingui extract && lingui compile --typescript && node version-sync.js && tsc && vite build --base=./",
+    "build-lowram": "lingui extract && lingui compile --typescript && node version-sync.js && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
     "lint": "eslint src/** --fix",
     "openapi": "tsx openapi.ts",
