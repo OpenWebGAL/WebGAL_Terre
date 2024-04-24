@@ -12,6 +12,10 @@ import {
   MessageWriter,
   SemanticTokensParams,
   SemanticTokensRangeParams,
+  SemanticTokenTypes,
+  SemanticTokenModifiers,
+  CompletionParams,
+  CompletionTriggerKind,
 } from 'vscode-languageserver/node';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -19,6 +23,10 @@ import { TextDocument } from 'vscode-languageserver-textdocument';
 import { getCommands } from './suggestionRules/getCommands';
 import { getArgsKey } from './suggestionRules/getArgsKey';
 import { getKeywordsAndConstants } from './suggestionRules/getKeywordsAndConstants';
+import { webgalParser } from '../../util/webgal-parser';
+import { IScene } from 'webgal-parser/build/types/interface/sceneInterface';
+import { pprintJSON } from 'src/util/strings';
+import { commandArgs, makeCompletion } from './commandArgs';
 
 export function createWsConnection(
   reader: MessageReader,
@@ -59,14 +67,15 @@ export function createWsConnection(
         // Tell the client that this server supports code completion.
         completionProvider: {
           resolveProvider: true,
+          triggerCharacters: ['-'],
         },
         semanticTokensProvider: {
-          full: false,
-          range: true,
+          full: true,
+          range: false,
           documentSelector: null,
           legend: {
-            tokenTypes: ['function', 'parameter'],
-            tokenModifiers: [],
+            tokenTypes: Object.values(SemanticTokenTypes),
+            tokenModifiers: Object.values(SemanticTokenModifiers),
           },
         },
       },
@@ -216,61 +225,103 @@ export function createWsConnection(
     connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
   }
 
-  connection.languages.semanticTokens.onRange(
-    (p: SemanticTokensRangeParams) => {
-      const document = documents.get(p.textDocument.uri);
-      const line = document.getText({
-        start: p.range.start,
-        end: p.range.end,
-      });
-      connection.console.log(`onCompletion: line: ${line}`);
-      return {
-        data: [0, 5, 4, 1, 0],
-      };
-    },
-  );
-
   connection.onDidChangeWatchedFiles((_change) => {
     // Monitored files have change in VS Code
     connection.console.log('We received a file change event');
   });
 
   // This handler provides the initial list of the completion items.
-  connection.onCompletion((p: TextDocumentPositionParams): CompletionItem[] => {
-    // The pass parameter contains the position of the text document in
-    // which code complete got requested. For the example we ignore this
-    // info and always provide the same completion items.
-    const document = documents.get(p.textDocument.uri);
-    const position = p.position;
+  connection.onCompletion((params: CompletionParams): CompletionItem[] => {
+    const document = documents.get(params.textDocument.uri);
+    const position = params.position;
     const line = document.getText({
       start: { line: position.line, character: 0 },
       end: position,
     });
-    const allTextBefore = document.getText({
-      start: { line: 0, character: 0 },
-      end: position,
-    });
-    connection.console.log(`onCompletion: line: ${line}`);
 
-    const suggestions: CompletionItem[] = [];
-    suggestions.push(...getCommands(line, allTextBefore, position));
-    suggestions.push(...getArgsKey(line, allTextBefore, position));
-    suggestions.push(...getKeywordsAndConstants(line, allTextBefore, position));
-    connection.console.log(`onCompletion: suggestions: ${suggestions}`);
+    // Before receving `:`, consider waiting for a new command
+    // NOTE: this may not be the case if the same character is saying, but we
+    // don't have other ways to distinguish these two cases
+    if (!line.includes(':')) {
+      return getCommands(line);
+    }
+
+    // If cursor after comment region, disable completion
+    if (line.includes(';') && position.character > line.indexOf(';')) {
+      return [];
+    }
+    return complete(line, params);
+  });
+
+  function isTriggeringByDash(params: CompletionParams) {
+    return (
+      params.context.triggerKind === CompletionTriggerKind.TriggerCharacter &&
+      params.context.triggerCharacter === '-'
+    );
+  }
+
+  function doesNotContainDash(lineBefore: string) {
+    const asciiRemoved = lineBefore.replace(/[^\x00-\x7F]/g, '');
+    return asciiRemoved.lastIndexOf('-') === asciiRemoved.length - 1;
+  }
+
+  function complete(line: string, params: CompletionParams) {
+    // The pass parameter contains the position of the text document in
+    // which code complete got requested. For the example we ignore this
+    // info and always provide the same completion items.
+    // const allTextBefore = document.getText({
+    //   start: { line: 0, character: 0 },
+    //   end: position,
+    // });
+    // connection.console.log(`onCompletion: line: ${line}`);
+
+    /**
+     * Ver 1 (manual parsing)
+     */
+    // suggestions.push(...getCommands(line, allTextBefore, position));
+    // suggestions.push(...getArgsKey(line, allTextBefore, position));
+    // suggestions.push(...getKeywordsAndConstants(line, allTextBefore, position));
+
+    /**
+     * Ver 2 (using webgal-parser)
+     */
+
+    console.debug(`Line to complete: ${line}`);
+
+    if (line.trim().length === 0) {
+      return getCommands(line);
+    }
+
+    let suggestions: CompletionItem[] = [];
+
+    // FIXME: Known bug: `getUserInput` returns commandType 0 (say)
+    // FIXME: Known bug: `setTransition` returns commandType 0 (say)
+    const scene: IScene = webgalParser.parse(
+      line,
+      'scene.txt',
+      params.textDocument.uri,
+    );
+
+    for (const sentence of scene.sentenceList) {
+      console.debug(`Sentence: ${pprintJSON(sentence, true)}`);
+
+      suggestions = suggestions.concat(
+        makeCompletion(
+          commandArgs[sentence.command],
+          !isTriggeringByDash(params) &&
+            doesNotContainDash(line.substring(0, params.position.character)),
+        ),
+      );
+    }
+
+    console.log(`onCompletion: suggestions: ${pprintJSON(suggestions, true)}`);
 
     return suggestions;
-  });
+  }
 
   // This handler resolves additional information for the item selected in
   // the completion list.
   connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
-    // if (item.data === 1) {
-    //   item.detail = 'TypeScript details';
-    //   item.documentation = 'TypeScript documentation';
-    // } else if (item.data === 2) {
-    //   item.detail = 'JavaScript details';
-    //   item.documentation = 'JavaScript documentation';
-    // }
     return item;
   });
 
