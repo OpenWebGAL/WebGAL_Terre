@@ -108,7 +108,10 @@ export default function TextEditor(props: ITextEditorProps) {
   }
 
   return (
-    <div style={{ display: props.isHide ? 'none' : 'block' }} className={styles.textEditor_main}>
+    <div
+      style={{ display: props.isHide ? 'none' : 'block', zIndex: 999, overflow: 'auto' }}
+      className={styles.textEditor_main}
+    >
       <Editor
         height="100%"
         width="100%"
