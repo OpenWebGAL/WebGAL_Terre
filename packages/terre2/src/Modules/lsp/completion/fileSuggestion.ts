@@ -23,6 +23,15 @@ export function makeFileSuggestion(files: string[]): CompletionItem[] {
 
 const fsService = new WebgalFsService(new ConsoleLogger());
 
+function getPathFromSubdir(basePath: string, subdir: string) {
+  return fsService.getPathFromRoot(decodeURI(`public/${basePath}/${subdir}`));
+}
+
+function filterFiles(files: IFileInfo[]) {
+  // Ignores hidden files (starting with `.`)
+  return files.filter((di) => !di.name.startsWith('.'));
+}
+
 export async function handleFileSuggestions(
   sentence: ISentence,
   basePath: string,
@@ -30,18 +39,31 @@ export async function handleFileSuggestions(
   let dirPath = '';
   let dirInfo: IFileInfo[] = [];
   if (sentence.command === commandType.changeBg) {
-    dirPath = fsService.getPathFromRoot(
-      decodeURI(`public/${basePath}/background`),
-    );
+    dirPath = getPathFromSubdir(basePath, 'background');
+  }
+  if (sentence.command === commandType.unlockCg) {
+    dirPath = getPathFromSubdir(basePath, 'background');
   }
   if (sentence.command === commandType.changeFigure) {
-    dirPath = fsService.getPathFromRoot(decodeURI(`public/${basePath}/figure`));
+    dirPath = getPathFromSubdir(basePath, 'figure');
   }
   if (sentence.command === commandType.changeScene) {
-    dirPath = fsService.getPathFromRoot(decodeURI(`public/${basePath}/scene`));
+    dirPath = getPathFromSubdir(basePath, 'scene');
+  }
+  if (sentence.command === commandType.callScene) {
+    dirPath = getPathFromSubdir(basePath, 'scene');
+  }
+  if (sentence.command === commandType.bgm) {
+    dirPath = getPathFromSubdir(basePath, 'bgm');
+  }
+  if (sentence.command === commandType.unlockBgm) {
+    dirPath = getPathFromSubdir(basePath, 'bgm');
+  }
+  if (sentence.command === commandType.video) {
+    dirPath = getPathFromSubdir(basePath, 'video');
   }
   dirInfo = await fsService.getDirInfo(dirPath);
   console.debug(dirInfo);
 
-  return makeFileSuggestion(dirInfo.map((di) => di.name));
+  return makeFileSuggestion(filterFiles(dirInfo).map((di) => di.name));
 }
