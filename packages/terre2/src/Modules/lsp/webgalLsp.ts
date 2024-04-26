@@ -155,10 +155,14 @@ export function createWsConnection(
     tokenModifiers: string[];
   }
 
+  let lastVariables = new Map<string, number>();
+
   function parseSemanticTokens(text: string, uri: string): IParsedToken[] {
     const r: IParsedToken[] = [];
     const lines = text.split(/\r\n|\r|\n/);
     let lastLine = 0;
+
+    lastVariables = new Map<string, number>();
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
@@ -166,6 +170,16 @@ export function createWsConnection(
       const sentence = scene.sentenceList[0];
 
       let currentOffset = 0;
+
+      // check variables
+      if (sentence.command === commandType.setVar) {
+        if (sentence.content.match(/=/)) {
+          const key = sentence.content.split(/=/)[0];
+          if (!lastVariables.has(key)) {
+            lastVariables.set(key, i);
+          }
+        }
+      }
 
       if (sentence.command !== commandType.say) {
         continue;
@@ -408,7 +422,7 @@ export function createWsConnection(
     for (const sentence of scene.sentenceList) {
       console.debug(`Sentence: ${pprintJSON(sentence, true)}`);
 
-      let newSuggestions;
+      let newSuggestions: CompletionItem[] = [];
 
       if (line.charAt(params.position.character - 1) === ':') {
         if (sentence.command === commandType.say) {
@@ -418,8 +432,19 @@ export function createWsConnection(
           newSuggestions = await handleFileSuggestions(sentence, basePath);
         }
       } else if (line.charAt(params.position.character - 1) === '{') {
+        newSuggestions = [];
+
         if (sentence.command === commandType.say) {
           // Suggest variables
+          lastVariables.forEach((v, k) => {
+            if (v <= params.position.line) {
+              newSuggestions.push({
+                label: k,
+                insertText: k + '}',
+                kind: CompletionItemKind.Variable,
+              });
+            }
+          });
         }
       } else {
         // No file suggestions. Check completion.
