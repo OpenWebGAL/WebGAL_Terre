@@ -55,6 +55,7 @@ export const runClient = async () => {
 
   updateUserConfiguration(`{
   "workbench.colorTheme": "WebGAL White",
+  "editor.semanticHighlighting.enabled": "configuredByTheme",
 }`);
 
   monaco.languages.register({
