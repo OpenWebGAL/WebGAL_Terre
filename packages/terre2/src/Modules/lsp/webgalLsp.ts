@@ -17,6 +17,8 @@ import {
   CompletionParams,
   CompletionTriggerKind,
   DidChangeTextDocumentParams,
+  SemanticTokens,
+  uinteger,
 } from 'vscode-languageserver/node';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -34,6 +36,13 @@ import {
   shouldInsertDash,
 } from './completion/commandArgs';
 import { handleFileSuggestions } from './completion/fileSuggestion';
+
+const tokenTypes = new Map<string, number>();
+const tokenModifiers = new Map<string, number>();
+
+tokenTypes.set('variable', 0);
+tokenTypes.set('keyword', 1);
+tokenModifiers.set('default', 0);
 
 export function createWsConnection(
   reader: MessageReader,
@@ -78,15 +87,15 @@ export function createWsConnection(
         // Tell the client that this server supports code completion.
         completionProvider: {
           resolveProvider: true,
-          triggerCharacters: ['-', ':'],
+          triggerCharacters: ['-', ':', '{'],
         },
         semanticTokensProvider: {
           full: true,
           range: false,
           documentSelector: null,
           legend: {
-            tokenTypes: Object.values(SemanticTokenTypes),
-            tokenModifiers: Object.values(SemanticTokenModifiers),
+            tokenTypes: Array.from(tokenTypes.keys()),
+            tokenModifiers: Array.from(tokenModifiers.keys()),
           },
         },
       },
@@ -123,6 +132,119 @@ export function createWsConnection(
       });
     }
   });
+
+  connection.onRequest(
+    'textDocument/semanticTokens/full',
+    (params: SemanticTokensParams): SemanticTokens => {
+      const document = documents.get(params.textDocument.uri);
+      const data = computeSemanticTokens(
+        parseSemanticTokens(document.getText(), params.textDocument.uri),
+      );
+      // console.log(`semanticTokens: data: ${data}`);
+      return {
+        data,
+      };
+    },
+  );
+
+  interface IParsedToken {
+    line: number;
+    startCharacter: number;
+    length: number;
+    tokenType: string;
+    tokenModifiers: string[];
+  }
+
+  function parseSemanticTokens(text: string, uri: string): IParsedToken[] {
+    const r: IParsedToken[] = [];
+    const lines = text.split(/\r\n|\r|\n/);
+    let lastLine = 0;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const scene: IScene = webgalParser.parse(line, 'scene.txt', uri);
+      const sentence = scene.sentenceList[0];
+
+      let currentOffset = 0;
+
+      if (sentence.command !== commandType.say) {
+        continue;
+      }
+
+      do {
+        const contentOffset = line.indexOf(sentence.content, currentOffset);
+        if (contentOffset === -1) {
+          break;
+        }
+        const openOffset = line.indexOf('{', contentOffset);
+        if (openOffset === -1) {
+          break;
+        }
+        const closeOffset = line.indexOf('}', openOffset);
+        if (closeOffset === -1) {
+          break;
+        }
+
+        r.push({
+          line: i - lastLine,
+          startCharacter: openOffset,
+          length: 1,
+          tokenType: 'keyword',
+          tokenModifiers: [],
+        });
+
+        r.push({
+          line: 0,
+          startCharacter: 1,
+          length: closeOffset - openOffset - 1,
+          tokenType: 'variable',
+          tokenModifiers: [],
+        });
+
+        r.push({
+          line: 0,
+          startCharacter: closeOffset - openOffset - 1,
+          length: 1,
+          tokenType: 'keyword',
+          tokenModifiers: [],
+        });
+
+        lastLine = i;
+        currentOffset = closeOffset;
+      } while (true);
+    }
+    return r;
+  }
+
+  function encodeTokenType(tokenType: string): uinteger {
+    if (tokenTypes.has(tokenType)) {
+      return tokenTypes.get(tokenType)!;
+    }
+    return 0;
+  }
+
+  function encodeTokenModifiers(strTokenModifiers: string[]): uinteger {
+    let result = 0;
+    for (let i = 0; i < strTokenModifiers.length; i++) {
+      const tokenModifier = strTokenModifiers[i];
+      if (tokenModifiers.has(tokenModifier)) {
+        result = result | (1 << tokenModifiers.get(tokenModifier)!);
+      }
+    }
+    return result;
+  }
+
+  function computeSemanticTokens(allTokens: IParsedToken[]): uinteger[] {
+    return allTokens
+      .map((token) => [
+        token.line,
+        token.startCharacter,
+        token.length,
+        encodeTokenType(token.tokenType),
+        encodeTokenModifiers(token.tokenModifiers),
+      ])
+      .flat(1);
+  }
 
   // The example settings
   interface ExampleSettings {
@@ -189,7 +311,7 @@ export function createWsConnection(
 
   documents.onDidChangeContent(async (params) => {
     connection.console.log('TextDocument didChange');
-    console.debug(params);
+    // console.debug(params);
     let currentDocumentLines: string[] = [];
     let changedLine = -1;
     for (let i = 0; i < params.document.lineCount; i++) {
@@ -295,6 +417,10 @@ export function createWsConnection(
           // Encountering file name input. Do file suggestions.
           newSuggestions = await handleFileSuggestions(sentence, basePath);
         }
+      } else if (line.charAt(params.position.character - 1) === '{') {
+        if (sentence.command === commandType.say) {
+          // Suggest variables
+        }
       } else {
         // No file suggestions. Check completion.
         newSuggestions = makeCompletion(
@@ -306,7 +432,9 @@ export function createWsConnection(
       suggestions = suggestions.concat(newSuggestions);
     }
 
-    console.log(`onCompletion: suggestions: ${pprintJSON(suggestions, true)}`);
+    console.debug(
+      `onCompletion: suggestions: ${pprintJSON(suggestions, true)}`,
+    );
 
     return suggestions;
   }
