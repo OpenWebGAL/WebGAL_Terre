@@ -32,7 +32,8 @@
       "name": "Strings",
       "scope": "string",
       "settings": {
-        "foreground": "#998f2f"
+        "foreground": "#998f2f",
+        "fontStyle": "bold"
       }
     },
     {
@@ -266,6 +267,12 @@
   "semanticHighlighting": true,
   "semanticTokenColors": {
     "variable": "#cf7000",
-    "keyword": "#9966b8"
+    "keyword": "#9966b8",
+    "parameter": "#cf7000",
+    "value": "#22aa44",
+    "string": {
+      "foreground": "#998f2f",
+      "fontStyle": "bold"
+    }
   }
 }
