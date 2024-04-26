@@ -1,13 +1,14 @@
 {
+  "$schema": "vscode://schemas/color-theme",
   "name": "Monokai Light Theme",
   "colors": {
-    "editor.background":"#fafafa",
-    "editor.lineHighlightBackground":"#e6e3c3",
-    "editor.selectionBackground":"#ccc9ad",
-    "editorCursor.foreground":"#666663",
-    "editorIndentGuide.background":"#D3D4D5",
-    "editorLineNumber.foreground":"#a2a19c",
-    "editorWhitespace.foreground":"#bbbbb7"
+    "editor.background": "#fafafa",
+    "editor.lineHighlightBackground": "#e6e3c3",
+    "editor.selectionBackground": "#ccc9ad",
+    "editorCursor.foreground": "#666663",
+    "editorIndentGuide.background": "#D3D4D5",
+    "editorLineNumber.foreground": "#a2a19c",
+    "editorWhitespace.foreground": "#bbbbb7"
   },
   "tokenColors": [
     {
@@ -261,5 +262,10 @@
         "foreground": "#ddbb88"
       }
     }
-  ]
+  ],
+  "semanticHighlighting": true,
+  "semanticTokenColors": {
+    "variable": "#cf7000",
+    "keyword": "#9966b8"
+  }
 }
