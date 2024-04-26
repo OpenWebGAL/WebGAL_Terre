@@ -3,6 +3,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
+import * as vscode from 'vscode';
 import * as monaco from 'monaco-editor';
 import { initServices } from 'monaco-languageclient/vscode/services';
 // monaco-editor does not supply json highlighting with the json worker,
@@ -22,7 +23,9 @@ import getConfigurationServiceOverride, {
   configurationRegistry,
 } from '@codingame/monaco-vscode-configuration-service-override';
 import './extension';
-import {getWsUrl} from "@/utils/getWsUrl";
+import { getWsUrl } from '@/utils/getWsUrl';
+import { Uri } from 'vscode';
+import useEditorStore from '@/store/useEditorStore';
 
 let initialized = false;
 
@@ -71,9 +74,14 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
     const socket = toSocket(webSocket);
     const reader = new WebSocketMessageReader(socket);
     const writer = new WebSocketMessageWriter(socket);
-    const languageClient = createLanguageClient({// @ts-ignore
-      reader,// @ts-ignore
+    const languageClient = createLanguageClient({
+      // @ts-ignore
+      reader, // @ts-ignore
       writer,
+    });
+    languageClient.onRequest('textDocument/completion', () => {
+      console.log('received completion request from server');
+      vscode.commands.executeCommand('editor.action.triggerSuggest', { auto: true });
     });
     languageClient.start();
     reader.onClose(() => languageClient.stop());
@@ -82,6 +90,8 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
 };
 
 export const createLanguageClient = (transports: MessageTransports): MonacoLanguageClient => {
+  const currentGameName = useEditorStore.getState().subPage;
+
   return new MonacoLanguageClient({
     name: 'Sample Language Client',
     clientOptions: {
@@ -90,7 +100,12 @@ export const createLanguageClient = (transports: MessageTransports): MonacoLangu
       // disable the default error handler
       errorHandler: {
         error: () => ({ action: ErrorAction.Continue }),
-        closed: () => ({ action: CloseAction.DoNotRestart }),
+        closed: () => ({ action: CloseAction.Restart }),
+      },
+      workspaceFolder: {
+        uri: Uri.parse(`webgal-workspace://games/${currentGameName}/game/`),
+        index: 0,
+        name: `games/${currentGameName}/game/`,
       },
     },
     // create a language client connection from the JSON RPC connection on demand
