@@ -16,6 +16,7 @@ import {
   SemanticTokenModifiers,
   CompletionParams,
   CompletionTriggerKind,
+  DidChangeTextDocumentParams,
 } from 'vscode-languageserver/node';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -26,19 +27,27 @@ import { getKeywordsAndConstants } from './suggestionRules/getKeywordsAndConstan
 import { webgalParser } from '../../util/webgal-parser';
 import { IScene } from 'webgal-parser/build/types/interface/sceneInterface';
 import { pprintJSON } from 'src/util/strings';
-import { commandArgs, makeCompletion } from './commandArgs';
+import {
+  commandArgs,
+  commandType,
+  makeCompletion,
+  shouldInsertDash,
+} from './completion/commandArgs';
+import { handleFileSuggestions } from './completion/fileSuggestion';
 
 export function createWsConnection(
   reader: MessageReader,
   writer: MessageWriter,
 ) {
-  // Create a connection for the server, using Node's IPC as a transport.
-  // Also include all preview / proposed LSP features.
+  // Create a connection for the server. Also include all preview / proposed
+  // LSP features.
   const connection = createConnection(reader, writer);
   // Create a simple text document manager.
   const documents: TextDocuments<TextDocument> = new TextDocuments(
     TextDocument,
   );
+
+  let basePath = '';
 
   const hasConfigurationCapability = false;
   let hasWorkspaceFolderCapability = false;
@@ -61,13 +70,15 @@ export function createWsConnection(
       capabilities.textDocument.publishDiagnostics.relatedInformation
     );
 
+    basePath = params.workspaceFolders[0].name;
+
     const result: InitializeResult = {
       capabilities: {
         textDocumentSync: TextDocumentSyncKind.Incremental,
         // Tell the client that this server supports code completion.
         completionProvider: {
           resolveProvider: true,
-          triggerCharacters: ['-'],
+          triggerCharacters: ['-', ':'],
         },
         semanticTokensProvider: {
           full: true,
@@ -124,7 +135,9 @@ export function createWsConnection(
   const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
   let globalSettings: ExampleSettings = defaultSettings;
 
-  // Cache the settings of all open documents
+  /**
+   * Cache the settings of all open documents
+   */
   const documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
 
   connection.onDidChangeConfiguration((change) => {
@@ -159,15 +172,52 @@ export function createWsConnection(
     return result;
   }
 
-  // Only keep settings for open documents
-  documents.onDidClose((e) => {
-    documentSettings.delete(e.document.uri);
+  connection.onDidCloseTextDocument((params) => {
+    documentSettings.delete(params.textDocument.uri);
   });
 
   // The content of a text document has changed. This event is emitted
   // when the text document first opened or when its content has changed.
-  documents.onDidChangeContent(async (change) => {
-    await validateTextDocument(change.document);
+  // documents.onDidChangeContent(async (change) => {
+  //   await validateTextDocument(change.document);
+  // });
+
+  /**
+   * Cache the last document lines
+   */
+  let lastDocumentLines = [];
+
+  documents.onDidChangeContent(async (params) => {
+    connection.console.log('TextDocument didChange');
+    console.debug(params);
+    let currentDocumentLines: string[] = [];
+    let changedLine = -1;
+    for (let i = 0; i < params.document.lineCount; i++) {
+      const line = params.document
+        .getText({
+          start: { line: i, character: 0 },
+          end: { line: i + 1, character: 0 },
+        })
+        .replace('\n', '');
+
+      currentDocumentLines[i] = line;
+
+      if (lastDocumentLines && lastDocumentLines[i] !== line) {
+        lastDocumentLines[i] = line;
+        changedLine = i;
+      }
+    }
+    if (!lastDocumentLines) {
+      lastDocumentLines = currentDocumentLines;
+    }
+
+    if (changedLine > 0) {
+      const line = currentDocumentLines[changedLine];
+      if (line.endsWith(':')) {
+        console.debug('Sending completion request to client...');
+        connection.sendRequest('textDocument/completion');
+      }
+    }
   });
 
   async function validateTextDocument(
@@ -175,106 +225,40 @@ export function createWsConnection(
   ): Promise<void> {
     // In this simple example we get the settings for every validate run.
     const settings = await getDocumentSettings(textDocument.uri);
+    connection.console.log(JSON.stringify(settings));
 
-    // The validator creates diagnostics for all uppercase words length 2 and more
-    const text = textDocument.getText();
-    const pattern = /\b[A-Z]{2,}\b/g;
-    let m: RegExpExecArray | null;
-
-    connection.console.log(settings.toString());
-
-    const problems = 0;
     const diagnostics: Diagnostic[] = [];
-
-    // while (
-    //   (m = pattern.exec(text)) &&
-    //   problems < settings.maxNumberOfProblems
-    // ) {
-    //   problems++;
-    //   let diagnostic: Diagnostic = {
-    //     severity: DiagnosticSeverity.Warning,
-    //     range: {
-    //       start: textDocument.positionAt(m.index),
-    //       end: textDocument.positionAt(m.index + m[0].length),
-    //     },
-    //     message: `${m[0]} is all uppercase.`,
-    //     source: 'ex',
-    //   };
-    //   if (hasDiagnosticRelatedInformationCapability) {
-    //     diagnostic.relatedInformation = [
-    //       {
-    //         location: {
-    //           uri: textDocument.uri,
-    //           range: Object.assign({}, diagnostic.range),
-    //         },
-    //         message: 'Spelling matters',
-    //       },
-    //       {
-    //         location: {
-    //           uri: textDocument.uri,
-    //           range: Object.assign({}, diagnostic.range),
-    //         },
-    //         message: 'Particularly for names',
-    //       },
-    //     ];
-    //   }
-    //   diagnostics.push(diagnostic);
-    // }
 
     // Send the computed diagnostics to VS Code.
     connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
   }
 
-  connection.onDidChangeWatchedFiles((_change) => {
-    // Monitored files have change in VS Code
-    connection.console.log('We received a file change event');
-  });
+  connection.onCompletion(
+    async (params: CompletionParams): Promise<CompletionItem[]> => {
+      const document = documents.get(params.textDocument.uri);
+      const position = params.position;
+      const line = document.getText({
+        start: { line: position.line, character: 0 },
+        end: position,
+      });
 
-  // This handler provides the initial list of the completion items.
-  connection.onCompletion((params: CompletionParams): CompletionItem[] => {
-    const document = documents.get(params.textDocument.uri);
-    const position = params.position;
-    const line = document.getText({
-      start: { line: position.line, character: 0 },
-      end: position,
-    });
+      // Before receving `:`, consider waiting for a new command
+      // NOTE: this may not be the case if the same character is saying, but we
+      // don't have other ways to distinguish these two cases
+      if (!line.includes(':')) {
+        return getCommands(line);
+      }
 
-    // Before receving `:`, consider waiting for a new command
-    // NOTE: this may not be the case if the same character is saying, but we
-    // don't have other ways to distinguish these two cases
-    if (!line.includes(':')) {
-      return getCommands(line);
-    }
+      // If cursor after comment region, disable completion
+      if (line.includes(';') && position.character > line.indexOf(';')) {
+        return [];
+      }
 
-    // If cursor after comment region, disable completion
-    if (line.includes(';') && position.character > line.indexOf(';')) {
-      return [];
-    }
-    return complete(line, params);
-  });
+      return await complete(line, params);
+    },
+  );
 
-  function isTriggeringByDash(params: CompletionParams) {
-    return (
-      params.context.triggerKind === CompletionTriggerKind.TriggerCharacter &&
-      params.context.triggerCharacter === '-'
-    );
-  }
-
-  function doesNotContainDash(lineBefore: string) {
-    const asciiRemoved = lineBefore.replace(/[^\x00-\x7F]/g, '');
-    return asciiRemoved.lastIndexOf('-') === asciiRemoved.length - 1;
-  }
-
-  function complete(line: string, params: CompletionParams) {
-    // The pass parameter contains the position of the text document in
-    // which code complete got requested. For the example we ignore this
-    // info and always provide the same completion items.
-    // const allTextBefore = document.getText({
-    //   start: { line: 0, character: 0 },
-    //   end: position,
-    // });
-    // connection.console.log(`onCompletion: line: ${line}`);
-
+  async function complete(line: string, params: CompletionParams) {
     /**
      * Ver 1 (manual parsing)
      */
@@ -285,12 +269,7 @@ export function createWsConnection(
     /**
      * Ver 2 (using webgal-parser)
      */
-
     console.debug(`Line to complete: ${line}`);
-
-    if (line.trim().length === 0) {
-      return getCommands(line);
-    }
 
     let suggestions: CompletionItem[] = [];
 
@@ -302,16 +281,29 @@ export function createWsConnection(
       params.textDocument.uri,
     );
 
+    // Currently, there SHOULD be only one sentence. But we still handle
+    // potential modifications to the language specification.
     for (const sentence of scene.sentenceList) {
       console.debug(`Sentence: ${pprintJSON(sentence, true)}`);
 
-      suggestions = suggestions.concat(
-        makeCompletion(
+      let newSuggestions;
+
+      if (line.charAt(params.position.character - 1) === ':') {
+        if (sentence.command === commandType.say) {
+          newSuggestions = [];
+        } else {
+          // Encountering file name input. Do file suggestions.
+          newSuggestions = await handleFileSuggestions(sentence, basePath);
+        }
+      } else {
+        // No file suggestions. Check completion.
+        newSuggestions = makeCompletion(
           commandArgs[sentence.command],
-          !isTriggeringByDash(params) &&
-            doesNotContainDash(line.substring(0, params.position.character)),
-        ),
-      );
+          shouldInsertDash(line, params),
+        );
+      }
+
+      suggestions = suggestions.concat(newSuggestions);
     }
 
     console.log(`onCompletion: suggestions: ${pprintJSON(suggestions, true)}`);

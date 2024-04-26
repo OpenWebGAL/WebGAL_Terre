@@ -1,11 +1,16 @@
-import { CompletionItem, CompletionItemKind } from 'vscode-languageserver';
+import {
+  CompletionItem,
+  CompletionItemKind,
+  CompletionParams,
+  CompletionTriggerKind,
+} from 'vscode-languageserver';
 // FIXME: Error: Cannot find module 'webgal-parser/src/interface/sceneInterface'
 // import { commandType } from 'webgal-parser/src/interface/sceneInterface';
 
 /**
  * 语句类型
  */
-enum commandType {
+export enum commandType {
   say = 0,
   changeBg = 1,
   changeFigure = 2,
@@ -555,4 +560,24 @@ export function makeCompletion(
   );
 
   return result;
+}
+
+function isTriggeringByDash(params: CompletionParams) {
+  return (
+    params.context.triggerKind === CompletionTriggerKind.TriggerCharacter &&
+    params.context.triggerCharacter === '-'
+  );
+}
+
+function containsDash(lineBefore: string) {
+  const asciiRemoved = lineBefore.replace(/[A-Za-z]/g, '');
+  console.debug(`asciiRemoved: ${asciiRemoved}`);
+  return asciiRemoved.lastIndexOf('-') === asciiRemoved.length - 1;
+}
+
+export function shouldInsertDash(line: string, params: CompletionParams) {
+  return (
+    !isTriggeringByDash(params) &&
+    !containsDash(line.substring(0, params.position.character))
+  );
 }
