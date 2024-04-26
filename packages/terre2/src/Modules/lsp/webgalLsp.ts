@@ -18,6 +18,7 @@ import {
   CompletionTriggerKind,
   DidChangeTextDocumentParams,
   SemanticTokens,
+  SemanticTokensBuilder,
   uinteger,
 } from 'vscode-languageserver/node';
 
@@ -42,6 +43,8 @@ const tokenModifiers = new Map<string, number>();
 
 tokenTypes.set('variable', 0);
 tokenTypes.set('keyword', 1);
+tokenTypes.set('value', 2);
+tokenTypes.set('string', 3);
 tokenModifiers.set('default', 0);
 
 export function createWsConnection(
@@ -137,15 +140,27 @@ export function createWsConnection(
     'textDocument/semanticTokens/full',
     (params: SemanticTokensParams): SemanticTokens => {
       const document = documents.get(params.textDocument.uri);
-      const data = computeSemanticTokens(
+      const result = buildSemanticTokens(
         parseSemanticTokens(document.getText(), params.textDocument.uri),
       );
       // console.log(`semanticTokens: data: ${data}`);
-      return {
-        data,
-      };
+      return result;
     },
   );
+
+  function buildSemanticTokens(tokens: IParsedToken[]) {
+    const builder = new SemanticTokensBuilder();
+    tokens.forEach((token) => {
+      builder.push(
+        token.line,
+        token.startCharacter,
+        token.length,
+        encodeTokenType(token.tokenType),
+        encodeTokenModifiers(token.tokenModifiers),
+      );
+    });
+    return builder.build();
+  }
 
   interface IParsedToken {
     line: number;
@@ -156,6 +171,58 @@ export function createWsConnection(
   }
 
   let lastVariables = new Map<string, number>();
+
+  function consumeArg(
+    arg: {
+      key: string;
+      value: string | number | boolean;
+    },
+    line: string,
+    lineNumber: number,
+    currentOffset,
+  ): [IParsedToken[], number] {
+    if (arg.key === 'speaker') {
+      return [[], currentOffset];
+    }
+
+    const tokens: IParsedToken[] = [];
+
+    console.log(arg);
+
+    if (arg.key.toString() !== '') {
+      const argKeyOffset = line.indexOf(arg.key, currentOffset);
+      if (argKeyOffset !== -1 && argKeyOffset >= currentOffset) {
+        tokens.push({
+          line: lineNumber,
+          startCharacter: argKeyOffset,
+          length: arg.key.length,
+          tokenType: 'parameter',
+          tokenModifiers: [],
+        });
+        console.log(`[line ${lineNumber}] key: ${arg.key}: ${argKeyOffset}`);
+        currentOffset = argKeyOffset + arg.key.length;
+      }
+    }
+
+    if (arg.value.toString() !== '') {
+      const argValueOffset = line.indexOf(arg.value.toString(), currentOffset);
+      if (argValueOffset !== -1 && argValueOffset >= currentOffset) {
+        tokens.push({
+          line: lineNumber,
+          startCharacter: argValueOffset,
+          length: arg.value.toString().length,
+          tokenType: 'value',
+          tokenModifiers: [],
+        });
+        console.log(
+          `[line ${lineNumber}]value: ${arg.value.toString()}: ${argValueOffset}`,
+        );
+        currentOffset = argValueOffset + arg.value.toString().length;
+      }
+    }
+
+    return [tokens, currentOffset];
+  }
 
   function parseSemanticTokens(text: string, uri: string): IParsedToken[] {
     const r: IParsedToken[] = [];
@@ -171,61 +238,108 @@ export function createWsConnection(
 
       let currentOffset = 0;
 
-      // check variables
+      // intro has special syntax
+      if (sentence.command === commandType.intro) {
+        const values = sentence.content.split(/\|/);
+        console.debug(values);
+
+        for (const value of values) {
+          const valueOffset = line.indexOf(value, currentOffset);
+          if (valueOffset === -1) {
+            break;
+          }
+
+          r.push({
+            line: i,
+            startCharacter: valueOffset,
+            length: value.length,
+            tokenType: 'string',
+            tokenModifiers: [],
+          });
+        }
+      }
+
+      // setVar has special syntax
       if (sentence.command === commandType.setVar) {
         if (sentence.content.match(/=/)) {
           const key = sentence.content.split(/=/)[0];
+          const value = sentence.content.split(/=/)[1];
+
+          // record variables (for completion)
           if (!lastVariables.has(key)) {
             lastVariables.set(key, i);
           }
+
+          let newTokens: IParsedToken[];
+          [newTokens, currentOffset] = consumeArg(
+            { key, value },
+            line,
+            i,
+            currentOffset,
+          );
+
+          newTokens.forEach((t) => r.push(t));
         }
       }
 
-      if (sentence.command !== commandType.say) {
-        continue;
+      // say has special syntax
+      if (sentence.command === commandType.say) {
+        do {
+          const contentOffset = line.indexOf(sentence.content, currentOffset);
+          if (contentOffset === -1) {
+            break;
+          }
+          const openOffset = line.indexOf('{', contentOffset);
+          if (openOffset === -1) {
+            break;
+          }
+          const closeOffset = line.indexOf('}', openOffset);
+          if (closeOffset === -1) {
+            break;
+          }
+
+          r.push({
+            line: i,
+            startCharacter: openOffset,
+            length: 1,
+            tokenType: 'keyword',
+            tokenModifiers: [],
+          });
+
+          r.push({
+            line: i,
+            startCharacter: openOffset + 1,
+            length: closeOffset - openOffset - 1,
+            tokenType: 'variable',
+            tokenModifiers: [],
+          });
+
+          r.push({
+            line: i,
+            startCharacter: closeOffset,
+            length: 1,
+            tokenType: 'keyword',
+            tokenModifiers: [],
+          });
+
+          lastLine = i;
+          currentOffset = closeOffset;
+        } while (true);
       }
 
-      do {
-        const contentOffset = line.indexOf(sentence.content, currentOffset);
-        if (contentOffset === -1) {
-          break;
-        }
-        const openOffset = line.indexOf('{', contentOffset);
-        if (openOffset === -1) {
-          break;
-        }
-        const closeOffset = line.indexOf('}', openOffset);
-        if (closeOffset === -1) {
-          break;
-        }
+      currentOffset = 0;
 
-        r.push({
-          line: i - lastLine,
-          startCharacter: openOffset,
-          length: 1,
-          tokenType: 'keyword',
-          tokenModifiers: [],
-        });
+      const args = sentence.args.sort(
+        (a, b) => line.indexOf(a.key) - line.indexOf(b.key),
+      );
 
-        r.push({
-          line: 0,
-          startCharacter: 1,
-          length: closeOffset - openOffset - 1,
-          tokenType: 'variable',
-          tokenModifiers: [],
-        });
+      // other commands
+      for (const arg of args) {
+        let newTokens: IParsedToken[];
+        [newTokens, currentOffset] = consumeArg(arg, line, i, currentOffset);
 
-        r.push({
-          line: 0,
-          startCharacter: closeOffset - openOffset - 1,
-          length: 1,
-          tokenType: 'keyword',
-          tokenModifiers: [],
-        });
-
-        lastLine = i;
-        currentOffset = closeOffset;
-      } while (true);
+        newTokens.forEach((t) => r.push(t));
+      }
     }
     return r;
   }
@@ -246,18 +360,6 @@ export function createWsConnection(
       }
     }
     return result;
-  }
-
-  function computeSemanticTokens(allTokens: IParsedToken[]): uinteger[] {
-    return allTokens
-      .map((token) => [
-        token.line,
-        token.startCharacter,
-        token.length,
-        encodeTokenType(token.tokenType),
-        encodeTokenModifiers(token.tokenModifiers),
-      ])
-      .flat(1);
   }
 
   // The example settings
@@ -325,7 +427,6 @@ export function createWsConnection(
 
   documents.onDidChangeContent(async (params) => {
     connection.console.log('TextDocument didChange');
-    // console.debug(params);
     let currentDocumentLines: string[] = [];
     let changedLine = -1;
     for (let i = 0; i < params.document.lineCount; i++) {
@@ -349,7 +450,8 @@ export function createWsConnection(
 
     if (changedLine > 0) {
       const line = currentDocumentLines[changedLine];
-      if (line.endsWith(':')) {
+      console.debug(`changed line: ${line}`);
+      if (line.trimEnd().endsWith(':')) {
         console.debug('Sending completion request to client...');
         connection.sendRequest('textDocument/completion');
       }
