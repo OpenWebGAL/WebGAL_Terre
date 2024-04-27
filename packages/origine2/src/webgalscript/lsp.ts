@@ -1,36 +1,30 @@
-/* --------------------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------
+ * Copyright (c) 2024 OpenWebGAL
+ * Modified from https://github.com/TypeFox/monaco-languageclient/blob/main/
+ * packages/examples/src/bare/client.ts
+ *
  * Copyright (c) 2024 TypeFox and others.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- * ------------------------------------------------------------------------------------------ */
-
+ * Licensed under the MIT License. See License.txt in the project root for
+ * license information.
+ * ------------------------------------------------------------------------- */
 import * as vscode from 'vscode';
 import * as monaco from 'monaco-editor';
 import { initServices } from 'monaco-languageclient/vscode/services';
-// monaco-editor does not supply json highlighting with the json worker,
-// that's why we use the textmate extension from VSCode
 import getThemeServiceOverride from '@codingame/monaco-vscode-theme-service-override';
 import getTextmateServiceOverride from '@codingame/monaco-vscode-textmate-service-override';
-// import '@codingame/monaco-vscode-theme-defaults-default-extension';
-// import '@codingame/monaco-vscode-json-default-extension';
-// import './external/vscode-webgal-highlighting';
 import { MonacoLanguageClient } from 'monaco-languageclient';
 import { WebSocketMessageReader, WebSocketMessageWriter, toSocket } from 'vscode-ws-jsonrpc';
 import { CloseAction, ErrorAction, MessageTransports } from 'vscode-languageclient';
 import { useWorkerFactory } from 'monaco-editor-wrapper/workerFactory';
-import getEditorServiceOverride from '@codingame/monaco-vscode-editor-service-override';
+// import getEditorServiceOverride from '@codingame/monaco-vscode-editor-service-override';
 import getConfigurationServiceOverride, {
   updateUserConfiguration,
-  configurationRegistry,
 } from '@codingame/monaco-vscode-configuration-service-override';
 import './extension';
 import { getWsUrl } from '@/utils/getWsUrl';
-import { Uri } from 'vscode';
-import useEditorStore from '@/store/useEditorStore';
+import useEditorStore, { registerSubPageChangedCallback } from '@/store/useEditorStore';
 
 let initialized = false;
-
-// as we don't do deltas, for performance reasons, don't compute semantic tokens for documents above that limit
-const CONTENT_LENGTH_LIMIT = 100000;
 
 export const configureMonacoWorkers = async () => {
   useWorkerFactory();
@@ -68,6 +62,10 @@ export const runClient = async () => {
   initWebSocketAndStartClient(getWsUrl('api/lsp2'));
 };
 
+const sendBasePathToLSP = (client: MonacoLanguageClient, gameName: string) => {
+  client.sendRequest('textDocument/setBasePath', { basePath: `games/${gameName}/game/` });
+};
+
 /** parameterized version , support all languageId */
 export const initWebSocketAndStartClient = (url: string): WebSocket => {
   const webSocket = new WebSocket(url);
@@ -84,15 +82,18 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
       console.log('received completion request from server');
       vscode.commands.executeCommand('editor.action.triggerSuggest', { auto: true });
     });
-    languageClient.start();
+    registerSubPageChangedCallback((subPage) => {
+      sendBasePathToLSP(languageClient, subPage);
+    });
     reader.onClose(() => languageClient.stop());
+    languageClient.start();
+
+    sendBasePathToLSP(languageClient, useEditorStore.getState().subPage);
   };
   return webSocket;
 };
 
 export const createLanguageClient = (transports: MessageTransports): MonacoLanguageClient => {
-  const currentGameName = useEditorStore.getState().subPage;
-
   return new MonacoLanguageClient({
     name: 'Sample Language Client',
     clientOptions: {
@@ -102,11 +103,6 @@ export const createLanguageClient = (transports: MessageTransports): MonacoLangu
       errorHandler: {
         error: () => ({ action: ErrorAction.Continue }),
         closed: () => ({ action: CloseAction.Restart }),
-      },
-      workspaceFolder: {
-        uri: Uri.parse(`webgal-workspace://games/${currentGameName}/game/`),
-        index: 0,
-        name: `games/${currentGameName}/game/`,
       },
     },
     // create a language client connection from the JSON RPC connection on demand
