@@ -27,7 +27,7 @@ export function checkTriggerCompletion(
   params: TextDocumentChangeEvent<TextDocument>,
   triggerCompletionCallback: () => void,
 ) {
-  let currentDocumentLines: string[] = [];
+  const currentDocumentLines: string[] = [];
   let changedLine = -1;
   for (let i = 0; i < params.document.lineCount; i++) {
     const line = params.document
