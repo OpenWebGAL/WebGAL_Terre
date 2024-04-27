@@ -5,16 +5,21 @@ import {
   WebSocketMessageWriter,
 } from '../../../terre-custom-libs/vscode-ws-jsonrpc-webgal/build/cjs';
 import { createWsConnection } from './webgalLsp';
+import { pprintJSON } from '../../util/strings';
 
 function toIWebSocket(ws: WebSocket): any {
   return {
     send: (content) => {
-      //console.log(`contents = ${content}`);
+      const log = pprintJSON(content);
+      if (!log.includes('data')) {
+        console.log(`<- ${log}`);
+      }
       ws.send(content);
     },
     onMessage: (cb) =>
       (ws.onmessage = (event) => {
-        console.log(event.data);
+        const log = pprintJSON(event.data);
+        console.log(`-> ${log}`);
         cb(event.data);
       }),
     onError: (cb) =>
