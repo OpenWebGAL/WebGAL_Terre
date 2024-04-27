@@ -20,7 +20,7 @@ import {
 } from './semanticToken';
 import { complete, checkTriggerCompletion } from './completion';
 
-export let lastVariables = new Map<string, number>();
+export const lastVariables = new Map<string, number>();
 
 export function createWsConnection(
   reader: MessageReader,
