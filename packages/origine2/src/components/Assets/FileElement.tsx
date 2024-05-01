@@ -55,7 +55,11 @@ export default function FileElement(
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                 <Subtitle1>{t`重命名`}</Subtitle1>
                 <Input ref={renameInputRef} value={newFileName.value}
-                  onFocus={() => renameInputRef.current?.setSelectionRange(0, file.name.length - file.extName.length)}
+                  onFocus={ev => {
+                    const el = ev.target;
+                    const dotPosition = el.value.lastIndexOf('.');
+                    el?.setSelectionRange(0, dotPosition === -1 ? el.value.length : dotPosition);
+                  }}
                   onChange={(_, data) => {
                     newFileName.set(data.value ?? "");
                   }}
