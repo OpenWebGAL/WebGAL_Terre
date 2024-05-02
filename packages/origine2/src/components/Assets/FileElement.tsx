@@ -52,9 +52,17 @@ export default function FileElement(
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                 <Subtitle1>{t`重命名`}</Subtitle1>
-                <Input value={newFileName.value} onChange={(_, data) => {
-                  newFileName.set(data.value ?? "");
-                }} />
+                <Input
+                  value={newFileName.value}
+                  onFocus={ev => {
+                    const el = ev.target;
+                    const dotPosition = el.value.indexOf('.');
+                    el?.setSelectionRange(0, dotPosition === -1 ? el.value.length : dotPosition);
+                  }}
+                  onChange={(_, data) => {
+                    newFileName.set(data.value ?? "");
+                  }}
+                />
                 <Button
                   appearance="primary"
                   disabled={newFileName.value.trim() === ''}
