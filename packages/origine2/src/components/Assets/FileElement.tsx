@@ -6,7 +6,6 @@ import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
 import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular } from "@fluentui/react-icons";
 import {t} from "@lingui/macro";
-import { useRef } from "react";
 
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
@@ -23,7 +22,6 @@ export default function FileElement(
       handleDeleteFile: (source: string) => Promise<void>,
     }) {
   const newFileName = useValue(file.name);
-  const renameInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div
@@ -54,10 +52,11 @@ export default function FileElement(
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                 <Subtitle1>{t`重命名`}</Subtitle1>
-                <Input ref={renameInputRef} value={newFileName.value}
+                <Input
+                  value={newFileName.value}
                   onFocus={ev => {
                     const el = ev.target;
-                    const dotPosition = el.value.lastIndexOf('.');
+                    const dotPosition = el.value.indexOf('.');
                     el?.setSelectionRange(0, dotPosition === -1 ? el.value.length : dotPosition);
                   }}
                   onChange={(_, data) => {
