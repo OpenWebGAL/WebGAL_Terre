@@ -20,6 +20,7 @@ import {getEditorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/Web
 import {IconButton} from "@fluentui/react";
 import WGCustomProperty
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCustomProperty";
+import {getMdnLink} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/getMdnLink";
 
 
 export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSubmit: () => void }) {
@@ -107,6 +108,11 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
                     </DialogBody>
                   </DialogSurface>
                 </Dialog>
+                <span>
+                  <Link href={getMdnLink(item!.propertyName)} target="_blank">
+                    {t`帮助文档`}
+                  </Link>
+                </span>
               </div>
             </TableCell>
             <TableCell>
