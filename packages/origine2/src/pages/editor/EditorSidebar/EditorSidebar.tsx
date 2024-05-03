@@ -103,6 +103,7 @@ export default function EditorSideBar() {
     [`games/${gameName}/game/figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
     [`games/${gameName}/game/scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
     [`games/${gameName}/game/scene/start.txt`, { isProtected: true }],
+    [`games/${gameName}/game/template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
     [`games/${gameName}/game/tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
     [`games/${gameName}/game/video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
     [`games/${gameName}/game/vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],

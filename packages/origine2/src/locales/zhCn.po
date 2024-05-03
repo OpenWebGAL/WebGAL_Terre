@@ -293,19 +293,19 @@ msgstr "修改颜色"
 msgid "值"
 msgstr "值"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
 msgid "偏移右侧距离（定位用）"
 msgstr "偏移右侧距离（定位用）"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:42
 msgid "偏移左侧距离（定位用）"
 msgstr "偏移左侧距离（定位用）"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:45
 msgid "偏移底部距离（定位用）"
 msgstr "偏移底部距离（定位用）"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
 msgid "偏移顶部距离（定位用）"
 msgstr "偏移顶部距离（定位用）"
 
@@ -358,19 +358,19 @@ msgstr "关闭立绘"
 msgid "关闭背景"
 msgstr "关闭背景"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:33
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:37
 msgid "最大宽度"
 msgstr "最大宽度"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:36
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
 msgid "最大高度"
 msgstr "最大高度"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:32
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:36
 msgid "最小宽度"
 msgstr "最小宽度"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:35
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "最小高度"
 msgstr "最小高度"
 
@@ -457,7 +457,7 @@ msgid "删除游戏"
 msgstr "删除游戏"
 
 #: src/components/Assets/Assets.tsx:211
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "刷新"
 
@@ -540,7 +540,7 @@ msgstr "在文件管理器中打开"
 
 #: src/pages/dashboard/GameElement.tsx:95
 #: src/pages/dashboard/TemplateElement.tsx:89
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:156
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
 msgid "在新标签页中预览"
 msgstr "在新标签页中预览"
 
@@ -549,7 +549,7 @@ msgid "在这里放置编辑组件"
 msgstr "在这里放置编辑组件"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:104
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
 msgid "场景"
 msgstr "场景"
 
@@ -565,19 +565,23 @@ msgstr "场景文件"
 msgid "大"
 msgstr "大"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:27
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:48
+msgid "字体"
+msgstr "字体"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:31
 msgid "字体大小"
 msgstr "字体大小"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:29
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:33
 msgid "字母间距"
 msgstr "字母间距"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:28
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:32
 msgid "字重"
 msgstr "字重"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:37
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "定位方式"
 msgstr "定位方式"
 
@@ -597,7 +601,7 @@ msgstr "实时预览将游戏快进至编辑语句，但有限制。先前场景
 msgid "实时预览打开"
 msgstr "实时预览打开"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:31
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:35
 msgid "宽度"
 msgstr "宽度"
 
@@ -633,6 +637,10 @@ msgstr "小"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:27
 msgid "小头像文件"
 msgstr "小头像文件"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:47
+msgid "层级顺序"
+msgstr "层级顺序"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "展示小头像"
@@ -732,7 +740,9 @@ msgstr "控制是否要显示文本框"
 msgid "提交"
 msgstr "提交"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonEditor.tsx:22
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:35
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonNumberEditor.tsx:23
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCustomProperty.tsx:20
 msgid "提交修改"
 msgstr "提交修改"
@@ -988,6 +998,7 @@ msgid "检测到新版本"
 msgstr "检测到新版本"
 
 #: src/pages/dashboard/DashBoard.tsx:176
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
 msgid "模板"
 msgstr "模板"
 
@@ -1105,7 +1116,7 @@ msgstr "游戏简介"
 msgid "游戏识别码"
 msgstr "游戏识别码"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:109
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "游戏配置"
 msgstr "游戏配置"
 
@@ -1158,7 +1169,7 @@ msgstr "视图"
 msgid "视觉小说编辑，再进化"
 msgstr "视觉小说编辑，再进化"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
 msgid "视频"
 msgstr "视频"
 
@@ -1202,7 +1213,7 @@ msgstr "立绘插图的ID"
 msgid "立绘文件"
 msgstr "立绘文件"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
 msgid "纹理"
 msgstr "纹理"
 
@@ -1382,7 +1393,7 @@ msgstr "该文件类型不支持预览"
 msgid "语言"
 msgstr "语言"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:109
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:132
 msgid "语音"
 msgstr "语音"
@@ -1403,7 +1414,7 @@ msgstr "调用场景"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "调用场景，新场景结束后返回父场景"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:171
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
 msgid "资源"
 msgstr "资源"
 
@@ -1557,11 +1568,11 @@ msgstr "音乐"
 msgid "项目主页"
 msgstr "项目主页"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:30
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:34
 msgid "颜色"
 msgstr "颜色"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:34
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
 msgid "高度"
 msgstr "高度"
 
@@ -1594,7 +1605,7 @@ msgstr "默认值1"
 msgid "鼠标悬浮样式"
 msgstr "鼠标悬浮样式"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:42
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:46
 msgid "鼠标指针"
 msgstr "鼠标指针"
 
