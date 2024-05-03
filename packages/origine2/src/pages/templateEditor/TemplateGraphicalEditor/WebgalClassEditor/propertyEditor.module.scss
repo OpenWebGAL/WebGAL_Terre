@@ -27,6 +27,14 @@
   visibility: hidden;
 }
 
+.helpLink{
+  visibility: hidden;
+}
+
 .propertyNameCell:hover > .propertyDelete{
+  visibility: visible;
+}
+
+.propertyNameCell:hover > .helpLink{
   visibility: visible;
 }
