@@ -11,6 +11,7 @@ import { WsUtil } from '../../../utils/wsUtil';
 import { eventBus } from '@/utils/eventBus';
 import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
+import { api } from '@/api';
 
 interface ITextEditorProps {
   targetPath: string;
@@ -22,8 +23,6 @@ let isAfterMount = false;
 export default function TextEditor(props: ITextEditorProps) {
   const target = useGameEditorContext((state) => state.currentTag);
   const tags = useGameEditorContext((state) => state.tags);
-  const gameName = useEditorStore.use.subPage();
-  // const currentText = useValue<string>("Loading Scene Data......");
   const currentText = { value: 'Loading Scene Data......' };
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
@@ -76,22 +75,17 @@ export default function TextEditor(props: ITextEditorProps) {
 
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value) currentText.value = value;
-    const params = new URLSearchParams();
-    params.append('gameName', gameName);
-    params.append('sceneName', sceneName);
-    params.append('sceneData', JSON.stringify({ value: currentText.value }));
     eventBus.emit('update-scene', currentText.value);
-    axios.post('/api/manageGame/editScene/', params).then((res) => {
+    api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
       const targetValue = currentText.value.split('\n')[lineNumber - 1];
       WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
     });
   }
 
   function updateEditData() {
-    const currentEditName = tags.find((e) => e.path === target?.path)!.name;
-    const url = `/games/${gameName}/game/scene/${currentEditName}`;
+    const path = props.targetPath;
     axios
-      .get(url)
+      .get(path)
       .then((res) => res.data)
       .then((data) => {
         // currentText.set(data);

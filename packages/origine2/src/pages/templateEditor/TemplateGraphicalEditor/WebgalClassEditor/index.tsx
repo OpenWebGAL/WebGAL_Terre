@@ -88,6 +88,7 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
                       iconProps={{iconName: 'Delete'}}
                       title={t`删除属性`}
                       ariaLabel={t`删除属性`}
+                      className={s.propertyDelete}
                     />
                   </DialogTrigger>
                   <DialogSurface>
@@ -98,11 +99,11 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
                       </DialogContent>
                       <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
-                          <Button appearance="secondary">{t`返回`}</Button>
+                          <Button appearance="secondary"
+                            onClick={() => handleDeleteProperty(item!.propertyName)}>{t`删除`}</Button>
                         </DialogTrigger>
                         <DialogTrigger disableButtonEnhancement>
-                          <Button appearance="primary"
-                            onClick={() => handleDeleteProperty(item!.propertyName)}>{t`删除`}</Button>
+                          <Button appearance="primary">{t`返回`}</Button>
                         </DialogTrigger>
                       </DialogActions>
                     </DialogBody>
