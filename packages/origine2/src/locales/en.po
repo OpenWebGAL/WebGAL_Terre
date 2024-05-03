@@ -443,7 +443,7 @@ msgid "删除游戏"
 msgstr "Delete game"
 
 #: src/components/Assets/Assets.tsx:211
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
 msgid "刷新"
 msgstr "Refresh"
 
@@ -455,7 +455,7 @@ msgstr "Refresh game"
 msgid "加粗"
 msgstr "Bold"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:99
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:103
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:240
 msgid "动画"
 msgstr "Animation"
@@ -530,7 +530,7 @@ msgstr "Open in file explorer"
 
 #: src/pages/dashboard/GameElement.tsx:95
 #: src/pages/dashboard/TemplateElement.tsx:89
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -538,8 +538,8 @@ msgstr "Preview in new tab"
 msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:104
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
 msgid "场景"
 msgstr "Scene"
 
@@ -579,6 +579,7 @@ msgstr "Positioning"
 msgid "实时预览"
 msgstr "Live preview"
 
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -587,6 +588,7 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "实时预览打开"
 msgstr "Live preview on"
@@ -995,7 +997,7 @@ msgid "检测到新版本"
 msgstr "New version detected"
 
 #: src/pages/dashboard/DashBoard.tsx:176
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "Template"
 
@@ -1113,7 +1115,7 @@ msgstr "Game description"
 msgid "游戏识别码"
 msgstr "Game ID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
 msgid "游戏配置"
 msgstr "Game configuration"
 
@@ -1166,7 +1168,7 @@ msgstr "View"
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:112
 msgid "视频"
 msgstr "Video"
 
@@ -1182,7 +1184,7 @@ msgstr "Video options"
 msgid "禁止跳过视频"
 msgstr "Disable skipping video"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:103
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
 msgid "立绘"
 msgstr "Figure"
 
@@ -1210,7 +1212,7 @@ msgstr "ID of figure illustration"
 msgid "立绘文件"
 msgstr "Figure file"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
 msgid "纹理"
 msgstr "Texture"
 
@@ -1254,7 +1256,7 @@ msgstr "Scale"
 msgid "老电影滤镜"
 msgstr "Old film filter"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:101
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:105
 msgid "背景"
 msgstr "Background"
 
@@ -1390,7 +1392,7 @@ msgstr "This file type does not support preview"
 msgid "语言"
 msgstr "Language"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:109
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:132
 msgid "语音"
 msgstr "Voice"
@@ -1411,7 +1413,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
 msgid "资源"
 msgstr "Assets"
 
@@ -1557,7 +1559,7 @@ msgstr "Hide Text Box"
 msgid "静态"
 msgstr "Static"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:102
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
 msgid "音乐"
 msgstr "Music"
 
