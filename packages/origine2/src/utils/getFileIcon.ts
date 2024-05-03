@@ -8,9 +8,10 @@ import folderAudioIcon from 'material-icon-theme/icons/folder-audio.svg';
 import folderVideoIcon from 'material-icon-theme/icons/folder-video.svg';
 import folderJsonIcon from 'material-icon-theme/icons/folder-json.svg';
 import folderTextIcon from 'material-icon-theme/icons/folder-docs.svg';
+import folderTemplateIcon from 'material-icon-theme/icons/folder-template.svg';
 import folderIcon from 'material-icon-theme/icons/folder.svg';
 
-type FileType = "image" | "video" | "text" | "audio" | "json" | "unknown";
+type FileType = "image" | "video" | "text" | "audio" | "json" | "template" | "unknown";
 
 export function extractExtension(filename: string): FileType {
   const extension = filename.split(".").pop()?.toLowerCase() ?? "unknown";
@@ -59,6 +60,7 @@ fileMappings.set("background", "image");
 fileMappings.set("bgm", "audio");
 fileMappings.set("figure", "image");
 fileMappings.set("scene", "text");
+fileMappings.set("template", "template");
 fileMappings.set("tex", "image");
 fileMappings.set("video", "video");
 fileMappings.set("vocal", "audio");
@@ -84,6 +86,8 @@ export function getDirIcon(dirName:string){
     return folderJsonIcon;
   case "text":
     return folderTextIcon;
+  case "template":
+    return folderTemplateIcon;
   default:
     return folderIcon;
   }
