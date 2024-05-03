@@ -18,20 +18,20 @@ msgid ";注释"
 msgstr "Comment"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
-msgid "（定位用）偏移右侧距离"
-msgstr ""
+#~ msgid "（定位用）偏移右侧距离"
+#~ msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
-msgid "（定位用）偏移左侧距离"
-msgstr ""
+#~ msgid "（定位用）偏移左侧距离"
+#~ msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
-msgid "（定位用）偏移底部距离"
-msgstr ""
+#~ msgid "（定位用）偏移底部距离"
+#~ msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
-msgid "（定位用）偏移顶部距离"
-msgstr ""
+#~ msgid "（定位用）偏移顶部距离"
+#~ msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:32
 msgid "%"
@@ -293,6 +293,22 @@ msgstr ""
 msgid "值"
 msgstr "Value"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
+msgid "偏移右侧距离（定位用）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
+msgid "偏移左侧距离（定位用）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
+msgid "偏移底部距离（定位用）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
+msgid "偏移顶部距离（定位用）"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:29
 msgid "停止 BGM"
 msgstr "Stop the BGM"
@@ -409,8 +425,8 @@ msgstr "Create new template"
 msgid "创建新游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/FileElement.tsx:74
-#: src/components/Assets/FileElement.tsx:81
+#: src/components/Assets/FileElement.tsx:82
+#: src/components/Assets/FileElement.tsx:89
 #: src/pages/dashboard/GameElement.tsx:152
 #: src/pages/dashboard/TemplateElement.tsx:132
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -1480,7 +1496,7 @@ msgid "配置"
 msgstr "Configuration"
 
 #: src/components/Assets/FileElement.tsx:54
-#: src/components/Assets/FileElement.tsx:62
+#: src/components/Assets/FileElement.tsx:70
 #: src/pages/dashboard/GameElement.tsx:122
 #: src/pages/dashboard/TemplateElement.tsx:116
 msgid "重命名"
