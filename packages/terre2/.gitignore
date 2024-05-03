@@ -42,3 +42,4 @@ public/templates/*
 
 /assets/templates/Derivative_Engine/*
 !/assets/templates/Derivative_Engine/.gitkeep
+!public/templates/WebGAL Black
