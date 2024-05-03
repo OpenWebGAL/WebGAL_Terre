@@ -34,9 +34,11 @@ export default function ComponentTree() {
       path: `${basePath}/Stage/TextBox/textbox.scss`,
       nodes: [
         { name: '文本框', class: 'TextBox_main' },
+        { name: '文本框背景', class: 'TextBox_Background' },
         { name: '外层文本', class: 'outer' },
         { name: '内层文本', class: 'inner' },
         { name: '角色名文本框', class: 'TextBox_showName' },
+        { name: '角色名文本框背景', class: 'TextBox_ShowName_Background' },
         { name: '小头像容器', class: 'miniAvatarContainer' },
         { name: '小头像图像', class: 'miniAvatarImg' },
         { name: '角色名容器', class: 'nameContainer' },
