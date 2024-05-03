@@ -41,6 +41,7 @@
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^5.0.0",
     "vscode-languageserver": "^8.1.0",
+    "vscode-languageserver-textdocument": "^1.0.11",
     "webgal-parser": "latest",
     "ws": "^8.16.0"
   },
