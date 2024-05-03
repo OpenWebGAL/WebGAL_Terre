@@ -10,6 +10,8 @@ import WGCursor from "./propertyEditor/WGCursor";
 import WGCommonNumberEditor
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonNumberEditor";
 import WGCommonEditor from "./propertyEditor/WGCommonEditor";
+import WGCommonLengthEditor4Values
+  from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values";
 
 export interface IPropertyEditorProps {
   prop: IWebgalCssProp,
@@ -46,5 +48,6 @@ export function getEditorTable(): IWebGALStylePropertyEditItem[] {
     {propName: 'cursor', propLable: t`鼠标指针`, editor: WGCursor, initialValue: 'pointer'},
     {propName: 'z-index', propLable: t`层级顺序`, editor: WGCommonNumberEditor, initialValue: '1'},
     {propName: 'font-family', propLable: t`字体`, editor: WGCommonEditor, initialValue: `"思源宋体", serif`},
+    {propName: 'border-radius', propLable: t`圆角`, editor: WGCommonLengthEditor4Values, initialValue: `"10px 10px 10px 10px`},
   ];
 }
