@@ -53,6 +53,7 @@
   border: var(--border-md);
   border-left: none;
   box-shadow: var(--shadow-md);
+  z-index: 999;
 }
 
 .preview_container:hover .gamePreviewButons {
