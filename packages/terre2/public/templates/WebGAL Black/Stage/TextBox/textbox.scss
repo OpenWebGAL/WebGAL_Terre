@@ -80,7 +80,6 @@ background: transparent;
 z-index: 2;
 box-shadow: none;
 background: transparent;
-
 }
 
 .miniAvatarContainer {
@@ -89,8 +88,9 @@ height: 450px;
 width: 450px;
 bottom: 0;
 left: -250px;
-border-radius: 100% 0 0 100%;
+border-radius: 0px 0px 0px 0px;
 overflow: hidden;
+
 }
 
 .miniAvatarImg {
