@@ -1,19 +1,19 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styles from "./tagsManager.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/origineStore";
-import { ITag, resetTagOrder, setCurrentTagTarget } from "../../../store/statusReducer";
 import { cloneDeep } from "lodash";
-import { CloseSmall, FileCodeOne } from "@icon-park/react";
+import { CloseSmall } from "@icon-park/react";
 import IconWrapper from "@/components/iconWrapper/IconWrapper";
 import { getFileIcon } from "@/utils/getFileIcon";
 import React, { useRef } from "react";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { ITag } from "@/types/gameEditor";
 
 export default function TagsManager() {
   // 获取 Tags 数据
-  const tags = useSelector((state: RootState) => state.status.editor.tags);
-  const tagSelected = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
-  const dispatch = useDispatch();
+  const tags = useGameEditorContext((state) => state.tags);
+  const currentTag = useGameEditorContext((state) => state.currentTag);
+  const updateTags = useGameEditorContext((state) => state.updateTags);
+  const updateCurrentTag= useGameEditorContext((state) => state.updateCurrentTag);
 
   // 重新记录数组顺序
   const reorder = (list: Array<ITag>, startIndex: number, endIndex: number): Array<ITag> => {
@@ -32,24 +32,24 @@ export default function TagsManager() {
       result.source.index,
       result.destination.index
     ));
-    dispatch(resetTagOrder(newList));
+    updateTags(newList);
   }
 
-  function selectTag(tagTarget: string) {
-    dispatch(setCurrentTagTarget(tagTarget));
+  function selectTag(tag: ITag) {
+    updateCurrentTag(tag);
   }
 
-  function closeTag(ev: MouseEvent, tagTarget: string) {
+  function closeTag(ev: MouseEvent, tagTarget: ITag) {
     // 先设法确定新的 target 是什么
     // 删除的是尾部，就是前一个，删除的不是尾部，就是后一个
-    const targetIndex = tags.findIndex((e) => e.tagTarget === tagTarget);
-    let newTarget = "";
+    const targetIndex = tags.findIndex((e) => e.path === tagTarget.path);
+    let newTarget;
     if (tags.length > 1) {
       // 是最后一个
       if (targetIndex === tags.length - 1) {
-        newTarget = tags[tags.length - 2].tagTarget;
+        newTarget = tags[tags.length - 2];
       } else { // 不是最后一个
-        newTarget = tags[targetIndex + 1].tagTarget;
+        newTarget = tags[targetIndex + 1];
       }
     }
     const newTags = Array.from(tags);
@@ -57,9 +57,9 @@ export default function TagsManager() {
     console.log(newTags);
     console.log(newTarget);
     // 关闭这个标签并设置新的激活标签
-    if (tagTarget === tagSelected)
-      dispatch(setCurrentTagTarget(newTarget));
-    dispatch(resetTagOrder(newTags));
+    if (tagTarget.path === currentTag?.path)
+      updateCurrentTag(newTarget as ITag);
+    updateTags(newTags);
     ev.stopPropagation();
   }
 
@@ -89,26 +89,27 @@ export default function TagsManager() {
           ref={provided.innerRef}
         >
           {tags.map((item, index) => (
-            <Draggable key={item.tagTarget} draggableId={item.tagTarget} index={index}>
+            <Draggable key={item.path} draggableId={item.path} index={index}>
               {(provided, snapshot) => (
                 // 下面开始书写可拖拽的元素
                 <div
-                  onClick={() => selectTag(item.tagTarget)}
+                  title={item.path}
+                  onClick={() => selectTag(item)}
                   onMouseDown={(event:any)=>{
                     if(event.button === 1){
-                      closeTag(event, item.tagTarget);
+                      closeTag(event, item);
                     }
                   }}
-                  className={item.tagTarget === tagSelected ? `${styles.tag} ${styles.tag_active}` : styles.tag}
+                  className={item.path === currentTag?.path ? `${styles.tag} ${styles.tag_active}` : styles.tag}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
-                  <IconWrapper src={getFileIcon(item.tagTarget)} size={24} iconSize={18}/>
+                  <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18}/>
                   <div>
-                    {item.tagName}
+                    {item.name}
                   </div>
-                  <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item.tagTarget)}>
+                  <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item)}>
                     <CloseSmall theme="outline" size="15" strokeWidth={3} />
                   </div>
                 </div>

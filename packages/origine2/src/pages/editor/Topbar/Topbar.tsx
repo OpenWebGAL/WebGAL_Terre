@@ -1,79 +1,72 @@
 import styles from "./topbar.module.scss";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../store/origineStore";
-import {language, setDashboardShow, setEditMode, statusActions, TopbarTabs} from "../../../store/statusReducer";
-import useTrans from "@/hooks/useTrans";
-import useLanguage from "@/hooks/useLanguage";
 import GithubIcon from './assets/github.svg';
 import TerreIcon from './assets/wgfav-new-blue.png';
 import {useEffect} from "react";
 import TopbarTabButton from "@/pages/editor/Topbar/TopbarTabButton";
 import ConfigTab from "@/pages/editor/Topbar/tabs/GameConfig/ConfigTab";
-import {setAutoHideToolbar} from "@/store/userDataReducer";
 import {ViewTab} from "@/pages/editor/Topbar/tabs/ViewConfig/ViewTab";
 import {SettingsTab} from "@/pages/editor/Topbar/tabs/Settings/SettingsTab";
 import {HelpTab} from "@/pages/editor/Topbar/tabs/Help/HelpTab";
 import {ExportTab} from "@/pages/editor/Topbar/tabs/Export/ExportTab";
 import TopbarTabButtonSpecial from "@/pages/editor/Topbar/TopbarTabButtonSpecial";
 import {AddSentenceTab} from "@/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab";
-import {useTranslation} from "react-i18next";
 import {Toolbar, Menu, MenuTrigger, ToolbarButton, MenuPopover, MenuList, MenuItem} from "@fluentui/react-components";
 import {EyeOff24Filled, EyeOff24Regular, PaddingTop24Filled, PaddingTop24Regular, bundleIcon} from "@fluentui/react-icons";
+import useEditorStore from "@/store/useEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { IGameEditorTopbarTabs } from "@/types/gameEditor";
+import { redirect } from "@/hooks/useHashRoute";
+import { t } from "@lingui/macro";
+
+const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
+const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
 
 export default function TopBar() {
-  const {t} = useTranslation();
-  const setLanguage = useLanguage();
-  const editingGame: string = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const gameName = useEditorStore.use.subPage();
 
-  const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode); // false 是脚本模式 true 是图形化模式
-  const dispatch = useDispatch();
-  const isAutoHideToolbar = useSelector((state: RootState) => state.userData.isAutoHideToolbar);
+  const isAutoHideToolbar = useEditorStore.use.isAutoHideToolbar();
+  const updateIsAutoHideToolbar = useEditorStore.use.updateIisAutoHideToolbar();
 
-  const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
-  const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
+  const isCodeMode = useGameEditorContext((state) => state.isCodeMode); // false 是脚本模式 true 是图形化模式
+  const currentTopbarTab = useGameEditorContext((state) => state.currentTopbarTab);
+  const updateCurrentTopbarTab = useGameEditorContext((state) => state.updateCurrentTopbarTab);
 
-  const handleChange = (newValue: boolean) => {
-    dispatch(setEditMode(newValue));
-  };
-
-  const currentTopbarTab = useSelector((state: RootState) => state.status.editor.currentTopbarTab);
-
-  function setCurrentTopbarTab(tab: TopbarTabs | undefined) {
-    dispatch(statusActions.setCurrentTopbarTab(tab));
+  function setCurrentTopbarTab(tab: IGameEditorTopbarTabs | null) {
+    updateCurrentTopbarTab(tab);
   }
 
-  const handleTabClick = (tab: TopbarTabs) => {
+  const handleTabClick = (tab: IGameEditorTopbarTabs) => {
     setCurrentTopbarTab(tab);
   };
 
   function setAlwaysShowToolbarCallback() {
-    setCurrentTopbarTab(TopbarTabs.Config);
-    dispatch(setAutoHideToolbar(false));
+    setCurrentTopbarTab('config');
+    updateIsAutoHideToolbar(false);
   }
 
   function setAutoHideToolbarCallback() {
-    setCurrentTopbarTab(undefined);
-    dispatch(setAutoHideToolbar(true));
+    setCurrentTopbarTab(null);
+    updateIsAutoHideToolbar(true);
   }
 
-  const currentTab = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
-  const tabs = useSelector((state: RootState) => state.status.editor.tags);
-  const currentTabType = tabs.find(e => e.tagTarget === currentTab)?.tagType;
-  const isShowAddSceneTab = currentTabType === 'scene' && !isCodeMode;
+  const currentTag = useGameEditorContext((state) => state.currentTag);
+  const tags = useGameEditorContext((state) => state.tags);
+  const currenttype = tags.find(e => e.path === currentTag?.path)?.type;
+  const isShowAddSceneTab = currenttype === 'scene' && !isCodeMode;
 
   useEffect(() => {
-    if (!isShowAddSceneTab && currentTopbarTab === TopbarTabs.AddSentence) {
+    if (!isShowAddSceneTab && currentTopbarTab === 'addSentence') {
       if (isAutoHideToolbar) {
         // @ts-ignore
         handleTabClick(undefined);
       } else {
-        handleTabClick(TopbarTabs.Config);
+        handleTabClick('config');
       }
     }
 
-    if (isShowAddSceneTab && currentTopbarTab !== TopbarTabs.AddSentence) {
+    if (isShowAddSceneTab && currentTopbarTab !== 'addSentence') {
       if (!isAutoHideToolbar) {
-        handleTabClick(TopbarTabs.AddSentence);
+        handleTabClick('addSentence');
       }
     }
   }, [isShowAddSceneTab]);
@@ -81,22 +74,22 @@ export default function TopBar() {
   return <div className={styles.editor_topbar}>
     <div className={styles.topbar_tags}>
       {/* 标签页 */}
-      <TopbarTabButton text={t("文件")} isActive={false} onClick={() => dispatch(setDashboardShow(true))}/>
-      <TopbarTabButton text={t("配置")} isActive={currentTopbarTab === TopbarTabs.Config}
-        onClick={() => handleTabClick(TopbarTabs.Config)}/>
-      <TopbarTabButton text={t("视图")} isActive={currentTopbarTab === TopbarTabs.View}
-        onClick={() => handleTabClick(TopbarTabs.View)}/>
-      <TopbarTabButton text={t("设置")} isActive={currentTopbarTab === TopbarTabs.Settings}
-        onClick={() => handleTabClick(TopbarTabs.Settings)}/>
-      <TopbarTabButton text={t("帮助")} isActive={currentTopbarTab === TopbarTabs.Help}
-        onClick={() => handleTabClick(TopbarTabs.Help)}/>
-      <TopbarTabButton text={t("导出")} isActive={currentTopbarTab === TopbarTabs.Export}
-        onClick={() => handleTabClick(TopbarTabs.Export)}/>
+      <TopbarTabButton text={t`文件`} isActive={false} onClick={() => redirect('dashboard', 'game')}/>
+      <TopbarTabButton text={t`配置`} isActive={currentTopbarTab === 'config'}
+        onClick={() => handleTabClick('config')}/>
+      <TopbarTabButton text={t`视图`} isActive={currentTopbarTab === 'view'}
+        onClick={() => handleTabClick('view')}/>
+      <TopbarTabButton text={t`设置`} isActive={currentTopbarTab === 'settings'}
+        onClick={() => handleTabClick('settings')}/>
+      <TopbarTabButton text={t`帮助`} isActive={currentTopbarTab === 'help'}
+        onClick={() => handleTabClick('help')}/>
+      <TopbarTabButton text={t`导出`} isActive={currentTopbarTab === 'export'}
+        onClick={() => handleTabClick('export')}/>
       {isShowAddSceneTab &&
-        <TopbarTabButtonSpecial text={t("添加语句")} isActive={currentTopbarTab === TopbarTabs.AddSentence}
-          onClick={() => handleTabClick(TopbarTabs.AddSentence)}/>}
+        <TopbarTabButtonSpecial text={t`添加语句`} isActive={currentTopbarTab === 'addSentence'}
+          onClick={() => handleTabClick('addSentence')}/>}
       <div className={styles.topbar_gamename}>
-        {editingGame}
+        {gameName}
       </div>
       <Toolbar>
         <Menu>
@@ -105,32 +98,32 @@ export default function TopBar() {
           </MenuTrigger>
           <MenuPopover>
             <MenuList>
-              <MenuItem icon={<PaddingTopIcon />} onClick={setAlwaysShowToolbarCallback}>{t('一直显示功能区')??''}</MenuItem>
-              <MenuItem icon={<EyeOffIcon />} onClick={setAutoHideToolbarCallback}>{t('自动隐藏功能区')??''}</MenuItem>
+              <MenuItem icon={<PaddingTopIcon />} onClick={setAlwaysShowToolbarCallback}>{t`一直显示功能区`}</MenuItem>
+              <MenuItem icon={<EyeOffIcon />} onClick={setAutoHideToolbarCallback}>{t`自动隐藏功能区`}</MenuItem>
             </MenuList>
           </MenuPopover>
         </Menu>
-        <ToolbarButton 
-          icon={<img src={TerreIcon} height={20} width={20} alt="WebGAL Homepage"/>} 
+        <ToolbarButton
+          icon={<img src={TerreIcon} height={20} width={20} alt="WebGAL Homepage"/>}
           onClick={() => window.open("https://openwebgal.com", "_blank")}
           style={{fontWeight: 'normal', fontSize: '14px'}}
         >
-          {t("主页")}
+          {t`主页`}
         </ToolbarButton>
-        <ToolbarButton 
-          icon={<img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>} 
+        <ToolbarButton
+          icon={<img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>}
           onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}
           style={{fontWeight: 'normal', fontSize: '14px'}}
         >
-          {t("源代码")}
+          {t`源代码`}
         </ToolbarButton>
       </Toolbar>
     </div>
-    {currentTopbarTab === TopbarTabs.Config && <ConfigTab/>}
-    {currentTopbarTab === TopbarTabs.View && <ViewTab/>}
-    {currentTopbarTab === TopbarTabs.Settings && <SettingsTab/>}
-    {currentTopbarTab === TopbarTabs.Help && <HelpTab/>}
-    {currentTopbarTab === TopbarTabs.Export && <ExportTab/>}
-    {currentTopbarTab === TopbarTabs.AddSentence && <AddSentenceTab/>}
+    {currentTopbarTab === 'config' && <ConfigTab/>}
+    {currentTopbarTab === 'view' && <ViewTab/>}
+    {currentTopbarTab === 'settings' && <SettingsTab/>}
+    {currentTopbarTab === 'help' && <HelpTab/>}
+    {currentTopbarTab === 'export' && <ExportTab/>}
+    {currentTopbarTab === 'addSentence' && <AddSentenceTab/>}
   </div>;
 }

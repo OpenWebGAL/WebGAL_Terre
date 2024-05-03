@@ -1,4 +1,3 @@
-import useTrans from "@/hooks/useTrans";
 import CommonOptions from "../components/CommonOption";
 import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
@@ -7,27 +6,27 @@ import {useValue} from "@/hooks/useValue";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import {useExpand} from "@/hooks/useExpand";
 import { Button, Dropdown, Option } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
+import { t } from "@lingui/macro";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
-  const tTarget = useTrans('editor.graphical.sentences.setAnime.options.');
   const {sentence} = props;
   const json = sentence.content;
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
   const duration = useValue((durationFromArgs ?? 0) as number);
-  const {updateExpandIndex} = useExpand();
+  const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const presetTargets = new Map<PresetTarget, string>([
-    [ "fig-left", tTarget('preparedTarget.choose.options.figLeft') ],
-    [ "fig-center", tTarget('preparedTarget.choose.options.figCenter') ],
-    [ "fig-right", tTarget('preparedTarget.choose.options.figRight') ],
-    [ "bg-main", tTarget('preparedTarget.choose.options.bgMain') ],
+    [ "fig-left", t`左侧立绘` ],
+    [ "fig-center", t`中间立绘` ],
+    [ "fig-right", t`右侧立绘` ],
+    [ "bg-main", t`背景图片` ],
   ]);
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
@@ -39,21 +38,21 @@ export default function SetTransform(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions title="效果编辑">
-        <Button onClick={() => updateExpandIndex(props.index)}>
-          {tTarget('$打开效果编辑器')}
+      <CommonOptions title={t`效果编辑`}>
+        <Button onClick={() => updateExpand(props.index)}>
+          {t`打开效果编辑器`}
         </Button>
-        <TerrePanel sentenceIndex={props.index} title={tTarget("$效果编辑器")}>
+        <TerrePanel sentenceIndex={props.index} title={t`效果编辑器`}>
           <EffectEditor json={transform.value} onChange={(newJson)=>{
             transform.set(newJson);
             submit();
           }}/>
         </TerrePanel>
       </CommonOptions>
-      <CommonOptions key="10" title={tTarget('duration.title')}>
+      <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
         <div>
           <input
-            placeholder={tTarget("$持续时间（单位为毫秒）")}
+            placeholder={t`持续时间（单位为毫秒）`}
             value={duration.value.toString()}
             className={styles.sayInput}
             style={{ width: "100%" }}
@@ -68,13 +67,13 @@ export default function SetTransform(props: ISentenceEditorProps) {
           />
         </div>
       </CommonOptions>
-      <CommonOptions key="2" title={tTarget('preparedTarget.title')}>
+      <CommonOptions key="2" title={t`使用预设目标`}>
         <TerreToggle title="" onChange={(newValue) => {
           isUsePreset.set(newValue);
-        }} onText={tTarget('preparedTarget.on')} offText={tTarget('preparedTarget.off')}
+        }} onText={t`使用预设的作用目标，如果设置了id则不生效`} offText={t`手动输入 ID`}
         isChecked={isUsePreset.value} />
       </CommonOptions>
-      {isUsePreset.value && <CommonOptions key="3" title={tTarget('preparedTarget.choose.title')}>
+      {isUsePreset.value && <CommonOptions key="3" title={t`选择预设目标`}>
         <Dropdown
           value={presetTargets.get(target.value as PresetTarget)}
           selectedOptions={[target.value]}
@@ -87,7 +86,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
           {Array.from(presetTargets.entries()).map(([key, text]) => <Option key={key} value={key}>{text}</Option>)}
         </Dropdown>
       </CommonOptions>}
-      {!isUsePreset.value && <CommonOptions key="4" title={tTarget('targetId.title')}>
+      {!isUsePreset.value && <CommonOptions key="4" title={t`输入目标 ID`}>
         <input value={target.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -95,15 +94,15 @@ export default function SetTransform(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={tTarget('targetId.placeholder')}
+          placeholder={t`立绘 ID`}
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-      <CommonOptions key="20" title={tTarget('$editor.graphical.sentences.common.options.goNext.title')}>
+      <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
-        }} onText={tTarget('$editor.graphical.sentences.common.options.goNext.on')} offText={tTarget('$editor.graphical.sentences.common.options.goNext.off')} isChecked={isGoNext.value} />
+        }} onText={t`本句执行后执行下一句`} offText={t`本句执行后等待`} isChecked={isGoNext.value} />
       </CommonOptions>
     </div>
   </div>;

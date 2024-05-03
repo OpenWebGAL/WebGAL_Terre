@@ -38,3 +38,8 @@ lerna-debug.log*
 
 Exported_Games/*
 public/games/*
+public/templates/*
+
+/assets/templates/Derivative_Engine/*
+!/assets/templates/Derivative_Engine/.gitkeep
+!public/templates/WebGAL Black

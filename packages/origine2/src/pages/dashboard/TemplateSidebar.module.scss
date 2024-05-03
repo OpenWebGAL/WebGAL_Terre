@@ -1,0 +1,39 @@
+.sidebar_main{
+  width: 100%;
+  min-width: 20rem;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+.sidebar_main_fullwidth {
+  width: 100%;
+}
+
+.sidebar_top{
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  gap: 0.5rem;
+}
+
+.sidebar_top_title{
+  font-size: 165%;
+  font-weight: 500;
+  color: var(--primary);
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.5rem 0.5rem 0.25rem;
+}
+.sidebar_top_buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.game_list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr) );
+  grid-gap: 0.5rem;
+  padding: 0 1rem 1rem 1rem;
+}

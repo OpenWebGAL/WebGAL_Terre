@@ -2,16 +2,14 @@ import React, {ReactNode, useEffect, useRef} from "react";
 import s from './topbarTab.module.scss';
 import styles from '../topbar.module.scss';
 import {eventBus} from "@/utils/eventBus";
-import {useSelector} from "react-redux";
-import {RootState} from "@/store/origineStore";
-import {TopbarTabs} from "@/store/statusReducer";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
 
 export default function TopbarTab(props:{children:ReactNode}){
 
   const topbarTag = useRef<HTMLDivElement>(null);
-  const currentTopbarTab = useSelector((state: RootState) => state.status.editor.currentTopbarTab);
+  const currentTopbarTab = useGameEditorContext((state) => state.currentTopbarTab);
 
-  const isAddSentenceActive = currentTopbarTab === TopbarTabs.AddSentence;
+  const isAddSentenceActive = currentTopbarTab === 'addSentence';
 
   const handleScroll = (event: React.WheelEvent<HTMLDivElement>) => {
     const deltaY = event.deltaY;
