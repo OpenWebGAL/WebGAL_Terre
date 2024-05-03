@@ -16,6 +16,7 @@ import {
 } from '../webgal-fs/webgal-fs.service';
 import { ManageGameService } from './manage-game.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { LspService } from '../lsp/lsp.service';
 import {
   ApiBody,
   ApiOperation,
@@ -44,6 +45,7 @@ export class ManageGameController {
     private readonly webgalFs: WebgalFsService,
     private readonly manageGame: ManageGameService,
     private readonly logger: ConsoleLogger,
+    private readonly lspServerce: LspService,
   ) {}
 
   @Get('gameList')
