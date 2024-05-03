@@ -17,7 +17,7 @@ export interface IFile {
   path: string;
 }
 
-export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'tex' | 'video' | 'vocal'
+export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'template' | 'tex' | 'video' | 'vocal'
 
 export type IFileConfig = Map<
 string,
