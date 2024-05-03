@@ -1,26 +1,35 @@
 import styles from "./editorSidebar.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/origineStore";
-import { setEditorSidebarTag, sidebarTag } from "../../../store/statusReducer";
-import Assets from "./SidebarTags/Assets/Assets";
-import Scenes from "./SidebarTags/Scenes/Scenes";
+import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
-import useTrans from "@/hooks/useTrans";
 import {eventBus} from "@/utils/eventBus";
-import { ArrowClockwise24Filled, ArrowClockwise24Regular, bundleIcon, Open24Filled, Open24Regular } from "@fluentui/react-icons";
 import { Button } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { ITag } from "@/types/gameEditor";
+import { t } from "@lingui/macro";
+import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 
 let startX = 0;
 let prevXvalue = 0;
 let isMouseDown = false;
 
+const ArrowClockwiseIcon = bundleIcon(ArrowClockwiseFilled, ArrowClockwiseRegular);
+const OpenIcon = bundleIcon(OpenFilled, OpenRegular);
+const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
+const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
+
 export default function EditorSideBar() {
-  const t = useTrans("editor.sideBar.");
+  const gameName = useEditorStore.use.subPage();
+  const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
+  const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
 
-  const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Regular);
-  const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+  const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
+  const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
+  const updateCurrentSidebarTab = useGameEditorContext((state) => state.updateCurrentSidebarTab);
+  const tags = useGameEditorContext((state) => state.tags);
+  const addTag = useGameEditorContext((state) => state.addTag);
+  const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
 
-  const state = useSelector((state: RootState) => state.status.editor);
   const ifRef = useRef(null);
   useEffect(() => {
     if (ifRef.current) {
@@ -55,7 +64,7 @@ export default function EditorSideBar() {
     if (isMouseDown) {
       const deltaX = event.clientX - (startX);
       const newValue = prevXvalue + deltaX;
-      document.body.style.setProperty("--sidebar-width", `${newValue}px`);
+      document.body.style.setProperty("--sidebar-width", `${(newValue < 240) ? 240 : newValue}px`);
     }
 
   };
@@ -81,14 +90,6 @@ export default function EditorSideBar() {
     };
   }, []);
 
-  const dispatch = useDispatch();
-
-  const setSidebarTab = (currentTag: sidebarTag) => {
-    dispatch(setEditorSidebarTag(currentTag));
-  };
-
-  const isShowSidebar = useSelector((state:RootState)=>state.userData.isShowSidebar);
-
   const refreshGame = () => (ifRef?.current as unknown as HTMLIFrameElement).contentWindow?.location.reload();
 
   useEffect(() => {
@@ -98,6 +99,39 @@ export default function EditorSideBar() {
     };
   }, []);
 
+  const fileConfig: IFileConfig = new Map([
+    [`games/${gameName}/game/animation`, { desc: t`动画`, folderType: 'animation', isProtected: true }],
+    [`games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
+    [`games/${gameName}/game/background`, { desc: t`背景`, folderType: 'background', isProtected: true }],
+    [`games/${gameName}/game/bgm`, { desc: t`音乐`, folderType: 'bgm', isProtected: true }],
+    [`games/${gameName}/game/figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
+    [`games/${gameName}/game/scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
+    [`games/${gameName}/game/scene/start.txt`, { isProtected: true }],
+    [`games/${gameName}/game/template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
+    [`games/${gameName}/game/tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
+    [`games/${gameName}/game/video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
+    [`games/${gameName}/game/vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
+    [`games/${gameName}/game/config.txt`, { desc: t`游戏配置`, isProtected: true }],
+    [`games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
+  ]);
+
+  const handleOpen: IFileFunction['open'] = async (file, type) => {
+    const target = file.path;
+    const tag: ITag = {
+      name: file.name,
+      path: file.path,
+      type: type,
+    };
+      // 先要确定没有这个tag
+    const result = tags.findIndex((e) => e.path === target);
+    if (result < 0) addTag(tag);
+    updateCurrentTag(tag);
+  };
+
+  const fileFunction: IFileFunction = {
+    open: handleOpen,
+  };
+
   return <>
     {isShowSidebar && <div className={styles.editor_sidebar}>
       <div className={styles.divider}
@@ -105,60 +139,72 @@ export default function EditorSideBar() {
       // onMouseUp={handleDragEnd}
       // onMouseLeave={handleDragEnd}
       />
-      {
-        state.showPreview &&
-        <div className={styles.preview_container} id="gamePreview">
-          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          <iframe
-            ref={ifRef}
-            id="gamePreviewIframe"
-            frameBorder="0"
-            className={styles.previewWindow}
-            src={`/games/${state.currentEditingGame}`}
+      <div className={styles.preview_container} id="gamePreview">
+        {/* eslint-disable-next-line react/iframe-missing-sandbox */}
+        <iframe
+          ref={ifRef}
+          id="gamePreviewIframe"
+          frameBorder="0"
+          className={styles.previewWindow}
+          src={`/games/${gameName}`}
+        />
+        <div className={styles.gamePreviewButons}>
+          <Button
+            appearance="subtle"
+            icon={<ArrowClockwiseIcon />}
+            title={t`刷新`}
+            onClick={refreshGame}
           />
-          <div className={styles.gamePreviewButons}>
-            <Button
-              appearance="subtle"
-              icon={<ArrowClockwiseIcon />}
-              title={t("preview.refresh")}
-              onClick={refreshGame}
-            />
-            <Button
-              appearance="subtle"
-              icon={<OpenIcon />}
-              title={t("preview.previewInNewTab")}
-              onClick={() => window.open(`/games/${state.currentEditingGame}`, "_blank")}
-            />
-          </div>
+          <Button
+            appearance="subtle"
+            icon={<OpenIcon />}
+            title={t`在新标签页中预览`}
+            onClick={() => window.open(`/games/${gameName}`, "_blank")}
+          />
+          <Button
+            appearance="subtle"
+            icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
+            title={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
+            onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
+          />
         </div>
-      }
+      </div>
 
       <div className={styles.sidebarTab}>
         <input
           type="radio"
           id="sidebarTabAssets"
           name="sidebarTab"
-          value={sidebarTag.assets}
-          checked={state.currentSidebarTag === sidebarTag.assets}
-          onChange={() => setSidebarTab(sidebarTag.assets)}
+          value="assets"
+          checked={currentSidebarTab === 'asset'}
+          onChange={() => updateCurrentSidebarTab('asset')}
         />
-        <label htmlFor="sidebarTabAssets">{t('assets.title')}</label>
+        <label htmlFor="sidebarTabAssets">{t`资源`}</label>
 
         <input
           type="radio"
           id="sidebarTabScenes"
           name="sidebarTab"
-          value={sidebarTag.scenes}
-          checked={state.currentSidebarTag === sidebarTag.scenes}
-          onChange={() => setSidebarTab(sidebarTag.scenes)}
+          value="scene"
+          checked={currentSidebarTab === 'scene'}
+          onChange={() => updateCurrentSidebarTab('scene')}
         />
-        <label htmlFor="sidebarTabScenes">{t('scenes.title')}</label>
+        <label htmlFor="sidebarTabScenes">{t`场景`}</label>
       </div>
 
       <div className={styles.sidebarContent}>
-        {/* {state.currentSidebarTag === sidebarTag.gameconfig && <GameConfig />} */}
-        {state.currentSidebarTag === sidebarTag.assets && <Assets />}
-        {state.currentSidebarTag === sidebarTag.scenes && <Scenes />}
+        {currentSidebarTab === 'asset' &&
+          <Assets
+            basePath={['games', gameName, 'game']}
+            fileConfig={fileConfig}
+            fileFunction={fileFunction}
+          />}
+        {currentSidebarTab === 'scene' &&
+          <Assets
+            basePath={['games', gameName, 'game', 'scene']}
+            fileConfig={fileConfig}
+            fileFunction={fileFunction}
+          />}
       </div>
 
     </div >

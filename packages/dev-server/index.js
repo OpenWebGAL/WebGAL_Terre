@@ -29,7 +29,15 @@ app.use(
   createProxyMiddleware("/api", {
     target: `http://localhost:${WEBGAL_PORT + 1}`, // http代理跨域目标接口
     changeOrigin: true,
+      ws:true
   })
+);
+
+app.use(
+    createProxyMiddleware("/template-preview", {
+        target: `http://localhost:${WEBGAL_PORT + 1}`, // http代理跨域目标接口
+        changeOrigin: true,
+    })
 );
 
 app.use(
@@ -37,6 +45,13 @@ app.use(
     target: `http://localhost:${WEBGAL_PORT + 1}`, // http代理跨域目标接口
     changeOrigin: true,
   })
+);
+
+app.use(
+    createProxyMiddleware("/templates", {
+        target: `http://localhost:${WEBGAL_PORT + 1}`, // http代理跨域目标接口
+        changeOrigin: true,
+    })
 );
 
 app.use(

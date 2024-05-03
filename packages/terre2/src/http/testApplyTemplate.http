@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/manageTemplate/applyTemplateToGame
+Content-Type: application/json
+
+{
+  "templateName": "新的模板333333",
+  "gameName": "ng"
+}

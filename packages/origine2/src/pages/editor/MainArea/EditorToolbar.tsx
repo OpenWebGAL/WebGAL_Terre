@@ -1,16 +1,15 @@
 import {DataSheet, FileCodeOne, ListView, Terminal} from '@icon-park/react';
 import s from './editorToolbar.module.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/origineStore";
-import {setEditMode, statusActions} from "@/store/statusReducer";
 import {useEffect, useState} from "react";
 import {eventBus} from "@/utils/eventBus";
-import {useTranslation} from "react-i18next";
+import {useGameEditorContext} from '@/store/useGameEditorStore';
+import { t } from '@lingui/macro';
 
 export default function EditorToolbar() {
-  const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode);
-  const dispatch = useDispatch();
-  const isShowDebugger = useSelector((state:RootState)=>state.status.editor.isShowDebugger);
+  const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
+  const isShowDebugger = useGameEditorContext((state)=> state.isShowDebugger);
+  const updateIsCodeMode = useGameEditorContext((state)=> state.updateIsCodeMode);
+  const updateIsShowDebugger = useGameEditorContext((state) => state.updateIsShowDebugger);
 
   const [textNum,setTextNum] = useState(0);
   const [lineNum,setLineNum] = useState(0);
@@ -24,16 +23,10 @@ export default function EditorToolbar() {
   const textNumString = formatNumberWithCommas(textNum);
   const lineNumString = formatNumberWithCommas(lineNum);
 
-  function handleSetCodeMode(){
-    dispatch(setEditMode(true));
-  }
-
-  function handleSetGraphMode(){
-    dispatch(setEditMode(false));
-  }
+  const handleSetCodeMode = () => updateIsCodeMode(true);
+  const handleSetGraphMode = () => updateIsCodeMode(false);
 
   useEffect(() => {
-
     const handleUpdagteScene = (scene:string)=>{
       const wordsAndChars = scene.match(/[\w]+|[^\s\w]/g) || [];
       setTextNum(wordsAndChars.length);
@@ -48,10 +41,9 @@ export default function EditorToolbar() {
     };
   }, []);
 
-  const {t}= useTranslation();
 
   const switchDebugger = ()=>{
-    dispatch(statusActions.setDebuggerOpen(!isShowDebugger));
+    updateIsShowDebugger(!isShowDebugger);
   };
 
   return <div className={s.toolbar}>
@@ -61,16 +53,16 @@ export default function EditorToolbar() {
     </div>
     <div className={s.toolbar_button}>
       <DataSheet theme="outline" size="20" fill="#333" strokeWidth={3}/>
-      {lineNumString} {t("行脚本")}{textNumString} {t("个字")}
+      {lineNumString} {t`行脚本`}{textNumString} {t`个字`}
     </div>
     <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode ? s.toolbar_button_active : '')}
       style={{marginLeft: 'auto'}}>
       <FileCodeOne theme="outline" size="20" fill={isCodeMode ? '#005CAF' : "#333"} strokeWidth={3}/>
-      {t("脚本编辑器")}
+      {t`脚本编辑器`}
     </div>
     <div onClick={handleSetGraphMode} className={s.toolbar_button + ' ' + (!isCodeMode ? s.toolbar_button_active : '')}>
       <ListView theme="outline" size="20" fill={isCodeMode ? "#333" : '#005CAF'} strokeWidth={3}/>
-      {t("图形编辑器")}
+      {t`图形编辑器`}
     </div>
   </div>;
 }

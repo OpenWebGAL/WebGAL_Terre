@@ -3,19 +3,26 @@
   width: 100%;
   display: flex;
   flex-flow: column;
-  padding: 0 4px 4px 4px;
+}
+
+.container_main {
+  width: 100%;
+  height: calc(100vh - 4.5em);
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  padding: 4px;
 }
 
 .dashboard_main {
-  width: 100%;
-  height: calc(100vh - 4.5em);
+  width: 80%;
+  height: 100%;
   display: flex;
   flex-grow: 1;
   overflow: hidden;
   background: var(--bg-card);
   border: var(--border-md);
   border-radius: var(--radius-md);
-  padding: 4px;
 }
 
 .topBar {
@@ -26,4 +33,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.tabListContainer {
+  padding: 8px 18px;
+}
+
+.tabItem {
+  padding: 8px 16px !important;
+  margin-bottom: 4px;
+  min-width: 120px;
+
+  &:hover {
+    background-color: var(--bg-button-hover) !important;
+  }
+
+  > span {
+    font-size: 16px;
+  }
+}
+
+.active {
+  > span {
+    color: var(--primary) !important;
+  }
+
+  background-color: var(--bg-button-hover) !important;
 }
