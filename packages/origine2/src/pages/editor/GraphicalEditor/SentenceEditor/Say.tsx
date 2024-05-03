@@ -5,17 +5,17 @@ import styles from "./sentenceEditor.module.scss";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonOptions from "../components/CommonOption";
-import useTrans from "@/hooks/useTrans";
 import {cloneDeep} from "lodash";
 import CommonTips from "../components/CommonTips";
 import { useEffect } from "react";
 import { Button, Dropdown, Option } from "@fluentui/react-components";
+import { t } from "@lingui/macro";
+
 
 type FigurePosition = "" | "left" |  "right" | "center" | "id";
 type FontSize = "default" | "small" | "medium" | "large";
 
 export default function Say(props: ISentenceEditorProps) {
-  const t = useTrans('editor.graphical.sentences.say.options.');
   const currentValue = useValue(props.sentence.content.split("|"));
   const currentSpeaker = useValue(getArgByKey(props.sentence, "speaker").toString());
   const vocal = useValue(getArgByKey(props.sentence, "vocal").toString() ?? "");
@@ -24,11 +24,11 @@ export default function Say(props: ISentenceEditorProps) {
   const figureId = useValue(getArgByKey(props.sentence, "figureId").toString() ?? "");
   const figurePosition = useValue<FigurePosition>("");
   const figurePositions = new Map<FigurePosition, string>([
-    [ "", t('position.options.none') ] ,
-    [ "left", t('position.options.left') ],
-    [ "center", t('position.options.center') ],
-    [ "right", t('position.options.right') ],
-    [ "id",  t('position.options.id') ],
+    [ "", t`未指定` ] ,
+    [ "left", t`左侧立绘` ],
+    [ "center", t`中间立绘` ],
+    [ "right", t`右侧立绘` ],
+    [ "id",  t`使用立绘ID` ],
   ]);
 
   useEffect(() => {
@@ -50,10 +50,10 @@ export default function Say(props: ISentenceEditorProps) {
   }, []);
 
   const fontSizes = new Map<FontSize, string>([
-    [ "default", t('font.options.default')],
-    [ "small", t('font.options.small') ],
-    [ "medium", t('font.options.medium') ],
-    [ "large", t('font.options.large') ],
+    [ "default", t`默认`],
+    [ "small", t`小` ],
+    [ "medium", t`中` ],
+    [ "large", t`大` ],
   ]);
   const getInitialFontSize = (): FontSize => {
     const fontSizeValue = getArgByKey(props.sentence, "fontSize");
@@ -79,7 +79,7 @@ export default function Say(props: ISentenceEditorProps) {
   };
 
   return <div className={styles.sentenceEditorContent}>
-    <CommonTips text={t('tips.edit')}/>
+    <CommonTips text={t`提示：换行符最多可达三行`}/>
     <div className={styles.editItem} style={{marginBottom: '4px'}}>
       <input value={isNoSpeaker.value ? "" : currentSpeaker.value}
         onChange={(ev) => {
@@ -88,7 +88,7 @@ export default function Say(props: ISentenceEditorProps) {
         }}
         onBlur={submit}
         className={styles.sayInput}
-        placeholder={isNoSpeaker.value ? t('speaker.placeholder.voiceover') : t('speaker.placeholder.role')}
+        placeholder={isNoSpeaker.value ? t`旁白模式，无角色名` : t`角色名，留空以继承上句`}
         disabled={isNoSpeaker.value}
       />
     </div>
@@ -103,7 +103,7 @@ export default function Say(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayArea}
-          placeholder={t('dialogue.placeholder')}
+          placeholder={t`对话`}
         />
         <div style={{padding: '0 0 0 4px'}}/>
         {index >= 1 && <Button onClick={() => {
@@ -111,7 +111,7 @@ export default function Say(props: ISentenceEditorProps) {
           newList.splice(index, 1);
           currentValue.set(newList);
           submit();
-        }}>{t('$common.delete')}</Button>}
+        }}>{t`删除`}</Button>}
       </div>
     ))}
     {currentValue.value.length < 3 && <Button onClick={() => {
@@ -121,15 +121,15 @@ export default function Say(props: ISentenceEditorProps) {
       }
       currentValue.set(newList);
       submit();
-    }}>{t('add.button')}</Button>}
+    }}>{t`添加新行`}</Button>}
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t('voiceover.title')}>
+      <CommonOptions key="isNoDialog" title={t`旁白模式`}>
         <TerreToggle title="" onChange={(newValue) => {
           isNoSpeaker.set(newValue);
           submit();
-        }} onText={t('voiceover.on')} offText={t('voiceover.off')} isChecked={isNoSpeaker.value}/>
+        }} onText={t`不显示角色名`} offText={t`显示角色名`} isChecked={isNoSpeaker.value}/>
       </CommonOptions>
-      <CommonOptions key="Vocal" title={t('vocal.title')}>
+      <CommonOptions key="Vocal" title={t`语音`}>
         <>
           {vocal.value !== "" ? `${vocal.value}\u00a0\u00a0` : ""}
           <ChooseFile sourceBase="vocal" onChange={(newName) => {
@@ -140,7 +140,7 @@ export default function Say(props: ISentenceEditorProps) {
           extName={[".ogg", ".mp3", ".wav"]}/>
         </>
       </CommonOptions>
-      <CommonOptions title={t('position.title')}>
+      <CommonOptions title={t`关联立绘`}>
         <Dropdown
           value={figurePositions.get(figurePosition.value) ?? figurePosition.value}
           selectedOptions={[figurePosition.value]}
@@ -153,7 +153,7 @@ export default function Say(props: ISentenceEditorProps) {
           { Array.from(figurePositions.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
         </Dropdown>
       </CommonOptions>
-      {figurePosition.value === 'id' && <CommonOptions title={t('id.title')}>
+      {figurePosition.value === 'id' && <CommonOptions title={t`立绘插图的ID`}>
         <input value={figureId.value}
           onChange={(ev) => {
             const newValue = ev.target.value;
@@ -161,11 +161,11 @@ export default function Say(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t('id.placeholder')}
+          placeholder={t`立绘 ID`}
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-      <CommonOptions title={t('font.size')}>
+      <CommonOptions title={t`文字大小`}>
         <Dropdown
           value={fontSizes.get(fontSize.value) ?? fontSize.value}
           selectedOptions={[fontSize.value]}

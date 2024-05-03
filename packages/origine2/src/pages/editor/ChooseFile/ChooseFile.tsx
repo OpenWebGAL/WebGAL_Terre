@@ -1,12 +1,11 @@
 import { useValue } from "../../../hooks/useValue";
 import { useEffect, useMemo } from "react";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/origineStore";
 import styles from "./chooseFile.module.scss";
 import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
-import useTrans from "@/hooks/useTrans";
 import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
+import useEditorStore from "@/store/useEditorStore";
+import { api } from "@/api";
+import {t} from "@lingui/macro";
 
 export interface IChooseFile {
   sourceBase: string;
@@ -24,12 +23,12 @@ export interface IFileDescription {
 }
 
 export default function ChooseFile(props: IChooseFile) {
-  const t = useTrans('editor.fileChoose.');
   const currentChildDir = useValue<string[]>([]);
   const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
   const currentDirFiles = useValue<IFileDescription[]>([]);
   const fileSearch = useValue<string>('');
-  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
+  const subPage = useEditorStore.use.subPage();
+  const gameName = subPage;
 
   const updateFileList = ()=>{
     /**
@@ -97,17 +96,17 @@ export default function ChooseFile(props: IChooseFile) {
       onOpenChange={isShowChooseFileCallout.value ? onCancel : toggleIsCalloutVisible}
     >
       <PopoverTrigger>
-        <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t('cancel') : t('choose')}</Button>
+        <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>
       </PopoverTrigger>
       <PopoverSurface>
         <div className={styles.chooseFileContentWarpper}>
           <div className={styles.chooseFileTitle}>
-            {t('choose')}
+            {t`选择`}
           </div>
           <div className="file-search">
             <Input
-              placeholder={t('fileSearch')}
-              aria-label={t('fileSearch')}
+              placeholder={t`搜索文件`}
+              aria-label={t`搜索文件`}
               onChange={(ev, data) => fileSearch.set(data.value || '')}
               style={{width: '100%'}}
             />
@@ -134,8 +133,8 @@ export default function ChooseFile(props: IChooseFile) {
  * @param extName 拓展名，要加.
  */
 export async function getFileList(currentGameName: string, childDir: string, extName: string[]) {
-  const url = `/api/manageGame/readGameAssets/${currentGameName}/game/${childDir}`;
-  const rawFileList: IFileDescription[] = await axios.get(url).then((r) => r.data.dirInfo);
+  const path = `games/${currentGameName}/game/${childDir}`;
+  const rawFileList: IFileDescription[] = await api.assetsControllerReadAssets(path).then((r: any) => r.data.dirInfo);
   if (extName.length === 0) {
     return rawFileList;
   }

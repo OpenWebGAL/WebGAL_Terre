@@ -22,3 +22,12 @@ Content-Type: application/json
 {
 "source": "public/games/新的游戏/game/bgm/456"
 }
+
+###
+POST http://localhost/api/manageTemplate/getStyleByClassName HTTP/1.1
+Content-Type: application/json
+
+{
+  "filePath": "templates/新的模板/UI/Title/title.scss",
+  "className": "Title_main"
+}

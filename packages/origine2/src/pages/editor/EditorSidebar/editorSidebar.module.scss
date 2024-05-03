@@ -24,8 +24,8 @@
   flex-flow: column;
   flex-shrink: 0;
   position: relative;
-  width: calc(var(--sidebar-width) - 8px);
-  height: calc(calc(var(--sidebar-width) - 8px) / 16 * 9);
+  // width: calc(var(--sidebar-width) - 8px);
+  // height: calc(calc(var(--sidebar-width) - 8px) / 16 * 9);
 }
 
 .previewWindow {
@@ -35,6 +35,7 @@
   //margin: 4px 0 4px 0;
   border-radius: var(--radius-md);
   border: var(--border-md);
+  aspect-ratio: 16 / 9;
 }
 
 .preview_container:hover .previewWindow {
@@ -52,6 +53,7 @@
   border: var(--border-md);
   border-left: none;
   box-shadow: var(--shadow-md);
+  z-index: 999;
 }
 
 .preview_container:hover .gamePreviewButons {

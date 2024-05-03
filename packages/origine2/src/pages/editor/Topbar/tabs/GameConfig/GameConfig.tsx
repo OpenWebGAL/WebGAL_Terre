@@ -1,12 +1,8 @@
 import styles from "../topbarTabs.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
-import axios from "axios";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../../../store/origineStore";
-import React, {useState, useEffect, useRef} from "react";
+import  { useEffect, useRef} from "react";
 import {cloneDeep} from "lodash";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
-import useTrans from "@/hooks/useTrans";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
 import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
@@ -17,18 +13,19 @@ import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
 import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
+import useEditorStore from "@/store/useEditorStore";
+import { api } from "@/api";
+import { t } from "@lingui/macro";
 
 export default function GameConfig() {
-  const t = useTrans("editor.sideBar.gameConfigs.");
-  const state = useSelector((state: RootState) => state.status.editor);
+  const gameName = useEditorStore.use.subPage();
 
   // 拿到游戏配置
   const gameConfig = useValue<WebgalConfig>([]);
   console.log(gameConfig);
   const getGameConfig = () => {
-    axios
-      .get(`/api/manageGame/getGameConfig/${state.currentEditingGame}`)
-      .then((r) => parseAndSetGameConfigState(r.data));
+    api.manageGameControllerGetGameConfig(gameName)
+      .then((r: any) => parseAndSetGameConfigState(r.data));
   };
 
   useEffect(() => {
@@ -37,10 +34,7 @@ export default function GameConfig() {
 
   function updateGameConfig() {
     const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
-    const form = new URLSearchParams();
-    form.append("gameName", state.currentEditingGame);
-    form.append("newConfig", newConfig);
-    axios.post(`/api/manageGame/setGameConfig/`, form).then(getGameConfig);
+    api.manageGameControllerSetGameConfig({gameName, newConfig}).then(getGameConfig);
   }
 
   function getConfigContentAsString(key: string) {
@@ -89,28 +83,28 @@ export default function GameConfig() {
 
   return (
     <>
-      <TabItem title={t("options.name")}>
+      <TabItem title={t`游戏名称`}>
         <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
           onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>
       </TabItem>
-      <TabItem title={t("options.id")}>
+      <TabItem title={t`游戏识别码`}>
         <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>
       </TabItem>
-      <TabItem title={t("options.description")}>
+      <TabItem title={t`游戏简介`}>
         <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
           onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>
       </TabItem>
-      <TabItem title={t("options.packageName")}>
+      <TabItem title={t`游戏包名`}>
         <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
       </TabItem>
-      {/* <TabItem title={t("options.textboxTheme")}> */}
+      {/* <TabItem title={t`文本框主题`}> */}
       {/*  <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')} */}
       {/*    onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} */}
       {/*    selectItems={textboxThemes}/> */}
       {/* </TabItem> */}
-      <TabItem title={t("options.bg")}>
+      <TabItem title={t`标题背景图片`}>
         <GameConfigEditorWithFileChoose
           sourceBase="background"
           extNameList={[".jpg", ".png", ".webp"]}
@@ -118,7 +112,7 @@ export default function GameConfig() {
           value={getConfigContentAsString('Title_img')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
       </TabItem>
-      <TabItem title={t("options.bgm")}>
+      <TabItem title={t`标题背景音乐`}>
         <div className={styles.sidebar_gameconfig_title}>{}</div>
         <GameConfigEditorWithFileChoose
           extNameList={[".mp3", ".ogg", ".wav"]}
@@ -126,7 +120,7 @@ export default function GameConfig() {
           value={getConfigContentAsString('Title_bgm')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
       </TabItem>
-      <TabItem title={t("options.logoImage")}>
+      <TabItem title={t`启动图`}>
         <GameConfigEditorWithImageFileChoose
           sourceBase="background"
           extNameList={[".jpg", ".png", ".webp"]}
@@ -151,7 +145,6 @@ interface IGameConfigEditorMulti {
 }
 
 function GameConfigEditor(props: IGameConfigEditor) {
-  const t = useTrans("common.");
   const showEditBox = useValue(false);
 
   return <div className={styles.textEditArea} style={{maxWidth: 200}}>
@@ -201,7 +194,6 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
   sourceBase: string,
   extNameList: string[]
 }) {
-  const t = useTrans("common.");
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
   return <div className={styles.textEditArea}>
@@ -227,10 +219,9 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   sourceBase: string,
   extNameList: string[]
 }) {
-  const t = useTrans("common.");
+  const gameName = useEditorStore.use.subPage();
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
-  const gameName = useSelector((state: RootState) => state.status.editor.currentEditingGame);
   const images = props.value;
 
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);

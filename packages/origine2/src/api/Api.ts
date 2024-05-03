@@ -16,9 +16,51 @@ export interface CompletionDto {
   params: object;
 }
 
+export interface CreateNewFileDto {
+  /** The source path where the directory will be created */
+  source: string;
+  /** Name for the new file */
+  name: string;
+}
+
+export interface CreateNewFolderDto {
+  /** The source path where the directory will be created */
+  source: string;
+  /** Name for the new directory */
+  name: string;
+}
+
+export interface UploadFilesDto {
+  /** Target directory for the uploaded files */
+  targetDirectory: string;
+}
+
+export interface DeleteFileOrDirDto {
+  /** The source path of the file or directory to be deleted */
+  source: string;
+}
+
+export interface RenameFileDto {
+  /** The source path of the file or directory to be renamed */
+  source: string;
+  /** New name for renaming the file or directory */
+  newName: string;
+}
+
+export interface EditTextFileDto {
+  /** The path of textfile */
+  path: string;
+  /** Text data content */
+  textFile: string;
+}
+
 export interface CreateGameDto {
   /** The name of the game to be created */
   gameName: string;
+  /** The name of the derivative to be used */
+  derivative: string;
+  /** The name of the template to be applied */
+  templateName: string;
 }
 
 export interface EditFileNameDto {
@@ -52,23 +94,11 @@ export interface EditSceneDto {
   sceneData: string;
 }
 
-export interface EditTextFileDto {
-  /** The path of textfile */
-  path: string;
-  /** Text data content */
-  textFile: string;
-}
-
 export interface GameConfigDto {
   /** The name of the game */
   gameName: string;
   /** New game configuration */
   newConfig: string;
-}
-
-export interface UploadFilesDto {
-  /** Target directory for the uploaded files */
-  targetDirectory: string;
 }
 
 export interface MkDirDto {
@@ -78,16 +108,35 @@ export interface MkDirDto {
   name: string;
 }
 
-export interface DeleteFileOrDirDto {
+export interface DeleteDto {
   /** The source path of the file or directory to be deleted */
-  source: string;
+  gameName: string;
 }
 
 export interface RenameDto {
-  /** The source path of the file or directory to be renamed */
-  source: string;
-  /** New name for renaming the file or directory */
+  /** Old name for renaming the game */
+  gameName: string;
+  /** New name for renaming the game */
   newName: string;
+}
+
+export interface CreateTemplateDto {
+  /** The name of the template to be created */
+  templateName: string;
+}
+
+export interface ApplyTemplateToGameDto {
+  /** The template name to apply */
+  templateName: string;
+  /** The game name to be applied. */
+  gameName: string;
+}
+
+export interface GetStyleByClassNameDto {
+  /** The name of class to be fetched */
+  className: string;
+  /** The path of stylesheet file to be fetched */
+  filePath: string;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from 'axios';
@@ -264,6 +313,138 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Assets
+     * @name AssetsControllerReadAssets
+     * @summary Read Assets
+     * @request GET:/api/assets/readAssets/{readDirPath}
+     */
+    assetsControllerReadAssets: (readDirPath: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/assets/readAssets/${readDirPath}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerOpenDict
+     * @summary Open Assets Dictionary
+     * @request POST:/api/assets/openDict/{dirPath}
+     */
+    assetsControllerOpenDict: (dirPath: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/assets/openDict/${dirPath}`,
+        method: 'POST',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerCreateNewFile
+     * @summary Create a New FIle
+     * @request POST:/api/assets/createNewFile
+     */
+    assetsControllerCreateNewFile: (data: CreateNewFileDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/createNewFile`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerCreateNewFolder
+     * @summary Create Folder
+     * @request POST:/api/assets/createNewFolder
+     */
+    assetsControllerCreateNewFolder: (data: CreateNewFolderDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/createNewFolder`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerUpload
+     * @summary Upload Files
+     * @request POST:/api/assets/upload
+     */
+    assetsControllerUpload: (data: UploadFilesDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/upload`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerDeleteFileOrDir
+     * @summary Delete File or Directory
+     * @request POST:/api/assets/delete
+     */
+    assetsControllerDeleteFileOrDir: (data: DeleteFileOrDirDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/delete`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerRename
+     * @summary Rename File or Directory
+     * @request POST:/api/assets/rename
+     */
+    assetsControllerRename: (data: RenameFileDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/rename`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerEditTextFile
+     * @summary Edit Text File
+     * @request POST:/api/assets/editTextFile
+     */
+    assetsControllerEditTextFile: (data: EditTextFileDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/assets/editTextFile`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Manage Game
      * @name ManageGameControllerGetGameList
      * @summary Retrieve game list
@@ -304,6 +485,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     manageGameControllerOpenGameDict: (gameName: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/manageGame/openGameDict/${gameName}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerGetDerivativeEngines
+     * @summary Retrieve Derivative Engines
+     * @request GET:/api/manageGame/derivativeEngines
+     */
+    manageGameControllerGetDerivativeEngines: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/manageGame/derivativeEngines`,
         method: 'GET',
         ...params,
       }),
@@ -545,11 +741,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Manage Game
-     * @name ManageGameControllerDeleteFileOrDir
+     * @name ManageGameControllerDelete
      * @summary Delete File or Directory
      * @request POST:/api/manageGame/delete
      */
-    manageGameControllerDeleteFileOrDir: (data: DeleteFileOrDirDto, params: RequestParams = {}) =>
+    manageGameControllerDelete: (data: DeleteDto, params: RequestParams = {}) =>
       this.request<void, void>({
         path: `/api/manageGame/delete`,
         method: 'POST',
@@ -572,6 +768,116 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerGetTemplateList
+     * @summary Retrieve template list
+     * @request GET:/api/manageTemplate/templateList
+     */
+    manageTemplateControllerGetTemplateList: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/manageTemplate/templateList`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerCreateTemplate
+     * @summary Create a new template
+     * @request POST:/api/manageTemplate/createTemplate
+     */
+    manageTemplateControllerCreateTemplate: (data: CreateTemplateDto, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/manageTemplate/createTemplate`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerGetTemplateConfig
+     * @summary Get Template Configuration
+     * @request GET:/api/manageTemplate/getTemplateConfig/{templateName}
+     */
+    manageTemplateControllerGetTemplateConfig: (templateName: string, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/getTemplateConfig/${templateName}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerDeleteTemplate
+     * @summary Delete Template
+     * @request DELETE:/api/manageTemplate/delete/{templateName}
+     */
+    manageTemplateControllerDeleteTemplate: (templateName: string, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/delete/${templateName}`,
+        method: 'DELETE',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerApplyTemplateToGame
+     * @summary Apply template to a game
+     * @request POST:/api/manageTemplate/applyTemplateToGame
+     */
+    manageTemplateControllerApplyTemplateToGame: (data: ApplyTemplateToGameDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/applyTemplateToGame`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerGetStyleByClassName
+     * @summary Apply template to a game
+     * @request POST:/api/manageTemplate/getStyleByClassName
+     */
+    manageTemplateControllerGetStyleByClassName: (data: GetStyleByClassNameDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/getStyleByClassName`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
+  templatePreview = {
+    /**
+     * No description
+     *
+     * @name TemplatePreviewControllerGetTemplateAsset
+     * @request GET:/template-preview/{templateName}/game/template/{path}
+     */
+    templatePreviewControllerGetTemplateAsset: (path: string, templateName: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/template-preview/${templateName}/game/template/${path}`,
+        method: 'GET',
         ...params,
       }),
   };
