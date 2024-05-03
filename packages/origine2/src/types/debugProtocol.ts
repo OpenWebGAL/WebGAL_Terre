@@ -9,14 +9,19 @@ export enum DebugCommand {
   SYNCFE,
   // 执行指令
   EXE_COMMAND,
+  // 重新拉取模板样式文件
+  REFETCH_TEMPLATE_FILES,
 }
 
 export interface IDebugMessage {
-  command: DebugCommand;
-  sceneMsg: {
-    sentence: number;
-    scene: string;
+  event: string;
+  data: {
+    command: DebugCommand;
+    sceneMsg: {
+      sentence: number;
+      scene: string;
+    };
+    message: string;
+    stageSyncMsg: IStageState;
   };
-  message: string;
-  stageSyncMsg: IStageState;
 }

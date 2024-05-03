@@ -34,6 +34,7 @@
     --text-sub: rgb(102, 102, 102);
     --text-weak: rgb(123, 123, 123);
     --bg-base: rgb(255, 255, 255);
+    --bg-primary: var(--primary);
     --bg-root: rgb(250, 250, 250);
     --bg-card: rgb(255, 255, 255);
     --bg-card-hover: var(--black-5pct);

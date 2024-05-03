@@ -1,41 +1,39 @@
 import styles from "./editArea.module.scss";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../store/origineStore";
 import TextEditor from "../TextEditor/TextEditor";
 import ResourceDisplay, {ResourceType} from "../ResourceDisplay/ResourceDisplay";
-import {ITag} from "../../../store/statusReducer";
 import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
-import useTrans from "@/hooks/useTrans";
 import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
 import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugger";
+import { useGameEditorContext } from "@/store/useGameEditorStore";
+import { ITag } from "@/types/gameEditor";
+import { t } from "@lingui/macro";
 
 export default function EditArea() {
-  const t = useTrans('editor.mainArea.');
-  const selectedTagTarget = useSelector((state: RootState) => state.status.editor.selectedTagTarget);
-  const tags = useSelector((state: RootState) => state.status.editor.tags);
-  const isCodeMode = useSelector((state: RootState) => state.status.editor.isCodeMode);
-  const isShowDebugger = useSelector((state: RootState) => state.status.editor.isShowDebugger);
+  const currentTag = useGameEditorContext((state) => state.currentTag);
+  const tags = useGameEditorContext((state) => state.tags);
+  const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
+  const isShowDebugger = useGameEditorContext((state) => state.isShowDebugger);
 
   // 生成每个 Tag 对应的编辑器主体
 
-  const tag = tags.find(tag => tag.tagTarget === selectedTagTarget);
-  const isScene = tag?.tagType === "scene";
+  const tag = tags.find(tag => tag.path === currentTag?.path);
+  const isScene = tag?.type === "scene";
 
   const getTagPage = (tag: ITag) => {
-    if (tag.tagType === "scene") {
+    if (tag.type === "scene") {
       if (isCodeMode)
-        return <TextEditor isHide={tag.tagTarget !== selectedTagTarget} key={tag.tagTarget}
-          targetPath={tag.tagTarget}/>;
-      else return <GraphicalEditor key={tag.tagTarget} targetPath={tag.tagTarget} targetName={tag.tagName}/>;
+        return <TextEditor isHide={tag.path !== currentTag?.path} key={tag.path}
+          targetPath={tag.path}/>;
+      else return <GraphicalEditor key={tag.path} targetPath={tag.path} targetName={tag.name}/>;
     } else {
-      const fileType = getFileType(tag.tagTarget);
+      const fileType = getFileType(tag.name);
       if (!fileType) {
-        return <div>{t('canNotPreview')}</div>;
+        return <div>{t`该文件类型不支持预览`}</div>;
       }
       return <ResourceDisplay
-        isHidden={tag.tagTarget !== selectedTagTarget}
+        isHidden={tag.path !== currentTag?.path}
         resourceType={fileType}
-        resourceUrl={tag.tagTarget}
+        resourceUrl={tag.path}
       />;
     }
   };
@@ -44,8 +42,8 @@ export default function EditArea() {
 
   return <>
     <div className={styles.editArea_main}>
-      {selectedTagTarget === "" && <div className={styles.none_text}>{t('noFileOpened')}</div>}
-      {selectedTagTarget !== "" && tagPage}
+      {tag?.path === "" && <div className={styles.none_text}>{t`目前没有打开任何文件`}</div>}
+      {tag?.path !== "" && tagPage}
     </div>
     {isScene && isShowDebugger && <EditorDebugger/>}
     {isScene && <EditorToolbar/>}

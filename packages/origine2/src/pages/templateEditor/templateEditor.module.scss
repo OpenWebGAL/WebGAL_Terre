@@ -1,0 +1,38 @@
+.editor {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.divider {
+  width: 4px;
+  height: 100%;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  cursor: ew-resize;
+  text-align: center;
+
+  & .dividerLine {
+    width: 12px;
+    visibility: hidden;
+  }
+}
+
+.divider:hover {
+  width: 12px;
+
+  & .dividerLine {
+    visibility: visible;
+  }
+}
+
+.dividerActive {
+  width: 12px;
+
+  & .dividerLine {
+    visibility: visible;
+  }
+}

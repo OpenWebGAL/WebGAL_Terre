@@ -1,0 +1,40 @@
+.propertyEditor {
+  display: flex;
+  align-items: center;
+}
+
+.propertyEditorText{
+  //font-weight: bold;
+  //color: var(--primary);
+}
+
+.tableHeadText{
+  font-weight: bold;
+  //color: var(--primary);
+}
+
+.propertyEditorMain{
+  padding: 5px 10px;
+}
+
+.propertyNameCell{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.propertyDelete{
+  visibility: hidden;
+}
+
+.helpLink{
+  visibility: hidden;
+}
+
+.propertyNameCell:hover > .propertyDelete{
+  visibility: visible;
+}
+
+.propertyNameCell:hover > .helpLink{
+  visibility: visible;
+}

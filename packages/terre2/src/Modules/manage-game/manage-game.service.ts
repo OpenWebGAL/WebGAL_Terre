@@ -1,5 +1,5 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { _open } from 'src/util/open';
+import { _open } from '../../util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as process from 'process';
 
@@ -31,8 +31,14 @@ export class ManageGameService {
   /**
    * 从模板创建游戏
    * @param gameName
+   * @param derivative
+   * @param templateName
    */
-  async createGame(gameName: string): Promise<boolean> {
+  async createGame(
+    gameName: string,
+    derivative?: string,
+    templateName?: string,
+  ): Promise<boolean> {
     // 检查是否存在这个游戏
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/games`),
@@ -52,11 +58,30 @@ export class ManageGameService {
       this.webgalFs.getPathFromRoot('/public/games'),
       gameName,
     );
-    // 递归复制
-    await this.webgalFs.copy(
-      this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template/game/'),
-      this.webgalFs.getPathFromRoot(`/public/games/${gameName}/game/`),
-    );
+    if (derivative) {
+      await this.webgalFs.copy(
+        this.webgalFs.getPathFromRoot(
+          `/assets/templates/Derivative_Engine/${derivative}/`,
+        ),
+        this.webgalFs.getPathFromRoot(`/public/games/${gameName}/`),
+      );
+    } else {
+      await this.webgalFs.copy(
+        this.webgalFs.getPathFromRoot(
+          '/assets/templates/WebGAL_Template/game/',
+        ),
+        this.webgalFs.getPathFromRoot(`/public/games/${gameName}/game/`),
+      );
+    }
+    if (templateName) {
+      await this.webgalFs.copy(
+        this.webgalFs.getPathFromRoot(`/public/templates/${templateName}/`),
+        this.webgalFs.getPathFromRoot(
+          `/public/games/${gameName}/game/template/`,
+        ),
+      );
+    }
+
     return true;
   }
 

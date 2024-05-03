@@ -5,9 +5,10 @@ import { _open } from './util/open';
 import { urlencoded, json } from 'express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { env } from 'process';
+import { WsAdapter } from '@nestjs/platform-ws';
 
 let WEBGAL_PORT = 3000; // default port
-const version_number = `4.4.13`;
+const version_number = `4.5.0`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }
@@ -23,11 +24,12 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  app.useWebSocketAdapter(new WsAdapter(app));
   await app.listen(WEBGAL_PORT + 1);
 }
 
 bootstrap().then(() => {
   console.log(`WebGAL Terre ${version_number} starting at ${process.cwd()}`);
-  if ((process?.env?.NODE_ENV ?? '') !== 'development')
+  if ((process?.env?.NODE_ENV ?? '') !== 'development' && !global['isElectron'])
     _open(`http://localhost:${WEBGAL_PORT + 1}`);
 });

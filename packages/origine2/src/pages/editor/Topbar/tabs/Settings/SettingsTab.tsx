@@ -1,14 +1,7 @@
 import s from './settingsTab.module.scss';
 import TopbarTab from "@/pages/editor/Topbar/components/TopbarTab";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
-import {language} from "@/store/statusReducer";
-import useTrans from "@/hooks/useTrans";
-import useLanguage from "@/hooks/useLanguage";
 import {IconWithTextItem} from "@/pages/editor/Topbar/components/IconWithTextItem";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/origineStore";
-import {setEnableLivePreview, setIsWarp} from "@/store/userDataReducer";
-import {useTranslation} from "react-i18next";
 import {
   ArrowEnterLeft24Filled,
   ArrowEnterLeft24Regular,
@@ -23,13 +16,12 @@ import {
   Navigation24Regular,
 } from '@fluentui/react-icons';
 import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Tooltip } from '@fluentui/react-components';
+import useEditorStore from '@/store/useEditorStore';
+import { t } from '@lingui/macro';
 
 export function SettingsTab() {
 
-  const t = useTrans('editor.topBar.');
-  const setLanguage = useLanguage();
-  const trans = useTranslation();
-  const t2 = trans.t;
+  const updateLanguage = useEditorStore.use.updateLanguage();
 
   const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regular);
   const LiveIcon = bundleIcon(Live24Filled, Live24Regular);
@@ -37,34 +29,34 @@ export function SettingsTab() {
   const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeft24Filled, ArrowEnterLeft24Regular);
   const NavigationIcon = bundleIcon(Navigation24Filled, Navigation24Regular);
 
-  const isAutoWarp = useSelector((state:RootState)=>state.userData.isWarp);
-  const dispatch = useDispatch();
-  const isEnableLivePreview = useSelector((state: RootState) => state.userData.isEnableLivePreview);
-  const tSidebar = useTrans("editor.sideBar.");
+  const isAutoWarp = useEditorStore.use.isAutoWarp();
+  const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
+  const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
+  const updateIsAutoWarp = useEditorStore.use.updateIsAutoWarp();
 
   return <TopbarTab>
-    <TabItem title={t('commandBar.items.language.text')}>
+    <TabItem title={t`语言`}>
       <Menu>
         <MenuTrigger>
           <div>
             <IconWithTextItem
               icon={<LocalLanguageIcon className={s.iconColor} />}
-              text={t('commandBar.items.language.text')}
+              text={t`语言`}
             />
           </div>
         </MenuTrigger>
         <MenuPopover>
           <MenuList>
-            <MenuItem onClick={() => setLanguage(language.zhCn)}>简体中文</MenuItem>
-            <MenuItem onClick={() => setLanguage(language.en)}>English</MenuItem>
-            <MenuItem onClick={() => setLanguage(language.jp)}>日本语</MenuItem>
+            <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
+            <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
+            <MenuItem onClick={() => updateLanguage('ja')}>日本语</MenuItem>
           </MenuList>
         </MenuPopover>
       </Menu>
     </TabItem>
-    <TabItem title={t2("实时预览")}>
+    <TabItem title={t`实时预览`}>
       <Tooltip
-        content={<div className={s.previewTips}>{tSidebar('preview.notice')}</div>}
+        content={<div className={s.previewTips}>{t`实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。`}</div>}
         relationship="description"
         showDelay={0}
         hideDelay={0}
@@ -73,21 +65,21 @@ export function SettingsTab() {
         <div>
           <IconWithTextItem
             onClick={() => {
-              dispatch(setEnableLivePreview(!isEnableLivePreview));
+              updateIsEnableLivePreview(!isEnableLivePreview);
             }}
             icon={ isEnableLivePreview ? <LiveIcon className={s.iconColor}/> : <LiveOffIcon className={s.iconColor}/>}
-            text={ isEnableLivePreview ? t2('实时预览打开') : t2('实时预览关闭') }
+            text={ isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭` }
           />
         </div>
       </Tooltip>
     </TabItem>
-    <TabItem title={t2("代码编辑器")}>
+    <TabItem title={t`代码编辑器`}>
       <IconWithTextItem
         onClick={() => {
-          dispatch(setIsWarp(!isAutoWarp));
+          updateIsAutoWarp(!isAutoWarp);
         }}
         icon={ isAutoWarp ? <ArrowEnterLeftIcon className={s.iconColor}/> : <NavigationIcon className={s.iconColor}/>}
-        text={ isAutoWarp ? t2('自动换行') : t2('永不换行') }
+        text={ isAutoWarp ? t`自动换行` : t`永不换行` }
       />
     </TabItem>
   </TopbarTab>;
