@@ -93,6 +93,7 @@ export default function TagsManager() {
               {(provided, snapshot) => (
                 // 下面开始书写可拖拽的元素
                 <div
+                  title={item.path}
                   onClick={() => selectTag(item)}
                   onMouseDown={(event:any)=>{
                     if(event.button === 1){
