@@ -1,16 +1,12 @@
-import {
-  CompletionItem,
-  CompletionItemKind,
-  Position,
-} from 'vscode-languageserver';
+import { CompletionItem, CompletionItemKind } from 'vscode-languageserver';
 
-export function getCommands(
-  line: string,
-  allTextBefore: string,
-  position: Position,
-): CompletionItem[] {
+export function getCommands(line: string): CompletionItem[] {
   if (!line.split('').includes(':')) return commandSuggestions;
   else return [];
+}
+
+function makeInsertText(text: string) {
+  return `${text}:`;
 }
 
 const commandSuggestions: CompletionItem[] = [
@@ -22,7 +18,7 @@ const commandSuggestions: CompletionItem[] = [
 独白的分拆以分隔符(|)来分割，也就是说，每一个 | 代表一个换行。
 intro:回忆不需要适合的剧本，|反正一说出口，|都成了戏言。;`,
     detail: `command intro:<text> [|<text of line 2>] ...;`,
-    insertText: 'intro:',
+    insertText: makeInsertText('intro'),
   },
   {
     label: 'changeBg',
@@ -30,7 +26,7 @@ intro:回忆不需要适合的剧本，|反正一说出口，|都成了戏言。
     documentation: `更新背景图片
 changeBg:testBG03.jpg -next;`,
     detail: `command changeBg:<fileName> [-next];`,
-    insertText: 'changeBg',
+    insertText: makeInsertText('changeBg'),
   },
   {
     label: 'changeFigure',
@@ -38,7 +34,7 @@ changeBg:testBG03.jpg -next;`,
     documentation: `更新立绘
 changeFigure:testFigure03.png -left -next;`,
     detail: `command changeFigure:<fileName> [-left] [-right] [id=figureId] [-next];`,
-    insertText: 'changeFigure',
+    insertText: makeInsertText('changeFigure'),
   },
   {
     label: 'miniAvatar',
@@ -48,7 +44,7 @@ changeFigure:testFigure03.png -left -next;`,
 miniAvatar:minipic_test.png;显示
 miniAvatar:none;关闭`,
     detail: `command miniAvatar:<fileName>;`,
-    insertText: 'miniAvatar',
+    insertText: makeInsertText('miniAvatar'),
   },
   {
     label: 'changeScene',
@@ -57,7 +53,7 @@ miniAvatar:none;关闭`,
 你可以将你的剧本拆分成多个 txt 文档，并使用一个简单的语句来切换当前运行的剧本。
 changeScene:Chapter-2.txt;`,
     detail: `command changeScene:<newSceneFileName>;`,
-    insertText: 'changeScene',
+    insertText: makeInsertText('changeScene'),
   },
   {
     label: 'callScene',
@@ -66,7 +62,7 @@ changeScene:Chapter-2.txt;`,
 如果你需要在执行完调用的场景后回到先前的场景（即父场景），你可以使用 callScene 来调用场景
 callScene:Chapter-2.txt;`,
     detail: `command callScene:<newSceneFileName>;`,
-    insertText: 'callScene',
+    insertText: makeInsertText('callScene'),
   },
   {
     label: 'choose',
@@ -92,7 +88,7 @@ end;`,
     documentation: `背景音乐（BGM）
 bgm:夏影.mp3;`,
     detail: `command bgm:<fileName>;`,
-    insertText: 'bgm',
+    insertText: makeInsertText('bgm'),
   },
   {
     label: 'playEffect',
@@ -100,7 +96,7 @@ bgm:夏影.mp3;`,
     documentation: `效果音
 playEffect:xxx.mp3;`,
     detail: `command playEffect:<fileName>;`,
-    insertText: 'playEffect',
+    insertText: makeInsertText('playEffect'),
   },
   {
     label: 'playVideo',
@@ -108,7 +104,7 @@ playEffect:xxx.mp3;`,
     documentation: `播放视频
 playVideo:OP.mp4;`,
     detail: `command playVideo:<fileName>;`,
-    insertText: 'playVideo',
+    insertText: makeInsertText('playVideo'),
   },
   {
     label: 'unlockCg',
@@ -116,7 +112,7 @@ playVideo:OP.mp4;`,
     documentation: `解锁 CG 鉴赏
 unlockCg:xgmain.jpeg -name=星光咖啡馆与死神之蝶 -series=1;`,
     detail: `command unlockCg:<fileName> -name=cgName -series=serisId;`,
-    insertText: 'unlockCg',
+    insertText: makeInsertText('unlockCg'),
   },
   {
     label: 'unlockBgm',
@@ -124,7 +120,7 @@ unlockCg:xgmain.jpeg -name=星光咖啡馆与死神之蝶 -series=1;`,
     documentation: `解锁 BGM 鉴赏
 unlockBgm:s_Title.mp3 -name=Smiling-Swinging!!;`,
     detail: `command unlockBgm:<fileName> -name=bgmName;`,
-    insertText: 'unlockBgm',
+    insertText: makeInsertText('unlockBgm'),
   },
   {
     label: 'setTextbox',
@@ -133,7 +129,7 @@ unlockBgm:s_Title.mp3 -name=Smiling-Swinging!!;`,
 setTextbox:hide;关闭文本框
 setTextbox:on;开启文本框，可以是除 hide 以外的任意值。`,
     detail: `command setTextbox:[hide] [others];`,
-    insertText: 'setTextbox',
+    insertText: makeInsertText('setTextbox'),
   },
   {
     label: 'setAnimation',
@@ -141,7 +137,7 @@ setTextbox:on;开启文本框，可以是除 hide 以外的任意值。`,
     documentation: `设置动画
 setAnimation:enter-from-bottom -target=fig-center -next;为中间立绘设置一个从下方进入的动画，并转到下一句。`,
     detail: `command setAnimation:<animationName> -target=targetId;`,
-    insertText: 'setAnimation',
+    insertText: makeInsertText('setAnimation'),
   },
   {
     label: 'pixiInit',
@@ -158,7 +154,7 @@ setAnimation:enter-from-bottom -target=fig-center -next;为中间立绘设置一
     documentation: `初始化 Pixi 特效
 注意：特效作用后，如果没有初始化，特效会一直运行。`,
     detail: `command pixiPerform:<performName>;`,
-    insertText: 'pixiPerform',
+    insertText: makeInsertText('pixiPerform'),
   },
   {
     label: 'setVar',
@@ -168,6 +164,27 @@ setVar:a=1;可以设置数字
 setVar:a=true;可以设置布尔值
 setVar:a=人物名称;可以设置字符串`,
     detail: `command setVar:<expression>;`,
-    insertText: 'setVar:',
+    insertText: makeInsertText('setVar'),
+  },
+  {
+    label: 'getUserInput',
+    kind: CompletionItemKind.Function,
+    documentation: `获取用户输入
+getUserInput:name -title=如何称呼你 -buttonText=确认; 将用户输入写入 name 变量中
+    `,
+    detail: `command getUserInput:<varName> -title=titleText -buttonText=buttonText;`,
+    insertText: makeInsertText('getUserInput'),
+  },
+  {
+    label: 'setTransition',
+    kind: CompletionItemKind.Function,
+    documentation: `设置进出场效果
+注意：只有当立绘或背景被设置后，你才能为其设置进出场效果。
+设置进出场效果的代码写在立绘或背景的设置代码后。
+并且，设置进出场效果的语句必须紧随设置立绘或背景的语句连续执行，否则无法被正确应用。
+setTransition: -target=fig-center -enter=enter-from-bottom -exit=exit;
+    `,
+    detail: `command setTransition: -target=targetId -enter=animationName -exit=animationName;`,
+    insertText: makeInsertText('setTransition'),
   },
 ];
