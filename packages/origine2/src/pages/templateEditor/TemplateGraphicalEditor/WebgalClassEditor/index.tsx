@@ -109,7 +109,7 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
                     </DialogBody>
                   </DialogSurface>
                 </Dialog>
-                <span>
+                <span className={s.helpLink}>
                   <Link href={getMdnLink(item!.propertyName)} target="_blank">
                     {t`帮助文档`}
                   </Link>

@@ -45,7 +45,7 @@ export default function TemplateEditorSidebar() {
       <div className={styles.assets}>
         <Assets
           basePath={['templates', templateName]}
-          isProtected
+          // isProtected
           fileFunction={{ open: handleOpen }}
         />
       </div>
