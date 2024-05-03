@@ -443,7 +443,7 @@ msgid "删除游戏"
 msgstr "ゲームを削除"
 
 #: src/components/Assets/Assets.tsx:211
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
 msgid "刷新"
 msgstr "更新"
 
@@ -455,7 +455,7 @@ msgstr "ゲームをリフレッシュ"
 msgid "加粗"
 msgstr "太字"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:99
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:103
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:240
 msgid "动画"
 msgstr "アニメーション"
@@ -530,7 +530,7 @@ msgstr "ファイルエクスプローラーで開く"
 
 #: src/pages/dashboard/GameElement.tsx:95
 #: src/pages/dashboard/TemplateElement.tsx:89
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
 
@@ -538,8 +538,8 @@ msgstr "新しいタブでプレビュー"
 msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:104
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
 msgid "场景"
 msgstr "シーン"
 
@@ -579,6 +579,7 @@ msgstr "位置決め方法"
 msgid "实时预览"
 msgstr "リアルタイムプレビュー"
 
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
@@ -587,6 +588,7 @@ msgstr "リアルタイムプレビューオフ"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "リアルタイムプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。"
 
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
@@ -995,7 +997,7 @@ msgid "检测到新版本"
 msgstr "新しいバージョンが見つかりました"
 
 #: src/pages/dashboard/DashBoard.tsx:176
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "テンプレート"
 
@@ -1113,7 +1115,7 @@ msgstr "ゲーム概要"
 msgid "游戏识别码"
 msgstr "ゲームID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
 msgid "游戏配置"
 msgstr "ゲーム構成"
 
@@ -1166,7 +1168,7 @@ msgstr "ビュー"
 msgid "视觉小说编辑，再进化"
 msgstr "Galgame Editing. Redefined"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:112
 msgid "视频"
 msgstr "Video"
 
@@ -1182,7 +1184,7 @@ msgstr "動画のオプション"
 msgid "禁止跳过视频"
 msgstr "動画のスキップを無効にする"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:103
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
 msgid "立绘"
 msgstr "Figure"
 
@@ -1210,7 +1212,7 @@ msgstr "関連する立ち絵のID"
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
 msgid "纹理"
 msgstr "Tex"
 
@@ -1254,7 +1256,7 @@ msgstr "スケール"
 msgid "老电影滤镜"
 msgstr "古い映画"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:101
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:105
 msgid "背景"
 msgstr "Background"
 
@@ -1390,7 +1392,7 @@ msgstr "このファイルタイプはプレビューをサポートしていま
 msgid "语言"
 msgstr "言語"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:109
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:132
 msgid "语音"
 msgstr "ボイス"
@@ -1411,7 +1413,7 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
 msgid "资源"
 msgstr "アセット"
 
@@ -1557,7 +1559,7 @@ msgstr "テキストボックスを非表示"
 msgid "静态"
 msgstr "静的"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:102
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
 msgid "音乐"
 msgstr "BGM"
 
