@@ -20,4 +20,13 @@
 .propertyNameCell{
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+}
+
+.propertyDelete{
+  visibility: hidden;
+}
+
+.propertyNameCell:hover > .propertyDelete{
+  visibility: visible;
 }
