@@ -23,13 +23,21 @@ jobs:
         run: sh release-linux.sh
 
       - name: Compress
-        run: 7z a -tzip WebGAL_Terre_Linux.zip release/*
+        run: |
+          7z a -tzip WebGAL_Terre_Linux.zip release/*
+          tar -zcf WebGAL_Terre_Linux.tar.gz release/*
 
-      - name: Upload Artifact
+      - name: Upload Artifact (zip)
         uses: actions/upload-artifact@v2
         with:
-          name: WebGAL_Terre_Linux
+          name: WebGAL_Terre_Linux(zip)
           path: WebGAL_Terre_Linux.zip
+
+      - name: Upload Artifact (tar.gz)
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebGAL_Terre_Linux(tar.gz)
+          path: WebGAL_Terre_Linux.tar.gz
   build-arm64:
     name: Build Linux ARM64 Binary
     runs-on: ubuntu-latest
@@ -116,12 +124,22 @@ jobs:
           echo "WebGAL Terre is now ready to be deployed."
 
       - name: Compress
-        run: 7z a -tzip WebGAL_Terre_Linux_Arm64.zip release/*
-      - name: Upload Artifact
+        run: |
+          7z a -tzip WebGAL_Terre_Linux_Arm64.zip release/*
+          tar -zcf WebGAL_Terre_Linux_Arm64.tar.gz release/*
+
+      - name: Upload Artifact (zip)
         uses: actions/upload-artifact@v2
         with:
-          name: WebGAL_Terre_Linux_Arm64
+          name: WebGAL_Terre_Linux_Arm64(zip)
           path: WebGAL_Terre_Linux_Arm64.zip
+
+      - name: Upload Artifact (tar.gz)
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebGAL_Terre_Linux_Arm64(tar.gz)
+          path: WebGAL_Terre_Linux_Arm64.tar.gz
+
   build-mac:
     name: Build MacOS Binary
     runs-on: macos-14
