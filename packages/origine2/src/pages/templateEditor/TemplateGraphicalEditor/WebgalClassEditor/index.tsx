@@ -20,6 +20,7 @@ import {getEditorTable} from "@/pages/templateEditor/TemplateGraphicalEditor/Web
 import {IconButton} from "@fluentui/react";
 import WGCustomProperty
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCustomProperty";
+import {getMdnLink} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/getMdnLink";
 
 
 export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSubmit: () => void }) {
@@ -87,6 +88,7 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
                       iconProps={{iconName: 'Delete'}}
                       title={t`删除属性`}
                       ariaLabel={t`删除属性`}
+                      className={s.propertyDelete}
                     />
                   </DialogTrigger>
                   <DialogSurface>
@@ -97,16 +99,21 @@ export default function WebgalClassEditor(props: { props: IWebgalCssProp[], onSu
                       </DialogContent>
                       <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
-                          <Button appearance="secondary">{t`返回`}</Button>
+                          <Button appearance="secondary"
+                            onClick={() => handleDeleteProperty(item!.propertyName)}>{t`删除`}</Button>
                         </DialogTrigger>
                         <DialogTrigger disableButtonEnhancement>
-                          <Button appearance="primary"
-                            onClick={() => handleDeleteProperty(item!.propertyName)}>{t`删除`}</Button>
+                          <Button appearance="primary">{t`返回`}</Button>
                         </DialogTrigger>
                       </DialogActions>
                     </DialogBody>
                   </DialogSurface>
                 </Dialog>
+                <span className={s.helpLink}>
+                  <Link href={getMdnLink(item!.propertyName)} target="_blank">
+                    {t`帮助文档`}
+                  </Link>
+                </span>
               </div>
             </TableCell>
             <TableCell>
