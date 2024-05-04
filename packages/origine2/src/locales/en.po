@@ -176,11 +176,11 @@ msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
 #: src/components/Assets/Assets.tsx:274
-#: src/components/Assets/Assets.tsx:276
+#: src/components/Assets/Assets.tsx:275
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:198
+#: src/components/Assets/Assets.tsx:199
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -394,8 +394,8 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:157
-#: src/components/Assets/Assets.tsx:185
+#: src/components/Assets/Assets.tsx:158
+#: src/components/Assets/Assets.tsx:186
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -409,8 +409,8 @@ msgstr "Create new template"
 msgid "创建新游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/FileElement.tsx:74
-#: src/components/Assets/FileElement.tsx:81
+#: src/components/Assets/FileElement.tsx:82
+#: src/components/Assets/FileElement.tsx:89
 #: src/pages/dashboard/GameElement.tsx:152
 #: src/pages/dashboard/TemplateElement.tsx:132
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -440,7 +440,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:211
+#: src/components/Assets/Assets.tsx:212
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
 msgid "刷新"
 msgstr "Refresh"
@@ -683,7 +683,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/components/Assets/Assets.tsx:212
+#: src/components/Assets/Assets.tsx:213
 msgid "打开文件夹"
 msgstr "Open folder"
 
@@ -691,7 +691,7 @@ msgstr "Open folder"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:142
+#: src/components/Assets/Assets.tsx:143
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -827,11 +827,11 @@ msgstr ""
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:135
+#: src/components/Assets/Assets.tsx:136
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:170
+#: src/components/Assets/Assets.tsx:171
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -844,11 +844,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:138
+#: src/components/Assets/Assets.tsx:139
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:173
+#: src/components/Assets/Assets.tsx:174
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -887,7 +887,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:144
+#: src/components/Assets/Assets.tsx:145
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1100,6 +1100,10 @@ msgstr "Source code"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:116
 msgid "滤镜"
 msgstr "Filter"
+
+#: src/components/Assets/Upload.tsx:30
+msgid "点击或拖拽文件至此上传"
+msgstr "Click or drag file to this area to upload"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:118
 msgid "点状电影滤镜"
@@ -1480,7 +1484,7 @@ msgid "配置"
 msgstr "Configuration"
 
 #: src/components/Assets/FileElement.tsx:54
-#: src/components/Assets/FileElement.tsx:62
+#: src/components/Assets/FileElement.tsx:70
 #: src/pages/dashboard/GameElement.tsx:122
 #: src/pages/dashboard/TemplateElement.tsx:116
 msgid "重命名"
