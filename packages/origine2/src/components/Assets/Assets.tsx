@@ -18,7 +18,7 @@ export interface IFile {
   path: string;
 }
 
-export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'tex' | 'video' | 'vocal'
+export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'template' | 'tex' | 'video' | 'vocal'
 
 export type IFileConfig = Map<
 string,
@@ -60,7 +60,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
     if ('dirInfo' in data && data.dirInfo) {
       const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: currentPathString + '/' + item.name }));
       const dirs = dirInfo.filter((item) => item.isDir);
-      const files = dirInfo.filter((item) => !item.isDir);
+      const files = dirInfo.filter((item) => !item.isDir).filter(e=>e.name!=='.gitkeep');
       dirs.sort((a, b) => a.name.localeCompare(b.name));
       files.sort((a, b) => a.name.localeCompare(b.name));
       return [...dirs, ...files];

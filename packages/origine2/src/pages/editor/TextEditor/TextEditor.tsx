@@ -10,13 +10,14 @@ import {loadWASM} from "onigasm"; // peer dependency of 'monaco-textmate'
 import {Registry} from "monaco-textmate"; // peer dependency
 import {wireTmGrammars} from "monaco-editor-textmate";
 // 语法高亮文件
+import { editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME } from '../../../runtime/WG_ORIGINE_RUNTIME';
+import { WsUtil } from '../../../utils/wsUtil';
+import { eventBus } from '@/utils/eventBus';
+import useEditorStore from '@/store/useEditorStore';
+import { useGameEditorContext } from '@/store/useGameEditorStore';
+import { api } from '@/api';
 import hljson from "../../../config/highlighting/hl.json";
 import theme from "../../../config/themes/monokai-light.json";
-import {editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME} from "../../../runtime/WG_ORIGINE_RUNTIME";
-import {WsUtil} from "../../../utils/wsUtil";
-import {eventBus} from "@/utils/eventBus";
-import useEditorStore from "@/store/useEditorStore";
-import { useGameEditorContext } from "@/store/useGameEditorStore";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -82,35 +83,31 @@ export default function TextEditor(props: ITextEditorProps) {
     }
 
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    if (value)
-      currentText.value = value;
-    const params = new URLSearchParams();
-    params.append("gameName", gameName);
-    params.append("sceneName", sceneName);
-    params.append("sceneData", JSON.stringify({value: currentText.value}));
+    if (value) currentText.value = value;
     eventBus.emit('update-scene', currentText.value);
-    axios.post("/api/manageGame/editScene/", params).then((res) => {
-      const targetValue = currentText.value.split("\n")[lineNumber - 1];
+    api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
+      const targetValue = currentText.value.split('\n')[lineNumber - 1];
       WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
     });
   }
 
   function updateEditData() {
-    const currentEditName = tags.find((e) => e.path === target?.path)!.name;
-    const url = `/games/${gameName}/game/scene/${currentEditName}`;
-    axios.get(url).then(res => res.data).then((data) => {
-      // currentText.set(data);
-      currentText.value = data.toString();
-      eventBus.emit('update-scene', data.toString());
-      editorRef.current?.getModel()?.setValue(currentText.value);
-      if (isAfterMount) {
-        const targetLine = editorLineHolder.getSceneLine(props.targetPath);
-        editorRef?.current?.setPosition({lineNumber: targetLine, column: 0});
-        editorRef?.current?.revealLineInCenter(targetLine, 0);
-        isAfterMount = false;
-      }
-
-    });
+    const path = props.targetPath;
+    axios
+      .get(path)
+      .then((res) => res.data)
+      .then((data) => {
+        // currentText.set(data);
+        currentText.value = data.toString();
+        eventBus.emit('update-scene', data.toString());
+        editorRef.current?.getModel()?.setValue(currentText.value);
+        if (isAfterMount) {
+          const targetLine = editorLineHolder.getSceneLine(props.targetPath);
+          editorRef?.current?.setPosition({ lineNumber: targetLine, column: 0 });
+          editorRef?.current?.revealLineInCenter(targetLine, 0);
+          isAfterMount = false;
+        }
+      });
   }
 
   // useEffect(() => {
