@@ -78,7 +78,9 @@ export default function TemplateElement(props: ITemplateElementProps){
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
           <div className={styles.templateElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routers.template.url}/${props.templateInfo.dir}`}>{t`编辑模板`}</Button>
+            <Button appearance='primary' as='a' href={`${routers.template.url}/${props.templateInfo.dir}`}>
+              <span style={{textWrap: 'nowrap'}}>{t`编辑模板`}</span>
+            </Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />
