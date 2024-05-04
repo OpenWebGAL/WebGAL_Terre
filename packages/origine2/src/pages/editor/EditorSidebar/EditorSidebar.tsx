@@ -2,22 +2,26 @@ import styles from "./editorSidebar.module.scss";
 import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
 import {eventBus} from "@/utils/eventBus";
-import { ArrowClockwise24Filled, ArrowClockwise24Regular, bundleIcon, Open24Filled, Open24Regular } from "@fluentui/react-icons";
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { ITag } from "@/types/gameEditor";
 import { t } from "@lingui/macro";
+import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 
 let startX = 0;
 let prevXvalue = 0;
 let isMouseDown = false;
 
-const ArrowClockwiseIcon = bundleIcon(ArrowClockwise24Filled, ArrowClockwise24Regular);
-const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
+const ArrowClockwiseIcon = bundleIcon(ArrowClockwiseFilled, ArrowClockwiseRegular);
+const OpenIcon = bundleIcon(OpenFilled, OpenRegular);
+const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
+const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
 
 export default function EditorSideBar() {
   const gameName = useEditorStore.use.subPage();
+  const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
+  const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -103,6 +107,7 @@ export default function EditorSideBar() {
     [`games/${gameName}/game/figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
     [`games/${gameName}/game/scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
     [`games/${gameName}/game/scene/start.txt`, { isProtected: true }],
+    [`games/${gameName}/game/template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
     [`games/${gameName}/game/tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
     [`games/${gameName}/game/video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
     [`games/${gameName}/game/vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
@@ -155,6 +160,12 @@ export default function EditorSideBar() {
             icon={<OpenIcon />}
             title={t`在新标签页中预览`}
             onClick={() => window.open(`/games/${gameName}`, "_blank")}
+          />
+          <Button
+            appearance="subtle"
+            icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
+            title={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
+            onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
           />
         </div>
       </div>
