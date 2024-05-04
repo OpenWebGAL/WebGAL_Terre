@@ -128,8 +128,8 @@ export default function TemplateElement(props: ITemplateElementProps){
             <DialogTitle>{t`删除模板`}</DialogTitle>
             <DialogContent>{t`确定要删除 "${templateName}" 模板吗？`}</DialogContent>
             <DialogActions>
-              <Button appearance='secondary' onClick={() => isShowDeleteDialog.set(false)}>{t`返回`}</Button>
-              <Button appearance='primary' onClick={()=>deleteThisTemplate(props.templateInfo.dir)}>{t`删除`}</Button>
+              <Button appearance='secondary' onClick={()=>deleteThisTemplate(props.templateInfo.dir)}>{t`删除`}</Button>
+              <Button appearance='primary' onClick={() => isShowDeleteDialog.set(false)}>{t`返回`}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>

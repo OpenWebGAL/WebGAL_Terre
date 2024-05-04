@@ -13,6 +13,7 @@ import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
 import {eventBus} from "@/utils/eventBus";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import { api } from "@/api";
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -25,8 +26,8 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const showSentence = useValue<Array<boolean>>([]);
 
   function updateScene() {
-    const url = `/games/${gameName}/game/scene/${props.targetName}`;
-    axios.get(url).then(res => res.data).then((data) => {
+    const path = props.targetPath;
+    axios.get(path).then(res => res.data).then((data) => {
       sceneText.set(data.toString());
       eventBus.emit('update-scene', data.toString());
       const arr = splitToArray(sceneText.value);
@@ -48,7 +49,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     params.append("gameName", gameName);
     params.append("sceneName", props.targetName);
     params.append("sceneData", JSON.stringify({value: sceneText.value}));
-    axios.post("/api/manageGame/editScene/", params).then(() => {
+    api.assetsControllerEditTextFile({textFile: newScene, path: props.targetPath}).then(() => {
       const targetValue = sceneText.value.split("\n")[updateIndex - 1];
       WsUtil.sendSyncCommand(props.targetName, updateIndex, targetValue);
       updateScene();

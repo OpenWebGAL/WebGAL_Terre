@@ -20,4 +20,21 @@
 .propertyNameCell{
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+}
+
+.propertyDelete{
+  visibility: hidden;
+}
+
+.helpLink{
+  visibility: hidden;
+}
+
+.propertyNameCell:hover > .propertyDelete{
+  visibility: visible;
+}
+
+.propertyNameCell:hover > .helpLink{
+  visibility: visible;
 }
