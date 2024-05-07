@@ -451,7 +451,7 @@ msgid "删除游戏"
 msgstr "ゲームを削除"
 
 #: src/components/Assets/Assets.tsx:212
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
 msgid "刷新"
 msgstr "更新"
 
@@ -1161,7 +1161,7 @@ msgstr "ソースコード"
 msgid "滤镜"
 msgstr "フィルター"
 
-#: src/components/Assets/Upload.tsx:30
+#: src/components/Assets/Upload.tsx:41
 msgid "点击或拖拽文件至此上传"
 msgstr "ここまでクリックかドラッグでアップロードします"
 
