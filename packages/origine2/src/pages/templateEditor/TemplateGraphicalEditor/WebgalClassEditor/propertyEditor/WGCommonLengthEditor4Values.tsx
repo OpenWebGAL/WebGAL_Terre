@@ -64,22 +64,22 @@ export default function WGCommonLengthEditor4Values(props: IPropertyEditorProps)
     <Input
       value={v1}
       onChange={(_, data) => setV1(data.value)}
-      style={{marginRight:10,width:50}}
+      style={{marginRight:10,width:70}}
     />
     <Input
       value={v2}
       onChange={(_, data) => setV2(data.value)}
-      style={{marginRight:10,width:50}}
+      style={{marginRight:10,width:70}}
     />
     <Input
       value={v3}
       onChange={(_, data) => setV3(data.value)}
-      style={{marginRight:10,width:50}}
+      style={{marginRight:10,width:70}}
     />
     <Input
       value={v4}
       onChange={(_, data) => setV4(data.value)}
-      style={{marginRight:10,width:50}}
+      style={{marginRight:10,width:70}}
     />
     <Select
       value={unit}

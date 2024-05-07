@@ -50,10 +50,10 @@ export function getEditorTable(): IWebGALStylePropertyEditItem[] {
     {propName: 'cursor', propLable: t`鼠标指针`, editor: WGCursor, initialValue: 'pointer'},
     {propName: 'z-index', propLable: t`层级顺序`, editor: WGCommonNumberEditor, initialValue: '1'},
     {propName: 'font-family', propLable: t`字体`, editor: WGCommonEditor, initialValue: `"思源宋体", serif`},
-    {propName: 'border-radius', propLable: t`圆角`, editor: WGCommonLengthEditor4Values, initialValue: `"10px 10px 10px 10px`},
-    {propName: 'text-align', propLable: t`文本对齐`, editor: WGTextAlignEditor, initialValue: `"10px 10px 10px 10px`},
-    {propName: 'text-shadow', propLable: t`文本阴影`, editor: WGTextShadowEditor, initialValue: `"10px 10px 10px white`},
-    {propName: 'margin', propLable: t`外边距`, editor: WGCommonLengthEditor4Values, initialValue: `"10px 10px 10px 10px`},
-    {propName: 'padding', propLable: t`内边距`, editor: WGCommonLengthEditor4Values, initialValue: `"10px 10px 10px 10px`},
+    {propName: 'border-radius', propLable: t`圆角`, editor: WGCommonLengthEditor4Values, initialValue: `10px 10px 10px 10px`},
+    {propName: 'text-align', propLable: t`文本对齐`, editor: WGTextAlignEditor, initialValue: `left`},
+    {propName: 'text-shadow', propLable: t`文本阴影`, editor: WGTextShadowEditor, initialValue: `10px 10px 10px white`},
+    {propName: 'margin', propLable: t`外边距`, editor: WGCommonLengthEditor4Values, initialValue: `10px 10px 10px 10px`},
+    {propName: 'padding', propLable: t`内边距`, editor: WGCommonLengthEditor4Values, initialValue: `10px 10px 10px 10px`},
   ];
 }
