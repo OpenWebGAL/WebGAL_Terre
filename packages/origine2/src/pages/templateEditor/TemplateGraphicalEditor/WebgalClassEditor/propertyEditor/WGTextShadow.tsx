@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Button, Input, Select } from '@fluentui/react-components';
-import { t } from '@lingui/macro';
+import {useState} from 'react';
+import {Button, Input, Select} from '@fluentui/react-components';
+import {t} from '@lingui/macro';
 import s from '../propertyEditor.module.scss';
-import { IPropertyEditorProps } from '@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable';
+import {IPropertyEditorProps} from '@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable';
 
 export default function WGTextShadowEditor(props: IPropertyEditorProps) {
   const initialValue = props.prop.propValue || '0px 0px 0px rgba(0,0,0,0)'; // 默认值为无阴影
@@ -18,16 +18,18 @@ export default function WGTextShadowEditor(props: IPropertyEditorProps) {
 
   return (
     <div className={s.propertyEditor}>
-      <Input type="number" value={hOffset} onChange={(_, data) => setHOffset(data.value)} style={{ marginRight: 10 }} />
-      <Input type="number" value={vOffset} onChange={(_, data) => setVOffset(data.value)} style={{ marginRight: 10 }} />
+      <Input type="number" value={hOffset} onChange={(_, data) => setHOffset(data.value)}
+        style={{marginRight: 10, width: 70}}/>
+      <Input type="number" value={vOffset} onChange={(_, data) => setVOffset(data.value)}
+        style={{marginRight: 10, width: 70}}/>
       <Input
         type="number"
         value={blurRadius}
         onChange={(_, data) => setBlurRadius(data.value)}
-        style={{ marginRight: 10 }}
+        style={{marginRight: 10, width: 70}}
       />
-      <Input value={color} onChange={(_, data) => setColor(data.value)} style={{ marginRight: 10 }} />
-      <Button style={{ marginLeft: 8 }} onClick={submit}>{t`提交修改`}</Button>
+      <Input value={color} onChange={(_, data) => setColor(data.value)} style={{marginRight: 10}}/>
+      <Button style={{marginLeft: 8}} onClick={submit}>{t`提交修改`}</Button>
     </div>
   );
 }
