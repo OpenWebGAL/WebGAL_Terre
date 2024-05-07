@@ -467,7 +467,7 @@ msgid "删除游戏"
 msgstr "删除游戏"
 
 #: src/components/Assets/Assets.tsx:212
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
 msgid "刷新"
 msgstr "刷新"
 
@@ -1177,7 +1177,7 @@ msgstr "源代码"
 msgid "滤镜"
 msgstr "滤镜"
 
-#: src/components/Assets/Upload.tsx:30
+#: src/components/Assets/Upload.tsx:41
 msgid "点击或拖拽文件至此上传"
 msgstr "点击或拖拽文件至此上传"
 

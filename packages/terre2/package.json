@@ -42,6 +42,7 @@
     "swagger-ui-express": "^5.0.0",
     "vscode-languageserver": "^8.1.0",
     "webgal-parser": "latest",
+    "webpack": "5.76.0",
     "ws": "^8.16.0"
   },
   "devDependencies": {
