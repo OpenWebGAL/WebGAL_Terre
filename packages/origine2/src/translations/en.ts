@@ -649,6 +649,9 @@ export const en = {
       },
 
       components: {
+        upload: {
+          text: 'Click or drag file to this area to upload'
+        },
         addSentence: {
           dialogs: {
             add: {

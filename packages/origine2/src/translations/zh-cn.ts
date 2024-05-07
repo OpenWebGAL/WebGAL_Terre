@@ -657,6 +657,9 @@ export const zhCn = {
       },
 
       components: {
+        upload: {
+          text: '点击或拖拽文件至此上传'
+        },
         addSentence: {
           dialogs: {
             add: {
