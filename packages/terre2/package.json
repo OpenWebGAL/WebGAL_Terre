@@ -24,6 +24,7 @@
     "pkg:linux-arm64": "cd dist && pkg main.js -o WebGAL_Terre -t node18-linux-arm64"
   },
   "dependencies": {
+    "@babel/traverse": "7.23.2",
     "@fastify/static": "^7.0.1",
     "@nestjs/common": "^9.0.5",
     "@nestjs/core": "^9.0.5",
