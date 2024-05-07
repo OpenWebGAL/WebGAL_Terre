@@ -177,11 +177,11 @@ msgid "一直显示功能区"
 msgstr "一直显示功能区"
 
 #: src/components/Assets/Assets.tsx:274
-#: src/components/Assets/Assets.tsx:276
+#: src/components/Assets/Assets.tsx:275
 msgid "上传"
 msgstr "上传"
 
-#: src/components/Assets/Assets.tsx:198
+#: src/components/Assets/Assets.tsx:199
 msgid "上传资源"
 msgstr "上传资源"
 
@@ -412,8 +412,8 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
-#: src/components/Assets/Assets.tsx:157
-#: src/components/Assets/Assets.tsx:185
+#: src/components/Assets/Assets.tsx:158
+#: src/components/Assets/Assets.tsx:186
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -458,8 +458,8 @@ msgstr "删除模板"
 msgid "删除游戏"
 msgstr "删除游戏"
 
-#: src/components/Assets/Assets.tsx:211
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
+#: src/components/Assets/Assets.tsx:212
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
 msgid "刷新"
 msgstr "刷新"
 
@@ -719,7 +719,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/components/Assets/Assets.tsx:212
+#: src/components/Assets/Assets.tsx:213
 msgid "打开文件夹"
 msgstr "打开文件夹"
 
@@ -727,7 +727,7 @@ msgstr "打开文件夹"
 msgid "执行到此句"
 msgstr "执行到此句"
 
-#: src/components/Assets/Assets.tsx:142
+#: src/components/Assets/Assets.tsx:143
 msgid "扩展名"
 msgstr "扩展名"
 
@@ -867,11 +867,11 @@ msgstr "文本长度 (em)"
 msgid "文档"
 msgstr "文档"
 
-#: src/components/Assets/Assets.tsx:135
+#: src/components/Assets/Assets.tsx:136
 msgid "新建文件"
 msgstr "新建文件"
 
-#: src/components/Assets/Assets.tsx:170
+#: src/components/Assets/Assets.tsx:171
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
@@ -884,11 +884,11 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/components/Assets/Assets.tsx:138
+#: src/components/Assets/Assets.tsx:139
 msgid "新文件名"
 msgstr "新文件名"
 
-#: src/components/Assets/Assets.tsx:173
+#: src/components/Assets/Assets.tsx:174
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
@@ -927,7 +927,7 @@ msgstr "旁白模式，无角色名"
 msgid "旋转角度："
 msgstr "旋转角度："
 
-#: src/components/Assets/Assets.tsx:144
+#: src/components/Assets/Assets.tsx:145
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
@@ -1142,6 +1142,10 @@ msgstr "源代码"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:116
 msgid "滤镜"
 msgstr "滤镜"
+
+#: src/components/Assets/Upload.tsx:30
+msgid "点击或拖拽文件至此上传"
+msgstr "点击或拖拽文件至此上传"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:118
 msgid "点状电影滤镜"
