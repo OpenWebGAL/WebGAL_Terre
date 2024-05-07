@@ -185,6 +185,10 @@ msgstr "雪"
 msgid "不显示角色名"
 msgstr "キャラクター名は設定不可"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:22
+msgid "两端对齐"
+msgstr ""
+
 #: src/pages/editor/MainArea/EditorToolbar.tsx:56
 msgid "个字"
 msgstr " ワード"
@@ -278,19 +282,19 @@ msgstr "色を変更する"
 msgid "值"
 msgstr "値"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:45
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:47
 msgid "偏移右侧距离（定位用）"
 msgstr "右側のオフセット（位置決め用）"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:46
 msgid "偏移左侧距离（定位用）"
 msgstr "左側のオフセット（位置決め用）"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:47
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:49
 msgid "偏移底部距离（定位用）"
 msgstr "下部のオフセット（位置決め用）"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:46
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:48
 msgid "偏移顶部距离（定位用）"
 msgstr "上部のオフセット（位置決め用）"
 
@@ -344,19 +348,23 @@ msgstr "立ち絵を非表示"
 msgid "关闭背景"
 msgstr "背景画像を非表示"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
+msgid "内边距"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "最大宽度"
 msgstr "最大幅"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:42
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
 msgid "最大高度"
 msgstr "最大高さ"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
 msgid "最小宽度"
 msgstr "最小幅"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
 msgid "最小高度"
 msgstr "最小高さ"
 
@@ -413,8 +421,8 @@ msgstr "新しいゲームを作成"
 
 #: src/components/Assets/FileElement.tsx:82
 #: src/components/Assets/FileElement.tsx:89
-#: src/pages/dashboard/GameElement.tsx:152
-#: src/pages/dashboard/TemplateElement.tsx:131
+#: src/pages/dashboard/GameElement.tsx:154
+#: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:114
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
@@ -432,13 +440,13 @@ msgstr "属性を削除"
 msgid "删除本句"
 msgstr "この文を削除"
 
-#: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/dashboard/TemplateElement.tsx:128
+#: src/pages/dashboard/TemplateElement.tsx:93
+#: src/pages/dashboard/TemplateElement.tsx:130
 msgid "删除模板"
 msgstr "テンプレートを削除"
 
-#: src/pages/dashboard/GameElement.tsx:97
-#: src/pages/dashboard/GameElement.tsx:137
+#: src/pages/dashboard/GameElement.tsx:99
+#: src/pages/dashboard/GameElement.tsx:139
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
@@ -495,6 +503,10 @@ msgstr "右"
 msgid "右侧立绘"
 msgstr "右の立ち絵"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:21
+msgid "右对齐"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:112
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "BGMの再生を開始、切り替え、または停止する"
@@ -515,7 +527,7 @@ msgstr "口パクとまばたき"
 msgid "图形编辑器"
 msgstr "グラフィックエディタ"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:51
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:53
 msgid "圆角"
 msgstr "角丸"
 
@@ -523,13 +535,13 @@ msgstr "角丸"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "ダイアログの左下に小さなアバターを表示します"
 
-#: src/pages/dashboard/GameElement.tsx:94
-#: src/pages/dashboard/TemplateElement.tsx:88
+#: src/pages/dashboard/GameElement.tsx:96
+#: src/pages/dashboard/TemplateElement.tsx:90
 msgid "在文件管理器中打开"
 msgstr "ファイルエクスプローラーで開く"
 
-#: src/pages/dashboard/GameElement.tsx:95
-#: src/pages/dashboard/TemplateElement.tsx:89
+#: src/pages/dashboard/GameElement.tsx:97
+#: src/pages/dashboard/TemplateElement.tsx:91
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
@@ -551,27 +563,31 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:56
+msgid "外边距"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:56
 msgid "大"
 msgstr "大きい"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:50
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:52
 msgid "字体"
 msgstr "フォント"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:33
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:35
 msgid "字体大小"
 msgstr "フォントサイズ"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:35
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:37
 msgid "字母间距"
 msgstr "文字間隔"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:34
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:36
 msgid "字重"
 msgstr "フォントの太さ"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:45
 msgid "定位方式"
 msgstr "位置決め方法"
 
@@ -593,7 +609,7 @@ msgstr "リアルタイムプレビューはゲームを制限付きで早送り
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:37
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "宽度"
 msgstr "幅"
 
@@ -630,9 +646,13 @@ msgstr "小さい"
 msgid "小头像文件"
 msgstr "アバターファイル"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:49
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:51
 msgid "层级顺序"
 msgstr "階層順序"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:20
+msgid "居中对齐"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "展示小头像"
@@ -652,6 +672,10 @@ msgstr "左"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:19
 msgid "左侧立绘"
 msgstr "左の立ち絵"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:19
+msgid "左对齐"
+msgstr ""
 
 #: src/pages/dashboard/DashBoard.tsx:126
 msgid "已创建"
@@ -687,7 +711,7 @@ msgstr "開いた口"
 msgid "当前版本"
 msgstr "現在のバージョン"
 
-#: src/pages/dashboard/GameElement.tsx:146
+#: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
 msgstr "ゲームを削除することを確認しました"
 
@@ -741,6 +765,8 @@ msgstr "提出"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values.tsx:93
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonNumberEditor.tsx:23
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCustomProperty.tsx:20
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:24
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGTextShadow.tsx:32
 msgid "提交修改"
 msgstr "変更を送信"
 
@@ -838,6 +864,10 @@ msgstr "文字サイズ"
 msgid "文字颜色"
 msgstr "文字色"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:54
+msgid "文本对齐"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "文本显示"
 msgstr "テキストボックス"
@@ -846,6 +876,10 @@ msgstr "テキストボックス"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values.tsx:89
 msgid "文本长度 (em)"
 msgstr "テキストの長さ (em)"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:55
+msgid "文本阴影"
+msgstr ""
 
 #: src/pages/dashboard/About.tsx:106
 msgid "文档"
@@ -916,7 +950,7 @@ msgstr "回転："
 msgid "无"
 msgstr "Null"
 
-#: src/pages/dashboard/GameElement.tsx:141
+#: src/pages/dashboard/GameElement.tsx:143
 msgid "是否要删除 \"{gameName}\" ？"
 msgstr "\"{gameName}\"を削除してもよろしいですか？"
 
@@ -1156,7 +1190,7 @@ msgstr "相対"
 msgid "睁开眼睛"
 msgstr "開いた目"
 
-#: src/pages/dashboard/TemplateElement.tsx:129
+#: src/pages/dashboard/TemplateElement.tsx:131
 msgid "确定要删除 \"{templateName}\" 模板吗？"
 msgstr "テンプレート\"{templateName}\"を削除してもよろしいですか？"
 
@@ -1240,11 +1274,11 @@ msgstr "ゲーム終了"
 msgid "绝对"
 msgstr "絶対"
 
-#: src/pages/dashboard/TemplateElement.tsx:81
+#: src/pages/dashboard/TemplateElement.tsx:82
 msgid "编辑模板"
 msgstr "テンプレートを編集"
 
-#: src/pages/dashboard/GameElement.tsx:87
+#: src/pages/dashboard/GameElement.tsx:88
 msgid "编辑游戏"
 msgstr "ゲームの編集"
 
@@ -1427,10 +1461,10 @@ msgstr "アセット"
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
 
-#: src/pages/dashboard/GameElement.tsx:121
-#: src/pages/dashboard/GameElement.tsx:153
-#: src/pages/dashboard/TemplateElement.tsx:115
-#: src/pages/dashboard/TemplateElement.tsx:132
+#: src/pages/dashboard/GameElement.tsx:123
+#: src/pages/dashboard/GameElement.tsx:155
+#: src/pages/dashboard/TemplateElement.tsx:117
+#: src/pages/dashboard/TemplateElement.tsx:134
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:106
 msgid "返回"
 msgstr "戻る"
@@ -1511,18 +1545,18 @@ msgstr "設定"
 
 #: src/components/Assets/FileElement.tsx:54
 #: src/components/Assets/FileElement.tsx:70
-#: src/pages/dashboard/GameElement.tsx:122
-#: src/pages/dashboard/TemplateElement.tsx:116
+#: src/pages/dashboard/GameElement.tsx:124
+#: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
 msgstr "名前を変更"
 
-#: src/pages/dashboard/GameElement.tsx:96
-#: src/pages/dashboard/GameElement.tsx:111
+#: src/pages/dashboard/GameElement.tsx:98
+#: src/pages/dashboard/GameElement.tsx:113
 msgid "重命名文件夹"
 msgstr "ディレクトリ名の変更"
 
-#: src/pages/dashboard/TemplateElement.tsx:90
-#: src/pages/dashboard/TemplateElement.tsx:105
+#: src/pages/dashboard/TemplateElement.tsx:92
+#: src/pages/dashboard/TemplateElement.tsx:107
 msgid "重命名模板"
 msgstr "テンプレート名の変更"
 
@@ -1571,11 +1605,11 @@ msgstr "BGM"
 msgid "项目主页"
 msgstr "プロジェクトホームページ"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:36
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
 msgid "颜色"
 msgstr "色"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:42
 msgid "高度"
 msgstr "高さ"
 
@@ -1604,7 +1638,7 @@ msgstr "デフォルト値は1"
 msgid "鼠标悬浮样式"
 msgstr "マウスホバースタイル"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:48
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:50
 msgid "鼠标指针"
 msgstr "マウスポインター"
 
