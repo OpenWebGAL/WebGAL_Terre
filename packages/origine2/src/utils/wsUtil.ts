@@ -4,9 +4,25 @@ import useEditorStore from "@/store/useEditorStore";
 
 export class WsUtil {
   // eslint-disable-next-line max-params
-  public static sendSyncCommand(sceneName: string, lineNumber: number, lineCommandString: string, force?: boolean) {
+  public static sendSyncCommand(scenePath: string, lineNumber: number, lineCommandString: string, force?: boolean) {
+    function extractPathAfterScene(scenePath: string): string {
+      // Normalize path separators to "/"
+      const normalizedPath = scenePath.replace(/\\/g, '/');
 
-    const isForce = force ?? false;
+      // Split the path into parts
+      const parts = normalizedPath.split('/');
+
+      // Find the index of the "scene" segment
+      const sceneIndex = parts.indexOf('scene');
+
+      // Extract the parts after "scene"
+      const afterSceneParts = parts.slice(sceneIndex + 1);
+
+      // Join the parts back into a string with "/"
+      return afterSceneParts.join('/');
+    }
+
+    const sceneName = extractPathAfterScene(scenePath);
     if (!useEditorStore.getState().isEnableLivePreview && !force) {
       return;
     }
