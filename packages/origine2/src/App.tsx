@@ -69,7 +69,7 @@ function App() {
         });
       }, triggerCharacters: ["-", "", ":", "\n"]
     });
-  });
+  },[]);
 
   // 建立 WS 连接
   useEffect(()=>{
