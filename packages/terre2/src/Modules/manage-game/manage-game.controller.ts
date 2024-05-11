@@ -144,7 +144,7 @@ export class ManageGameController {
     gameName = decodeURI(gameName); // Optionally decode the URI
     this.manageGame
       .exportGame(gameName, 'web')
-      .then(() => this.logger.log(`${gameName} export as web app`));
+      .then(() => this.logger.log(`${gameName} exported as web app`));
   }
 
   @Get('ejectGameAsExe/:gameName')
