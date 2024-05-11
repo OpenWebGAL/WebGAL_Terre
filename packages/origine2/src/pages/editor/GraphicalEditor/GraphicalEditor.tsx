@@ -51,7 +51,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     params.append("sceneData", JSON.stringify({value: sceneText.value}));
     api.assetsControllerEditTextFile({textFile: newScene, path: props.targetPath}).then(() => {
       const targetValue = sceneText.value.split("\n")[updateIndex - 1];
-      WsUtil.sendSyncCommand(props.targetName, updateIndex, targetValue);
+      WsUtil.sendSyncCommand(props.targetPath, updateIndex, targetValue);
       updateScene();
     });
   }
@@ -131,7 +131,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   function syncToIndex(index: number) {
     const targetValue = sceneText.value.split("\n")[index];
-    WsUtil.sendSyncCommand(props.targetName, index + 1, targetValue,true);
+    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue,true);
   }
 
   useEffect(() => {
