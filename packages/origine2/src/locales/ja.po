@@ -187,7 +187,7 @@ msgstr "キャラクター名は設定不可"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:22
 msgid "两端对齐"
-msgstr ""
+msgstr "両端揃え"
 
 #: src/pages/editor/MainArea/EditorToolbar.tsx:56
 msgid "个字"
@@ -348,9 +348,13 @@ msgstr "立ち絵を非表示"
 msgid "关闭背景"
 msgstr "背景画像を非表示"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
+msgid "内层文本"
+msgstr "内側テキスト"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
 msgid "内边距"
-msgstr ""
+msgstr "パディング"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "最大宽度"
@@ -505,7 +509,7 @@ msgstr "右の立ち絵"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:21
 msgid "右对齐"
-msgstr ""
+msgstr "右揃え"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:112
 msgid "启动、切换或停止背景音乐的播放"
@@ -563,9 +567,13 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
+msgid "外层文本"
+msgstr "外側テキスト"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:56
 msgid "外边距"
-msgstr ""
+msgstr "マージン"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:56
 msgid "大"
@@ -642,6 +650,14 @@ msgstr "ウェブとしてエクスポート"
 msgid "小"
 msgstr "小さい"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+msgid "小头像图像"
+msgstr "アバター画像"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
+msgid "小头像容器"
+msgstr "アバターコンテナ"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:27
 msgid "小头像文件"
 msgstr "アバターファイル"
@@ -652,7 +668,7 @@ msgstr "階層順序"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:20
 msgid "居中对齐"
-msgstr ""
+msgstr "中央揃え"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "展示小头像"
@@ -675,7 +691,7 @@ msgstr "左の立ち絵"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:19
 msgid "左对齐"
-msgstr ""
+msgstr "左揃え"
 
 #: src/pages/dashboard/DashBoard.tsx:126
 msgid "已创建"
@@ -866,11 +882,24 @@ msgstr "文字色"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:54
 msgid "文本对齐"
-msgstr ""
+msgstr "テキストの配置"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "文本显示"
 msgstr "テキストボックス"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:34
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:37
+msgid "文本框"
+msgstr "テキストボックス"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
+msgid "文本框文本"
+msgstr "テキストボックスのテキスト"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+msgid "文本框背景"
+msgstr "テキストボックスの背景"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:31
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values.tsx:89
@@ -879,7 +908,7 @@ msgstr "テキストの長さ (em)"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:55
 msgid "文本阴影"
-msgstr ""
+msgstr "テキストシャドウ"
 
 #: src/pages/dashboard/About.tsx:106
 msgid "文档"
@@ -1013,6 +1042,27 @@ msgstr "この文が実行された後、次の文を実行"
 msgid "本句执行后等待"
 msgstr "この文が実行されるのを待つ"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:23
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:26
+msgid "标题"
+msgstr "タイトル"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:30
+msgid "标题备用背景"
+msgstr "タイトル代替背景"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:28
+msgid "标题按钮"
+msgstr "タイトルボタン"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:27
+msgid "标题按钮列表"
+msgstr "タイトルボタンリスト"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:29
+msgid "标题按钮文字"
+msgstr "タイトルボタンテキスト"
+
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:107
 msgid "标题背景图片"
 msgstr "タイトルの背景画像"
@@ -1036,6 +1086,7 @@ msgid "模板"
 msgstr "テンプレート"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:35
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:37
 msgid "模板列表"
 msgstr "テンプレートリスト"
 
@@ -1070,6 +1121,10 @@ msgstr "コメントは編集時のみ表示され、ゲームプレイ時には
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:60
 msgid "淡入淡出"
 msgstr "フェードインとアウト"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:51
+msgid "添加"
+msgstr "追加"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:80
 msgid "添加一句对话，可以附带语音"
@@ -1368,6 +1423,26 @@ msgstr "キャラクター名を空白のままにすると前の文から継承
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:77
 msgid "角色名，留空以继承上句:对话;"
 msgstr "キャラクター名を空白のままにすると前の文から継承;ダイアログ;"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
+msgid "角色名内层文本"
+msgstr "キャラクター名内側テキスト"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
+msgid "角色名外层文本"
+msgstr "キャラクター名外側テキスト"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
+msgid "角色名容器"
+msgstr "キャラクター名コンテナ"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
+msgid "角色名文本框"
+msgstr "キャラクター名テキストボックス"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
+msgid "角色名文本框背景"
+msgstr "キャラクター名テキストボックスの背景"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:172
 msgid "角落头像"
