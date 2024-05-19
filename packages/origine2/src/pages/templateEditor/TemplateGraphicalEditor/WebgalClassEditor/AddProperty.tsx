@@ -48,7 +48,7 @@ export default function AddProperty(props: {
     <Button onClick={() => {
       props.onAddProperty(customPropertyName, customPropertyValue);
       props.onOpenChange(false);
-    }}>添加</Button>
+    }}>{t`添加`}</Button>
   </div>;
 
   return <Dialog
