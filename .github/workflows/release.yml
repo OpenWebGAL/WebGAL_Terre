@@ -234,7 +234,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: WebGAL_Terre_Linux/WebGAL_Terre_Linux.zip
+          asset_path: WebGAL_Terre_Linux/WebGAL_Terre_Linux(zip).zip
+          asset_name: WebGAL_Terre_Linux_${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload Linux Asset(tgz)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: WebGAL_Terre_Linux/WebGAL_Terre_Linux(tar.gz).tar.gz
           asset_name: WebGAL_Terre_Linux_${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
@@ -244,7 +254,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: WebGAL_Terre_Linux_Arm64/WebGAL_Terre_Linux_Arm64.zip
+          asset_path: WebGAL_Terre_Linux_Arm64/WebGAL_Terre_Linux_Arm64(zip).zip
+          asset_name: WebGAL_Terre_Linux_Arm64_${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload Linux Arm64 Asset(tgz)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: WebGAL_Terre_Linux_Arm64/WebGAL_Terre_Linux_Arm64(tar.gz).tar.gz
           asset_name: WebGAL_Terre_Linux_Arm64_${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
