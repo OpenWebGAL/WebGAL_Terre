@@ -84,7 +84,9 @@ export default function GameElement(props: IGameElementProps) {
         <div className={styles.gameElement_sub}>
           <span className={styles.gameElement_dir}>{props.gameInfo.dir}</span>
           <div className={styles.gameElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routers.game.url}/${props.gameInfo.dir}`}>{t`编辑游戏`}</Button>
+            <Button appearance='primary' as='a' href={`${routers.game.url}/${props.gameInfo.dir}`}>
+              <span style={{textWrap: 'nowrap'}}>{t`编辑游戏`}</span>
+            </Button>
             <Menu>
               <MenuTrigger>
                 <MenuButton appearance='subtle' icon={<MoreVerticalIcon />} />

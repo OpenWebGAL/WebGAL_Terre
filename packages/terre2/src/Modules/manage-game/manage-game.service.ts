@@ -136,6 +136,17 @@ export class ManageGameService {
     gameName: string,
     ejectPlatform: 'web' | 'electron-windows' | 'android',
   ) {
+    // 检查是否使用了衍生版本
+    const gameRootDir = `/public/games/${gameName}/`;
+    const checkIsEngineTemplateExist = async () => {
+      const dirInfo = await this.webgalFs.getDirInfo(
+        this.webgalFs.getPathFromRoot(gameRootDir),
+      );
+      return !!dirInfo.find((e) => e.name === 'index.html');
+    };
+
+    const isEngineTemplateExist = await checkIsEngineTemplateExist();
+
     // 根据 GameName 找到游戏所在目录
     const gameDir = this.webgalFs.getPathFromRoot(
       `/public/games/${gameName}/game/`,
@@ -179,10 +190,16 @@ export class ManageGameService {
           ),
           `${electronExportDir}/`,
         );
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-          `${electronExportDir}/resources/app/public/`,
-        );
+        if (!isEngineTemplateExist)
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+            `${electronExportDir}/resources/app/public/`,
+          );
+        else
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(gameRootDir),
+            `${electronExportDir}/resources/app/public/`,
+          );
         // 修改 manifest.json
         await this.webgalFs.replaceTextFile(
           `${electronExportDir}/resources/app/public/manifest.json`,
@@ -214,10 +231,16 @@ export class ManageGameService {
           ),
           `${electronExportDir}/`,
         );
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-          `${electronExportDir}/resources/app/public/`,
-        );
+        if (!isEngineTemplateExist)
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+            `${electronExportDir}/resources/app/public/`,
+          );
+        else
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(gameRootDir),
+            `${electronExportDir}/resources/app/public/`,
+          );
         // 修改 manifest.json
         await this.webgalFs.replaceTextFile(
           `${electronExportDir}/resources/app/public/manifest.json`,
@@ -249,10 +272,16 @@ export class ManageGameService {
           ),
           `${electronExportDir}/`,
         );
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-          `${electronExportDir}/Contents/Resources/app/public/`,
-        );
+        if (!isEngineTemplateExist)
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+            `${electronExportDir}/Contents/Resources/app/public/`,
+          );
+        else
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(gameRootDir),
+            `${electronExportDir}/Contents/Resources/app/public/`,
+          );
         // 修改 manifest.json
         await this.webgalFs.replaceTextFile(
           `${electronExportDir}/Contents/Resources/app/public/manifest.json`,
@@ -288,10 +317,16 @@ export class ManageGameService {
         ),
         `${androidExportDir}/`,
       );
-      await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-        `${androidExportDir}/app/src/main/assets/webgal/`,
-      );
+      if (!isEngineTemplateExist)
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+          `${androidExportDir}/app/src/main/assets/webgal/`,
+        );
+      else
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot(gameRootDir),
+          `${androidExportDir}/app/src/main/assets/webgal/`,
+        );
       // 修改 manifest.json
       await this.webgalFs.replaceTextFile(
         `${androidExportDir}/app/src/main/assets/webgal/manifest.json`,
@@ -346,10 +381,16 @@ export class ManageGameService {
     if (ejectPlatform === 'web') {
       const webExportDir = this.webgalFs.getPath(`${exportDir}/web`);
       await this.webgalFs.mkdir(webExportDir, '');
-      await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-        `${webExportDir}/`,
-      );
+      if (!isEngineTemplateExist)
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+          `${webExportDir}/`,
+        );
+      else
+        await this.webgalFs.copy(
+          this.webgalFs.getPathFromRoot(gameRootDir),
+          `${webExportDir}/`,
+        );
       // 修改 manifest.json
       await this.webgalFs.replaceTextFile(
         `${webExportDir}/manifest.json`,

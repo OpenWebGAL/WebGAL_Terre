@@ -657,6 +657,9 @@ export const jp = {
       },
 
       components: {
+        upload: {
+          text: 'ここまでクリックかドラッグでアップロードします'
+        },
         addSentence: {
           dialogs: {
             add: {

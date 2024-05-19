@@ -54,11 +54,10 @@ export default function TextEditor(props: ITextEditorProps) {
       const editorValue = editor.getValue();
       const targetValue = editorValue.split("\n")[lineNumber - 1];
       // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
-      const sceneName = tags.find((e) => e.path === target?.path)!.name;
       if (!isAfterMount) {
         editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
       }
-      WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
+      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
     });
     editor.updateOptions({unicodeHighlight: {ambiguousCharacters: false}, wordWrap: isAutoWarp ? 'on' : 'off'});
     liftOff(editor).then();
@@ -87,7 +86,7 @@ export default function TextEditor(props: ITextEditorProps) {
     eventBus.emit('update-scene', currentText.value);
     api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
       const targetValue = currentText.value.split('\n')[lineNumber - 1];
-      WsUtil.sendSyncCommand(sceneName, lineNumber, targetValue);
+      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
     });
   }
 
