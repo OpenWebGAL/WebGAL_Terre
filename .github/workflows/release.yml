@@ -23,21 +23,13 @@ jobs:
         run: sh release-linux.sh
 
       - name: Compress
-        run: |
-          7z a -tzip WebGAL_Terre_Linux.zip release/*
-          tar -zcf WebGAL_Terre_Linux.tar.gz release/*
+        run: 7z a -tzip WebGAL_Terre_Linux.zip release/*
 
-      - name: Upload Artifact (zip)
+      - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: WebGAL_Terre_Linux(zip)
+          name: WebGAL_Terre_Linux
           path: WebGAL_Terre_Linux.zip
-
-      - name: Upload Artifact (tar.gz)
-        uses: actions/upload-artifact@v2
-        with:
-          name: WebGAL_Terre_Linux(tar.gz)
-          path: WebGAL_Terre_Linux.tar.gz
   build-arm64:
     name: Build Linux ARM64 Binary
     runs-on: ubuntu-latest
@@ -124,22 +116,12 @@ jobs:
           echo "WebGAL Terre is now ready to be deployed."
 
       - name: Compress
-        run: |
-          7z a -tzip WebGAL_Terre_Linux_Arm64.zip release/*
-          tar -zcf WebGAL_Terre_Linux_Arm64.tar.gz release/*
-
-      - name: Upload Artifact (zip)
+        run: 7z a -tzip WebGAL_Terre_Linux_Arm64.zip release/*
+      - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: WebGAL_Terre_Linux_Arm64(zip)
+          name: WebGAL_Terre_Linux_Arm64
           path: WebGAL_Terre_Linux_Arm64.zip
-
-      - name: Upload Artifact (tar.gz)
-        uses: actions/upload-artifact@v2
-        with:
-          name: WebGAL_Terre_Linux_Arm64(tar.gz)
-          path: WebGAL_Terre_Linux_Arm64.tar.gz
-
   build-mac:
     name: Build MacOS Binary
     runs-on: macos-14
@@ -234,17 +216,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: WebGAL_Terre_Linux/WebGAL_Terre_Linux(zip).zip
-          asset_name: WebGAL_Terre_Linux_${{ github.ref_name }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Linux Asset(tgz)
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: WebGAL_Terre_Linux/WebGAL_Terre_Linux(tar.gz).tar.gz
+          asset_path: WebGAL_Terre_Linux/WebGAL_Terre_Linux.zip
           asset_name: WebGAL_Terre_Linux_${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
@@ -254,17 +226,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: WebGAL_Terre_Linux_Arm64/WebGAL_Terre_Linux_Arm64(zip).zip
-          asset_name: WebGAL_Terre_Linux_Arm64_${{ github.ref_name }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Linux Arm64 Asset(tgz)
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: WebGAL_Terre_Linux_Arm64/WebGAL_Terre_Linux_Arm64(tar.gz).tar.gz
+          asset_path: WebGAL_Terre_Linux_Arm64/WebGAL_Terre_Linux_Arm64.zip
           asset_name: WebGAL_Terre_Linux_Arm64_${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
