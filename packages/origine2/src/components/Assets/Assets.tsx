@@ -1,14 +1,15 @@
 import { api } from "@/api";
 import { useValue } from "@/hooks/useValue";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import styles from "./Assets.module.scss";
-import { Badge, Button, Field, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Radio, RadioGroup, Subtitle1, Text } from "@fluentui/react-components";
+import { Badge, Button, Field, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Radio, RadioGroup, Subtitle1 } from "@fluentui/react-components";
 import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
 import FileElement from "./FileElement";
 import axios from "axios";
 import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 import useSWR, { useSWRConfig } from "swr";
 import {t} from '@lingui/macro';
+import Upload from "./Upload";
 
 export interface IFile {
   extName: string;
@@ -270,9 +271,7 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderPro
 
   return (
     <div className={styles.fileUploadContainer}>
-      <div>
-        <input title={t`上传`} className={styles.fileSelectInput} type="file" multiple onChange={handleFileChange} />
-      </div>
+        <Upload className={styles.fileSelectInput} title={t`上传`} multiple onChange={handleFileChange} />
       <Button appearance='primary' onClick={handleUpload}>{t`上传`}</Button>
     </div>
   );

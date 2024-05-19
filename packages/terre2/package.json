@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre-2",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "description": "",
   "author": "",
   "private": true,
@@ -11,7 +11,7 @@
     "build-standalone": "nest build --webpack --webpackPath=./standalone.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "rimraf dist && nest start --watch",
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -24,6 +24,7 @@
     "pkg:linux-arm64": "cd dist && pkg main.js -o WebGAL_Terre -t node18-linux-arm64"
   },
   "dependencies": {
+    "@babel/traverse": "7.23.2",
     "@fastify/static": "^7.0.1",
     "@nestjs/common": "^9.0.5",
     "@nestjs/core": "^9.0.5",
@@ -34,7 +35,7 @@
     "@nestjs/swagger": "^7.1.13",
     "@nestjs/websockets": "^10.3.6",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.0",
     "open": "^8.4.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -42,6 +43,7 @@
     "swagger-ui-express": "^5.0.0",
     "vscode-languageserver": "^8.1.0",
     "webgal-parser": "latest",
+    "webpack": "5.76.0",
     "ws": "^8.16.0"
   },
   "devDependencies": {

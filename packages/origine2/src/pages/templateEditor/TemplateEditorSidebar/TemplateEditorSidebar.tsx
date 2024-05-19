@@ -7,6 +7,7 @@ import { Button } from '@fluentui/react-components';
 import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
 import { ArrowLeftFilled, ArrowLeftRegular, bundleIcon } from "@fluentui/react-icons";
 import { ITab } from '@/types/templateEditor';
+import {t} from "@lingui/macro";
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 
@@ -33,7 +34,7 @@ export default function TemplateEditorSidebar() {
   return (
     <div className={styles.sidebar} style={{ width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px` }}>
       <div className={styles.toolbar}>
-        <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>模板列表</Button>
+        <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button>
         <span className={styles.title}>
           {templateName}
         </span>
