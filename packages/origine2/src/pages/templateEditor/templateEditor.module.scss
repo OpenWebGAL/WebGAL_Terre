@@ -14,15 +14,18 @@
   align-items: center;
   cursor: ew-resize;
   text-align: center;
+  padding: 44px 0.75px 8px 0.75px;
 
   & .dividerLine {
-    width: 12px;
     visibility: hidden;
+    height: 100%;
+    width: 100%;
+    background: var(--primary);
+    border-radius: var(--radius-md);
   }
 }
 
 .divider:hover {
-  width: 12px;
 
   & .dividerLine {
     visibility: visible;
@@ -30,7 +33,6 @@
 }
 
 .dividerActive {
-  width: 12px;
 
   & .dividerLine {
     visibility: visible;
