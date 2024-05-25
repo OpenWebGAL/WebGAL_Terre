@@ -1,7 +1,7 @@
 .editor_topbar {
   display: flex;
   flex-flow: column;
-  border-bottom: var(--border-md);
+  // border-bottom: var(--border-md);
   padding: 0 4px 0 4px;
 }
 
@@ -27,6 +27,7 @@
   height: 30px;
   align-self: flex-end;
   transform: translateY(1px);
+  text-wrap: nowrap;
 }
 
 .topbar_btn_active {
@@ -43,6 +44,9 @@
   font-weight: 400;
   line-height: normal;
   margin: 0 auto 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0 0 8px;
 }
 
 .topbar_btn_special {
@@ -64,6 +68,7 @@
   background-image: linear-gradient(var(--bg-root), var(--bg-root)), linear-gradient(to bottom, rgba(0,92,175,0.3), var(--bg-root)), linear-gradient(to bottom, rgba(0,92,175,0.3), var(--bg-root));
   background-origin: border-box;
   background-clip: padding-box, border-box, border-box;
+  text-wrap: nowrap;
 }
 
 .topbar_btn_special_active {

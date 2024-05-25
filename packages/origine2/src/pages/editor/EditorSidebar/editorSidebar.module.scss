@@ -1,5 +1,5 @@
 .editor_sidebar {
-  padding: 4px;
+  padding: 0 4px 4px 4px;
   width: var(--sidebar-width);
   text-align: left;
   display: flex;
@@ -8,7 +8,6 @@
   max-height: 100%;
   min-height: 100%;
   position: relative;
-  margin-right: 2px;
 }
 
 .preview_title {
@@ -107,22 +106,24 @@
 }
 
 .divider {
-  height: 100%;
-  width: 2px;
-  background-color: var(--bg-divider);
+  height: calc(100% - 12px);
+  width: 2.5px;
+  background-color: transparent;
   position: absolute;
-  top: 0;
+  top: 4px;
   cursor: ew-resize;
-  right: -2px;
+  right: 0.75px;
   transition: width 0.33s, background-color 0.33s;
+  border-radius: var(--radius-md);
+  background: transparent;
 }
 
 .divider:hover {
-  border: solid 2px var(--primary);
+  background: var(--primary);
 }
 
 .divider:active {
-  border: solid 2px var(--primary);
+  background: var(--primary);
 }
 
 .divider:active+.preview_container {
