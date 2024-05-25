@@ -84,7 +84,7 @@ export default function TemplatePreview() {
         className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`}
         onMouseDown={handleMouseDown}
       >
-        <div className={styles.dividerLine}>‖</div>
+        <div className={styles.dividerLine} />
       </div>
     </>
   );
