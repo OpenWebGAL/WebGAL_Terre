@@ -77,51 +77,56 @@ export default function TagsManager() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    (tags.length > 0) &&
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable" direction="horizontal">
-        {(provided, snapshot) => (
-          // 下面开始书写容器
-          <div className={styles.tagsContainer}
-            id="tags-container"
-            onWheel={handleScroll}
-            // provided.droppableProps应用的相同元素.
-            {...provided.droppableProps}
-            // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
-            ref={provided.innerRef}
-          >
-            {tags.map((item, index) => (
-              <Draggable key={item.path} draggableId={item.path} index={index}>
-                {(provided, snapshot) => (
-                  // 下面开始书写可拖拽的元素
-                  <div
-                    title={item.path}
-                    onClick={() => selectTag(item)}
-                    onMouseDown={(event: any) => {
-                      if (event.button === 1) {
-                        closeTag(event, item);
-                      }
-                    }}
-                    className={item.path === currentTag?.path ? `${styles.tag} ${styles.tag_active}` : styles.tag}
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
-                    <div>
-                      {item.name}
-                    </div>
-                    <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item)}>
-                      <CloseSmall theme="outline" size="15" strokeWidth={3} />
-                    </div>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      {
+        (tags.length > 0) &&
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable" direction="horizontal">
+            {(provided, snapshot) => (
+              // 下面开始书写容器
+              <div className={styles.tagsContainer}
+                id="tags-container"
+                onWheel={handleScroll}
+                // provided.droppableProps应用的相同元素.
+                {...provided.droppableProps}
+                // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
+                ref={provided.innerRef}
+              >
+                {tags.map((item, index) => (
+                  <Draggable key={item.path} draggableId={item.path} index={index}>
+                    {(provided, snapshot) => (
+                      // 下面开始书写可拖拽的元素
+                      <div
+                        title={item.path}
+                        onClick={() => selectTag(item)}
+                        onMouseDown={(event: any) => {
+                          if (event.button === 1) {
+                            closeTag(event, item);
+                          }
+                        }}
+                        className={item.path === currentTag?.path ? `${styles.tag} ${styles.tag_active}` : styles.tag}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
+                        <div>
+                          {item.name}
+                        </div>
+                        <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item)}>
+                          <CloseSmall theme="outline" size="15" strokeWidth={3} />
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      }
+    </>
+
   );
 }
