@@ -106,14 +106,14 @@ export default function TopBar() {
         <ToolbarButton
           icon={<img src={TerreIcon} height={20} width={20} alt="WebGAL Homepage"/>}
           onClick={() => window.open("https://openwebgal.com", "_blank")}
-          style={{fontWeight: 'normal', fontSize: '14px'}}
+          style={{fontWeight: 'normal', fontSize: '14px', paddingLeft: '4px', paddingRight: '4px', minWidth: 0, textWrap: 'nowrap'}}
         >
           {t`主页`}
         </ToolbarButton>
         <ToolbarButton
           icon={<img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>}
           onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}
-          style={{fontWeight: 'normal', fontSize: '14px'}}
+          style={{fontWeight: 'normal', fontSize: '14px', paddingLeft: '4px', paddingRight: '4px', minWidth: 0, textWrap: 'nowrap'}}
         >
           {t`源代码`}
         </ToolbarButton>
