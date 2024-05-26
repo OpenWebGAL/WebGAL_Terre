@@ -455,7 +455,7 @@ msgid "删除游戏"
 msgstr "Delete game"
 
 #: src/components/Assets/Assets.tsx:212
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "Refresh"
 
@@ -546,7 +546,7 @@ msgstr "Open in file explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -555,7 +555,7 @@ msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:188
 msgid "场景"
 msgstr "Scene"
 
@@ -603,7 +603,7 @@ msgstr "Positioning"
 msgid "实时预览"
 msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -612,7 +612,7 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "实时预览打开"
 msgstr "Live preview on"
@@ -1526,7 +1526,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
 msgid "资源"
 msgstr "Assets"
 
