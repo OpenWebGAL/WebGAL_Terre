@@ -35,6 +35,7 @@ export default function ComponentTree() {
       path: `${basePath}/Stage/TextBox/textbox.scss`,
       nodes: [
         { name: t`文本框`, class: 'TextBox_main' },
+        { name: t`文本框（小头像关闭时）`, class: 'TextBox_main_miniavatarOff' },
         { name: t`文本框背景`, class: 'TextBox_Background' },
         { name: t`外层文本`, class: 'outer' },
         { name: t`内层文本`, class: 'inner' },
