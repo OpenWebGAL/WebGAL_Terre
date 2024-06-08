@@ -1,7 +1,7 @@
 {
-  "name": "webgal-electron-project",
+  "name": "webgal-terre-electron",
   "version": "1.0.0",
-  "description": "WebGAL Electron Support",
+  "description": "WebGAL Terre Electron",
   "main": "main.js",
   "repository": "https://github.com/WebGAL-Technical-Committee/WebGAL-Electron-Project.git",
   "author": "Mahiru <makinoharashoko@outlook.com>",
@@ -17,8 +17,8 @@
     "electron-builder": "^24.12.0"
   },
   "build": {
-    "productName": "WebGAL",
-    "appId": "com.wtc.webgal",
+    "productName": "WebGAL Terre",
+    "appId": "com.openwebgal.webgal-terre",
     "copyright": "webgal",
     "directories": {
       "output": "build"
@@ -43,5 +43,7 @@
       "mirror": "https://npmmirror.com/mirrors/electron/"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "electron-log": "^5.1.5"
+  }
 }
