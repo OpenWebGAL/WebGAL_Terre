@@ -105,7 +105,9 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
     fileFunction?.delete && await fileFunction.delete(source);
     handleRefresh();
   };
-
+  const handlePreventDefault = async (e: any) =>{
+    e.preventDefault();
+  };
   const createNewFilePopoverOpen = useValue(false);
   const createNewFolderPopoverOpen = useValue(false);
   const newFileName = useValue('');
@@ -113,7 +115,25 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
   const uploadAssetPopoverOpen = useValue(false);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', height: '100%' }}
+      onDragEnter={(e)=> handlePreventDefault(e)}
+      onDragLeave={(e)=>handlePreventDefault(e)}
+      onDragOver={(e)=> handlePreventDefault(e)}
+      onDrop={(e)=>{
+        handlePreventDefault(e);
+        const files = e.dataTransfer.files;
+        const formData = new FormData();
+        formData.append("targetDirectory", currentPathString);
+        [...files].forEach((file) => {
+          formData.append("files", file);
+        });
+        axios.post("/api/assets/upload", formData).then((response) => {
+          if (response.data) {
+            handleRefresh();
+          }
+        });
+      }}
+    >
       <div className={styles.controll}>
         {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
         <Input
@@ -221,7 +241,25 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
           {extName.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
         </div>
       }
-      <div style={{ overflow: 'auto', padding: '4px' }}>
+      <div style={{ overflow: 'auto', padding: '4px' }}
+        onDragEnter={(e)=>handlePreventDefault(e)}
+        onDragLeave={(e)=> handlePreventDefault(e)}
+        onDragOver={(e)=> handlePreventDefault(e)}
+        onDrop={(e)=>{
+          handlePreventDefault(e);
+          const files = e.dataTransfer.files;
+          const formData = new FormData();
+          formData.append("targetDirectory", currentPathString);
+          [...files].forEach((file) => {
+            formData.append("files", file);
+          });
+
+          axios.post("/api/assets/upload", formData).then((response) => {
+            if (response.data) {
+              handleRefresh();
+            }
+          });
+        }}>
         {
           fileList?.map(file =>
             <FileElement
@@ -271,7 +309,7 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderPro
 
   return (
     <div className={styles.fileUploadContainer}>
-        <Upload className={styles.fileSelectInput} title={t`上传`} multiple onChange={handleFileChange} />
+      <Upload className={styles.fileSelectInput} title={t`上传`} multiple onChange={handleFileChange} />
       <Button appearance='primary' onClick={handleUpload}>{t`上传`}</Button>
     </div>
   );
