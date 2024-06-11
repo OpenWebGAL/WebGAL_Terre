@@ -28,13 +28,6 @@ export default function FileElement(
   const FileItemSelfRef  = useRef(null);
 
   const is_picture = (extName:string)=> extractExtension(extName) === 'image' ? true : false;
-  const _include_cache = new WeakMap(); // 设置缓存，减少查询重复节点时消耗性能
-  const is_include_node = (_target:HTMLElement , _target_parent:HTMLElement) : boolean =>{
-    // @ts-ignore
-    if(!_target || _target === document) return false;
-    if(_include_cache.has(_target)){if(_include_cache.get(_target) === _target_parent){return true;}else{return false;}}
-    return _target === _target_parent? true : _target.parentElement ? is_include_node(_target.parentElement,_target_parent) : false ;
-  };
 
   return (
     <div
@@ -54,7 +47,7 @@ export default function FileElement(
       >
         <span
           onMouseEnter={(e)=>{
-            if(is_picture(file.extName) && is_include_node(e.target as HTMLElement,FileItemSelfRef.current!)) ShowThumbPopoverOpen.value = true;
+            if(is_picture(file.extName)) ShowThumbPopoverOpen.value = true;
           }}
           onMouseOut={(e)=>{
             ShowThumbPopoverOpen.value = false;
