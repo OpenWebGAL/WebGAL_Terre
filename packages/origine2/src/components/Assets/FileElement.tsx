@@ -1,4 +1,4 @@
-import { getFileIcon, getDirIcon } from "@/utils/getFileIcon";
+import { getFileIcon, getDirIcon, extractExtension } from "@/utils/getFileIcon";
 import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text, Subtitle1 } from "@fluentui/react-components";
 import IconWrapper from "../iconWrapper/IconWrapper";
 import { IFile } from "./Assets";
@@ -27,7 +27,7 @@ export default function FileElement(
   const ShowThumbPopoverOpen = useValue(false);
   const FileItemSelfRef  = useRef(null);
 
-  const is_picture = (extName:string)=> ['.png','.jpg','.jpeg','.webp','.svg'].includes(extName);
+  const is_picture = (extName:string)=> extractExtension(extName) === 'image' ? true : false;
   const _include_cache = new WeakMap(); // 设置缓存，减少查询重复节点时消耗性能
   const is_include_node = (_target:HTMLElement , _target_parent:HTMLElement) : boolean =>{
     // @ts-ignore
