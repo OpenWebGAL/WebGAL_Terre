@@ -176,12 +176,12 @@ msgstr "Y轴缩放："
 msgid "一直显示功能区"
 msgstr "一直显示功能区"
 
-#: src/components/Assets/Assets.tsx:274
-#: src/components/Assets/Assets.tsx:275
+#: src/components/Assets/Assets.tsx:312
+#: src/components/Assets/Assets.tsx:313
 msgid "上传"
 msgstr "上传"
 
-#: src/components/Assets/Assets.tsx:199
+#: src/components/Assets/Assets.tsx:219
 msgid "上传资源"
 msgstr "上传资源"
 
@@ -424,8 +424,8 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
-#: src/components/Assets/Assets.tsx:158
-#: src/components/Assets/Assets.tsx:186
+#: src/components/Assets/Assets.tsx:178
+#: src/components/Assets/Assets.tsx:206
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -439,8 +439,8 @@ msgstr "创建新模板"
 msgid "创建新游戏"
 msgstr "创建新游戏"
 
-#: src/components/Assets/FileElement.tsx:82
-#: src/components/Assets/FileElement.tsx:89
+#: src/components/Assets/FileElement.tsx:95
+#: src/components/Assets/FileElement.tsx:102
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -470,7 +470,7 @@ msgstr "删除模板"
 msgid "删除游戏"
 msgstr "删除游戏"
 
-#: src/components/Assets/Assets.tsx:212
+#: src/components/Assets/Assets.tsx:232
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "刷新"
@@ -759,7 +759,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/components/Assets/Assets.tsx:213
+#: src/components/Assets/Assets.tsx:233
 msgid "打开文件夹"
 msgstr "打开文件夹"
 
@@ -767,7 +767,7 @@ msgstr "打开文件夹"
 msgid "执行到此句"
 msgstr "执行到此句"
 
-#: src/components/Assets/Assets.tsx:143
+#: src/components/Assets/Assets.tsx:163
 msgid "扩展名"
 msgstr "扩展名"
 
@@ -934,11 +934,11 @@ msgstr "文本阴影"
 msgid "文档"
 msgstr "文档"
 
-#: src/components/Assets/Assets.tsx:136
+#: src/components/Assets/Assets.tsx:156
 msgid "新建文件"
 msgstr "新建文件"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:191
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
@@ -951,11 +951,11 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/components/Assets/Assets.tsx:139
+#: src/components/Assets/Assets.tsx:159
 msgid "新文件名"
 msgstr "新文件名"
 
-#: src/components/Assets/Assets.tsx:174
+#: src/components/Assets/Assets.tsx:194
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
@@ -994,7 +994,7 @@ msgstr "旁白模式，无角色名"
 msgid "旋转角度："
 msgstr "旋转角度："
 
-#: src/components/Assets/Assets.tsx:145
+#: src/components/Assets/Assets.tsx:165
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
@@ -1638,8 +1638,8 @@ msgstr "通过选项进入不同的场景"
 msgid "配置"
 msgstr "配置"
 
-#: src/components/Assets/FileElement.tsx:54
-#: src/components/Assets/FileElement.tsx:70
+#: src/components/Assets/FileElement.tsx:67
+#: src/components/Assets/FileElement.tsx:83
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
