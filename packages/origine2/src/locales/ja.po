@@ -160,12 +160,12 @@ msgstr " Y軸スケール："
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
-#: src/components/Assets/Assets.tsx:274
-#: src/components/Assets/Assets.tsx:275
+#: src/components/Assets/Assets.tsx:312
+#: src/components/Assets/Assets.tsx:313
 msgid "上传"
 msgstr "アップロード"
 
-#: src/components/Assets/Assets.tsx:199
+#: src/components/Assets/Assets.tsx:219
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
@@ -408,8 +408,8 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
-#: src/components/Assets/Assets.tsx:158
-#: src/components/Assets/Assets.tsx:186
+#: src/components/Assets/Assets.tsx:178
+#: src/components/Assets/Assets.tsx:206
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -423,8 +423,8 @@ msgstr "新しいテンプレートを作成"
 msgid "创建新游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/FileElement.tsx:82
-#: src/components/Assets/FileElement.tsx:89
+#: src/components/Assets/FileElement.tsx:95
+#: src/components/Assets/FileElement.tsx:102
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -454,7 +454,7 @@ msgstr "テンプレートを削除"
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
-#: src/components/Assets/Assets.tsx:212
+#: src/components/Assets/Assets.tsx:232
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "更新"
@@ -743,7 +743,7 @@ msgstr "IDを手動で設定"
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
-#: src/components/Assets/Assets.tsx:213
+#: src/components/Assets/Assets.tsx:233
 msgid "打开文件夹"
 msgstr "フォルダーを開く"
 
@@ -751,7 +751,7 @@ msgstr "フォルダーを開く"
 msgid "执行到此句"
 msgstr "この文まで実行"
 
-#: src/components/Assets/Assets.tsx:143
+#: src/components/Assets/Assets.tsx:163
 msgid "扩展名"
 msgstr "拡張子"
 
@@ -918,11 +918,11 @@ msgstr "テキストシャドウ"
 msgid "文档"
 msgstr "ドキュメント"
 
-#: src/components/Assets/Assets.tsx:136
+#: src/components/Assets/Assets.tsx:156
 msgid "新建文件"
 msgstr "新しいファイルを作成"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:191
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
@@ -935,11 +935,11 @@ msgstr "新しいテンプレートを作成"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/Assets.tsx:139
+#: src/components/Assets/Assets.tsx:159
 msgid "新文件名"
 msgstr "新しいファイル名"
 
-#: src/components/Assets/Assets.tsx:174
+#: src/components/Assets/Assets.tsx:194
 msgid "新文件夹名"
 msgstr "新しいフォルダー名"
 
@@ -978,7 +978,7 @@ msgstr "キャラクター名は設定不可"
 msgid "旋转角度："
 msgstr "回転："
 
-#: src/components/Assets/Assets.tsx:145
+#: src/components/Assets/Assets.tsx:165
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
@@ -1622,8 +1622,8 @@ msgstr "選択肢からシーンに切り替えることが可能です"
 msgid "配置"
 msgstr "設定"
 
-#: src/components/Assets/FileElement.tsx:54
-#: src/components/Assets/FileElement.tsx:70
+#: src/components/Assets/FileElement.tsx:67
+#: src/components/Assets/FileElement.tsx:83
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
