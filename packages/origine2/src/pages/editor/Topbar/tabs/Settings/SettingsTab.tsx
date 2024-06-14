@@ -94,7 +94,7 @@ export function SettingsTab() {
         text={isUseExpSyncFast ? t`启用` : t`关闭`}
       />
       {isUseExpSyncFast && <div className={s.tips}>
-        {t`你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。`}
+        {t`你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。`}
       </div>}
     </TabItem>
   </TopbarTab>;
