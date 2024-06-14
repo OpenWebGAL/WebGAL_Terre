@@ -228,9 +228,17 @@ msgstr "Main Style"
 msgid "主页"
 msgstr "WebGAL Home"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:76
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
 msgstr "Code Editor"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
+msgstr ""
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+#~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
@@ -327,6 +335,10 @@ msgstr "About"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:143
 msgid "关联立绘"
 msgstr "Associated figure"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "关闭"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:18
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
@@ -519,6 +531,10 @@ msgstr "Start, switch or stop the playback of background music"
 msgid "启动图"
 msgstr "Startup image"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "启用"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:37
 msgid "启用视频跳过"
 msgstr "Enable video skipping"
@@ -599,23 +615,27 @@ msgstr "Font Weight"
 msgid "定位方式"
 msgstr "Positioning"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:57
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
 msgid "实时预览"
 msgstr "Live preview"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览关闭"
 msgstr "Live preview off"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览打开"
 msgstr "Live preview on"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
+msgid "实验性快速预览"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "宽度"
@@ -1110,7 +1130,7 @@ msgstr "Play BGM normally"
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "永不换行"
 msgstr "Never wrap"
 
@@ -1387,7 +1407,7 @@ msgstr "Script editor"
 msgid "自动"
 msgstr "Auto"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "自动换行"
 msgstr "Auto wrap"
 
@@ -1504,8 +1524,8 @@ msgstr "This file type does not support preview"
 
 #: src/pages/dashboard/DashBoard.tsx:157
 #: src/pages/dashboard/DashBoard.tsx:158
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:38
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:44
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
 msgstr "Language"
 
