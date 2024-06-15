@@ -234,11 +234,7 @@ msgstr "Code Editor"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
-msgstr ""
-
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
-#~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。"
-#~ msgstr ""
+msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
@@ -338,7 +334,7 @@ msgstr "Associated figure"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
 msgid "关闭"
-msgstr ""
+msgstr "Disabled"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:18
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
@@ -533,7 +529,7 @@ msgstr "Startup image"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
 msgid "启用"
-msgstr ""
+msgstr "Enabled"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:37
 msgid "启用视频跳过"
@@ -635,7 +631,7 @@ msgstr "Live preview on"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
 msgid "实验性快速预览"
-msgstr ""
+msgstr "Experimental fast preview"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "宽度"
