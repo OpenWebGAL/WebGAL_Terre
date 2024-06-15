@@ -1,14 +1,16 @@
-import { getFileIcon, getDirIcon } from "@/utils/getFileIcon";
+import { getFileIcon, getDirIcon, extractExtension } from "@/utils/getFileIcon";
 import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text, Subtitle1 } from "@fluentui/react-components";
 import IconWrapper from "../iconWrapper/IconWrapper";
 import { IFile } from "./Assets";
 import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
-import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular } from "@fluentui/react-icons";
+import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular, DesktopMacFilled, DesktopMacRegular } from "@fluentui/react-icons";
 import {t} from "@lingui/macro";
+import { useRef } from "react";
 
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
+const ThumbIcon = bundleIcon(DesktopMacFilled, DesktopMacRegular);
 
 export default function FileElement(
   { file, desc, currentPath, isProtected, handleOpenFile, handleRenameFile, handleDeleteFile }
@@ -22,9 +24,14 @@ export default function FileElement(
       handleDeleteFile: (source: string) => Promise<void>,
     }) {
   const newFileName = useValue(file.name);
+  const ShowThumbPopoverOpen = useValue(false);
+  const FileItemSelfRef  = useRef(null);
+
+  const is_picture = (extName:string)=> extractExtension(extName) === 'image' ? true : false;
 
   return (
     <div
+      ref={FileItemSelfRef}
       key={file.name}
       onClick={() => handleOpenFile(file)}
       className={styles.file}
@@ -38,7 +45,13 @@ export default function FileElement(
         whiteSpace: 'nowrap',
       }}
       >
-        {file.name} {desc && <span style={{color:'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>{desc}</span>}
+        <span
+          onMouseEnter={(e)=>{
+            if(is_picture(file.extName)) ShowThumbPopoverOpen.value = true;
+          }}
+          onMouseOut={(e)=>{
+            ShowThumbPopoverOpen.value = false;
+          }}>{file.name}</span> {desc && <span style={{color:'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>{desc}</span>}
       </div>
 
       {
@@ -90,6 +103,24 @@ export default function FileElement(
               </div>
             </PopoverSurface>
           </Popover>
+          {is_picture(file.extName) ?  <Popover
+            withArrow
+            open={ShowThumbPopoverOpen.value}
+            onOpenChange={() => ShowThumbPopoverOpen.set(!ShowThumbPopoverOpen.value)}
+          >
+            <PopoverTrigger>
+              <Button
+                icon={<ThumbIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
+                onClick={(e) => e.stopPropagation()} />
+            </PopoverTrigger>
+            <PopoverSurface>
+              <div style={{width:"200px",display:"inline-block"}}>
+                <img src={file.path} style={{objectFit:"cover"}} alt={file.path}
+                  decoding="async" loading="lazy" width={200} />
+              </div>
+            </PopoverSurface>
+          </Popover>: ''
+          }
         </>
       }
     </div>

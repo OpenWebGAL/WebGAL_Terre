@@ -176,12 +176,12 @@ msgstr "Y轴缩放："
 msgid "一直显示功能区"
 msgstr "一直显示功能区"
 
-#: src/components/Assets/Assets.tsx:274
-#: src/components/Assets/Assets.tsx:275
+#: src/components/Assets/Assets.tsx:312
+#: src/components/Assets/Assets.tsx:313
 msgid "上传"
 msgstr "上传"
 
-#: src/components/Assets/Assets.tsx:199
+#: src/components/Assets/Assets.tsx:219
 msgid "上传资源"
 msgstr "上传资源"
 
@@ -244,9 +244,17 @@ msgstr "主要样式"
 msgid "主页"
 msgstr "主页"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:76
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
 msgstr "代码编辑器"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
+msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+#~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。"
+#~ msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
@@ -344,6 +352,10 @@ msgstr "关于"
 msgid "关联立绘"
 msgstr "关联立绘"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "关闭"
+msgstr "关闭"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:18
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "关闭小头像"
@@ -364,7 +376,7 @@ msgstr "关闭立绘"
 msgid "关闭背景"
 msgstr "关闭背景"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "内层文本"
 msgstr "内层文本"
 
@@ -424,8 +436,8 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
-#: src/components/Assets/Assets.tsx:158
-#: src/components/Assets/Assets.tsx:186
+#: src/components/Assets/Assets.tsx:178
+#: src/components/Assets/Assets.tsx:206
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -439,8 +451,8 @@ msgstr "创建新模板"
 msgid "创建新游戏"
 msgstr "创建新游戏"
 
-#: src/components/Assets/FileElement.tsx:82
-#: src/components/Assets/FileElement.tsx:89
+#: src/components/Assets/FileElement.tsx:95
+#: src/components/Assets/FileElement.tsx:102
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -470,8 +482,8 @@ msgstr "删除模板"
 msgid "删除游戏"
 msgstr "删除游戏"
 
-#: src/components/Assets/Assets.tsx:212
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
+#: src/components/Assets/Assets.tsx:232
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "刷新"
 
@@ -535,6 +547,10 @@ msgstr "启动、切换或停止背景音乐的播放"
 msgid "启动图"
 msgstr "启动图"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "启用"
+msgstr "启用"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:37
 msgid "启用视频跳过"
 msgstr "启用视频跳过"
@@ -562,7 +578,7 @@ msgstr "在文件管理器中打开"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
 msgid "在新标签页中预览"
 msgstr "在新标签页中预览"
 
@@ -571,7 +587,7 @@ msgid "在这里放置编辑组件"
 msgstr "在这里放置编辑组件"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:188
 msgid "场景"
 msgstr "场景"
 
@@ -583,7 +599,7 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
 msgid "外层文本"
 msgstr "外层文本"
 
@@ -615,23 +631,27 @@ msgstr "字重"
 msgid "定位方式"
 msgstr "定位方式"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:57
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
 msgid "实时预览"
 msgstr "实时预览"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览关闭"
 msgstr "实时预览关闭"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览打开"
 msgstr "实时预览打开"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
+msgid "实验性快速预览"
+msgstr "实验性快速预览"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "宽度"
@@ -666,11 +686,11 @@ msgstr "导出为网页"
 msgid "小"
 msgstr "小"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
 msgid "小头像图像"
 msgstr "小头像图像"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
 msgid "小头像容器"
 msgstr "小头像容器"
 
@@ -759,7 +779,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/components/Assets/Assets.tsx:213
+#: src/components/Assets/Assets.tsx:233
 msgid "打开文件夹"
 msgstr "打开文件夹"
 
@@ -767,7 +787,7 @@ msgstr "打开文件夹"
 msgid "执行到此句"
 msgstr "执行到此句"
 
-#: src/components/Assets/Assets.tsx:143
+#: src/components/Assets/Assets.tsx:163
 msgid "扩展名"
 msgstr "扩展名"
 
@@ -909,11 +929,15 @@ msgstr "文本显示"
 msgid "文本框"
 msgstr "文本框"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+msgid "文本框（小头像关闭时）"
+msgstr "文本框（小头像关闭时）"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
 msgid "文本框文本"
 msgstr "文本框文本"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
 msgid "文本框背景"
 msgstr "文本框背景"
 
@@ -930,11 +954,11 @@ msgstr "文本阴影"
 msgid "文档"
 msgstr "文档"
 
-#: src/components/Assets/Assets.tsx:136
+#: src/components/Assets/Assets.tsx:156
 msgid "新建文件"
 msgstr "新建文件"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:191
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
@@ -947,11 +971,11 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/components/Assets/Assets.tsx:139
+#: src/components/Assets/Assets.tsx:159
 msgid "新文件名"
 msgstr "新文件名"
 
-#: src/components/Assets/Assets.tsx:174
+#: src/components/Assets/Assets.tsx:194
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
@@ -990,7 +1014,7 @@ msgstr "旁白模式，无角色名"
 msgid "旋转角度："
 msgstr "旋转角度："
 
-#: src/components/Assets/Assets.tsx:145
+#: src/components/Assets/Assets.tsx:165
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
@@ -1122,7 +1146,7 @@ msgstr "正常播放 BGM"
 msgid "此指令将结束游戏"
 msgstr "此指令将结束游戏"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "永不换行"
 msgstr "永不换行"
 
@@ -1399,7 +1423,7 @@ msgstr "脚本编辑器"
 msgid "自动"
 msgstr "自动"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "自动换行"
 msgstr "自动换行"
 
@@ -1440,23 +1464,23 @@ msgstr "角色名，留空以继承上句"
 msgid "角色名，留空以继承上句:对话;"
 msgstr "角色名，留空以继承上句:对话;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
 msgid "角色名内层文本"
 msgstr "角色名内层文本"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
 msgid "角色名外层文本"
 msgstr "角色名外层文本"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
 msgid "角色名容器"
 msgstr "角色名容器"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
 msgid "角色名文本框"
 msgstr "角色名文本框"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
 msgid "角色名文本框背景"
 msgstr "角色名文本框背景"
 
@@ -1516,8 +1540,8 @@ msgstr "该文件类型不支持预览"
 
 #: src/pages/dashboard/DashBoard.tsx:157
 #: src/pages/dashboard/DashBoard.tsx:158
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:38
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:44
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
 msgstr "语言"
 
@@ -1542,7 +1566,7 @@ msgstr "调用场景"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "调用场景，新场景结束后返回父场景"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
 msgid "资源"
 msgstr "资源"
 
@@ -1634,8 +1658,8 @@ msgstr "通过选项进入不同的场景"
 msgid "配置"
 msgstr "配置"
 
-#: src/components/Assets/FileElement.tsx:54
-#: src/components/Assets/FileElement.tsx:70
+#: src/components/Assets/FileElement.tsx:67
+#: src/components/Assets/FileElement.tsx:83
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"

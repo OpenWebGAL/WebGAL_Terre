@@ -1,4 +1,5 @@
-const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
+const { app, BrowserWindow, globalShortcut, Menu } = require('electron');
+const log = require('electron-log');
 
 /**
  * 关闭默认菜单栏
@@ -30,6 +31,25 @@ const createWindow = () => {
     // 注册快捷键 Ctrl + F12 切换开发者工具
     globalShortcut.register("Ctrl+F12", () => {
         win.isFocused() && win.webContents.toggleDevTools();
+    });
+
+    // 捕获渲染进程控制台信息
+    win.webContents.on('console-message', (event, level, message) => {
+        const logLevels = {
+            '[silly]': log.silly,
+            '[debug]': log.debug,
+            '[verbose]': log.verbose,
+            '[warn]': log.warn,
+            '[error]': log.error,
+        };
+
+        const logMessage = (message) => {
+            const level = Object.keys(logLevels).find(key => message.toLowerCase().includes(key));
+            const selectedLevel = level ? logLevels[level] : log.info;
+            selectedLevel(message);
+        }
+
+        logMessage(message);
     });
 }
 

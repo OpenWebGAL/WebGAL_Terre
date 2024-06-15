@@ -22,12 +22,10 @@ transition: left 0.33s;
 .TextBox_Background {
 z-index: 2;
 background: linear-gradient(transparent,rgba(0,0,0,.25) 25%,rgba(0,0,0,.35) 75%,rgba(0,0,0,.6)),linear-gradient(90deg,transparent 0,rgba(0,0,0,.35) 25%,rgba(0,0,0,.35) 75%,transparent);
-
 &:hover {
 }
 &:active {
-}
-}
+}}
 
 .TextBox_textElement_start {
 position: relative;
@@ -132,6 +130,11 @@ z-index: 1;
 .text {
 line-height: 1.9em;
 overflow: hidden;
+}
+
+.TextBox_main_miniavatarOff {
+left: 25px;
+
 }
 
 @keyframes showSoftly {
