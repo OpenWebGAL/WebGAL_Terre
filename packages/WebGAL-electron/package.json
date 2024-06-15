@@ -18,7 +18,7 @@
   },
   "build": {
     "productName": "WebGAL",
-    "appId": "com.wtc.webgal",
+    "appId": "com.openwebgal.webgal",
     "copyright": "webgal",
     "directories": {
       "output": "build"
@@ -43,5 +43,7 @@
       "mirror": "https://npmmirror.com/mirrors/electron/"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "electron-log": "^5.1.5"
+  }
 }

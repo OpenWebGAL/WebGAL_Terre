@@ -8,3 +8,15 @@
   color: var(--primary);
   text-align: left;
 }
+
+.tips{
+  color: var(--primary);
+  font-weight: bolder;
+  font-size: smaller;
+  text-align: left;
+  height: 100%;
+  width: 500px;
+  background: var(--primary-5pct);
+  padding: 4px;
+  border-radius: 4px;
+}
