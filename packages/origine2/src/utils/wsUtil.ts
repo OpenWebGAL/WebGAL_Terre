@@ -38,10 +38,11 @@ export class WsUtil {
             sentence: lineNumber
           },// @ts-ignore
           stageSyncMsg: {},
-          message: 'Sync'
+          message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
         }
       };
       // @ts-ignore
+
       window["currentWs"].send(JSON.stringify(message));
     }
   }

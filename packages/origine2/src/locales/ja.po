@@ -160,12 +160,12 @@ msgstr " Y軸スケール："
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
-#: src/components/Assets/Assets.tsx:274
-#: src/components/Assets/Assets.tsx:275
+#: src/components/Assets/Assets.tsx:312
+#: src/components/Assets/Assets.tsx:313
 msgid "上传"
 msgstr "アップロード"
 
-#: src/components/Assets/Assets.tsx:199
+#: src/components/Assets/Assets.tsx:219
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
@@ -228,9 +228,13 @@ msgstr "メインスタイル"
 msgid "主页"
 msgstr "WebGALホーム"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:76
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
 msgstr "コードエディタ"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
+msgstr "実験的な高速プレビューを有効にすると、リアルタイムプレビューの効率が大幅に向上しますが、異常が発生する可能性があります。特別なヒント：前回のリアルタイムプレビューのジャンプが完全に終了していない（特にアニメーションが終了していない）ときに、再度ジャンプしないでください。"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
@@ -328,6 +332,10 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "関連する立ち絵"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "关闭"
+msgstr "閉鎖中"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:18
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "关闭小头像"
@@ -348,7 +356,7 @@ msgstr "立ち絵を非表示"
 msgid "关闭背景"
 msgstr "背景画像を非表示"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "内层文本"
 msgstr "内側テキスト"
 
@@ -408,8 +416,8 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
-#: src/components/Assets/Assets.tsx:158
-#: src/components/Assets/Assets.tsx:186
+#: src/components/Assets/Assets.tsx:178
+#: src/components/Assets/Assets.tsx:206
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -423,8 +431,8 @@ msgstr "新しいテンプレートを作成"
 msgid "创建新游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/FileElement.tsx:82
-#: src/components/Assets/FileElement.tsx:89
+#: src/components/Assets/FileElement.tsx:95
+#: src/components/Assets/FileElement.tsx:102
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -454,8 +462,8 @@ msgstr "テンプレートを削除"
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
-#: src/components/Assets/Assets.tsx:212
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
+#: src/components/Assets/Assets.tsx:232
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "更新"
 
@@ -519,6 +527,10 @@ msgstr "BGMの再生を開始、切り替え、または停止する"
 msgid "启动图"
 msgstr "ロゴ"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "启用"
+msgstr "有効化"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:37
 msgid "启用视频跳过"
 msgstr "動画のスキップを有効にする"
@@ -546,7 +558,7 @@ msgstr "ファイルエクスプローラーで開く"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
 
@@ -555,7 +567,7 @@ msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:188
 msgid "场景"
 msgstr "シーン"
 
@@ -567,7 +579,7 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
 msgid "外层文本"
 msgstr "外側テキスト"
 
@@ -599,23 +611,27 @@ msgstr "フォントの太さ"
 msgid "定位方式"
 msgstr "位置決め方法"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:57
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
 msgid "实时预览"
 msgstr "リアルタイムプレビュー"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "リアルタイムプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
+msgid "实验性快速预览"
+msgstr "実験的な高速プレビュー"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "宽度"
@@ -650,11 +666,11 @@ msgstr "ウェブとしてエクスポート"
 msgid "小"
 msgstr "小さい"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
 msgid "小头像图像"
 msgstr "アバター画像"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
 msgid "小头像容器"
 msgstr "アバターコンテナ"
 
@@ -743,7 +759,7 @@ msgstr "IDを手動で設定"
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
-#: src/components/Assets/Assets.tsx:213
+#: src/components/Assets/Assets.tsx:233
 msgid "打开文件夹"
 msgstr "フォルダーを開く"
 
@@ -751,7 +767,7 @@ msgstr "フォルダーを開く"
 msgid "执行到此句"
 msgstr "この文まで実行"
 
-#: src/components/Assets/Assets.tsx:143
+#: src/components/Assets/Assets.tsx:163
 msgid "扩展名"
 msgstr "拡張子"
 
@@ -893,11 +909,15 @@ msgstr "テキストボックス"
 msgid "文本框"
 msgstr "テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+msgid "文本框（小头像关闭时）"
+msgstr "テキストボックス（アバターが閉じている場合）"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
 msgid "文本框文本"
 msgstr "テキストボックスのテキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
 msgid "文本框背景"
 msgstr "テキストボックスの背景"
 
@@ -914,11 +934,11 @@ msgstr "テキストシャドウ"
 msgid "文档"
 msgstr "ドキュメント"
 
-#: src/components/Assets/Assets.tsx:136
+#: src/components/Assets/Assets.tsx:156
 msgid "新建文件"
 msgstr "新しいファイルを作成"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:191
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
@@ -931,11 +951,11 @@ msgstr "新しいテンプレートを作成"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/Assets.tsx:139
+#: src/components/Assets/Assets.tsx:159
 msgid "新文件名"
 msgstr "新しいファイル名"
 
-#: src/components/Assets/Assets.tsx:174
+#: src/components/Assets/Assets.tsx:194
 msgid "新文件夹名"
 msgstr "新しいフォルダー名"
 
@@ -974,7 +994,7 @@ msgstr "キャラクター名は設定不可"
 msgid "旋转角度："
 msgstr "回転："
 
-#: src/components/Assets/Assets.tsx:145
+#: src/components/Assets/Assets.tsx:165
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
@@ -1106,7 +1126,7 @@ msgstr "BGMを再生"
 msgid "此指令将结束游戏"
 msgstr "このコマンドはすべてのゲームが終わるときに使用"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "永不换行"
 msgstr "折り返しなし"
 
@@ -1383,7 +1403,7 @@ msgstr "スクリプトエディタ"
 msgid "自动"
 msgstr "自動"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "自动换行"
 msgstr "自動折り返し"
 
@@ -1424,23 +1444,23 @@ msgstr "キャラクター名を空白のままにすると前の文から継承
 msgid "角色名，留空以继承上句:对话;"
 msgstr "キャラクター名を空白のままにすると前の文から継承;ダイアログ;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
 msgid "角色名内层文本"
 msgstr "キャラクター名内側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
 msgid "角色名外层文本"
 msgstr "キャラクター名外側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
 msgid "角色名容器"
 msgstr "キャラクター名コンテナ"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
 msgid "角色名文本框"
 msgstr "キャラクター名テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
 msgid "角色名文本框背景"
 msgstr "キャラクター名テキストボックスの背景"
 
@@ -1500,8 +1520,8 @@ msgstr "このファイルタイプはプレビューをサポートしていま
 
 #: src/pages/dashboard/DashBoard.tsx:157
 #: src/pages/dashboard/DashBoard.tsx:158
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:38
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:44
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
 msgstr "言語"
 
@@ -1526,7 +1546,7 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
 msgid "资源"
 msgstr "アセット"
 
@@ -1618,8 +1638,8 @@ msgstr "選択肢からシーンに切り替えることが可能です"
 msgid "配置"
 msgstr "設定"
 
-#: src/components/Assets/FileElement.tsx:54
-#: src/components/Assets/FileElement.tsx:70
+#: src/components/Assets/FileElement.tsx:67
+#: src/components/Assets/FileElement.tsx:83
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
