@@ -160,12 +160,12 @@ msgstr " Scale y："
 msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
-#: src/components/Assets/Assets.tsx:274
-#: src/components/Assets/Assets.tsx:275
+#: src/components/Assets/Assets.tsx:312
+#: src/components/Assets/Assets.tsx:313
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:199
+#: src/components/Assets/Assets.tsx:219
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -228,9 +228,13 @@ msgstr "Main Style"
 msgid "主页"
 msgstr "WebGAL Home"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:76
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
 msgstr "Code Editor"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
+msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
@@ -328,6 +332,10 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "关闭"
+msgstr "Disabled"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:18
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
 msgid "关闭小头像"
@@ -348,7 +356,7 @@ msgstr "Hide the figure"
 msgid "关闭背景"
 msgstr "Hide the background"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "内层文本"
 msgstr "Inner Text"
 
@@ -408,8 +416,8 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:158
-#: src/components/Assets/Assets.tsx:186
+#: src/components/Assets/Assets.tsx:178
+#: src/components/Assets/Assets.tsx:206
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -423,8 +431,8 @@ msgstr "Create new template"
 msgid "创建新游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/FileElement.tsx:82
-#: src/components/Assets/FileElement.tsx:89
+#: src/components/Assets/FileElement.tsx:95
+#: src/components/Assets/FileElement.tsx:102
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -454,8 +462,8 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:212
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
+#: src/components/Assets/Assets.tsx:232
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "Refresh"
 
@@ -519,6 +527,10 @@ msgstr "Start, switch or stop the playback of background music"
 msgid "启动图"
 msgstr "Startup image"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+msgid "启用"
+msgstr "Enabled"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:37
 msgid "启用视频跳过"
 msgstr "Enable video skipping"
@@ -546,7 +558,7 @@ msgstr "Open in file explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -555,7 +567,7 @@ msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:188
 msgid "场景"
 msgstr "Scene"
 
@@ -567,7 +579,7 @@ msgstr "Scenes and branches"
 msgid "场景文件"
 msgstr "Scene file"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
 msgid "外层文本"
 msgstr "Outer Text"
 
@@ -599,23 +611,27 @@ msgstr "Font Weight"
 msgid "定位方式"
 msgstr "Positioning"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:57
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
 msgid "实时预览"
 msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览关闭"
 msgstr "Live preview off"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:167
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "实时预览打开"
 msgstr "Live preview on"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
+msgid "实验性快速预览"
+msgstr "Experimental fast preview"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "宽度"
@@ -650,11 +666,11 @@ msgstr "Export as webpage"
 msgid "小"
 msgstr "Small"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
 msgid "小头像图像"
 msgstr "Mini avatar image"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
 msgid "小头像容器"
 msgstr "Mini avatar container"
 
@@ -743,7 +759,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/components/Assets/Assets.tsx:213
+#: src/components/Assets/Assets.tsx:233
 msgid "打开文件夹"
 msgstr "Open folder"
 
@@ -751,7 +767,7 @@ msgstr "Open folder"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:143
+#: src/components/Assets/Assets.tsx:163
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -893,11 +909,15 @@ msgstr "Text display"
 msgid "文本框"
 msgstr "Text Box"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+msgid "文本框（小头像关闭时）"
+msgstr "Textbox (when avatar is closed)"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
 msgid "文本框文本"
 msgstr "Text Box Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
 msgid "文本框背景"
 msgstr "Text Box Background"
 
@@ -914,11 +934,11 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:136
+#: src/components/Assets/Assets.tsx:156
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:191
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -931,11 +951,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:139
+#: src/components/Assets/Assets.tsx:159
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:174
+#: src/components/Assets/Assets.tsx:194
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -974,7 +994,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:145
+#: src/components/Assets/Assets.tsx:165
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1106,7 +1126,7 @@ msgstr "Play BGM normally"
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "永不换行"
 msgstr "Never wrap"
 
@@ -1383,7 +1403,7 @@ msgstr "Script editor"
 msgid "自动"
 msgstr "Auto"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:82
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "自动换行"
 msgstr "Auto wrap"
 
@@ -1424,23 +1444,23 @@ msgstr "Role name, leave blank to inherit from previous sentence"
 msgid "角色名，留空以继承上句:对话;"
 msgstr "Role name, leave blank to inherit from previous sentence: Dialogue;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
 msgid "角色名内层文本"
 msgstr "Role Name Inner Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
 msgid "角色名外层文本"
 msgstr "Role Name Outer Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
 msgid "角色名容器"
 msgstr "Role Name Container"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
 msgid "角色名文本框"
 msgstr "Role Name Text Box"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
 msgid "角色名文本框背景"
 msgstr "Role Name Text Box Background"
 
@@ -1500,8 +1520,8 @@ msgstr "This file type does not support preview"
 
 #: src/pages/dashboard/DashBoard.tsx:157
 #: src/pages/dashboard/DashBoard.tsx:158
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:38
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:44
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
 msgstr "Language"
 
@@ -1526,7 +1546,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
 msgid "资源"
 msgstr "Assets"
 
@@ -1618,8 +1638,8 @@ msgstr "Enter different scenes through options"
 msgid "配置"
 msgstr "Configuration"
 
-#: src/components/Assets/FileElement.tsx:54
-#: src/components/Assets/FileElement.tsx:70
+#: src/components/Assets/FileElement.tsx:67
+#: src/components/Assets/FileElement.tsx:83
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"

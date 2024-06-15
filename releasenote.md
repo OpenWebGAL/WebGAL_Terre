@@ -4,21 +4,17 @@
 
 #### 新功能
 
-添加更多 CSS 编辑组件
+为 Electron 导出版添加日志写入
 
-为 Linux 添加 tar.gz 发布包
+资源管理器支持拖拽上传
 
-优化上传文件组件
+资源管理器支持图像缩略图
+
+添加试验性快速预览功能
 
 #### 修复
 
-导出带有衍生引擎版本的游戏发生的问题
-
-LSP 重复注册问题
-
-Mac 上重命名无效的问题
-
-完善更多翻译文本
+优化 UI 编辑器样式
 
 <!-- English Translation -->
 ## Release Notes
@@ -27,15 +23,17 @@ Mac 上重命名无效的问题
 
 #### New Features
 
-Bring a brand-new template editing function, which can customize UI. Currently open title interface and text box editing.
+Add log writing for Electron export
 
-Completely refactored resource manager, optimizing resource management experience.
+Support drag and drop upload in resource manager
 
-Support creating games from customized versions of WebGAL
+Support image thumbnails in resource manager
 
-#### Bug Fixes
+Add experimental quick preview feature
 
-Fixed some bugs of the engine
+#### Fixes
+
+Refine UI editor styling
 
 
 <!-- Japanese Translation -->
@@ -45,15 +43,17 @@ Fixed some bugs of the engine
 
 #### 新機能
 
-まったく新しいテンプレート編集機能を搭載し、UI をカスタマイズできます。現在、タイトル画面とテキストボックスの編集に対応しています。
+Electron 导出版にログ出力を追加
 
-リソースマネージャーを完全に再構築し、リソース管理エクスペリエンスを最適化しました。
+リソースマネージャーでドラッグアンドドロップによるアップロードに対応
 
-WebGAL のカスタムバージョンからゲームを作成することをサポートします。
+リソースマネージャーで画像のサムネイル表示に対応
+
+試験的な高速プレビュー機能を追加
 
 #### 修正
 
-エンジンのいくつかの不具合を修正しました。
+UI エディターのスタイルを最適化
 
 <!-- French Translation -->
 ## Notes de version
@@ -62,12 +62,14 @@ WebGAL のカスタムバージョンからゲームを作成することをサ�
 
 #### Nouvelles fonctionnalités
 
-Ajout d'une toute nouvelle fonctionnalité d'édition de modèle, permettant de personnaliser l'interface utilisateur. L'édition de l'interface de titre et de la zone de texte est actuellement disponible.
+Ajout de l'écriture de log pour la version d'exportation Electron
 
-Gestionnaire de ressources entièrement repensé, optimisant l'expérience de gestion des ressources.
+Le gestionnaire de ressources prend en charge le glisser-déposer pour le téléchargement
 
-Prise en charge de la création de jeux à partir de versions personnalisées de WebGAL
+Le gestionnaire de ressources prend en charge les miniatures d'images
+
+Ajout d'une fonction d'aperçu rapide expérimentale
 
 #### Corrections
 
-Correction de plusieurs bugs du moteur
+Optimisation du style de l'éditeur d'interface utilisateur

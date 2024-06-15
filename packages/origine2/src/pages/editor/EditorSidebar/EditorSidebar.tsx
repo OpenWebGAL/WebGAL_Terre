@@ -1,7 +1,7 @@
 import styles from "./editorSidebar.module.scss";
 import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
-import {eventBus} from "@/utils/eventBus";
+import { eventBus } from "@/utils/eventBus";
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
@@ -93,9 +93,9 @@ export default function EditorSideBar() {
   const refreshGame = () => (ifRef?.current as unknown as HTMLIFrameElement).contentWindow?.location.reload();
 
   useEffect(() => {
-    eventBus.on('refGame',refreshGame);
-    return ()=>{
-      eventBus.off('refGame',refreshGame);
+    eventBus.on('refGame', refreshGame);
+    return () => {
+      eventBus.off('refGame', refreshGame);
     };
   }, []);
 
@@ -122,7 +122,7 @@ export default function EditorSideBar() {
       path: file.path,
       type: type,
     };
-      // 先要确定没有这个tag
+    // 先要确定没有这个tag
     const result = tags.findIndex((e) => e.path === target);
     if (result < 0) addTag(tag);
     updateCurrentTag(tag);
@@ -133,81 +133,84 @@ export default function EditorSideBar() {
   };
 
   return <>
-    {isShowSidebar && <div className={styles.editor_sidebar}>
-      <div className={styles.divider}
-        onMouseDown={handleDragStart}
-      // onMouseUp={handleDragEnd}
-      // onMouseLeave={handleDragEnd}
-      />
-      <div className={styles.preview_container} id="gamePreview">
-        {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-        <iframe
-          ref={ifRef}
-          id="gamePreviewIframe"
-          frameBorder="0"
-          className={styles.previewWindow}
-          src={`/games/${gameName}`}
-        />
-        <div className={styles.gamePreviewButons}>
-          <Button
-            appearance="subtle"
-            icon={<ArrowClockwiseIcon />}
-            title={t`刷新`}
-            onClick={refreshGame}
+    {isShowSidebar &&
+      <div className={styles.editor_sidebar}>
+        <div className={styles.preview_container} id="gamePreview">
+          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
+          <iframe
+            ref={ifRef}
+            id="gamePreviewIframe"
+            frameBorder="0"
+            className={styles.previewWindow}
+            src={`/games/${gameName}`}
           />
-          <Button
-            appearance="subtle"
-            icon={<OpenIcon />}
-            title={t`在新标签页中预览`}
-            onClick={() => window.open(`/games/${gameName}`, "_blank")}
-          />
-          <Button
-            appearance="subtle"
-            icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
-            title={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
-            onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
-          />
+          <div className={styles.gamePreviewButons}>
+            <Button
+              appearance="subtle"
+              icon={<ArrowClockwiseIcon />}
+              title={t`刷新`}
+              onClick={refreshGame}
+            />
+            <Button
+              appearance="subtle"
+              icon={<OpenIcon />}
+              title={t`在新标签页中预览`}
+              onClick={() => window.open(`/games/${gameName}`, "_blank")}
+            />
+            <Button
+              appearance="subtle"
+              icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
+              title={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
+              onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
+            />
+          </div>
         </div>
-      </div>
 
-      <div className={styles.sidebarTab}>
-        <input
-          type="radio"
-          id="sidebarTabAssets"
-          name="sidebarTab"
-          value="assets"
-          checked={currentSidebarTab === 'asset'}
-          onChange={() => updateCurrentSidebarTab('asset')}
+        <div className={styles.sidebarTab}>
+          <input
+            type="radio"
+            id="sidebarTabAssets"
+            name="sidebarTab"
+            value="assets"
+            checked={currentSidebarTab === 'asset'}
+            onChange={() => updateCurrentSidebarTab('asset')}
+          />
+          <label htmlFor="sidebarTabAssets">{t`资源`}</label>
+
+          <input
+            type="radio"
+            id="sidebarTabScenes"
+            name="sidebarTab"
+            value="scene"
+            checked={currentSidebarTab === 'scene'}
+            onChange={() => updateCurrentSidebarTab('scene')}
+          />
+          <label htmlFor="sidebarTabScenes">{t`场景`}</label>
+        </div>
+
+        <div className={styles.sidebarContent}>
+          {currentSidebarTab === 'asset' &&
+            <Assets
+              basePath={['games', gameName, 'game']}
+              fileConfig={fileConfig}
+              fileFunction={fileFunction}
+            />}
+          {currentSidebarTab === 'scene' &&
+            <Assets
+              basePath={['games', gameName, 'game', 'scene']}
+              fileConfig={fileConfig}
+              fileFunction={fileFunction}
+            />}
+        </div>
+
+        <div
+          className={styles.divider}
+          onMouseDown={handleDragStart}
+        // onMouseUp={handleDragEnd}
+        // onMouseLeave={handleDragEnd}
         />
-        <label htmlFor="sidebarTabAssets">{t`资源`}</label>
 
-        <input
-          type="radio"
-          id="sidebarTabScenes"
-          name="sidebarTab"
-          value="scene"
-          checked={currentSidebarTab === 'scene'}
-          onChange={() => updateCurrentSidebarTab('scene')}
-        />
-        <label htmlFor="sidebarTabScenes">{t`场景`}</label>
-      </div>
-
-      <div className={styles.sidebarContent}>
-        {currentSidebarTab === 'asset' &&
-          <Assets
-            basePath={['games', gameName, 'game']}
-            fileConfig={fileConfig}
-            fileFunction={fileFunction}
-          />}
-        {currentSidebarTab === 'scene' &&
-          <Assets
-            basePath={['games', gameName, 'game', 'scene']}
-            fileConfig={fileConfig}
-            fileFunction={fileFunction}
-          />}
-      </div>
-
-    </div >
+      </div >
     }
   </>;
 }
