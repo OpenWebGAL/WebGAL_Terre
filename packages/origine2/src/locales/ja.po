@@ -234,11 +234,7 @@ msgstr "コードエディタ"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
-msgstr ""
-
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
-#~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。"
-#~ msgstr ""
+msgstr "実験的な高速プレビューを有効にすると、リアルタイムプレビューの効率が大幅に向上しますが、異常が発生する可能性があります。特別なヒント：前回のリアルタイムプレビューのジャンプが完全に終了していない（特にアニメーションが終了していない）ときに、再度ジャンプしないでください。"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
@@ -338,7 +334,7 @@ msgstr "関連する立ち絵"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
 msgid "关闭"
-msgstr ""
+msgstr "閉鎖中"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:18
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:25
@@ -533,7 +529,7 @@ msgstr "ロゴ"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
 msgid "启用"
-msgstr ""
+msgstr "有効化"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:37
 msgid "启用视频跳过"
@@ -635,7 +631,7 @@ msgstr "リアルタイムプレビューオン"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
 msgid "实验性快速预览"
-msgstr ""
+msgstr "実験的な高速プレビュー"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
 msgid "宽度"

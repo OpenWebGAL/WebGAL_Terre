@@ -10,12 +10,13 @@
 }
 
 .tips{
-  color: #9F353A;
-  font-weight: bold;
+  color: var(--primary);
+  font-weight: bolder;
+  font-size: smaller;
   text-align: left;
   height: 100%;
-  width: 400px;
-  background: rgba(159, 53, 58, 0.05);
-  padding: 3px;
+  width: 500px;
+  background: var(--primary-5pct);
+  padding: 4px;
   border-radius: 4px;
 }
