@@ -91,7 +91,7 @@ export default function TopBar() {
       <div className={styles.topbar_gamename}>
         {gameName}
       </div>
-      <Toolbar>
+      <Toolbar style={{gap:8}}>
         <Menu>
           <MenuTrigger>
             <ToolbarButton icon={isAutoHideToolbar ? <EyeOffIcon /> : <PaddingTopIcon />} />
