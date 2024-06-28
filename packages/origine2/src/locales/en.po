@@ -156,16 +156,16 @@ msgstr " Y："
 msgid "Y轴缩放："
 msgstr " Scale y："
 
-#: src/pages/editor/Topbar/Topbar.tsx:101
+#: src/pages/editor/Topbar/Topbar.tsx:111
 msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
-#: src/components/Assets/Assets.tsx:312
-#: src/components/Assets/Assets.tsx:313
+#: src/components/Assets/Assets.tsx:315
+#: src/components/Assets/Assets.tsx:316
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:219
+#: src/components/Assets/Assets.tsx:220
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -225,8 +225,8 @@ msgid "主要样式"
 msgstr "Main Style"
 
 #: src/pages/editor/Topbar/Topbar.tsx:111
-msgid "主页"
-msgstr "WebGAL Home"
+#~ msgid "主页"
+#~ msgstr "WebGAL Home"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
@@ -416,8 +416,8 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:178
-#: src/components/Assets/Assets.tsx:206
+#: src/components/Assets/Assets.tsx:179
+#: src/components/Assets/Assets.tsx:207
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -462,7 +462,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:232
+#: src/components/Assets/Assets.tsx:233
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "Refresh"
@@ -496,7 +496,7 @@ msgstr "Single line comment"
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:99
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
 msgid "取消"
 msgstr "Cancel"
 
@@ -567,7 +567,7 @@ msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:188
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:173
 msgid "场景"
 msgstr "Scene"
 
@@ -646,7 +646,7 @@ msgid "对话框标题"
 msgstr "Dialog title"
 
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:18
-#: src/pages/editor/Topbar/Topbar.tsx:86
+#: src/pages/editor/Topbar/Topbar.tsx:153
 msgid "导出"
 msgstr "Export"
 
@@ -715,10 +715,11 @@ msgstr "Created"
 
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
-#: src/pages/editor/Topbar/Topbar.tsx:84
+#: src/pages/editor/Topbar/Topbar.tsx:152
 msgid "帮助"
 msgstr "Help"
 
+#: src/pages/editor/Topbar/Topbar.tsx:142
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:114
 msgid "帮助文档"
 msgstr "Documents"
@@ -759,7 +760,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/components/Assets/Assets.tsx:233
+#: src/components/Assets/Assets.tsx:234
 msgid "打开文件夹"
 msgstr "Open folder"
 
@@ -767,7 +768,7 @@ msgstr "Open folder"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:163
+#: src/components/Assets/Assets.tsx:164
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -816,8 +817,8 @@ msgstr "Tip: Line breaks can be up to three lines"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:108
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:109
-msgid "搜索文件"
-msgstr "Search file"
+#~ msgid "搜索文件"
+#~ msgstr "Search file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:120
 msgid "播放一小段视频"
@@ -884,8 +885,8 @@ msgid "效果音文件"
 msgstr "Sound effect file"
 
 #: src/pages/editor/Topbar/Topbar.tsx:77
-msgid "文件"
-msgstr "File"
+#~ msgid "文件"
+#~ msgstr "File"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:227
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:168
@@ -934,11 +935,11 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:156
+#: src/components/Assets/Assets.tsx:157
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:191
+#: src/components/Assets/Assets.tsx:192
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -951,11 +952,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:159
+#: src/components/Assets/Assets.tsx:160
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:194
+#: src/components/Assets/Assets.tsx:195
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -994,7 +995,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:165
+#: src/components/Assets/Assets.tsx:166
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1182,7 +1183,7 @@ msgstr "Add Custom Property"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:229
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
-#: src/pages/editor/Topbar/Topbar.tsx:89
+#: src/pages/editor/Topbar/Topbar.tsx:156
 msgid "添加语句"
 msgstr "Add statement"
 
@@ -1228,7 +1229,7 @@ msgstr "Game ID"
 msgid "游戏配置"
 msgstr "Game configuration"
 
-#: src/pages/editor/Topbar/Topbar.tsx:118
+#: src/pages/editor/Topbar/Topbar.tsx:128
 msgid "源代码"
 msgstr "Source code"
 
@@ -1273,7 +1274,7 @@ msgstr "Are you sure you want to delete the \"{templateName}\" template?"
 msgid "确认按钮文本"
 msgstr "Confirm button text"
 
-#: src/pages/editor/Topbar/Topbar.tsx:80
+#: src/pages/editor/Topbar/Topbar.tsx:150
 msgid "视图"
 msgstr "View"
 
@@ -1407,7 +1408,7 @@ msgstr "Auto"
 msgid "自动换行"
 msgstr "Auto wrap"
 
-#: src/pages/editor/Topbar/Topbar.tsx:102
+#: src/pages/editor/Topbar/Topbar.tsx:112
 msgid "自动隐藏功能区"
 msgstr "Auto-hide toolbar"
 
@@ -1490,7 +1491,7 @@ msgstr "Name of unlocked CG or BGM"
 msgid "解锁鉴赏类型"
 msgstr "Unlock appreciation type"
 
-#: src/pages/editor/Topbar/Topbar.tsx:82
+#: src/pages/editor/Topbar/Topbar.tsx:151
 msgid "设置"
 msgstr "Settings"
 
@@ -1546,7 +1547,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
 msgid "资源"
 msgstr "Assets"
 
@@ -1571,8 +1572,8 @@ msgstr "Return"
 msgid "连续执行"
 msgstr "Execute Continuously"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:99
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:104
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 msgid "选择"
 msgstr "Choose"
 
@@ -1634,7 +1635,7 @@ msgstr "Opacity (0-1):"
 msgid "通过选项进入不同的场景"
 msgstr "Enter different scenes through options"
 
-#: src/pages/editor/Topbar/Topbar.tsx:78
+#: src/pages/editor/Topbar/Topbar.tsx:149
 msgid "配置"
 msgstr "Configuration"
 
