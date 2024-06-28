@@ -58,7 +58,7 @@ const animationTypes = ["json"];
 function getFileType(path: string): ResourceType | null {
   const parts = path.split(/[/\\]/);
   const fileName = parts[parts.length - 1];
-  const extension = fileName.split(".")[1].toLowerCase();
+  const extension = fileName.split(".")[1]?.toLowerCase();
 
   if (imageTypes.includes(extension)) {
     return ResourceType.Image;
