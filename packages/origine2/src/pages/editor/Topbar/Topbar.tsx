@@ -35,6 +35,7 @@ import {useGameEditorContext} from "@/store/useGameEditorStore";
 import {IGameEditorSidebarTabs, IGameEditorTopbarTabs} from "@/types/gameEditor";
 import {redirect} from "@/hooks/useHashRoute";
 import {t} from "@lingui/macro";
+import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
 
 const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
 const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
@@ -93,12 +94,7 @@ export default function TopBar() {
 
   return <div className={styles.editor_topbar}>
     <Toolbar style={{gap: 8}}>
-      <button className={styles.backButton} onClick={backToDashboard}>
-        {/* <ArrowLeft20Filled/> */}
-        <ChevronLeftFilled className={styles.backIcon} />
-        {/* <span style={{marginLeft: 0}}>WebGAl Terre</span> */}
-        <img src={TerreIcon} className={styles.terreImg} height={24} width={24} alt="WebGAL Terre Dashboard"/>
-      </button>
+      <BackDashboardButton onClick={backToDashboard}/>
       <div className={styles.topbar_gamename}>
         {gameName}
       </div>

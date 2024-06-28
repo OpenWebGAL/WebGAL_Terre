@@ -8,6 +8,8 @@ import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
 import { ArrowLeftFilled, ArrowLeftRegular, bundleIcon } from "@fluentui/react-icons";
 import { ITab } from '@/types/templateEditor';
 import {t} from "@lingui/macro";
+import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
+import {redirect} from "@/hooks/useHashRoute";
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 
@@ -31,10 +33,13 @@ export default function TemplateEditorSidebar() {
     updateCurrentTab(newTab);
   };
 
+  const backToDashboard = () => redirect('dashboard', 'template');
+
   return (
     <div className={styles.sidebar} style={{ width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px` }}>
       <div className={styles.toolbar}>
-        <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button>
+        <BackDashboardButton onClick={backToDashboard}/>
+        {/* <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button> */}
         <span className={styles.title}>
           {templateName}
         </span>
