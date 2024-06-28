@@ -38,7 +38,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           <ChooseFile sourceBase="animation" onChange={(file) => {
             fileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} ignoreFiles={['animationTable.json']} />
+          }} extName={[".json"]} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>
