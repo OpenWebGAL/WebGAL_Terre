@@ -156,16 +156,16 @@ msgstr " Y軸位移："
 msgid "Y轴缩放："
 msgstr " Y軸スケール："
 
-#: src/pages/editor/Topbar/Topbar.tsx:101
+#: src/pages/editor/Topbar/Topbar.tsx:111
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
-#: src/components/Assets/Assets.tsx:312
-#: src/components/Assets/Assets.tsx:313
+#: src/components/Assets/Assets.tsx:315
+#: src/components/Assets/Assets.tsx:316
 msgid "上传"
 msgstr "アップロード"
 
-#: src/components/Assets/Assets.tsx:219
+#: src/components/Assets/Assets.tsx:220
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
@@ -225,8 +225,8 @@ msgid "主要样式"
 msgstr "メインスタイル"
 
 #: src/pages/editor/Topbar/Topbar.tsx:111
-msgid "主页"
-msgstr "WebGALホーム"
+#~ msgid "主页"
+#~ msgstr "WebGALホーム"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
@@ -416,8 +416,8 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
-#: src/components/Assets/Assets.tsx:178
-#: src/components/Assets/Assets.tsx:206
+#: src/components/Assets/Assets.tsx:179
+#: src/components/Assets/Assets.tsx:207
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -462,7 +462,7 @@ msgstr "テンプレートを削除"
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
-#: src/components/Assets/Assets.tsx:232
+#: src/components/Assets/Assets.tsx:233
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "更新"
@@ -496,7 +496,7 @@ msgstr "一行コメント"
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:99
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
 msgid "取消"
 msgstr "キャンセル"
 
@@ -567,7 +567,7 @@ msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:188
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:173
 msgid "场景"
 msgstr "シーン"
 
@@ -646,7 +646,7 @@ msgid "对话框标题"
 msgstr "ダイアログタイトル"
 
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:18
-#: src/pages/editor/Topbar/Topbar.tsx:86
+#: src/pages/editor/Topbar/Topbar.tsx:153
 msgid "导出"
 msgstr "エクスポート"
 
@@ -715,10 +715,11 @@ msgstr "作成済み"
 
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
-#: src/pages/editor/Topbar/Topbar.tsx:84
+#: src/pages/editor/Topbar/Topbar.tsx:152
 msgid "帮助"
 msgstr "ヘルプ"
 
+#: src/pages/editor/Topbar/Topbar.tsx:142
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:114
 msgid "帮助文档"
 msgstr "ヘルプドキュメント"
@@ -759,7 +760,7 @@ msgstr "IDを手動で設定"
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
-#: src/components/Assets/Assets.tsx:233
+#: src/components/Assets/Assets.tsx:234
 msgid "打开文件夹"
 msgstr "フォルダーを開く"
 
@@ -767,7 +768,7 @@ msgstr "フォルダーを開く"
 msgid "执行到此句"
 msgstr "この文まで実行"
 
-#: src/components/Assets/Assets.tsx:163
+#: src/components/Assets/Assets.tsx:164
 msgid "扩展名"
 msgstr "拡張子"
 
@@ -816,8 +817,8 @@ msgstr "ヒント:改行は三行まで可能"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:108
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:109
-msgid "搜索文件"
-msgstr "ファイル検索"
+#~ msgid "搜索文件"
+#~ msgstr "ファイル検索"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:120
 msgid "播放一小段视频"
@@ -884,8 +885,8 @@ msgid "效果音文件"
 msgstr "効果音ファイル"
 
 #: src/pages/editor/Topbar/Topbar.tsx:77
-msgid "文件"
-msgstr "ファイル"
+#~ msgid "文件"
+#~ msgstr "ファイル"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:227
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:168
@@ -934,11 +935,11 @@ msgstr "テキストシャドウ"
 msgid "文档"
 msgstr "ドキュメント"
 
-#: src/components/Assets/Assets.tsx:156
+#: src/components/Assets/Assets.tsx:157
 msgid "新建文件"
 msgstr "新しいファイルを作成"
 
-#: src/components/Assets/Assets.tsx:191
+#: src/components/Assets/Assets.tsx:192
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
@@ -951,11 +952,11 @@ msgstr "新しいテンプレートを作成"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/Assets.tsx:159
+#: src/components/Assets/Assets.tsx:160
 msgid "新文件名"
 msgstr "新しいファイル名"
 
-#: src/components/Assets/Assets.tsx:194
+#: src/components/Assets/Assets.tsx:195
 msgid "新文件夹名"
 msgstr "新しいフォルダー名"
 
@@ -994,7 +995,7 @@ msgstr "キャラクター名は設定不可"
 msgid "旋转角度："
 msgstr "回転："
 
-#: src/components/Assets/Assets.tsx:165
+#: src/components/Assets/Assets.tsx:166
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
@@ -1182,7 +1183,7 @@ msgstr "カスタム属性を追加"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:229
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
-#: src/pages/editor/Topbar/Topbar.tsx:89
+#: src/pages/editor/Topbar/Topbar.tsx:156
 msgid "添加语句"
 msgstr "ステートメントを追加"
 
@@ -1228,7 +1229,7 @@ msgstr "ゲームID"
 msgid "游戏配置"
 msgstr "ゲーム構成"
 
-#: src/pages/editor/Topbar/Topbar.tsx:118
+#: src/pages/editor/Topbar/Topbar.tsx:128
 msgid "源代码"
 msgstr "ソースコード"
 
@@ -1273,7 +1274,7 @@ msgstr "テンプレート\"{templateName}\"を削除してもよろしいです
 msgid "确认按钮文本"
 msgstr "確認ボタンのテキスト"
 
-#: src/pages/editor/Topbar/Topbar.tsx:80
+#: src/pages/editor/Topbar/Topbar.tsx:150
 msgid "视图"
 msgstr "ビュー"
 
@@ -1407,7 +1408,7 @@ msgstr "自動"
 msgid "自动换行"
 msgstr "自動折り返し"
 
-#: src/pages/editor/Topbar/Topbar.tsx:102
+#: src/pages/editor/Topbar/Topbar.tsx:112
 msgid "自动隐藏功能区"
 msgstr "ツールバーを自動的に隠す"
 
@@ -1490,7 +1491,7 @@ msgstr "CG/BGMの名前"
 msgid "解锁鉴赏类型"
 msgstr "タイプ"
 
-#: src/pages/editor/Topbar/Topbar.tsx:82
+#: src/pages/editor/Topbar/Topbar.tsx:151
 msgid "设置"
 msgstr "設定"
 
@@ -1546,7 +1547,7 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
 msgid "资源"
 msgstr "アセット"
 
@@ -1571,8 +1572,8 @@ msgstr "戻る"
 msgid "连续执行"
 msgstr "連続実行"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:99
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:104
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 msgid "选择"
 msgstr "選択"
 
@@ -1634,7 +1635,7 @@ msgstr "透明度（０－１）："
 msgid "通过选项进入不同的场景"
 msgstr "選択肢からシーンに切り替えることが可能です"
 
-#: src/pages/editor/Topbar/Topbar.tsx:78
+#: src/pages/editor/Topbar/Topbar.tsx:149
 msgid "配置"
 msgstr "設定"
 
