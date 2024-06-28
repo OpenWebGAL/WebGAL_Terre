@@ -5,7 +5,7 @@ import { IFile } from "./Assets";
 import styles from "./FileElement.module.scss";
 import { useValue } from '../../hooks/useValue';
 import { bundleIcon, RenameFilled, RenameRegular, DeleteFilled, DeleteRegular, DesktopMacFilled, DesktopMacRegular } from "@fluentui/react-icons";
-import {t} from "@lingui/macro";
+import { t } from "@lingui/macro";
 import { useRef } from "react";
 
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
@@ -25,9 +25,9 @@ export default function FileElement(
     }) {
   const newFileName = useValue(file.name);
   const ShowThumbPopoverOpen = useValue(false);
-  const FileItemSelfRef  = useRef(null);
+  const FileItemSelfRef = useRef(null);
 
-  const is_picture = (extName:string)=> extractExtension(extName) === 'image' ? true : false;
+  const is_picture = (extName: string) => extractExtension(extName) === 'image' ? true : false;
 
   return (
     <div
@@ -46,12 +46,12 @@ export default function FileElement(
       }}
       >
         <span
-          onMouseEnter={(e)=>{
-            if(is_picture(file.extName)) ShowThumbPopoverOpen.value = true;
+          onMouseEnter={(e) => {
+            if (is_picture(file.extName)) ShowThumbPopoverOpen.value = true;
           }}
-          onMouseOut={(e)=>{
+          onMouseOut={(e) => {
             ShowThumbPopoverOpen.value = false;
-          }}>{file.name}</span> {desc && <span style={{color:'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>{desc}</span>}
+          }}>{file.name}</span> {desc && <span style={{ color: 'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>{desc}</span>}
       </div>
 
       {
@@ -91,7 +91,7 @@ export default function FileElement(
                 onClick={(e) => e.stopPropagation()} />
             </PopoverTrigger>
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
-              <div style={{ display: "flex", flexFlow: "column", gap: "16px"}}>
+              <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                 <Subtitle1>{t`删除`}</Subtitle1>
                 <Button
                   appearance="primary"
@@ -103,25 +103,26 @@ export default function FileElement(
               </div>
             </PopoverSurface>
           </Popover>
-          {is_picture(file.extName) ?  <Popover
-            withArrow
-            open={ShowThumbPopoverOpen.value}
-            onOpenChange={() => ShowThumbPopoverOpen.set(!ShowThumbPopoverOpen.value)}
-          >
-            <PopoverTrigger>
-              <Button
-                icon={<ThumbIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
-                onClick={(e) => e.stopPropagation()} />
-            </PopoverTrigger>
-            <PopoverSurface>
-              <div style={{width:"200px",display:"inline-block"}}>
-                <img src={file.path} style={{objectFit:"cover"}} alt={file.path}
-                  decoding="async" loading="lazy" width={200} />
-              </div>
-            </PopoverSurface>
-          </Popover>: ''
-          }
         </>
+      }
+      {
+        is_picture(file.extName) ? <Popover
+          withArrow
+          open={ShowThumbPopoverOpen.value}
+          onOpenChange={() => ShowThumbPopoverOpen.set(!ShowThumbPopoverOpen.value)}
+        >
+          <PopoverTrigger>
+            <Button
+              icon={<ThumbIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
+              onClick={(e) => e.stopPropagation()} />
+          </PopoverTrigger>
+          <PopoverSurface style={{ padding: '8px', }}>
+            <div style={{ width: "200px", maxHeight: "300px", overflow: 'hidden', display: "inline-block" }}>
+              <img src={file.path} style={{ objectFit: "cover" }} alt={file.path}
+                decoding="async" loading="lazy" width='100%' height='100%' />
+            </div>
+          </PopoverSurface>
+        </Popover> : ''
       }
     </div>
   );

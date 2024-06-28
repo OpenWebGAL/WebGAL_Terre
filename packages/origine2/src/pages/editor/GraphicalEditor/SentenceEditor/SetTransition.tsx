@@ -12,8 +12,8 @@ import {t} from "@lingui/macro";
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
 export default function SetTransition(props: ISentenceEditorProps) {
-  const enterFileName = useValue(getArgByKey(props.sentence,'enter'));
-  const exitFileName = useValue(getArgByKey(props.sentence,'exit'));
+  const enterFileName = useValue(getArgByKey(props.sentence, 'enter'));
+  const exitFileName = useValue(getArgByKey(props.sentence, 'exit'));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const presetTargets = new Map<PresetTarget, string>([
     [ "fig-left", t`左侧立绘` ],
@@ -34,7 +34,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
           <ChooseFile sourceBase="animation" onChange={(file) => {
             enterFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} ignoreFiles={['animationTable.json']} />
+          }} extName={[".json"]} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="1.1" title={t`选择退出动画`}>
@@ -43,7 +43,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
           <ChooseFile sourceBase="animation" onChange={(file) => {
             exitFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} ignoreFiles={['animationTable.json']} />
+          }} extName={[".json"]} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>
