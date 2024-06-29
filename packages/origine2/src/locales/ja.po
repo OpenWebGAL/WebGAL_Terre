@@ -156,7 +156,7 @@ msgstr " Y軸位移："
 msgid "Y轴缩放："
 msgstr " Y軸スケール："
 
-#: src/pages/editor/Topbar/Topbar.tsx:111
+#: src/pages/editor/Topbar/Topbar.tsx:129
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
@@ -224,9 +224,9 @@ msgstr "立ち絵や背景画像のエフェクトを使う"
 msgid "主要样式"
 msgstr "メインスタイル"
 
-#: src/pages/editor/Topbar/Topbar.tsx:111
-#~ msgid "主页"
-#~ msgstr "WebGALホーム"
+#: src/pages/editor/Topbar/Topbar.tsx:174
+msgid "主页"
+msgstr "WebGALホーム"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
@@ -471,6 +471,10 @@ msgstr "更新"
 msgid "刷新游戏"
 msgstr "ゲームをリフレッシュ"
 
+#: src/pages/editor/Topbar/Topbar.tsx:125
+msgid "功能区显示"
+msgstr "機能区の表示"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:16
 msgid "加粗"
 msgstr "太字"
@@ -646,7 +650,7 @@ msgid "对话框标题"
 msgstr "ダイアログタイトル"
 
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:18
-#: src/pages/editor/Topbar/Topbar.tsx:153
+#: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "エクスポート"
 
@@ -715,11 +719,11 @@ msgstr "作成済み"
 
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
-#: src/pages/editor/Topbar/Topbar.tsx:152
+#: src/pages/editor/Topbar/Topbar.tsx:104
 msgid "帮助"
 msgstr "ヘルプ"
 
-#: src/pages/editor/Topbar/Topbar.tsx:142
+#: src/pages/editor/Topbar/Topbar.tsx:160
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:114
 msgid "帮助文档"
 msgstr "ヘルプドキュメント"
@@ -1107,7 +1111,6 @@ msgid "模板"
 msgstr "テンプレート"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:35
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:37
 msgid "模板列表"
 msgstr "テンプレートリスト"
 
@@ -1183,7 +1186,7 @@ msgstr "カスタム属性を追加"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:229
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
-#: src/pages/editor/Topbar/Topbar.tsx:156
+#: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
 msgstr "ステートメントを追加"
 
@@ -1229,7 +1232,7 @@ msgstr "ゲームID"
 msgid "游戏配置"
 msgstr "ゲーム構成"
 
-#: src/pages/editor/Topbar/Topbar.tsx:128
+#: src/pages/editor/Topbar/Topbar.tsx:146
 msgid "源代码"
 msgstr "ソースコード"
 
@@ -1274,7 +1277,7 @@ msgstr "テンプレート\"{templateName}\"を削除してもよろしいです
 msgid "确认按钮文本"
 msgstr "確認ボタンのテキスト"
 
-#: src/pages/editor/Topbar/Topbar.tsx:150
+#: src/pages/editor/Topbar/Topbar.tsx:102
 msgid "视图"
 msgstr "ビュー"
 
@@ -1408,7 +1411,7 @@ msgstr "自動"
 msgid "自动换行"
 msgstr "自動折り返し"
 
-#: src/pages/editor/Topbar/Topbar.tsx:112
+#: src/pages/editor/Topbar/Topbar.tsx:130
 msgid "自动隐藏功能区"
 msgstr "ツールバーを自動的に隠す"
 
@@ -1491,7 +1494,7 @@ msgstr "CG/BGMの名前"
 msgid "解锁鉴赏类型"
 msgstr "タイプ"
 
-#: src/pages/editor/Topbar/Topbar.tsx:151
+#: src/pages/editor/Topbar/Topbar.tsx:103
 msgid "设置"
 msgstr "設定"
 
@@ -1635,7 +1638,7 @@ msgstr "透明度（０－１）："
 msgid "通过选项进入不同的场景"
 msgstr "選択肢からシーンに切り替えることが可能です"
 
-#: src/pages/editor/Topbar/Topbar.tsx:149
+#: src/pages/editor/Topbar/Topbar.tsx:101
 msgid "配置"
 msgstr "設定"
 
