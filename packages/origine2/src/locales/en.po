@@ -156,7 +156,7 @@ msgstr " Y："
 msgid "Y轴缩放："
 msgstr " Scale y："
 
-#: src/pages/editor/Topbar/Topbar.tsx:111
+#: src/pages/editor/Topbar/Topbar.tsx:129
 msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
@@ -224,9 +224,9 @@ msgstr "Set effect for figure or background"
 msgid "主要样式"
 msgstr "Main Style"
 
-#: src/pages/editor/Topbar/Topbar.tsx:111
-#~ msgid "主页"
-#~ msgstr "WebGAL Home"
+#: src/pages/editor/Topbar/Topbar.tsx:174
+msgid "主页"
+msgstr "WebGAL Home"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
 msgid "代码编辑器"
@@ -471,6 +471,10 @@ msgstr "Refresh"
 msgid "刷新游戏"
 msgstr "Refresh game"
 
+#: src/pages/editor/Topbar/Topbar.tsx:125
+msgid "功能区显示"
+msgstr "Functional Area"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:16
 msgid "加粗"
 msgstr "Bold"
@@ -646,7 +650,7 @@ msgid "对话框标题"
 msgstr "Dialog title"
 
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:18
-#: src/pages/editor/Topbar/Topbar.tsx:153
+#: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "Export"
 
@@ -715,11 +719,11 @@ msgstr "Created"
 
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
-#: src/pages/editor/Topbar/Topbar.tsx:152
+#: src/pages/editor/Topbar/Topbar.tsx:104
 msgid "帮助"
 msgstr "Help"
 
-#: src/pages/editor/Topbar/Topbar.tsx:142
+#: src/pages/editor/Topbar/Topbar.tsx:160
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:114
 msgid "帮助文档"
 msgstr "Documents"
@@ -1107,7 +1111,6 @@ msgid "模板"
 msgstr "Template"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:35
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:37
 msgid "模板列表"
 msgstr "Template list"
 
@@ -1183,7 +1186,7 @@ msgstr "Add Custom Property"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:229
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
-#: src/pages/editor/Topbar/Topbar.tsx:156
+#: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
 msgstr "Add statement"
 
@@ -1229,7 +1232,7 @@ msgstr "Game ID"
 msgid "游戏配置"
 msgstr "Game configuration"
 
-#: src/pages/editor/Topbar/Topbar.tsx:128
+#: src/pages/editor/Topbar/Topbar.tsx:146
 msgid "源代码"
 msgstr "Source code"
 
@@ -1274,7 +1277,7 @@ msgstr "Are you sure you want to delete the \"{templateName}\" template?"
 msgid "确认按钮文本"
 msgstr "Confirm button text"
 
-#: src/pages/editor/Topbar/Topbar.tsx:150
+#: src/pages/editor/Topbar/Topbar.tsx:102
 msgid "视图"
 msgstr "View"
 
@@ -1408,7 +1411,7 @@ msgstr "Auto"
 msgid "自动换行"
 msgstr "Auto wrap"
 
-#: src/pages/editor/Topbar/Topbar.tsx:112
+#: src/pages/editor/Topbar/Topbar.tsx:130
 msgid "自动隐藏功能区"
 msgstr "Auto-hide toolbar"
 
@@ -1491,7 +1494,7 @@ msgstr "Name of unlocked CG or BGM"
 msgid "解锁鉴赏类型"
 msgstr "Unlock appreciation type"
 
-#: src/pages/editor/Topbar/Topbar.tsx:151
+#: src/pages/editor/Topbar/Topbar.tsx:103
 msgid "设置"
 msgstr "Settings"
 
@@ -1635,7 +1638,7 @@ msgstr "Opacity (0-1):"
 msgid "通过选项进入不同的场景"
 msgstr "Enter different scenes through options"
 
-#: src/pages/editor/Topbar/Topbar.tsx:149
+#: src/pages/editor/Topbar/Topbar.tsx:101
 msgid "配置"
 msgstr "Configuration"
 
