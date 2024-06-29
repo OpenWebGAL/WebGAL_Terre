@@ -28,7 +28,7 @@ import {
   PaddingTop24Regular,
   bundleIcon,
   ArrowLeft20Filled,
-  ChevronLeftFilled, QuestionCircle20Regular, QuestionCircle24Regular, BookQuestionMark24Regular
+  ChevronLeftFilled, QuestionCircle20Regular, QuestionCircle24Regular, BookQuestionMark24Regular, Open16Filled
 } from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
 import {useGameEditorContext} from "@/store/useGameEditorStore";
@@ -93,14 +93,36 @@ export default function TopBar() {
   const backToDashboard = () => redirect('dashboard', 'game');
 
   return <div className={styles.editor_topbar}>
-    <Toolbar style={{gap: 8}}>
+    <Toolbar>
       <BackDashboardButton onClick={backToDashboard}/>
+      <TabList style={{padding: '0 4px'}} size="small" selectedValue={currentTopbarTab}
+        onTabSelect={(_, data) => handleTabClick(data.value as unknown as IGameEditorTopbarTabs)}
+      >
+        <Tab value="config">{t`配置`}</Tab>
+        <Tab value="view">{t`视图`}</Tab>
+        <Tab value="settings">{t`设置`}</Tab>
+        <Tab value="help">{t`帮助`}</Tab>
+        <Tab value="export">{t`导出`}</Tab>
+        {isShowAddSceneTab && <Tab value="addSentence">
+          <span style={{color: 'var(--primary)', fontWeight: 'bold'}}>
+            {t`添加语句`}
+          </span>
+        </Tab>}
+      </TabList>
       <div className={styles.topbar_gamename}>
         {gameName}
       </div>
       <Menu>
         <MenuTrigger>
-          <ToolbarButton icon={isAutoHideToolbar ? <EyeOffIcon/> : <PaddingTopIcon/>}/>
+          <ToolbarButton
+            style={{
+              fontWeight: 'normal',
+              fontSize: '14px',
+              paddingLeft: '4px',
+              paddingRight: '4px',
+              minWidth: 0,
+              textWrap: 'nowrap'
+            }} icon={isAutoHideToolbar ? <EyeOffIcon/> : <PaddingTopIcon/>}>{t`功能区显示`}</ToolbarButton>
         </MenuTrigger>
         <MenuPopover>
           <MenuList>
@@ -124,7 +146,7 @@ export default function TopBar() {
         {t`源代码`}
       </ToolbarButton>
       <ToolbarButton
-        icon={<BookQuestionMark24Regular style={{color:'var(--primary)'}} />}
+        icon={<BookQuestionMark24Regular style={{color: 'var(--primary)'}}/>}
         onClick={() => window.open("https://docs.openwebgal.com/", "_blank")}
         style={{
           fontWeight: 'normal',
@@ -137,22 +159,22 @@ export default function TopBar() {
       >
         {t`帮助文档`}
       </ToolbarButton>
-
+      <ToolbarButton
+        icon={<Open16Filled style={{color: 'var(--primary)'}}/>}
+        onClick={() => window.open("https://openwebgal.com/", "_blank")}
+        style={{
+          fontWeight: 'normal',
+          fontSize: '14px',
+          paddingLeft: '4px',
+          paddingRight: '4px',
+          minWidth: 0,
+          textWrap: 'nowrap'
+        }}
+      >
+        {t`主页`}
+      </ToolbarButton>
     </Toolbar>
-    <TabList style={{padding:'0 4px'}} size="small" selectedValue={currentTopbarTab}
-      onTabSelect={(_, data) => handleTabClick(data.value as unknown as IGameEditorTopbarTabs)}
-    >
-      <Tab value="config">{t`配置`}</Tab>
-      <Tab value="view">{t`视图`}</Tab>
-      <Tab value="settings">{t`设置`}</Tab>
-      <Tab value="help">{t`帮助`}</Tab>
-      <Tab value="export">{t`导出`}</Tab>
-      {isShowAddSceneTab && <Tab value="addSentence">
-        <span style={{color: 'var(--primary)', fontWeight: 'bold'}}>
-          {t`添加语句`}
-        </span>
-      </Tab>}
-    </TabList>
+
     {/* <div className={styles.topbar_tags}> */}
     {/*  /!* 标签页 *!/ */}
     {/*  <TopbarTabButton text={t`配置`} isActive={currentTopbarTab === 'config'} */}

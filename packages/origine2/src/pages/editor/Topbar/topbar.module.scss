@@ -39,14 +39,18 @@
 }
 
 .topbar_gamename {
-  font-size: 18px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   line-height: normal;
   margin: 0 auto 0 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 0 0 8px;
+  //padding: 4px 8px;
+  //border-radius: 4px;
+  flex:1;
+  text-align: center;
+  //background: var(--primary-5pct);
 }
 
 .topbar_btn_special {
@@ -91,6 +95,3 @@
 
 
 
-.terreImg {
-  border-radius: 4px;
-}
