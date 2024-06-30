@@ -1,13 +1,13 @@
-import { useValue } from "../../../hooks/useValue";
-import { useEffect, useMemo } from "react";
+import {useValue} from "../../../hooks/useValue";
+import {useEffect, useMemo} from "react";
 import styles from "./chooseFile.module.scss";
-import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
-import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
+import {FolderOpen, FolderWithdrawal, Notes} from "@icon-park/react";
+import {Button, Input, Popover, PopoverSurface, PopoverTrigger} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
-import { api } from "@/api";
-import { t } from "@lingui/macro";
-import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
-import { join } from 'path';
+import {api} from "@/api";
+import {t} from "@lingui/macro";
+import Assets, {IFile, IFileConfig, IFileFunction} from "@/components/Assets/Assets";
+import {join} from 'path';
 
 export interface IChooseFile {
   sourceBase: string;
@@ -30,7 +30,7 @@ export default function ChooseFile(props: IChooseFile) {
 
   async function onChooseFile(file: IFile, type: 'scene' | 'asset') {
     toggleIsCalloutVisible();
-    props.onChange(file);
+    props.onChange({...file, name: file?.pathFromBase ?? ''});
   }
 
   const fileFunction: IFileFunction = {
@@ -39,7 +39,7 @@ export default function ChooseFile(props: IChooseFile) {
 
   const fileConfig: IFileConfig = new Map(
     props.hiddenFiles
-      ? props.hiddenFiles.map(item => [`games/${gameName}/game/${currentDirName}/${item}`, { isHidden: true }])
+      ? props.hiddenFiles.map(item => [`games/${gameName}/game/${currentDirName}/${item}`, {isHidden: true}])
       : []
   );
 
@@ -51,9 +51,9 @@ export default function ChooseFile(props: IChooseFile) {
       onOpenChange={toggleIsCalloutVisible}
     >
       <PopoverTrigger>
-        <Button style={{ minWidth: 0 }}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>
+        <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>
       </PopoverTrigger>
-      <PopoverSurface style={{ padding: 0 }}>
+      <PopoverSurface style={{padding: 0}}>
         <div className={styles.chooseFileContentWarpper}>
           <div className={styles.chooseFileTitle}>
             {t`选择`}
