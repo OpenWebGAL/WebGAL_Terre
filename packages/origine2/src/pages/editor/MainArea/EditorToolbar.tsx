@@ -53,7 +53,7 @@ export default function EditorToolbar() {
     </div>
     <div className={s.toolbar_button}>
       <DataSheet theme="outline" size="20" fill="#333" strokeWidth={3}/>
-      {lineNumString} {t`行脚本`}{textNumString} {t`个字`}
+      {lineNumString} {t`行脚本`}, {textNumString} {t`个字`}
     </div>
     <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode ? s.toolbar_button_active : '')}
       style={{marginLeft: 'auto'}}>

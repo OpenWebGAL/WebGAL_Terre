@@ -1,0 +1,32 @@
+.backButton {
+  transition: all 0.34s;
+  padding: 4px;
+  border-radius: var(--radius-md);
+  font-family: Georgia, serif;
+  color: var(--primary);
+  font-size: 22px;
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+
+  .backIcon {
+    width: 0;
+    transition: all 0.34s;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 4px 8px;
+
+    .backIcon {
+      width: 22px;
+    }
+
+  }
+}
+
+.terreImg {
+  border-radius: 4px;
+}

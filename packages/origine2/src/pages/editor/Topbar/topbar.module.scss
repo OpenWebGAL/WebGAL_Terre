@@ -39,21 +39,25 @@
 }
 
 .topbar_gamename {
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   line-height: normal;
-  margin: 0 auto 0 auto;
+  margin: 0 auto 0 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 0 0 8px;
+  //padding: 4px 8px;
+  //border-radius: 4px;
+  flex:1;
+  text-align: center;
+  //background: var(--primary-5pct);
 }
 
 .topbar_btn_special {
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   margin-left: 4px;
   color: var(--text);
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   line-height: normal;
   cursor: pointer;
@@ -65,7 +69,7 @@
   border-right: 2px solid transparent;
   border-bottom: none;
   border-left: 2px solid transparent;
-  background-image: linear-gradient(var(--bg-root), var(--bg-root)), linear-gradient(to bottom, rgba(0,92,175,0.3), var(--bg-root)), linear-gradient(to bottom, rgba(0,92,175,0.3), var(--bg-root));
+  background-image: linear-gradient(var(--bg-root), var(--bg-root)), linear-gradient(to bottom, rgba(0, 92, 175, 0.3), var(--bg-root)), linear-gradient(to bottom, rgba(0, 92, 175, 0.3), var(--bg-root));
   background-origin: border-box;
   background-clip: padding-box, border-box, border-box;
   text-wrap: nowrap;
@@ -78,12 +82,16 @@
   border-bottom: none;
   background: var(--bg-card);
   font-weight: 700;
-  transform: translate(0,2px);
-  .specialText{
-    transform: translate(0,-1px);
+  transform: translate(0, 2px);
+
+  .specialText {
+    transform: translate(0, -1px);
   }
 }
 
-.topbar_btn_special_active_topbar_tags{
-  border-top: 2px solid var(--primary) !important;
+.topbar_btn_special_active_topbar_tags {
+  //border-top: 2px solid var(--primary) !important;
 }
+
+
+

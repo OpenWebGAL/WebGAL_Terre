@@ -26,7 +26,7 @@
 }
 
 .topBar {
-  padding: 0 0 0 12px;
+  padding: 4px 0 0 22px;
   font-family: Georgia, serif;
   font-size: 150%;
   color: var(--primary);
@@ -36,7 +36,8 @@
 }
 
 .tabListContainer {
-  padding: 4px 8px;
+  padding: 1rem 20px 0 20px;
+  min-width: 200px;
 }
 
 .tabItem {

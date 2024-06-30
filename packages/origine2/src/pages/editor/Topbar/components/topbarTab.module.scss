@@ -1,11 +1,13 @@
-.tab{
-  border: var(--border-md);
+.tab {
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14);
+  //border: var(--border-md);
   border-radius: var(--radius-md);
   background: var(--bg-card);
-  min-height: 60px;
+  min-height: 125px;
   overflow: auto;
   display: flex;
-  margin-bottom: 4px;
+  margin: 4px 8px;
+
   &::-webkit-scrollbar {
     //width: 3px;
     height: 8px;

@@ -40,7 +40,7 @@
   -webkit-user-select: none;
   user-select: none !important;
   display: flex;
-  border-top: var(--border-trans-lg);
+  border-bottom: var(--border-trans-lg);
   border-right: var(--border-sm);
   //transition: all 0.33s;
   align-items: center;
@@ -50,7 +50,7 @@
 
 .tab_active {
   background: var(--bg-card) !important;
-  border-top: var(--border-primary-lg);
+  border-bottom: var(--border-primary-lg);
   color: var(--primary);
   //font-style: italic;
   //font-weight: 700;

@@ -156,16 +156,16 @@ msgstr " Y："
 msgid "Y轴缩放："
 msgstr " Scale y："
 
-#: src/pages/editor/Topbar/Topbar.tsx:101
+#: src/pages/editor/Topbar/Topbar.tsx:129
 msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
-#: src/components/Assets/Assets.tsx:312
-#: src/components/Assets/Assets.tsx:313
+#: src/components/Assets/Assets.tsx:317
+#: src/components/Assets/Assets.tsx:318
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:219
+#: src/components/Assets/Assets.tsx:222
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -224,7 +224,7 @@ msgstr "Set effect for figure or background"
 msgid "主要样式"
 msgstr "Main Style"
 
-#: src/pages/editor/Topbar/Topbar.tsx:111
+#: src/pages/editor/Topbar/Topbar.tsx:174
 msgid "主页"
 msgstr "WebGAL Home"
 
@@ -356,7 +356,7 @@ msgstr "Hide the figure"
 msgid "关闭背景"
 msgstr "Hide the background"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:11
 msgid "内层文本"
 msgstr "Inner Text"
 
@@ -416,8 +416,8 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:178
-#: src/components/Assets/Assets.tsx:206
+#: src/components/Assets/Assets.tsx:181
+#: src/components/Assets/Assets.tsx:209
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -462,7 +462,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:232
+#: src/components/Assets/Assets.tsx:235
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "Refresh"
@@ -470,6 +470,10 @@ msgstr "Refresh"
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:49
 msgid "刷新游戏"
 msgstr "Refresh game"
+
+#: src/pages/editor/Topbar/Topbar.tsx:125
+msgid "功能区显示"
+msgstr "Functional Area"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:16
 msgid "加粗"
@@ -496,7 +500,7 @@ msgstr "Single line comment"
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:99
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
 msgid "取消"
 msgstr "Cancel"
 
@@ -567,7 +571,7 @@ msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:188
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:173
 msgid "场景"
 msgstr "Scene"
 
@@ -579,7 +583,7 @@ msgstr "Scenes and branches"
 msgid "场景文件"
 msgstr "Scene file"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:10
 msgid "外层文本"
 msgstr "Outer Text"
 
@@ -646,7 +650,7 @@ msgid "对话框标题"
 msgstr "Dialog title"
 
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:18
-#: src/pages/editor/Topbar/Topbar.tsx:86
+#: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "Export"
 
@@ -666,11 +670,11 @@ msgstr "Export as webpage"
 msgid "小"
 msgstr "Small"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:15
 msgid "小头像图像"
 msgstr "Mini avatar image"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:14
 msgid "小头像容器"
 msgstr "Mini avatar container"
 
@@ -715,10 +719,11 @@ msgstr "Created"
 
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
-#: src/pages/editor/Topbar/Topbar.tsx:84
+#: src/pages/editor/Topbar/Topbar.tsx:104
 msgid "帮助"
 msgstr "Help"
 
+#: src/pages/editor/Topbar/Topbar.tsx:160
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:114
 msgid "帮助文档"
 msgstr "Documents"
@@ -759,7 +764,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/components/Assets/Assets.tsx:233
+#: src/components/Assets/Assets.tsx:236
 msgid "打开文件夹"
 msgstr "Open folder"
 
@@ -767,7 +772,7 @@ msgstr "Open folder"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:163
+#: src/components/Assets/Assets.tsx:166
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -816,8 +821,8 @@ msgstr "Tip: Line breaks can be up to three lines"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:108
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:109
-msgid "搜索文件"
-msgstr "Search file"
+#~ msgid "搜索文件"
+#~ msgstr "Search file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:120
 msgid "播放一小段视频"
@@ -884,8 +889,8 @@ msgid "效果音文件"
 msgstr "Sound effect file"
 
 #: src/pages/editor/Topbar/Topbar.tsx:77
-msgid "文件"
-msgstr "File"
+#~ msgid "文件"
+#~ msgstr "File"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:227
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:168
@@ -904,20 +909,20 @@ msgstr "Text alignment"
 msgid "文本显示"
 msgstr "Text display"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:34
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:37
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:4
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:7
 msgid "文本框"
 msgstr "Text Box"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:8
 msgid "文本框（小头像关闭时）"
 msgstr "Textbox (when avatar is closed)"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:19
 msgid "文本框文本"
 msgstr "Text Box Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:9
 msgid "文本框背景"
 msgstr "Text Box Background"
 
@@ -934,11 +939,11 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:156
+#: src/components/Assets/Assets.tsx:159
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:191
+#: src/components/Assets/Assets.tsx:194
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -951,11 +956,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:159
+#: src/components/Assets/Assets.tsx:162
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:194
+#: src/components/Assets/Assets.tsx:197
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -994,7 +999,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:165
+#: src/components/Assets/Assets.tsx:168
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1062,24 +1067,24 @@ msgstr "Execute next sentence after this"
 msgid "本句执行后等待"
 msgstr "Wait after this sentence"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:23
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:26
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:4
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:7
 msgid "标题"
 msgstr "Title"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:30
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:11
 msgid "标题备用背景"
 msgstr "Title Alternate Background"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:28
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:9
 msgid "标题按钮"
 msgstr "Title Button"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:27
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:8
 msgid "标题按钮列表"
 msgstr "Title Button List"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:29
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:10
 msgid "标题按钮文字"
 msgstr "Title Button Text"
 
@@ -1106,7 +1111,6 @@ msgid "模板"
 msgstr "Template"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:35
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:37
 msgid "模板列表"
 msgstr "Template list"
 
@@ -1182,7 +1186,7 @@ msgstr "Add Custom Property"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:229
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
-#: src/pages/editor/Topbar/Topbar.tsx:89
+#: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
 msgstr "Add statement"
 
@@ -1228,7 +1232,7 @@ msgstr "Game ID"
 msgid "游戏配置"
 msgstr "Game configuration"
 
-#: src/pages/editor/Topbar/Topbar.tsx:118
+#: src/pages/editor/Topbar/Topbar.tsx:146
 msgid "源代码"
 msgstr "Source code"
 
@@ -1273,7 +1277,7 @@ msgstr "Are you sure you want to delete the \"{templateName}\" template?"
 msgid "确认按钮文本"
 msgstr "Confirm button text"
 
-#: src/pages/editor/Topbar/Topbar.tsx:80
+#: src/pages/editor/Topbar/Topbar.tsx:102
 msgid "视图"
 msgstr "View"
 
@@ -1407,7 +1411,7 @@ msgstr "Auto"
 msgid "自动换行"
 msgstr "Auto wrap"
 
-#: src/pages/editor/Topbar/Topbar.tsx:102
+#: src/pages/editor/Topbar/Topbar.tsx:130
 msgid "自动隐藏功能区"
 msgstr "Auto-hide toolbar"
 
@@ -1444,23 +1448,23 @@ msgstr "Role name, leave blank to inherit from previous sentence"
 msgid "角色名，留空以继承上句:对话;"
 msgstr "Role name, leave blank to inherit from previous sentence: Dialogue;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:18
 msgid "角色名内层文本"
 msgstr "Role Name Inner Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:17
 msgid "角色名外层文本"
 msgstr "Role Name Outer Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:16
 msgid "角色名容器"
 msgstr "Role Name Container"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:12
 msgid "角色名文本框"
 msgstr "Role Name Text Box"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:13
 msgid "角色名文本框背景"
 msgstr "Role Name Text Box Background"
 
@@ -1490,7 +1494,7 @@ msgstr "Name of unlocked CG or BGM"
 msgid "解锁鉴赏类型"
 msgstr "Unlock appreciation type"
 
-#: src/pages/editor/Topbar/Topbar.tsx:82
+#: src/pages/editor/Topbar/Topbar.tsx:103
 msgid "设置"
 msgstr "Settings"
 
@@ -1546,7 +1550,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
 msgid "资源"
 msgstr "Assets"
 
@@ -1571,8 +1575,8 @@ msgstr "Return"
 msgid "连续执行"
 msgstr "Execute Continuously"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:99
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:104
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 msgid "选择"
 msgstr "Choose"
 
@@ -1619,12 +1623,29 @@ msgid "选择预设目标"
 msgstr "Choose Preset Target"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:4
 msgid "选项"
 msgstr "Option"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:7
+msgid "选项列表"
+msgstr "Selection List"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:39
 msgid "选项名称"
 msgstr "Option Name"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:8
+msgid "选项按钮"
+msgstr "Selection Button"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:9
+msgid "选项按钮（禁用）"
+msgstr "Selection Button (disabled)"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:10
+msgid "选项按钮外层"
+msgstr "Selection Button Wrapper"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "透明度（0-1）："
@@ -1634,7 +1655,7 @@ msgstr "Opacity (0-1):"
 msgid "通过选项进入不同的场景"
 msgstr "Enter different scenes through options"
 
-#: src/pages/editor/Topbar/Topbar.tsx:78
+#: src/pages/editor/Topbar/Topbar.tsx:101
 msgid "配置"
 msgstr "Configuration"
 
