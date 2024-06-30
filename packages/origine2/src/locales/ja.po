@@ -356,7 +356,7 @@ msgstr "立ち絵を非表示"
 msgid "关闭背景"
 msgstr "背景画像を非表示"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:11
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:31
 msgid "内层文本"
 msgstr "内側テキスト"
 
@@ -583,7 +583,7 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:10
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:30
 msgid "外层文本"
 msgstr "外側テキスト"
 
@@ -670,11 +670,11 @@ msgstr "ウェブとしてエクスポート"
 msgid "小"
 msgstr "小さい"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:15
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:35
 msgid "小头像图像"
 msgstr "アバター画像"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:14
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:34
 msgid "小头像容器"
 msgstr "アバターコンテナ"
 
@@ -909,20 +909,20 @@ msgstr "テキストの配置"
 msgid "文本显示"
 msgstr "テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:4
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:7
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:24
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:27
 msgid "文本框"
 msgstr "テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:8
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:28
 msgid "文本框（小头像关闭时）"
 msgstr "テキストボックス（アバターが閉じている場合）"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:19
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
 msgid "文本框文本"
 msgstr "テキストボックスのテキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:9
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:29
 msgid "文本框背景"
 msgstr "テキストボックスの背景"
 
@@ -1067,24 +1067,24 @@ msgstr "この文が実行された後、次の文を実行"
 msgid "本句执行后等待"
 msgstr "この文が実行されるのを待つ"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:4
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:7
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "标题"
 msgstr "タイトル"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:11
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:62
 msgid "标题备用背景"
 msgstr "タイトル代替背景"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:9
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:60
 msgid "标题按钮"
 msgstr "タイトルボタン"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:8
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:59
 msgid "标题按钮列表"
 msgstr "タイトルボタンリスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:10
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:61
 msgid "标题按钮文字"
 msgstr "タイトルボタンテキスト"
 
@@ -1448,23 +1448,23 @@ msgstr "キャラクター名を空白のままにすると前の文から継承
 msgid "角色名，留空以继承上句:对话;"
 msgstr "キャラクター名を空白のままにすると前の文から継承;ダイアログ;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:18
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
 msgid "角色名内层文本"
 msgstr "キャラクター名内側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:17
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:37
 msgid "角色名外层文本"
 msgstr "キャラクター名外側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:16
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:36
 msgid "角色名容器"
 msgstr "キャラクター名コンテナ"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:12
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:32
 msgid "角色名文本框"
 msgstr "キャラクター名テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:13
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:33
 msgid "角色名文本框背景"
 msgstr "キャラクター名テキストボックスの背景"
 
@@ -1623,11 +1623,11 @@ msgid "选择预设目标"
 msgstr "事前設定されたターゲットを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:4
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
 msgid "选项"
 msgstr "選択肢を設定"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:7
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
 msgid "选项列表"
 msgstr "選択肢リスト"
 
@@ -1635,15 +1635,15 @@ msgstr "選択肢リスト"
 msgid "选项名称"
 msgstr "選択肢を設定"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:8
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
 msgid "选项按钮"
 msgstr "選択肢ボタン"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:9
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
 msgid "选项按钮（禁用）"
 msgstr "選択肢ボタン（無効状態）"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:10
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
 

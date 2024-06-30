@@ -356,7 +356,7 @@ msgstr "Hide the figure"
 msgid "关闭背景"
 msgstr "Hide the background"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:11
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:31
 msgid "内层文本"
 msgstr "Inner Text"
 
@@ -583,7 +583,7 @@ msgstr "Scenes and branches"
 msgid "场景文件"
 msgstr "Scene file"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:10
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:30
 msgid "外层文本"
 msgstr "Outer Text"
 
@@ -670,11 +670,11 @@ msgstr "Export as webpage"
 msgid "小"
 msgstr "Small"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:15
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:35
 msgid "小头像图像"
 msgstr "Mini avatar image"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:14
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:34
 msgid "小头像容器"
 msgstr "Mini avatar container"
 
@@ -909,20 +909,20 @@ msgstr "Text alignment"
 msgid "文本显示"
 msgstr "Text display"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:4
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:7
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:24
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:27
 msgid "文本框"
 msgstr "Text Box"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:8
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:28
 msgid "文本框（小头像关闭时）"
 msgstr "Textbox (when avatar is closed)"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:19
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
 msgid "文本框文本"
 msgstr "Text Box Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:9
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:29
 msgid "文本框背景"
 msgstr "Text Box Background"
 
@@ -1067,24 +1067,24 @@ msgstr "Execute next sentence after this"
 msgid "本句执行后等待"
 msgstr "Wait after this sentence"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:4
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:7
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "标题"
 msgstr "Title"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:11
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:62
 msgid "标题备用背景"
 msgstr "Title Alternate Background"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:9
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:60
 msgid "标题按钮"
 msgstr "Title Button"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:8
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:59
 msgid "标题按钮列表"
 msgstr "Title Button List"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/title.ts:10
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:61
 msgid "标题按钮文字"
 msgstr "Title Button Text"
 
@@ -1448,23 +1448,23 @@ msgstr "Role name, leave blank to inherit from previous sentence"
 msgid "角色名，留空以继承上句:对话;"
 msgstr "Role name, leave blank to inherit from previous sentence: Dialogue;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:18
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
 msgid "角色名内层文本"
 msgstr "Role Name Inner Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:17
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:37
 msgid "角色名外层文本"
 msgstr "Role Name Outer Text"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:16
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:36
 msgid "角色名容器"
 msgstr "Role Name Container"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:12
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:32
 msgid "角色名文本框"
 msgstr "Role Name Text Box"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/textbox.ts:13
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:33
 msgid "角色名文本框背景"
 msgstr "Role Name Text Box Background"
 
@@ -1623,11 +1623,11 @@ msgid "选择预设目标"
 msgstr "Choose Preset Target"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:4
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
 msgid "选项"
 msgstr "Option"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:7
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
 msgid "选项列表"
 msgstr "Selection List"
 
@@ -1635,15 +1635,15 @@ msgstr "Selection List"
 msgid "选项名称"
 msgstr "Option Name"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:8
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
 msgid "选项按钮"
 msgstr "Selection Button"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:9
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
 msgid "选项按钮（禁用）"
 msgstr "Selection Button (disabled)"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:10
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
 
