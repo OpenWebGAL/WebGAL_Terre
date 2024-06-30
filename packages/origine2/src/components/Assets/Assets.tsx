@@ -16,6 +16,7 @@ export interface IFile {
   isDir: boolean;
   name: string;
   path: string;
+  pathFromBase?: string;
 }
 
 export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'template' | 'tex' | 'video' | 'vocal'
@@ -78,8 +79,9 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
     if (file.isDir) {
       currentPath.set([...currentPath.value, file.name]);
     } else {
+      const pathFromBase = (currentPath.value.slice(basePath.length)).concat([file.name]).join('/');
       const isScene = (folderType === 'scene') && file.name.endsWith('.txt');
-      fileFunction?.open && fileFunction.open(file, isScene ? 'scene' : 'asset');
+      fileFunction?.open && fileFunction.open({...file, pathFromBase}, isScene ? 'scene' : 'asset');
     }
   };
 
