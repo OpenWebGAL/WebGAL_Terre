@@ -1,7 +1,7 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.5.2",
+  "version": "4.5.3",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "lingui extract && lingui compile --typescript && vite --host",
