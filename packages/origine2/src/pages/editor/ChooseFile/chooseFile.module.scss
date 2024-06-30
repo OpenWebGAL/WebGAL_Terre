@@ -1,17 +1,7 @@
 .chooseFileTitle{
   font-weight: bold;
   font-size: large;
-  padding: 2px 0 2px 4px;
-}
-
-.choseFileButton{
-  padding: 4px 8px 4px 8px;
-  margin: 2px 0 0 0;
-  //border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border-bottom: var(--border-md);
+  padding: 8px 0 2px 8px;
 }
 
 .chooseFileContentWarpper{
@@ -19,7 +9,8 @@
   flex-flow: column;
   height: 100%;
   max-height: 40vh;
-  gap: 8px;
+  width: 16rem;
+  gap: 4px;
 }
 
 .chooseFileFileListWarpper{

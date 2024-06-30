@@ -1,4 +1,4 @@
-const { app, BrowserWindow, globalShortcut, Menu } = require('electron');
+const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
 const log = require('electron-log');
 
 /**
@@ -26,7 +26,10 @@ const createWindow = () => {
         height: 900
     })
 
-    win.loadFile('./public/index.html').then(r => console.log(r));
+    win.loadFile('./public/index.html').then(r => {
+        console.log(r)
+        win.webContents.executeJavaScript('window.isElectron = true')
+    });
 
     // 注册快捷键 Ctrl + F12 切换开发者工具
     globalShortcut.register("Ctrl+F12", () => {
