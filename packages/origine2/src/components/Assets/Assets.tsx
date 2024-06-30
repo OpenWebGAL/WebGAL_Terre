@@ -8,7 +8,7 @@ import FileElement from "./FileElement";
 import axios from "axios";
 import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 import useSWR, { useSWRConfig } from "swr";
-import {t} from '@lingui/macro';
+import { t } from '@lingui/macro';
 import Upload from "./Upload";
 
 export interface IFile {
@@ -16,17 +16,19 @@ export interface IFile {
   isDir: boolean;
   name: string;
   path: string;
+  pathFromBase?: string;
 }
 
 export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'template' | 'tex' | 'video' | 'vocal'
 
 export type IFileConfig = Map<
-string,
-{
-  desc?: string,
-  folderType?: IFolderType,
-  isProtected?: boolean,
-}
+  string,
+  {
+    desc?: string,
+    folderType?: IFolderType,
+    isProtected?: boolean,
+    isHidden?: boolean,
+  }
 >
 
 export interface IFileFunction {
@@ -44,9 +46,9 @@ const MoreVerticalIcon = bundleIcon(MoreVerticalFilled, MoreVerticalRegular);
 const ArrowExportUpIcon = bundleIcon(ArrowExportUpFilled, ArrowExportUpRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
 
-export default function Assets({basePath, isProtected = false, fileConfig, fileFunction}:
-  {basePath: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction}) {
-  const {mutate} = useSWRConfig();
+export default function Assets({ basePath, isProtected = false, fileConfig, fileFunction }:
+  { basePath: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction }) {
+  const { mutate } = useSWRConfig();
 
   const currentPath = useValue(basePath);
   const currentPathString = useMemo(() => currentPath.value.join("/"), [currentPath]);
@@ -60,14 +62,14 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
     if ('dirInfo' in data && data.dirInfo) {
       const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: currentPathString + '/' + item.name }));
       const dirs = dirInfo.filter((item) => item.isDir);
-      const files = dirInfo.filter((item) => !item.isDir).filter(e=>e.name!=='.gitkeep');
+      const files = dirInfo.filter((item) => !item.isDir).filter(e => e.name !== '.gitkeep');
       dirs.sort((a, b) => a.name.localeCompare(b.name));
       files.sort((a, b) => a.name.localeCompare(b.name));
       return [...dirs, ...files];
     } else return [];
   };
 
-  const {data: fileList} = useSWR(currentPathString, assetsFetcher);
+  const { data: fileList } = useSWR(currentPathString, assetsFetcher);
 
   const handleRefresh = () => mutate(currentPathString);
   const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathString);
@@ -77,8 +79,9 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
     if (file.isDir) {
       currentPath.set([...currentPath.value, file.name]);
     } else {
+      const pathFromBase = (currentPath.value.slice(basePath.length)).concat([file.name]).join('/');
       const isScene = (folderType === 'scene') && file.name.endsWith('.txt');
-      fileFunction?.open && fileFunction.open(file, isScene ? 'scene' : 'asset');
+      fileFunction?.open && fileFunction.open({...file, pathFromBase}, isScene ? 'scene' : 'asset');
     }
   };
 
@@ -100,12 +103,12 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
     handleRefresh();
   };
 
-  const handleDeleteFile = async (source: string) =>{
+  const handleDeleteFile = async (source: string) => {
     await api.assetsControllerDeleteFileOrDir({ source });
     fileFunction?.delete && await fileFunction.delete(source);
     handleRefresh();
   };
-  const handlePreventDefault = async (e: any) =>{
+  const handlePreventDefault = async (e: any) => {
     e.preventDefault();
   };
   const createNewFilePopoverOpen = useValue(false);
@@ -116,10 +119,10 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', height: '100%' }}
-      onDragEnter={(e)=> handlePreventDefault(e)}
-      onDragLeave={(e)=>handlePreventDefault(e)}
-      onDragOver={(e)=> handlePreventDefault(e)}
-      onDrop={(e)=>{
+      onDragEnter={(e) => handlePreventDefault(e)}
+      onDragLeave={(e) => handlePreventDefault(e)}
+      onDragOver={(e) => handlePreventDefault(e)}
+      onDrop={(e) => {
         handlePreventDefault(e);
         const files = e.dataTransfer.files;
         const formData = new FormData();
@@ -142,7 +145,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
           style={{ flexGrow: 1, minWidth: 0 }}
         />
 
-        { !isProtected && <>
+        {!isProtected && <>
           <Popover
             withArrow
             open={createNewFilePopoverOpen.value}
@@ -159,7 +162,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
                   placeholder={t`新文件名`}
                   onChange={(_, data) => {
                     newFileName.set(data.value ?? "");
-                  } } />
+                  }} />
                 <Field label={t`扩展名`} size='small'>
                   <RadioGroup value={newFileExtensionName.value} onChange={(_, data) => newFileExtensionName.set(data.value)}>
                     <Radio value="" label={t`无`} />
@@ -174,7 +177,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
                     handleCreateNewFile(currentPathString, `${newFileName.value.trim()}${newFileExtensionName.value}`);
                     createNewFilePopoverOpen.set(false);
                     newFileName.set('');
-                  } }
+                  }}
                 >{t`创建`}</Button>
               </div>
             </PopoverSurface>
@@ -194,7 +197,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
                   placeholder={t`新文件夹名`}
                   onChange={(_, data) => {
                     newFileName.set(data.value ?? "");
-                  } } />
+                  }} />
                 <Button
                   appearance="primary"
                   disabled={newFileName.value.trim() === ''}
@@ -202,7 +205,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
                     handleCreateNewFolder(currentPathString, newFileName.value.trim());
                     createNewFolderPopoverOpen.set(false);
                     newFileName.set('');
-                  } }
+                  }}
                 >{t`创建`}</Button>
               </div>
             </PopoverSurface>
@@ -225,7 +228,7 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
 
         <Menu>
           <MenuTrigger>
-            <Button icon={<MoreVerticalIcon />} size='small'/>
+            <Button icon={<MoreVerticalIcon />} size='small' />
           </MenuTrigger>
           <MenuPopover>
             <MenuList>
@@ -237,15 +240,15 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
       </div>
       {
         extName && extName.length > 0 &&
-        <div style={{display: 'flex', padding: '4px 8px', gap: '4px'}}>
+        <div style={{ display: 'flex', padding: '4px 8px', gap: '4px' }}>
           {extName.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
         </div>
       }
       <div style={{ overflow: 'auto', padding: '4px' }}
-        onDragEnter={(e)=>handlePreventDefault(e)}
-        onDragLeave={(e)=> handlePreventDefault(e)}
-        onDragOver={(e)=> handlePreventDefault(e)}
-        onDrop={(e)=>{
+        onDragEnter={(e) => handlePreventDefault(e)}
+        onDragLeave={(e) => handlePreventDefault(e)}
+        onDragOver={(e) => handlePreventDefault(e)}
+        onDrop={(e) => {
           handlePreventDefault(e);
           const files = e.dataTransfer.files;
           const formData = new FormData();
@@ -262,16 +265,18 @@ export default function Assets({basePath, isProtected = false, fileConfig, fileF
         }}>
         {
           fileList?.map(file =>
-            <FileElement
-              key={file.name}
-              file={file}
-              desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
-              currentPath={currentPath}
-              isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? isProtected}
-              handleOpenFile={handleOpenFile}
-              handleRenameFile={handleRenameFile}
-              handleDeleteFile={handleDeleteFile}
-            />
+            (fileConfig?.get(`${currentPathString}/${file.name}`)?.isHidden) // 判断是否隐藏
+              ? null
+              : <FileElement
+                key={file.name}
+                file={file}
+                desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
+                currentPath={currentPath}
+                isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? isProtected}
+                handleOpenFile={handleOpenFile}
+                handleRenameFile={handleRenameFile}
+                handleDeleteFile={handleDeleteFile}
+              />
           )
         }
       </div>

@@ -1,145 +1,71 @@
-import { useValue } from "../../../hooks/useValue";
-import { useEffect, useMemo } from "react";
+import {useValue} from "../../../hooks/useValue";
+import {useEffect, useMemo} from "react";
 import styles from "./chooseFile.module.scss";
-import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
-import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
+import {FolderOpen, FolderWithdrawal, Notes} from "@icon-park/react";
+import {Button, Input, Popover, PopoverSurface, PopoverTrigger} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
-import { api } from "@/api";
+import {api} from "@/api";
 import {t} from "@lingui/macro";
+import Assets, {IFile, IFileConfig, IFileFunction} from "@/components/Assets/Assets";
+import {join} from 'path';
 
 export interface IChooseFile {
   sourceBase: string;
-  onChange: (choosedFileDescription: IFileDescription | null) => void;
+  onChange: (choosedFile: IFile | null) => void;
   // 拓展名，要加.
   extName: string[];
-  ignoreFiles?: string[];
-}
-
-export interface IFileDescription {
-  extName: string;
-  isDir: boolean;
-  name: string;
-  path: string;
+  hiddenFiles?: string[];
 }
 
 export default function ChooseFile(props: IChooseFile) {
-  const currentChildDir = useValue<string[]>([]);
-  const currentDirName = props.sourceBase + currentChildDir.value.reduce((prev, curr) => prev + "/" + curr, "");
-  const currentDirFiles = useValue<IFileDescription[]>([]);
-  const fileSearch = useValue<string>('');
+  const currentDirName = props.sourceBase;
   const subPage = useEditorStore.use.subPage();
   const gameName = subPage;
-
-  const updateFileList = ()=>{
-    /**
-     * 更新当前目录内的文件
-     */
-    getFileList(gameName, currentDirName, props.extName).then(result => {
-      const filteredFileList = result.filter(file => !props.ignoreFiles?.includes(file.name));
-      currentDirFiles.set(filteredFileList);
-    });
-  };
-
-  useEffect(() => {
-    updateFileList();
-  }, [currentDirName]);
 
   const isShowChooseFileCallout = useValue(false);
 
   function toggleIsCalloutVisible() {
-    updateFileList();
     isShowChooseFileCallout.set(!isShowChooseFileCallout.value);
   }
 
-  function onChooseFile(fileDescription: IFileDescription) {
+  async function onChooseFile(file: IFile, type: 'scene' | 'asset') {
     toggleIsCalloutVisible();
-    fileDescription.name = currentChildDir.value.reduce((prev, curr) => prev + curr + "/", "") + fileDescription.name;
-    props.onChange(fileDescription);
+    props.onChange({...file, name: file?.pathFromBase ?? ''});
   }
 
-  function onEnterChildDir(dirName: string) {
-    currentChildDir.set([...currentChildDir.value, dirName]);
-  }
+  const fileFunction: IFileFunction = {
+    open: onChooseFile,
+  };
 
-  function onBack() {
-    currentChildDir.set(currentChildDir.value.slice(0, currentChildDir.value.length - 1));
-  }
-
-  const fileSelectButtonList = useMemo(() => currentDirFiles.value
-    .filter(f => f.name.includes(fileSearch.value))
-    .sort((a, b) => a.name.indexOf(fileSearch.value) - b.name.indexOf(fileSearch.value))
-    .map(file => {
-      if (file.isDir) {
-        return <div key={file.path} className={styles.choseFileButton} onClick={() => onEnterChildDir(file.name)}>
-          <FolderOpen theme="multi-color" size="24"/>
-          {'\u00a0\u00a0'}
-          {file.name}
-        </div>;
-      }
-      return <div key={file.path} className={styles.choseFileButton} onClick={() => onChooseFile(file)}>
-        <Notes theme="multi-color" size="24"/>
-        {'\u00a0\u00a0'}
-        {file.name}
-      </div>;
-    }), [currentDirFiles, fileSearch.value]);
-
-  function onCancel(){
-    toggleIsCalloutVisible();
-    props.onChange(null);
-  }
+  const fileConfig: IFileConfig = new Map(
+    props.hiddenFiles
+      ? props.hiddenFiles.map(item => [`games/${gameName}/game/${currentDirName}/${item}`, {isHidden: true}])
+      : []
+  );
 
   return (
     <Popover
       withArrow
       trapFocus
       open={isShowChooseFileCallout.value}
-      onOpenChange={isShowChooseFileCallout.value ? onCancel : toggleIsCalloutVisible}
+      onOpenChange={toggleIsCalloutVisible}
     >
       <PopoverTrigger>
         <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>
       </PopoverTrigger>
-      <PopoverSurface>
+      <PopoverSurface style={{padding: 0}}>
         <div className={styles.chooseFileContentWarpper}>
           <div className={styles.chooseFileTitle}>
             {t`选择`}
           </div>
-          <div className="file-search">
-            <Input
-              placeholder={t`搜索文件`}
-              aria-label={t`搜索文件`}
-              onChange={(ev, data) => fileSearch.set(data.value || '')}
-              style={{width: '100%'}}
-            />
-          </div>
-          <div className={styles.chooseFileFileListWarpper}>
-            {currentChildDir.value.length > 0 && (
-              <div className={styles.choseFileButton} onClick={onBack}>
-                <FolderWithdrawal theme="multi-color" size="24"/>
-                {'\u00a0\u00a0'}
-                ...
-              </div>)}
-            {fileSelectButtonList}
-          </div>
+          <Assets
+            basePath={['games', gameName, 'game', ...currentDirName.split('/')]}
+            isProtected
+            fileFunction={fileFunction}
+            fileConfig={fileConfig}
+          />
         </div>
       </PopoverSurface>
     </Popover>
   );
-}
-
-/**
- * 请求目录内文件的函数
- * @param currentGameName 游戏名
- * @param childDir 目录
- * @param extName 拓展名，要加.
- */
-export async function getFileList(currentGameName: string, childDir: string, extName: string[]) {
-  const path = `games/${currentGameName}/game/${childDir}`;
-  const rawFileList: IFileDescription[] = await api.assetsControllerReadAssets(path).then((r: any) => r.data.dirInfo);
-  if (extName.length === 0) {
-    return rawFileList;
-  }
-  for(const e of rawFileList){
-    e.extName = e.extName.toLowerCase();
-  }
-  return rawFileList.filter((e: any) => extName.includes(e.extName) || e.isDir);
 }

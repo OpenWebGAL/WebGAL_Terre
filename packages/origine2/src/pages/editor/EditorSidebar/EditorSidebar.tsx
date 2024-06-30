@@ -2,10 +2,10 @@ import styles from "./editorSidebar.module.scss";
 import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
 import { eventBus } from "@/utils/eventBus";
-import { Button } from "@fluentui/react-components";
+import {Button, Tab, TabList} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
-import { ITag } from "@/types/gameEditor";
+import {IGameEditorSidebarTabs, IGameEditorTopbarTabs, ITag} from "@/types/gameEditor";
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 
@@ -166,28 +166,32 @@ export default function EditorSideBar() {
           </div>
         </div>
 
-        <div className={styles.sidebarTab}>
-          <input
-            type="radio"
-            id="sidebarTabAssets"
-            name="sidebarTab"
-            value="assets"
-            checked={currentSidebarTab === 'asset'}
-            onChange={() => updateCurrentSidebarTab('asset')}
-          />
-          <label htmlFor="sidebarTabAssets">{t`资源`}</label>
-
-          <input
-            type="radio"
-            id="sidebarTabScenes"
-            name="sidebarTab"
-            value="scene"
-            checked={currentSidebarTab === 'scene'}
-            onChange={() => updateCurrentSidebarTab('scene')}
-          />
-          <label htmlFor="sidebarTabScenes">{t`场景`}</label>
-        </div>
-
+        <TabList style={{padding:'0 0 4px 0'}} size="small" selectedValue={currentSidebarTab}
+          onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
+        >
+          <Tab value="asset">{t`资源`}</Tab>
+          <Tab value="scene">{t`场景`}</Tab>
+        </TabList>
+        {/* <div className={styles.sidebarTab}> */}
+        {/*  <input */}
+        {/*    type="radio" */}
+        {/*    id="sidebarTabAssets" */}
+        {/*    name="sidebarTab" */}
+        {/*    value="assets" */}
+        {/*    checked={currentSidebarTab === 'asset'} */}
+        {/*    onChange={() => updateCurrentSidebarTab('asset')} */}
+        {/*  /> */}
+        {/*  <label htmlFor="sidebarTabAssets">{t`资源`}</label> */}
+        {/*  <input */}
+        {/*    type="radio" */}
+        {/*    id="sidebarTabScenes" */}
+        {/*    name="sidebarTab" */}
+        {/*    value="scene" */}
+        {/*    checked={currentSidebarTab === 'scene'} */}
+        {/*    onChange={() => updateCurrentSidebarTab('scene')} */}
+        {/*  /> */}
+        {/*  <label htmlFor="sidebarTabScenes">{t`场景`}</label> */}
+        {/* </div> */}
         <div className={styles.sidebarContent}>
           {currentSidebarTab === 'asset' &&
             <Assets
