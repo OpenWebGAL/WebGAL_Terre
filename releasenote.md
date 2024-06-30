@@ -4,17 +4,17 @@
 
 #### 新功能
 
-为 Electron 导出版添加日志写入
+使用新的文件选择器
 
-资源管理器支持拖拽上传
-
-资源管理器支持图像缩略图
-
-添加试验性快速预览功能
+添加对引擎选择支界面 UI 自定义支持
 
 #### 修复
 
-优化 UI 编辑器样式
+优化编辑器样式
+
+修复打开无后缀文件报错问题
+
+修复引擎的若干错误
 
 <!-- English Translation -->
 ## Release Notes
@@ -23,18 +23,17 @@
 
 #### New Features
 
-Add log writing for Electron export
+Use new file picker
 
-Support drag and drop upload in resource manager
-
-Support image thumbnails in resource manager
-
-Add experimental quick preview feature
+Add support for customizing the UI of the engine selection interface
 
 #### Fixes
 
-Refine UI editor styling
+Optimized editor style
 
+Fixed an error that occurred when opening a file without a suffix
+
+Fixed several engine errors
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -43,33 +42,35 @@ Refine UI editor styling
 
 #### 新機能
 
-Electron 导出版にログ出力を追加
+新しレ ファイル選択器使っ
 
-リソースマネージャーでドラッグアンドドロップによるアップロードに対応
-
-リソースマネージャーで画像のサムネイル表示に対応
-
-試験的な高速プレビュー機能を追加
+エンジン選択支界面 UI カスタム対応追加
 
 #### 修正
 
-UI エディターのスタイルを最適化
+エディタースタイル最適化
+
+拡張子無しのファイル開く時エラーなる問題修正
+
+エンジン幾つかエラー修正
+
 
 <!-- French Translation -->
 ## Notes de version
 
 ### Dans cette version
 
-#### Nouvelles fonctionnalités
+#### Nouveaux Fonctionnalités
 
-Ajout de l'écriture de log pour la version d'exportation Electron
+Utilisation d'un nouveau sélecteur de fichiers
 
-Le gestionnaire de ressources prend en charge le glisser-déposer pour le téléchargement
-
-Le gestionnaire de ressources prend en charge les miniatures d'images
-
-Ajout d'une fonction d'aperçu rapide expérimentale
+Ajout de la prise en charge de la personnalisation de l'interface utilisateur de la branche de sélection du moteur
 
 #### Corrections
 
-Optimisation du style de l'éditeur d'interface utilisateur
+Style de l'éditeur optimisé
+
+Correction d'un problème où l'ouverture d'un fichier sans suffixe renvoyait une erreur
+
+Correction d'un certain nombre d'erreurs dans le moteur
+
