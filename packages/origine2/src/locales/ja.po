@@ -1629,7 +1629,7 @@ msgstr "選択肢を設定"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:7
 msgid "选项列表"
-msgstr ""
+msgstr "選択肢リスト"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:39
 msgid "选项名称"
@@ -1637,15 +1637,15 @@ msgstr "選択肢を設定"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:8
 msgid "选项按钮"
-msgstr ""
+msgstr "選択肢ボタン"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:9
 msgid "选项按钮（禁用）"
-msgstr ""
+msgstr "選択肢ボタン（無効状態）"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/componentNodes/choose.ts:10
 msgid "选项按钮外层"
-msgstr ""
+msgstr "選択肢ボタン外層"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "透明度（0-1）："
