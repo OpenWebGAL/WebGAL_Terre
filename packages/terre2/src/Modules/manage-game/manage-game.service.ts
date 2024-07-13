@@ -2,6 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { _open } from '../../util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as process from 'process';
+import * as asar from '@electron/asar';
 
 @Injectable()
 export class ManageGameService {
@@ -218,6 +219,14 @@ export class ManageGameService {
           gameDir,
           `${electronExportDir}/resources/app/public/game/`,
         );
+        // 创建 app.asar
+        await asar.createPackage(
+          `${electronExportDir}/resources/app/`,
+          `${electronExportDir}/resources/app.asar`,
+        );
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/resources/app/`,
+        )
         await _open(electronExportDir);
       }
       if (process.platform === 'linux') {
@@ -259,6 +268,14 @@ export class ManageGameService {
           gameDir,
           `${electronExportDir}/resources/app/public/game/`,
         );
+        // 创建 app.asar
+        await asar.createPackage(
+          `${electronExportDir}/resources/app/`,
+          `${electronExportDir}/resources/app.asar`,
+        );
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/resources/app/`,
+        )
         await _open(electronExportDir);
       }
       if (process.platform === 'darwin') {
@@ -300,6 +317,14 @@ export class ManageGameService {
           gameDir,
           `${electronExportDir}/Contents/Resources/app/public/game/`,
         );
+        // 创建 app.asar
+        await asar.createPackage(
+          `${electronExportDir}/Contents/Resources/app/`,
+          `${electronExportDir}/Contents/Resources/app.asar`,
+        );
+        await this.webgalFs.deleteFileOrDirectory(
+          `${electronExportDir}/Contents/Resources/app/`,
+        )
         await _open(exportDir);
       }
     }
