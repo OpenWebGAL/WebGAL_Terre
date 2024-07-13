@@ -15,6 +15,7 @@ export interface IChooseFile {
   // 拓展名，要加.
   extName: string[];
   hiddenFiles?: string[];
+  _hardBasePath?: string[]
 }
 
 export default function ChooseFile(props: IChooseFile) {
@@ -59,7 +60,7 @@ export default function ChooseFile(props: IChooseFile) {
             {t`选择`}
           </div>
           <Assets
-            basePath={['games', gameName, 'game', ...currentDirName.split('/')]}
+            basePath={props._hardBasePath ?? ['games', gameName, 'game', ...currentDirName.split('/')]}
             isProtected
             fileFunction={fileFunction}
             fileConfig={fileConfig}

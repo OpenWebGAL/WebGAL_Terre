@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Assets, { IFileFunction } from '@/components/Assets/Assets';
+import React, {useEffect, useState} from 'react';
+import Assets, {IFileFunction} from '@/components/Assets/Assets';
 import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
 import useEditorStore from '@/store/useEditorStore';
-import { Button } from '@fluentui/react-components';
-import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
-import { ArrowLeftFilled, ArrowLeftRegular, bundleIcon } from "@fluentui/react-icons";
-import { ITab } from '@/types/templateEditor';
+import {Button} from '@fluentui/react-components';
+import {useTemplateEditorContext} from '@/store/useTemplateEditorStore';
+import {ArrowLeftFilled, ArrowLeftRegular, bundleIcon} from "@fluentui/react-icons";
+import {ITab} from '@/types/templateEditor';
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
 import {redirect} from "@/hooks/useHashRoute";
+import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 
@@ -36,7 +37,7 @@ export default function TemplateEditorSidebar() {
   const backToDashboard = () => redirect('dashboard', 'template');
 
   return (
-    <div className={styles.sidebar} style={{ width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px` }}>
+    <div className={styles.sidebar} style={{width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px`}}>
       <div className={styles.toolbar}>
         <BackDashboardButton onClick={backToDashboard}/>
         {/* <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button> */}
@@ -44,15 +45,16 @@ export default function TemplateEditorSidebar() {
           {templateName}
         </span>
       </div>
-      <div className={styles.componentTree} style={{ height: `${componentTreeHeight}px` }}>
-        <ComponentTree />
+      <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
+        <ComponentTree/>
       </div>
-      <ComponentTreeReSizer />
+      <ComponentTreeReSizer/>
       <div className={styles.assets}>
+        <CommonTips style={{margin:4}} text={t`提示：样式中用到的资源放在 assets 目录下`}/>
         <Assets
           basePath={['templates', templateName]}
           // isProtected
-          fileFunction={{ open: handleOpen }}
+          fileFunction={{open: handleOpen}}
         />
       </div>
     </div>
@@ -100,7 +102,7 @@ function ComponentTreeReSizer() {
     <div
       className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`}
       onMouseDown={handleMouseDown}>
-      <div className={styles.dividerLine} />
+      <div className={styles.dividerLine}/>
     </div>
   );
 }
