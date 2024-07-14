@@ -20,10 +20,10 @@ function getComponent(resourceType: ResourceType, resourceUrl: string) {
 
   switch (resourceType) {
   case ResourceType.Image:
-    return () => <img className={styles.asset} src={url} alt="Resource"/>;
+    return () => <img className={[styles.asset, styles.mosaicBg].join(' ')} src={url} alt="Resource"/>;
   case ResourceType.Video:
     return () => (
-      <video className={styles.asset} controls>
+      <video className={[styles.asset, styles.mosaicBg].join(' ')} controls>
         <source src={url} type="video/mp4"/>
           Your browser does not support the video tag.
       </video>

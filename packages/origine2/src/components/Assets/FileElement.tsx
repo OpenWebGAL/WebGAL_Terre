@@ -117,8 +117,8 @@ export default function FileElement(
               onClick={(e) => e.stopPropagation()} />
           </PopoverTrigger>
           <PopoverSurface style={{ padding: '8px', }}>
-            <div style={{ width: "200px", maxHeight: "300px", overflow: 'hidden', display: "inline-block" }}>
-              <img src={file.path} style={{ objectFit: "cover" }} alt={file.path}
+            <div style={{ width: "200px", maxHeight: "300px", display: "inline-block" }}>
+              <img src={file.path} className={styles.mosaicBg} alt={file.path}
                 decoding="async" loading="lazy" width='100%' height='100%' />
             </div>
           </PopoverSurface>
