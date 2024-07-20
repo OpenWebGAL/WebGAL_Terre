@@ -4,7 +4,8 @@ export default function WGColorPicker(props: { color: string, onChange: (hexColo
   const hexColor = toHex(props.color);
   return <ColorPicker color={convertColor(hexColor)} onChange={(_, data) => {
     const hexColor = data.hex;
-    const hexAlpha = Math.floor(data.a ?? 0).toString(16).padStart(2, '0');
+    const alphaValue = Math.round((data.a ?? 0) / 100 * 255);
+    const hexAlpha = alphaValue.toString(16).padStart(2, '0').toUpperCase();
     const hex = `#${hexColor}${hexAlpha}`.toUpperCase();
     props.onChange(hex);
   }}/>;
@@ -18,7 +19,7 @@ export function convertColor(hex: string) {
   let r = parseInt(hex.slice(1, 3), 16);
   let g = parseInt(hex.slice(3, 5), 16);
   let b = parseInt(hex.slice(5, 7), 16);
-  let a = parseInt(hex.slice(7, 9), 16) / 100;  // 转换透明度到0-1范围
+  let a = parseInt(hex.slice(7, 9), 16) / 255;  // 转换透明度到0-1范围
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 

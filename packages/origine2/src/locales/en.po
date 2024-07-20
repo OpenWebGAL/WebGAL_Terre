@@ -278,6 +278,7 @@ msgstr "Sidebar"
 msgid "侧边栏游戏预览"
 msgstr "Sidebar Game Preview"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:73
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGColor.tsx:32
 msgid "修改颜色"
 msgstr "Edit Color"
@@ -286,19 +287,19 @@ msgstr "Edit Color"
 msgid "值"
 msgstr "Value"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:47
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:53
 msgid "偏移右侧距离（定位用）"
 msgstr "Offset right (for positioning)"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:46
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:52
 msgid "偏移左侧距离（定位用）"
 msgstr "Offset left (for positioning)"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:49
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:55
 msgid "偏移底部距离（定位用）"
 msgstr "Offset bottom (for positioning)"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:48
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:54
 msgid "偏移顶部距离（定位用）"
 msgstr "Offset top (for positioning)"
 
@@ -360,23 +361,23 @@ msgstr "Hide the background"
 msgid "内层文本"
 msgstr "Inner Text"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:63
 msgid "内边距"
 msgstr "Padding"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:47
 msgid "最大宽度"
 msgstr "Max Width"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:50
 msgid "最大高度"
 msgstr "Max Height"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:40
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:46
 msgid "最小宽度"
 msgstr "Min Width"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:49
 msgid "最小高度"
 msgstr "Min Height"
 
@@ -500,7 +501,7 @@ msgstr "Single line comment"
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 msgid "取消"
 msgstr "Cancel"
 
@@ -543,11 +544,15 @@ msgstr "Enable video skipping"
 msgid "唇形同步与眨眼"
 msgstr "Lip sync and blinking"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:50
+msgid "图像"
+msgstr "Image"
+
 #: src/pages/editor/MainArea/EditorToolbar.tsx:65
 msgid "图形编辑器"
 msgstr "Graphical editor"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:53
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:59
 msgid "圆角"
 msgstr "Rounded corners"
 
@@ -587,7 +592,7 @@ msgstr "Scene file"
 msgid "外层文本"
 msgstr "Outer Text"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:56
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:62
 msgid "外边距"
 msgstr "Margin"
 
@@ -595,23 +600,23 @@ msgstr "Margin"
 msgid "大"
 msgstr "Large"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:52
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:58
 msgid "字体"
 msgstr "Font"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:35
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "字体大小"
 msgstr "Font size"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:37
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
 msgid "字母间距"
 msgstr "Letter spacing"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:36
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:42
 msgid "字重"
 msgstr "Font Weight"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:45
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:51
 msgid "定位方式"
 msgstr "Positioning"
 
@@ -637,7 +642,7 @@ msgstr "Live preview on"
 msgid "实验性快速预览"
 msgstr "Experimental fast preview"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:39
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:45
 msgid "宽度"
 msgstr "Width"
 
@@ -682,9 +687,13 @@ msgstr "Mini avatar container"
 msgid "小头像文件"
 msgstr "Avatar file"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:51
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
 msgid "层级顺序"
 msgstr "Z Index"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition.tsx:27
+msgid "居中"
+msgstr "Center"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:20
 msgid "居中对齐"
@@ -731,6 +740,10 @@ msgstr "Documents"
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:37
 msgid "常规演出"
 msgstr "Regular performance"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:28
+msgid "平铺"
+msgstr "Tiling"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:294
 msgid "应用颜色变化"
@@ -797,6 +810,9 @@ msgstr "Control whether to display the text box"
 msgid "提交"
 msgstr "Submit"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:92
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition.tsx:39
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:36
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonEditor.tsx:22
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:35
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values.tsx:93
@@ -818,6 +834,10 @@ msgstr "Tip: After editing, if you find any invalid CG/BGM in the appreciation g
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:82
 msgid "提示：换行符最多可达三行"
 msgstr "Tip: Line breaks can be up to three lines"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:53
+msgid "提示：样式中用到的资源放在 assets 目录下"
+msgstr "Tips: Resources used in styles are placed in the assets directory"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:108
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:109
@@ -901,7 +921,7 @@ msgstr "Font size"
 msgid "文字颜色"
 msgstr "Font color"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:54
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:60
 msgid "文本对齐"
 msgstr "Text alignment"
 
@@ -931,7 +951,7 @@ msgstr "Text Box Background"
 msgid "文本长度 (em)"
 msgstr "Text length (em)"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:55
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:61
 msgid "文本阴影"
 msgstr "Text Shadow"
 
@@ -1333,6 +1353,10 @@ msgstr "Figure file"
 msgid "纹理"
 msgstr "Texture"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:51
+msgid "线性渐变"
+msgstr "Linear gradient"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:266
 msgid "结束后保持"
 msgstr "Hold after end"
@@ -1374,8 +1398,17 @@ msgid "老电影滤镜"
 msgstr "Old film filter"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:105
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:66
+msgid "背景图像位置"
+msgstr "Background Image Position"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:65
+msgid "背景图像大小"
+msgstr "Background image size"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:21
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:29
@@ -1415,6 +1448,15 @@ msgstr "Auto wrap"
 msgid "自动隐藏功能区"
 msgstr "Auto-hide toolbar"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition.tsx:32
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:27
+msgid "自定义"
+msgstr "Customization"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:52
+msgid "自定义值"
+msgstr "Custom Value "
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:61
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:69
 msgid "自定义特效名称"
@@ -1439,6 +1481,10 @@ msgstr "Line of script"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:98
 msgid "要删除属性{0}吗？"
 msgstr "Delete the property {0}?"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:29
+msgid "覆盖"
+msgstr "Coverage"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:91
 msgid "角色名，留空以继承上句"
@@ -1575,8 +1621,8 @@ msgstr "Return"
 msgid "连续执行"
 msgstr "Execute Continuously"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:54
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:60
 msgid "选择"
 msgstr "Choose"
 
@@ -1713,6 +1759,22 @@ msgstr "Hide Text Box"
 msgid "静态"
 msgstr "Static"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition.tsx:28
+msgid "靠上"
+msgstr "Top"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition.tsx:29
+msgid "靠下"
+msgstr "Bottom"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition.tsx:31
+msgid "靠右"
+msgstr "Right"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition.tsx:30
+msgid "靠左"
+msgstr "Left"
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
 msgid "音乐"
 msgstr "Music"
@@ -1721,11 +1783,12 @@ msgstr "Music"
 msgid "项目主页"
 msgstr "Project Homepage"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:38
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:49
 msgid "颜色"
 msgstr "Color"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:42
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:48
 msgid "高度"
 msgstr "Height"
 
@@ -1758,7 +1821,7 @@ msgstr "Default Value is 1"
 msgid "鼠标悬浮样式"
 msgstr "Mouse hover style"
 
-#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:50
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:56
 msgid "鼠标指针"
 msgstr "Mouse cursor"
 
