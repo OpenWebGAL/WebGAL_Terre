@@ -1,6 +1,7 @@
 name: Release WebGAL Terre
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - '*.*'
