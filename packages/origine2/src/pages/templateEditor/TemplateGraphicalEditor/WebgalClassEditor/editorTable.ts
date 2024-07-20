@@ -14,6 +14,12 @@ import WGCommonLengthEditor4Values
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values";
 import WGTextAlignEditor from "./propertyEditor/WGText";
 import WGTextShadowEditor from "./propertyEditor/WGTextShadow";
+import WGBackgroundEditor
+  from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor";
+import WGBackgroundSize
+  from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize";
+import WGBackgroundPosition
+  from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition";
 
 export interface IPropertyEditorProps {
   prop: IWebgalCssProp,
@@ -55,5 +61,8 @@ export function getEditorTable(): IWebGALStylePropertyEditItem[] {
     {propName: 'text-shadow', propLable: t`文本阴影`, editor: WGTextShadowEditor, initialValue: `10px 10px 10px white`},
     {propName: 'margin', propLable: t`外边距`, editor: WGCommonLengthEditor4Values, initialValue: `10px 10px 10px 10px`},
     {propName: 'padding', propLable: t`内边距`, editor: WGCommonLengthEditor4Values, initialValue: `10px 10px 10px 10px`},
+    {propName: 'background', propLable: t`背景`, editor: WGBackgroundEditor, initialValue: `#FFFFFFFF`},
+    {propName: 'background-size', propLable: t`背景图像大小`, editor: WGBackgroundSize, initialValue: `cover`},
+    {propName: 'background-position', propLable: t`背景图像位置`, editor: WGBackgroundPosition, initialValue: `center`},
   ];
 }

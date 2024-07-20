@@ -4,15 +4,13 @@
 
 #### 新功能
 
-使用新的文件选择器
+为透明图像添加网格背景
 
-添加对引擎选择支界面 UI 自定义支持
+自定义 UI 支持自定义背景
+
+创建可执行文件时打包 asar
 
 #### 修复
-
-优化编辑器样式
-
-修复打开无后缀文件报错问题
 
 修复引擎的若干错误
 
@@ -23,17 +21,15 @@
 
 #### New Features
 
-Use new file picker
+Add grid background for transparent images
 
-Add support for customizing the UI of the engine selection interface
+Custom UI supports custom backgrounds
+
+Pack asar when creating executable files
 
 #### Fixes
 
-Optimized editor style
-
-Fixed an error that occurred when opening a file without a suffix
-
-Fixed several engine errors
+Fix several bugs in the engine
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -42,35 +38,39 @@ Fixed several engine errors
 
 #### 新機能
 
-新しレ ファイル選択器使っ
-
-エンジン選択支界面 UI カスタム対応追加
+* 透明な画像にグリッド背景を追加
+* カスタムUIでカスタム背景をサポート
+* 実行ファイルを生成する際にasarをパック
 
 #### 修正
 
-エディタースタイル最適化
+* エンジンのいくつかのバグを修正
 
-拡張子無しのファイル開く時エラーなる問題修正
+[//]: # (<!-- French Translation -->)
 
-エンジン幾つかエラー修正
+[//]: # (## Notes de version)
 
+[//]: # ()
+[//]: # (### Dans cette version)
 
-<!-- French Translation -->
-## Notes de version
+[//]: # ()
+[//]: # (#### Nouveaux Fonctionnalités)
 
-### Dans cette version
+[//]: # ()
+[//]: # (Utilisation d'un nouveau sélecteur de fichiers)
 
-#### Nouveaux Fonctionnalités
+[//]: # ()
+[//]: # (Ajout de la prise en charge de la personnalisation de l'interface utilisateur de la branche de sélection du moteur)
 
-Utilisation d'un nouveau sélecteur de fichiers
+[//]: # ()
+[//]: # (#### Corrections)
 
-Ajout de la prise en charge de la personnalisation de l'interface utilisateur de la branche de sélection du moteur
+[//]: # ()
+[//]: # (Style de l'éditeur optimisé)
 
-#### Corrections
+[//]: # ()
+[//]: # (Correction d'un problème où l'ouverture d'un fichier sans suffixe renvoyait une erreur)
 
-Style de l'éditeur optimisé
-
-Correction d'un problème où l'ouverture d'un fichier sans suffixe renvoyait une erreur
-
-Correction d'un certain nombre d'erreurs dans le moteur
+[//]: # ()
+[//]: # (Correction d'un certain nombre d'erreurs dans le moteur)
 
