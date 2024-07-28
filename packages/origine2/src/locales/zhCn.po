@@ -176,12 +176,12 @@ msgstr "Y轴缩放："
 msgid "一直显示功能区"
 msgstr "一直显示功能区"
 
-#: src/components/Assets/Assets.tsx:344
-#: src/components/Assets/Assets.tsx:345
+#: src/components/Assets/Assets.tsx:350
+#: src/components/Assets/Assets.tsx:351
 msgid "上传"
 msgstr "上传"
 
-#: src/components/Assets/Assets.tsx:248
+#: src/components/Assets/Assets.tsx:254
 msgid "上传资源"
 msgstr "上传资源"
 
@@ -437,8 +437,8 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
-#: src/components/Assets/Assets.tsx:199
-#: src/components/Assets/Assets.tsx:235
+#: src/components/Assets/Assets.tsx:202
+#: src/components/Assets/Assets.tsx:241
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -483,7 +483,7 @@ msgstr "删除模板"
 msgid "删除游戏"
 msgstr "删除游戏"
 
-#: src/components/Assets/Assets.tsx:261
+#: src/components/Assets/Assets.tsx:267
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "刷新"
@@ -746,8 +746,8 @@ msgstr "左对齐"
 msgid "已创建"
 msgstr "已创建"
 
-#: src/components/Assets/Assets.tsx:170
-#: src/components/Assets/Assets.tsx:214
+#: src/components/Assets/Assets.tsx:173
+#: src/components/Assets/Assets.tsx:220
 #: src/components/Assets/FileElement.tsx:70
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
@@ -803,7 +803,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/components/Assets/Assets.tsx:262
+#: src/components/Assets/Assets.tsx:268
 msgid "打开文件夹"
 msgstr "打开文件夹"
 
@@ -811,7 +811,7 @@ msgstr "打开文件夹"
 msgid "执行到此句"
 msgstr "执行到此句"
 
-#: src/components/Assets/Assets.tsx:184
+#: src/components/Assets/Assets.tsx:187
 msgid "扩展名"
 msgstr "扩展名"
 
@@ -985,11 +985,11 @@ msgstr "文本阴影"
 msgid "文档"
 msgstr "文档"
 
-#: src/components/Assets/Assets.tsx:168
+#: src/components/Assets/Assets.tsx:171
 msgid "新建文件"
 msgstr "新建文件"
 
-#: src/components/Assets/Assets.tsx:212
+#: src/components/Assets/Assets.tsx:218
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
@@ -1002,11 +1002,11 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/components/Assets/Assets.tsx:178
+#: src/components/Assets/Assets.tsx:181
 msgid "新文件名"
 msgstr "新文件名"
 
-#: src/components/Assets/Assets.tsx:221
+#: src/components/Assets/Assets.tsx:227
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
@@ -1045,7 +1045,7 @@ msgstr "旁白模式，无角色名"
 msgid "旋转角度："
 msgstr "旋转角度："
 
-#: src/components/Assets/Assets.tsx:186
+#: src/components/Assets/Assets.tsx:189
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
