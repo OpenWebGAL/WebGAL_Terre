@@ -28,3 +28,11 @@
   border: var(--border-primary-sm);
   box-shadow: var(--shadow-primary-md);
 }
+
+.inputDanger {
+  border-color: var(--danger) !important;
+}
+
+.inputDanger::after {
+  border-bottom: var(--border-danger-lg) !important;
+}

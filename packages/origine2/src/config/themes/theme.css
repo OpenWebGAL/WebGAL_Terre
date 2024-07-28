@@ -30,6 +30,9 @@
     --primary-5pct: rgba(0, 92, 175, 0.05);
     --primary-10pct: rgba(0, 92, 175, 0.1);
     --primary-90pct: rgba(0, 92, 175, 0.9);
+    --success: rgb(16, 124, 16);
+    --warning: rgb(247, 99, 12);
+    --danger: rgb(197, 15, 31);
     --text: rgb(51, 51, 51);
     --text-sub: rgb(102, 102, 102);
     --text-weak: rgb(123, 123, 123);
@@ -51,6 +54,9 @@
     --border-primary-sm: 0.5px solid var(--primary);
     --border-primary-md: 1px solid var(--primary);
     --border-primary-lg: 2px solid var(--primary);
+    --border-danger-sm: 0.5px solid var(--danger);
+    --border-danger-md: 1px solid var(--danger);
+    --border-danger-lg: 2px solid var(--danger);
     --border-trans-sm: 0.5px solid transparent;
     --border-trans-md: 1px solid transparent;
     --border-trans-lg: 2px solid transparent;
