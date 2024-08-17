@@ -7,20 +7,13 @@ import { WsUtil } from '@/utils/wsUtil';
 export default function TextEditor({ path }: { path: string }) {
   const { mutate } = useSWRConfig();
   const extName = path.split('.').pop() || '';
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
-  const currentText = {value: "Loading Data......"};
 
-  function updateEditorData(){
-    axios
-      .get(path,{responseType:'text'})
-      .then((res) => res.data)
-      .then((data) => {
-        // currentText.set(data);
-        currentText.value = data;
-        eventBus.emit('update-scene', data.toString());
-        editorRef.current?.getModel()?.setValue(currentText.value);
-      });
-  }
+  const fileFetcher = async (path: string) => {
+    const res = await axios.get(path, { responseType: 'text', transformResponse: [(data) => data] });
+    return res.data;
+  };
+
+  const { data } = useSWR(path, fileFetcher);
 
   const update = async (text: string) => {
     await api.assetsControllerEditTextFile({ textFile: text, path: path });
@@ -34,6 +27,7 @@ export default function TextEditor({ path }: { path: string }) {
   // 使用 useMemo 缓存 iframe 元素
   const memoizedIframe = useMemo(() => {
     return (
+      // eslint-disable-next-line react/iframe-missing-sandbox
       <iframe
         ref={iframeRef}
         src="/monaco-iframe/monaco.html" // 确保路径正确
