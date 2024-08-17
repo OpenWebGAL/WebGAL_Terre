@@ -3,6 +3,12 @@ import createSelectors from '@/utils/createSelectors';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+let subPageChangedCallback: (subPage: string) => void = () => {};
+
+export const registerSubPageChangedCallback = (callback: (subPage: string) => void) => {
+  subPageChangedCallback = callback;
+};
+
 const useEditorStoreBase = create<IEditorState & IEditorAction>()(
   persist(
     (set) => ({
@@ -27,11 +33,9 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       name: 'editor-storage',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) =>
-        Object.fromEntries(
-          Object.entries(state).filter(([key]) => !['page','subPage','expand'].includes(key)),
-        ),
-    }
-  )
+        Object.fromEntries(Object.entries(state).filter(([key]) => !['page', 'subPage', 'expand'].includes(key))),
+    },
+  ),
 );
 
 const useEditorStore = createSelectors(useEditorStoreBase);
