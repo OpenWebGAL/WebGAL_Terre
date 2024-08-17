@@ -17,6 +17,7 @@ import TemplateEditor from "./pages/templateEditor/TemplateEditor";
 import GameEditorProvider from "./components/Provider/GameEditorProvider";
 import TemplateEditorProvider from "./components/Provider/TemplateEditorProvider";
 import {eventBus} from "@/utils/eventBus";
+import {loader} from "@monaco-editor/react";
 
 export const routers: { [key in IPage]: { url: string, element: ReactNode } } = {
   dashboard: {
@@ -69,6 +70,8 @@ function App() {
         });
       }, triggerCharacters: ["-", "", ":", "\n"]
     });
+
+    loader.config({monaco});
   },[]);
 
   // 建立 WS 连接
