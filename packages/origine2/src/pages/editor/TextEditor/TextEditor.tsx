@@ -38,7 +38,6 @@ export default function TextEditor(props: ITextEditorProps) {
   // 准备获取 Monaco
   // 建立 Ref
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
-  loader.config({monaco});
 
   /**
    * 处理挂载事件
