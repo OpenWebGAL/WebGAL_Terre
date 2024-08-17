@@ -14,6 +14,9 @@ import GameEditorProvider from './components/Provider/GameEditorProvider';
 import TemplateEditorProvider from './components/Provider/TemplateEditorProvider';
 import { eventBus } from '@/utils/eventBus';
 import { configureMonacoWorkers, runClient } from './webgalscript/lsp';
+import {loader} from "@monaco-editor/react";
+import * as monaco from "monaco-editor";
+import {initMonaco} from "@/utils/initMonaco";
 
 export const routers: { [key in IPage]: { url: string; element: ReactNode } } = {
   dashboard: {
@@ -40,10 +43,7 @@ export const routers: { [key in IPage]: { url: string; element: ReactNode } } = 
 
 function App() {
   useEffect(() => {
-    logger.info('Welcome to WebGAL live editor!');
-
-    configureMonacoWorkers().then();
-    runClient().then(() => console.log('<App/>: LSP client started'));
+    initMonaco();
   },[]);
 
   // 建立 WS 连接

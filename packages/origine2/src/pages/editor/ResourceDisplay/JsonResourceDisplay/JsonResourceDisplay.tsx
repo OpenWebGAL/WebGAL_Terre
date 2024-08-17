@@ -20,7 +20,7 @@ export function JsonResourceDisplay(props: { url: string }) {
       update(newValue);
     }
   }} defaultLanguage="json"
-  language="webgal"
+  language="json"
   value={fileResp.data}
   />;
 }
