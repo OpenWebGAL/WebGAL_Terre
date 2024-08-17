@@ -44,7 +44,7 @@ function App() {
 
     configureMonacoWorkers().then();
     runClient().then(() => console.log('<App/>: LSP client started'));
-  });
+  },[]);
 
   // 建立 WS 连接
   useEffect(() => {
