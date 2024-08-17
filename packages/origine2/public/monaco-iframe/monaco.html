@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monaco Editor in iframe</title>
+  <style>
+    html, body, #container {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+<div id="container"></div>
+
+<script>
+  // 使用微软的 CDN
+  var require = {paths: {'vs': '/monaco-iframe/min/vs'}};
+</script>
+<script src="/monaco-iframe/loader.js"></script>
+<script>
+  require(['vs/editor/editor.main'], function () {
+    var editor = monaco.editor.create(document.getElementById('container'), {
+      value: '',
+      language: 'js' // 初始化语言为 javascript，可以根据需要修改
+    });
+
+    // 通知父窗口 editor 已经准备好
+    window.parent.postMessage({type: 'editorReady'}, '*');
+
+    // 监听来自父窗口的消息
+    window.addEventListener('message', function (event) {
+      // 安全检查，确保消息来自你的预期来源
+      // if (event.origin !== 'your_parent_origin') return;
+
+      var message = event.data;
+
+      switch (message.type) {
+        case 'setLanguage':
+          monaco.editor.setModelLanguage(editor.getModel(), message.language);
+          break;
+        case 'setValue':
+          // 使用 executeEdits 设置新值
+          // 检查要 set 的 value 是否和当前 value 一致
+          if (editor.getValue() !== message.value) {
+            // 使用 executeEdits 设置新值
+            editor.executeEdits('setValue', [
+              {range: editor.getModel().getFullModelRange(), text: message.value}
+            ]);
+          }
+          break;
+      }
+    });
+
+    // 监听编辑器内容变化
+    editor.onDidChangeModelContent(function () {
+      // 向父窗口发送消息
+      window.parent.postMessage({
+        type: 'valueChanged',
+        value: editor.getValue()
+      }, '*'); // 可以替换 '*' 为你的父窗口 origin
+    });
+  });
+</script>
+</body>
+</html>
