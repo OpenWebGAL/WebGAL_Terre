@@ -21,6 +21,7 @@ export function JsonResourceDisplay(props: { url: string }) {
   // 使用 useMemo 缓存 iframe 元素
   const memoizedIframe = useMemo(() => {
     return (
+      // eslint-disable-next-line react/iframe-missing-sandbox
       <iframe
         ref={iframeRef}
         src="/monaco-iframe/monaco.html"
