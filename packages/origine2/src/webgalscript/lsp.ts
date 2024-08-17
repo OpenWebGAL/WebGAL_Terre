@@ -16,15 +16,12 @@ import { MonacoLanguageClient } from 'monaco-languageclient';
 import { WebSocketMessageReader, WebSocketMessageWriter, toSocket } from 'vscode-ws-jsonrpc';
 import { CloseAction, ErrorAction, MessageTransports } from 'vscode-languageclient';
 import { useWorkerFactory } from 'monaco-editor-wrapper/workerFactory';
-// import getEditorServiceOverride from '@codingame/monaco-vscode-editor-service-override';
 import getConfigurationServiceOverride, {
   updateUserConfiguration,
 } from '@codingame/monaco-vscode-configuration-service-override';
 import './extension';
 import { getWsUrl } from '@/utils/getWsUrl';
 import useEditorStore, { registerSubPageChangedCallback } from '@/store/useEditorStore';
-import '@codingame/monaco-vscode-extensions-service-override';
-import '@codingame/monaco-vscode-all-default-extensions';
 
 let initialized = false;
 
