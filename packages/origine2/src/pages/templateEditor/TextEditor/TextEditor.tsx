@@ -7,13 +7,20 @@ import { WsUtil } from '@/utils/wsUtil';
 export default function TextEditor({ path }: { path: string }) {
   const { mutate } = useSWRConfig();
   const extName = path.split('.').pop() || '';
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const currentText = {value: "Loading Data......"};
 
-  const fileFetcher = async (path: string) => {
-    const res = await axios.get(path, { responseType: 'text', transformResponse: [(data) => data] });
-    return res.data;
-  };
-
-  const { data } = useSWR(path, fileFetcher);
+  function updateEditorData(){
+    axios
+      .get(path,{responseType:'text'})
+      .then((res) => res.data)
+      .then((data) => {
+        // currentText.set(data);
+        currentText.value = data;
+        eventBus.emit('update-scene', data.toString());
+        editorRef.current?.getModel()?.setValue(currentText.value);
+      });
+  }
 
   const update = async (text: string) => {
     await api.assetsControllerEditTextFile({ textFile: text, path: path });
