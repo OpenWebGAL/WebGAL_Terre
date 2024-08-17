@@ -5,5 +5,5 @@ export interface Info {
 
 export const __INFO: Info = {
   version: '4.5.4',
-  buildTime: '2024-04-21T13:58:52.414Z', // 编译时会通过 version-sync.js 自动更新
+  buildTime: '2024-08-17T14:10:41.796Z', // 编译时会通过 version-sync.js 自动更新
 };

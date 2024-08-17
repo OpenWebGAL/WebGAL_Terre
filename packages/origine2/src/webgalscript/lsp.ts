@@ -23,6 +23,8 @@ import getConfigurationServiceOverride, {
 import './extension';
 import { getWsUrl } from '@/utils/getWsUrl';
 import useEditorStore, { registerSubPageChangedCallback } from '@/store/useEditorStore';
+import '@codingame/monaco-vscode-extensions-service-override';
+import '@codingame/monaco-vscode-all-default-extensions';
 
 let initialized = false;
 
