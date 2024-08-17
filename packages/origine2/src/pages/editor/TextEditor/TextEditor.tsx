@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor';
-import Editor, { loader, Monaco } from '@monaco-editor/react';
+import Editor, { Monaco } from '@monaco-editor/react';
 import { useEffect, useRef } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
@@ -30,7 +30,6 @@ export default function TextEditor(props: ITextEditorProps) {
   // 准备获取 Monaco
   // 建立 Ref
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
-  loader.config({ monaco });
 
   /**
    * 处理挂载事件
