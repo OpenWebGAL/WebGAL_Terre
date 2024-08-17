@@ -28,6 +28,7 @@ export default function TextEditor({ path }: { path: string }) {
       width="100%"
       onChange={(newValue) => newValue && update(newValue)}
       defaultLanguage={extName}
+      language={extName}
       value={data}
     />
   );
