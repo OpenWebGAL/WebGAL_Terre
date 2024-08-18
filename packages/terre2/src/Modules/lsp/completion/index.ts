@@ -57,6 +57,22 @@ export function checkTriggerCompletion(
   }
 }
 
+function suggestVariables(params: CompletionParams, postfix = '') {
+  const result = [];
+
+  lastVariables.forEach((v, k) => {
+    if (v <= params.position.line) {
+      result.push({
+        label: k,
+        insertText: k + postfix,
+        kind: CompletionItemKind.Variable,
+      });
+    }
+  });
+
+  return result;
+}
+
 export async function complete(
   params: CompletionParams,
   document: TextDocument,
@@ -103,24 +119,17 @@ export async function complete(
       if (sentence.command === commandType.say) {
         // No suggestions for conversation
         newSuggestions = [];
+      } else if (sentence.command === commandType.setVar) {
+        // Suggest existing variables for value updates
+        newSuggestions = suggestVariables(params, '=');
       } else {
         // Encountering file name input. Do file suggestions
         newSuggestions = await handleFileSuggestions(sentence, basePath);
       }
     } else if (line.charAt(params.position.character - 1) === '{') {
-      newSuggestions = [];
-
       if (sentence.command === commandType.say) {
         // Suggest variables
-        lastVariables.forEach((v, k) => {
-          if (v <= params.position.line) {
-            newSuggestions.push({
-              label: k,
-              insertText: k + '}',
-              kind: CompletionItemKind.Variable,
-            });
-          }
-        });
+        newSuggestions = suggestVariables(params, '}');
       }
     } else {
       // No file suggestions. Check completion
