@@ -1,5 +1,4 @@
 import './App.css';
-import { logger } from './utils/logger';
 import DashBoard from './pages/dashboard/DashBoard';
 import Editor from './pages/editor/Editor';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
@@ -13,10 +12,7 @@ import TemplateEditor from './pages/templateEditor/TemplateEditor';
 import GameEditorProvider from './components/Provider/GameEditorProvider';
 import TemplateEditorProvider from './components/Provider/TemplateEditorProvider';
 import { eventBus } from '@/utils/eventBus';
-import { configureMonacoWorkers, runClient } from './webgalscript/lsp';
-import {loader} from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
-import {initMonaco} from "@/utils/initMonaco";
+import { initMonaco } from "@/utils/initMonaco";
 
 export const routers: { [key in IPage]: { url: string; element: ReactNode } } = {
   dashboard: {
@@ -44,7 +40,7 @@ export const routers: { [key in IPage]: { url: string; element: ReactNode } } = 
 function App() {
   useEffect(() => {
     initMonaco();
-  },[]);
+  }, []);
 
   // 建立 WS 连接
   useEffect(() => {
