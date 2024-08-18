@@ -21,7 +21,10 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isAutoWarp: false,
       isUseExpFastSync:false,
       updatePage: (page) => set({page}),
-      updateSubPage: (subPage) => set({subPage}),
+      updateSubPage: (subPage) => {
+        set({ subPage });
+        subPageChangedCallback(subPage);
+      },
       updateExpand: (index) => set({expand: index}),
       updateLanguage: (language) => set({language}),
       updateIisAutoHideToolbar: (isAutoHideToolbar) => set({isAutoHideToolbar}),
