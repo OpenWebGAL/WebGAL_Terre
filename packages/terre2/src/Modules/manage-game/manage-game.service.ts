@@ -226,7 +226,7 @@ export class ManageGameService {
         );
         await this.webgalFs.deleteFileOrDirectory(
           `${electronExportDir}/resources/app/`,
-        )
+        );
         await _open(electronExportDir);
       }
       if (process.platform === 'linux') {
@@ -275,7 +275,7 @@ export class ManageGameService {
         );
         await this.webgalFs.deleteFileOrDirectory(
           `${electronExportDir}/resources/app/`,
-        )
+        );
         await _open(electronExportDir);
       }
       if (process.platform === 'darwin') {
@@ -324,7 +324,7 @@ export class ManageGameService {
         );
         await this.webgalFs.deleteFileOrDirectory(
           `${electronExportDir}/Contents/Resources/app/`,
-        )
+        );
         await _open(exportDir);
       }
     }

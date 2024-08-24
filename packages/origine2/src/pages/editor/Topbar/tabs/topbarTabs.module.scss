@@ -127,3 +127,14 @@
   width: 0;
   flex: 1;
 }
+
+.applyTemplateWrapper {
+  padding: 0 8px 0 0
+}
+
+.applyTemplateSelectorLine {
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
