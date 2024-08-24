@@ -66,7 +66,7 @@ function consumeArg(
 
   const tokens: IParsedToken[] = [];
 
-  console.log(arg);
+  // console.log(arg);
 
   if (arg.key.toString() !== '') {
     const argKeyOffset = line.indexOf(arg.key, currentOffset);
@@ -78,7 +78,7 @@ function consumeArg(
         tokenType: 'parameter',
         tokenModifiers: [],
       });
-      console.log(`[line ${lineNumber}] key: ${arg.key}: ${argKeyOffset}`);
+      // console.log(`[line ${lineNumber}] key: ${arg.key}: ${argKeyOffset}`);
       currentOffset = argKeyOffset + arg.key.length;
     }
   }
@@ -93,9 +93,9 @@ function consumeArg(
         tokenType: 'value',
         tokenModifiers: [],
       });
-      console.log(
-        `[line ${lineNumber}]value: ${arg.value.toString()}: ${argValueOffset}`,
-      );
+      // console.log(
+      //   `[line ${lineNumber}]value: ${arg.value.toString()}: ${argValueOffset}`,
+      // );
       currentOffset = argValueOffset + arg.value.toString().length;
     }
   }

@@ -91,12 +91,12 @@ export function createWsConnection(
   });
 
   connection.onInitialized(() => {
-    connection.console.log(
-      `hasConfigurationCapability: ${hasConfigurationCapability}`,
-    );
-    connection.console.log(
-      `hasWorkspaceFolderCapability: ${hasWorkspaceFolderCapability}`,
-    );
+    // connection.console.log(
+    //   `hasConfigurationCapability: ${hasConfigurationCapability}`,
+    // );
+    // connection.console.log(
+    //   `hasWorkspaceFolderCapability: ${hasWorkspaceFolderCapability}`,
+    // );
 
     // NOTE: Currently, we disable configuration capability for server
     // if (hasConfigurationCapability) {
@@ -108,7 +108,7 @@ export function createWsConnection(
     // }
     if (hasWorkspaceFolderCapability) {
       connection.workspace.onDidChangeWorkspaceFolders((_event) => {
-        connection.console.log('Workspace folder change event received.');
+        // connection.console.log('Workspace folder change event received.');
       });
     }
   });
@@ -168,9 +168,9 @@ export function createWsConnection(
       globalSettings = <ExampleSettings>(
         (change.settings.languageServerExample || defaultSettings)
       );
-      connection.console.log(
-        `onDidChangeConfiguration: globalSettings: ${globalSettings}`,
-      );
+      // connection.console.log(
+      //   `onDidChangeConfiguration: globalSettings: ${globalSettings}`,
+      // );
     }
 
     // Revalidate all open text documents
@@ -209,7 +209,7 @@ export function createWsConnection(
   ): Promise<void> {
     // In this simple example we get the settings for every validate run.
     const settings = await getDocumentSettings(textDocument.uri);
-    connection.console.log(JSON.stringify(settings));
+    // connection.console.log(JSON.stringify(settings));
 
     const diagnostics: Diagnostic[] = [];
 
@@ -219,7 +219,7 @@ export function createWsConnection(
 
   /******************************* COMPLETION ********************************/
   documents.onDidChangeContent(async (params) => {
-    connection.console.log('TextDocument didChange');
+    // connection.console.log('TextDocument didChange');
     checkTriggerCompletion(params, () => {
       console.debug('Sending completion request to client...');
       connection.sendRequest('textDocument/completion');

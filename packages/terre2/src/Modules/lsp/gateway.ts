@@ -12,14 +12,14 @@ function toIWebSocket(ws: WebSocket): any {
     send: (content) => {
       const log = pprintJSON(content);
       if (!log.includes('data')) {
-        console.log(`<- ${log}`);
+        // console.log(`<- ${log}`);
       }
       ws.send(content);
     },
     onMessage: (cb) =>
       (ws.onmessage = (event) => {
         const log = pprintJSON(event.data);
-        console.log(`-> ${log}`);
+        // console.log(`-> ${log}`);
         cb(event.data);
       }),
     onError: (cb) =>

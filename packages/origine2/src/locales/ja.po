@@ -22,13 +22,13 @@ msgstr ";コメント"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:184
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:183
 msgid "<0>应用新的模板</0>"
-msgstr ""
+msgstr "<0>新しいテンプレートを適用する</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:177
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:176
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
-msgstr ""
+msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:16
 msgid "BGM"
@@ -537,7 +537,7 @@ msgstr "右揃え"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "BGMの再生を開始、切り替え、または停止する"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:167
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "启动图"
 msgstr "ロゴ"
 
@@ -760,9 +760,9 @@ msgstr "通常演出"
 msgid "平铺"
 msgstr "タイリング"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:175
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
-msgstr ""
+msgstr "すでに適用されているテンプレート"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:294
 msgid "应用颜色变化"
@@ -1127,11 +1127,11 @@ msgstr "タイトルボタンリスト"
 msgid "标题按钮文字"
 msgstr "タイトルボタンテキスト"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:151
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:150
 msgid "标题背景图片"
 msgstr "タイトルの背景画像"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:159
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:158
 msgid "标题背景音乐"
 msgstr "タイトルのBGM"
 
@@ -1247,11 +1247,11 @@ msgstr "ゲーム"
 msgid "游戏列表"
 msgstr "ゲームリスト"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:142
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:141
 msgid "游戏包名"
 msgstr "パッケージ名"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:130
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
 msgid "游戏名称"
 msgstr "ゲーム名"
 
@@ -1259,11 +1259,11 @@ msgstr "ゲーム名"
 msgid "游戏控制"
 msgstr "ゲームコントロール"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:138
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:137
 msgid "游戏简介"
 msgstr "ゲーム概要"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:134
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:133
 msgid "游戏识别码"
 msgstr "ゲームID"
 
