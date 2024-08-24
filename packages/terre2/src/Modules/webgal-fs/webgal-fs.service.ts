@@ -219,6 +219,11 @@ export class WebgalFsService {
     });
   }
 
+  /**
+   * 更新文本
+   * @param path 要更新的文本的路径
+   * @param content 文本内容
+   */
   async updateTextFile(path: string, content: string) {
     return await new Promise((resolve) => {
       fs.writeFile(decodeURI(path), content)

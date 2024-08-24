@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre-2",
-  "version": "4.5.4",
+  "version": "4.5.5",
   "description": "",
   "author": "",
   "private": true,
@@ -43,6 +43,7 @@
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^5.0.0",
     "vscode-languageserver": "^8.1.0",
+    "vscode-languageserver-textdocument": "^1.0.11",
     "webgal-parser": "latest",
     "webpack": "5.76.0",
     "ws": "^8.16.0"
