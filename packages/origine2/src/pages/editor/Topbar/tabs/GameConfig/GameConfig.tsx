@@ -1,6 +1,6 @@
 import styles from "../topbarTabs.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
-import  { useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {cloneDeep} from "lodash";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -11,11 +11,14 @@ import {textboxThemes} from "./constants";
 import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
-import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
-import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
+import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
+import {Dismiss24Filled, Dismiss24Regular, bundleIcon} from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
-import { api } from "@/api";
-import { t } from "@lingui/macro";
+import {api} from "@/api";
+import {t, Trans} from "@lingui/macro";
+import useSWR from "swr";
+import axios from "axios";
+import {WsUtil} from "@/utils/wsUtil";
 
 export default function GameConfig() {
   const gameName = useEditorStore.use.subPage();
@@ -31,6 +34,46 @@ export default function GameConfig() {
   useEffect(() => {
     getGameConfig();
   }, []);
+
+  const templatesResp = useSWR('template-list-selector', async () => {
+    const resp = await api.manageTemplateControllerGetTemplateList();
+    return resp.data as unknown as { name: string }[];
+  });
+
+  const [templateName, setTemplateName] = useState<string | undefined>('__STANDARD__WG__');
+
+  const currentTemplateResp = useSWR(`game-${gameName}-template-config`, async () => {
+    const resp = await axios.get(`/games/${gameName}/game/template/template.json`);
+    return resp.data as { name: string, 'webgal-version': string };
+  });
+
+  const currentTemplateName = currentTemplateResp.data?.name ?? '';
+
+  const selectorTemplate = <Dropdown style={{minWidth:150}} key={currentTemplateName}
+    value={templateName === '__STANDARD__WG__' ? t`WebGAL Classic` : templateName}
+    selectedOptions={[currentTemplateName ?? '__STANDARD__WG__']}
+    onOptionSelect={(_, elem) => {
+      setTemplateName(elem.optionValue);
+    }}>
+    {/* 应用模板的接口还不支持应用默认模板 */}
+    {/* <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Classic`}</Option> */}
+    {(templatesResp.data ?? []).map(e =>
+      <Option  key={e.name} value={e.name}>{e.name}</Option>
+    )}
+  </Dropdown>;
+
+  useEffect(()=>{
+    setTemplateName(currentTemplateName);
+  },[currentTemplateName]);
+
+  async function applyNewTemplate() {
+    if (templateName) {
+      await api.manageTemplateControllerApplyTemplateToGame({gameName, templateName});
+      // 更新模板后，让游戏再去拉一次模板的样式文件
+      WsUtil.sendTemplateRefetchCommand();
+      await currentTemplateResp.mutate();
+    }
+  }
 
   function updateGameConfig() {
     const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
@@ -128,6 +171,21 @@ export default function GameConfig() {
           value={getConfigContentAsStringArray('Game_Logo')}
           onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
       </TabItem>
+      <TabItem title={t`应用的模板`}>
+        <div className={styles.applyTemplateWrapper}>
+          <Trans>
+            <div>
+              当前应用的模板：{currentTemplateName}
+            </div>
+          </Trans>
+          <div className={styles.applyTemplateSelectorLine}>
+            {selectorTemplate}
+            <Trans>
+              <Button onClick={applyNewTemplate}>应用新的模板</Button>
+            </Trans>
+          </div>
+        </div>
+      </TabItem>
     </>
   );
 }
@@ -150,25 +208,25 @@ function GameConfigEditor(props: IGameConfigEditor) {
   return <div className={styles.textEditArea} style={{maxWidth: 200}}>
     {!showEditBox.value && props.value}
     {!showEditBox.value &&
-    <span className={styles.editButton} onClick={() => showEditBox.set(true)}>
-      <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
-    </span>}
+      <span className={styles.editButton} onClick={() => showEditBox.set(true)}>
+        <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
+      </span>}
     {showEditBox.value &&
-    <Input
-      autoFocus
-      defaultValue={props.value}
-      onBlur={(event) => {
-        props.onChange(event.target.value);
-        showEditBox.set(false);
-      }}
-      onKeyDown={(event) => {
-        if (event.key === 'Enter') {
-          const inputElement = event.target as HTMLInputElement;
-          props.onChange(inputElement.value);
+      <Input
+        autoFocus
+        defaultValue={props.value}
+        onBlur={(event) => {
+          props.onChange(event.target.value);
           showEditBox.set(false);
-        }
-      }}
-    />}
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            const inputElement = event.target as HTMLInputElement;
+            props.onChange(inputElement.value);
+            showEditBox.set(false);
+          }
+        }}
+      />}
   </div>;
 }
 
@@ -249,7 +307,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
             {/* <div className={styles.imageChooseItemText}>{imageName}</div> */}
             <Button
               appearance="subtle"
-              icon={<DismissIcon />}
+              icon={<DismissIcon/>}
               onClick={() => removeImage(imageName)}
             />
           </div>

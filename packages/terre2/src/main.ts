@@ -8,13 +8,22 @@ import { env } from 'process';
 import { WsAdapter } from '@nestjs/platform-ws';
 
 let WEBGAL_PORT = 3000; // default port
-const version_number = `4.5.4`;
+const version_number = `4.5.5`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+    allowedHeaders: '*', // Allow all headers
+    exposedHeaders: '*', // Expose all headers
+  });
+
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
   const config = new DocumentBuilder()

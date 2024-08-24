@@ -158,5 +158,5 @@ export class AssetsController {
     const path = editTextFileData.path;
     const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
     return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
-  };
+  }
 }

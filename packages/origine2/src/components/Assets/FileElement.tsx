@@ -1,5 +1,5 @@
 import { getFileIcon, getDirIcon, extractExtension } from "@/utils/getFileIcon";
-import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text, Subtitle1 } from "@fluentui/react-components";
+import { Popover, PopoverTrigger, Button, PopoverSurface, Input, Text, Subtitle1, Tooltip } from "@fluentui/react-components";
 import IconWrapper from "../iconWrapper/IconWrapper";
 import { IFile } from "./Assets";
 import styles from "./FileElement.module.scss";
@@ -13,7 +13,7 @@ const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
 const ThumbIcon = bundleIcon(DesktopMacFilled, DesktopMacRegular);
 
 export default function FileElement(
-  { file, desc, currentPath, isProtected, handleOpenFile, handleRenameFile, handleDeleteFile }
+  { file, desc, currentPath, isProtected, handleOpenFile, handleRenameFile, handleDeleteFile, checkHasFile }
     : {
       file: IFile,
       desc?: string,
@@ -22,6 +22,7 @@ export default function FileElement(
       handleOpenFile: (file: IFile) => Promise<void>,
       handleRenameFile: (source: string, newName: string) => Promise<void>,
       handleDeleteFile: (source: string) => Promise<void>,
+      checkHasFile: (fileNmae: string) => boolean,
     }) {
   const newFileName = useValue(file.name);
   const ShowThumbPopoverOpen = useValue(false);
@@ -57,7 +58,7 @@ export default function FileElement(
       {
         !isProtected &&
         <>
-          <Popover withArrow onOpenChange={() => (newFileName.value === '') && newFileName.set(file.name)}>
+          <Popover withArrow onOpenChange={() => newFileName.set(file.name)}>
             <PopoverTrigger>
               <Button icon={<RenameIcon style={{ width: '16px' }} />} size='small' appearance='subtle'
                 onClick={(e) => e.stopPropagation()} />
@@ -65,20 +66,28 @@ export default function FileElement(
             <PopoverSurface onClick={(e) => e.stopPropagation()}>
               <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                 <Subtitle1>{t`重命名`}</Subtitle1>
-                <Input
-                  value={newFileName.value}
-                  onFocus={ev => {
-                    const el = ev.target;
-                    const dotPosition = el.value.indexOf('.');
-                    el?.setSelectionRange(0, dotPosition === -1 ? el.value.length : dotPosition);
-                  }}
-                  onChange={(_, data) => {
-                    newFileName.set(data.value ?? "");
-                  }}
-                />
+                <Tooltip
+                  content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
+                  relationship="description"
+                  visible={checkHasFile(newFileName.value) && newFileName.value !== file.name}
+                  positioning="below"
+                >
+                  <Input
+                    value={newFileName.value}
+                    className={checkHasFile(newFileName.value) && newFileName.value !== file.name ? styles.inputDanger : ''}
+                    onFocus={ev => {
+                      const el = ev.target;
+                      const dotPosition = el.value.indexOf('.');
+                      el?.setSelectionRange(0, dotPosition === -1 ? el.value.length : dotPosition);
+                    }}
+                    onChange={(_, data) => {
+                      newFileName.set(data.value ?? "");
+                    }}
+                  />
+                </Tooltip>
                 <Button
                   appearance="primary"
-                  disabled={newFileName.value.trim() === ''}
+                  disabled={newFileName.value.trim() === '' || checkHasFile(newFileName.value) && newFileName.value !== file.name}
                   onClick={() => handleRenameFile(`${currentPath.value.join('/')}/${file.name}`, newFileName.value.trim())}
                 >{t`重命名`}</Button>
               </div>

@@ -22,6 +22,14 @@ msgstr "Comment"
 msgid "%"
 msgstr "%"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:183
+msgid "<0>应用新的模板</0>"
+msgstr "<0>Apply a new template</0>"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:176
+msgid "<0>当前应用的模板：{currentTemplateName}</0>"
+msgstr "<0>Current template: {currentTemplateName}</0>"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:16
 msgid "BGM"
 msgstr "BGM"
@@ -132,6 +140,7 @@ msgstr "unlockCg:;"
 
 #: src/pages/dashboard/Sidebar.tsx:60
 #: src/pages/dashboard/Sidebar.tsx:65
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:53
 msgid "WebGAL Classic"
 msgstr "WebGAL Classic"
 
@@ -160,12 +169,12 @@ msgstr " Scale y："
 msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
-#: src/components/Assets/Assets.tsx:317
-#: src/components/Assets/Assets.tsx:318
+#: src/components/Assets/Assets.tsx:350
+#: src/components/Assets/Assets.tsx:351
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:222
+#: src/components/Assets/Assets.tsx:254
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -417,8 +426,8 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:181
-#: src/components/Assets/Assets.tsx:209
+#: src/components/Assets/Assets.tsx:202
+#: src/components/Assets/Assets.tsx:241
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -432,8 +441,8 @@ msgstr "Create new template"
 msgid "创建新游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/FileElement.tsx:95
-#: src/components/Assets/FileElement.tsx:102
+#: src/components/Assets/FileElement.tsx:104
+#: src/components/Assets/FileElement.tsx:111
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
@@ -463,7 +472,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:235
+#: src/components/Assets/Assets.tsx:267
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "Refresh"
@@ -528,7 +537,7 @@ msgstr "Right Align"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:123
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "启动图"
 msgstr "Startup image"
 
@@ -726,6 +735,12 @@ msgstr "Left align"
 msgid "已创建"
 msgstr "Created"
 
+#: src/components/Assets/Assets.tsx:173
+#: src/components/Assets/Assets.tsx:220
+#: src/components/Assets/FileElement.tsx:70
+msgid "已存在文件或文件夹 {0}，请输入其他名称"
+msgstr "File or folder already exists {0}, please enter another name"
+
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
 #: src/pages/editor/Topbar/Topbar.tsx:104
@@ -744,6 +759,10 @@ msgstr "Regular performance"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:28
 msgid "平铺"
 msgstr "Tiling"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
+msgid "应用的模板"
+msgstr "Applied template"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:294
 msgid "应用颜色变化"
@@ -777,7 +796,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/components/Assets/Assets.tsx:236
+#: src/components/Assets/Assets.tsx:268
 msgid "打开文件夹"
 msgstr "Open folder"
 
@@ -785,7 +804,7 @@ msgstr "Open folder"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:166
+#: src/components/Assets/Assets.tsx:187
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -959,11 +978,11 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:159
+#: src/components/Assets/Assets.tsx:171
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:194
+#: src/components/Assets/Assets.tsx:218
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -976,11 +995,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:162
+#: src/components/Assets/Assets.tsx:181
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:197
+#: src/components/Assets/Assets.tsx:227
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -1019,7 +1038,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:168
+#: src/components/Assets/Assets.tsx:189
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1108,11 +1127,11 @@ msgstr "Title Button List"
 msgid "标题按钮文字"
 msgstr "Title Button Text"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:107
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:150
 msgid "标题背景图片"
 msgstr "Title background image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:115
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:158
 msgid "标题背景音乐"
 msgstr "Title background music"
 
@@ -1228,11 +1247,11 @@ msgstr "Games"
 msgid "游戏列表"
 msgstr "Game list"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:98
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:141
 msgid "游戏包名"
 msgstr "Game package name"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:86
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
 msgid "游戏名称"
 msgstr "Game name"
 
@@ -1240,11 +1259,11 @@ msgstr "Game name"
 msgid "游戏控制"
 msgstr "Game control"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:94
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:137
 msgid "游戏简介"
 msgstr "Game description"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:90
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:133
 msgid "游戏识别码"
 msgstr "Game ID"
 
@@ -1705,8 +1724,8 @@ msgstr "Enter different scenes through options"
 msgid "配置"
 msgstr "Configuration"
 
-#: src/components/Assets/FileElement.tsx:67
-#: src/components/Assets/FileElement.tsx:83
+#: src/components/Assets/FileElement.tsx:68
+#: src/components/Assets/FileElement.tsx:92
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
