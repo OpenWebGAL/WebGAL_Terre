@@ -41,6 +41,25 @@ export class ManageTemplateService {
       ),
       this.webgalFs.getPathFromRoot(`/public/templates/${templateName}/`),
     );
+
+    /**
+     * 把模板配置文件的名称改一下
+     */
+    const templateConfig = {
+      name: templateName,
+      'webgal-version': '4.5.4',
+    };
+
+    const templateConfigText = JSON.stringify(templateConfig, undefined, 2);
+
+    // 写一下文件系统
+    await this.webgalFs.updateTextFile(
+      this.webgalFs.getPathFromRoot(
+        `/public/templates/${templateName}/template.json`,
+      ),
+      templateConfigText,
+    );
+
     return true;
   }
 

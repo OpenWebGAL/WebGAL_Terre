@@ -38,6 +38,14 @@ msgstr ";注释"
 msgid "%"
 msgstr "%"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:184
+msgid "<0>应用新的模板</0>"
+msgstr "<0>应用新的模板</0>"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:177
+msgid "<0>当前应用的模板：{currentTemplateName}</0>"
+msgstr "<0>当前应用的模板：{currentTemplateName}</0>"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:16
 msgid "BGM"
 msgstr "BGM"
@@ -148,6 +156,7 @@ msgstr "unlockCg:;"
 
 #: src/pages/dashboard/Sidebar.tsx:60
 #: src/pages/dashboard/Sidebar.tsx:65
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:53
 msgid "WebGAL Classic"
 msgstr "WebGAL Classic"
 
@@ -548,7 +557,7 @@ msgstr "右对齐"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "启动、切换或停止背景音乐的播放"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:123
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:167
 msgid "启动图"
 msgstr "启动图"
 
@@ -770,6 +779,10 @@ msgstr "常规演出"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:28
 msgid "平铺"
 msgstr "平铺"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:175
+msgid "应用的模板"
+msgstr "应用的模板"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:294
 msgid "应用颜色变化"
@@ -1134,11 +1147,11 @@ msgstr "标题按钮列表"
 msgid "标题按钮文字"
 msgstr "标题按钮文字"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:107
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:151
 msgid "标题背景图片"
 msgstr "标题背景图片"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:115
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:159
 msgid "标题背景音乐"
 msgstr "标题背景音乐"
 
@@ -1254,11 +1267,11 @@ msgstr "游戏"
 msgid "游戏列表"
 msgstr "游戏列表"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:98
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:142
 msgid "游戏包名"
 msgstr "游戏包名"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:86
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:130
 msgid "游戏名称"
 msgstr "游戏名称"
 
@@ -1266,11 +1279,11 @@ msgstr "游戏名称"
 msgid "游戏控制"
 msgstr "游戏控制"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:94
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:138
 msgid "游戏简介"
 msgstr "游戏简介"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:90
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:134
 msgid "游戏识别码"
 msgstr "游戏识别码"
 
