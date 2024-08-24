@@ -47,7 +47,7 @@ export class ManageTemplateService {
      */
     const templateConfig = {
       name: templateName,
-      'webgal-version': '4.5.4',
+      'webgal-version': '4.5.5',
     };
 
     const templateConfigText = JSON.stringify(templateConfig, undefined, 2);

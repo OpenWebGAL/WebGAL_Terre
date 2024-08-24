@@ -4,11 +4,11 @@
 
 #### 新功能
 
-为透明图像添加网格背景
+创建和重命名场景文件时检查是否有重名文件
 
-自定义 UI 支持自定义背景
+全新的语言服务器
 
-创建可执行文件时打包 asar
+在创建游戏后重新应用模板
 
 #### 修复
 
@@ -21,11 +21,11 @@
 
 #### New Features
 
-Add grid background for transparent images
+Check for duplicate file names when creating and renaming scene files
 
-Custom UI supports custom backgrounds
+Brand-new language server
 
-Pack asar when creating executable files
+Reapply template after game creation
 
 #### Fixes
 
@@ -38,13 +38,16 @@ Fix several bugs in the engine
 
 #### 新機能
 
-* 透明な画像にグリッド背景を追加
-* カスタムUIでカスタム背景をサポート
-* 実行ファイルを生成する際にasarをパック
+シーンファイルを作成および名前変更するときに、名前が重複しているかどうかを確認する
+
+新しい言語サーバー
+
+ゲームの作成後にテンプレートを再適用する
+
 
 #### 修正
 
-* エンジンのいくつかのバグを修正
+エンジンのいくつかのバグを修正
 
 [//]: # (<!-- French Translation -->)
 
