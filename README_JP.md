@@ -23,6 +23,10 @@ https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
 https://docs.openwebgal.com/guide/
 
+## Terre への貢献
+
+[WebGAL Terre 貢献ガイド](https://docs.openwebgal.com/developers/terre.html)
+
 ### スポンサーシップ
 
 WebGALはオープンソースソフトウェアであり、MPL-2.0オープンソースライセンスの範囲内でこのソフトウェアを無料で使用し、商用利用も可能です。
