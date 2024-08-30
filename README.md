@@ -25,6 +25,10 @@ https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
 https://docs.openwebgal.com/guide/
 
+## 参与贡献
+
+[WebGAL Terre 贡献指南](https://docs.openwebgal.com/developers/terre.html)
+
 ### 赞助
 
 WebGAL 是一款开源软件，因此你可以免费在 MPL-2.0 开源协议的范畴下使用本软件，并可用于商业使用。
