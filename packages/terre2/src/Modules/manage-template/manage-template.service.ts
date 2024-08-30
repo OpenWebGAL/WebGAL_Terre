@@ -2,6 +2,7 @@ import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as fsp from 'fs/promises';
 import { webgalParser } from '../../util/webgal-parser';
+import { version_number } from '../../main';
 
 @Injectable()
 export class ManageTemplateService {
@@ -47,7 +48,7 @@ export class ManageTemplateService {
      */
     const templateConfig = {
       name: templateName,
-      'webgal-version': '4.5.5',
+      'webgal-version': version_number,
     };
 
     const templateConfigText = JSON.stringify(templateConfig, undefined, 2);
