@@ -23,7 +23,7 @@ https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
 ## 使用说明
 
-https://docs.openwebgal.com/guide/
+https://docs.openwebgal.com/
 
 ## 参与贡献
 

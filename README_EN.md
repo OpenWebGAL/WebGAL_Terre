@@ -21,11 +21,11 @@ https://github.com/MakinoharaShoko/WebGAL_Terre/releases
 
 ## Usage instructions
 
-https://docs.openwebgal.com/guide/
+https://docs.openwebgal.com/en
 
 ## Contributing to Terre
 
-[WebGAL Terre Contribution Guide](https://docs.openwebgal.com/developers/terre.html)
+[WebGAL Terre Contribution Guide](https://docs.openwebgal.com/en/developers/terre.html)
 
 ### Sponsorship
 
@@ -33,7 +33,7 @@ WebGAL is an open source software, so you can use this software for free under t
 
 Even so, your sponsorship can give the developers the motivation to move forward and make this project better.
 
-[Sponsor this project](https://docs.openwebgal.com/sponsor/)
+[Sponsor this project](https://docs.openwebgal.com/en/sponsor/)
 
 
 # Sponsors
