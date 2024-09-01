@@ -45,7 +45,7 @@
     "vscode-languageserver": "^8.1.0",
     "vscode-languageserver-textdocument": "^1.0.11",
     "webgal-parser": "latest",
-    "webpack": "5.76.0",
+    "webpack": "5.94.0",
     "ws": "^8.16.0"
   },
   "devDependencies": {
