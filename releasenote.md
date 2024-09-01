@@ -12,7 +12,7 @@
 
 #### 修复
 
-4.5.6 修复：无法从状态中获取到对应 key 的变量时，返回 {key} 以避免变换不生效
+4.5.7 修复：无法从状态中获取到对应 key 的变量时，返回 {key} 以避免变换不生效
 
 修复引擎的若干错误
 
@@ -31,7 +31,7 @@ Reapply template after game creation
 
 #### Fixes
 
-4.5.6 Fix: When the corresponding key variable cannot be obtained from the state, return {key} to avoid ineffective transformation.
+4.5.7 Fix: When the corresponding key variable cannot be obtained from the state, return {key} to avoid ineffective transformation.
 
 Fix several bugs in the engine
 
@@ -51,7 +51,7 @@ Fix several bugs in the engine
 
 #### 修正
 
-4.5.6 修正：状態から対応する key の変数が取得できない場合、{key} を返すようにし、変換が無効になるのを回避しました
+4.5.7 修正：状態から対応する key の変数が取得できない場合、{key} を返すようにし、変換が無効になるのを回避しました
 
 エンジンのいくつかのバグを修正
 
