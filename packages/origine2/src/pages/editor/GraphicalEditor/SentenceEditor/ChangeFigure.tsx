@@ -34,6 +34,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const eyesOpen = useValue(getArgByKey(props.sentence, "eyesOpen").toString() ?? "");
   const eyesClose = useValue(getArgByKey(props.sentence, "eyesClose").toString() ?? "");
   const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
+  const bounds = useValue(getArgByKey(props.sentence, "bounds").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
@@ -127,11 +128,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const eyesCloseFile = eyesClose.value !== "" ? ` -eyesClose=${eyesClose.value}` : "";
     const motionArgs = currentMotion.value !== '' ? ` -motion=${currentMotion.value}` : "";
     const expressionArgs = currentExpression.value !== '' ? ` -expression=${currentExpression.value}` : "";
+    const boundsArgs = bounds.value !== '' ? ` -bounds=${bounds.value}` : "";
 
     if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs};`);
     } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs};`);
     }
   };
 
@@ -192,6 +194,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             >
               {l2dExpressionsList.map(e => (<Option key={e} value={e}>{e}</Option>))}
             </Dropdown>
+          </CommonOptions>
+          <CommonOptions title={t`自定义 Live2D 绘制范围`} key="bounds">
+            <input value={bounds.value}
+              onChange={(ev) => {
+                const newValue = ev.target.value;
+                bounds.set(newValue ?? "");
+              }}
+              onBlur={submit}
+              className={styles.sayInput}
+              placeholder={t`例如：-100,-100,100,100`}
+              style={{ width: "100%" }}
+            />
           </CommonOptions>
         </>
       )}
