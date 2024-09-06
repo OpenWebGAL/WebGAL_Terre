@@ -206,7 +206,7 @@ msgstr " Words"
 msgid "中"
 msgstr "Medium"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:47
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:48
 msgid "中间"
 msgstr "Center"
 
@@ -278,6 +278,10 @@ msgstr "Use prepared apply target, if target set the ID, it won't apply"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:49
 msgid "使用预设目标"
 msgstr "Use prepared target"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:206
+msgid "例如：-100,-100,100,100"
+msgstr "For example: -100,-100,100,100 "
 
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:34
 msgid "侧边栏"
@@ -356,8 +360,8 @@ msgstr "Hide the avatar"
 msgid "关闭效果音"
 msgstr "Stop the sound effect"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:140
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:142
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:149
 msgid "关闭立绘"
 msgstr "Hide the figure"
 
@@ -494,7 +498,7 @@ msgstr "Bold"
 msgid "动画"
 msgstr "Animation"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:283
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:297
 msgid "半张嘴"
 msgstr "Half open mouth"
 
@@ -518,7 +522,7 @@ msgstr "Cancel"
 msgid "变换"
 msgstr "Transform"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:49
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:50
 msgid "右侧"
 msgstr "Right"
 
@@ -549,7 +553,7 @@ msgstr "Enabled"
 msgid "启用视频跳过"
 msgstr "Enable video skipping"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:258
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:272
 msgid "唇形同步与眨眼"
 msgstr "Lip sync and blinking"
 
@@ -716,7 +720,7 @@ msgstr "Show avatar"
 msgid "属性"
 msgstr "Property"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:49
 msgid "左侧"
 msgstr "Left"
 
@@ -772,7 +776,7 @@ msgstr "Apply color changes"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:272
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:286
 msgid "张开嘴"
 msgstr "Open mouth"
 
@@ -791,7 +795,7 @@ msgid "手动输入 ID"
 msgstr "Manually enter ID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:78
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:227
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:241
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:43
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
@@ -810,8 +814,8 @@ msgstr "Extension name"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:88
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:91
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:240
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:242
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:254
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:256
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:52
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:55
 msgid "持续时间（单位为毫秒）"
@@ -892,7 +896,7 @@ msgid "效果声音"
 msgstr "Sound effect"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:83
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:235
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:249
 msgid "效果提示"
 msgstr "Effect tip"
 
@@ -901,7 +905,7 @@ msgid "效果编辑"
 msgstr "Effect editing"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:80
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:230
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:244
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:45
 msgid "效果编辑器"
 msgstr "Effect editor"
@@ -1052,7 +1056,7 @@ msgid "显示侧边栏"
 msgstr "Show sidebar"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:75
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:224
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:238
 msgid "显示效果"
 msgstr "Display effect"
 
@@ -1060,7 +1064,7 @@ msgstr "Display effect"
 msgid "显示文本框"
 msgstr "Show text box"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:149
 msgid "显示立绘"
 msgstr "Show figure"
 
@@ -1093,14 +1097,14 @@ msgid "本句前插入句子"
 msgstr "Insert sentence before this"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:60
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:164
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:166
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:79
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:105
 msgid "本句执行后执行下一句"
 msgstr "Execute next sentence after this"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:61
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:165
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:167
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:79
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:105
 msgid "本句执行后等待"
@@ -1304,7 +1308,7 @@ msgstr "No file currently open"
 msgid "相对"
 msgstr "Relative"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:304
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:318
 msgid "睁开眼睛"
 msgstr "Open eyes"
 
@@ -1344,7 +1348,7 @@ msgstr "Disable skipping video"
 msgid "立绘"
 msgstr "Figure"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:220
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:234
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:164
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:71
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:97
@@ -1352,11 +1356,11 @@ msgstr "Figure"
 msgid "立绘 ID"
 msgstr "Figure ID"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:212
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:226
 msgid "立绘ID（可选）"
 msgstr "Figure ID (optional)"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:199
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:213
 msgid "立绘位置"
 msgstr "Figure position"
 
@@ -1364,7 +1368,7 @@ msgstr "Figure position"
 msgid "立绘插图的ID"
 msgstr "ID of figure illustration"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:150
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:152
 msgid "立绘文件"
 msgstr "Figure file"
 
@@ -1471,6 +1475,10 @@ msgstr "Auto-hide toolbar"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:27
 msgid "自定义"
 msgstr "Customization"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:198
+msgid "自定义 Live2D 绘制范围"
+msgstr "Custom Live2D drawing area"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:52
 msgid "自定义值"
@@ -1634,7 +1642,7 @@ msgid "返回"
 msgstr "Return"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:56
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:160
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:162
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:75
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:101
 msgid "连续执行"
@@ -1661,7 +1669,7 @@ msgstr "Choose Avatar"
 msgid "选择效果音文件"
 msgstr "Choose Sound Effect File"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:143
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:145
 msgid "选择立绘文件"
 msgstr "Choose Figure File"
 
@@ -1757,11 +1765,11 @@ msgstr "Appreciation Asset File"
 msgid "鉴赏音乐"
 msgstr "Appreciation Music"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:294
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:308
 msgid "闭上嘴"
 msgstr "Close Mouth"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:314
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:328
 msgid "闭上眼睛"
 msgstr "Close Eyes"
 
