@@ -178,10 +178,6 @@ msgstr "Upload"
 msgid "上传资源"
 msgstr "Upload asset"
 
-#: src/pages/dashboard/About.tsx:88
-msgid "下载最新版本"
-msgstr "Download Latest Version"
-
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
 msgid "下雨"
 msgstr "Rain"
@@ -337,8 +333,8 @@ msgstr "Full-screen text"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "Show some texts on Full-screen"
 
-#: src/pages/dashboard/About.tsx:65
-#: src/pages/dashboard/About.tsx:66
+#: src/pages/dashboard/About.tsx:32
+#: src/pages/dashboard/About.tsx:33
 msgid "关于"
 msgstr "About"
 
@@ -394,7 +390,8 @@ msgstr "Min Width"
 msgid "最小高度"
 msgstr "Min Height"
 
-#: src/pages/dashboard/About.tsx:81
+#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/DashBoard.tsx:190
 msgid "最新版本"
 msgstr "Latest Version"
 
@@ -513,6 +510,10 @@ msgstr "Single line comment"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:119
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
+
+#: src/pages/dashboard/DashBoard.tsx:185
+msgid "发现新版本"
+msgstr "New version detected"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 msgid "取消"
@@ -735,7 +736,7 @@ msgstr "Left side figure"
 msgid "左对齐"
 msgstr "Left align"
 
-#: src/pages/dashboard/DashBoard.tsx:126
+#: src/pages/dashboard/DashBoard.tsx:141
 msgid "已创建"
 msgstr "Created"
 
@@ -780,9 +781,14 @@ msgstr "Delay time (seconds)"
 msgid "张开嘴"
 msgstr "Open mouth"
 
-#: src/pages/dashboard/About.tsx:77
+#: src/pages/dashboard/About.tsx:44
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "当前版本"
 msgstr "Current version"
+
+#: src/pages/dashboard/DashBoard.tsx:199
+msgid "忽略此版本"
+msgstr "Ignore this version"
 
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
@@ -978,7 +984,7 @@ msgstr "Text length (em)"
 msgid "文本阴影"
 msgstr "Text Shadow"
 
-#: src/pages/dashboard/About.tsx:106
+#: src/pages/dashboard/About.tsx:73
 msgid "文档"
 msgstr "Document"
 
@@ -1144,11 +1150,7 @@ msgstr "Title background music"
 msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
-#: src/pages/dashboard/About.tsx:66
-msgid "检测到新版本"
-msgstr "New version detected"
-
-#: src/pages/dashboard/DashBoard.tsx:176
+#: src/pages/dashboard/DashBoard.tsx:247
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "Template"
@@ -1243,7 +1245,7 @@ msgstr "Clear special effects of current stage"
 msgid "清除特效"
 msgstr "Clear effects"
 
-#: src/pages/dashboard/DashBoard.tsx:174
+#: src/pages/dashboard/DashBoard.tsx:245
 msgid "游戏"
 msgstr "Games"
 
@@ -1324,7 +1326,7 @@ msgstr "Confirm button text"
 msgid "视图"
 msgstr "View"
 
-#: src/pages/dashboard/About.tsx:75
+#: src/pages/dashboard/About.tsx:42
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
@@ -1493,6 +1495,11 @@ msgstr "Custom effect name"
 msgid "舞台对象控制"
 msgstr "Stage object control"
 
+#: src/pages/dashboard/About.tsx:55
+#: src/pages/dashboard/DashBoard.tsx:195
+msgid "获取最新版本"
+msgstr "Download Latest Version"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:248
 msgid "获取来自用户的字符输入"
 msgstr "Get character input from user"
@@ -1595,8 +1602,8 @@ msgstr "This command is not recognized, please open script editing mode to edit 
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
 
-#: src/pages/dashboard/DashBoard.tsx:157
-#: src/pages/dashboard/DashBoard.tsx:158
+#: src/pages/dashboard/DashBoard.tsx:228
+#: src/pages/dashboard/DashBoard.tsx:229
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1806,7 +1813,7 @@ msgstr "Left"
 msgid "音乐"
 msgstr "Music"
 
-#: src/pages/dashboard/About.tsx:103
+#: src/pages/dashboard/About.tsx:70
 msgid "项目主页"
 msgstr "Project Homepage"
 
