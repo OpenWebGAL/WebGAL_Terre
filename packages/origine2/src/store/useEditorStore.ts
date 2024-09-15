@@ -20,6 +20,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isEnableLivePreview: false,
       isAutoWarp: false,
       isUseExpFastSync:false,
+      ignoreVersion: '',
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
         set({ subPage });
@@ -30,7 +31,8 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateIisAutoHideToolbar: (isAutoHideToolbar) => set({isAutoHideToolbar}),
       updateIsEnableLivePreview: (isEnableLivePreview) => set({isEnableLivePreview}),
       updateIsAutoWarp: (isAutoWarp) => set({isAutoWarp}),
-      updateIsUseExpFastSync:(isUseExpFastSync)=> set({isUseExpFastSync})
+      updateIsUseExpFastSync:(isUseExpFastSync)=> set({isUseExpFastSync}),
+      updateIgnoreVersion: (ignoreVersion) => set({ignoreVersion}),
     }),
     {
       name: 'editor-storage',

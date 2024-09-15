@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import {useValue} from "../../hooks/useValue";
 import {logger} from "../../utils/logger";
 import {Message, TestRefRef} from "../../components/message/Message";
@@ -9,6 +9,7 @@ import GamePreview from "./GamePreview";
 import About from "./About";
 import {WebgalParser} from "../editor/GraphicalEditor/parser";
 import {
+  Button,
   Menu,
   MenuItem,
   MenuList,
@@ -18,13 +19,24 @@ import {
   SelectTabEvent,
   Tab,
   TabList,
+  Text,
+  Toast,
+  ToastBody,
+  Toaster,
+  ToastFooter,
+  ToastTitle,
+  ToastTrigger,
   Toolbar,
-  ToolbarButton
+  ToolbarButton,
+  useId,
+  useToastController
 } from "@fluentui/react-components";
 import {
   AlbumFilled,
   AlbumRegular,
   bundleIcon,
+  DismissFilled,
+  DismissRegular,
   GamesFilled,
   GamesRegular,
   LocalLanguage24Filled,
@@ -36,6 +48,8 @@ import {api} from "@/api";
 import useSWR, {useSWRConfig} from "swr";
 import {redirect} from "@/hooks/useHashRoute";
 import {t} from "@lingui/macro";
+import { useRelease } from "@/hooks/useRelease";
+import { __INFO } from "@/config/info";
 
 // 返回的文件信息（单个）
 interface IFileInfo {
@@ -55,9 +69,18 @@ export interface TemplateInfo {
   title: string;
 }
 
+export interface DateTimeFormatOptions {
+  year: 'numeric' | '2-digit';
+  month: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow';
+  day: 'numeric' | '2-digit';
+}
+
+export const dateTimeOptions: DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
 const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regular);
 const GameIcon = bundleIcon(GamesFilled, GamesRegular);
 const AlbumIcon = bundleIcon(AlbumFilled, AlbumRegular);
+const DismissIcon = bundleIcon(DismissFilled, DismissRegular);
 
 export const gameListFetcher = async () => {
   const data = (await api.manageGameControllerGetGameList()).data;
@@ -146,6 +169,62 @@ export default function DashBoard() {
     }
   };
 
+  // 新版本通知
+  const latestRelease = useRelease();
+  const ignoreVersion = useEditorStore.use.ignoreVersion();
+  const updateIgnoreVersion = useEditorStore.use.updateIgnoreVersion();
+  const releaseHasNotified = useRef(false);
+  const releaseTimeout = 5000;
+
+  const releaseToasterId = useId("release-toaster");
+  const { dispatchToast } = useToastController(releaseToasterId);
+  const releaseNotify = () => {
+    if (releaseHasNotified.current || !latestRelease || ignoreVersion === __INFO.version) return;
+
+    dispatchToast(
+      <Toast>
+        <ToastTitle
+          action={
+            <ToastTrigger>
+              <Button appearance="subtle" size="small" icon={<DismissIcon />} />
+            </ToastTrigger>
+          }
+        >
+          {t`发现新版本`}
+        </ToastTitle>
+        <ToastBody>
+          <Text size={200} style={{lineHeight: 1.5}}>
+            {t`当前版本`}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
+            {t`最新版本`}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
+          </Text>
+        </ToastBody>
+        <ToastFooter>
+          <Button appearance="primary" size="small" as="a" href="https://openwebgal.com/download/" target="_blank">
+            {t`获取最新版本`}
+          </Button>
+          <ToastTrigger>
+            <Button appearance="subtle" size="small" onClick={() => updateIgnoreVersion(__INFO.version)}>
+              {t`忽略此版本`}
+            </Button>
+          </ToastTrigger>
+        </ToastFooter>
+      </Toast>,
+      { timeout: releaseTimeout, intent: "info" }
+    );
+
+    releaseHasNotified.current = true;
+  };
+  
+  useEffect(
+    () => {
+      if (latestRelease?.hasNewVersion) {
+        releaseNotify();
+        logger.info(`发现新版本：${latestRelease.version}`, latestRelease);
+      }
+    },
+    [latestRelease?.hasNewVersion]
+  );
+
   return (
     <div className={styles.dashboard_container}>
       <div className={styles.topBar}>
@@ -204,6 +283,7 @@ export default function DashBoard() {
             templateList={templateList ? templateList : []}/>
         </div>}
       </div>
+      <Toaster toasterId={releaseToasterId} />
     </div>
   );
 }
