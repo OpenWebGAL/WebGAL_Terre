@@ -178,10 +178,6 @@ msgstr "アップロード"
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
-#: src/pages/dashboard/About.tsx:88
-msgid "下载最新版本"
-msgstr "最新バージョンをダウンロード"
-
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
 msgid "下雨"
 msgstr "雨"
@@ -337,8 +333,8 @@ msgstr "全画面テキスト"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "全画面画面でテキストを表示する。独白やシーンの導入に使用"
 
-#: src/pages/dashboard/About.tsx:65
-#: src/pages/dashboard/About.tsx:66
+#: src/pages/dashboard/About.tsx:32
+#: src/pages/dashboard/About.tsx:33
 msgid "关于"
 msgstr "About"
 
@@ -394,7 +390,8 @@ msgstr "最小幅"
 msgid "最小高度"
 msgstr "最小高さ"
 
-#: src/pages/dashboard/About.tsx:81
+#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/DashBoard.tsx:190
 msgid "最新版本"
 msgstr "最新バージョン"
 
@@ -513,6 +510,10 @@ msgstr "一行コメント"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:119
 msgid "反射电影滤镜"
 msgstr "反射映画"
+
+#: src/pages/dashboard/DashBoard.tsx:185
+msgid "发现新版本"
+msgstr "新しいバージョンが検出されました"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 msgid "取消"
@@ -735,7 +736,7 @@ msgstr "左の立ち絵"
 msgid "左对齐"
 msgstr "左揃え"
 
-#: src/pages/dashboard/DashBoard.tsx:126
+#: src/pages/dashboard/DashBoard.tsx:141
 msgid "已创建"
 msgstr "作成済み"
 
@@ -780,9 +781,14 @@ msgstr "遅延時間（秒）"
 msgid "张开嘴"
 msgstr "開いた口"
 
-#: src/pages/dashboard/About.tsx:77
+#: src/pages/dashboard/About.tsx:44
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "当前版本"
 msgstr "現在のバージョン"
+
+#: src/pages/dashboard/DashBoard.tsx:199
+msgid "忽略此版本"
+msgstr "このバージョンを無視する"
 
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
@@ -978,7 +984,7 @@ msgstr "テキストの長さ (em)"
 msgid "文本阴影"
 msgstr "テキストシャドウ"
 
-#: src/pages/dashboard/About.tsx:106
+#: src/pages/dashboard/About.tsx:73
 msgid "文档"
 msgstr "ドキュメント"
 
@@ -1144,11 +1150,7 @@ msgstr "タイトルのBGM"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
-#: src/pages/dashboard/About.tsx:66
-msgid "检测到新版本"
-msgstr "新しいバージョンが見つかりました"
-
-#: src/pages/dashboard/DashBoard.tsx:176
+#: src/pages/dashboard/DashBoard.tsx:247
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "テンプレート"
@@ -1243,7 +1245,7 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:174
+#: src/pages/dashboard/DashBoard.tsx:245
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1324,7 +1326,7 @@ msgstr "確認ボタンのテキスト"
 msgid "视图"
 msgstr "ビュー"
 
-#: src/pages/dashboard/About.tsx:75
+#: src/pages/dashboard/About.tsx:42
 msgid "视觉小说编辑，再进化"
 msgstr "Galgame Editing. Redefined"
 
@@ -1493,6 +1495,11 @@ msgstr "カスタムの特殊効果名"
 msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
 
+#: src/pages/dashboard/About.tsx:55
+#: src/pages/dashboard/DashBoard.tsx:195
+msgid "获取最新版本"
+msgstr "最新バージョンをダウンロード"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:248
 msgid "获取来自用户的字符输入"
 msgstr "ユーザーからの文字入力を取得"
@@ -1595,8 +1602,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:157
-#: src/pages/dashboard/DashBoard.tsx:158
+#: src/pages/dashboard/DashBoard.tsx:228
+#: src/pages/dashboard/DashBoard.tsx:229
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1806,7 +1813,7 @@ msgstr "左寄せ"
 msgid "音乐"
 msgstr "BGM"
 
-#: src/pages/dashboard/About.tsx:103
+#: src/pages/dashboard/About.tsx:70
 msgid "项目主页"
 msgstr "プロジェクトホームページ"
 
