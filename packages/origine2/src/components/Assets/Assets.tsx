@@ -55,6 +55,7 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
   const isBasePath = (currentPathString === basePath.join('/'));
   const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPathString.startsWith(key))?.[1].folderType : undefined;
   const extName = folderType ? dirNameToExtNameMap.get(folderType) : [];
+  const filterText = useValue('');
 
   const assetsFetcher = async () => {
     const res = await api.assetsControllerReadAssets(currentPathString);
@@ -73,15 +74,19 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
 
   const handleRefresh = () => mutate(currentPathString);
   const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathString);
-  const handleBack = () => !isBasePath && currentPath.set(currentPath.value.slice(0, currentPath.value.length - 1));
+  const handleBack = () => {
+    !isBasePath && currentPath.set(currentPath.value.slice(0, currentPath.value.length - 1));
+    filterText.set('');
+  };
 
   const handleOpenFile = async (file: IFile) => {
     if (file.isDir) {
       currentPath.set([...currentPath.value, file.name]);
+      filterText.set('');
     } else {
       const pathFromBase = (currentPath.value.slice(basePath.length)).concat([file.name]).join('/');
       const isScene = (folderType === 'scene') && file.name.endsWith('.txt');
-      fileFunction?.open && fileFunction.open({...file, pathFromBase}, isScene ? 'scene' : 'asset');
+      fileFunction?.open && fileFunction.open({ ...file, pathFromBase }, isScene ? 'scene' : 'asset');
     }
   };
 
@@ -147,128 +152,139 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
       }}
     >
       <div className={styles.controll}>
-        {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
+        <div style={{ width: '100%', display: 'flex', gap: '0.25rem' }}>
+          {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
+          <Input
+            value={isBasePath ? '/' : currentPathString.replace(basePath.join('/'), '')}
+            size='small'
+            style={{ flexGrow: 1, minWidth: 0 }}
+          />
+
+          {!isProtected && <>
+            <Popover
+              withArrow
+              open={createNewFilePopoverOpen.value}
+              onOpenChange={() => {
+                createNewFilePopoverOpen.set(!createNewFilePopoverOpen.value);
+                newFileName.set('');
+              }}
+            >
+              <PopoverTrigger>
+                <Button icon={<DocumentAddIcon />} size='small' />
+              </PopoverTrigger>
+              <PopoverSurface>
+                <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
+                  <Subtitle1>{t`新建文件`}</Subtitle1>
+                  <Tooltip
+                    content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
+                    relationship="description"
+                    visible={checkHasFile(newFileName.value.trim() + newFileExtensionName.value)}
+                    positioning="below"
+
+                  >
+                    <Input
+                      value={newFileName.value}
+                      placeholder={t`新文件名`}
+                      className={checkHasFile(newFileName.value.trim() + newFileExtensionName.value) ? styles.inputDanger : ''}
+                      onChange={(_, data) => {
+                        newFileName.set(data.value ?? "");
+                      }} />
+                  </Tooltip>
+                  <Field label={t`扩展名`} size='small'>
+                    <RadioGroup value={newFileExtensionName.value} onChange={(_, data) => newFileExtensionName.set(data.value)}>
+                      <Radio value="" label={t`无`} />
+                      <Radio value=".txt" label="txt" />
+                      <Radio value=".json" label="json" />
+                    </RadioGroup>
+                  </Field>
+                  <Button
+                    appearance="primary"
+                    disabled={disableCreateFile}
+                    onClick={() => {
+                      handleCreateNewFile(currentPathString, `${newFileName.value.trim()}${newFileExtensionName.value}`);
+                      createNewFilePopoverOpen.set(false);
+                      newFileName.set('');
+                    }}
+                  >{t`创建`}</Button>
+                </div>
+              </PopoverSurface>
+            </Popover>
+            <Popover
+              withArrow
+              open={createNewFolderPopoverOpen.value}
+              onOpenChange={() => {
+                createNewFolderPopoverOpen.set(!createNewFolderPopoverOpen.value);
+                newFileName.set('');
+              }}
+            >
+              <PopoverTrigger>
+                <Button icon={<FolderAddIcon />} size='small' />
+              </PopoverTrigger>
+              <PopoverSurface>
+                <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
+                  <Subtitle1>{t`新建文件夹`}</Subtitle1>
+                  <Tooltip
+                    content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
+                    relationship="description"
+                    visible={checkHasFile(newFileName.value.trim())}
+                    positioning="below"
+                  >
+                    <Input
+                      value={newFileName.value}
+                      placeholder={t`新文件夹名`}
+                      className={checkHasFile(newFileName.value.trim()) ? styles.inputDanger : ''}
+                      onChange={(_, data) => {
+                        newFileName.set(data.value ?? "");
+                      }} />
+                  </Tooltip>
+                  <Button
+                    appearance="primary"
+                    disabled={disableCreateFile}
+                    onClick={() => {
+                      handleCreateNewFolder(currentPathString, newFileName.value.trim());
+                      createNewFolderPopoverOpen.set(false);
+                      newFileName.set('');
+                    }}
+                  >{t`创建`}</Button>
+                </div>
+              </PopoverSurface>
+            </Popover>
+            <Popover
+              withArrow
+              open={uploadAssetPopoverOpen.value}
+              onOpenChange={() => uploadAssetPopoverOpen.set(!uploadAssetPopoverOpen.value)}
+            >
+              <PopoverTrigger>
+                <Button icon={<ArrowExportUpIcon />} size='small' />
+              </PopoverTrigger>
+              <PopoverSurface>
+                <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
+                  <Subtitle1>{t`上传资源`}</Subtitle1>
+                  <FileUploader onUpload={handleRefresh} targetDirectory={currentPathString} uploadUrl="/api/assets/upload" />
+                </div>
+              </PopoverSurface>
+            </Popover>
+          </>}
+
+          <Menu>
+            <MenuTrigger>
+              <Button icon={<MoreVerticalIcon />} size='small' />
+            </MenuTrigger>
+            <MenuPopover>
+              <MenuList>
+                <MenuItem icon={<ArrowSyncIcon />} onClick={handleRefresh} >{t`刷新`}</MenuItem>
+                <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder} >{t`打开文件夹`}</MenuItem>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
+        </div>
         <Input
-          value={isBasePath ? '/' : currentPathString.replace(basePath.join('/'), '')}
+          value={filterText.value}
+          onChange={(_, data) => filterText.set(data.value)}
+          placeholder={t`过滤文件`}
           size='small'
-          style={{ flexGrow: 1, minWidth: 0 }}
+          style={{ width: '100%' }}
         />
-
-        {!isProtected && <>
-          <Popover
-            withArrow
-            open={createNewFilePopoverOpen.value}
-            onOpenChange={() => {
-              createNewFilePopoverOpen.set(!createNewFilePopoverOpen.value);
-              newFileName.set('');
-            }}
-          >
-            <PopoverTrigger>
-              <Button icon={<DocumentAddIcon />} size='small' />
-            </PopoverTrigger>
-            <PopoverSurface>
-              <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                <Subtitle1>{t`新建文件`}</Subtitle1>
-                <Tooltip
-                  content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
-                  relationship="description"
-                  visible={checkHasFile(newFileName.value.trim() + newFileExtensionName.value)}
-                  positioning="below"
-                  
-                >
-                  <Input
-                    value={newFileName.value}
-                    placeholder={t`新文件名`}
-                    className={checkHasFile(newFileName.value.trim() + newFileExtensionName.value) ? styles.inputDanger : ''}
-                    onChange={(_, data) => {
-                      newFileName.set(data.value ?? "");
-                    }} />
-                </Tooltip>
-                <Field label={t`扩展名`} size='small'>
-                  <RadioGroup value={newFileExtensionName.value} onChange={(_, data) => newFileExtensionName.set(data.value)}>
-                    <Radio value="" label={t`无`} />
-                    <Radio value=".txt" label="txt" />
-                    <Radio value=".json" label="json" />
-                  </RadioGroup>
-                </Field>
-                <Button
-                  appearance="primary"
-                  disabled={disableCreateFile}
-                  onClick={() => {
-                    handleCreateNewFile(currentPathString, `${newFileName.value.trim()}${newFileExtensionName.value}`);
-                    createNewFilePopoverOpen.set(false);
-                    newFileName.set('');
-                  }}
-                >{t`创建`}</Button>
-              </div>
-            </PopoverSurface>
-          </Popover><Popover
-            withArrow
-            open={createNewFolderPopoverOpen.value}
-            onOpenChange={() => {
-              createNewFolderPopoverOpen.set(!createNewFolderPopoverOpen.value);
-              newFileName.set('');
-            }}
-          >
-            <PopoverTrigger>
-              <Button icon={<FolderAddIcon />} size='small' />
-            </PopoverTrigger>
-            <PopoverSurface>
-              <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                <Subtitle1>{t`新建文件夹`}</Subtitle1>
-                <Tooltip
-                  content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
-                  relationship="description"
-                  visible={checkHasFile(newFileName.value.trim())}
-                  positioning="below"
-                >
-                  <Input
-                    value={newFileName.value}
-                    placeholder={t`新文件夹名`}
-                    className={checkHasFile(newFileName.value.trim()) ? styles.inputDanger : ''}
-                    onChange={(_, data) => {
-                      newFileName.set(data.value ?? "");
-                    }} />
-                </Tooltip>
-                <Button
-                  appearance="primary"
-                  disabled={disableCreateFile}
-                  onClick={() => {
-                    handleCreateNewFolder(currentPathString, newFileName.value.trim());
-                    createNewFolderPopoverOpen.set(false);
-                    newFileName.set('');
-                  }}
-                >{t`创建`}</Button>
-              </div>
-            </PopoverSurface>
-          </Popover><Popover
-            withArrow
-            open={uploadAssetPopoverOpen.value}
-            onOpenChange={() => uploadAssetPopoverOpen.set(!uploadAssetPopoverOpen.value)}
-          >
-            <PopoverTrigger>
-              <Button icon={<ArrowExportUpIcon />} size='small' />
-            </PopoverTrigger>
-            <PopoverSurface>
-              <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                <Subtitle1>{t`上传资源`}</Subtitle1>
-                <FileUploader onUpload={handleRefresh} targetDirectory={currentPathString} uploadUrl="/api/assets/upload" />
-              </div>
-            </PopoverSurface>
-          </Popover>
-        </>}
-
-        <Menu>
-          <MenuTrigger>
-            <Button icon={<MoreVerticalIcon />} size='small' />
-          </MenuTrigger>
-          <MenuPopover>
-            <MenuList>
-              <MenuItem icon={<ArrowSyncIcon />} onClick={handleRefresh} >{t`刷新`}</MenuItem>
-              <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder} >{t`打开文件夹`}</MenuItem>
-            </MenuList>
-          </MenuPopover>
-        </Menu>
       </div>
       {
         extName && extName.length > 0 &&
@@ -296,21 +312,23 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
           });
         }}>
         {
-          fileList?.map(file =>
-            (fileConfig?.get(`${currentPathString}/${file.name}`)?.isHidden) // 判断是否隐藏
-              ? null
-              : <FileElement
-                key={file.name}
-                file={file}
-                desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
-                currentPath={currentPath}
-                isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? isProtected}
-                handleOpenFile={handleOpenFile}
-                handleRenameFile={handleRenameFile}
-                handleDeleteFile={handleDeleteFile}
-                checkHasFile={checkHasFile}
-              />
-          )
+          fileList
+            ?.filter(file => file.name.toLocaleLowerCase().includes(filterText.value.toLocaleLowerCase()))
+            .map(file =>
+              (fileConfig?.get(`${currentPathString}/${file.name}`)?.isHidden) // 判断是否隐藏
+                ? null
+                : <FileElement
+                  key={file.name}
+                  file={file}
+                  desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
+                  currentPath={currentPath}
+                  isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? isProtected}
+                  handleOpenFile={handleOpenFile}
+                  handleRenameFile={handleRenameFile}
+                  handleDeleteFile={handleDeleteFile}
+                  checkHasFile={checkHasFile}
+                />
+            )
         }
       </div>
     </div>

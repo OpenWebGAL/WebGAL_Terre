@@ -185,12 +185,12 @@ msgstr "Y轴缩放："
 msgid "一直显示功能区"
 msgstr "一直显示功能区"
 
-#: src/components/Assets/Assets.tsx:350
-#: src/components/Assets/Assets.tsx:351
+#: src/components/Assets/Assets.tsx:368
+#: src/components/Assets/Assets.tsx:369
 msgid "上传"
 msgstr "上传"
 
-#: src/components/Assets/Assets.tsx:254
+#: src/components/Assets/Assets.tsx:262
 msgid "上传资源"
 msgstr "上传资源"
 
@@ -353,8 +353,8 @@ msgstr "全屏文字"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "全屏显示一段文字，用于独白或引出场景"
 
-#: src/pages/dashboard/About.tsx:32
-#: src/pages/dashboard/About.tsx:33
+#: src/pages/dashboard/About.tsx:25
+#: src/pages/dashboard/About.tsx:26
 msgid "关于"
 msgstr "关于"
 
@@ -410,8 +410,8 @@ msgstr "最小宽度"
 msgid "最小高度"
 msgstr "最小高度"
 
-#: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:190
+#: src/pages/dashboard/About.tsx:41
+#: src/pages/dashboard/DashBoard.tsx:198
 msgid "最新版本"
 msgstr "最新版本"
 
@@ -447,8 +447,8 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
-#: src/components/Assets/Assets.tsx:202
-#: src/components/Assets/Assets.tsx:241
+#: src/components/Assets/Assets.tsx:208
+#: src/components/Assets/Assets.tsx:248
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -493,7 +493,7 @@ msgstr "删除模板"
 msgid "删除游戏"
 msgstr "删除游戏"
 
-#: src/components/Assets/Assets.tsx:267
+#: src/components/Assets/Assets.tsx:275
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "刷新"
@@ -531,7 +531,7 @@ msgstr "单行注释"
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
 
-#: src/pages/dashboard/DashBoard.tsx:185
+#: src/pages/dashboard/DashBoard.tsx:193
 msgid "发现新版本"
 msgstr "发现新版本"
 
@@ -756,12 +756,12 @@ msgstr "左侧立绘"
 msgid "左对齐"
 msgstr "左对齐"
 
-#: src/pages/dashboard/DashBoard.tsx:141
+#: src/pages/dashboard/DashBoard.tsx:149
 msgid "已创建"
 msgstr "已创建"
 
-#: src/components/Assets/Assets.tsx:173
-#: src/components/Assets/Assets.tsx:220
+#: src/components/Assets/Assets.tsx:179
+#: src/components/Assets/Assets.tsx:227
 #: src/components/Assets/FileElement.tsx:70
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
@@ -801,12 +801,12 @@ msgstr "延迟时间（秒）"
 msgid "张开嘴"
 msgstr "张开嘴"
 
-#: src/pages/dashboard/About.tsx:44
-#: src/pages/dashboard/DashBoard.tsx:189
+#: src/pages/dashboard/About.tsx:37
+#: src/pages/dashboard/DashBoard.tsx:197
 msgid "当前版本"
 msgstr "当前版本"
 
-#: src/pages/dashboard/DashBoard.tsx:199
+#: src/pages/dashboard/DashBoard.tsx:207
 msgid "忽略此版本"
 msgstr "忽略此版本"
 
@@ -826,7 +826,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/components/Assets/Assets.tsx:268
+#: src/components/Assets/Assets.tsx:276
 msgid "打开文件夹"
 msgstr "打开文件夹"
 
@@ -834,7 +834,7 @@ msgstr "打开文件夹"
 msgid "执行到此句"
 msgstr "执行到此句"
 
-#: src/components/Assets/Assets.tsx:187
+#: src/components/Assets/Assets.tsx:193
 msgid "扩展名"
 msgstr "扩展名"
 
@@ -1004,15 +1004,15 @@ msgstr "文本长度 (em)"
 msgid "文本阴影"
 msgstr "文本阴影"
 
-#: src/pages/dashboard/About.tsx:73
+#: src/pages/dashboard/About.tsx:66
 msgid "文档"
 msgstr "文档"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:177
 msgid "新建文件"
 msgstr "新建文件"
 
-#: src/components/Assets/Assets.tsx:218
+#: src/components/Assets/Assets.tsx:225
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
@@ -1025,11 +1025,11 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/components/Assets/Assets.tsx:181
+#: src/components/Assets/Assets.tsx:187
 msgid "新文件名"
 msgstr "新文件名"
 
-#: src/components/Assets/Assets.tsx:227
+#: src/components/Assets/Assets.tsx:234
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
@@ -1068,7 +1068,7 @@ msgstr "旁白模式，无角色名"
 msgid "旋转角度："
 msgstr "旋转角度："
 
-#: src/components/Assets/Assets.tsx:189
+#: src/components/Assets/Assets.tsx:195
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
@@ -1170,7 +1170,7 @@ msgstr "标题背景音乐"
 msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:247
+#: src/pages/dashboard/DashBoard.tsx:255
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "模板"
@@ -1265,7 +1265,7 @@ msgstr "清除当前舞台的特殊效果"
 msgid "清除特效"
 msgstr "清除特效"
 
-#: src/pages/dashboard/DashBoard.tsx:245
+#: src/pages/dashboard/DashBoard.tsx:253
 msgid "游戏"
 msgstr "游戏"
 
@@ -1346,7 +1346,7 @@ msgstr "确认按钮文本"
 msgid "视图"
 msgstr "视图"
 
-#: src/pages/dashboard/About.tsx:42
+#: src/pages/dashboard/About.tsx:35
 msgid "视觉小说编辑，再进化"
 msgstr "视觉小说编辑，再进化"
 
@@ -1515,8 +1515,8 @@ msgstr "自定义特效名称"
 msgid "舞台对象控制"
 msgstr "舞台对象控制"
 
-#: src/pages/dashboard/About.tsx:55
-#: src/pages/dashboard/DashBoard.tsx:195
+#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/DashBoard.tsx:203
 msgid "获取最新版本"
 msgstr "获取最新版本"
 
@@ -1622,8 +1622,8 @@ msgstr "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgid "该文件类型不支持预览"
 msgstr "该文件类型不支持预览"
 
-#: src/pages/dashboard/DashBoard.tsx:228
-#: src/pages/dashboard/DashBoard.tsx:229
+#: src/pages/dashboard/DashBoard.tsx:236
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1659,6 +1659,10 @@ msgstr "资源"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:68
 msgid "输入目标 ID"
 msgstr "输入目标 ID"
+
+#: src/components/Assets/Assets.tsx:284
+msgid "过滤文件"
+msgstr "过滤文件"
 
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
@@ -1833,7 +1837,7 @@ msgstr "靠左"
 msgid "音乐"
 msgstr "音乐"
 
-#: src/pages/dashboard/About.tsx:70
+#: src/pages/dashboard/About.tsx:63
 msgid "项目主页"
 msgstr "项目主页"
 
