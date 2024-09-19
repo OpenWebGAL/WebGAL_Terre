@@ -169,12 +169,12 @@ msgstr " Y軸スケール："
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
-#: src/components/Assets/Assets.tsx:350
-#: src/components/Assets/Assets.tsx:351
+#: src/components/Assets/Assets.tsx:368
+#: src/components/Assets/Assets.tsx:369
 msgid "上传"
 msgstr "アップロード"
 
-#: src/components/Assets/Assets.tsx:254
+#: src/components/Assets/Assets.tsx:262
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
@@ -333,8 +333,8 @@ msgstr "全画面テキスト"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "全画面画面でテキストを表示する。独白やシーンの導入に使用"
 
-#: src/pages/dashboard/About.tsx:32
-#: src/pages/dashboard/About.tsx:33
+#: src/pages/dashboard/About.tsx:25
+#: src/pages/dashboard/About.tsx:26
 msgid "关于"
 msgstr "About"
 
@@ -390,8 +390,8 @@ msgstr "最小幅"
 msgid "最小高度"
 msgstr "最小高さ"
 
-#: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:190
+#: src/pages/dashboard/About.tsx:41
+#: src/pages/dashboard/DashBoard.tsx:198
 msgid "最新版本"
 msgstr "最新バージョン"
 
@@ -427,8 +427,8 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
-#: src/components/Assets/Assets.tsx:202
-#: src/components/Assets/Assets.tsx:241
+#: src/components/Assets/Assets.tsx:208
+#: src/components/Assets/Assets.tsx:248
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -473,7 +473,7 @@ msgstr "テンプレートを削除"
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
-#: src/components/Assets/Assets.tsx:267
+#: src/components/Assets/Assets.tsx:275
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "更新"
@@ -511,7 +511,7 @@ msgstr "一行コメント"
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
-#: src/pages/dashboard/DashBoard.tsx:185
+#: src/pages/dashboard/DashBoard.tsx:193
 msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
@@ -736,12 +736,12 @@ msgstr "左の立ち絵"
 msgid "左对齐"
 msgstr "左揃え"
 
-#: src/pages/dashboard/DashBoard.tsx:141
+#: src/pages/dashboard/DashBoard.tsx:149
 msgid "已创建"
 msgstr "作成済み"
 
-#: src/components/Assets/Assets.tsx:173
-#: src/components/Assets/Assets.tsx:220
+#: src/components/Assets/Assets.tsx:179
+#: src/components/Assets/Assets.tsx:227
 #: src/components/Assets/FileElement.tsx:70
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "ファイルまたはフォルダは既に存在します {0}"
@@ -781,12 +781,12 @@ msgstr "遅延時間（秒）"
 msgid "张开嘴"
 msgstr "開いた口"
 
-#: src/pages/dashboard/About.tsx:44
-#: src/pages/dashboard/DashBoard.tsx:189
+#: src/pages/dashboard/About.tsx:37
+#: src/pages/dashboard/DashBoard.tsx:197
 msgid "当前版本"
 msgstr "現在のバージョン"
 
-#: src/pages/dashboard/DashBoard.tsx:199
+#: src/pages/dashboard/DashBoard.tsx:207
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
@@ -806,7 +806,7 @@ msgstr "IDを手動で設定"
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
-#: src/components/Assets/Assets.tsx:268
+#: src/components/Assets/Assets.tsx:276
 msgid "打开文件夹"
 msgstr "フォルダーを開く"
 
@@ -814,7 +814,7 @@ msgstr "フォルダーを開く"
 msgid "执行到此句"
 msgstr "この文まで実行"
 
-#: src/components/Assets/Assets.tsx:187
+#: src/components/Assets/Assets.tsx:193
 msgid "扩展名"
 msgstr "拡張子"
 
@@ -984,15 +984,15 @@ msgstr "テキストの長さ (em)"
 msgid "文本阴影"
 msgstr "テキストシャドウ"
 
-#: src/pages/dashboard/About.tsx:73
+#: src/pages/dashboard/About.tsx:66
 msgid "文档"
 msgstr "ドキュメント"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:177
 msgid "新建文件"
 msgstr "新しいファイルを作成"
 
-#: src/components/Assets/Assets.tsx:218
+#: src/components/Assets/Assets.tsx:225
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
@@ -1005,11 +1005,11 @@ msgstr "新しいテンプレートを作成"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/Assets.tsx:181
+#: src/components/Assets/Assets.tsx:187
 msgid "新文件名"
 msgstr "新しいファイル名"
 
-#: src/components/Assets/Assets.tsx:227
+#: src/components/Assets/Assets.tsx:234
 msgid "新文件夹名"
 msgstr "新しいフォルダー名"
 
@@ -1048,7 +1048,7 @@ msgstr "キャラクター名は設定不可"
 msgid "旋转角度："
 msgstr "回転："
 
-#: src/components/Assets/Assets.tsx:189
+#: src/components/Assets/Assets.tsx:195
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
@@ -1150,7 +1150,7 @@ msgstr "タイトルのBGM"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:247
+#: src/pages/dashboard/DashBoard.tsx:255
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "テンプレート"
@@ -1245,7 +1245,7 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:245
+#: src/pages/dashboard/DashBoard.tsx:253
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1326,7 +1326,7 @@ msgstr "確認ボタンのテキスト"
 msgid "视图"
 msgstr "ビュー"
 
-#: src/pages/dashboard/About.tsx:42
+#: src/pages/dashboard/About.tsx:35
 msgid "视觉小说编辑，再进化"
 msgstr "Galgame Editing. Redefined"
 
@@ -1495,8 +1495,8 @@ msgstr "カスタムの特殊効果名"
 msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
 
-#: src/pages/dashboard/About.tsx:55
-#: src/pages/dashboard/DashBoard.tsx:195
+#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/DashBoard.tsx:203
 msgid "获取最新版本"
 msgstr "最新バージョンをダウンロード"
 
@@ -1602,8 +1602,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:228
-#: src/pages/dashboard/DashBoard.tsx:229
+#: src/pages/dashboard/DashBoard.tsx:236
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1639,6 +1639,10 @@ msgstr "アセット"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:68
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
+
+#: src/components/Assets/Assets.tsx:284
+msgid "过滤文件"
+msgstr "ファイルのフィルタリング"
 
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
@@ -1813,7 +1817,7 @@ msgstr "左寄せ"
 msgid "音乐"
 msgstr "BGM"
 
-#: src/pages/dashboard/About.tsx:70
+#: src/pages/dashboard/About.tsx:63
 msgid "项目主页"
 msgstr "プロジェクトホームページ"
 
