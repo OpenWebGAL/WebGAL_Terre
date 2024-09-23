@@ -5,6 +5,8 @@
 
 ### [English](README_EN.md) | [日本語](README_JP.md)
 
+## 这是 WebGAL 可视化编辑器项目。如果你想要查看 WebGAL 的源代码，请前往 [WebGAL代码仓库](https://github.com/OpenWebGAL/WebGAL)
+
 # WebGAL_Terre
 
 **重新定义Galgame的制作方式**
