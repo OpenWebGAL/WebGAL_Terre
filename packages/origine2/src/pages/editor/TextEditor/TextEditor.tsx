@@ -12,6 +12,7 @@ import { eventBus } from '@/utils/eventBus';
 import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
+import {useValue} from "@/hooks/useValue";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -26,6 +27,7 @@ export default function TextEditor(props: ITextEditorProps) {
   const currentText = { value: 'Loading Scene Data......' };
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
+  const isEditorReady = useValue(false); // 读取完脚本才能算准备就绪
 
   // 准备获取 Monaco
   // 建立 Ref
@@ -65,6 +67,7 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} ev
    */
   function handleChange(value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) {
+    if(!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
     const lineNumber = ev.changes[0].range.startLineNumber;
     if (!isAfterMount) {
@@ -90,6 +93,7 @@ export default function TextEditor(props: ITextEditorProps) {
         currentText.value = data.toString();
         eventBus.emit('update-scene', data.toString());
         editorRef.current?.getModel()?.setValue(currentText.value);
+        isEditorReady.value = true;
         if (isAfterMount) {
           const targetLine = editorLineHolder.getSceneLine(props.targetPath);
           editorRef?.current?.setPosition({ lineNumber: targetLine, column: 0 });
