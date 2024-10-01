@@ -24,7 +24,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-linux.sh
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Linux
           path: release
@@ -113,7 +113,7 @@ jobs:
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
           echo "WebGAL Terre is now ready to be deployed."
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Linux_Arm64
           path: release
@@ -133,7 +133,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-mac.sh
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Mac
           path: release
@@ -152,7 +152,7 @@ jobs:
         shell: bash
         run: ./release.sh
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Windows
           path: release
@@ -174,7 +174,7 @@ jobs:
         shell: bash
         run: mkdir bundle && yarn nsis-bundle
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Windows_Setup
           path: bundle/WebGal_Terre_Setup.exe
