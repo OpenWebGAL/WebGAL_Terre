@@ -1,16 +1,16 @@
 import CommonOptions from "../components/CommonOption";
-import { ISentenceEditorProps } from "./index";
+import {ISentenceEditorProps} from "./index";
 import styles from "./sentenceEditor.module.scss";
 import ChooseFile from "../../ChooseFile/ChooseFile";
-import { useValue } from "../../../../hooks/useValue";
-import { getArgByKey } from "../utils/getArgByKey";
+import {useValue} from "../../../../hooks/useValue";
+import {getArgByKey} from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import { useEffect, useState } from "react";
-import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
+import {useEffect, useState} from "react";
+import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
-import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import { Button, Dropdown, Input, Option } from "@fluentui/react-components";
+import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
+import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 
@@ -35,6 +35,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const eyesClose = useValue(getArgByKey(props.sentence, "eyesClose").toString() ?? "");
   const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
   const bounds = useValue(getArgByKey(props.sentence, "bounds").toString() ?? "");
+  const zIndex = useValue(String(getArgByKey(props.sentence, 'zIndex') ?? ''));
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
@@ -129,11 +130,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const motionArgs = currentMotion.value !== '' ? ` -motion=${currentMotion.value}` : "";
     const expressionArgs = currentExpression.value !== '' ? ` -expression=${currentExpression.value}` : "";
     const boundsArgs = bounds.value !== '' ? ` -bounds=${bounds.value}` : "";
+    const zIndexArgs = zIndex.value !== '' ? ` -zIndex=${zIndex.value}` : "";
 
     if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
     } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
     }
   };
 
@@ -146,7 +148,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           } else
             figureFile.set("none");
           submit();
-        }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
+        }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile}/>
       </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t`立绘文件`}>
@@ -156,7 +158,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
-            extName={[".png", ".jpg", ".webp", ".json"]} />
+            extName={[".png", ".jpg", ".webp", ".json"]}/>
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
@@ -164,7 +166,19 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           isGoNext.set(newValue);
           submit();
         }} onText={t`本句执行后执行下一句`}
-        offText={t`本句执行后等待`} isChecked={isGoNext.value} />
+        offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
+      </CommonOptions>
+      <CommonOptions title={t`z-index`} key="z-index">
+        <input value={zIndex.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            zIndex.set(newValue ?? "");
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          placeholder={t`1, 2, 3, ...`}
+          style={{width: "100%"}}
+        />
       </CommonOptions>
       {figureFile.value.includes('.json') && (
         <>
@@ -176,7 +190,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 data.optionValue && currentMotion.set(data.optionValue);
                 submit();
               }}
-              style={{ minWidth: 0 }}
+              style={{minWidth: 0}}
             >
               {l2dMotionsList.map(e => (<Option key={e} value={e}>{e}</Option>))}
             </Dropdown>
@@ -190,7 +204,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 data.optionValue && currentExpression.set(data.optionValue);
                 submit();
               }}
-              style={{ minWidth: 0 }}
+              style={{minWidth: 0}}
             >
               {l2dExpressionsList.map(e => (<Option key={e} value={e}>{e}</Option>))}
             </Dropdown>
@@ -204,7 +218,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               onBlur={submit}
               className={styles.sayInput}
               placeholder={t`例如：-100,-100,100,100`}
-              style={{ width: "100%" }}
+              style={{width: "100%"}}
             />
           </CommonOptions>
         </>
@@ -218,7 +232,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             figurePosition.set(data.optionValue?.toString() as FigurePosition ?? "");
             submit();
           }}
-          style={{ minWidth: 0 }}
+          style={{minWidth: 0}}
         >
           {Array.from(figurePositions.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>)}
         </Dropdown>
@@ -232,7 +246,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           placeholder={t`立绘 ID`}
-          style={{ width: "100%" }}
+          style={{width: "100%"}}
         />
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
@@ -246,11 +260,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         <div>
           <CommonTips
-            text={t`效果提示`} />
+            text={t`效果提示`}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();
-          }} />
+          }}/>
           <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
             <div>
               <Input placeholder={t`持续时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
@@ -259,7 +273,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   duration.set("");
                 else
                   duration.set(newDuration);
-              }} onBlur={submit} />
+              }} onBlur={submit}/>
             </div>
           </CommonOptions>
         </div>
@@ -277,9 +291,10 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 animationFlag.set(data.optionValue?.toString() ?? "");
                 submit();
               }}
-              style={{ minWidth: 0 }}
+              style={{minWidth: 0}}
             >
-              {Array.from(animationFlags.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>)}
+              {Array.from(animationFlags.entries()).map(([key, value]) => <Option key={key}
+                value={key}>{value}</Option>)}
             </Dropdown>
           </CommonOptions>
           {animationFlag.value === "on" &&
@@ -290,7 +305,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   mouthOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]} />
+                extName={[".png", ".jpg", ".webp"]}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
@@ -301,7 +316,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   mouthHalfOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]} />
+                extName={[".png", ".jpg", ".webp"]}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
@@ -312,7 +327,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   mouthClose.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]} />
+                extName={[".png", ".jpg", ".webp"]}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" && <CommonOptions key="9" title={t`睁开眼睛`}>
@@ -322,7 +337,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 eyesOpen.set(fileDesc?.name ?? "");
                 submit();
               }}
-              extName={[".png", ".jpg", ".webp"]} />
+              extName={[".png", ".jpg", ".webp"]}/>
             </>
           </CommonOptions>}
           {animationFlag.value === "on" && <CommonOptions key="10" title={t`闭上眼睛`}>
@@ -332,7 +347,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 eyesClose.set(fileDesc?.name ?? "");
                 submit();
               }}
-              extName={[".png", ".jpg", ".webp"]} />
+              extName={[".png", ".jpg", ".webp"]}/>
             </>
           </CommonOptions>}
         </div>
