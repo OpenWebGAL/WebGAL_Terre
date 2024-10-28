@@ -30,6 +30,10 @@ msgstr "<0>Apply a new template</0>"
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>Current template: {currentTemplateName}</0>"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:179
+msgid "1, 2, 3, ..."
+msgstr "1, 2, 3, ..."
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:16
 msgid "BGM"
 msgstr "BGM"
@@ -165,22 +169,22 @@ msgstr " Y："
 msgid "Y轴缩放："
 msgstr " Scale y："
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:171
+msgid "z-index"
+msgstr "z-index"
+
 #: src/pages/editor/Topbar/Topbar.tsx:129
 msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
-#: src/components/Assets/Assets.tsx:350
-#: src/components/Assets/Assets.tsx:351
+#: src/components/Assets/Assets.tsx:368
+#: src/components/Assets/Assets.tsx:369
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:254
+#: src/components/Assets/Assets.tsx:262
 msgid "上传资源"
 msgstr "Upload asset"
-
-#: src/pages/dashboard/About.tsx:88
-msgid "下载最新版本"
-msgstr "Download Latest Version"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
 msgid "下雨"
@@ -206,7 +210,7 @@ msgstr " Words"
 msgid "中"
 msgstr "Medium"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:47
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:49
 msgid "中间"
 msgstr "Center"
 
@@ -279,6 +283,10 @@ msgstr "Use prepared apply target, if target set the ID, it won't apply"
 msgid "使用预设目标"
 msgstr "Use prepared target"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:220
+msgid "例如：-100,-100,100,100"
+msgstr "For example: -100,-100,100,100 "
+
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:34
 msgid "侧边栏"
 msgstr "Sidebar"
@@ -333,8 +341,8 @@ msgstr "Full-screen text"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "Show some texts on Full-screen"
 
-#: src/pages/dashboard/About.tsx:65
-#: src/pages/dashboard/About.tsx:66
+#: src/pages/dashboard/About.tsx:25
+#: src/pages/dashboard/About.tsx:26
 msgid "关于"
 msgstr "About"
 
@@ -356,8 +364,8 @@ msgstr "Hide the avatar"
 msgid "关闭效果音"
 msgstr "Stop the sound effect"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:140
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:144
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:151
 msgid "关闭立绘"
 msgstr "Hide the figure"
 
@@ -390,7 +398,8 @@ msgstr "Min Width"
 msgid "最小高度"
 msgstr "Min Height"
 
-#: src/pages/dashboard/About.tsx:81
+#: src/pages/dashboard/About.tsx:41
+#: src/pages/dashboard/DashBoard.tsx:198
 msgid "最新版本"
 msgstr "Latest Version"
 
@@ -426,8 +435,8 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:202
-#: src/components/Assets/Assets.tsx:241
+#: src/components/Assets/Assets.tsx:208
+#: src/components/Assets/Assets.tsx:248
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -472,7 +481,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:267
+#: src/components/Assets/Assets.tsx:275
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "Refresh"
@@ -494,7 +503,7 @@ msgstr "Bold"
 msgid "动画"
 msgstr "Animation"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:283
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:312
 msgid "半张嘴"
 msgstr "Half open mouth"
 
@@ -510,6 +519,10 @@ msgstr "Single line comment"
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
+#: src/pages/dashboard/DashBoard.tsx:193
+msgid "发现新版本"
+msgstr "New version detected"
+
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 msgid "取消"
 msgstr "Cancel"
@@ -518,7 +531,7 @@ msgstr "Cancel"
 msgid "变换"
 msgstr "Transform"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:49
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:51
 msgid "右侧"
 msgstr "Right"
 
@@ -549,7 +562,7 @@ msgstr "Enabled"
 msgid "启用视频跳过"
 msgstr "Enable video skipping"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:258
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:286
 msgid "唇形同步与眨眼"
 msgstr "Lip sync and blinking"
 
@@ -716,7 +729,7 @@ msgstr "Show avatar"
 msgid "属性"
 msgstr "Property"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:50
 msgid "左侧"
 msgstr "Left"
 
@@ -731,12 +744,12 @@ msgstr "Left side figure"
 msgid "左对齐"
 msgstr "Left align"
 
-#: src/pages/dashboard/DashBoard.tsx:126
+#: src/pages/dashboard/DashBoard.tsx:149
 msgid "已创建"
 msgstr "Created"
 
-#: src/components/Assets/Assets.tsx:173
-#: src/components/Assets/Assets.tsx:220
+#: src/components/Assets/Assets.tsx:179
+#: src/components/Assets/Assets.tsx:227
 #: src/components/Assets/FileElement.tsx:70
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
@@ -772,13 +785,18 @@ msgstr "Apply color changes"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:272
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:301
 msgid "张开嘴"
 msgstr "Open mouth"
 
-#: src/pages/dashboard/About.tsx:77
+#: src/pages/dashboard/About.tsx:37
+#: src/pages/dashboard/DashBoard.tsx:197
 msgid "当前版本"
 msgstr "Current version"
+
+#: src/pages/dashboard/DashBoard.tsx:207
+msgid "忽略此版本"
+msgstr "Ignore this version"
 
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
@@ -791,12 +809,12 @@ msgid "手动输入 ID"
 msgstr "Manually enter ID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:78
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:227
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:255
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:43
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/components/Assets/Assets.tsx:268
+#: src/components/Assets/Assets.tsx:276
 msgid "打开文件夹"
 msgstr "Open folder"
 
@@ -804,14 +822,14 @@ msgstr "Open folder"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:187
+#: src/components/Assets/Assets.tsx:193
 msgid "扩展名"
 msgstr "Extension name"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:88
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:91
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:240
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:242
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:268
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:270
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:52
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:55
 msgid "持续时间（单位为毫秒）"
@@ -892,7 +910,7 @@ msgid "效果声音"
 msgstr "Sound effect"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:83
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:235
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:263
 msgid "效果提示"
 msgstr "Effect tip"
 
@@ -901,7 +919,7 @@ msgid "效果编辑"
 msgstr "Effect editing"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:80
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:230
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:258
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:45
 msgid "效果编辑器"
 msgstr "Effect editor"
@@ -974,15 +992,15 @@ msgstr "Text length (em)"
 msgid "文本阴影"
 msgstr "Text Shadow"
 
-#: src/pages/dashboard/About.tsx:106
+#: src/pages/dashboard/About.tsx:66
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:177
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:218
+#: src/components/Assets/Assets.tsx:225
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -995,11 +1013,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:181
+#: src/components/Assets/Assets.tsx:187
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:227
+#: src/components/Assets/Assets.tsx:234
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -1038,7 +1056,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:189
+#: src/components/Assets/Assets.tsx:195
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1052,7 +1070,7 @@ msgid "显示侧边栏"
 msgstr "Show sidebar"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:75
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:224
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:252
 msgid "显示效果"
 msgstr "Display effect"
 
@@ -1060,7 +1078,7 @@ msgstr "Display effect"
 msgid "显示文本框"
 msgstr "Show text box"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:151
 msgid "显示立绘"
 msgstr "Show figure"
 
@@ -1093,14 +1111,14 @@ msgid "本句前插入句子"
 msgstr "Insert sentence before this"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:60
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:164
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:168
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:79
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:105
 msgid "本句执行后执行下一句"
 msgstr "Execute next sentence after this"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:61
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:165
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:169
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:79
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:105
 msgid "本句执行后等待"
@@ -1140,11 +1158,7 @@ msgstr "Title background music"
 msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
-#: src/pages/dashboard/About.tsx:66
-msgid "检测到新版本"
-msgstr "New version detected"
-
-#: src/pages/dashboard/DashBoard.tsx:176
+#: src/pages/dashboard/DashBoard.tsx:255
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "Template"
@@ -1239,7 +1253,7 @@ msgstr "Clear special effects of current stage"
 msgid "清除特效"
 msgstr "Clear effects"
 
-#: src/pages/dashboard/DashBoard.tsx:174
+#: src/pages/dashboard/DashBoard.tsx:253
 msgid "游戏"
 msgstr "Games"
 
@@ -1304,7 +1318,7 @@ msgstr "No file currently open"
 msgid "相对"
 msgstr "Relative"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:304
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:333
 msgid "睁开眼睛"
 msgstr "Open eyes"
 
@@ -1320,7 +1334,7 @@ msgstr "Confirm button text"
 msgid "视图"
 msgstr "View"
 
-#: src/pages/dashboard/About.tsx:75
+#: src/pages/dashboard/About.tsx:35
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
@@ -1344,7 +1358,7 @@ msgstr "Disable skipping video"
 msgid "立绘"
 msgstr "Figure"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:220
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:248
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:164
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:71
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:97
@@ -1352,11 +1366,11 @@ msgstr "Figure"
 msgid "立绘 ID"
 msgstr "Figure ID"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:212
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:240
 msgid "立绘ID（可选）"
 msgstr "Figure ID (optional)"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:199
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:227
 msgid "立绘位置"
 msgstr "Figure position"
 
@@ -1364,7 +1378,7 @@ msgstr "Figure position"
 msgid "立绘插图的ID"
 msgstr "ID of figure illustration"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:150
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:154
 msgid "立绘文件"
 msgstr "Figure file"
 
@@ -1472,6 +1486,10 @@ msgstr "Auto-hide toolbar"
 msgid "自定义"
 msgstr "Customization"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:212
+msgid "自定义 Live2D 绘制范围"
+msgstr "Custom Live2D drawing area"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:52
 msgid "自定义值"
 msgstr "Custom Value "
@@ -1484,6 +1502,11 @@ msgstr "Custom effect name"
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:45
 msgid "舞台对象控制"
 msgstr "Stage object control"
+
+#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/DashBoard.tsx:203
+msgid "获取最新版本"
+msgstr "Download Latest Version"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:248
 msgid "获取来自用户的字符输入"
@@ -1587,8 +1610,8 @@ msgstr "This command is not recognized, please open script editing mode to edit 
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
 
-#: src/pages/dashboard/DashBoard.tsx:157
-#: src/pages/dashboard/DashBoard.tsx:158
+#: src/pages/dashboard/DashBoard.tsx:236
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1625,6 +1648,10 @@ msgstr "Assets"
 msgid "输入目标 ID"
 msgstr "Enter Target ID"
 
+#: src/components/Assets/Assets.tsx:284
+msgid "过滤文件"
+msgstr "Filter files"
+
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
 #: src/pages/dashboard/TemplateElement.tsx:117
@@ -1634,7 +1661,7 @@ msgid "返回"
 msgstr "Return"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:56
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:160
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:164
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:75
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:101
 msgid "连续执行"
@@ -1661,7 +1688,7 @@ msgstr "Choose Avatar"
 msgid "选择效果音文件"
 msgstr "Choose Sound Effect File"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:143
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 msgid "选择立绘文件"
 msgstr "Choose Figure File"
 
@@ -1757,11 +1784,11 @@ msgstr "Appreciation Asset File"
 msgid "鉴赏音乐"
 msgstr "Appreciation Music"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:294
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:323
 msgid "闭上嘴"
 msgstr "Close Mouth"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:314
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:343
 msgid "闭上眼睛"
 msgstr "Close Eyes"
 
@@ -1798,7 +1825,7 @@ msgstr "Left"
 msgid "音乐"
 msgstr "Music"
 
-#: src/pages/dashboard/About.tsx:103
+#: src/pages/dashboard/About.tsx:63
 msgid "项目主页"
 msgstr "Project Homepage"
 
