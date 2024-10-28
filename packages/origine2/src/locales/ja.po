@@ -30,6 +30,10 @@ msgstr "<0>新しいテンプレートを適用する</0>"
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:179
+msgid "1, 2, 3, ..."
+msgstr "1, 2, 3, ..."
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:16
 msgid "BGM"
 msgstr "BGM"
@@ -165,22 +169,22 @@ msgstr " Y軸位移："
 msgid "Y轴缩放："
 msgstr " Y軸スケール："
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:171
+msgid "z-index"
+msgstr "z-index"
+
 #: src/pages/editor/Topbar/Topbar.tsx:129
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
-#: src/components/Assets/Assets.tsx:350
-#: src/components/Assets/Assets.tsx:351
+#: src/components/Assets/Assets.tsx:368
+#: src/components/Assets/Assets.tsx:369
 msgid "上传"
 msgstr "アップロード"
 
-#: src/components/Assets/Assets.tsx:254
+#: src/components/Assets/Assets.tsx:262
 msgid "上传资源"
 msgstr "アセットのアップロード"
-
-#: src/pages/dashboard/About.tsx:88
-msgid "下载最新版本"
-msgstr "最新バージョンをダウンロード"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
 msgid "下雨"
@@ -206,7 +210,7 @@ msgstr " ワード"
 msgid "中"
 msgstr "中央"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:47
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:49
 msgid "中间"
 msgstr "中央"
 
@@ -279,6 +283,10 @@ msgstr "以前に設定されたアクションターゲットを使用。IDを�
 msgid "使用预设目标"
 msgstr "事前設定されたターゲットを使用"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:220
+msgid "例如：-100,-100,100,100"
+msgstr "例えば：-100,-100,100,100"
+
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:34
 msgid "侧边栏"
 msgstr "サイドバー"
@@ -333,8 +341,8 @@ msgstr "全画面テキスト"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "全画面画面でテキストを表示する。独白やシーンの導入に使用"
 
-#: src/pages/dashboard/About.tsx:65
-#: src/pages/dashboard/About.tsx:66
+#: src/pages/dashboard/About.tsx:25
+#: src/pages/dashboard/About.tsx:26
 msgid "关于"
 msgstr "About"
 
@@ -356,8 +364,8 @@ msgstr "アバターを非表示"
 msgid "关闭效果音"
 msgstr "効果音を停止"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:140
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:144
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:151
 msgid "关闭立绘"
 msgstr "立ち絵を非表示"
 
@@ -390,7 +398,8 @@ msgstr "最小幅"
 msgid "最小高度"
 msgstr "最小高さ"
 
-#: src/pages/dashboard/About.tsx:81
+#: src/pages/dashboard/About.tsx:41
+#: src/pages/dashboard/DashBoard.tsx:198
 msgid "最新版本"
 msgstr "最新バージョン"
 
@@ -426,8 +435,8 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
-#: src/components/Assets/Assets.tsx:202
-#: src/components/Assets/Assets.tsx:241
+#: src/components/Assets/Assets.tsx:208
+#: src/components/Assets/Assets.tsx:248
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -472,7 +481,7 @@ msgstr "テンプレートを削除"
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
-#: src/components/Assets/Assets.tsx:267
+#: src/components/Assets/Assets.tsx:275
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "更新"
@@ -494,7 +503,7 @@ msgstr "太字"
 msgid "动画"
 msgstr "アニメーション"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:283
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:312
 msgid "半张嘴"
 msgstr "半分開いた口"
 
@@ -510,6 +519,10 @@ msgstr "一行コメント"
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
+#: src/pages/dashboard/DashBoard.tsx:193
+msgid "发现新版本"
+msgstr "新しいバージョンが検出されました"
+
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 msgid "取消"
 msgstr "キャンセル"
@@ -518,7 +531,7 @@ msgstr "キャンセル"
 msgid "变换"
 msgstr "トランスフォーム"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:49
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:51
 msgid "右侧"
 msgstr "右"
 
@@ -549,7 +562,7 @@ msgstr "有効化"
 msgid "启用视频跳过"
 msgstr "動画のスキップを有効にする"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:258
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:286
 msgid "唇形同步与眨眼"
 msgstr "口パクとまばたき"
 
@@ -716,7 +729,7 @@ msgstr "アバターを表示"
 msgid "属性"
 msgstr "プロパティ"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:50
 msgid "左侧"
 msgstr "左"
 
@@ -731,12 +744,12 @@ msgstr "左の立ち絵"
 msgid "左对齐"
 msgstr "左揃え"
 
-#: src/pages/dashboard/DashBoard.tsx:126
+#: src/pages/dashboard/DashBoard.tsx:149
 msgid "已创建"
 msgstr "作成済み"
 
-#: src/components/Assets/Assets.tsx:173
-#: src/components/Assets/Assets.tsx:220
+#: src/components/Assets/Assets.tsx:179
+#: src/components/Assets/Assets.tsx:227
 #: src/components/Assets/FileElement.tsx:70
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "ファイルまたはフォルダは既に存在します {0}"
@@ -772,13 +785,18 @@ msgstr "色の変更を適用"
 msgid "延迟时间（秒）"
 msgstr "遅延時間（秒）"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:272
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:301
 msgid "张开嘴"
 msgstr "開いた口"
 
-#: src/pages/dashboard/About.tsx:77
+#: src/pages/dashboard/About.tsx:37
+#: src/pages/dashboard/DashBoard.tsx:197
 msgid "当前版本"
 msgstr "現在のバージョン"
+
+#: src/pages/dashboard/DashBoard.tsx:207
+msgid "忽略此版本"
+msgstr "このバージョンを無視する"
 
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
@@ -791,12 +809,12 @@ msgid "手动输入 ID"
 msgstr "IDを手動で設定"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:78
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:227
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:255
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:43
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
-#: src/components/Assets/Assets.tsx:268
+#: src/components/Assets/Assets.tsx:276
 msgid "打开文件夹"
 msgstr "フォルダーを開く"
 
@@ -804,14 +822,14 @@ msgstr "フォルダーを開く"
 msgid "执行到此句"
 msgstr "この文まで実行"
 
-#: src/components/Assets/Assets.tsx:187
+#: src/components/Assets/Assets.tsx:193
 msgid "扩展名"
 msgstr "拡張子"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:88
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:91
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:240
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:242
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:268
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:270
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:52
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:55
 msgid "持续时间（单位为毫秒）"
@@ -892,7 +910,7 @@ msgid "效果声音"
 msgstr "効果音"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:83
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:235
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:263
 msgid "效果提示"
 msgstr "効果のヒント"
 
@@ -901,7 +919,7 @@ msgid "效果编辑"
 msgstr "エフェクトエディタ"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:80
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:230
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:258
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:45
 msgid "效果编辑器"
 msgstr "エフェクトエディタ"
@@ -974,15 +992,15 @@ msgstr "テキストの長さ (em)"
 msgid "文本阴影"
 msgstr "テキストシャドウ"
 
-#: src/pages/dashboard/About.tsx:106
+#: src/pages/dashboard/About.tsx:66
 msgid "文档"
 msgstr "ドキュメント"
 
-#: src/components/Assets/Assets.tsx:171
+#: src/components/Assets/Assets.tsx:177
 msgid "新建文件"
 msgstr "新しいファイルを作成"
 
-#: src/components/Assets/Assets.tsx:218
+#: src/components/Assets/Assets.tsx:225
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
@@ -995,11 +1013,11 @@ msgstr "新しいテンプレートを作成"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/Assets.tsx:181
+#: src/components/Assets/Assets.tsx:187
 msgid "新文件名"
 msgstr "新しいファイル名"
 
-#: src/components/Assets/Assets.tsx:227
+#: src/components/Assets/Assets.tsx:234
 msgid "新文件夹名"
 msgstr "新しいフォルダー名"
 
@@ -1038,7 +1056,7 @@ msgstr "キャラクター名は設定不可"
 msgid "旋转角度："
 msgstr "回転："
 
-#: src/components/Assets/Assets.tsx:189
+#: src/components/Assets/Assets.tsx:195
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
@@ -1052,7 +1070,7 @@ msgid "显示侧边栏"
 msgstr "サイドバーを表示"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:75
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:224
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:252
 msgid "显示效果"
 msgstr "エフェクト"
 
@@ -1060,7 +1078,7 @@ msgstr "エフェクト"
 msgid "显示文本框"
 msgstr "テキストボックスを表示"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:151
 msgid "显示立绘"
 msgstr "立ち絵を表示"
 
@@ -1093,14 +1111,14 @@ msgid "本句前插入句子"
 msgstr "選択した文の前に追加"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:60
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:164
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:168
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:79
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:105
 msgid "本句执行后执行下一句"
 msgstr "この文が実行された後、次の文を実行"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:61
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:165
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:169
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:79
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:105
 msgid "本句执行后等待"
@@ -1140,11 +1158,7 @@ msgstr "タイトルのBGM"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
-#: src/pages/dashboard/About.tsx:66
-msgid "检测到新版本"
-msgstr "新しいバージョンが見つかりました"
-
-#: src/pages/dashboard/DashBoard.tsx:176
+#: src/pages/dashboard/DashBoard.tsx:255
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "テンプレート"
@@ -1239,7 +1253,7 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:174
+#: src/pages/dashboard/DashBoard.tsx:253
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1304,7 +1318,7 @@ msgstr "現在開いているファイルはありません"
 msgid "相对"
 msgstr "相対"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:304
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:333
 msgid "睁开眼睛"
 msgstr "開いた目"
 
@@ -1320,7 +1334,7 @@ msgstr "確認ボタンのテキスト"
 msgid "视图"
 msgstr "ビュー"
 
-#: src/pages/dashboard/About.tsx:75
+#: src/pages/dashboard/About.tsx:35
 msgid "视觉小说编辑，再进化"
 msgstr "Galgame Editing. Redefined"
 
@@ -1344,7 +1358,7 @@ msgstr "動画のスキップを無効にする"
 msgid "立绘"
 msgstr "Figure"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:220
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:248
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:164
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:71
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:97
@@ -1352,11 +1366,11 @@ msgstr "Figure"
 msgid "立绘 ID"
 msgstr "立ち絵ID"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:212
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:240
 msgid "立绘ID（可选）"
 msgstr "立ち絵ID(オプション)"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:199
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:227
 msgid "立绘位置"
 msgstr "描画位置"
 
@@ -1364,7 +1378,7 @@ msgstr "描画位置"
 msgid "立绘插图的ID"
 msgstr "関連する立ち絵のID"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:150
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:154
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
 
@@ -1472,6 +1486,10 @@ msgstr "ツールバーを自動的に隠す"
 msgid "自定义"
 msgstr "カスタム"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:212
+msgid "自定义 Live2D 绘制范围"
+msgstr "Live2D 描画範囲のカスタマイズ"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:52
 msgid "自定义值"
 msgstr "カスタム値"
@@ -1484,6 +1502,11 @@ msgstr "カスタムの特殊効果名"
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:45
 msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
+
+#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/DashBoard.tsx:203
+msgid "获取最新版本"
+msgstr "最新バージョンをダウンロード"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:248
 msgid "获取来自用户的字符输入"
@@ -1587,8 +1610,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:157
-#: src/pages/dashboard/DashBoard.tsx:158
+#: src/pages/dashboard/DashBoard.tsx:236
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1625,6 +1648,10 @@ msgstr "アセット"
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
 
+#: src/components/Assets/Assets.tsx:284
+msgid "过滤文件"
+msgstr "ファイルのフィルタリング"
+
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
 #: src/pages/dashboard/TemplateElement.tsx:117
@@ -1634,7 +1661,7 @@ msgid "返回"
 msgstr "戻る"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:56
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:160
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:164
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:75
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:101
 msgid "连续执行"
@@ -1661,7 +1688,7 @@ msgstr "アバターを選択"
 msgid "选择效果音文件"
 msgstr "効果音ファイルを選択"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:143
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 msgid "选择立绘文件"
 msgstr "立ち絵ファイルを選択"
 
@@ -1757,11 +1784,11 @@ msgstr "CG/BGMファイルを選択"
 msgid "鉴赏音乐"
 msgstr "BGM鑑賞"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:294
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:323
 msgid "闭上嘴"
 msgstr "閉じた口"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:314
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:343
 msgid "闭上眼睛"
 msgstr "閉じた目"
 
@@ -1798,7 +1825,7 @@ msgstr "左寄せ"
 msgid "音乐"
 msgstr "BGM"
 
-#: src/pages/dashboard/About.tsx:103
+#: src/pages/dashboard/About.tsx:63
 msgid "项目主页"
 msgstr "プロジェクトホームページ"
 

@@ -4,17 +4,19 @@
 
 #### 新功能
 
-创建和重命名场景文件时检查是否有重名文件
+允许修改 Live2D 绘制范围
 
-全新的语言服务器
+允许设定立绘的 z-index
 
-在创建游戏后重新应用模板
+模拟口型同步
+
+优化版本升级提示
+
+优化文件选择器，可以按文件名过滤
 
 #### 修复
 
-4.5.7 修复：无法从状态中获取到对应 key 的变量时，返回 {key} 以避免变换不生效
-
-修复引擎的若干错误
+优化场景文件保存的稳定性
 
 <!-- English Translation -->
 ## Release Notes
@@ -23,17 +25,19 @@
 
 #### New Features
 
-Check for duplicate file names when creating and renaming scene files
+Allow modifying Live2D drawing range
 
-Brand-new language server
+Allow setting the z-index of the standing picture
 
-Reapply template after game creation
+Simulate lip sync
+
+Optimized version upgrade prompt
+
+Optimized file picker to filter by file name
 
 #### Fixes
 
-4.5.7 Fix: When the corresponding key variable cannot be obtained from the state, return {key} to avoid ineffective transformation.
-
-Fix several bugs in the engine
+Optimized the stability of scene file saving
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -42,18 +46,19 @@ Fix several bugs in the engine
 
 #### 新機能
 
-シーンファイルを作成および名前変更するときに、名前が重複しているかどうかを確認する
+Live2D 描画範囲変更可能
 
-新しい言語サーバー
+立ち絵 z-index 設定可能
 
-ゲームの作成後にテンプレートを再適用する
+口パク同期シミュレーション
 
+バージョンアップメッセージ最適化
+
+ファイルセレクター最適化、ファイル名フィルタリング可能
 
 #### 修正
 
-4.5.7 修正：状態から対応する key の変数が取得できない場合、{key} を返すようにし、変換が無効になるのを回避しました
-
-エンジンのいくつかのバグを修正
+シーンファイル保存安定性最適化
 
 [//]: # (<!-- French Translation -->)
 
