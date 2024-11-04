@@ -4,19 +4,11 @@
 
 #### 新功能
 
-允许修改 Live2D 绘制范围
-
-允许设定立绘的 z-index
-
-模拟口型同步
-
-优化版本升级提示
-
-优化文件选择器，可以按文件名过滤
+对话内容支持不间断的连续空格
 
 #### 修复
 
-优化场景文件保存的稳定性
+引擎修复：读取存档时意外在状态表中存储了多份演出记录的问题；带有 id 的效果音播放在停止后演出未完全清除的问题；对状态表和演出控制器中的演出列表在插入时去重
 
 <!-- English Translation -->
 ## Release Notes
@@ -25,19 +17,11 @@
 
 #### New Features
 
-Allow modifying Live2D drawing range
-
-Allow setting the z-index of the standing picture
-
-Simulate lip sync
-
-Optimized version upgrade prompt
-
-Optimized file picker to filter by file name
+Dialogue content now supports continuous spaces.
 
 #### Fixes
 
-Optimized the stability of scene file saving
+Engine fixes:  Fixed an issue where multiple performance records were unexpectedly stored in the state table when loading a save; fixed an issue where performances with IDs were not completely cleared after stopping sound effects playback; deduplicated performance lists in the state table and performance controller upon insertion.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -46,19 +30,11 @@ Optimized the stability of scene file saving
 
 #### 新機能
 
-Live2D 描画範囲変更可能
-
-立ち絵 z-index 設定可能
-
-口パク同期シミュレーション
-
-バージョンアップメッセージ最適化
-
-ファイルセレクター最適化、ファイル名フィルタリング可能
+会話内容で連続するスペースが正しく表示されるようになりました。
 
 #### 修正
 
-シーンファイル保存安定性最適化
+エンジン修正：セーブデータ読み込み時にステータステーブルに複数の演出記録が重複して保存される問題、ID付きの効果音が停止した後も演出が完全にクリアされない問題、ステータステーブルと演出コントローラーの演出リストへの挿入時に重複を除去するように修正しました。
 
 [//]: # (<!-- French Translation -->)
 
