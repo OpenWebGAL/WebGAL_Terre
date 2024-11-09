@@ -102,7 +102,7 @@ msgstr "end;"
 msgid "getUserInput:;"
 msgstr "getUserInput:;"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:205
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:207
 msgid "Intro 文本"
 msgstr "Intro 文本"
 
@@ -474,7 +474,7 @@ msgstr "创建新游戏"
 #: src/components/Assets/FileElement.tsx:111
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:193
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:195
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:114
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
 msgid "删除"
@@ -519,7 +519,7 @@ msgid "加粗"
 msgstr "加粗"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:103
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:240
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:242
 msgid "动画"
 msgstr "动画"
 
@@ -574,6 +574,7 @@ msgstr "启动、切换或停止背景音乐的播放"
 msgid "启动图"
 msgstr "启动图"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
 msgid "启用"
 msgstr "启用"
@@ -797,11 +798,11 @@ msgstr "平铺"
 msgid "应用的模板"
 msgstr "应用的模板"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:294
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:305
 msgid "应用颜色变化"
 msgstr "应用颜色变化"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:253
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:255
 msgid "延迟时间（秒）"
 msgstr "延迟时间（秒）"
 
@@ -821,6 +822,10 @@ msgstr "忽略此版本"
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
 msgstr "我确定要删除游戏"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:277
+msgid "手动触发下一句"
+msgstr "手动触发下一句"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:47
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:73
@@ -892,6 +897,14 @@ msgstr "提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，�
 msgid "提示：换行符最多可达三行"
 msgstr "提示：换行符最多可达三行"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:263
+msgid "提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令"
+msgstr "提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:83
+msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
+msgstr "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
+
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:53
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "提示：样式中用到的资源放在 assets 目录下"
@@ -931,8 +944,8 @@ msgstr "效果声音"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:83
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:263
-msgid "效果提示"
-msgstr "效果提示"
+#~ msgid "效果提示"
+#~ msgstr "效果提示"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:41
 msgid "效果编辑"
@@ -944,8 +957,8 @@ msgstr "效果编辑"
 msgid "效果编辑器"
 msgstr "效果编辑器"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:222
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:224
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:226
 msgid "效果选项"
 msgstr "效果选项"
 
@@ -969,12 +982,12 @@ msgstr "效果音文件"
 #~ msgid "文件"
 #~ msgstr "文件"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:227
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:229
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:168
 msgid "文字大小"
 msgstr "文字大小"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:283
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:294
 msgid "文字颜色"
 msgstr "文字颜色"
 
@@ -1248,7 +1261,7 @@ msgstr "添加属性"
 msgid "添加或切换指定位置的立绘"
 msgstr "添加或切换指定位置的立绘"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:220
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:222
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:124
 msgid "添加新行"
 msgstr "添加新行"
@@ -1374,6 +1387,10 @@ msgstr "视频选项"
 msgid "禁止跳过视频"
 msgstr "禁止跳过视频"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:195
+msgid "禁用"
+msgstr "禁用"
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
 msgid "立绘"
 msgstr "立绘"
@@ -1410,7 +1427,7 @@ msgstr "纹理"
 msgid "线性渐变"
 msgstr "线性渐变"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:266
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:268
 msgid "结束后保持"
 msgstr "结束后保持"
 
@@ -1481,7 +1498,7 @@ msgstr "背景音乐"
 msgid "背景音乐文件"
 msgstr "背景音乐文件"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:277
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:288
 msgid "背景颜色"
 msgstr "背景颜色"
 

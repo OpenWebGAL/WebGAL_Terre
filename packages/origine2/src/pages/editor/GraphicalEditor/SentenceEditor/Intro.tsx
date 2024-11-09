@@ -21,6 +21,7 @@ export default function Intro(props: ISentenceEditorProps) {
   const introTextList = useValue(props.sentence.content.split("|"));
   const isHoldFromSentence = getArgByKey(props.sentence, 'hold');
   const isHold = useValue(!!isHoldFromSentence);
+  const isUserForward = useValue(!!getArgByKey(props.sentence, 'userForward'));
   const initialBackgroundColor: IColor = {
     r: 0,
     g: 0,
@@ -177,7 +178,8 @@ export default function Intro(props: ISentenceEditorProps) {
     const backgroundRgbaColor = `rgba(${backgroundColor.value.r}, ${backgroundColor.value.g}, ${backgroundColor.value.b}, ${backgroundColor.value.a ? backgroundColor.value.a / 100 : 1})`;
     const fontRgbaColor = `rgba(${fontColor.value.r}, ${fontColor.value.g}, ${fontColor.value.b}, ${fontColor.value.a ? fontColor.value.a / 100 : 1})`;
     const holdStr = isHold.value ? ` -hold` : '';
-    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime}${holdStr};`);
+    const userForwardStr = isUserForward.value ? ` -userForward` : '';
+    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime}${holdStr}${userForwardStr};`);
   };
 
   const introCompList = introTextList.value.map((text, index) => {
@@ -268,6 +270,15 @@ export default function Intro(props: ISentenceEditorProps) {
               checked={isHold.value}
               onChange={(ev, data) => {
                 isHold.set(data.checked ?? false);
+                submit();
+              }}
+            />
+          </CommonOptions>
+          <CommonOptions title={t`手动触发下一句`}>
+            <Switch
+              checked={isUserForward.value}
+              onChange={(ev, data) => {
+                isUserForward.set(data.checked ?? false);
                 submit();
               }}
             />
