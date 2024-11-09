@@ -49,7 +49,7 @@ export default function GameConfig() {
 
   const currentTemplateName = currentTemplateResp.data?.name ?? '';
 
-  const selectorTemplate = <Dropdown style={{minWidth:150}} key={currentTemplateName}
+  const selectorTemplate = <Dropdown style={{minWidth: 150}} key={currentTemplateName}
     value={templateName === '__STANDARD__WG__' ? t`WebGAL Classic` : templateName}
     selectedOptions={[currentTemplateName ?? '__STANDARD__WG__']}
     onOptionSelect={(_, elem) => {
@@ -58,13 +58,13 @@ export default function GameConfig() {
     {/* 应用模板的接口还不支持应用默认模板 */}
     {/* <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Classic`}</Option> */}
     {(templatesResp.data ?? []).map(e =>
-      <Option  key={e.name} value={e.name}>{e.name}</Option>
+      <Option key={e.name} value={e.name}>{e.name}</Option>
     )}
   </Dropdown>;
 
-  useEffect(()=>{
+  useEffect(() => {
     setTemplateName(currentTemplateName);
-  },[currentTemplateName]);
+  }, [currentTemplateName]);
 
   async function applyNewTemplate() {
     if (templateName) {
@@ -185,6 +185,16 @@ export default function GameConfig() {
             </Trans>
           </div>
         </div>
+      </TabItem>
+      <TabItem title="紧急回避">
+        <GameConfigEditorWithSelector
+          key="isUserForward"
+          value={getConfigContentAsString('Show_panic') ? getConfigContentAsString('Show_panic') : 'true'}
+          selectItems={[
+            {key: 'true', text: t`启用`},
+            {key: 'false', text: t`禁用`}
+          ]}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Show_panic', e)}/>
       </TabItem>
     </>
   );

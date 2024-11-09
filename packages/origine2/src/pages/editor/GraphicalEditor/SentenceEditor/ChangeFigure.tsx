@@ -260,7 +260,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         <div>
           <CommonTips
-            text={t`效果提示`}/>
+            text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();
