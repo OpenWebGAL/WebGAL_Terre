@@ -544,6 +544,7 @@ msgid "发现新版本"
 msgstr "发现新版本"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:96
 msgid "取消"
 msgstr "取消"
 
@@ -794,6 +795,15 @@ msgstr "常规演出"
 msgid "平铺"
 msgstr "平铺"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:98
+msgid "应用"
+msgstr "应用"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:82
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:90
+msgid "应用当前模板到游戏"
+msgstr "应用当前模板到游戏"
+
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
 msgstr "应用的模板"
@@ -905,7 +915,7 @@ msgstr "提示：效果只有在切换到不同立绘或关闭之前的立绘再
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:53
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:55
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "提示：样式中用到的资源放在 assets 目录下"
 
@@ -1775,6 +1785,10 @@ msgstr "选项按钮（禁用）"
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "选项按钮外层"
 msgstr "选项按钮外层"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:78
+msgid "选项菜单"
+msgstr "选项菜单"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "透明度（0-1）："

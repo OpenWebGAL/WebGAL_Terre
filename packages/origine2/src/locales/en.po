@@ -524,6 +524,7 @@ msgid "发现新版本"
 msgstr "New version detected"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:96
 msgid "取消"
 msgstr "Cancel"
 
@@ -774,6 +775,15 @@ msgstr "Regular performance"
 msgid "平铺"
 msgstr "Tiling"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:98
+msgid "应用"
+msgstr "Apply"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:82
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:90
+msgid "应用当前模板到游戏"
+msgstr "Apply current template to game"
+
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
 msgstr "Applied template"
@@ -885,7 +895,7 @@ msgstr "Tip: The effect will only take place when switching to a different chara
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "Tip: The effect will only take place when switching to a different background or removing the current background and adding it again. If you want to set an effect for an existing background, please use a separate command for setting effects."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:53
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:55
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "Tips: Resources used in styles are placed in the assets directory"
 
@@ -1755,6 +1765,10 @@ msgstr "Selection Button (disabled)"
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:78
+msgid "选项菜单"
+msgstr "Option Menu"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "透明度（0-1）："
