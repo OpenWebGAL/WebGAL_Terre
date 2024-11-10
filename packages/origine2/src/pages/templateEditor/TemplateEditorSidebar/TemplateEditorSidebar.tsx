@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import Assets, {IFileFunction} from '@/components/Assets/Assets';
 import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
 import useEditorStore from '@/store/useEditorStore';
-import {Button} from '@fluentui/react-components';
+import {Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger} from '@fluentui/react-components';
 import {useTemplateEditorContext} from '@/store/useTemplateEditorStore';
-import {ArrowLeftFilled, ArrowLeftRegular, bundleIcon} from "@fluentui/react-icons";
+import {ArrowLeftFilled, ArrowLeftRegular, bundleIcon, NavigationFilled, NavigationRegular} from "@fluentui/react-icons";
 import {ITab} from '@/types/templateEditor';
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
@@ -13,6 +13,7 @@ import {redirect} from "@/hooks/useHashRoute";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
+const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 
 export default function TemplateEditorSidebar() {
   const templateName = useEditorStore.use.subPage();
@@ -44,6 +45,7 @@ export default function TemplateEditorSidebar() {
         <span className={styles.title}>
           {templateName}
         </span>
+        <OptionMenu/>
       </div>
       <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
         <ComponentTree/>
@@ -60,6 +62,47 @@ export default function TemplateEditorSidebar() {
     </div>
   );
 }
+
+const OptionMenu = (): ReactNode => {
+  const templateName = useEditorStore.use.subPage();
+
+  const [applyTemplateDialogIsOpen, setApplyTemplateDialogIsOpen] = useState(false);
+
+  const [gameList, setGameList] = useState([]);
+  const [selectedGame, setSelectedGame] = useState<string[]>([]);
+
+  return (
+    <>
+      <Menu>
+        <MenuTrigger>
+          <MenuButton appearance='subtle' icon={<NavigationIcon />} title={t`选项菜单`} style={{ minWidth: 0, textWrap: 'nowrap' }} />
+        </MenuTrigger>
+        <MenuPopover>
+          <MenuList>
+            <MenuItem onClick={() => setApplyTemplateDialogIsOpen(true)}>{t`应用当前模板到游戏`}</MenuItem>
+          </MenuList>
+        </MenuPopover>
+      </Menu>
+
+      <Dialog open={applyTemplateDialogIsOpen} onOpenChange={(event, data) => setApplyTemplateDialogIsOpen(data.open)}>
+        <DialogSurface>
+          <DialogBody>
+            <DialogTitle>{t`应用当前模板到游戏`}</DialogTitle>
+            <DialogContent>
+              {gameList}
+            </DialogContent>
+            <DialogActions>
+              <DialogTrigger disableButtonEnhancement>
+                <Button appearance="secondary">{t`取消`}</Button>
+              </DialogTrigger>
+              <Button appearance="primary">{t`应用`}</Button>
+            </DialogActions>
+          </DialogBody>
+        </DialogSurface>
+      </Dialog>
+    </>
+  );
+};
 
 function ComponentTreeReSizer() {
   const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);

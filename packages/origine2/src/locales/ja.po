@@ -524,6 +524,7 @@ msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:96
 msgid "取消"
 msgstr "キャンセル"
 
@@ -774,6 +775,15 @@ msgstr "通常演出"
 msgid "平铺"
 msgstr "タイリング"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:98
+msgid "应用"
+msgstr "適用"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:82
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:90
+msgid "应用当前模板到游戏"
+msgstr "現在のテンプレートをゲームに適用する"
+
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
@@ -885,7 +895,7 @@ msgstr "ヒント：この効果は、異なる立ち絵に切り替えるか、
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "ヒント：エフェクトは、異なる背景に切り替えるか、一度背景を削除してから再度追加した場合にのみ有効になります。既存の背景にエフェクトを設定する場合は、専用の「エフェクト設定」コマンドを使用してください。"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:53
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:55
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "ヒント：スタイルで使用されるリソースは assets ディレクトリにあります"
 
@@ -1755,6 +1765,10 @@ msgstr "選択肢ボタン（無効状態）"
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:78
+msgid "选项菜单"
+msgstr "オプションメニュー"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "透明度（0-1）："
