@@ -3,6 +3,8 @@ import { _open } from '../../util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as process from 'process';
 import * as asar from '@electron/asar';
+import { GameInfoDto } from './manage-game.dto';
+import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 
 @Injectable()
 export class ManageGameService {
@@ -10,6 +12,39 @@ export class ManageGameService {
     private readonly logger: ConsoleLogger,
     private readonly webgalFs: WebgalFsService,
   ) {}
+
+  /**
+   * 获取游戏列表
+   */
+  async getGameList(): Promise<GameInfoDto[]> {
+    // 如果游戏文件夹不存在就创建
+    if (!(await this.webgalFs.existsDir('public/games')))
+      await this.webgalFs.mkdir('public', 'games');
+    const path = this.webgalFs.getPathFromRoot(`public/games`);
+    const dirInfo = await this.webgalFs.getDirInfo(path);
+    const gameList: Promise<GameInfoDto>[] = dirInfo
+      .filter((item) => item.isDir)
+      .map(async (item): Promise<GameInfoDto> => {
+        const gameDir = item.name;
+        const gameConfig = await this.getGameConfig(gameDir);
+        const configFilePath = this.webgalFs.getPathFromRoot(
+          `/public/games/${gameDir}/game/template/template.json`,
+        );
+        const templateConfigString = await this.webgalFs.readTextFile(
+          configFilePath,
+        );
+        const templateConfig: TemplateConfigDto = JSON.parse(
+          templateConfigString as string,
+        );
+        return {
+          name: gameConfig.Game_name,
+          dir: item.name,
+          cover: gameConfig.Title_img,
+          template: templateConfig,
+        };
+      });
+    return Promise.all(gameList);
+  }
 
   /**
    * 打开游戏文件夹
@@ -93,12 +128,14 @@ export class ManageGameService {
       Description: string;
       Game_key: string;
       Package_name: string;
+      Title_img: string;
     }
     const config: Config = {
       Game_name: '',
       Description: '',
       Game_key: '',
       Package_name: '',
+      Title_img: '',
     };
     // 根据 GameName 找到游戏所在目录
     const gameDir = this.webgalFs.getPathFromRoot(
