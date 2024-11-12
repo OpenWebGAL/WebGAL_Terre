@@ -57,13 +57,6 @@ interface IFileInfo {
   isDir: boolean;
 }
 
-// 游戏信息
-export interface GameInfo {
-  dir: string;
-  title: string;
-  cover: string;
-}
-
 export interface TemplateInfo {
   dir: string;
   title: string;
@@ -83,20 +76,9 @@ const AlbumIcon = bundleIcon(AlbumFilled, AlbumRegular);
 const DismissIcon = bundleIcon(DismissFilled, DismissRegular);
 
 export const gameListFetcher = async () => {
-  const data = (await api.manageGameControllerGetGameList()).data;
-  const gameList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
+  const gameList = (await api.manageGameControllerGetGameList()).data;
   logger.info("返回的游戏列表", gameList);
-  const getGameInfoList = gameList.map(
-    async (gameName): Promise<GameInfo> => {
-      const gameConfigData = (await api.manageGameControllerGetGameConfig(gameName)).data;
-      const gameConfig = WebgalParser.parseConfig(gameConfigData as unknown as string);
-      return {
-        dir: gameName,
-        title: gameConfig.find(e => e.command === "Game_name")?.args?.join('') ?? "",
-        cover: gameConfig.find(e => e.command === "Title_img")?.args?.join('') ?? "",
-      };
-    });
-  return await Promise.all(getGameInfoList);
+  return gameList;
 };
 
 export const templateListFetcher = async () => {
