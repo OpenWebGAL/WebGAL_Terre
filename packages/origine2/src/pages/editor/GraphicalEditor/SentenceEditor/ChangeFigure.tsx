@@ -182,7 +182,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {figureFile.value.includes('.json') && (
         <>
-          <CommonOptions key="24" title="live2D Motion">
+          <CommonOptions key="24" title={t`Live2D 动作`}>
             <Dropdown
               value={currentMotion.value}
               selectedOptions={[currentMotion.value]}
@@ -196,7 +196,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             </Dropdown>
           </CommonOptions>
 
-          <CommonOptions key="25" title="live2D Expression">
+          <CommonOptions key="25" title={t`Live2D 表情`}>
             <Dropdown
               value={currentExpression.value}
               selectedOptions={[currentExpression.value]}
