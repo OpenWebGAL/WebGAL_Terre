@@ -94,6 +94,14 @@ msgstr "Intro texts"
 msgid "intro:;"
 msgstr "intro:;"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:185
+msgid "Live2D 动作"
+msgstr "Live2D Motion"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:199
+msgid "Live2D 表情"
+msgstr "Live2D Expression"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:173
 msgid "miniAvatar:选择小头像;"
 msgstr "miniAvatar: Choose a file of avatar;"
