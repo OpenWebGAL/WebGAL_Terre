@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Dropdown, Option, DropdownProps } from "@fluentui/react-components";
 
 interface WheelDropdownProps extends DropdownProps {
@@ -9,27 +9,34 @@ interface WheelDropdownProps extends DropdownProps {
 
 export default function WheelDropdown({ options, value, onValueChange, ...restProps }: WheelDropdownProps) {
   const dropdownRef = useRef<HTMLButtonElement>(null);
+  const optionKeys = Array.from(options.keys());
 
-  useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
+  const handleWheel = useCallback(
+    (event: WheelEvent) => {
       event.preventDefault();
       event.stopPropagation();
 
-      const currentIndex = Array.from(options.keys()).indexOf(value);
+      const currentIndex = optionKeys.indexOf(value);
+      let direction = 0;
 
-      let newIndex = currentIndex;
-      if (currentIndex === -1) {
-        newIndex = 0;
-      } else if (event.deltaY > 0) {
-        newIndex = (currentIndex + 1) % options.size;
+      // 判断滚动方向：向下滚动为 1，向上滚动为 -1，滚动停止为 0
+      if (event.deltaY > 0) {
+        direction = 1;
       } else if (event.deltaY < 0) {
-        newIndex = (currentIndex - 1 + options.size) % options.size;
+        direction = -1;
       }
 
-      const newTarget = Array.from(options.keys())[newIndex];
-      onValueChange(newTarget);
-    };
+      const newIndex = currentIndex === -1
+        ? 0
+        : (currentIndex + direction + options.size) % options.size;
 
+      const newTarget = optionKeys[newIndex];
+      onValueChange(newTarget);
+    },
+    [value, onValueChange, options.size, optionKeys]
+  );
+
+  useEffect(() => {
     const dropdownElement = dropdownRef.current;
     if (dropdownElement) {
       dropdownElement.addEventListener('wheel', handleWheel, { passive: false });
@@ -40,7 +47,7 @@ export default function WheelDropdown({ options, value, onValueChange, ...restPr
         dropdownElement.removeEventListener('wheel', handleWheel);
       }
     };
-  }, [value, options, onValueChange]);
+  }, [handleWheel]);
 
   return (
     <Dropdown
