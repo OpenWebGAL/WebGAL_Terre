@@ -165,7 +165,6 @@ jobs:
       - name: Compress
         run: 7z a -tzip release/WebGAL_Terre_Windows.zip release/*  
       - name: Upload Artifact
-        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Windows
