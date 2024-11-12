@@ -10,6 +10,7 @@ import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig"
 import useSWR, { useSWRConfig } from "swr";
 import { t } from '@lingui/macro';
 import Upload from "./Upload";
+import naturalCompare from 'natural-compare-lite';
 
 export interface IFile {
   extName: string;
@@ -64,8 +65,8 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
       const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: currentPathString + '/' + item.name }));
       const dirs = dirInfo.filter((item) => item.isDir);
       const files = dirInfo.filter((item) => !item.isDir).filter(e => e.name !== '.gitkeep');
-      dirs.sort((a, b) => a.name.localeCompare(b.name));
-      files.sort((a, b) => a.name.localeCompare(b.name));
+      dirs.sort((a, b) => naturalCompare(a.name, b.name));
+      files.sort((a, b) => naturalCompare(a.name, b.name));
       return [...dirs, ...files];
     } else return [];
   };
