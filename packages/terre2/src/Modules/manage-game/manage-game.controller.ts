@@ -32,6 +32,7 @@ import {
   EditSceneDto,
   EditTextFileDto,
   GameConfigDto,
+  GameInfoDto,
   MkDirDto,
   RenameDto,
   UploadFilesDto,
@@ -49,14 +50,13 @@ export class ManageGameController {
   @Get('gameList')
   @Get('gameList')
   @ApiOperation({ summary: 'Retrieve game list' })
-  @ApiResponse({ status: 200, description: 'Returned game list.' })
-  async getGameList() {
-    // 如果游戏文件夹不存在就创建
-    if (!(await this.webgalFs.existsDir('public/games')))
-      await this.webgalFs.mkdir('public', 'games');
-    return await this.webgalFs.getDirInfo(
-      this.webgalFs.getPathFromRoot('/public/games'),
-    );
+  @ApiResponse({
+    status: 200,
+    type: [GameInfoDto],
+    description: 'Returned game list.',
+  })
+  async getGameList(): Promise<GameInfoDto[]> {
+    return await this.manageGame.getGameList();
   }
 
   @Post('createGame')
