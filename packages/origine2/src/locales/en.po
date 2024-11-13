@@ -257,6 +257,10 @@ msgstr "Code Editor"
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:139
+msgid "使用中的模板："
+msgstr "Template in use: "
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
 msgstr "Use the special effects prepared in engine"
@@ -407,7 +411,7 @@ msgid "最小高度"
 msgstr "Min Height"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:198
+#: src/pages/dashboard/DashBoard.tsx:180
 msgid "最新版本"
 msgstr "Latest Version"
 
@@ -527,12 +531,12 @@ msgstr "Single line comment"
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
-#: src/pages/dashboard/DashBoard.tsx:193
+#: src/pages/dashboard/DashBoard.tsx:175
 msgid "发现新版本"
 msgstr "New version detected"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:96
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:151
 msgid "取消"
 msgstr "Cancel"
 
@@ -703,6 +707,11 @@ msgstr "Export as Android project file"
 msgid "导出为网页"
 msgstr "Export as webpage"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:103
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:111
+msgid "将当前模板应用到选定的游戏"
+msgstr "Apply the current template to selected games"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:54
 msgid "小"
 msgstr "Small"
@@ -754,7 +763,7 @@ msgstr "Left side figure"
 msgid "左对齐"
 msgstr "Left align"
 
-#: src/pages/dashboard/DashBoard.tsx:149
+#: src/pages/dashboard/DashBoard.tsx:131
 msgid "已创建"
 msgstr "Created"
 
@@ -783,14 +792,9 @@ msgstr "Regular performance"
 msgid "平铺"
 msgstr "Tiling"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:98
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:153
 msgid "应用"
 msgstr "Apply"
-
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:82
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:90
-msgid "应用当前模板到游戏"
-msgstr "Apply current template to game"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
@@ -809,11 +813,11 @@ msgid "张开嘴"
 msgstr "Open mouth"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:179
 msgid "当前版本"
 msgstr "Current version"
 
-#: src/pages/dashboard/DashBoard.tsx:207
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "忽略此版本"
 msgstr "Ignore this version"
 
@@ -903,7 +907,7 @@ msgstr "Tip: The effect will only take place when switching to a different chara
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "Tip: The effect will only take place when switching to a different background or removing the current background and adding it again. If you want to set an effect for an existing background, please use a separate command for setting effects."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:58
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "Tips: Resources used in styles are placed in the assets directory"
 
@@ -1189,7 +1193,7 @@ msgstr "Title background music"
 msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:255
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "Template"
@@ -1284,7 +1288,7 @@ msgstr "Clear special effects of current stage"
 msgid "清除特效"
 msgstr "Clear effects"
 
-#: src/pages/dashboard/DashBoard.tsx:253
+#: src/pages/dashboard/DashBoard.tsx:235
 msgid "游戏"
 msgstr "Games"
 
@@ -1539,7 +1543,7 @@ msgid "舞台对象控制"
 msgstr "Stage object control"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:203
+#: src/pages/dashboard/DashBoard.tsx:185
 msgid "获取最新版本"
 msgstr "Download Latest Version"
 
@@ -1645,8 +1649,8 @@ msgstr "This command is not recognized, please open script editing mode to edit 
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
 
-#: src/pages/dashboard/DashBoard.tsx:236
-#: src/pages/dashboard/DashBoard.tsx:237
+#: src/pages/dashboard/DashBoard.tsx:218
+#: src/pages/dashboard/DashBoard.tsx:219
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1774,7 +1778,7 @@ msgstr "Selection Button (disabled)"
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:78
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:94
 msgid "选项菜单"
 msgstr "Option Menu"
 
