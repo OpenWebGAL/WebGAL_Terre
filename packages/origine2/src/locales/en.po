@@ -94,11 +94,11 @@ msgstr "Intro texts"
 msgid "intro:;"
 msgstr "intro:;"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:185
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:186
 msgid "Live2D 动作"
 msgstr "Live2D Motion"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:199
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:196
 msgid "Live2D 表情"
 msgstr "Live2D Expression"
 
@@ -407,7 +407,7 @@ msgid "最小高度"
 msgstr "Min Height"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:198
+#: src/pages/dashboard/DashBoard.tsx:180
 msgid "最新版本"
 msgstr "Latest Version"
 
@@ -527,7 +527,7 @@ msgstr "Single line comment"
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
-#: src/pages/dashboard/DashBoard.tsx:193
+#: src/pages/dashboard/DashBoard.tsx:175
 msgid "发现新版本"
 msgstr "New version detected"
 
@@ -753,7 +753,7 @@ msgstr "Left side figure"
 msgid "左对齐"
 msgstr "Left align"
 
-#: src/pages/dashboard/DashBoard.tsx:149
+#: src/pages/dashboard/DashBoard.tsx:131
 msgid "已创建"
 msgstr "Created"
 
@@ -799,11 +799,11 @@ msgid "张开嘴"
 msgstr "Open mouth"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:179
 msgid "当前版本"
 msgstr "Current version"
 
-#: src/pages/dashboard/DashBoard.tsx:207
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "忽略此版本"
 msgstr "Ignore this version"
 
@@ -1179,7 +1179,7 @@ msgstr "Title background music"
 msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:255
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "Template"
@@ -1274,7 +1274,7 @@ msgstr "Clear special effects of current stage"
 msgid "清除特效"
 msgstr "Clear effects"
 
-#: src/pages/dashboard/DashBoard.tsx:253
+#: src/pages/dashboard/DashBoard.tsx:235
 msgid "游戏"
 msgstr "Games"
 
@@ -1529,7 +1529,7 @@ msgid "舞台对象控制"
 msgstr "Stage object control"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:203
+#: src/pages/dashboard/DashBoard.tsx:185
 msgid "获取最新版本"
 msgstr "Download Latest Version"
 
@@ -1635,8 +1635,8 @@ msgstr "This command is not recognized, please open script editing mode to edit 
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
 
-#: src/pages/dashboard/DashBoard.tsx:236
-#: src/pages/dashboard/DashBoard.tsx:237
+#: src/pages/dashboard/DashBoard.tsx:218
+#: src/pages/dashboard/DashBoard.tsx:219
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
