@@ -1,6 +1,6 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { Dropdown, Option, DropdownProps } from "@fluentui/react-components";
-import {debounce} from '@/utils/debounce';
+import { debounce } from '@/utils/debounce';
 
 interface WheelDropdownProps extends DropdownProps {
   options: Map<string, string>;
@@ -8,10 +8,21 @@ interface WheelDropdownProps extends DropdownProps {
   onValueChange: (newValue: string | undefined) => void;
 }
 
-export default function WheelDropdown({ options, value, onValueChange, ...restProps }: WheelDropdownProps) {
+export default function WheelDropdown({
+  options,
+  value,
+  onValueChange,
+  ...restProps
+}: WheelDropdownProps) {
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const optionKeys = Array.from(options.keys());
-  const scrollDirectionRef = useRef(0); // 累计滚动方向
+
+  const [internalValue, setInternalValue] = useState(value);
+
+  const debouncedOnValueChange = useCallback(
+    debounce(onValueChange, 250),
+    [onValueChange]
+  );
 
   const handleWheel = useCallback(
     (event: WheelEvent) => {
@@ -20,25 +31,16 @@ export default function WheelDropdown({ options, value, onValueChange, ...restPr
 
       // 判断滚动方向：向下滚动为 1，向上滚动为 -1
       const direction = event.deltaY > 0 ? 1 : event.deltaY < 0 ? -1 : 0;
-      scrollDirectionRef.current += direction; // 累加滚动方向
-      debouncedHandleWheel();
-    },
-    [options]
-  );
-
-  const debouncedHandleWheel = useCallback(
-    debounce(() => {
-      const accumulatedDirection = scrollDirectionRef.current;
-      if (accumulatedDirection !== 0) {
-        const currentIndex = optionKeys.indexOf(value);
-        const newIndex = (currentIndex + accumulatedDirection + options.size) % options.size;
+      if (direction !== 0) {
+        const currentIndex = optionKeys.indexOf(internalValue);
+        const newIndex = (currentIndex + direction + options.size) % options.size;
         const newTarget = optionKeys[newIndex];
 
-        onValueChange(newTarget);
-        scrollDirectionRef.current = 0; // 重置累加方向
+        setInternalValue(newTarget);
+        debouncedOnValueChange(newTarget);
       }
-    }, 250),
-    [optionKeys, options.size, value, onValueChange]
+    },
+    [optionKeys, options.size, internalValue, debouncedOnValueChange]
   );
 
   useEffect(() => {
@@ -54,11 +56,15 @@ export default function WheelDropdown({ options, value, onValueChange, ...restPr
     };
   }, [handleWheel]);
 
+  useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
+
   return (
     <Dropdown
       ref={dropdownRef}
-      value={options.get(value) ?? value}
-      selectedOptions={[value]}
+      value={options.get(internalValue) ?? internalValue}
+      selectedOptions={[internalValue]}
       onOptionSelect={(event, data) => {
         onValueChange(data.optionValue);
       }}
