@@ -1,6 +1,5 @@
 import styles from "./gameElement.module.scss";
 import { useValue } from "../../hooks/useValue";
-import { GameInfo } from "./DashBoard";
 import { useMemo } from "react";
 import { api } from "@/api";
 import { Button, Checkbox, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
@@ -8,9 +7,10 @@ import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regula
 import { localStorageRename } from "@/utils/localStorageRename";
 import { routers } from "@/App";
 import { t } from "@lingui/macro";
+import { GameInfoDto } from "@/api/Api";
 
 interface IGameElementProps {
-  gameInfo: GameInfo;
+  gameInfo: GameInfoDto;
   checked: boolean;
   onClick: () => void;
   refreash?: () => void;
@@ -75,11 +75,11 @@ export default function GameElement(props: IGameElementProps) {
       <div onClick={props.onClick} className={className} id={props.gameInfo.dir}>
         <img
           src={`/games/${props.gameInfo.dir}/game/${soureBase}/${props.gameInfo.cover}`}
-          alt={props.gameInfo.title}
+          alt={props.gameInfo.name}
           className={styles.gameElement_cover}
         />
         <div className={styles.gameElement_title}>
-          <span>{props.gameInfo.title}</span>
+          <span>{props.gameInfo.name}</span>
         </div>
         <div className={styles.gameElement_sub}>
           <span className={styles.gameElement_dir}>{props.gameInfo.dir}</span>
