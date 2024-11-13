@@ -257,6 +257,10 @@ msgstr "コードエディタ"
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "実験的な高速プレビューを有効にすると、リアルタイムプレビューの効率が大幅に向上しますが、異常が発生する可能性があります。特別なヒント：前回のリアルタイムプレビューのジャンプが完全に終了していない（特にアニメーションが終了していない）ときに、再度ジャンプしないでください。"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:139
+msgid "使用中的模板："
+msgstr "使用中のテンプレート："
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
 msgstr "デフォルトの特殊効果を使用"
@@ -407,7 +411,7 @@ msgid "最小高度"
 msgstr "最小高さ"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:198
+#: src/pages/dashboard/DashBoard.tsx:180
 msgid "最新版本"
 msgstr "最新バージョン"
 
@@ -527,12 +531,12 @@ msgstr "一行コメント"
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
-#: src/pages/dashboard/DashBoard.tsx:193
+#: src/pages/dashboard/DashBoard.tsx:175
 msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:96
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:151
 msgid "取消"
 msgstr "キャンセル"
 
@@ -703,6 +707,11 @@ msgstr "Andoroidアプリとしてエクスポート"
 msgid "导出为网页"
 msgstr "ウェブとしてエクスポート"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:103
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:111
+msgid "将当前模板应用到选定的游戏"
+msgstr "選択したゲームに現在のテンプレートを適用する"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:54
 msgid "小"
 msgstr "小さい"
@@ -754,7 +763,7 @@ msgstr "左の立ち絵"
 msgid "左对齐"
 msgstr "左揃え"
 
-#: src/pages/dashboard/DashBoard.tsx:149
+#: src/pages/dashboard/DashBoard.tsx:131
 msgid "已创建"
 msgstr "作成済み"
 
@@ -783,14 +792,9 @@ msgstr "通常演出"
 msgid "平铺"
 msgstr "タイリング"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:98
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:153
 msgid "应用"
 msgstr "適用"
-
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:82
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:90
-msgid "应用当前模板到游戏"
-msgstr "現在のテンプレートをゲームに適用する"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
@@ -809,11 +813,11 @@ msgid "张开嘴"
 msgstr "開いた口"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:179
 msgid "当前版本"
 msgstr "現在のバージョン"
 
-#: src/pages/dashboard/DashBoard.tsx:207
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
@@ -903,7 +907,7 @@ msgstr "ヒント：この効果は、異なる立ち絵に切り替えるか、
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "ヒント：エフェクトは、異なる背景に切り替えるか、一度背景を削除してから再度追加した場合にのみ有効になります。既存の背景にエフェクトを設定する場合は、専用の「エフェクト設定」コマンドを使用してください。"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:58
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "ヒント：スタイルで使用されるリソースは assets ディレクトリにあります"
 
@@ -1189,7 +1193,7 @@ msgstr "タイトルのBGM"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:255
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "テンプレート"
@@ -1284,7 +1288,7 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:253
+#: src/pages/dashboard/DashBoard.tsx:235
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1539,7 +1543,7 @@ msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:203
+#: src/pages/dashboard/DashBoard.tsx:185
 msgid "获取最新版本"
 msgstr "最新バージョンをダウンロード"
 
@@ -1645,8 +1649,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:236
-#: src/pages/dashboard/DashBoard.tsx:237
+#: src/pages/dashboard/DashBoard.tsx:218
+#: src/pages/dashboard/DashBoard.tsx:219
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1774,7 +1778,7 @@ msgstr "選択肢ボタン（無効状態）"
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:78
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:94
 msgid "选项菜单"
 msgstr "オプションメニュー"
 

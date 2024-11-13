@@ -11,12 +11,15 @@ import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
 import {redirect} from "@/hooks/useHashRoute";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
+import { api } from '@/api';
+import { GameInfoDto } from '@/api/Api';
+import { List, ListItem } from "@fluentui/react-list-preview";
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 
 export default function TemplateEditorSidebar() {
-  const templateName = useEditorStore.use.subPage();
+  const templateDir = useEditorStore.use.subPage();
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
   const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
 
@@ -43,7 +46,7 @@ export default function TemplateEditorSidebar() {
         <BackDashboardButton onClick={backToDashboard}/>
         {/* <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button> */}
         <span className={styles.title}>
-          {templateName}
+          {templateDir}
         </span>
         <OptionMenu/>
       </div>
@@ -54,7 +57,7 @@ export default function TemplateEditorSidebar() {
       <div className={styles.assets}>
         <CommonTips style={{margin:4}} text={t`提示：样式中用到的资源放在 assets 目录下`}/>
         <Assets
-          basePath={['templates', templateName]}
+          basePath={['templates', templateDir]}
           // isProtected
           fileFunction={{open: handleOpen}}
         />
@@ -64,12 +67,25 @@ export default function TemplateEditorSidebar() {
 }
 
 const OptionMenu = (): ReactNode => {
-  const templateName = useEditorStore.use.subPage();
+  const templateDir = useEditorStore.use.subPage();
 
   const [applyTemplateDialogIsOpen, setApplyTemplateDialogIsOpen] = useState(false);
 
-  const [gameList, setGameList] = useState([]);
-  const [selectedGame, setSelectedGame] = useState<string[]>([]);
+  const [gameList, setGameList] = useState<GameInfoDto[]>([]);
+  const [selectedGameDirs, setSelectedGameDirs] = useState<string[]>([]);
+
+  const getGameList = async () => {
+    const gameList = (await api.manageGameControllerGetGameList()).data;
+    const selectedGameDirs = gameList.filter((game) => game.template.name === templateDir).map((game) => game.dir);
+    setGameList(gameList);
+    setSelectedGameDirs(selectedGameDirs);
+  };
+
+  const applyTemplate = async () => {
+    const apply = selectedGameDirs.map(async (gameDir) => await api.manageTemplateControllerApplyTemplateToGame({gameName: gameDir, templateName: templateDir}));
+    await Promise.all(apply);
+    setApplyTemplateDialogIsOpen(false);
+  };
 
   return (
     <>
@@ -79,7 +95,14 @@ const OptionMenu = (): ReactNode => {
         </MenuTrigger>
         <MenuPopover>
           <MenuList>
-            <MenuItem onClick={() => setApplyTemplateDialogIsOpen(true)}>{t`应用当前模板到游戏`}</MenuItem>
+            <MenuItem
+              onClick={
+                () => {
+                  setApplyTemplateDialogIsOpen(true);
+                  getGameList();
+                }
+              }
+            >{t`将当前模板应用到选定的游戏`}</MenuItem>
           </MenuList>
         </MenuPopover>
       </Menu>
@@ -87,15 +110,49 @@ const OptionMenu = (): ReactNode => {
       <Dialog open={applyTemplateDialogIsOpen} onOpenChange={(event, data) => setApplyTemplateDialogIsOpen(data.open)}>
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t`应用当前模板到游戏`}</DialogTitle>
-            <DialogContent>
-              {gameList}
+            <DialogTitle>{t`将当前模板应用到选定的游戏`}</DialogTitle>
+            <DialogContent style={{padding: '0.5rem 0'}}>
+              <List
+                selectionMode="multiselect"
+                selectedItems={selectedGameDirs}
+                onSelectionChange={(_, data) => setSelectedGameDirs(data.selectedItems as string[])}
+              >
+                {
+                  gameList.map((game) => (
+                    <ListItem
+                      key={game.dir}
+                      value={game.dir}
+                      aria-label={game.dir}
+                      checkmark={{"value": game.dir}}
+                      style={{userSelect: 'none'}}
+                    >
+                      <div style={{padding: '0.25rem 0.5rem'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>
+                          <div style={{width: '4rem', aspectRatio: '16 / 9', overflow: 'hidden'}}>
+                            <img
+                              src={`/games/${game.dir}/game/background/${game.cover}`}
+                              alt={game.name}
+                              style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                            />
+                          </div>
+                          <div>
+                            <div>{game.name}</div>
+                            <div style={{fontSize: '90%', color: 'var(--text-sub)'}}>
+                              {t`使用中的模板：` + game.template.name}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ListItem>
+                  ))
+                }
+              </List>
             </DialogContent>
             <DialogActions>
               <DialogTrigger disableButtonEnhancement>
                 <Button appearance="secondary">{t`取消`}</Button>
               </DialogTrigger>
-              <Button appearance="primary">{t`应用`}</Button>
+              <Button appearance="primary" onClick={() => applyTemplate()}>{t`应用`}</Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>
