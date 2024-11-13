@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 
 export class CreateGameDto {
   @ApiProperty({ description: 'The name of the game to be created' })
@@ -63,6 +64,17 @@ export class GameConfigDto {
 
   @ApiProperty({ description: 'New game configuration' })
   newConfig: string;
+}
+
+export class GameInfoDto {
+  @ApiProperty({ description: 'The name of the game' })
+  name: string;
+  @ApiProperty({ description: 'The dir of the game' })
+  dir: string;
+  @ApiProperty({ description: 'The cover of the game' })
+  cover: string;
+  @ApiProperty({ description: 'The template config of the game' })
+  template: TemplateConfigDto;
 }
 
 export class UploadFilesDto {

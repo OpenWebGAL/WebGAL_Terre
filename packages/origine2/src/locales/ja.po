@@ -94,6 +94,14 @@ msgstr "Intro テキスト"
 msgid "intro:;"
 msgstr "intro:;"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:185
+msgid "Live2D 动作"
+msgstr "Live2D モーション"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:199
+msgid "Live2D 表情"
+msgstr "Live2D 表情"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:173
 msgid "miniAvatar:选择小头像;"
 msgstr "miniAvatar: アバターファイルを選択;"
@@ -177,12 +185,12 @@ msgstr "z-index"
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
-#: src/components/Assets/Assets.tsx:368
 #: src/components/Assets/Assets.tsx:369
+#: src/components/Assets/Assets.tsx:370
 msgid "上传"
 msgstr "アップロード"
 
-#: src/components/Assets/Assets.tsx:262
+#: src/components/Assets/Assets.tsx:263
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
@@ -435,8 +443,8 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
-#: src/components/Assets/Assets.tsx:208
-#: src/components/Assets/Assets.tsx:248
+#: src/components/Assets/Assets.tsx:209
+#: src/components/Assets/Assets.tsx:249
 #: src/pages/dashboard/Sidebar.tsx:106
 #: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建"
@@ -481,7 +489,7 @@ msgstr "テンプレートを削除"
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
-#: src/components/Assets/Assets.tsx:275
+#: src/components/Assets/Assets.tsx:276
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "刷新"
 msgstr "更新"
@@ -750,8 +758,8 @@ msgstr "左揃え"
 msgid "已创建"
 msgstr "作成済み"
 
-#: src/components/Assets/Assets.tsx:179
-#: src/components/Assets/Assets.tsx:227
+#: src/components/Assets/Assets.tsx:180
+#: src/components/Assets/Assets.tsx:228
 #: src/components/Assets/FileElement.tsx:70
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "ファイルまたはフォルダは既に存在します {0}"
@@ -829,7 +837,7 @@ msgstr "IDを手動で設定"
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
-#: src/components/Assets/Assets.tsx:276
+#: src/components/Assets/Assets.tsx:277
 msgid "打开文件夹"
 msgstr "フォルダーを開く"
 
@@ -837,7 +845,7 @@ msgstr "フォルダーを開く"
 msgid "执行到此句"
 msgstr "この文まで実行"
 
-#: src/components/Assets/Assets.tsx:193
+#: src/components/Assets/Assets.tsx:194
 msgid "扩展名"
 msgstr "拡張子"
 
@@ -1019,11 +1027,11 @@ msgstr "テキストシャドウ"
 msgid "文档"
 msgstr "ドキュメント"
 
-#: src/components/Assets/Assets.tsx:177
+#: src/components/Assets/Assets.tsx:178
 msgid "新建文件"
 msgstr "新しいファイルを作成"
 
-#: src/components/Assets/Assets.tsx:225
+#: src/components/Assets/Assets.tsx:226
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
@@ -1036,11 +1044,11 @@ msgstr "新しいテンプレートを作成"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/Assets.tsx:187
+#: src/components/Assets/Assets.tsx:188
 msgid "新文件名"
 msgstr "新しいファイル名"
 
-#: src/components/Assets/Assets.tsx:234
+#: src/components/Assets/Assets.tsx:235
 msgid "新文件夹名"
 msgstr "新しいフォルダー名"
 
@@ -1079,7 +1087,7 @@ msgstr "キャラクター名は設定不可"
 msgid "旋转角度："
 msgstr "回転："
 
-#: src/components/Assets/Assets.tsx:195
+#: src/components/Assets/Assets.tsx:196
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
@@ -1675,7 +1683,7 @@ msgstr "アセット"
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
 
-#: src/components/Assets/Assets.tsx:284
+#: src/components/Assets/Assets.tsx:285
 msgid "过滤文件"
 msgstr "ファイルのフィルタリング"
 
