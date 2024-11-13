@@ -15,34 +15,6 @@
         ]
       }
     },
-    "/api/lsp/compile": {
-      "post": {
-        "operationId": "LspController_compile",
-        "summary": "Get code completions based on given input",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompletionDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully fetched the completion list."
-          },
-          "400": {
-            "description": "Failed to fetch the completion list."
-          }
-        },
-        "tags": [
-          "LSP"
-        ]
-      }
-    },
     "/api/assets/readAssets/{readDirPath}": {
       "get": {
         "operationId": "AssetsController_readAssets",
@@ -268,7 +240,17 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Returned game list."
+            "description": "Returned game list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GameInfoDto"
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -975,23 +957,6 @@
   "servers": [],
   "components": {
     "schemas": {
-      "CompletionDto": {
-        "type": "object",
-        "properties": {
-          "editorValue": {
-            "type": "string",
-            "description": "Editor input value for which the completion is required"
-          },
-          "params": {
-            "type": "object",
-            "description": "Parameters required for completion"
-          }
-        },
-        "required": [
-          "editorValue",
-          "params"
-        ]
-      },
       "CreateNewFileDto": {
         "type": "object",
         "properties": {
@@ -1082,6 +1047,54 @@
         "required": [
           "path",
           "textFile"
+        ]
+      },
+      "TemplateConfigDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the template"
+          },
+          "webgal-version": {
+            "type": "string",
+            "description": "The webgal version of the template"
+          }
+        },
+        "required": [
+          "name",
+          "webgal-version"
+        ]
+      },
+      "GameInfoDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the game"
+          },
+          "dir": {
+            "type": "string",
+            "description": "The dir of the game"
+          },
+          "cover": {
+            "type": "string",
+            "description": "The cover of the game"
+          },
+          "template": {
+            "description": "The template config of the game",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TemplateConfigDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "dir",
+          "cover",
+          "template"
         ]
       },
       "CreateGameDto": {
