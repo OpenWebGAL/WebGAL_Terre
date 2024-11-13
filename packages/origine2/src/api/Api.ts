@@ -9,13 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface CompletionDto {
-  /** Editor input value for which the completion is required */
-  editorValue: string;
-  /** Parameters required for completion */
-  params: object;
-}
-
 export interface CreateNewFileDto {
   /** The source path where the directory will be created */
   source: string;
@@ -52,6 +45,24 @@ export interface EditTextFileDto {
   path: string;
   /** Text data content */
   textFile: string;
+}
+
+export interface TemplateConfigDto {
+  /** The name of the template */
+  name: string;
+  /** The webgal version of the template */
+  'webgal-version': string;
+}
+
+export interface GameInfoDto {
+  /** The name of the game */
+  name: string;
+  /** The dir of the game */
+  dir: string;
+  /** The cover of the game */
+  cover: string;
+  /** The template config of the game */
+  template: TemplateConfigDto;
 }
 
 export interface CreateGameDto {
@@ -296,23 +307,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags LSP
-     * @name LspControllerCompile
-     * @summary Get code completions based on given input
-     * @request POST:/api/lsp/compile
-     */
-    lspControllerCompile: (data: CompletionDto, params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/api/lsp/compile`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags Assets
      * @name AssetsControllerReadAssets
      * @summary Read Assets
@@ -451,9 +445,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/manageGame/gameList
      */
     manageGameControllerGetGameList: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<GameInfoDto[], any>({
         path: `/api/manageGame/gameList`,
         method: 'GET',
+        format: 'json',
         ...params,
       }),
 
