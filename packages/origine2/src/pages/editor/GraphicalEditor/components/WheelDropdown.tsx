@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { Dropdown, Option, DropdownProps } from "@fluentui/react-components";
+import {debounce} from '@/utils/debounce';
 
 interface WheelDropdownProps extends DropdownProps {
   options: Map<string, string>;
@@ -10,30 +11,34 @@ interface WheelDropdownProps extends DropdownProps {
 export default function WheelDropdown({ options, value, onValueChange, ...restProps }: WheelDropdownProps) {
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const optionKeys = Array.from(options.keys());
+  const scrollDirectionRef = useRef(0); // 累计滚动方向
 
   const handleWheel = useCallback(
     (event: WheelEvent) => {
       event.preventDefault();
       event.stopPropagation();
 
-      const currentIndex = optionKeys.indexOf(value);
-      let direction = 0;
-
-      // 判断滚动方向：向下滚动为 1，向上滚动为 -1，滚动停止为 0
-      if (event.deltaY > 0) {
-        direction = 1;
-      } else if (event.deltaY < 0) {
-        direction = -1;
-      }
-
-      const newIndex = currentIndex === -1
-        ? 0
-        : (currentIndex + direction + options.size) % options.size;
-
-      const newTarget = optionKeys[newIndex];
-      onValueChange(newTarget);
+      // 判断滚动方向：向下滚动为 1，向上滚动为 -1
+      const direction = event.deltaY > 0 ? 1 : event.deltaY < 0 ? -1 : 0;
+      scrollDirectionRef.current += direction; // 累加滚动方向
+      debouncedHandleWheel();
     },
-    [value, onValueChange, options.size, optionKeys]
+    [options]
+  );
+
+  const debouncedHandleWheel = useCallback(
+    debounce(() => {
+      const accumulatedDirection = scrollDirectionRef.current;
+      if (accumulatedDirection !== 0) {
+        const currentIndex = optionKeys.indexOf(value);
+        const newIndex = (currentIndex + accumulatedDirection + options.size) % options.size;
+        const newTarget = optionKeys[newIndex];
+
+        onValueChange(newTarget);
+        scrollDirectionRef.current = 0; // 重置累加方向
+      }
+    }, 250),
+    [optionKeys, options.size, value, onValueChange]
   );
 
   useEffect(() => {
