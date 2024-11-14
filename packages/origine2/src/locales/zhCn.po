@@ -265,11 +265,11 @@ msgstr "主要样式"
 msgid "主页"
 msgstr "主页"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:95
 msgid "代码编辑器"
 msgstr "代码编辑器"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:135
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 
@@ -378,7 +378,7 @@ msgstr "关于"
 msgid "关联立绘"
 msgstr "关联立绘"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "关闭"
 msgstr "关闭"
 
@@ -427,7 +427,7 @@ msgid "最小高度"
 msgstr "最小高度"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:198
+#: src/pages/dashboard/DashBoard.tsx:180
 msgid "最新版本"
 msgstr "最新版本"
 
@@ -547,7 +547,7 @@ msgstr "单行注释"
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
 
-#: src/pages/dashboard/DashBoard.tsx:193
+#: src/pages/dashboard/DashBoard.tsx:175
 msgid "发现新版本"
 msgstr "发现新版本"
 
@@ -580,10 +580,10 @@ msgstr "启动、切换或停止背景音乐的播放"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "启动图"
-msgstr "启动图"
+msgstr "启动图<<<<<<< Updated upstream"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "启用"
 msgstr "启用"
 
@@ -651,10 +651,12 @@ msgstr "外边距"
 msgid "大"
 msgstr "大"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:99
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:58
 msgid "字体"
 msgstr "字体"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:105
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "字体大小"
 msgstr "字体大小"
@@ -671,25 +673,25 @@ msgstr "字重"
 msgid "定位方式"
 msgstr "定位方式"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:75
 msgid "实时预览"
 msgstr "实时预览"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
 msgid "实时预览关闭"
 msgstr "实时预览关闭"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:78
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
 msgid "实时预览打开"
 msgstr "实时预览打开"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:126
 msgid "实验性快速预览"
 msgstr "实验性快速预览"
 
@@ -773,7 +775,7 @@ msgstr "左侧立绘"
 msgid "左对齐"
 msgstr "左对齐"
 
-#: src/pages/dashboard/DashBoard.tsx:149
+#: src/pages/dashboard/DashBoard.tsx:131
 msgid "已创建"
 msgstr "已创建"
 
@@ -819,11 +821,11 @@ msgid "张开嘴"
 msgstr "张开嘴"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:179
 msgid "当前版本"
 msgstr "当前版本"
 
-#: src/pages/dashboard/DashBoard.tsx:207
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "忽略此版本"
 msgstr "忽略此版本"
 
@@ -1199,7 +1201,7 @@ msgstr "标题背景音乐"
 msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:255
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "模板"
@@ -1224,7 +1226,7 @@ msgstr "正常播放 BGM"
 msgid "此指令将结束游戏"
 msgstr "此指令将结束游戏"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
 msgid "永不换行"
 msgstr "永不换行"
 
@@ -1294,7 +1296,7 @@ msgstr "清除当前舞台的特殊效果"
 msgid "清除特效"
 msgstr "清除特效"
 
-#: src/pages/dashboard/DashBoard.tsx:253
+#: src/pages/dashboard/DashBoard.tsx:235
 msgid "游戏"
 msgstr "游戏"
 
@@ -1518,7 +1520,7 @@ msgstr "脚本编辑器"
 msgid "自动"
 msgstr "自动"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
 msgid "自动换行"
 msgstr "自动换行"
 
@@ -1549,7 +1551,7 @@ msgid "舞台对象控制"
 msgstr "舞台对象控制"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:203
+#: src/pages/dashboard/DashBoard.tsx:185
 msgid "获取最新版本"
 msgstr "获取最新版本"
 
@@ -1655,10 +1657,10 @@ msgstr "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgid "该文件类型不支持预览"
 msgstr "该文件类型不支持预览"
 
-#: src/pages/dashboard/DashBoard.tsx:236
-#: src/pages/dashboard/DashBoard.tsx:237
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
+#: src/pages/dashboard/DashBoard.tsx:218
+#: src/pages/dashboard/DashBoard.tsx:219
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:56
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
 msgid "语言"
 msgstr "语言"
 

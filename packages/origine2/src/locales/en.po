@@ -249,11 +249,11 @@ msgstr "Main Style"
 msgid "主页"
 msgstr "WebGAL Home"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:95
 msgid "代码编辑器"
 msgstr "Code Editor"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:135
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
@@ -358,7 +358,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "关闭"
 msgstr "Disabled"
 
@@ -407,7 +407,7 @@ msgid "最小高度"
 msgstr "Min Height"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:198
+#: src/pages/dashboard/DashBoard.tsx:180
 msgid "最新版本"
 msgstr "Latest Version"
 
@@ -527,7 +527,7 @@ msgstr "Single line comment"
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
-#: src/pages/dashboard/DashBoard.tsx:193
+#: src/pages/dashboard/DashBoard.tsx:175
 msgid "发现新版本"
 msgstr "New version detected"
 
@@ -560,10 +560,10 @@ msgstr "Start, switch or stop the playback of background music"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "启动图"
-msgstr "Startup image"
+msgstr "Startup image<<<<<<< Updated upstream"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "启用"
 msgstr "Enabled"
 
@@ -631,10 +631,12 @@ msgstr "Margin"
 msgid "大"
 msgstr "Large"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:99
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:58
 msgid "字体"
 msgstr "Font"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:105
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "字体大小"
 msgstr "Font size"
@@ -651,25 +653,25 @@ msgstr "Font Weight"
 msgid "定位方式"
 msgstr "Positioning"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:75
 msgid "实时预览"
 msgstr "Live preview"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
 msgid "实时预览关闭"
 msgstr "Live preview off"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:78
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
 msgid "实时预览打开"
 msgstr "Live preview on"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:126
 msgid "实验性快速预览"
 msgstr "Experimental fast preview"
 
@@ -753,7 +755,7 @@ msgstr "Left side figure"
 msgid "左对齐"
 msgstr "Left align"
 
-#: src/pages/dashboard/DashBoard.tsx:149
+#: src/pages/dashboard/DashBoard.tsx:131
 msgid "已创建"
 msgstr "Created"
 
@@ -799,11 +801,11 @@ msgid "张开嘴"
 msgstr "Open mouth"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:179
 msgid "当前版本"
 msgstr "Current version"
 
-#: src/pages/dashboard/DashBoard.tsx:207
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "忽略此版本"
 msgstr "Ignore this version"
 
@@ -1179,7 +1181,7 @@ msgstr "Title background music"
 msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:255
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "Template"
@@ -1204,7 +1206,7 @@ msgstr "Play BGM normally"
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
 msgid "永不换行"
 msgstr "Never wrap"
 
@@ -1274,7 +1276,7 @@ msgstr "Clear special effects of current stage"
 msgid "清除特效"
 msgstr "Clear effects"
 
-#: src/pages/dashboard/DashBoard.tsx:253
+#: src/pages/dashboard/DashBoard.tsx:235
 msgid "游戏"
 msgstr "Games"
 
@@ -1498,7 +1500,7 @@ msgstr "Script editor"
 msgid "自动"
 msgstr "Auto"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
 msgid "自动换行"
 msgstr "Auto wrap"
 
@@ -1529,7 +1531,7 @@ msgid "舞台对象控制"
 msgstr "Stage object control"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:203
+#: src/pages/dashboard/DashBoard.tsx:185
 msgid "获取最新版本"
 msgstr "Download Latest Version"
 
@@ -1635,10 +1637,10 @@ msgstr "This command is not recognized, please open script editing mode to edit 
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
 
-#: src/pages/dashboard/DashBoard.tsx:236
-#: src/pages/dashboard/DashBoard.tsx:237
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
+#: src/pages/dashboard/DashBoard.tsx:218
+#: src/pages/dashboard/DashBoard.tsx:219
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:56
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
 msgid "语言"
 msgstr "Language"
 
