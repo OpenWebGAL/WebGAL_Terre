@@ -20,7 +20,7 @@ export default function WheelDropdown({
   const [internalValue, setInternalValue] = useState(value);
 
   const debouncedOnValueChange = useCallback(
-    debounce(onValueChange, 250),
+    debounce(onValueChange, 500),
     [onValueChange]
   );
 
