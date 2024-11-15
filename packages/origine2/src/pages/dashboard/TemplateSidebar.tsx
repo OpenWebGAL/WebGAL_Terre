@@ -1,16 +1,16 @@
 import styles from "./TemplateSidebar.module.scss";
-import { TemplateInfo } from "./DashBoard";
 import { useState } from "react";
 import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Subtitle1 } from "@fluentui/react-components";
 import { AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon } from "@fluentui/react-icons";
 import TemplateElement from "./TemplateElement";
 import {t} from "@lingui/macro";
+import { CreateTemplateDto, TemplateInfoDto } from "@/api/Api";
 
 interface ITemplateSidebarProps {
-  templateList: TemplateInfo[];
+  templateList: TemplateInfoDto[];
   currentSetTemplate: string |null;
   setCurrentTemplate: (currentTemplate: string) => void;
-  createTemplate: (name: string) => void;
+  createTemplate: (template: CreateTemplateDto) => void;
   refreash?: () => void;
 }
 
@@ -21,12 +21,20 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
 
   const [createTemplateFormOpen, setCreateTemplateFormOpen] = useState(false);
   const [newTemplateName, setNewTemplateName] = useState(t`新的模板`);
+  const [newTemplateDir, setNewTemplateDir] = useState(t`新的模板`);
+
+  const isAllowCreate = newTemplateName
+    && newTemplateName.trim() !== ''
+    && newTemplateDir
+    && newTemplateDir.trim() !== ''
+    && !props.templateList.find((item) => item.dir === newTemplateDir.trim());
 
   function createNewTemplate() {
-    if (newTemplateName && newTemplateName.trim() !== '' && !props.templateList.find((item) => item.dir === newTemplateName.trim())) {
-      props.createTemplate(newTemplateName);
+    if (isAllowCreate) {
+      props.createTemplate({templateName: newTemplateName, templateDir: newTemplateDir});
       setCreateTemplateFormOpen(false);
-      setNewTemplateName(t`新的游戏`);
+      setNewTemplateName(t`新的模板`);
+      setNewTemplateDir(t`新的模板`);
     }
   }
 
@@ -44,16 +52,29 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
             <Button appearance='primary' icon={<AddIcon />}>{t`新建模板`}</Button>
           </PopoverTrigger>
           <PopoverSurface>
-            <form style={{display:"flex", flexDirection:"column", gap:'8px'}}>
+            <form style={{display:"flex", flexDirection:"column", gap:'16px'}}>
               <Subtitle1>{t`创建新模板`}</Subtitle1>
+              {t`模板名称`}
               <Input
                 value={newTemplateName}
-                onChange={(event) => setNewTemplateName(event.target.value)}
+                onChange={(event) => {
+                  setNewTemplateName(event.target.value);
+                  newTemplateDir === newTemplateName && setNewTemplateDir(event.target.value);
+                }}
                 onKeyDown={(event) => (event.key === 'Enter') && createNewTemplate()}
-                defaultValue={t`新模板名`}
-                placeholder={t`新建模板`} />
+                defaultValue={t`新的模板`}
+                placeholder={t`模板名称`}
+              />
+              {t`模板目录`}
+              <Input
+                value={newTemplateDir}
+                onChange={(event) => setNewTemplateDir(event.target.value)}
+                onKeyDown={(event) => (event.key === 'Enter') && createNewTemplate()}
+                defaultValue={t`新的模板`}
+                placeholder={t`模板目录`}
+              />
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button appearance='primary' onClick={createNewTemplate} >{t`创建`}</Button>
+                <Button appearance='primary' disabled={!isAllowCreate} onClick={createNewTemplate} >{t`创建`}</Button>
               </div>
             </form>
           </PopoverSurface>
