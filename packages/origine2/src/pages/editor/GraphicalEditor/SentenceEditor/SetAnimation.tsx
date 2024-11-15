@@ -6,8 +6,8 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonOptions from "../components/CommonOption";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonTips from "../components/CommonTips";
-import { Dropdown, Option } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
+import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -48,17 +48,14 @@ export default function SetAnimation(props: ISentenceEditorProps) {
         isChecked={isUsePreset.value} />
       </CommonOptions>
       {isUsePreset.value && <CommonOptions key="3" title={t`选择预设目标`}>
-        <Dropdown
-          value={presetTargets.get(target.value as PresetTarget)}
-          selectedOptions={[target.value]}
-          onOptionSelect={(event, data) => {
-            target.set(data.optionValue?.toString() ?? "");
+        <WheelDropdown
+          options={presetTargets}
+          value={target.value}
+          onValueChange={(newValue) => {
+            target.set(newValue?.toString() ?? "");
             submit();
           }}
-          style={{ minWidth: 0 }}
-        >
-          {Array.from(presetTargets.entries()).map(([key, text]) => <Option key={key} value={key}>{text}</Option>)}
-        </Dropdown>
+        />
       </CommonOptions>}
       {!isUsePreset.value && <CommonOptions key="4" title={t`输入目标 ID`}>
         <input value={target.value}
