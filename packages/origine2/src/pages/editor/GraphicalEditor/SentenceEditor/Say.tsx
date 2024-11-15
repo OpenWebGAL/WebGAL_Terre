@@ -8,9 +8,9 @@ import CommonOptions from "../components/CommonOption";
 import {cloneDeep} from "lodash";
 import CommonTips from "../components/CommonTips";
 import { useEffect } from "react";
-import { Button, Dropdown, Option } from "@fluentui/react-components";
+import { Button } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
-
+import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 
 type FigurePosition = "" | "left" |  "right" | "center" | "id";
 type FontSize = "default" | "small" | "medium" | "large";
@@ -141,17 +141,14 @@ export default function Say(props: ISentenceEditorProps) {
         </>
       </CommonOptions>
       <CommonOptions title={t`关联立绘`}>
-        <Dropdown
-          value={figurePositions.get(figurePosition.value) ?? figurePosition.value}
-          selectedOptions={[figurePosition.value]}
-          onOptionSelect={(event, data) => {
-            figurePosition.set(data.optionValue as FigurePosition?? "");
+        <WheelDropdown
+          options={figurePositions}
+          value={figurePosition.value}
+          onValueChange={(newValue) => {
+            figurePosition.set(newValue as FigurePosition?? "");
             submit();
           }}
-          style={{ minWidth: 0}}
-        >
-          { Array.from(figurePositions.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
-        </Dropdown>
+        />
       </CommonOptions>
       {figurePosition.value === 'id' && <CommonOptions title={t`立绘插图的ID`}>
         <input value={figureId.value}
@@ -166,17 +163,14 @@ export default function Say(props: ISentenceEditorProps) {
         />
       </CommonOptions>}
       <CommonOptions title={t`文字大小`}>
-        <Dropdown
-          value={fontSizes.get(fontSize.value) ?? fontSize.value}
-          selectedOptions={[fontSize.value]}
-          onOptionSelect={(event, data) =>{
-            data.optionValue && fontSize.set(data.optionValue as FontSize);
+        <WheelDropdown
+          options={fontSizes}
+          value={fontSize.value}
+          onValueChange={(newValue) => {
+            newValue && fontSize.set(newValue as FontSize);
             submit();
           }}
-          style={{ minWidth: 0}}
-        >
-          { Array.from(fontSizes.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
-        </Dropdown>
+        />
       </CommonOptions>
     </div>
   </div>;
