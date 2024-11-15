@@ -407,7 +407,7 @@ msgid "最小高度"
 msgstr "最小高さ"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:198
+#: src/pages/dashboard/DashBoard.tsx:180
 msgid "最新版本"
 msgstr "最新バージョン"
 
@@ -527,7 +527,7 @@ msgstr "一行コメント"
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
-#: src/pages/dashboard/DashBoard.tsx:193
+#: src/pages/dashboard/DashBoard.tsx:175
 msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
@@ -753,7 +753,7 @@ msgstr "左の立ち絵"
 msgid "左对齐"
 msgstr "左揃え"
 
-#: src/pages/dashboard/DashBoard.tsx:149
+#: src/pages/dashboard/DashBoard.tsx:131
 msgid "已创建"
 msgstr "作成済み"
 
@@ -799,11 +799,11 @@ msgid "张开嘴"
 msgstr "開いた口"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:179
 msgid "当前版本"
 msgstr "現在のバージョン"
 
-#: src/pages/dashboard/DashBoard.tsx:207
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
@@ -1179,7 +1179,7 @@ msgstr "タイトルのBGM"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:255
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "テンプレート"
@@ -1274,7 +1274,7 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:253
+#: src/pages/dashboard/DashBoard.tsx:235
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1529,7 +1529,7 @@ msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:203
+#: src/pages/dashboard/DashBoard.tsx:185
 msgid "获取最新版本"
 msgstr "最新バージョンをダウンロード"
 
@@ -1635,8 +1635,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:236
-#: src/pages/dashboard/DashBoard.tsx:237
+#: src/pages/dashboard/DashBoard.tsx:218
+#: src/pages/dashboard/DashBoard.tsx:219
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
