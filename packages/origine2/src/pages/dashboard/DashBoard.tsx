@@ -50,17 +50,7 @@ import {redirect} from "@/hooks/useHashRoute";
 import {t} from "@lingui/macro";
 import { useRelease } from "@/hooks/useRelease";
 import { __INFO } from "@/config/info";
-
-// 返回的文件信息（单个）
-interface IFileInfo {
-  name: string;
-  isDir: boolean;
-}
-
-export interface TemplateInfo {
-  dir: string;
-  title: string;
-}
+import { CreateTemplateDto } from "@/api/Api";
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -82,18 +72,9 @@ export const gameListFetcher = async () => {
 };
 
 export const templateListFetcher = async () => {
-  const data = (await api.manageTemplateControllerGetTemplateList()).data;
-  const templateList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
+  const templateList = (await api.manageTemplateControllerGetTemplateList()).data;
   logger.info("返回的模板列表", templateList);
-  const getTemplateInfoList = templateList.map(
-    async (templateName): Promise<TemplateInfo> => {
-      const TemplateConfigData = (await api.manageTemplateControllerGetTemplateConfig(templateName)).data as unknown as object;
-      return {
-        dir: templateName,
-        title: 'name' in TemplateConfigData ? TemplateConfigData.name as string : templateName,
-      };
-    });
-  return await Promise.all(getTemplateInfoList);
+  return templateList;
 };
 
 export default function DashBoard() {
@@ -132,9 +113,9 @@ export default function DashBoard() {
     refreash();
   }
 
-  async function createTemplate(templateName: string) {
-    console.log("createTeplate:" + templateName);
-    const res = await api.manageTemplateControllerCreateTemplate({templateName: templateName}).then(r => r.data);
+  async function createTemplate(template: CreateTemplateDto) {
+    console.log("createTeplate:" + template);
+    const res = await api.manageTemplateControllerCreateTemplate(template).then(r => r.data);
     logger.info("创建结果：", res);
     refreash();
   }

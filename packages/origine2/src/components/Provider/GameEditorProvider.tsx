@@ -8,15 +8,15 @@ import useSWR from "swr";
 
 const GameEditorProvider = ({ children }: { children: ReactNode }) => {
   const page = useEditorStore.use.page();
-  const gameName = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
 
-  if (page !== 'game' || !gameName) {
+  if (page !== 'game' || !gameDir) {
     redirect('dashboard', 'game');
   };
 
   const { data: gameList, isLoading: gameListLoading } = useSWR("game-list", gameListFetcher);
   const fristLoading = gameListLoading && !gameList;
-  const inGameList = gameList && gameList.length > 0 && gameList.some((game) => game.dir === gameName);
+  const inGameList = gameList && gameList.length > 0 && gameList.some((game) => game.dir === gameDir);
 
   if (!fristLoading && !inGameList) {
     redirect('dashboard', 'game');
@@ -27,7 +27,7 @@ const GameEditorProvider = ({ children }: { children: ReactNode }) => {
       {
         fristLoading &&
         <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Spinner labelPosition="below" label={gameName} />
+          <Spinner labelPosition="below" label={gameDir} />
         </div>
       }
       {inGameList && !fristLoading && <GameEditorContextProvider>{children}</GameEditorContextProvider>}

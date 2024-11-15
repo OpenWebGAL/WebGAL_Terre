@@ -11,17 +11,24 @@ import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
 import {redirect} from "@/hooks/useHashRoute";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
+import useSWR from 'swr';
+import { api } from '@/api';
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 
 export default function TemplateEditorSidebar() {
-  const templateName = useEditorStore.use.subPage();
+  const templateDir = useEditorStore.use.subPage();
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
   const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
 
   const tabs = useTemplateEditorContext((state) => state.tabs);
   const updateTabs = useTemplateEditorContext((state) => state.updateTabs);
   const updateCurrentTab = useTemplateEditorContext((state) => state.updateCurrentTab);
+
+  const {data: templateConfig} = useSWR(
+    `/templateConfig/${templateDir}`,
+    async () => (await api.manageTemplateControllerGetTemplateConfig(templateDir)).data
+  );
 
   const handleOpen: IFileFunction['open'] = async (file, type) => {
     const newTab: ITab = {
@@ -42,7 +49,7 @@ export default function TemplateEditorSidebar() {
         <BackDashboardButton onClick={backToDashboard}/>
         {/* <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button> */}
         <span className={styles.title}>
-          {templateName}
+          {templateConfig ? templateConfig.name : templateDir}
         </span>
       </div>
       <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
@@ -52,7 +59,7 @@ export default function TemplateEditorSidebar() {
       <div className={styles.assets}>
         <CommonTips style={{margin:4}} text={t`提示：样式中用到的资源放在 assets 目录下`}/>
         <Assets
-          basePath={['templates', templateName]}
+          basePath={['templates', templateDir]}
           // isProtected
           fileFunction={{open: handleOpen}}
         />

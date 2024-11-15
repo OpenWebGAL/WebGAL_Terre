@@ -21,13 +21,13 @@ import axios from "axios";
 import {WsUtil} from "@/utils/wsUtil";
 
 export default function GameConfig() {
-  const gameName = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
 
   // 拿到游戏配置
   const gameConfig = useValue<WebgalConfig>([]);
   console.log(gameConfig);
   const getGameConfig = () => {
-    api.manageGameControllerGetGameConfig(gameName)
+    api.manageGameControllerGetGameConfig(gameDir)
       .then((r: any) => parseAndSetGameConfigState(r.data));
   };
 
@@ -35,25 +35,22 @@ export default function GameConfig() {
     getGameConfig();
   }, []);
 
-  const templatesResp = useSWR('template-list-selector', async () => {
-    const resp = await api.manageTemplateControllerGetTemplateList();
-    return resp.data as unknown as { name: string }[];
-  });
+  const templatesResp = useSWR('template-list', async () => (await api.manageTemplateControllerGetTemplateList()).data);
 
-  const [templateName, setTemplateName] = useState<string | undefined>('__STANDARD__WG__');
+  const [templateDir, setTemplateDir] = useState<string | undefined>('__STANDARD__WG__');
 
-  const currentTemplateResp = useSWR(`game-${gameName}-template-config`, async () => {
-    const resp = await axios.get(`/games/${gameName}/game/template/template.json`);
+  const currentTemplateResp = useSWR(`game-${gameDir}-template-config`, async () => {
+    const resp = await axios.get(`/games/${gameDir}/game/template/template.json`);
     return resp.data as { name: string, 'webgal-version': string };
   });
 
   const currentTemplateName = currentTemplateResp.data?.name ?? '';
 
   const selectorTemplate = <Dropdown style={{minWidth: 150}} key={currentTemplateName}
-    value={templateName === '__STANDARD__WG__' ? t`WebGAL Classic` : templateName}
+    value={templateDir === '__STANDARD__WG__' ? t`WebGAL Classic` : templateDir}
     selectedOptions={[currentTemplateName ?? '__STANDARD__WG__']}
     onOptionSelect={(_, elem) => {
-      setTemplateName(elem.optionValue);
+      setTemplateDir(elem.optionValue);
     }}>
     {/* 应用模板的接口还不支持应用默认模板 */}
     {/* <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Classic`}</Option> */}
@@ -63,12 +60,12 @@ export default function GameConfig() {
   </Dropdown>;
 
   useEffect(() => {
-    setTemplateName(currentTemplateName);
+    setTemplateDir(currentTemplateName);
   }, [currentTemplateName]);
 
   async function applyNewTemplate() {
-    if (templateName) {
-      await api.manageTemplateControllerApplyTemplateToGame({gameName, templateName});
+    if (templateDir) {
+      await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir});
       // 更新模板后，让游戏再去拉一次模板的样式文件
       WsUtil.sendTemplateRefetchCommand();
       await currentTemplateResp.mutate();
@@ -77,7 +74,7 @@ export default function GameConfig() {
 
   function updateGameConfig() {
     const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
-    api.manageGameControllerSetGameConfig({gameName, newConfig}).then(getGameConfig);
+    api.manageGameControllerSetGameConfig({gameName: gameDir, newConfig}).then(getGameConfig);
   }
 
   function getConfigContentAsString(key: string) {
@@ -287,7 +284,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   sourceBase: string,
   extNameList: string[]
 }) {
-  const gameName = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
   const images = props.value;
@@ -312,7 +309,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
       <div style={{display: 'flex'}}>
         {images.map((imageName, index) => (
           <div key={index} className={styles.imageChooseItem}>
-            <img className={styles.imageChooseItemImage} src={`games/${gameName}/game/${props.sourceBase}/${imageName}`}
+            <img className={styles.imageChooseItemImage} src={`games/${gameDir}/game/${props.sourceBase}/${imageName}`}
               alt={`logo-${index}`}/>
             {/* <div className={styles.imageChooseItemText}>{imageName}</div> */}
             <Button

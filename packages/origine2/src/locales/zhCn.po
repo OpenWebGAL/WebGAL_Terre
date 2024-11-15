@@ -427,7 +427,7 @@ msgid "最小高度"
 msgstr "最小高度"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:198
+#: src/pages/dashboard/DashBoard.tsx:180
 msgid "最新版本"
 msgstr "最新版本"
 
@@ -547,7 +547,7 @@ msgstr "单行注释"
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
 
-#: src/pages/dashboard/DashBoard.tsx:193
+#: src/pages/dashboard/DashBoard.tsx:175
 msgid "发现新版本"
 msgstr "发现新版本"
 
@@ -773,7 +773,7 @@ msgstr "左侧立绘"
 msgid "左对齐"
 msgstr "左对齐"
 
-#: src/pages/dashboard/DashBoard.tsx:149
+#: src/pages/dashboard/DashBoard.tsx:131
 msgid "已创建"
 msgstr "已创建"
 
@@ -819,11 +819,11 @@ msgid "张开嘴"
 msgstr "张开嘴"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:179
 msgid "当前版本"
 msgstr "当前版本"
 
-#: src/pages/dashboard/DashBoard.tsx:207
+#: src/pages/dashboard/DashBoard.tsx:189
 msgid "忽略此版本"
 msgstr "忽略此版本"
 
@@ -1199,7 +1199,7 @@ msgstr "标题背景音乐"
 msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:255
+#: src/pages/dashboard/DashBoard.tsx:237
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "模板"
@@ -1294,7 +1294,7 @@ msgstr "清除当前舞台的特殊效果"
 msgid "清除特效"
 msgstr "清除特效"
 
-#: src/pages/dashboard/DashBoard.tsx:253
+#: src/pages/dashboard/DashBoard.tsx:235
 msgid "游戏"
 msgstr "游戏"
 
@@ -1549,7 +1549,7 @@ msgid "舞台对象控制"
 msgstr "舞台对象控制"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:203
+#: src/pages/dashboard/DashBoard.tsx:185
 msgid "获取最新版本"
 msgstr "获取最新版本"
 
@@ -1655,8 +1655,8 @@ msgstr "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgid "该文件类型不支持预览"
 msgstr "该文件类型不支持预览"
 
-#: src/pages/dashboard/DashBoard.tsx:236
-#: src/pages/dashboard/DashBoard.tsx:237
+#: src/pages/dashboard/DashBoard.tsx:218
+#: src/pages/dashboard/DashBoard.tsx:219
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
