@@ -580,7 +580,7 @@ msgstr "启动、切换或停止背景音乐的播放"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "启动图"
-msgstr "启动图<<<<<<< Updated upstream"
+msgstr "启动图"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132

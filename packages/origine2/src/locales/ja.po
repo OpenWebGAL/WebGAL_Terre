@@ -560,7 +560,7 @@ msgstr "BGMの再生を開始、切り替え、または停止する"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "启动图"
-msgstr "ロゴ<<<<<<< Updated upstream"
+msgstr "ロゴ"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132

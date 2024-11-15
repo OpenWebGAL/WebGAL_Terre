@@ -560,7 +560,7 @@ msgstr "Start, switch or stop the playback of background music"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "启动图"
-msgstr "Startup image<<<<<<< Updated upstream"
+msgstr "Startup image"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
