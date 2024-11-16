@@ -248,11 +248,11 @@ msgstr "Main Style"
 msgid "主页"
 msgstr "WebGAL Home"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:95
 msgid "代码编辑器"
 msgstr "Code Editor"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:135
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
@@ -361,7 +361,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "关闭"
 msgstr "Disabled"
 
@@ -635,10 +635,12 @@ msgstr "Margin"
 msgid "大"
 msgstr "Large"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:99
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:58
 msgid "字体"
 msgstr "Font"
 
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:105
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "字体大小"
 msgstr "Font size"
@@ -655,25 +657,25 @@ msgstr "Font Weight"
 msgid "定位方式"
 msgstr "Positioning"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:59
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:75
 msgid "实时预览"
 msgstr "Live preview"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
 msgid "实时预览关闭"
 msgstr "Live preview off"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:78
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
 msgid "实时预览打开"
 msgstr "Live preview on"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:88
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:126
 msgid "实验性快速预览"
 msgstr "Experimental fast preview"
 
@@ -1230,7 +1232,7 @@ msgstr "Play BGM normally"
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
 msgid "永不换行"
 msgstr "Never wrap"
 
@@ -1524,7 +1526,7 @@ msgstr "Script editor"
 msgid "自动"
 msgstr "Auto"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
 msgid "自动换行"
 msgstr "Auto wrap"
 
