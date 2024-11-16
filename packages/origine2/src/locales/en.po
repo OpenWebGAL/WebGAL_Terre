@@ -22,11 +22,11 @@ msgstr "Comment"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:189
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:185
 msgid "<0>应用新的模板</0>"
 msgstr "<0>Apply a new template</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:167
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:164
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>Current template: {currentTemplateName}</0>"
 
@@ -256,7 +256,7 @@ msgstr "Code Editor"
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:147
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:159
 msgid "使用中的模板："
 msgstr "Template in use: "
 
@@ -535,7 +535,7 @@ msgid "发现新版本"
 msgstr "New version detected"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:159
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "Cancel"
 
@@ -562,11 +562,11 @@ msgstr "Right Align"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:157
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:154
 msgid "启动图"
 msgstr "Startup image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:200
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:196
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
 msgid "启用"
 msgstr "Enabled"
@@ -706,8 +706,8 @@ msgstr "Export as Android project file"
 msgid "导出为网页"
 msgstr "Export as webpage"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:111
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:119
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:123
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
 msgid "将当前模板应用到选定的游戏"
 msgstr "Apply the current template to selected games"
 
@@ -791,11 +791,11 @@ msgstr "Regular performance"
 msgid "平铺"
 msgstr "Tiling"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:161
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:173
 msgid "应用"
 msgstr "Apply"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:165
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:162
 msgid "应用的模板"
 msgstr "Applied template"
 
@@ -906,7 +906,7 @@ msgstr "Tip: The effect will only take place when switching to a different chara
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "Tip: The effect will only take place when switching to a different background or removing the current background and adding it again. If you want to set an effect for an existing background, please use a separate command for setting effects."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:64
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:76
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "Tips: Resources used in styles are placed in the assets directory"
 
@@ -1182,11 +1182,11 @@ msgstr "Title Button List"
 msgid "标题按钮文字"
 msgstr "Title Button Text"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:141
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:138
 msgid "标题背景图片"
 msgstr "Title background image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:149
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:146
 msgid "标题背景音乐"
 msgstr "Title background music"
 
@@ -1308,11 +1308,11 @@ msgstr "Games"
 msgid "游戏列表"
 msgstr "Game list"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:132
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
 msgid "游戏包名"
 msgstr "Game package name"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:120
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:117
 msgid "游戏名称"
 msgstr "Game name"
 
@@ -1320,11 +1320,11 @@ msgstr "Game name"
 msgid "游戏控制"
 msgstr "Game control"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:128
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:125
 msgid "游戏简介"
 msgstr "Game description"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:124
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:121
 msgid "游戏识别码"
 msgstr "Game ID"
 
@@ -1401,7 +1401,7 @@ msgstr "Video options"
 msgid "禁止跳过视频"
 msgstr "Disable skipping video"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:201
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:197
 msgid "禁用"
 msgstr "Disabled"
 
@@ -1798,7 +1798,7 @@ msgstr "Selection Button (disabled)"
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:100
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:112
 msgid "选项菜单"
 msgstr "Option Menu"
 
