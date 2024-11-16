@@ -277,6 +277,10 @@ msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览
 #~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。"
 #~ msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有立绘动画没有结束时）再次跳转。"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:139
+msgid "使用中的模板："
+msgstr "使用中的模板："
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
 msgstr "使用引擎内置的特效"
@@ -552,6 +556,7 @@ msgid "发现新版本"
 msgstr "发现新版本"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:151
 msgid "取消"
 msgstr "取消"
 
@@ -722,6 +727,11 @@ msgstr "导出为安卓项目文件"
 msgid "导出为网页"
 msgstr "导出为网页"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:103
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:111
+msgid "将当前模板应用到选定的游戏"
+msgstr "将当前模板应用到选定的游戏"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:54
 msgid "小"
 msgstr "小"
@@ -801,6 +811,10 @@ msgstr "常规演出"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:28
 msgid "平铺"
 msgstr "平铺"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:153
+msgid "应用"
+msgstr "应用"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
@@ -913,7 +927,7 @@ msgstr "提示：效果只有在切换到不同立绘或关闭之前的立绘再
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:53
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:58
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "提示：样式中用到的资源放在 assets 目录下"
 
@@ -1783,6 +1797,10 @@ msgstr "选项按钮（禁用）"
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "选项按钮外层"
 msgstr "选项按钮外层"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:94
+msgid "选项菜单"
+msgstr "选项菜单"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "透明度（0-1）："

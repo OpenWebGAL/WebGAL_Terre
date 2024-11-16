@@ -257,6 +257,10 @@ msgstr "Code Editor"
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:139
+msgid "使用中的模板："
+msgstr "Template in use: "
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
 msgid "使用引擎内置的特效"
 msgstr "Use the special effects prepared in engine"
@@ -532,6 +536,7 @@ msgid "发现新版本"
 msgstr "New version detected"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:151
 msgid "取消"
 msgstr "Cancel"
 
@@ -702,6 +707,11 @@ msgstr "Export as Android project file"
 msgid "导出为网页"
 msgstr "Export as webpage"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:103
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:111
+msgid "将当前模板应用到选定的游戏"
+msgstr "Apply the current template to selected games"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:54
 msgid "小"
 msgstr "Small"
@@ -781,6 +791,10 @@ msgstr "Regular performance"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:28
 msgid "平铺"
 msgstr "Tiling"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:153
+msgid "应用"
+msgstr "Apply"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
 msgid "应用的模板"
@@ -893,7 +907,7 @@ msgstr "Tip: The effect will only take place when switching to a different chara
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "Tip: The effect will only take place when switching to a different background or removing the current background and adding it again. If you want to set an effect for an existing background, please use a separate command for setting effects."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:53
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:58
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "Tips: Resources used in styles are placed in the assets directory"
 
@@ -1763,6 +1777,10 @@ msgstr "Selection Button (disabled)"
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:94
+msgid "选项菜单"
+msgstr "Option Menu"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "透明度（0-1）："
