@@ -14,8 +14,7 @@ import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import { api } from '@/api';
 import { GameInfoDto } from '@/api/Api';
 import { List, ListItem } from "@fluentui/react-list-preview";
-import useSWR from 'swr';
-import { api } from '@/api';
+import useSWR, { mutate } from 'swr';
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
@@ -46,6 +45,18 @@ export default function TemplateEditorSidebar() {
   };
 
   const backToDashboard = () => redirect('dashboard', 'template');
+
+  // 当前模板没有id时自动添加
+  useEffect(() => {
+    if (templateConfig && !templateConfig.id) {
+      const newTemplateConfig = {
+        ...templateConfig,
+        id: crypto.randomUUID(),
+      };
+      api.manageTemplateControllerUpdateTemplateConfig({templateDir, newTemplateConfig});
+      mutate(`/templateConfig/${templateDir}`);
+    }
+  },[templateConfig]);
 
   return (
     <div className={styles.sidebar} style={{width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px`}}>
@@ -89,7 +100,7 @@ const OptionMenu = (): ReactNode => {
   };
 
   const applyTemplate = async () => {
-    const apply = selectedGameDirs.map(async (gameDir) => await api.manageTemplateControllerApplyTemplateToGame({gameName: gameDir, templateName: templateDir}));
+    const apply = selectedGameDirs.map(async (gameDir) => await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir}));
     await Promise.all(apply);
     setApplyTemplateDialogIsOpen(false);
   };
