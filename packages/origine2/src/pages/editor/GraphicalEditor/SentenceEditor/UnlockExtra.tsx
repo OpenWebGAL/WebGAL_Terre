@@ -6,8 +6,8 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonTips from "../components/CommonTips";
-import { Dropdown, Option } from "@fluentui/react-components";
 import {t} from "@lingui/macro";
+import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
 
@@ -31,20 +31,17 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
     <CommonTips text={t`提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。`}/>
     <div className={styles.editItem}>
       <CommonOptions key="1" title={t`解锁鉴赏类型`}>
-        <Dropdown
-          value={extra.get(unlockType.value)}
-          selectedOptions={[unlockType.value]}
-          onOptionSelect={(event, data) => {
-            if(data.optionValue?.toString() !== unlockType.value){
+        <WheelDropdown
+          options={extra}
+          value={unlockType.value}
+          onValueChange={(newValue) => {
+            if(newValue?.toString() !== unlockType.value){
               fileName.set("");
             }
-            unlockType.set(data.optionValue?.toString() ?? "");
+            unlockType.set(newValue?.toString() ?? "");
             submit();
           }}
-          style={{ minWidth: 0 }}
-        >
-          {Array.from(extra.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>)}
-        </Dropdown>
+        />
       </CommonOptions>
       <CommonOptions key="2" title={t`鉴赏资源文件`}>
         <>

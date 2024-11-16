@@ -6,7 +6,8 @@ import {useValue} from "@/hooks/useValue";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import { Button, Dropdown, Option } from "@fluentui/react-components";
+import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 
@@ -74,17 +75,14 @@ export default function SetTransform(props: ISentenceEditorProps) {
         isChecked={isUsePreset.value} />
       </CommonOptions>
       {isUsePreset.value && <CommonOptions key="3" title={t`选择预设目标`}>
-        <Dropdown
-          value={presetTargets.get(target.value as PresetTarget)}
-          selectedOptions={[target.value]}
-          onOptionSelect={(event, data) => {
-            target.set(data.optionValue?.toString() ?? "");
+        <WheelDropdown
+          options={presetTargets}
+          value={target.value}
+          onValueChange={(newValue) => {
+            target.set(newValue?.toString() ?? "");
             submit();
           }}
-          style={{ minWidth: 0 }}
-        >
-          {Array.from(presetTargets.entries()).map(([key, text]) => <Option key={key} value={key}>{text}</Option>)}
-        </Dropdown>
+        />
       </CommonOptions>}
       {!isUsePreset.value && <CommonOptions key="4" title={t`输入目标 ID`}>
         <input value={target.value}
