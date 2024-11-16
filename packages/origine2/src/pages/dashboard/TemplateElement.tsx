@@ -1,16 +1,16 @@
 import styles from "./templateElement.module.scss";
 import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
-import { TemplateInfo } from "./DashBoard";
 import { useMemo } from "react";
 import { useValue } from "../../hooks/useValue";
 import { api } from "@/api";
 import { routers } from "@/App";
 import { t } from "@lingui/macro";
 import { localStorageRename } from "@/utils/localStorageRename";
+import { TemplateInfoDto } from "@/api/Api";
 
 interface ITemplateElementProps {
-  templateInfo: TemplateInfo;
+  templateInfo: TemplateInfoDto;
   onClick: () => void;
   refreash?: () => void;
   checked: boolean;
@@ -73,7 +73,7 @@ export default function TemplateElement(props: ITemplateElementProps){
     <>
       <div onClick={props.onClick} className={className} id={props.templateInfo.dir}>
         <div className={styles.templateElement_title}>
-          <span>{props.templateInfo.title}</span>
+          <span>{props.templateInfo.name}</span>
         </div>
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
@@ -89,7 +89,7 @@ export default function TemplateElement(props: ITemplateElementProps){
                 <MenuList>
                   <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t`在文件管理器中打开`}</MenuItem>
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
-                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名模板`}</MenuItem>
+                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名文件夹`}</MenuItem>
                   <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除模板`}</MenuItem>
                 </MenuList>
               </MenuPopover>
