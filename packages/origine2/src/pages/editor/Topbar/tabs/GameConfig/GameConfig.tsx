@@ -19,6 +19,7 @@ import {t, Trans} from "@lingui/macro";
 import useSWR from "swr";
 import axios from "axios";
 import {WsUtil} from "@/utils/wsUtil";
+import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 
 export default function GameConfig() {
   const gameDir = useEditorStore.use.subPage();
@@ -35,37 +36,27 @@ export default function GameConfig() {
     getGameConfig();
   }, []);
 
-  const templatesResp = useSWR('template-list', async () => (await api.manageTemplateControllerGetTemplateList()).data);
-
-  const [templateDir, setTemplateDir] = useState<string | undefined>('__STANDARD__WG__');
+  const { data: templateList } = useSWR('template-list', async () => (await api.manageTemplateControllerGetTemplateList()).data);
 
   const currentTemplateResp = useSWR(`game-${gameDir}-template-config`, async () => {
     const resp = await axios.get(`/games/${gameDir}/game/template/template.json`);
-    return resp.data as { name: string, 'webgal-version': string };
+    return resp.data as TemplateConfigDto;
   });
 
   const currentTemplateName = currentTemplateResp.data?.name ?? '';
 
-  const selectorTemplate = <Dropdown style={{minWidth: 150}} key={currentTemplateName}
-    value={templateDir === '__STANDARD__WG__' ? t`WebGAL Classic` : templateDir}
-    selectedOptions={[currentTemplateName ?? '__STANDARD__WG__']}
-    onOptionSelect={(_, elem) => {
-      setTemplateDir(elem.optionValue);
-    }}>
-    {/* 应用模板的接口还不支持应用默认模板 */}
-    {/* <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Classic`}</Option> */}
-    {(templatesResp.data ?? []).map(e =>
-      <Option key={e.name} value={e.name}>{e.name}</Option>
-    )}
-  </Dropdown>;
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateInfoDto | null>(null);
 
   useEffect(() => {
-    setTemplateDir(currentTemplateName);
-  }, [currentTemplateName]);
+    if (templateList && currentTemplateResp.data && currentTemplateResp.data.id) {
+      const selectedTemplate = templateList.find(template => template.id === currentTemplateResp.data?.id);
+      selectedTemplate && setSelectedTemplate(selectedTemplate);
+    }
+  }, [templateList, currentTemplateResp.data]);
 
   async function applyNewTemplate() {
-    if (templateDir) {
-      await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir});
+    if (selectedTemplate) {
+      await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir: selectedTemplate.dir});
       // 更新模板后，让游戏再去拉一次模板的样式文件
       WsUtil.sendTemplateRefetchCommand();
       await currentTemplateResp.mutate();
@@ -176,7 +167,21 @@ export default function GameConfig() {
             </div>
           </Trans>
           <div className={styles.applyTemplateSelectorLine}>
-            {selectorTemplate}
+            <Dropdown
+              style={{minWidth: 150}}
+              value={!selectedTemplate ? '' : selectedTemplate.name}
+              selectedOptions={[!selectedTemplate ? '' : selectedTemplate.dir]}
+              onOptionSelect={(_, data) => {
+                if (data.optionValue){
+                  const t = templateList?.find(template => template.dir === data.optionValue);
+                  t && setSelectedTemplate(t);
+                }
+              }}
+            >
+              {/* 应用模板的接口还不支持应用默认模板 */}
+              {/* <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Classic`}</Option> */}
+              {(templateList ?? []).map(template => <Option key={template.name} value={template.dir}>{template.name}</Option>)}
+            </Dropdown>
             <Trans>
               <Button onClick={applyNewTemplate}>应用新的模板</Button>
             </Trans>
