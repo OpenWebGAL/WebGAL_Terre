@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
 import { logger } from '../../../utils/logger';
+import debounce from 'lodash/debounce';
 
 // 语法高亮文件
 import { editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME } from '../../../runtime/WG_ORIGINE_RUNTIME';
@@ -13,7 +14,6 @@ import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
 import {useValue} from "@/hooks/useValue";
-import {debounce} from '@/utils/debounce';
 
 interface ITextEditorProps {
   targetPath: string;
@@ -54,7 +54,7 @@ export default function TextEditor(props: ITextEditorProps) {
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
       }
-    }, 250));
+    }, 500));
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false }, wordWrap: isAutoWarp ? 'on' : 'off' });
     isAfterMount = true;
     updateEditData();
@@ -84,7 +84,7 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = currentText.value.split('\n')[lineNumber - 1];
       WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
     });
-  }, 250);
+  }, 500);
 
   function updateEditData() {
     const path = props.targetPath;
