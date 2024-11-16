@@ -567,7 +567,7 @@ msgid "启动图"
 msgstr "ロゴ"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:196
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "启用"
 msgstr "有効化"
 
@@ -1665,8 +1665,8 @@ msgstr "このファイルタイプはプレビューをサポートしていま
 
 #: src/pages/dashboard/DashBoard.tsx:199
 #: src/pages/dashboard/DashBoard.tsx:200
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:56
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
 msgid "语言"
 msgstr "言語"
 
