@@ -98,9 +98,9 @@ export default function Sidebar(props: ISidebarProps) {
                 onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
                 defaultValue={t`新的游戏`}
                 placeholder={t`新游戏名`}/>
-              选择游戏引擎版本
+              {t`选择游戏引擎版本`}
               {selector}
-              选择应用的模板
+              {t`选择应用的模板`}
               {selectorTemplate}
               <Button appearance='primary' disabled={newGameName.trim() === ''}
                 onClick={createNewGame}>{t`创建`}</Button>
