@@ -84,7 +84,7 @@ export default function TemplateEditorSidebar() {
   );
 }
 
-const OptionMenu = (): ReactNode => {
+const OptionMenu = () => {
   const templateDir = useEditorStore.use.subPage();
 
   const [applyTemplateDialogIsOpen, setApplyTemplateDialogIsOpen] = useState(false);
