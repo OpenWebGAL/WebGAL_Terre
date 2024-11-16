@@ -22,11 +22,11 @@ msgstr ";コメント"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:183
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:189
 msgid "<0>应用新的模板</0>"
 msgstr "<0>新しいテンプレートを適用する</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:176
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:167
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 
@@ -152,7 +152,6 @@ msgstr "unlockCg:;"
 
 #: src/pages/dashboard/Sidebar.tsx:60
 #: src/pages/dashboard/Sidebar.tsx:65
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:53
 msgid "WebGAL Classic"
 msgstr "WebGAL Classic"
 
@@ -257,7 +256,7 @@ msgstr "コードエディタ"
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "実験的な高速プレビューを有効にすると、リアルタイムプレビューの効率が大幅に向上しますが、異常が発生する可能性があります。特別なヒント：前回のリアルタイムプレビューのジャンプが完全に終了していない（特にアニメーションが終了していない）ときに、再度ジャンプしないでください。"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:139
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:147
 msgid "使用中的模板："
 msgstr "使用中のテンプレート："
 
@@ -411,7 +410,7 @@ msgid "最小高度"
 msgstr "最小高さ"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:180
+#: src/pages/dashboard/DashBoard.tsx:161
 msgid "最新版本"
 msgstr "最新バージョン"
 
@@ -450,11 +449,11 @@ msgstr "背景画像の切り替え"
 #: src/components/Assets/Assets.tsx:209
 #: src/components/Assets/Assets.tsx:249
 #: src/pages/dashboard/Sidebar.tsx:106
-#: src/pages/dashboard/TemplateSidebar.tsx:56
+#: src/pages/dashboard/TemplateSidebar.tsx:77
 msgid "创建"
 msgstr "作成"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:48
+#: src/pages/dashboard/TemplateSidebar.tsx:56
 msgid "创建新模板"
 msgstr "新しいテンプレートを作成"
 
@@ -531,12 +530,12 @@ msgstr "一行コメント"
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
-#: src/pages/dashboard/DashBoard.tsx:175
+#: src/pages/dashboard/DashBoard.tsx:156
 msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:151
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:159
 msgid "取消"
 msgstr "キャンセル"
 
@@ -563,11 +562,11 @@ msgstr "右揃え"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "BGMの再生を開始、切り替え、または停止する"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:157
 msgid "启动图"
 msgstr "ロゴ"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:200
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:94
 msgid "启用"
 msgstr "有効化"
@@ -707,8 +706,8 @@ msgstr "Andoroidアプリとしてエクスポート"
 msgid "导出为网页"
 msgstr "ウェブとしてエクスポート"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:103
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:111
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:119
 msgid "将当前模板应用到选定的游戏"
 msgstr "選択したゲームに現在のテンプレートを適用する"
 
@@ -763,7 +762,7 @@ msgstr "左の立ち絵"
 msgid "左对齐"
 msgstr "左揃え"
 
-#: src/pages/dashboard/DashBoard.tsx:131
+#: src/pages/dashboard/DashBoard.tsx:112
 msgid "已创建"
 msgstr "作成済み"
 
@@ -792,11 +791,11 @@ msgstr "通常演出"
 msgid "平铺"
 msgstr "タイリング"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:153
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:161
 msgid "应用"
 msgstr "適用"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:174
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:165
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
 
@@ -813,11 +812,11 @@ msgid "张开嘴"
 msgstr "開いた口"
 
 #: src/pages/dashboard/About.tsx:37
-#: src/pages/dashboard/DashBoard.tsx:179
+#: src/pages/dashboard/DashBoard.tsx:160
 msgid "当前版本"
 msgstr "現在のバージョン"
 
-#: src/pages/dashboard/DashBoard.tsx:189
+#: src/pages/dashboard/DashBoard.tsx:170
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
@@ -907,7 +906,7 @@ msgstr "ヒント：この効果は、異なる立ち絵に切り替えるか、
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "ヒント：エフェクトは、異なる背景に切り替えるか、一度背景を削除してから再度追加した場合にのみ有効になります。既存の背景にエフェクトを設定する場合は、専用の「エフェクト設定」コマンドを使用してください。"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:58
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:64
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "ヒント：スタイルで使用されるリソースは assets ディレクトリにあります"
 
@@ -1039,8 +1038,7 @@ msgstr "新しいファイルを作成"
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:44
-#: src/pages/dashboard/TemplateSidebar.tsx:54
+#: src/pages/dashboard/TemplateSidebar.tsx:52
 msgid "新建模板"
 msgstr "新しいテンプレートを作成"
 
@@ -1061,21 +1059,25 @@ msgid "新标签页预览"
 msgstr "新しいタブでプレビュー"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:53
-msgid "新模板名"
-msgstr "新しいテンプレート名"
+#~ msgid "新模板名"
+#~ msgstr "新しいテンプレート名"
 
 #: src/pages/dashboard/Sidebar.tsx:100
 msgid "新游戏名"
 msgstr "新しいゲーム名"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:23
+#: src/pages/dashboard/TemplateSidebar.tsx:24
+#: src/pages/dashboard/TemplateSidebar.tsx:36
+#: src/pages/dashboard/TemplateSidebar.tsx:37
+#: src/pages/dashboard/TemplateSidebar.tsx:65
+#: src/pages/dashboard/TemplateSidebar.tsx:73
 msgid "新的模板"
 msgstr "新しいテンプレート"
 
 #: src/pages/dashboard/Sidebar.tsx:34
 #: src/pages/dashboard/Sidebar.tsx:75
 #: src/pages/dashboard/Sidebar.tsx:99
-#: src/pages/dashboard/TemplateSidebar.tsx:29
 msgid "新的游戏"
 msgstr "新しいゲーム"
 
@@ -1180,11 +1182,11 @@ msgstr "タイトルボタンリスト"
 msgid "标题按钮文字"
 msgstr "タイトルボタンテキスト"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:150
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:141
 msgid "标题背景图片"
 msgstr "タイトルの背景画像"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:158
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:149
 msgid "标题背景音乐"
 msgstr "タイトルのBGM"
 
@@ -1193,14 +1195,24 @@ msgstr "タイトルのBGM"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:237
+#: src/pages/dashboard/DashBoard.tsx:218
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
 msgid "模板"
 msgstr "テンプレート"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:35
+#: src/pages/dashboard/TemplateSidebar.tsx:43
 msgid "模板列表"
 msgstr "テンプレートリスト"
+
+#: src/pages/dashboard/TemplateSidebar.tsx:57
+#: src/pages/dashboard/TemplateSidebar.tsx:66
+msgid "模板名称"
+msgstr "テンプレート名"
+
+#: src/pages/dashboard/TemplateSidebar.tsx:68
+#: src/pages/dashboard/TemplateSidebar.tsx:74
+msgid "模板目录"
+msgstr "テンプレートカタログ"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
 msgid "櫻花"
@@ -1288,7 +1300,7 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:235
+#: src/pages/dashboard/DashBoard.tsx:216
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1296,11 +1308,11 @@ msgstr "ゲーム"
 msgid "游戏列表"
 msgstr "ゲームリスト"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:141
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:132
 msgid "游戏包名"
 msgstr "パッケージ名"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:120
 msgid "游戏名称"
 msgstr "ゲーム名"
 
@@ -1308,11 +1320,11 @@ msgstr "ゲーム名"
 msgid "游戏控制"
 msgstr "ゲームコントロール"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:137
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:128
 msgid "游戏简介"
 msgstr "ゲーム概要"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:133
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:124
 msgid "游戏识别码"
 msgstr "ゲームID"
 
@@ -1389,7 +1401,7 @@ msgstr "動画のオプション"
 msgid "禁止跳过视频"
 msgstr "動画のスキップを無効にする"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:195
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:201
 msgid "禁用"
 msgstr "無効化"
 
@@ -1543,7 +1555,7 @@ msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
 
 #: src/pages/dashboard/About.tsx:48
-#: src/pages/dashboard/DashBoard.tsx:185
+#: src/pages/dashboard/DashBoard.tsx:166
 msgid "获取最新版本"
 msgstr "最新バージョンをダウンロード"
 
@@ -1649,8 +1661,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:218
-#: src/pages/dashboard/DashBoard.tsx:219
+#: src/pages/dashboard/DashBoard.tsx:199
+#: src/pages/dashboard/DashBoard.tsx:200
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:40
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:46
 msgid "语言"
@@ -1723,9 +1735,17 @@ msgstr "シーンファイルを選択"
 msgid "选择小头像"
 msgstr "アバターを選択"
 
+#: src/pages/dashboard/Sidebar.tsx:103
+msgid "选择应用的模板"
+msgstr "適用テンプレートを選択"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayEffect.tsx:26
 msgid "选择效果音文件"
 msgstr "効果音ファイルを選択"
+
+#: src/pages/dashboard/Sidebar.tsx:101
+msgid "选择游戏引擎版本"
+msgstr "ゲームエンジンのバージョンを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 msgid "选择立绘文件"
@@ -1778,7 +1798,7 @@ msgstr "選択肢ボタン（無効状態）"
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:94
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:100
 msgid "选项菜单"
 msgstr "オプションメニュー"
 
@@ -1803,10 +1823,10 @@ msgstr "名前を変更"
 
 #: src/pages/dashboard/GameElement.tsx:98
 #: src/pages/dashboard/GameElement.tsx:113
+#: src/pages/dashboard/TemplateElement.tsx:92
 msgid "重命名文件夹"
 msgstr "ディレクトリ名の変更"
 
-#: src/pages/dashboard/TemplateElement.tsx:92
 #: src/pages/dashboard/TemplateElement.tsx:107
 msgid "重命名模板"
 msgstr "テンプレート名の変更"
