@@ -47,9 +47,11 @@ export const runClient = async () => {
   });
 
   updateUserConfiguration(`{
-  "workbench.colorTheme": "WebGAL White",
-  "editor.semanticHighlighting.enabled": "configuredByTheme",
-}`);
+    "workbench.colorTheme": "WebGAL White",
+    "editor.semanticHighlighting.enabled": "configuredByTheme",
+    "editor.fontFamily": "${useEditorStore.getState().editorFontFamily}",
+    "editor.fontSize": ${useEditorStore.getState().editorFontSize},
+  }`);
 
   monaco.languages.register({
     id: 'webgal',

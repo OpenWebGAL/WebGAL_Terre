@@ -3,6 +3,8 @@ import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as fsp from 'fs/promises';
 import { webgalParser } from '../../util/webgal-parser';
 import { version_number } from '../../main';
+import { TemplateConfigDto, TemplateInfoDto } from './manage-template.dto';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class ManageTemplateService {
@@ -12,10 +14,37 @@ export class ManageTemplateService {
   ) {}
 
   /**
+   * 获取模板列表
+   */
+  async getTemplateList(): Promise<TemplateInfoDto[]> {
+    // 如果模板文件夹不存在就创建
+    if (!(await this.webgalFs.existsDir('public/templates')))
+      await this.webgalFs.mkdir('public', 'templates');
+    const path = this.webgalFs.getPathFromRoot(`public/templates`);
+    const fileInfo = await this.webgalFs.getDirInfo(path);
+    const templateList: Promise<TemplateInfoDto>[] = fileInfo
+      .filter((file) => file.isDir)
+      .map(async (item): Promise<TemplateInfoDto> => {
+        const templateConfig: TemplateConfigDto = await this.getTemplateConfig(
+          item.name,
+        );
+        return {
+          ...templateConfig,
+          dir: item.name,
+        };
+      });
+    return Promise.all(templateList);
+  }
+
+  /**
    * 创建模板
    * @param templateName 模板名称
+   * @param templateDir 模板文件夹
    */
-  async createTemplate(templateName: string): Promise<boolean> {
+  async createTemplate(
+    templateName: string,
+    templateDir: string,
+  ): Promise<boolean> {
     // 检查是否存在这个模板
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/templates`),
@@ -23,7 +52,7 @@ export class ManageTemplateService {
     let isThisTemplateExist = false;
     checkDir.forEach((e) => {
       const info: IFileInfo = e as IFileInfo;
-      if (info.name === templateName && info.isDir) {
+      if (info.name === templateDir && info.isDir) {
         isThisTemplateExist = true;
       }
     });
@@ -33,21 +62,22 @@ export class ManageTemplateService {
     // 创建文件夹
     await this.webgalFs.mkdir(
       this.webgalFs.getPathFromRoot('/public/templates'),
-      templateName,
+      templateDir,
     );
     // 递归复制
     await this.webgalFs.copy(
       this.webgalFs.getPathFromRoot(
         '/assets/templates/WebGAL_Default_Template/',
       ),
-      this.webgalFs.getPathFromRoot(`/public/templates/${templateName}/`),
+      this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
     );
 
     /**
      * 把模板配置文件的名称改一下
      */
-    const templateConfig = {
+    const templateConfig: TemplateConfigDto = {
       name: templateName,
+      id: randomUUID(),
       'webgal-version': version_number,
     };
 
@@ -56,7 +86,53 @@ export class ManageTemplateService {
     // 写一下文件系统
     await this.webgalFs.updateTextFile(
       this.webgalFs.getPathFromRoot(
-        `/public/templates/${templateName}/template.json`,
+        `/public/templates/${templateDir}/template.json`,
+      ),
+      templateConfigText,
+    );
+
+    return true;
+  }
+
+  /**
+   * 获取模板配置
+   * @param templateDir 模板文件夹
+   */
+  async getTemplateConfig(templateDir: string): Promise<TemplateConfigDto> {
+    const configFilePath = this.webgalFs.getPathFromRoot(
+      `/public/templates/${decodeURI(templateDir)}/template.json`,
+    );
+    const templateConfigString = await this.webgalFs.readTextFile(
+      configFilePath,
+    );
+    const templateConfig: TemplateConfigDto = JSON.parse(
+      templateConfigString as string,
+    );
+    return templateConfig;
+  }
+
+  /**
+   * 更新模板配置
+   * @param templateDir 模板文件夹
+   * @param newTemplateConfig 模板配置
+   */
+  async updateTemplateConfig(
+    templateDir: string,
+    newTemplateConfig: TemplateConfigDto,
+  ): Promise<boolean> {
+    const templateConfig = await this.getTemplateConfig(templateDir);
+
+    if (!templateConfig) {
+      return false;
+    }
+
+    const newConfig = { ...templateConfig, ...newTemplateConfig };
+
+    const templateConfigText = JSON.stringify(newConfig, undefined, 2);
+
+    await this.webgalFs.updateTextFile(
+      this.webgalFs.getPathFromRoot(
+        `/public/templates/${templateDir}/template.json`,
       ),
       templateConfigText,
     );
@@ -66,36 +142,34 @@ export class ManageTemplateService {
 
   /**
    * 删除模板
-   * @param templateName 模板名称
+   * @param templateDir 模板名称
    */
-  async deleteTemplate(templateName: string): Promise<boolean> {
+  async deleteTemplate(templateDir: string): Promise<boolean> {
     const templatePath = this.webgalFs.getPathFromRoot(
-      `/public/templates/${templateName}`,
+      `/public/templates/${templateDir}`,
     );
     return this.webgalFs.deleteFileOrDirectory(templatePath);
   }
 
   /**
    * 应用模板到游戏
-   * @param templateName 模板名称
-   * @param gameName 游戏名称
+   * @param templateDir 模板文件夹
+   * @param gameDir 游戏文件夹
    */
   async applyTemplateToGame(
-    templateName: string,
-    gameName: string,
+    templateDir: string,
+    gameDir: string,
   ): Promise<boolean> {
     try {
       // 删除指定游戏的模板
       await this.webgalFs.deleteFileOrDirectory(
-        this.webgalFs.getPathFromRoot(`public/games/${gameName}/game/template`),
+        this.webgalFs.getPathFromRoot(`public/games/${gameDir}/game/template`),
       );
 
       // 递归复制指定的模板到游戏
       await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot(`/public/templates/${templateName}/`),
-        this.webgalFs.getPathFromRoot(
-          `public/games/${gameName}/game/template/`,
-        ),
+        this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
+        this.webgalFs.getPathFromRoot(`public/games/${gameDir}/game/template/`),
       );
 
       return true;
