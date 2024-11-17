@@ -80,7 +80,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       <TerrePanel sentenceIndex={props.index} title={t`效果编辑器`}>
         <div>
           <CommonTips
-            text={t`效果提示`}/>
+            text={t`提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令`}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();

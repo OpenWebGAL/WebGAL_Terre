@@ -1,7 +1,6 @@
 import GameElement from "./GameElement";
 import styles from "./sidebar.module.scss";
 import {useState} from "react";
-import {GameInfo} from "./DashBoard";
 import {
   Button, Dropdown,
   Input,
@@ -16,9 +15,10 @@ import {AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon} fr
 import {t} from "@lingui/macro";
 import useSWR from "swr";
 import {api} from "@/api";
+import { GameInfoDto } from "@/api/Api";
 
 interface ISidebarProps {
-  gameList: GameInfo[];
+  gameList: GameInfoDto[];
   currentSetGame: string | null;
   setCurrentGame: (currentGame: string) => void;
   createGame: (name: string, derivative?: string, templateName?: string) => void;
@@ -98,9 +98,9 @@ export default function Sidebar(props: ISidebarProps) {
                 onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
                 defaultValue={t`新的游戏`}
                 placeholder={t`新游戏名`}/>
-              选择游戏引擎版本
+              {t`选择游戏引擎版本`}
               {selector}
-              选择应用的模板
+              {t`选择应用的模板`}
               {selectorTemplate}
               <Button appearance='primary' disabled={newGameName.trim() === ''}
                 onClick={createNewGame}>{t`创建`}</Button>

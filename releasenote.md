@@ -4,17 +4,27 @@
 
 #### 新功能
 
-创建和重命名场景文件时检查是否有重名文件
+支持通过配置文件控制是否要启用紧急回避界面
 
-全新的语言服务器
+intro 支持关闭自动展示下一句，只有用户手动点击鼠标或按下键盘时才展示下一句
 
-在创建游戏后重新应用模板
+为模板编辑器添加快速应用模板到游戏的菜单项
+
+为选择器添加使用鼠标滚轮快速切换选项的功能
+
+脚本编辑器支持设置字号和字体
+
+支持创建模板时指定模板存储位置
 
 #### 修复
 
-4.5.7 修复：无法从状态中获取到对应 key 的变量时，返回 {key} 以避免变换不生效
+优化文件列表文件名排序
 
-修复引擎的若干错误
+为 Live2D 相关选项添加翻译文本
+
+优化脚本编辑器下的编辑性能
+
+重复应用当前应用的模板时，偶发的找不到模板的问题
 
 <!-- English Translation -->
 ## Release Notes
@@ -23,17 +33,28 @@
 
 #### New Features
 
-Check for duplicate file names when creating and renaming scene files
+Support controlling whether to enable the emergency skip interface through the configuration file.
 
-Brand-new language server
+The intro now supports disabling automatic display of the next sentence.  The next sentence will only be displayed when the user manually clicks the mouse or presses a key.
 
-Reapply template after game creation
+Added a menu item to the template editor to quickly apply templates to the game.
+
+Added the ability to quickly switch options using the mouse wheel in the selector.
+
+The script editor now supports setting font size and font family.
+
+Support specifying the template storage location when creating a template.
+
 
 #### Fixes
 
-4.5.7 Fix: When the corresponding key variable cannot be obtained from the state, return {key} to avoid ineffective transformation.
+Optimized file name sorting in the file list.
 
-Fix several bugs in the engine
+Added translated text for Live2D related options.
+
+Optimized editing performance in the script editor.
+
+Fixed the occasional issue of not finding a template when repeatedly applying the currently applied template.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -42,18 +63,27 @@ Fix several bugs in the engine
 
 #### 新機能
 
-シーンファイルを作成および名前変更するときに、名前が重複しているかどうかを確認する
+設定ファイルで緊急回避インターフェースの有効/無効を切り替えられるようになりました。
 
-新しい言語サーバー
+イントロで自動的に次の文章を表示する機能をオフにできるようになりました。ユーザーがマウスをクリックまたはキーボードを押したときにのみ、次の文章が表示されます。
 
-ゲームの作成後にテンプレートを再適用する
+テンプレートエディターに、ゲームにテンプレートをクイック適用するためのメニュー項目を追加しました。
 
+セレクターでマウスホイールを使用してオプションをすばやく切り替える機能を追加しました。
+
+スクリプトエディターでフォントサイズとフォントを設定できるようになりました。
+
+テンプレートの作成時にテンプレートの保存場所を指定できるようになりました。
 
 #### 修正
 
-4.5.7 修正：状態から対応する key の変数が取得できない場合、{key} を返すようにし、変換が無効になるのを回避しました
+ファイルリストのファイル名ソートを最適化しました。
 
-エンジンのいくつかのバグを修正
+Live2D関連オプションに翻訳テキストを追加しました。
+
+スクリプトエディターのエディットパフォーマンスを最適化しました。
+
+現在適用されているテンプレートを再度適用するときに、テンプレートが見つからない場合がある問題を修正しました。
 
 [//]: # (<!-- French Translation -->)
 

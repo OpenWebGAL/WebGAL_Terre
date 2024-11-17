@@ -50,24 +50,7 @@ import {redirect} from "@/hooks/useHashRoute";
 import {t} from "@lingui/macro";
 import { useRelease } from "@/hooks/useRelease";
 import { __INFO } from "@/config/info";
-
-// 返回的文件信息（单个）
-interface IFileInfo {
-  name: string;
-  isDir: boolean;
-}
-
-// 游戏信息
-export interface GameInfo {
-  dir: string;
-  title: string;
-  cover: string;
-}
-
-export interface TemplateInfo {
-  dir: string;
-  title: string;
-}
+import { CreateTemplateDto } from "@/api/Api";
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -83,35 +66,15 @@ const AlbumIcon = bundleIcon(AlbumFilled, AlbumRegular);
 const DismissIcon = bundleIcon(DismissFilled, DismissRegular);
 
 export const gameListFetcher = async () => {
-  const data = (await api.manageGameControllerGetGameList()).data;
-  const gameList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
+  const gameList = (await api.manageGameControllerGetGameList()).data;
   logger.info("返回的游戏列表", gameList);
-  const getGameInfoList = gameList.map(
-    async (gameName): Promise<GameInfo> => {
-      const gameConfigData = (await api.manageGameControllerGetGameConfig(gameName)).data;
-      const gameConfig = WebgalParser.parseConfig(gameConfigData as unknown as string);
-      return {
-        dir: gameName,
-        title: gameConfig.find(e => e.command === "Game_name")?.args?.join('') ?? "",
-        cover: gameConfig.find(e => e.command === "Title_img")?.args?.join('') ?? "",
-      };
-    });
-  return await Promise.all(getGameInfoList);
+  return gameList;
 };
 
 export const templateListFetcher = async () => {
-  const data = (await api.manageTemplateControllerGetTemplateList()).data;
-  const templateList = (data as unknown as Array<IFileInfo>).filter(e => e.isDir).map(e => e.name);
+  const templateList = (await api.manageTemplateControllerGetTemplateList()).data;
   logger.info("返回的模板列表", templateList);
-  const getTemplateInfoList = templateList.map(
-    async (templateName): Promise<TemplateInfo> => {
-      const TemplateConfigData = (await api.manageTemplateControllerGetTemplateConfig(templateName)).data as unknown as object;
-      return {
-        dir: templateName,
-        title: 'name' in TemplateConfigData ? TemplateConfigData.name as string : templateName,
-      };
-    });
-  return await Promise.all(getTemplateInfoList);
+  return templateList;
 };
 
 export default function DashBoard() {
@@ -150,9 +113,9 @@ export default function DashBoard() {
     refreash();
   }
 
-  async function createTemplate(templateName: string) {
-    console.log("createTeplate:" + templateName);
-    const res = await api.manageTemplateControllerCreateTemplate({templateName: templateName}).then(r => r.data);
+  async function createTemplate(template: CreateTemplateDto) {
+    console.log("createTeplate:" + template);
+    const res = await api.manageTemplateControllerCreateTemplate(template).then(r => r.data);
     logger.info("创建结果：", res);
     refreash();
   }

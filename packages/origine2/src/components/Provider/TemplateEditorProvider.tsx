@@ -8,15 +8,15 @@ import useSWR from "swr";
 
 const TemplateEditorProvider = ({ children }: { children: ReactNode }) => {
   const page = useEditorStore.use.page();
-  const templateName = useEditorStore.use.subPage();
+  const templateDir = useEditorStore.use.subPage();
 
-  if (page !== 'template' || !templateName) {
+  if (page !== 'template' || !templateDir) {
     redirect('dashboard', 'template');
   }
 
   const {data: templateList, isLoading: templateListLoading} = useSWR("template-list", templateListFetcher);
   const fristLoading = templateListLoading && !templateList;
-  const inTemplateList = templateList && templateList.length > 0 && templateList.some((template) => template.dir === templateName);
+  const inTemplateList = templateList && templateList.length > 0 && templateList.some((template) => template.dir === templateDir);
 
   if (!fristLoading && !inTemplateList) {
     redirect('dashboard', 'template');
@@ -27,7 +27,7 @@ const TemplateEditorProvider = ({ children }: { children: ReactNode }) => {
       {
         fristLoading &&
        <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-         <Spinner labelPosition="below" label={templateName} />
+         <Spinner labelPosition="below" label={templateDir} />
        </div>
       }
       {inTemplateList && !fristLoading && <TemplateEditorContextProvider>{children}</TemplateEditorContextProvider>}
