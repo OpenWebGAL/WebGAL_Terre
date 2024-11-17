@@ -6,6 +6,7 @@ import { urlencoded, json } from 'express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { env } from 'process';
 import { WsAdapter } from '@nestjs/platform-ws';
+import './logger';
 
 let WEBGAL_PORT = 3000; // default port
 export const version_number = `4.5.9`;
