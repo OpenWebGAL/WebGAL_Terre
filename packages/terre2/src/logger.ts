@@ -31,17 +31,16 @@ const logStream = fs.createWriteStream(logFile, { flags: 'a' });
 const originalStdoutWrite = process.stdout.write;
 const originalStderrWrite = process.stderr.write;
 
-process.stdout.write = function (...args) {
+process.stdout.write = function (...args: any[]) {
   try {
     logStream.write(`${new Date().toISOString()} [LOG]: ${args[0]}`);
   } catch (_) {}
   return originalStdoutWrite.apply(process.stdout, args);
 };
 
-process.stderr.write = function (...args) {
+process.stderr.write = function (...args: any[]) {
   try {
     logStream.write(`${new Date().toISOString()} [ERROR]: ${args[0]}`);
   } catch (_) {}
-
   return originalStderrWrite.apply(process.stderr, args);
 };
