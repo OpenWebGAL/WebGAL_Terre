@@ -4,8 +4,8 @@ import styles from "./sentenceEditor.module.scss";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
-import { Dropdown, Option } from "@fluentui/react-components";
 import {t} from "@lingui/macro";
+import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 
 export default function PixiPerform(props: ISentenceEditorProps) {
 
@@ -46,17 +46,14 @@ export default function PixiPerform(props: ISentenceEditorProps) {
         onText={t`使用引擎内置的特效`} offText={t`使用自定义特效`} isChecked={isUsePreset.value} />
       </CommonOptions>}
       {isUsePreset.value && <CommonOptions title={t`使用预制特效`} key="3">
-        <Dropdown
-          value={effects.get(effectName.value) ?? effectName.value}
-          selectedOptions={[effectName.value]}
-          onOptionSelect={(ev, data) => {
-            effectName.set(data.optionValue?.toString() ?? "");
+        <WheelDropdown
+          options={effects}
+          value={effectName.value}
+          onValueChange={(newValue) => {
+            effectName.set(newValue?.toString() ?? "");
             submit();
           }}
-          style={{ minWidth: 0}}
-        >
-          { Array.from(effects.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>) }
-        </Dropdown>
+        />
       </CommonOptions>}
       {!isUsePreset.value && !isSetEffectsOff.value && < CommonOptions title={t`自定义特效名称`} key="3">
         <input value={effectName.value}

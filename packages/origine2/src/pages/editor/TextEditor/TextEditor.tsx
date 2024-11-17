@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
 import { logger } from '../../../utils/logger';
+import debounce from 'lodash/debounce';
 
 // 语法高亮文件
 import { editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME } from '../../../runtime/WG_ORIGINE_RUNTIME';
@@ -42,7 +43,7 @@ export default function TextEditor(props: ITextEditorProps) {
     logger.debug('脚本编辑器挂载');
     lspSceneName.value = sceneName;
     editorRef.current = editor;
-    editor.onDidChangeCursorPosition((event) => {
+    editor.onDidChangeCursorPosition(debounce((event:monaco.editor.ICursorPositionChangedEvent) => {
       const lineNumber = event.position.lineNumber;
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[lineNumber - 1];
@@ -50,8 +51,10 @@ export default function TextEditor(props: ITextEditorProps) {
       if (!isAfterMount) {
         editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
       }
-      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
-    });
+      if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
+        WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
+      }
+    }, 500));
     editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false }, wordWrap: isAutoWarp ? 'on' : 'off' });
     isAfterMount = true;
     updateEditData();
@@ -66,7 +69,7 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {string} value
    * @param {any} ev
    */
-  function handleChange(value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) {
+  const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     if(!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
     const lineNumber = ev.changes[0].range.startLineNumber;
@@ -81,7 +84,7 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = currentText.value.split('\n')[lineNumber - 1];
       WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
     });
-  }
+  }, 500);
 
   function updateEditData() {
     const path = props.targetPath;

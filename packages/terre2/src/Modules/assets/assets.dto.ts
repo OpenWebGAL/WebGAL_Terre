@@ -55,10 +55,10 @@ export class EditTextFileDto {
 
 export class ApplyTemplateToGameDto {
   @ApiProperty({ description: 'The template name to apply' })
-  templateName: string;
+  templateDir: string;
 
   @ApiProperty({
     description: 'The game name to be applied.',
   })
-  gameName: string;
+  gameDir: string;
 }

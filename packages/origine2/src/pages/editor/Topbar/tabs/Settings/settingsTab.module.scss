@@ -1,15 +1,16 @@
-.iconColor{
+.iconColor {
   color: var(--primary);
   font-size: 25px;
   height: 25px;
   width: 25px;
 }
-.previewTips{
+
+.previewTips {
   color: var(--primary);
   text-align: left;
 }
 
-.tips{
+.tips {
   color: var(--primary);
   font-weight: bolder;
   font-size: smaller;
@@ -19,4 +20,13 @@
   background: var(--primary-5pct);
   padding: 4px;
   border-radius: 4px;
+}
+
+.fontFamilyInput {
+  max-width: 320px;
+  margin: 0 5px 0 0;
+}
+
+.prompt {
+  padding-bottom: 8px;
 }

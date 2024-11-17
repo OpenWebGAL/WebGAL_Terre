@@ -9,9 +9,10 @@ import { useState } from "react";
 import React from 'react';
 import { logger } from "@/utils/logger";
 import { TerrePanel } from "../components/TerrePanel";
-import { Button, Dropdown, Option, Switch } from "@fluentui/react-components";
+import { Button, Switch } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 
 type FontSize = "small" | "medium" | "large";
 type Animation = "fadeIn" | "slideIn" | "typingEffect" | "pixelateEffect" | "revealAnimation";
@@ -21,6 +22,7 @@ export default function Intro(props: ISentenceEditorProps) {
   const introTextList = useValue(props.sentence.content.split("|"));
   const isHoldFromSentence = getArgByKey(props.sentence, 'hold');
   const isHold = useValue(!!isHoldFromSentence);
+  const isUserForward = useValue(!!getArgByKey(props.sentence, 'userForward'));
   const initialBackgroundColor: IColor = {
     r: 0,
     g: 0,
@@ -177,7 +179,8 @@ export default function Intro(props: ISentenceEditorProps) {
     const backgroundRgbaColor = `rgba(${backgroundColor.value.r}, ${backgroundColor.value.g}, ${backgroundColor.value.b}, ${backgroundColor.value.a ? backgroundColor.value.a / 100 : 1})`;
     const fontRgbaColor = `rgba(${fontColor.value.r}, ${fontColor.value.g}, ${fontColor.value.b}, ${fontColor.value.a ? fontColor.value.a / 100 : 1})`;
     const holdStr = isHold.value ? ` -hold` : '';
-    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime}${holdStr};`);
+    const userForwardStr = isUserForward.value ? ` -userForward` : '';
+    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime}${holdStr}${userForwardStr};`);
   };
 
   const introCompList = introTextList.value.map((text, index) => {
@@ -225,49 +228,53 @@ export default function Intro(props: ISentenceEditorProps) {
       <div style={{ width: '100%' }}>
         <div style={{ display: 'flex' }}>
           <CommonOptions title={t`文字大小`}>
-            <Dropdown
-              value={fontSizes.get(fontSize.value as FontSize) ?? fontSize.value}
-              selectedOptions={[fontSize.value]}
-              onOptionSelect={(event, data) => {
-                data.optionValue && fontSize.set(data.optionValue as string);
+            <WheelDropdown
+              options={fontSizes}
+              value={fontSize.value}
+              onValueChange={(newValue) => {
+                newValue && fontSize.set(newValue);
                 submit();
               }}
               style={{ minWidth: 0 }}
-            >
-              {Array.from(fontSizes.entries()).map(([key, value]) => <Option key={key} value={key} >{value}</Option>)}
-            </Dropdown>
+            />
           </CommonOptions>
           <CommonOptions title={t`动画`}>
-            <Dropdown
-              value={animations.get(animation.value as Animation) ?? animation.value}
-              selectedOptions={[animation.value]}
-              onOptionSelect={(ev, data) => {
-                data.optionValue && animation.set(data.optionValue.toString() ?? "");
+            <WheelDropdown
+              options={animations}
+              value={animation.value}
+              onValueChange={(newValue) => {
+                newValue && animation.set(newValue.toString() ?? "");
                 submit();
               }}
               style={{ minWidth: 0 }}
-            >
-              {Array.from(animations.entries()).map(([key, value]) => <Option key={key} value={key} >{value}</Option>)}
-            </Dropdown>
+            />
           </CommonOptions>
           <CommonOptions title={t`延迟时间（秒）`}>
-            <Dropdown
-              value={delayTimes.get(Number(delayTime.value) as DelayTime) ?? delayTime.value}
-              selectedOptions={[delayTime.value]}
-              onOptionSelect={(ev, data) => {
-                data.optionValue && delayTime.set(data.optionValue.toString() ?? "");
+            <WheelDropdown
+              options={new Map<string, string>(
+                Array.from(delayTimes.entries()).map(([key, value]) => [key.toString(), value])
+              )}
+              value={delayTime.value}
+              onValueChange={(newValue) => {
+                newValue && delayTime.set(newValue.toString() ?? "");
                 submit();
               }}
-              style={{ minWidth: 0 }}
-            >
-              {Array.from(delayTimes.entries()).map(([key, value]) => <Option key={key} value={String(key)} >{value}</Option>)}
-            </Dropdown>
+            />
           </CommonOptions>
           <CommonOptions title={t`结束后保持`}>
             <Switch
               checked={isHold.value}
               onChange={(ev, data) => {
                 isHold.set(data.checked ?? false);
+                submit();
+              }}
+            />
+          </CommonOptions>
+          <CommonOptions title={t`手动触发下一句`}>
+            <Switch
+              checked={isUserForward.value}
+              onChange={(ev, data) => {
+                isUserForward.set(data.checked ?? false);
                 submit();
               }}
             />

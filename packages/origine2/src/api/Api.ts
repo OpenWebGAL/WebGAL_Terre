@@ -9,13 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface CompletionDto {
-  /** Editor input value for which the completion is required */
-  editorValue: string;
-  /** Parameters required for completion */
-  params: object;
-}
-
 export interface CreateNewFileDto {
   /** The source path where the directory will be created */
   source: string;
@@ -52,6 +45,26 @@ export interface EditTextFileDto {
   path: string;
   /** Text data content */
   textFile: string;
+}
+
+export interface TemplateConfigDto {
+  /** The name of the template */
+  name: string;
+  /** The id of the template */
+  id: string;
+  /** The webgal version of the template */
+  'webgal-version': string;
+}
+
+export interface GameInfoDto {
+  /** The name of the game */
+  name: string;
+  /** The dir of the game */
+  dir: string;
+  /** The cover of the game */
+  cover: string;
+  /** The template config of the game */
+  template: TemplateConfigDto;
 }
 
 export interface CreateGameDto {
@@ -120,16 +133,36 @@ export interface RenameDto {
   newName: string;
 }
 
+export interface TemplateInfoDto {
+  /** The name of the template */
+  name: string;
+  /** The id of the template */
+  id: string;
+  /** The webgal version of the template */
+  'webgal-version': string;
+  /** The dir of the template */
+  dir: string;
+}
+
 export interface CreateTemplateDto {
   /** The name of the template to be created */
   templateName: string;
+  /** The dir of the template */
+  templateDir: string;
+}
+
+export interface UpdateTemplateConfigDto {
+  /** The dir of the template */
+  templateDir: string;
+  /** The new config of the template */
+  newTemplateConfig: TemplateConfigDto;
 }
 
 export interface ApplyTemplateToGameDto {
   /** The template name to apply */
-  templateName: string;
+  templateDir: string;
   /** The game name to be applied. */
-  gameName: string;
+  gameDir: string;
 }
 
 export interface GetStyleByClassNameDto {
@@ -296,23 +329,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags LSP
-     * @name LspControllerCompile
-     * @summary Get code completions based on given input
-     * @request POST:/api/lsp/compile
-     */
-    lspControllerCompile: (data: CompletionDto, params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/api/lsp/compile`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags Assets
      * @name AssetsControllerReadAssets
      * @summary Read Assets
@@ -451,9 +467,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/manageGame/gameList
      */
     manageGameControllerGetGameList: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<GameInfoDto[], any>({
         path: `/api/manageGame/gameList`,
         method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -780,9 +797,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/manageTemplate/templateList
      */
     manageTemplateControllerGetTemplateList: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<TemplateInfoDto[], void>({
         path: `/api/manageTemplate/templateList`,
         method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -795,7 +813,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/manageTemplate/createTemplate
      */
     manageTemplateControllerCreateTemplate: (data: CreateTemplateDto, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<void, void>({
         path: `/api/manageTemplate/createTemplate`,
         method: 'POST',
         body: data,
@@ -809,12 +827,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Manage Template
      * @name ManageTemplateControllerGetTemplateConfig
      * @summary Get Template Configuration
-     * @request GET:/api/manageTemplate/getTemplateConfig/{templateName}
+     * @request GET:/api/manageTemplate/getTemplateConfig/{templateDir}
      */
-    manageTemplateControllerGetTemplateConfig: (templateName: string, params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/api/manageTemplate/getTemplateConfig/${templateName}`,
+    manageTemplateControllerGetTemplateConfig: (templateDir: string, params: RequestParams = {}) =>
+      this.request<TemplateConfigDto, void>({
+        path: `/api/manageTemplate/getTemplateConfig/${templateDir}`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerUpdateTemplateConfig
+     * @summary Update template configuration
+     * @request PUT:/api/manageTemplate/updateTemplateConfig
+     */
+    manageTemplateControllerUpdateTemplateConfig: (data: UpdateTemplateConfigDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/updateTemplateConfig`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -824,11 +860,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Manage Template
      * @name ManageTemplateControllerDeleteTemplate
      * @summary Delete Template
-     * @request DELETE:/api/manageTemplate/delete/{templateName}
+     * @request DELETE:/api/manageTemplate/delete/{templateDir}
      */
-    manageTemplateControllerDeleteTemplate: (templateName: string, params: RequestParams = {}) =>
+    manageTemplateControllerDeleteTemplate: (templateDir: string, params: RequestParams = {}) =>
       this.request<void, void>({
-        path: `/api/manageTemplate/delete/${templateName}`,
+        path: `/api/manageTemplate/delete/${templateDir}`,
         method: 'DELETE',
         ...params,
       }),
@@ -855,15 +891,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Manage Template
      * @name ManageTemplateControllerGetStyleByClassName
-     * @summary Apply template to a game
+     * @summary Get style by class name
      * @request POST:/api/manageTemplate/getStyleByClassName
      */
     manageTemplateControllerGetStyleByClassName: (data: GetStyleByClassNameDto, params: RequestParams = {}) =>
-      this.request<void, void>({
+      this.request<string, void>({
         path: `/api/manageTemplate/getStyleByClassName`,
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
   };
