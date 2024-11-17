@@ -15,34 +15,6 @@
         ]
       }
     },
-    "/api/lsp/compile": {
-      "post": {
-        "operationId": "LspController_compile",
-        "summary": "Get code completions based on given input",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompletionDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully fetched the completion list."
-          },
-          "400": {
-            "description": "Failed to fetch the completion list."
-          }
-        },
-        "tags": [
-          "LSP"
-        ]
-      }
-    },
     "/api/assets/readAssets/{readDirPath}": {
       "get": {
         "operationId": "AssetsController_readAssets",
@@ -268,7 +240,17 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Returned game list."
+            "description": "Returned game list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GameInfoDto"
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -792,7 +774,20 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Returned template list."
+            "description": "Returned template list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TemplateInfoDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
           }
         },
         "tags": [
@@ -819,6 +814,12 @@
         "responses": {
           "200": {
             "description": "Template creation result."
+          },
+          "400": {
+            "description": "Invalid input data."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         },
         "tags": [
@@ -826,13 +827,13 @@
         ]
       }
     },
-    "/api/manageTemplate/getTemplateConfig/{templateName}": {
+    "/api/manageTemplate/getTemplateConfig/{templateDir}": {
       "get": {
         "operationId": "ManageTemplateController_getTemplateConfig",
         "summary": "Get Template Configuration",
         "parameters": [
           {
-            "name": "templateName",
+            "name": "templateDir",
             "required": true,
             "in": "path",
             "schema": {
@@ -842,10 +843,20 @@
         ],
         "responses": {
           "200": {
-            "description": "Returned template configuration."
+            "description": "Returned template configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TemplateConfigDto"
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Failed to get the template configuration."
+          "404": {
+            "description": "Template configuration not found."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         },
         "tags": [
@@ -853,13 +864,47 @@
         ]
       }
     },
-    "/api/manageTemplate/delete/{templateName}": {
+    "/api/manageTemplate/updateTemplateConfig": {
+      "put": {
+        "operationId": "ManageTemplateController_updateTemplateConfig",
+        "summary": "Update template configuration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTemplateConfigDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Template configuration updated successfully."
+          },
+          "400": {
+            "description": "Invalid input data."
+          },
+          "404": {
+            "description": "Template configuration not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/delete/{templateDir}": {
       "delete": {
         "operationId": "ManageTemplateController_deleteTemplate",
         "summary": "Delete Template",
         "parameters": [
           {
-            "name": "templateName",
+            "name": "templateDir",
             "required": true,
             "in": "path",
             "schema": {
@@ -868,11 +913,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returned delete result."
+          "204": {
+            "description": "Template deleted successfully."
           },
-          "400": {
-            "description": "Failed to delete."
+          "404": {
+            "description": "Template not found."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         },
         "tags": [
@@ -897,10 +945,16 @@
         },
         "responses": {
           "200": {
-            "description": "Returned apply result."
+            "description": "Template applied successfully."
           },
           "400": {
-            "description": "Failed to delete."
+            "description": "Invalid input data or failed to apply template."
+          },
+          "404": {
+            "description": "Template or game directory not found."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         },
         "tags": [
@@ -911,7 +965,7 @@
     "/api/manageTemplate/getStyleByClassName": {
       "post": {
         "operationId": "ManageTemplateController_getStyleByClassName",
-        "summary": "Apply template to a game",
+        "summary": "Get style by class name",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -925,10 +979,23 @@
         },
         "responses": {
           "200": {
-            "description": "Returned apply result."
+            "description": "Returned style information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Failed to delete."
+            "description": "Invalid input data."
+          },
+          "404": {
+            "description": "Style not found."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         },
         "tags": [
@@ -975,23 +1042,6 @@
   "servers": [],
   "components": {
     "schemas": {
-      "CompletionDto": {
-        "type": "object",
-        "properties": {
-          "editorValue": {
-            "type": "string",
-            "description": "Editor input value for which the completion is required"
-          },
-          "params": {
-            "type": "object",
-            "description": "Parameters required for completion"
-          }
-        },
-        "required": [
-          "editorValue",
-          "params"
-        ]
-      },
       "CreateNewFileDto": {
         "type": "object",
         "properties": {
@@ -1082,6 +1132,59 @@
         "required": [
           "path",
           "textFile"
+        ]
+      },
+      "TemplateConfigDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the template"
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the template"
+          },
+          "webgal-version": {
+            "type": "string",
+            "description": "The webgal version of the template"
+          }
+        },
+        "required": [
+          "name",
+          "id",
+          "webgal-version"
+        ]
+      },
+      "GameInfoDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the game"
+          },
+          "dir": {
+            "type": "string",
+            "description": "The dir of the game"
+          },
+          "cover": {
+            "type": "string",
+            "description": "The cover of the game"
+          },
+          "template": {
+            "description": "The template config of the game",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TemplateConfigDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "dir",
+          "cover",
+          "template"
         ]
       },
       "CreateGameDto": {
@@ -1238,33 +1341,86 @@
           "newName"
         ]
       },
+      "TemplateInfoDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the template"
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the template"
+          },
+          "webgal-version": {
+            "type": "string",
+            "description": "The webgal version of the template"
+          },
+          "dir": {
+            "type": "string",
+            "description": "The dir of the template"
+          }
+        },
+        "required": [
+          "name",
+          "id",
+          "webgal-version",
+          "dir"
+        ]
+      },
       "CreateTemplateDto": {
         "type": "object",
         "properties": {
           "templateName": {
             "type": "string",
             "description": "The name of the template to be created"
+          },
+          "templateDir": {
+            "type": "string",
+            "description": "The dir of the template"
           }
         },
         "required": [
-          "templateName"
+          "templateName",
+          "templateDir"
+        ]
+      },
+      "UpdateTemplateConfigDto": {
+        "type": "object",
+        "properties": {
+          "templateDir": {
+            "type": "string",
+            "description": "The dir of the template"
+          },
+          "newTemplateConfig": {
+            "description": "The new config of the template",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TemplateConfigDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "templateDir",
+          "newTemplateConfig"
         ]
       },
       "ApplyTemplateToGameDto": {
         "type": "object",
         "properties": {
-          "templateName": {
+          "templateDir": {
             "type": "string",
             "description": "The template name to apply"
           },
-          "gameName": {
+          "gameDir": {
             "type": "string",
             "description": "The game name to be applied."
           }
         },
         "required": [
-          "templateName",
-          "gameName"
+          "templateDir",
+          "gameDir"
         ]
       },
       "GetStyleByClassNameDto": {

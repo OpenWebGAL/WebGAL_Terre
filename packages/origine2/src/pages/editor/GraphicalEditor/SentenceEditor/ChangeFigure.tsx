@@ -10,9 +10,10 @@ import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEdit
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
 import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
+import {Button, Input} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
+import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -182,32 +183,25 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {figureFile.value.includes('.json') && (
         <>
-          <CommonOptions key="24" title="live2D Motion">
-            <Dropdown
+          <CommonOptions key="24" title={t`Live2D 动作`}>
+            <WheelDropdown
+              options={new Map(l2dMotionsList.map(item => [item, item]))}
               value={currentMotion.value}
-              selectedOptions={[currentMotion.value]}
-              onOptionSelect={(ev, data) => {
-                data.optionValue && currentMotion.set(data.optionValue);
+              onValueChange={(newValue) =>{
+                newValue && currentMotion.set(newValue);
                 submit();
               }}
-              style={{minWidth: 0}}
-            >
-              {l2dMotionsList.map(e => (<Option key={e} value={e}>{e}</Option>))}
-            </Dropdown>
+            />
           </CommonOptions>
-
-          <CommonOptions key="25" title="live2D Expression">
-            <Dropdown
+          <CommonOptions key="25" title={t`Live2D 表情`}>
+            <WheelDropdown
+              options={new Map(l2dExpressionsList.map(item => [item, item]))}
               value={currentExpression.value}
-              selectedOptions={[currentExpression.value]}
-              onOptionSelect={(ev, data) => {
-                data.optionValue && currentExpression.set(data.optionValue);
+              onValueChange={(newValue) =>{
+                newValue && currentExpression.set(newValue);
                 submit();
               }}
-              style={{minWidth: 0}}
-            >
-              {l2dExpressionsList.map(e => (<Option key={e} value={e}>{e}</Option>))}
-            </Dropdown>
+            />
           </CommonOptions>
           <CommonOptions title={t`自定义 Live2D 绘制范围`} key="bounds">
             <input value={bounds.value}
@@ -225,17 +219,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       )}
 
       <CommonOptions title={t`立绘位置`} key="3">
-        <Dropdown
-          value={figurePositions.get(figurePosition.value) ?? figurePosition.value}
-          selectedOptions={[figurePosition.value]}
-          onOptionSelect={(ev, data) => {
-            figurePosition.set(data.optionValue?.toString() as FigurePosition ?? "");
+        <WheelDropdown
+          options={figurePositions}
+          value={figurePosition.value}
+          onValueChange={(newValue) => {
+            figurePosition.set(newValue?.toString() as FigurePosition ?? "");
             submit();
           }}
-          style={{minWidth: 0}}
-        >
-          {Array.from(figurePositions.entries()).map(([key, value]) => <Option key={key} value={key}>{value}</Option>)}
-        </Dropdown>
+        />
       </CommonOptions>
       <CommonOptions title={t`立绘ID（可选）`} key="4">
         <input value={id.value}
@@ -260,7 +251,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         <div>
           <CommonTips
-            text={t`效果提示`}/>
+            text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
           <EffectEditor json={json.value.toString()} onChange={(newJson) => {
             json.set(newJson);
             submit();
@@ -284,18 +275,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           width: animationFlag.value !== "on" ? 'auto' : '100%'
         }}>
           <CommonOptions title={t`唇形同步与眨眼`} key="5">
-            <Dropdown
-              value={animationFlags.get(animationFlag.value as AnimationFlag)}
-              selectedOptions={[animationFlag.value]}
-              onOptionSelect={(ev, data) => {
-                animationFlag.set(data.optionValue?.toString() ?? "");
+            <WheelDropdown
+              options={animationFlags}
+              value={animationFlag.value}
+              onValueChange={(newValue) => {
+                animationFlag.set(newValue?.toString() ?? "");
                 submit();
               }}
-              style={{minWidth: 0}}
-            >
-              {Array.from(animationFlags.entries()).map(([key, value]) => <Option key={key}
-                value={key}>{value}</Option>)}
-            </Dropdown>
+            />
           </CommonOptions>
           {animationFlag.value === "on" &&
             <CommonOptions key="6" title={t`张开嘴`}>
