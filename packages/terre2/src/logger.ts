@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const logDir = path.join(__dirname, 'logs');
+const logDir = path.join(process.cwd(), 'logs');
 const logFile = path.join(logDir, 'log.txt');
 const logFileMaxSize = 1024 * 1024;
 
