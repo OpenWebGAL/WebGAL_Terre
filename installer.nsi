@@ -7,7 +7,7 @@
 
 ; 常量
 !define NAME "WebGal_Terre"
-!define VERSION "4.4.3.1" ; 版本号变量
+!define VERSION "4.5.10" ; 版本号变量
 !define PRODUCT_VERSION "${VERSION}.0"
 !define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; 版权信息
 !define ICON_PATH ".\assets\nsis.ico"
@@ -25,7 +25,7 @@ Icon "${ICON_PATH}"
 !define MUI_UNICON "${ICON_PATH}"
 !define MUI_ABORTWARNING ; 退出时警告
 ; 默认安装路径
-InstallDir "$PROGRAMFILES\${NAME}" 
+InstallDir "$LOCALAPPDATA\${NAME}"
 
 ; 版本信息
 VIAddVersionKey ProductName "${NAME} Installer" ; product name
