@@ -28,10 +28,12 @@ const checkLogFileSize = (filePath: string, maxSize: number) => {
 };
 
 const cleanLog = (log: string) =>
-  log.replace(
-    /(\x1B\[[0-9;]*m)|(-\s*\d{1,2}\/\d{1,2}\/\d{4},\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M\s+(LOG|ERROR)\s+)/g,
-    '',
-  );
+  log
+    .replace(/(\x1B\[[0-9;]*m)/g, '')
+    .replace(
+      /  (-\s*\d{1,2}\/\d{1,2}\/\d{4},\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M\s+(LOG|ERROR))/g,
+      '',
+    );
 
 // 在启动时检查日志文件大小
 checkLogFileSize(logFile, logFileMaxSize);
