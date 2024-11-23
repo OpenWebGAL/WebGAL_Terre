@@ -3,6 +3,90 @@ import CommonOptions from "@/pages/editor/GraphicalEditor/components/CommonOptio
 import {useValue} from "@/hooks/useValue";
 import { Checkbox, Input } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
+import {InputProps} from "@fluentui/react-input";
+import React, {FocusEventHandler, useRef, useState} from "react";
+
+interface AdjustableProps extends InputProps {
+  min?: number;
+  max?: number;
+  step?: number;
+}
+
+const AdjustableInput = ({ value, onChange, onBlur, placeholder, min = -100, max = 100, step = 1, style}: AdjustableProps) => {
+  const [dragging, setDragging] = useState(false);
+  const [propReadOnly, setPropReadOnly] = useState(true);
+  const [startX, setStartX] = useState(0);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleMouseDown = (e: { clientX: number; }) => {
+    setDragging(true);
+    setStartX(e.clientX);
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+    if (inputRef.current) {
+      if (onBlur) {
+        const blur = onBlur as () => void;
+        blur();
+      }
+    }
+  };
+
+  const handleMouseMove = (e: { clientX: number; }) => {
+    if (!dragging || !propReadOnly) return;
+    const deltaX = e.clientX - startX;
+    if (inputRef.current) {
+      const newValue = Math.min(
+        max,
+        Math.max(min, Number(inputRef.current.value) + Math.round(deltaX / 10) * step) // 每移动10px调整一个step
+      );
+      if (newValue === Number(inputRef.current.value)) return;
+      inputRef.current.value = newValue.toString();
+      if (onChange) {
+        onChange(e as unknown as React.ChangeEvent<HTMLInputElement>, {value: newValue.toString()});
+      }
+    }
+  };
+
+  const handleDoubleClick = () => {
+    setPropReadOnly(false);
+  };
+  let prefixOnBlur: FocusEventHandler<HTMLInputElement> | undefined;
+  if(onBlur) {
+    prefixOnBlur = new Proxy(onBlur, {
+      apply(target, targetArg) {
+        setPropReadOnly(true);
+        return target.apply(target, targetArg);
+      }
+    });
+  }
+  else {
+    prefixOnBlur = () => setPropReadOnly(true);
+  }
+
+  return (
+    <Input
+      ref={inputRef}
+      value={value}
+      placeholder={placeholder}
+      onChange={onChange}
+      onDoubleClick={handleDoubleClick}
+      onBlur={prefixOnBlur}
+      readOnly={propReadOnly}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      style={{
+        ...{
+          cursor: dragging ? "grab" : "text" // 无效
+        },
+        ...style,
+      }}
+    />
+  );
+};
 
 export function EffectEditor(props:{
   json:string,onChange:(newJson:string)=>void
@@ -83,9 +167,9 @@ export function EffectEditor(props:{
 
   return <>
     <CommonOptions key={1} title={t`变换`}>
-      {t`X轴位移：`}<Input value={x.value} placeholder={t`默认值0`} onChange={(_, data) => {
+      {t`X轴位移：`}<AdjustableInput value={x.value} placeholder={t`默认值0`} onChange={(_, data) => {
         x.set(data.value);
-      }} onBlur={submit}/>{'\u00a0'}
+      }} onBlur={submit} min={-2000} max={2000} step={20}/>{'\u00a0'}
 
       {t`Y轴位移：`}<Input value={y.value} placeholder={t`默认值0`} onChange={(_, data) => {
         y.set(data.value);
