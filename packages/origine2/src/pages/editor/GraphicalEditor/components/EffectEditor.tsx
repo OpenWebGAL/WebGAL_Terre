@@ -4,7 +4,7 @@ import {useValue} from "@/hooks/useValue";
 import { Checkbox, Input } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
 import {InputProps} from "@fluentui/react-input";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Slider} from "@fluentui/react-components";
 
 interface AdjustableProps extends InputProps {
@@ -17,35 +17,24 @@ interface KeysPressed {
 const AdjustableInput = ({ value, onChange, onBlur, placeholder, style, step = 10}: AdjustableProps) => {
   const [dragging, setDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [slideVisibility, setSlideVisibility] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const slideRef = useRef<HTMLInputElement>(null);
 
   const [keysPressed, setKeysPressed] = useState<KeysPressed>({});
-  useEffect(() => {
-    const handleKeyDown = (event: { key: any; }) => {
-      setKeysPressed((prevKeys) => ({
-        ...prevKeys,
-        [event.key]: true
-      }));
-    };
+  const handleKeyDown = (event: { key: any; }) => {
+    setKeysPressed((prevKeys) => ({
+      ...prevKeys,
+      [event.key]: true
+    }));
+  };
 
-    const handleKeyUp = (event: { key: any; }) => {
-      setKeysPressed((prevKeys) => ({
-        ...prevKeys,
-        [event.key]: false
-      }));
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, []);
+  const handleKeyUp = (event: { key: any; }) => {
+    setKeysPressed((prevKeys) => ({
+      ...prevKeys,
+      [event.key]: false
+    }));
+  };
 
   const handleMouseDown = (e: { clientX: number; }) => {
     setDragging(true);
@@ -53,7 +42,6 @@ const AdjustableInput = ({ value, onChange, onBlur, placeholder, style, step = 1
   };
 
   const handleMouseUp = () => {
-    setDragging(false);
     if (inputRef.current) {
       if (onBlur) {
         const blur = onBlur as () => void;
@@ -66,8 +54,8 @@ const AdjustableInput = ({ value, onChange, onBlur, placeholder, style, step = 1
     if (!dragging) return;
     let deltaX = e.clientX - startX;
     if (inputRef.current) {
-      if (keysPressed['Shift']) deltaX = deltaX * 0.1;
-      const newValue = Number(inputRef.current.value) + Math.round(deltaX * step) ;
+      if (keysPressed['Shift']) deltaX = deltaX * 0.125;
+      const newValue = Number(inputRef.current.value) + deltaX * step;
       inputRef.current.value = newValue.toString();
       setStartX(e.clientX);
       if (onChange) {
@@ -80,26 +68,23 @@ const AdjustableInput = ({ value, onChange, onBlur, placeholder, style, step = 1
     <div style={{
       display: "flex",
       flexDirection: "column",
-    }}
-    onMouseOver={() => {setSlideVisibility(true);}}
-    onMouseLeave={() => {setSlideVisibility(false);}}
-    >
+    }}>
       <Input
         ref={inputRef}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
         style={style}
+        onBlur={onBlur}
       />
       <Slider
         ref={slideRef}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        defaultValue={50}
-        style={{
-          display: `${!slideVisibility ? "none": ""}`,
-        }}/>
+        onKeyUp={handleKeyUp}
+        onKeyDown={handleKeyDown}
+        defaultValue={50}/>
     </div>
   );
 };
@@ -185,33 +170,33 @@ export function EffectEditor(props:{
     <CommonOptions key={1} title={t`变换`}>
       {t`X轴位移：`}<AdjustableInput value={x.value} placeholder={t`默认值0`} onChange={(_, data) => {
         x.set(data.value);
-      }} onBlur={submit} min={-2000} max={2000} step={20}/>{'\u00a0'}
+      }} onBlur={submit} step={20}/>{'\u00a0'}
 
-      {t`Y轴位移：`}<Input value={y.value} placeholder={t`默认值0`} onChange={(_, data) => {
+      {t`Y轴位移：`}<AdjustableInput value={y.value} placeholder={t`默认值0`} onChange={(_, data) => {
         y.set(data.value);
-      }} onBlur={submit}/>
+      }} onBlur={submit} step={20}/>
     </CommonOptions>
     <CommonOptions key={2} title={t`缩放`}>
-      {t`X轴缩放：`}<Input value={scaleX.value} placeholder={t`默认值1`} onChange={(_, data) => {
+      {t`X轴缩放：`}<AdjustableInput value={scaleX.value} placeholder={t`默认值1`} onChange={(_, data) => {
         scaleX.set(data.value);
-      }} onBlur={submit}/>{'\u00a0'}
+      }} onBlur={submit} step={0.125}/>{'\u00a0'}
 
-      {t`Y轴缩放：`}<Input value={scaleY.value} placeholder={t`默认值1`} onChange={(_, data) => {
+      {t`Y轴缩放：`}<AdjustableInput value={scaleY.value} placeholder={t`默认值1`} onChange={(_, data) => {
         scaleY.set(data.value);
-      }} onBlur={submit}/>
+      }} onBlur={submit} step={0.125}/>
     </CommonOptions>
     <CommonOptions key={3} title={t`效果`}>
-      {t`透明度（0-1）：`}<Input value={alpha.value} placeholder={t`默认值1`} onChange={(_, data) => {
+      {t`透明度（0-1）：`}<AdjustableInput value={alpha.value} placeholder={t`默认值1`} onChange={(_, data) => {
         alpha.set(data.value);
-      }} onBlur={submit} style={{width: '140px'}}/>{'\u00a0'}
+      }} onBlur={submit} style={{width: '140px'}} step={0.125}/>{'\u00a0'}
 
-      {t`旋转角度：`}<Input value={rotation.value} placeholder={t`默认值0`} onChange={(_, data) => {
+      {t`旋转角度：`}<AdjustableInput value={rotation.value} placeholder={t`默认值0`} onChange={(_, data) => {
         rotation.set(data.value);
-      }} onBlur={submit} style={{width: '140px'}}/>{'\u00a0'}
+      }} onBlur={submit} style={{width: '140px'}} step={0.125}/>{'\u00a0'}
 
-      {t`高斯模糊：`}<Input value={blur.value} placeholder={t`默认值0`} onChange={(_, data) => {
+      {t`高斯模糊：`}<AdjustableInput value={blur.value} placeholder={t`默认值0`} onChange={(_, data) => {
         blur.set(data.value);
-      }} onBlur={submit} style={{width: '140px'}}/>
+      }} onBlur={submit} style={{width: '140px'}} step={0.125}/>
     </CommonOptions>
     <CommonOptions key={4} title={t`滤镜`}>
       <Checkbox checked={oldFilm.value === 1} onChange={(_, data) => { oldFilm.set(data.checked ? 1 : 0); submit(); }} label={t`老电影滤镜`} />{'\u00a0'}
