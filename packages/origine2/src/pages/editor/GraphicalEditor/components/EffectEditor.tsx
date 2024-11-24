@@ -4,20 +4,48 @@ import {useValue} from "@/hooks/useValue";
 import { Checkbox, Input } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
 import {InputProps} from "@fluentui/react-input";
-import React, {FocusEventHandler, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
+import {Slider} from "@fluentui/react-components";
 
 interface AdjustableProps extends InputProps {
-  min?: number;
-  max?: number;
   step?: number;
 }
+interface KeysPressed {
+  [key: string]: boolean;
+}
 
-const AdjustableInput = ({ value, onChange, onBlur, placeholder, min = -100, max = 100, step = 1, style}: AdjustableProps) => {
+const AdjustableInput = ({ value, onChange, onBlur, placeholder, style, step = 10}: AdjustableProps) => {
   const [dragging, setDragging] = useState(false);
-  const [propReadOnly, setPropReadOnly] = useState(true);
   const [startX, setStartX] = useState(0);
+  const [slideVisibility, setSlideVisibility] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const slideRef = useRef<HTMLInputElement>(null);
+
+  const [keysPressed, setKeysPressed] = useState<KeysPressed>({});
+  useEffect(() => {
+    const handleKeyDown = (event: { key: any; }) => {
+      setKeysPressed((prevKeys) => ({
+        ...prevKeys,
+        [event.key]: true
+      }));
+    };
+
+    const handleKeyUp = (event: { key: any; }) => {
+      setKeysPressed((prevKeys) => ({
+        ...prevKeys,
+        [event.key]: false
+      }));
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
 
   const handleMouseDown = (e: { clientX: number; }) => {
     setDragging(true);
@@ -35,56 +63,44 @@ const AdjustableInput = ({ value, onChange, onBlur, placeholder, min = -100, max
   };
 
   const handleMouseMove = (e: { clientX: number; }) => {
-    if (!dragging || !propReadOnly) return;
-    const deltaX = e.clientX - startX;
+    if (!dragging) return;
+    let deltaX = e.clientX - startX;
     if (inputRef.current) {
-      const newValue = Math.min(
-        max,
-        Math.max(min, Number(inputRef.current.value) + Math.round(deltaX / 10) * step) // 每移动10px调整一个step
-      );
-      if (newValue === Number(inputRef.current.value)) return;
+      if (keysPressed['Shift']) deltaX = deltaX * 0.1;
+      const newValue = Number(inputRef.current.value) + Math.round(deltaX * step) ;
       inputRef.current.value = newValue.toString();
+      setStartX(e.clientX);
       if (onChange) {
         onChange(e as unknown as React.ChangeEvent<HTMLInputElement>, {value: newValue.toString()});
       }
     }
   };
 
-  const handleDoubleClick = () => {
-    setPropReadOnly(false);
-  };
-  let prefixOnBlur: FocusEventHandler<HTMLInputElement> | undefined;
-  if(onBlur) {
-    prefixOnBlur = new Proxy(onBlur, {
-      apply(target, targetArg) {
-        setPropReadOnly(true);
-        return target.apply(target, targetArg);
-      }
-    });
-  }
-  else {
-    prefixOnBlur = () => setPropReadOnly(true);
-  }
-
   return (
-    <Input
-      ref={inputRef}
-      value={value}
-      placeholder={placeholder}
-      onChange={onChange}
-      onDoubleClick={handleDoubleClick}
-      onBlur={prefixOnBlur}
-      readOnly={propReadOnly}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
-      style={{
-        ...{
-          cursor: dragging ? "grab" : "text" // 无效
-        },
-        ...style,
-      }}
-    />
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+    }}
+    onMouseOver={() => {setSlideVisibility(true);}}
+    onMouseLeave={() => {setSlideVisibility(false);}}
+    >
+      <Input
+        ref={inputRef}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        style={style}
+      />
+      <Slider
+        ref={slideRef}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        defaultValue={50}
+        style={{
+          display: `${!slideVisibility ? "none": ""}`,
+        }}/>
+    </div>
   );
 };
 
