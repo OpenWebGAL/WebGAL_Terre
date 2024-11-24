@@ -28,8 +28,8 @@ const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IA
   const isShowCallout = useValue(false);
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
-      props.onChoose(sentenceConfig.initialText());
       isShowCallout.set(false);
+      props.onChoose(sentenceConfig.initialText());
     }}>
       <div style={{padding:'1px 0 0 0'}}>
         {sentenceConfig.icon}

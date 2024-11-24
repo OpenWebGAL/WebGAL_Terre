@@ -24,6 +24,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const sceneText = useValue("");
   const gameName = useEditorStore.use.subPage();
   const showSentence = useValue<Array<boolean>>([]);
+  const droppableRefs = useRef<HTMLDivElement | null>(null);
 
   function updateScene() {
     const path = props.targetPath;
@@ -62,6 +63,16 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     submitSceneAndUpdate(mergeToString(arr), updateIndex);
   }
 
+  function focusOneSentence(focusIndex: number){
+    if (droppableRefs.current) {
+      const searchElement: any = droppableRefs.current.childNodes[focusIndex];
+      const firstTabElement = searchElement.querySelector("[tabindex]");
+      if (firstTabElement instanceof HTMLElement) {
+        firstTabElement.focus();
+      }
+    }
+  }
+
   function addOneSentence(newSentence: string, updateIndex: number) {
     const arr = sceneText.value === "" ? [] : splitToArray(sceneText.value);
     arr.splice(updateIndex, 0, newSentence);
@@ -69,6 +80,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const showSentenceList = [...showSentence.value];
     showSentenceList.splice(updateIndex, 0, true);
     showSentence.set(showSentenceList);
+    focusOneSentence(updateIndex);
   }
 
   function deleteOneSentence(index: number) {
@@ -142,7 +154,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       eventBus.off('topbar-add-sentence', handleAdd);
     };
   }, [sceneText.value]);
-
   const parsedScene = (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
   const sharingAddSentenceRef = useRef<AddSentenceMethods | null>(null);
   const chosenSentenceIndex = useValue<number>(-1);
@@ -169,7 +180,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               // provided.droppableProps应用的相同元素.
               {...provided.droppableProps}
               // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
-              ref={provided.innerRef}
+              ref={(ref) => {
+                provided.innerRef(ref);
+                droppableRefs.current = ref;
+              }}
             >
               {parsedScene.sentenceList.map((sentence, i) => {
                 // 实际显示的行数
