@@ -6,6 +6,7 @@ import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
+import React, {forwardRef, useImperativeHandle} from "react";
 
 export enum addSentenceType {
   forward,
@@ -18,7 +19,11 @@ interface IAddSentenceProps {
   onChoose: (newSentence: string) => void;
 }
 
-export default function AddSentence(props: IAddSentenceProps) {
+export interface AddSentenceMethods {
+  showUp: () => void;
+}
+
+const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IAddSentenceProps, ref) => {
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
   const isShowCallout = useValue(false);
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
@@ -39,6 +44,12 @@ export default function AddSentence(props: IAddSentenceProps) {
       </div>
     </div>;
   });
+
+  useImperativeHandle(ref, () => ({
+    showUp: () => {
+      isShowCallout.set(!isShowCallout.value);
+    },
+  }));
 
   return <>
     <div className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
@@ -71,4 +82,6 @@ export default function AddSentence(props: IAddSentenceProps) {
       </DialogSurface>
     </Dialog>
   </>;
-}
+});
+
+export default AddSentence;
