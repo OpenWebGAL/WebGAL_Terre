@@ -15,6 +15,7 @@ export interface IChooseFile {
   // 拓展名，要加.
   extName: string[];
   hiddenFiles?: string[];
+  recentlyFiles?: IFile[];
   _hardBasePath?: string[]
 }
 
@@ -64,6 +65,7 @@ export default function ChooseFile(props: IChooseFile) {
             isProtected
             fileFunction={fileFunction}
             fileConfig={fileConfig}
+            recentlyFile={props.recentlyFiles}
           />
         </div>
       </PopoverSurface>
