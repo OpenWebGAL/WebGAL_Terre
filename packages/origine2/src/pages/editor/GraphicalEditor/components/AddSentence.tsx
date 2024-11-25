@@ -6,7 +6,6 @@ import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
-import React, {forwardRef, KeyboardEvent, useImperativeHandle} from "react";
 
 export enum addSentenceType {
   forward,
@@ -19,18 +18,13 @@ interface IAddSentenceProps {
   onChoose: (newSentence: string) => void;
 }
 
-export interface AddSentenceMethods {
-  showUp: () => void;
-}
-
-const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IAddSentenceProps, ref) => {
+export default function AddSentence(props: IAddSentenceProps) {
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
   const isShowCallout = useValue(false);
-  const sentenceConfigMap = sentenceEditorConfig.filter(e => e.type !== commandType.comment);
-  const addSentenceButtons = sentenceConfigMap.map(sentenceConfig => {
+  const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
-      isShowCallout.set(false);
       props.onChoose(sentenceConfig.initialText());
+      isShowCallout.set(false);
     }}>
       <div style={{padding:'1px 0 0 0'}}>
         {sentenceConfig.icon}
@@ -45,26 +39,6 @@ const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IA
       </div>
     </div>;
   });
-  const addSentenceHotKey = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.ctrlKey) {
-      if (event.key === "1") {
-        event.preventDefault();
-        isShowCallout.set(false);
-        props.onChoose(sentenceConfigMap[0].initialText());
-      }
-      else if (event.key === "2") {
-        event.preventDefault();
-        isShowCallout.set(false);
-        props.onChoose(sentenceConfigMap[2].initialText());
-      }
-    }
-  };
-
-  useImperativeHandle(ref, () => ({
-    showUp: () => {
-      isShowCallout.set(!isShowCallout.value);
-    },
-  }));
 
   return <>
     <div className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
@@ -75,7 +49,7 @@ const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IA
       open={isShowCallout.value}
       onOpenChange={() => isShowCallout.set(false)}
     >
-      <DialogSurface style={{ maxWidth: "960px"}} onKeyDown={addSentenceHotKey}>
+      <DialogSurface style={{ maxWidth: "960px"}}>
         <DialogBody>
           <DialogTitle
             action={
@@ -97,6 +71,4 @@ const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IA
       </DialogSurface>
     </Dialog>
   </>;
-});
-
-export default AddSentence;
+}

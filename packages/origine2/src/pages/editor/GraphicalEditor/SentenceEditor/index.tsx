@@ -74,7 +74,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   {
     type: commandType.say,
     title: () => t`普通对话`,
-    initialText: () => t`对话;`,
+    initialText: () => t`角色名，留空以继承上句:对话;`,
     component: Say,
     icon: <CommentOne className={styles.iconSvg} theme="multi-color" size="24"/>,
     descText: () => t`添加一句对话，可以附带语音`

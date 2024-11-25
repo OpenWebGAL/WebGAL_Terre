@@ -1,14 +1,14 @@
 import {useValue} from "../../../hooks/useValue";
 import {parseScene} from "./parser";
 import axios from "axios";
-import React, {KeyboardEvent, useEffect, useRef} from "react";
+import {useEffect} from "react";
 import {WsUtil} from "../../../utils/wsUtil";
 import {mergeToString, splitToArray} from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {sentenceEditorConfig, sentenceEditorDefault} from "./SentenceEditor";
 import {DeleteFive, Sort, DownOne, RightOne, Play} from "@icon-park/react";
-import AddSentence, {AddSentenceMethods, addSentenceType} from "./components/AddSentence";
+import AddSentence, {addSentenceType} from "./components/AddSentence";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
 import {eventBus} from "@/utils/eventBus";
 import useEditorStore from "@/store/useEditorStore";
@@ -24,7 +24,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const sceneText = useValue("");
   const gameName = useEditorStore.use.subPage();
   const showSentence = useValue<Array<boolean>>([]);
-  const droppableRefs = useRef<HTMLDivElement | null>(null);
 
   function updateScene() {
     const path = props.targetPath;
@@ -63,17 +62,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     submitSceneAndUpdate(mergeToString(arr), updateIndex);
   }
 
-  function focusOneSentence(focusIndex: number){
-    if (droppableRefs.current) {
-      const searchElement: any = droppableRefs.current.childNodes[focusIndex];
-      const firstTabElement = searchElement.querySelector("[tabindex]");
-      if (firstTabElement instanceof HTMLElement) {
-        firstTabElement.focus();
-        firstTabElement.scrollIntoView?.({behavior: 'auto'});
-      }
-    }
-  }
-
   function addOneSentence(newSentence: string, updateIndex: number) {
     const arr = sceneText.value === "" ? [] : splitToArray(sceneText.value);
     arr.splice(updateIndex, 0, newSentence);
@@ -81,7 +69,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const showSentenceList = [...showSentence.value];
     showSentenceList.splice(updateIndex, 0, true);
     showSentence.set(showSentenceList);
-    setTimeout(() => {focusOneSentence(updateIndex);}, 0);
   }
 
   function deleteOneSentence(index: number) {
@@ -155,24 +142,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       eventBus.off('topbar-add-sentence', handleAdd);
     };
   }, [sceneText.value]);
+
   const parsedScene = (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
-  const sharingAddSentenceRef = useRef<AddSentenceMethods | null>(null);
-  const chosenSentenceIndex = useValue<number>(-1);
   return <div className={styles.main} id="graphical-editor-main">
     <div style={{flex: 1, padding: '14px 4px 0 4px'}}>
-      <div style={{display: "none"}}>
-        <AddSentence titleText={t`本句后插入句子`} type={addSentenceType.backward}
-          onChoose={(newSentence) => {
-            if (newSentence && chosenSentenceIndex.value !== -1) {
-              addOneSentence(newSentence, chosenSentenceIndex.value);
-              chosenSentenceIndex.set(-1);
-            }
-          }}
-          ref={(ref) => {
-            sharingAddSentenceRef.current = ref;
-          }}
-        />
-      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -181,10 +154,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               // provided.droppableProps应用的相同元素.
               {...provided.droppableProps}
               // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
-              ref={(ref) => {
-                provided.innerRef(ref);
-                droppableRefs.current = ref;
-              }}
+              ref={provided.innerRef}
             >
               {parsedScene.sentenceList.map((sentence, i) => {
                 // 实际显示的行数
@@ -192,18 +162,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 // console.log(sentence.command);
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
-                const handleSentenceKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-                  if (event.shiftKey && event.key === "Enter") {
-                    event.preventDefault();
-                    chosenSentenceIndex.set(i + 1);
-                    if (sharingAddSentenceRef.current) {sharingAddSentenceRef.current.showUp();}
-                  }
-                };
-                return <Draggable key={"Draggable:" + sentence.command.toString() + ":" + index}
+                return <Draggable key={JSON.stringify(sentence) + i}
                   draggableId={sentence.content + sentence.commandRaw + i} index={i}>
                   {(provided, snapshot) => (
-                    <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`} onKeyDown={handleSentenceKeyDown}
-                      key={"Inner Draggable:" + i.toString()}
+                    <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
+                      key={sentence.commandRaw + JSON.stringify(sentence.sentenceAssets) + i + 'inner'}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                     >
@@ -217,7 +180,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                       </div>
                       <div className={styles.sentenceEditorContent}>
                         <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{index}</span>
-                          <Sort {...provided.dragHandleProps} tabIndex={-1} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
+                          <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
                             strokeWidth={3}/>
                         </div>
                         <div className={styles.seArea}>
@@ -252,7 +215,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               </div>
                             </div>
                           </div>
-                          {showSentence.value[i] && <SentenceEditor key={"SentenceEditor:" + sentence.command.toString() + ":" + index} sentence={sentence} index={index} onSubmit={(newSentence) => {
+                          {showSentence.value[i] && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
                             updateSentenceByIndex(newSentence, i);
                           }}/>}
                         </div>

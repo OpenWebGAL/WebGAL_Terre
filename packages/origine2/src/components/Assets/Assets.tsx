@@ -47,8 +47,8 @@ const MoreVerticalIcon = bundleIcon(MoreVerticalFilled, MoreVerticalRegular);
 const ArrowExportUpIcon = bundleIcon(ArrowExportUpFilled, ArrowExportUpRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
 
-export default function Assets({ basePath, isProtected = false, fileConfig, fileFunction, recentlyFile }:
-  { basePath: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction, recentlyFile?: IFile[] }) {
+export default function Assets({ basePath, isProtected = false, fileConfig, fileFunction }:
+  { basePath: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction }) {
   const { mutate } = useSWRConfig();
 
   const currentPath = useValue(basePath);
@@ -266,36 +266,7 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
               </PopoverSurface>
             </Popover>
           </>}
-          {recentlyFile &&
-            <Menu>
-              <MenuTrigger>
-                <Button icon={<ArrowSyncIcon />} size='small' />
-              </MenuTrigger>
-              <MenuPopover>
-                <MenuList>
-                  {
-                    recentlyFile
-                      ?.filter(file => file.name.toLocaleLowerCase().includes(filterText.value.toLocaleLowerCase()))
-                      .map(file =>
-                        (fileConfig?.get(`${currentPathString}/${file.name}`)?.isHidden) // 判断是否隐藏
-                          ? null
-                          : <FileElement
-                            key={file.name}
-                            file={file}
-                            desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
-                            currentPath={currentPath}
-                            isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? isProtected}
-                            handleOpenFile={handleOpenFile}
-                            handleRenameFile={handleRenameFile}
-                            handleDeleteFile={handleDeleteFile}
-                            checkHasFile={checkHasFile}
-                          />
-                      )
-                  }
-                </MenuList>
-              </MenuPopover>
-            </Menu>
-          }
+
           <Menu>
             <MenuTrigger>
               <Button icon={<MoreVerticalIcon />} size='small' />

@@ -34,9 +34,7 @@ export default function FileElement(
     <div
       ref={FileItemSelfRef}
       key={file.name}
-      tabIndex={0}
       onClick={() => handleOpenFile(file)}
-      onKeyDown={(e) => {if (e.key === "Enter") {handleOpenFile(file);}}}
       className={styles.file}
     >
       {!file.isDir && <IconWrapper src={getFileIcon(file.name)} size={22} iconSize={20} />}
