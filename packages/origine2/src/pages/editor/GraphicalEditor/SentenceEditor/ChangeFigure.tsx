@@ -14,9 +14,12 @@ import {Button, Input} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import {IFile} from "@/components/Assets/Assets";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
+
+const figuresHistory: IFile[] = [];
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
   const currentEdit = useEditorStore.use.subPage();
@@ -156,10 +159,13 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           <>
             {figureFile.value + "\u00a0\u00a0"}
             <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+              if (fileDesc && !figuresHistory.some((file) => file.path === fileDesc.path)) {
+                figuresHistory.push(fileDesc);
+              }
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
-            extName={[".png", ".jpg", ".webp", ".json"]}/>
+            extName={[".png", ".jpg", ".webp", ".json"]} recentlyFiles={figuresHistory}/>
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
@@ -168,18 +174,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           submit();
         }} onText={t`本句执行后执行下一句`}
         offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
-      </CommonOptions>
-      <CommonOptions title={t`z-index`} key="z-index">
-        <input value={zIndex.value}
-          onChange={(ev) => {
-            const newValue = ev.target.value;
-            zIndex.set(newValue ?? "");
-          }}
-          onBlur={submit}
-          className={styles.sayInput}
-          placeholder={t`1, 2, 3, ...`}
-          style={{width: "100%"}}
-        />
       </CommonOptions>
       {figureFile.value.includes('.json') && (
         <>
@@ -217,7 +211,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           </CommonOptions>
         </>
       )}
-
+      <CommonOptions title={t`z-index`} key="z-index">
+        <input value={zIndex.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            zIndex.set(newValue ?? "");
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          placeholder={t`1, 2, 3, ...`}
+          style={{width: "100%"}}
+        />
+      </CommonOptions>
       <CommonOptions title={t`立绘位置`} key="3">
         <WheelDropdown
           options={figurePositions}

@@ -46,10 +46,17 @@ const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IA
     </div>;
   });
   const addSentenceHotKey = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.ctrlKey && event.key === "1") {
-      event.preventDefault();
-      isShowCallout.set(false);
-      props.onChoose(sentenceConfigMap[0].initialText());
+    if (event.ctrlKey) {
+      if (event.key === "1") {
+        event.preventDefault();
+        isShowCallout.set(false);
+        props.onChoose(sentenceConfigMap[0].initialText());
+      }
+      else if (event.key === "2") {
+        event.preventDefault();
+        isShowCallout.set(false);
+        props.onChoose(sentenceConfigMap[2].initialText());
+      }
     }
   };
 
