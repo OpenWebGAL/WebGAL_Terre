@@ -477,7 +477,7 @@ msgstr "Delete"
 msgid "删除属性"
 msgstr "Delete Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:227
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:241
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:28
 msgid "删除本句"
 msgstr "Delete this sentence"
@@ -846,7 +846,7 @@ msgstr "Open effect editor"
 msgid "打开文件夹"
 msgstr "Open folder"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:235
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:249
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
@@ -1145,11 +1145,11 @@ msgstr "Unrecognized"
 msgid "未识别的指令"
 msgstr "Unrecognized command"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:198
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:212
 msgid "本句前插入句子"
 msgstr "Insert sentence before this"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:152
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:163
 msgid "本句后插入句子"
 msgstr ""
 
@@ -1290,7 +1290,7 @@ msgstr "Add new line"
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:251
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:265
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
 #: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"

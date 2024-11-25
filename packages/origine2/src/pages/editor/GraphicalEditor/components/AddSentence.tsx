@@ -6,7 +6,7 @@ import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
-import React, {forwardRef, useImperativeHandle} from "react";
+import React, {forwardRef, KeyboardEvent, useImperativeHandle} from "react";
 
 export enum addSentenceType {
   forward,
@@ -26,7 +26,8 @@ export interface AddSentenceMethods {
 const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IAddSentenceProps, ref) => {
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
   const isShowCallout = useValue(false);
-  const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
+  const sentenceConfigMap = sentenceEditorConfig.filter(e => e.type !== commandType.comment);
+  const addSentenceButtons = sentenceConfigMap.map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
       isShowCallout.set(false);
       props.onChoose(sentenceConfig.initialText());
@@ -44,6 +45,13 @@ const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IA
       </div>
     </div>;
   });
+  const addSentenceHotKey = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.ctrlKey && event.key === "1") {
+      event.preventDefault();
+      isShowCallout.set(false);
+      props.onChoose(sentenceConfigMap[0].initialText());
+    }
+  };
 
   useImperativeHandle(ref, () => ({
     showUp: () => {
@@ -60,7 +68,7 @@ const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IA
       open={isShowCallout.value}
       onOpenChange={() => isShowCallout.set(false)}
     >
-      <DialogSurface style={{ maxWidth: "960px"}}>
+      <DialogSurface style={{ maxWidth: "960px"}} onKeyDown={addSentenceHotKey}>
         <DialogBody>
           <DialogTitle
             action={

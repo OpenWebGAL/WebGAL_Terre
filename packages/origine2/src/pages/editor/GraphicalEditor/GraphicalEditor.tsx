@@ -198,7 +198,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                     if (sharingAddSentenceRef.current) {sharingAddSentenceRef.current.showUp();}
                   }
                 };
-                return <Draggable key={JSON.stringify(sentence) + i}
+                return <Draggable key={"Draggable:" + sentence.command.toString() + ":" + index}
                   draggableId={sentence.content + sentence.commandRaw + i} index={i}>
                   {(provided, snapshot) => (
                     <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`} onKeyDown={handleSentenceKeyDown}
@@ -251,7 +251,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               </div>
                             </div>
                           </div>
-                          {showSentence.value[i] && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
+                          {showSentence.value[i] && <SentenceEditor key={"SentenceEditor:" + sentence.command.toString() + ":" + index} sentence={sentence} index={index} onSubmit={(newSentence) => {
                             updateSentenceByIndex(newSentence, i);
                           }}/>}
                         </div>
