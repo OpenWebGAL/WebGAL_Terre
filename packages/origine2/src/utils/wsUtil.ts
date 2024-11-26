@@ -3,6 +3,28 @@ import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
 import useEditorStore from "@/store/useEditorStore";
 
 export class WsUtil {
+
+  public static backToTitle(){
+    // @ts-ignore
+    if (window["currentWs"]) { // @ts-ignore
+      logger.debug("编辑器开始发送同步数据");
+      const message: IDebugMessage = {
+        event: 'message', data: {
+          command: DebugCommand.BACK_TO_TITLE,
+          sceneMsg: {
+            scene: "",
+            sentence: 0
+          },// @ts-ignore
+          stageSyncMsg: {},
+          message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
+        }
+      };
+      // @ts-ignore
+
+      window["currentWs"].send(JSON.stringify(message));
+    }
+  }
+
   // eslint-disable-next-line max-params
   public static sendSyncCommand(scenePath: string, lineNumber: number, lineCommandString: string, force?: boolean) {
     function extractPathAfterScene(scenePath: string): string {
@@ -41,8 +63,8 @@ export class WsUtil {
           message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
         }
       };
+      console.log(scenePath, lineNumber, lineCommandString);
       // @ts-ignore
-
       window["currentWs"].send(JSON.stringify(message));
     }
   }
