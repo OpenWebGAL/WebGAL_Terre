@@ -25,7 +25,7 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
     expand
       ? updateExpandNode(expandNode.filter(path => path !== getFileName(componentNode.path)))
       : updateExpandNode([...expandNode, getFileName(componentNode.path)]);
-  const handleClassNodeClick = (classNode: IClassNode, path: string) => {
+  const handleClassNodeClick = (classNode: IClassNode, titleName: string, path: string) => {
     const newTab: ITab = {
       name: classNode.name,
       path: path,
@@ -56,7 +56,7 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
                     ? `${styles.classNode} ${styles.classNodeActive}`
                     : styles.classNode
                 }
-                onClick={() => handleClassNodeClick(classNode, componentNode.path)}
+                onClick={() => handleClassNodeClick(classNode, componentNode.name, componentNode.path)}
               >
                 {classNode.name}
               </div>);

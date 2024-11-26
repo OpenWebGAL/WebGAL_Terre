@@ -11,7 +11,7 @@ export enum DebugCommand {
   EXE_COMMAND,
   // 重新拉取模板样式文件
   REFETCH_TEMPLATE_FILES,
-  // 返回主界面
+  // 设置指定控件是否可见
   SET_COMPONENT_VISIBILITY,
   // 临时场景
   TEMP_SCENE,
