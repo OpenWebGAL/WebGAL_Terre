@@ -3,7 +3,7 @@ import styles from './componentNode.module.scss';
 import { ChevronDownFilled, ChevronDownRegular, ChevronUpFilled, ChevronUpRegular, bundleIcon } from "@fluentui/react-icons";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 import { ITab } from "@/types/templateEditor";
-import { WsUtil } from "@/utils/wsUtil";
+import {tabsSyncAction} from "@/pages/templateEditor/TemplateEditor";
 
 const ChevronDownIcon = bundleIcon(ChevronDownFilled, ChevronDownRegular);
 const ChevronUpIcon = bundleIcon(ChevronUpFilled, ChevronUpRegular);
@@ -25,7 +25,7 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
     expand
       ? updateExpandNode(expandNode.filter(path => path !== getFileName(componentNode.path)))
       : updateExpandNode([...expandNode, getFileName(componentNode.path)]);
-  const handleClassNodeClick = (classNode: IClassNode, titleName: string, path: string) => {
+  const handleClassNodeClick = (classNode: IClassNode, path: string) => {
     const newTab: ITab = {
       name: classNode.name,
       path: path,
@@ -34,16 +34,8 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
     if (!tabs.some(tab => tab.path === newTab.path && tab.class === newTab.class)) {
       updateTabs([...tabs, newTab]);
     }
-    if (titleName === "标题") {
-      WsUtil.backToTitle();
-    }
-    else if (titleName === "文本框") {
-      WsUtil.sendSyncCommand("games/新的游戏/game/scene/start.txt", 5, "choose:可选项:选择场景文件|不可选项:start.txt;", true);
-    }
-    else if (titleName === "选项") {
-      WsUtil.sendSyncCommand("", 4, "2", true);
-    }
     updateCurrentTab(newTab);
+    tabsSyncAction(newTab.path, newTab.name);
   };
 
   return (
@@ -64,7 +56,7 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
                     ? `${styles.classNode} ${styles.classNodeActive}`
                     : styles.classNode
                 }
-                onClick={() => handleClassNodeClick(classNode, componentNode.name, componentNode.path)}
+                onClick={() => handleClassNodeClick(classNode, componentNode.path)}
               >
                 {classNode.name}
               </div>);
