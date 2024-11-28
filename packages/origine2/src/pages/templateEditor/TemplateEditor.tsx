@@ -3,6 +3,9 @@ import TemplateEditorSidebar from "./TemplateEditorSidebar/TemplateEditorSidebar
 import TemplateEditorMainAria from "./TemplateEditorMainAria/TemplateEditorMainAria";
 import styles from "./templateEditor.module.scss";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
+import { WsUtil } from "@/utils/wsUtil";
+import { ComponentTreeChoose, ComponentTreeTextbox, ComponentTreeTitle}
+  from "@/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree";
 
 export default function TemplateEditor() {
   return (
@@ -13,6 +16,20 @@ export default function TemplateEditor() {
     </div>
   );
 }
+
+export const tabsSyncAction = (nodePath: string, nodeName: string)=> {
+  console.log(nodePath, nodeName);
+  if (nodePath.includes(ComponentTreeTitle.path)) {
+    WsUtil.backToTitle();
+  }
+  else if (nodePath.includes(ComponentTreeTextbox.path)) {
+    const miniAvatar = !nodeName.includes("小头像关闭时") ? "stand.png" : "";
+    WsUtil.createTempScene(`changeBg:bg.png -next;\nminiAvatar:${miniAvatar} -next;\nWebGal:这里对话框文字 -fontSize=default;`);
+  }
+  else if (nodePath.includes(ComponentTreeChoose.path)) {
+    WsUtil.createTempScene("changeBg:bg.png -next;\nchoose:可选项:|不可选项:;");
+  }
+};
 
 function SideberResizer() {
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);

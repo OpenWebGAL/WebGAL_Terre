@@ -25,6 +25,27 @@ export class WsUtil {
     }
   }
 
+  public static createTempScene(command: string) {
+    // @ts-ignore
+    if (window["currentWs"]) { // @ts-ignore
+      logger.debug("编辑器开始发送同步数据");
+      const message: IDebugMessage = {
+        event: 'message', data: {
+          command: DebugCommand.TEMP_SCENE,
+          sceneMsg: {
+            scene: "",
+            sentence: 0
+          },// @ts-ignore
+          stageSyncMsg: {},
+          message: command,
+        }
+      };
+      // @ts-ignore
+
+      window["currentWs"].send(JSON.stringify(message));
+    }
+  }
+
   // eslint-disable-next-line max-params
   public static sendSyncCommand(scenePath: string, lineNumber: number, lineCommandString: string, force?: boolean) {
     function extractPathAfterScene(scenePath: string): string {
