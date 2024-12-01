@@ -1,5 +1,16 @@
 import { IPage } from "@/hooks/useHashRoute";
 import {IGameEditorState} from "@/types/gameEditor";
+import {commandType} from "webgal-parser/src/interface/sceneInterface";
+
+interface IEditorShortCutsConfig {
+  // 快捷键，暂时用string储存
+  shortcuts: string
+}
+
+export interface IAddSentenceShortCutsConfig extends IEditorShortCutsConfig {
+  type: commandType | "custom",
+  initialText?: string;
+}
 
 export interface IEditorState {
   page: IPage,
@@ -13,6 +24,9 @@ export interface IEditorState {
   isAutoWarp: boolean, // 是否开启自动换行
   isUseExpFastSync: boolean,
   ignoreVersion: string, // 忽略版本
+
+  // 添加语句快捷键设置
+  addSentenceShortCuts: IAddSentenceShortCutsConfig[],
 }
 
 export interface IEditorAction {
@@ -27,4 +41,5 @@ export interface IEditorAction {
   updateIsAutoWarp: (isAutoWarp: IEditorState['isAutoWarp']) => void,
   updateIsUseExpFastSync: (isUseExpFastSync: IGameEditorState['isShowDebugger']) => void,
   updateIgnoreVersion: (ignoreVersion: IEditorState['ignoreVersion']) => void,
+  updateAddSentenceConfig: (config: IEditorState['addSentenceShortCuts']) => void,
 }
