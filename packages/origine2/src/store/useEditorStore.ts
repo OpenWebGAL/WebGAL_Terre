@@ -1,14 +1,31 @@
-import { IEditorState, IEditorAction } from '@/types/editor';
+import {IEditorState, IEditorAction, IAddSentenceShortCutsConfig} from '@/types/editor';
 import createSelectors from '@/utils/createSelectors';
 import { updateUserConfiguration } from '@codingame/monaco-vscode-configuration-service-override';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import {commandType} from "webgal-parser/src/interface/sceneInterface";
 
 let subPageChangedCallback: (subPage: string) => void = () => {};
 
 export const registerSubPageChangedCallback = (callback: (subPage: string) => void) => {
   subPageChangedCallback = callback;
 };
+
+const defaultAddSentenceShortCuts: IAddSentenceShortCutsConfig[] = [
+  {
+    "shortcuts": "S",
+    "type": commandType.say,
+  },
+  {
+    "shortcuts": "F",
+    "type": commandType.changeFigure,
+  },
+  {
+    "shortcuts": "C",
+    "type": "custom",
+    "initialText": "changeFigure:stand.png -left -next;"
+  }
+];
 
 const useEditorStoreBase = create<IEditorState & IEditorAction>()(
   persist(
@@ -24,6 +41,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isAutoWarp: false,
       isUseExpFastSync:false,
       ignoreVersion: '',
+      addSentenceShortCuts: defaultAddSentenceShortCuts,
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
         set({ subPage });
@@ -54,6 +72,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateIsAutoWarp: (isAutoWarp) => set({isAutoWarp}),
       updateIsUseExpFastSync:(isUseExpFastSync)=> set({isUseExpFastSync}),
       updateIgnoreVersion: (ignoreVersion) => set({ignoreVersion}),
+      updateAddSentenceConfig: (addSentenceShortCuts) => set({addSentenceShortCuts}),
     }),
     {
       name: 'editor-storage',
