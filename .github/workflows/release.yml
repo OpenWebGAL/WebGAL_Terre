@@ -16,7 +16,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         env:
@@ -40,7 +40,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build Stage 1
         run: |
@@ -132,7 +132,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         env:
@@ -154,7 +154,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         shell: bash
@@ -175,7 +175,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         shell: bash
