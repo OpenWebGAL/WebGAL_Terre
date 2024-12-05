@@ -1,10 +1,6 @@
-name: Build WebGAL Terre
+name: Build Check
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
   pull_request:
     types:
       - opened
@@ -27,12 +23,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-linux.sh
-      - name: Compress
-        run: 7z a -tzip release/WebGAL_Terre_Linux.zip release/*
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WebGAL_Terre_Linux.zip
+          name: WebGAL_Terre_Linux
           path: release
   build-arm64:
     name: Build Linux ARM64 Binary
@@ -118,13 +112,10 @@ jobs:
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
           echo "WebGAL Terre is now ready to be deployed."
-      - name: Compress
-        run: 7z a -tzip release/WebGAL_Terre_Linux_Arm64.zip release/*
-      
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WebGAL_Terre_Linux_Arm64.zip
+          name: WebGAL_Terre_Linux_Arm64
           path: release
   build-mac:
     name: Build MacOS Binary
@@ -141,12 +132,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-mac.sh
-      - name: Compress
-        run: 7z a -tzip release/WebGAL_Terre_Mac.zip release/*      
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WebGAL_Terre_Mac.zip
+          name: WebGAL_Terre_Mac
           path: release
   build-windows:
     name: Build Windows Binary
@@ -162,8 +151,6 @@ jobs:
       - name: Build
         shell: bash
         run: ./release.sh
-      - name: Compress
-        run: 7z a -tzip release/WebGAL_Terre_Windows.zip release/*  
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -191,3 +178,4 @@ jobs:
         with:
           name: WebGAL_Terre_Windows_Setup
           path: bundle/WebGal_Terre_Setup.exe
+
