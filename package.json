@@ -26,9 +26,11 @@
       "**/electron/**"
     ]
   },
-  "dependencies": {},
   "devDependencies": {
     "concurrently": "^7.2.2",
     "iconv-lite": "^0.6.3"
+  },
+  "engines": {
+    "node": "18"
   }
 }
