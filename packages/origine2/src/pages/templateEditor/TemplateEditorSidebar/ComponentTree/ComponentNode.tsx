@@ -35,7 +35,7 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
       updateTabs([...tabs, newTab]);
     }
     updateCurrentTab(newTab);
-    tabsSyncAction(newTab.path, newTab.name);
+    tabsSyncAction(newTab.path, classNode.class);
   };
 
   return (

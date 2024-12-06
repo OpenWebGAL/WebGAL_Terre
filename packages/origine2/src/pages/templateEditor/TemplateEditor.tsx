@@ -4,7 +4,12 @@ import TemplateEditorMainAria from "./TemplateEditorMainAria/TemplateEditorMainA
 import styles from "./templateEditor.module.scss";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 import { WsUtil } from "@/utils/wsUtil";
-import { ComponentTreeChoose, ComponentTreeTextbox, ComponentTreeTitle}
+import {
+  TemplateGraphicComponentTreeChoose,
+  TemplateGraphicComponentTreeTextbox,
+  TemplateGraphicComponentTreeTitle,
+  TemplateTempScene
+}
   from "@/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree";
 
 export default function TemplateEditor() {
@@ -17,17 +22,21 @@ export default function TemplateEditor() {
   );
 }
 
-export const tabsSyncAction = (nodePath: string, nodeName: string)=> {
-  console.log(nodePath, nodeName);
-  if (nodePath.includes(ComponentTreeTitle.path)) {
-    WsUtil.backToTitle();
+export const tabsSyncAction = (nodePath: string, nodeClass: string)=> {
+  console.debug(nodePath, nodeClass);
+  if (nodePath.includes(TemplateGraphicComponentTreeTitle().path)) {
+    // set scene to title
+    WsUtil.setComponentVisibility([
+      { component: "showTitle", visibility: true },
+      { component: "showPanicOverlay", visibility: false },
+    ]);
   }
-  else if (nodePath.includes(ComponentTreeTextbox.path)) {
-    const miniAvatar = !nodeName.includes("小头像关闭时") ? "stand.png" : "";
-    WsUtil.createTempScene(`changeBg:bg.png -next;\nminiAvatar:${miniAvatar} -next;\nWebGal:这里对话框文字 -fontSize=default;`);
+  else if (nodePath.includes(TemplateGraphicComponentTreeTextbox().path)) {
+    const miniAvatar = !nodeClass.toLowerCase().includes("miniavataroff") ? "stand.png" : "";
+    WsUtil.createTempScene(`changeBg:bg.png -next;\nminiAvatar:${miniAvatar} -next;\n${TemplateTempScene().textbox}`);
   }
-  else if (nodePath.includes(ComponentTreeChoose.path)) {
-    WsUtil.createTempScene("changeBg:bg.png -next;\nchoose:可选项:|不可选项:;");
+  else if (nodePath.includes(TemplateGraphicComponentTreeChoose().path)) {
+    WsUtil.createTempScene(`changeBg:bg.png -next;${TemplateTempScene().choose}`);
   }
 };
 

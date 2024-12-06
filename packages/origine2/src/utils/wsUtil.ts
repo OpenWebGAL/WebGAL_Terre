@@ -1,49 +1,71 @@
 import {logger} from "./logger";
 import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
 import useEditorStore from "@/store/useEditorStore";
+import {isArray} from "lodash";
+
+export interface componentsVisibility {
+  showStarter: boolean; // 是否显示初始界面（用于使得bgm可以播放)
+  showTitle: boolean; // 是否显示标题界面
+  showMenuPanel: boolean; // 是否显示Menu界面
+  showTextBox: boolean;
+  showControls: boolean;
+  controlsVisibility: boolean;
+  showBacklog: boolean;
+  showExtra: boolean;
+  showGlobalDialog: boolean;
+  showPanicOverlay: boolean;
+  isEnterGame: boolean;
+  isShowLogo: boolean;
+}
+
+interface componentVisibilityCommandInterface {
+  component: keyof componentsVisibility;
+  visibility: boolean;
+}
 
 export class WsUtil {
 
-  public static backToTitle(){
+  public static sentMessageToCurrentWs(data: IDebugMessage['data'], event?: IDebugMessage['event'] | undefined){
     // @ts-ignore
-    if (window["currentWs"]) { // @ts-ignore
+    if (window["currentWs"]) {
       logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.BACK_TO_TITLE,
-          sceneMsg: {
-            scene: "",
-            sentence: 0
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
-        }
+      const sendMessage: IDebugMessage = {
+        event: (event === undefined) ? "message" : event,
+        data: data
       };
       // @ts-ignore
-
-      window["currentWs"].send(JSON.stringify(message));
+      window["currentWs"].send(JSON.stringify(sendMessage));
     }
   }
 
-  public static createTempScene(command: string) {
-    // @ts-ignore
-    if (window["currentWs"]) { // @ts-ignore
-      logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.TEMP_SCENE,
-          sceneMsg: {
-            scene: "",
-            sentence: 0
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: command,
-        }
-      };
-      // @ts-ignore
+  public static setComponentVisibility(message: componentVisibilityCommandInterface | componentVisibilityCommandInterface[]) {
+    const compose = (message: componentVisibilityCommandInterface[]) => {
+      return message.map((item) => {
+        return `${item.component}:${item.visibility}`;
+      }).join('\n');
+    };
+    const sendMessage = !isArray(message) ? `${message.component}:${message.visibility}` : compose(message);
+    this.sentMessageToCurrentWs({
+      command: DebugCommand.SET_COMPONENT_VISIBILITY,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: sendMessage,
+    });
+  }
 
-      window["currentWs"].send(JSON.stringify(message));
-    }
+  public static createTempScene(command: string) {
+    this.sentMessageToCurrentWs({
+      command: DebugCommand.TEMP_SCENE,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: command,
+    });
   }
 
   // eslint-disable-next-line max-params
@@ -71,64 +93,41 @@ export class WsUtil {
     }
 
     // @ts-ignore
-    if (window["currentWs"] && this.getIsCurrentLineJump(lineCommandString)) { // @ts-ignore
-      logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.JUMP,
-          sceneMsg: {
-            scene: sceneName,
-            sentence: lineNumber
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
-        }
-      };
-      console.log(scenePath, lineNumber, lineCommandString);
-      // @ts-ignore
-      window["currentWs"].send(JSON.stringify(message));
+    if (this.getIsCurrentLineJump(lineCommandString)) {
+      this.sentMessageToCurrentWs({
+        command: DebugCommand.JUMP,
+        sceneMsg: {
+          scene: sceneName,
+          sentence: lineNumber
+        },// @ts-ignore
+        stageSyncMsg: {},
+        message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
+      });
     }
   }
 
   public static sendExeCommand(command: string) {
-
-    // @ts-ignore
-    if (window["currentWs"]) { // @ts-ignore
-      logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.EXE_COMMAND,
-          sceneMsg: {
-            scene: 'temp',
-            sentence: 0
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: command
-        }
-      };
-      // @ts-ignore
-      window["currentWs"].send(JSON.stringify(message));
-    }
+    this.sentMessageToCurrentWs({
+      command: DebugCommand.EXE_COMMAND,
+      sceneMsg: {
+        scene: 'temp',
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: command
+    });
   }
 
   public static sendTemplateRefetchCommand(){
-    // @ts-ignore
-    if (window["currentWs"]) { // @ts-ignore
-      logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.REFETCH_TEMPLATE_FILES,
-          sceneMsg: {
-            scene: 'temp',
-            sentence: 0
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: ''
-        }
-      };
-      // @ts-ignore
-      window["currentWs"].send(JSON.stringify(message));
-    }
+    this.sentMessageToCurrentWs({
+      command: DebugCommand.REFETCH_TEMPLATE_FILES,
+      sceneMsg: {
+        scene: 'temp',
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: ''
+    });
   };
 
   private static getIsCurrentLineJump(currentLineValue: string | null): boolean {
