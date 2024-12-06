@@ -12,6 +12,30 @@ export interface IAddSentenceShortCutsConfig extends IEditorShortCutsConfig {
   initialText?: string;
 }
 
+export enum SentenceLayerType {
+  'OUTER',
+  'INNER'
+}
+
+export enum SentenceActionType {
+  'run_sentence',
+  'insert_sentence',
+  'copy_sentence',
+  'paste_sentence',
+  'delete_sentence',
+  'warp_with_down',
+  'warp_with_up',
+  'move_to_down',
+  'move_to_up',
+  'move_to_down_or_insert',
+  'copy_sentence_and_insert',
+}
+
+export interface ISentenceShortCutsConfig extends IEditorShortCutsConfig {
+  layers: SentenceLayerType[];
+  action: SentenceActionType
+}
+
 export interface IEditorState {
   page: IPage,
   subPage: string,
@@ -27,6 +51,7 @@ export interface IEditorState {
 
   // 添加语句快捷键设置
   addSentenceShortCuts: IAddSentenceShortCutsConfig[],
+  sentenceShortCuts: ISentenceShortCutsConfig[],
 }
 
 export interface IEditorAction {
@@ -42,4 +67,5 @@ export interface IEditorAction {
   updateIsUseExpFastSync: (isUseExpFastSync: IGameEditorState['isShowDebugger']) => void,
   updateIgnoreVersion: (ignoreVersion: IEditorState['ignoreVersion']) => void,
   updateAddSentenceConfig: (config: IEditorState['addSentenceShortCuts']) => void,
+  updateSentenceConfig: (config: IEditorState['sentenceShortCuts']) => void,
 }
