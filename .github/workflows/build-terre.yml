@@ -168,7 +168,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Windows
-          path: release
+          path: release/WebGAL_Terre_Windows.zip
   build-windows-nsis:
     name: Build Windows Setup
     runs-on: windows-latest
