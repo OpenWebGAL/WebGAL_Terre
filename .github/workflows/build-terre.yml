@@ -32,8 +32,8 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WebGAL_Terre_Linux.zip
-          path: release
+          name: WebGAL_Terre_Linux
+          path: release/WebGAL_Terre_Linux.zip
   build-arm64:
     name: Build Linux ARM64 Binary
     runs-on: ubuntu-latest
@@ -124,8 +124,8 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WebGAL_Terre_Linux_Arm64.zip
-          path: release
+          name: WebGAL_Terre_Linux_Arm64
+          path: release/WebGAL_Terre_Linux_Arm64.zip
   build-mac:
     name: Build MacOS Binary
     runs-on: macos-14
@@ -146,8 +146,8 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WebGAL_Terre_Mac.zip
-          path: release
+          name: WebGAL_Terre_Mac
+          path: release/WebGAL_Terre_Mac.zip
   build-windows:
     name: Build Windows Binary
     runs-on: windows-latest
