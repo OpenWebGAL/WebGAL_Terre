@@ -477,7 +477,7 @@ msgstr "削除"
 msgid "删除属性"
 msgstr "属性を削除"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:376
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:330
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:28
 msgid "删除本句"
 msgstr "この文を削除"
@@ -846,7 +846,7 @@ msgstr "エフェクトエディタを開く"
 msgid "打开文件夹"
 msgstr "フォルダーを開く"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:384
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:338
 msgid "执行到此句"
 msgstr "この文まで実行"
 
@@ -1145,11 +1145,11 @@ msgstr "認識されないコマンド"
 msgid "未识别的指令"
 msgstr "認識されないコマンド"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:347
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:299
 msgid "本句前插入句子"
 msgstr "選択した文の前に追加"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:331
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:284
 msgid "本句后插入句子"
 msgstr ""
 
@@ -1290,7 +1290,7 @@ msgstr "新しい行を追加"
 msgid "添加自定义属性"
 msgstr "カスタム属性を追加"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:400
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:354
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
 #: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
