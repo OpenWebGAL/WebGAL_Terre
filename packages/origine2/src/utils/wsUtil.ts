@@ -25,12 +25,12 @@ interface componentVisibilityCommandInterface {
 
 export class WsUtil {
 
-  public static sentMessageToCurrentWs(data: IDebugMessage['data'], event?: IDebugMessage['event'] | undefined){
+  public static sendMessageToCurrentWs(data: IDebugMessage['data'], event?: IDebugMessage['event']){
     // @ts-ignore
     if (window["currentWs"]) {
       logger.debug("编辑器开始发送同步数据");
       const sendMessage: IDebugMessage = {
-        event: (event === undefined) ? "message" : event,
+        event: event ?? "message",
         data: data
       };
       // @ts-ignore
@@ -45,7 +45,7 @@ export class WsUtil {
       }).join('\n');
     };
     const sendMessage = !isArray(message) ? `${message.component}:${message.visibility}` : compose(message);
-    this.sentMessageToCurrentWs({
+    this.sendMessageToCurrentWs({
       command: DebugCommand.SET_COMPONENT_VISIBILITY,
       sceneMsg: {
         scene: "",
@@ -57,7 +57,7 @@ export class WsUtil {
   }
 
   public static createTempScene(command: string) {
-    this.sentMessageToCurrentWs({
+    this.sendMessageToCurrentWs({
       command: DebugCommand.TEMP_SCENE,
       sceneMsg: {
         scene: "",
@@ -94,7 +94,7 @@ export class WsUtil {
 
     // @ts-ignore
     if (this.getIsCurrentLineJump(lineCommandString)) {
-      this.sentMessageToCurrentWs({
+      this.sendMessageToCurrentWs({
         command: DebugCommand.JUMP,
         sceneMsg: {
           scene: sceneName,
@@ -107,7 +107,7 @@ export class WsUtil {
   }
 
   public static sendExeCommand(command: string) {
-    this.sentMessageToCurrentWs({
+    this.sendMessageToCurrentWs({
       command: DebugCommand.EXE_COMMAND,
       sceneMsg: {
         scene: 'temp',
@@ -119,7 +119,7 @@ export class WsUtil {
   }
 
   public static sendTemplateRefetchCommand(){
-    this.sentMessageToCurrentWs({
+    this.sendMessageToCurrentWs({
       command: DebugCommand.REFETCH_TEMPLATE_FILES,
       sceneMsg: {
         scene: 'temp',
