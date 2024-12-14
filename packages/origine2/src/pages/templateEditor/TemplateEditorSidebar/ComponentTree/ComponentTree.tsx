@@ -15,7 +15,7 @@ export interface IClassNode {
   class: string,
 }
 
-export const TemplateGraphicComponentTreeTitle = () => {
+export const useComponentTreeTitle = () => {
   return {
     name: t`标题`,
     path: `UI/Title/title.scss`,
@@ -29,7 +29,7 @@ export const TemplateGraphicComponentTreeTitle = () => {
   };
 };
 
-export const TemplateGraphicComponentTreeTextbox = () => {
+export const useComponentTreeTextbox = () => {
   return {
     name: t`文本框`,
     path: `Stage/TextBox/textbox.scss`,
@@ -52,15 +52,14 @@ export const TemplateGraphicComponentTreeTextbox = () => {
   };
 };
 
-export const TemplateTempScene = () => {
-  // useLingui(); 不清楚是否需要加这个
+export const useTemplateTempScene = () => {
   return {
     textbox: `WebGal:${t`对话框文字`} -fontSize=default;`,
     choose: `choose:${t`可选项`}:|${t`不可选项`}:;`
   };
 };
 
-export const TemplateGraphicComponentTreeChoose = () => {
+export const useComponentTreeChoose = () => {
   return {
     name: t`选项`,
     path: `Stage/Choose/choose.scss`,
@@ -74,21 +73,23 @@ export const TemplateGraphicComponentTreeChoose = () => {
 };
 
 export default function ComponentTree() {
+
+  useLingui();
+
   /**
    * Component Tree
    * 通过函数形式延迟加载字符，以便适应useLingui();
    */
 
   const componentTree: IComponentNode[] = [
-    TemplateGraphicComponentTreeTitle(),
-    TemplateGraphicComponentTreeTextbox(),
-    TemplateGraphicComponentTreeChoose(),
+    useComponentTreeTitle(),
+    useComponentTreeTextbox(),
+    useComponentTreeChoose(),
   ];
 
   const templateName = useEditorStore.use.subPage();
   const basePath = `templates/${templateName}`;
   const tree = componentTree.map(e => ({...e, path: `${basePath}/${e.path}`}));
-  useLingui();
 
   return (
     <div className={styles.componentTree}>

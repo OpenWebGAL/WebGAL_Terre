@@ -3,7 +3,7 @@ import styles from './componentNode.module.scss';
 import { ChevronDownFilled, ChevronDownRegular, ChevronUpFilled, ChevronUpRegular, bundleIcon } from "@fluentui/react-icons";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 import { ITab } from "@/types/templateEditor";
-import {tabsSyncAction} from "@/pages/templateEditor/TemplateEditor";
+import {sendComponentPreviewMessage} from "@/pages/templateEditor/TemplateEditor";
 
 const ChevronDownIcon = bundleIcon(ChevronDownFilled, ChevronDownRegular);
 const ChevronUpIcon = bundleIcon(ChevronUpFilled, ChevronUpRegular);
@@ -35,7 +35,7 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
       updateTabs([...tabs, newTab]);
     }
     updateCurrentTab(newTab);
-    tabsSyncAction(newTab.path, classNode.class);
+    sendComponentPreviewMessage(newTab.path, classNode.class);
   };
 
   return (

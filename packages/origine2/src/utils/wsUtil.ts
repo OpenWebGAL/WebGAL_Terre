@@ -3,7 +3,7 @@ import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
 import useEditorStore from "@/store/useEditorStore";
 import {isArray} from "lodash";
 
-export interface componentsVisibility {
+export interface IComponentsVisibility {
   showStarter: boolean; // 是否显示初始界面（用于使得bgm可以播放)
   showTitle: boolean; // 是否显示标题界面
   showMenuPanel: boolean; // 是否显示Menu界面
@@ -18,8 +18,8 @@ export interface componentsVisibility {
   isShowLogo: boolean;
 }
 
-interface componentVisibilityCommandInterface {
-  component: keyof componentsVisibility;
+interface IComponentVisibilityCommand {
+  component: keyof IComponentsVisibility;
   visibility: boolean;
 }
 
@@ -38,13 +38,8 @@ export class WsUtil {
     }
   }
 
-  public static setComponentVisibility(message: componentVisibilityCommandInterface | componentVisibilityCommandInterface[]) {
-    const compose = (message: componentVisibilityCommandInterface[]) => {
-      return message.map((item) => {
-        return `${item.component}:${item.visibility}`;
-      }).join('\n');
-    };
-    const sendMessage = !isArray(message) ? `${message.component}:${message.visibility}` : compose(message);
+  public static setComponentVisibility(message: IComponentVisibilityCommand[]) {
+    const sendMessage = JSON.stringify(message);
     this.sendMessageToCurrentWs({
       command: DebugCommand.SET_COMPONENT_VISIBILITY,
       sceneMsg: {
