@@ -5,10 +5,10 @@ import styles from "./templateEditor.module.scss";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 import { WsUtil } from "@/utils/wsUtil";
 import {
-  TemplateGraphicComponentTreeChoose,
-  TemplateGraphicComponentTreeTextbox,
-  TemplateGraphicComponentTreeTitle,
-  TemplateTempScene
+  useComponentTreeChoose,
+  useComponentTreeTextbox,
+  useComponentTreeTitle,
+  useTemplateTempScene
 }
   from "@/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree";
 
@@ -22,21 +22,21 @@ export default function TemplateEditor() {
   );
 }
 
-export const tabsSyncAction = (nodePath: string, nodeClass: string)=> {
-  console.debug(nodePath, nodeClass);
-  if (nodePath.includes(TemplateGraphicComponentTreeTitle().path)) {
+export const sendComponentPreviewMessage = (componentPath: string, componentClass: string)=> {
+  console.debug(componentPath, componentClass);
+  if (componentPath.includes(useComponentTreeTitle().path)) {
     // set scene to title
     WsUtil.setComponentVisibility([
       { component: "showTitle", visibility: true },
       { component: "showPanicOverlay", visibility: false },
     ]);
   }
-  else if (nodePath.includes(TemplateGraphicComponentTreeTextbox().path)) {
-    const miniAvatar = !nodeClass.toLowerCase().includes("miniavataroff") ? "stand.png" : "";
-    WsUtil.createTempScene(`changeBg:bg.png -next;\nminiAvatar:${miniAvatar} -next;\n${TemplateTempScene().textbox}`);
+  else if (componentPath.includes(useComponentTreeTextbox().path)) {
+    const miniAvatar = !componentClass.toLowerCase().includes("miniavataroff") ? "stand.png" : "";
+    WsUtil.createTempScene(`changeBg:bg.png -next;\nminiAvatar:${miniAvatar} -next;\n${useTemplateTempScene().textbox}`);
   }
-  else if (nodePath.includes(TemplateGraphicComponentTreeChoose().path)) {
-    WsUtil.createTempScene(`changeBg:bg.png -next;${TemplateTempScene().choose}`);
+  else if (componentPath.includes(useComponentTreeChoose().path)) {
+    WsUtil.createTempScene(`changeBg:bg.png -next;${useTemplateTempScene().choose}`);
   }
 };
 
