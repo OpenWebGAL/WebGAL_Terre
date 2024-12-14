@@ -1,27 +1,6 @@
 import {logger} from "./logger";
-import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
+import {DebugCommand, IComponentVisibilityCommand, IDebugMessage} from "@/types/debugProtocol";
 import useEditorStore from "@/store/useEditorStore";
-import {isArray} from "lodash";
-
-export interface IComponentsVisibility {
-  showStarter: boolean; // 是否显示初始界面（用于使得bgm可以播放)
-  showTitle: boolean; // 是否显示标题界面
-  showMenuPanel: boolean; // 是否显示Menu界面
-  showTextBox: boolean;
-  showControls: boolean;
-  controlsVisibility: boolean;
-  showBacklog: boolean;
-  showExtra: boolean;
-  showGlobalDialog: boolean;
-  showPanicOverlay: boolean;
-  isEnterGame: boolean;
-  isShowLogo: boolean;
-}
-
-interface IComponentVisibilityCommand {
-  component: keyof IComponentsVisibility;
-  visibility: boolean;
-}
 
 export class WsUtil {
 
