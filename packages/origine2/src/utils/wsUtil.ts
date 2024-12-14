@@ -30,7 +30,7 @@ export class WsUtil {
     });
   }
 
-  public static createTempScene(command: string) {
+  public static runTempScene(command: string) {
     this.sendMessageToCurrentWs({
       command: DebugCommand.TEMP_SCENE,
       sceneMsg: {
