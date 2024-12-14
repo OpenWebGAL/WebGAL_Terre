@@ -201,9 +201,9 @@ msgstr "Rain"
 msgid "下雪"
 msgstr "Snow"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:59
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
-msgstr ""
+msgstr "Disabled Option"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:130
 msgid "不显示角色名"
@@ -547,9 +547,9 @@ msgstr "Cancel"
 msgid "变换"
 msgstr "Transform"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:59
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "可选项"
-msgstr ""
+msgstr "Option"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:52
 msgid "右侧"
@@ -695,9 +695,9 @@ msgstr "Width"
 msgid "对话"
 msgstr "Dialogue"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:57
 msgid "对话框文字"
-msgstr ""
+msgstr "Text of the Textbox"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:32
 msgid "对话框标题"
@@ -1788,11 +1788,11 @@ msgid "选择预设目标"
 msgstr "Choose Preset Target"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:65
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:64
 msgid "选项"
 msgstr "Option"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:68
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:67
 msgid "选项列表"
 msgstr "Selection List"
 
@@ -1800,15 +1800,15 @@ msgstr "Selection List"
 msgid "选项名称"
 msgstr "Option Name"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:69
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:68
 msgid "选项按钮"
 msgstr "Selection Button"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:70
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:69
 msgid "选项按钮（禁用）"
 msgstr "Selection Button (disabled)"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:71
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:70
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
 

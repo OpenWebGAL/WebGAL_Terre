@@ -217,7 +217,7 @@ msgstr "下雨"
 msgid "下雪"
 msgstr "下雪"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:59
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
 msgstr "不可选项"
 
@@ -567,7 +567,7 @@ msgstr "取消"
 msgid "变换"
 msgstr "变换"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:59
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "可选项"
 msgstr "可选项"
 
@@ -715,7 +715,7 @@ msgstr "宽度"
 msgid "对话"
 msgstr "对话"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:57
 msgid "对话框文字"
 msgstr "对话框文字"
 
@@ -1808,11 +1808,11 @@ msgid "选择预设目标"
 msgstr "选择预设目标"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:65
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:64
 msgid "选项"
 msgstr "选项"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:68
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:67
 msgid "选项列表"
 msgstr "选项列表"
 
@@ -1820,15 +1820,15 @@ msgstr "选项列表"
 msgid "选项名称"
 msgstr "选项名称"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:69
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:68
 msgid "选项按钮"
 msgstr "选项按钮"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:70
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:69
 msgid "选项按钮（禁用）"
 msgstr "选项按钮（禁用）"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:71
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:70
 msgid "选项按钮外层"
 msgstr "选项按钮外层"
 
