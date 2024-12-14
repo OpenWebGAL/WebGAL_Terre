@@ -28,7 +28,7 @@ export default function WheelDropdown({
     (event: WheelEvent) => {
       event.preventDefault();
       event.stopPropagation();
-
+      // TODO 这个特性容易误触
       // 判断滚动方向：向下滚动为 1，向上滚动为 -1
       const direction = event.deltaY > 0 ? 1 : event.deltaY < 0 ? -1 : 0;
       if (direction !== 0) {

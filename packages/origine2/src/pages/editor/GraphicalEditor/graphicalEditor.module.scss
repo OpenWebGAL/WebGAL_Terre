@@ -12,14 +12,6 @@
   flex-wrap: wrap;
 }
 
-.sentenceEditorWrapper:focus {
-  outline: none;
-}
-
-.sentenceEditorWrapper:focus .sentenceEditorContent {
-  outline: var(--border-primary-lg);
-}
-
 .sentenceEditorContent {
   display: flex;
   background: var(--bg-card);
@@ -27,6 +19,10 @@
   padding: 0px 4px 4px 4px;
   border: var(--border-md);
   border-radius: var(--radius-md);
+}
+
+.sentenceEditorContent:focus {
+  border: 1px solid var(--primary);
 }
 
 .lineNumber {
