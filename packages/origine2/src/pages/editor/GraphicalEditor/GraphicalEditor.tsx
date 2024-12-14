@@ -49,7 +49,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       syncToIndex(index);
     }],
     [SentenceActionType.insert_sentence, (index: number) => {
-      selectorSentenceIndex.set(index);
+      selectorSentenceIndex.set(index + 1);
       addSentenceRef.current?.showUp();
     }],
     [SentenceActionType.warp_with_up, (index: number) => {
@@ -66,7 +66,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     }],
     [SentenceActionType.move_to_up, (index: number) => {if (index !== 0) focusOnSentence(index - 1);}],
     [SentenceActionType.move_to_down,
-      (line: number) => {if (line !== parsedScene.sentenceList.length) focusOnSentence(line + 1);}
+      (index: number) => {if (index !== parsedScene.sentenceList.length - 1) focusOnSentence(index + 1);}
     ],
     [SentenceActionType.copy_sentence, (index: number) => clipboardSentence.set(splitToArray(sceneText.value)[index])],
     [SentenceActionType.paste_sentence, (index: number) => {
@@ -75,9 +75,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       }
     }],
     [SentenceActionType.move_to_down_or_insert, (index: number) => {
-      if (index !== parsedScene.sentenceList.length) focusOnSentence(index + 1);
+      if (index !== parsedScene.sentenceList.length - 1) focusOnSentence(index + 1);
       else {
-        selectorSentenceIndex.set(index);
+        selectorSentenceIndex.set(index + 1);
         addSentenceRef.current?.showUp();
       }
     }],
@@ -203,7 +203,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       console.debug("focusOnSentence", targetIndex);
     };
     setTimeout(() => {
-      const targetBlock: HTMLDivElement | null = document.querySelector(`.sentence-block-${targetIndex}`);
+      const targetBlock: HTMLDivElement | null = document.querySelector(`.sentence-editor-block-${targetIndex}`);
       if (targetBlock) {
         focusFunction(targetBlock);
       }
@@ -217,7 +217,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const targetLine = editorLineHolder.getSceneLine(props.targetPath);
     const scrollToFunc = () => {
       console.debug("scrollToFunc", targetLine);
-      const targetBlock = document.querySelector(`.sentence-block-${targetLine}`);
+      const targetBlock = document.querySelector(`.sentence-editor-block-${targetLine}`);
       if (targetBlock) {
         targetBlock?.scrollIntoView?.({behavior: 'auto'});
       } else {
@@ -272,10 +272,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                   draggableId={sentence.content + sentence.commandRaw + i} index={i}>
                   {(provided, snapshot) => (
                     <div className={`${styles.sentenceEditorWrapper} sentence-block-${i}`}
-                      key={`sentence-block-div-${sentence.content}-outer`}
+                      key={`sentence-block-div-${sentence.content}-${i}-outer`}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      tabIndex={0}
                       // Sentence Outer
                       onKeyDown={(e) => {sentenceShortCutHandle(e, SentenceLayerType.OUTER, i);}}
                     >
@@ -301,7 +300,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                         </div>
                       </div>
-                      <div className={styles.sentenceEditorContent}>
+                      <div className={`${styles.sentenceEditorContent} sentence-editor-block-${i}`} tabIndex={0}>
                         <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{i + 1}</span>
                           <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
                             strokeWidth={3} tabIndex={-1}/>
