@@ -14,20 +14,82 @@ import {eventBus} from "@/utils/eventBus";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import {api} from "@/api";
-import {SentenceActionType, SentenceLayerType} from "@/types/editor";
+import {SentenceActionType, SentenceLayerType, ShortCutParse} from "@/types/editor";
 
 interface IGraphicalEditorProps {
   targetPath: string;
   targetName: string;
 }
 
-export function shortCutParse(e: React.KeyboardEvent<any>){
-  const keysPressed: string[] = [];
-  if (e.ctrlKey) keysPressed.push('Ctrl');
-  if (e.shiftKey) keysPressed.push('Shift');
-  if (e.altKey) keysPressed.push('Alt');
-  if (e.key) keysPressed.push(e.key);
-  return keysPressed.join('+');
+interface IGraphicalFunction {
+  syncToIndex: (index: number) => void;
+  showUpAddSentence: (index: number) => void;
+  swapSentence: (firstIndex: number, secondIndex: number) => void;
+  focusOnSentence: (index: number, delay?: number, tryInsert?: boolean) => void;
+  addOneSentence: (sentence: string, index: number) => void;
+  getSentence: (index: number) => string;
+  deleteSentence: (index: number) => void;
+}
+
+function useGraphicalEditorShortcut(functions: IGraphicalFunction){
+  const clipboardSentence = useValue("");
+  const sentenceActionShortCutConfig = useEditorStore.use.graphicalSentenceShortCuts();
+  const sentenceShortCutActionMap: Map<SentenceActionType, (index: number) => void> = new Map([
+    [SentenceActionType.run_sentence, (index: number) => {
+      functions.syncToIndex(index);
+    }],
+    [SentenceActionType.insert_sentence, (index: number) => {
+      functions.showUpAddSentence(index);
+    }],
+    [SentenceActionType.warp_with_up, (index: number) => {
+      functions.swapSentence(index, index - 1);
+      functions.focusOnSentence(index - 1);
+    }],
+    [SentenceActionType.warp_with_down, (index: number) => {
+      functions.swapSentence(index - 1, index);
+      functions.focusOnSentence(index + 1);
+    }],
+    [SentenceActionType.move_to_up, (index: number) => {
+      functions.focusOnSentence(index - 1);
+    }],
+    [SentenceActionType.move_to_down, (index: number) => {
+      functions.focusOnSentence(index + 1);
+    }],
+    [SentenceActionType.copy_sentence, (index: number) => {
+      clipboardSentence.set(functions.getSentence(index));
+    }],
+    [SentenceActionType.paste_sentence, (index: number) => {
+      if (clipboardSentence.value !== "") {
+        functions.addOneSentence(clipboardSentence.value, index + 1);
+      }
+    }],
+    [SentenceActionType.move_to_down_or_insert, (index: number) => {
+      functions.focusOnSentence(index + 1, 0, true);
+    }],
+    [SentenceActionType.delete_sentence, (index: number) => {
+      functions.deleteSentence(index - 1);
+    }],
+    [SentenceActionType.copy_sentence_and_insert, (index: number) => {
+      const copy_sentence = functions.getSentence(index);
+      functions.addOneSentence(copy_sentence, index + 1);
+    }],
+    [SentenceActionType.select_correct_sentence, (index: number) => {
+      functions.focusOnSentence(index);
+      console.debug("select_correct_sentence", index);
+    }]
+  ]);
+  return (e: KeyboardEvent, index: number, layer: SentenceLayerType) => {
+    const keyCombined = ShortCutParse(e);
+    const config = sentenceActionShortCutConfig.find(
+      (config) =>
+        (config.shortcuts.toLowerCase() === keyCombined.toLowerCase() &&
+          (config.layers === layer || config.layers === 'all')));
+    if (config) {
+      sentenceShortCutActionMap.get(config.action)?.apply(index, [index]);
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
 }
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
@@ -36,84 +98,23 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   const sceneText = useValue("");
   const gameName = useEditorStore.use.subPage();
-  const sentenceActionShortCutConfig = useEditorStore.use.sentenceShortCuts();
   const showSentence = useValue<Array<boolean>>([]);
   const addSentenceRef = useRef<AddSentenceMethods | null>(null);
   const selectorSentenceIndex = useValue(0);
   const parsedScene =
     (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
-  const clipboardSentence = useValue<string>("");
 
-  const sentenceShortCutActionMap: Map<SentenceActionType, (index: number) => void> = new Map([
-    [SentenceActionType.run_sentence, (index: number) => {
-      syncToIndex(index);
-    }],
-    [SentenceActionType.insert_sentence, (index: number) => {
-      selectorSentenceIndex.set(index + 1);
-      addSentenceRef.current?.showUp();
-    }],
-    [SentenceActionType.warp_with_up, (index: number) => {
-      if (index !== 0) {
-        reorder(index, index - 1);
-        focusOnSentence(index - 1);
-      }
-    }],
-    [SentenceActionType.warp_with_down, (index: number) => {
-      if (index !== parsedScene.sentenceList.length - 1) {
-        reorder(index - 1, index);
-        focusOnSentence(index + 1);
-      }
-    }],
-    [SentenceActionType.move_to_up, (index: number) => {if (index !== 0) focusOnSentence(index - 1);}],
-    [SentenceActionType.move_to_down,
-      (index: number) => {if (index !== parsedScene.sentenceList.length - 1) focusOnSentence(index + 1);}
-    ],
-    [SentenceActionType.copy_sentence, (index: number) => clipboardSentence.set(splitToArray(sceneText.value)[index])],
-    [SentenceActionType.paste_sentence, (index: number) => {
-      if (clipboardSentence.value !== "") {
-        addOneSentence(clipboardSentence.value, index + 1);
-      }
-    }],
-    [SentenceActionType.move_to_down_or_insert, (index: number) => {
-      if (index !== parsedScene.sentenceList.length - 1) focusOnSentence(index + 1);
-      else {
-        selectorSentenceIndex.set(index + 1);
-        addSentenceRef.current?.showUp();
-      }
-    }],
-    [SentenceActionType.delete_sentence, (index: number) => {
-      deleteOneSentence(index - 1);
-    }],
-    [SentenceActionType.copy_sentence_and_insert, (index: number) => {
-      const copy_sentence = splitToArray(sceneText.value)[index];
-      addOneSentence(copy_sentence, index + 1);
-    }]
-  ]);
-
-  const sentenceShortCutHandle =
-  (e: React.KeyboardEvent<HTMLDivElement>, layer: SentenceLayerType,
-    index: number) => {
-    const keyCombined = shortCutParse(e);
-    // console.debug(keyCombined);
-    const config = sentenceActionShortCutConfig.find(
-      (config) =>
-        (config.shortcuts.toLowerCase() === keyCombined.toLowerCase()));
-    let action: any;
-    if (config) {
-      // console.debug(config);
-      if (config.layers.includes(layer)) action = config.action;
-      // 如果Sentence Inner没有快捷键但Outer有，则
-      else if (layer === SentenceLayerType.INNER && config.layers.includes(SentenceLayerType.OUTER)) {
-        e.stopPropagation(); // 阻止向Outer传递
-      }
+  const sentenceShortCutHandle = useGraphicalEditorShortcut(
+    {
+      focusOnSentence: focusOnSentence,
+      syncToIndex: syncToIndex,
+      showUpAddSentence: showUpAddSentence,
+      addOneSentence: addOneSentence,
+      swapSentence: reorder,
+      deleteSentence: deleteOneSentence,
+      getSentence: getSentenceByIndex
     }
-    if (action !== undefined) {
-      sentenceShortCutActionMap.get(action)?.apply(index, [index]);
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-  };
+  );
 
   function updateScene() {
     const path = props.targetPath;
@@ -177,12 +178,12 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   // 重新记录数组顺序
-  const reorder = (startIndex: number, endIndex: number) => {
+  function reorder(startIndex: number, endIndex: number){
     const result = splitToArray(sceneText.value);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     submitSceneAndUpdate(mergeToString(result), endIndex);
-  };
+  }
 
   function onDragEnd(result: any) {
     if (!result.destination) {
@@ -195,22 +196,30 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     );
   }
 
-  function focusOnSentence(targetIndex: number, delay?: number) {
-    const delay_time = (delay === undefined) ? 100 : delay;
-    const focusFunction = (targetBlock: HTMLDivElement) => {
-      targetBlock.focus();
-      targetBlock.scrollIntoView?.({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
+  function getSentenceByIndex(index: number) {
+    return splitToArray(sceneText.value)[index];
+  }
+
+  function focusOnSentence(targetIndex: number, delay=100, tryInsert=false) {
+    if (tryInsert && targetIndex >= parsedScene.sentenceList.length) {
+      showUpAddSentence(targetIndex);
+      return;
+    }
+
+    const focusFunction = (targetBlock: HTMLDivElement | null) => {
+      targetBlock?.focus();
+      targetBlock?.scrollIntoView?.({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
       console.debug("focusOnSentence", targetIndex);
     };
     setTimeout(() => {
       const targetBlock: HTMLDivElement | null = document.querySelector(`.sentence-editor-block-${targetIndex}`);
-      if (targetBlock) {
-        focusFunction(targetBlock);
-      }
-      else {
-        setTimeout(focusFunction, 100);
-      }
-    }, delay_time);
+      focusFunction(targetBlock);
+    }, delay);
+  }
+
+  function showUpAddSentence(targetIndex: number) {
+    selectorSentenceIndex.set(targetIndex);
+    addSentenceRef.current?.showUp();
   }
 
   useEffect(() => {
@@ -252,6 +261,24 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     };
   }, [sceneText.value]);
 
+  useEffect(() => {
+    const KeyDownListener = (ev: KeyboardEvent) => {
+      const target = ev.target as HTMLElement;
+      // 如果焦点在DIV,BODY才会触发诸如ArrowUp，复制语句等操作
+      if (target.tagName === 'DIV' || target.tagName === 'BODY') {
+        sentenceShortCutHandle(ev, selectorSentenceIndex.value, 'onlyOnDiv');
+      }
+      else {
+        sentenceShortCutHandle(ev, selectorSentenceIndex.value, 'all');
+      }
+    };
+
+    window.addEventListener("keydown", KeyDownListener);
+    return () => {
+      window.removeEventListener("keydown", KeyDownListener);
+    };
+  }, [selectorSentenceIndex.value]);
+
   return <div className={styles.main} id="graphical-editor-main">
     <div style={{flex: 1, padding: '14px 4px 0 4px'}}>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -264,34 +291,28 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
               ref={provided.innerRef}
             >
+              {/* sharing add sentence component */}
+              <AddSentence titleText={t`本句后插入句子`} type={addSentenceType.backward}
+                onChoose={(newSentence) => {
+                  if (newSentence && selectorSentenceIndex.value !== -1) {
+                    addOneSentence(newSentence, selectorSentenceIndex.value);
+                    selectorSentenceIndex.set(selectorSentenceIndex.value + 1);
+                  }
+                }} ref={addSentenceRef} displayButton={false}
+              />
               {parsedScene.sentenceList.map((sentence, i) => {
+                const line = i + 1;
                 // console.log(sentence.command);
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
-                return <Draggable key={'sentence-draggable-' + i + '-outer'}
+                return <Draggable key={`sentence-draggable-${i}-outer`}
                   draggableId={sentence.content + sentence.commandRaw + i} index={i}>
                   {(provided, snapshot) => (
                     <div className={`${styles.sentenceEditorWrapper} sentence-block-${i}`}
                       key={`sentence-block-div-${sentence.content}-${i}-outer`}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      // Sentence Outer
-                      onKeyDown={(e) => {sentenceShortCutHandle(e, SentenceLayerType.OUTER, i);}}
                     >
-                      {/* sharing add sentence component */}
-                      <div style={{display: "none"}}>
-                        <AddSentence titleText={t`本句后插入句子`} type={addSentenceType.backward}
-                          onChoose={(newSentence) => {
-                            if (newSentence && selectorSentenceIndex.value !== 0) {
-                              addOneSentence(newSentence, selectorSentenceIndex.value);
-                              selectorSentenceIndex.set(-1);
-                            }
-                          }}
-                          ref={(ref) => {
-                            addSentenceRef.current = ref;
-                          }}
-                        />
-                      </div>
                       <div className={styles.addForwardArea}>
                         <div className={styles.addForwardAreaButtonGroup}>
                           <div className={styles.addForwardAreaButton}>
@@ -300,14 +321,14 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                         </div>
                       </div>
-                      <div className={`${styles.sentenceEditorContent} sentence-editor-block-${i}`} tabIndex={0}>
-                        <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{i + 1}</span>
+                      <div className={`${styles.sentenceEditorContent} sentence-editor-block-${i}`} tabIndex={0}
+                        style={{border: selectorSentenceIndex.value === i ? "1px solid var(--primary)" : ""}}
+                        onFocus={() => selectorSentenceIndex.set(i)}>
+                        <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{line}</span>
                           <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
                             strokeWidth={3} tabIndex={-1}/>
                         </div>
-                        <div className={styles.seArea}
-                          // Sentence Inner
-                          onKeyDown={(e) => {sentenceShortCutHandle(e, SentenceLayerType.INNER, i);}}>
+                        <div className={styles.seArea}>
                           <div className={styles.head}>
                             <div className={styles.title}>
                               {sentenceConfig.title()}
@@ -339,7 +360,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               </div>
                             </div>
                           </div>
-                          {showSentence.value[i] && <SentenceEditor sentence={sentence} index={i + 1} onSubmit={(newSentence) => {
+                          {showSentence.value[i] && <SentenceEditor sentence={sentence} index={line} onSubmit={(newSentence) => {
                             updateSentenceByIndex(newSentence, i);
                           }}/>}
                         </div>
