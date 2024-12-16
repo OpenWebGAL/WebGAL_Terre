@@ -16,9 +16,8 @@ import stylesGe from '../graphicalEditor.module.scss';
 import {commandType} from "webgal-parser/src/interface/sceneInterface";
 import {bundleIcon, Dismiss24Filled, Dismiss24Regular} from "@fluentui/react-icons";
 import React, {forwardRef, useImperativeHandle, useRef} from "react";
-import {shortCutParse} from "@/pages/editor/GraphicalEditor/GraphicalEditor";
 import useEditorStore from "@/store/useEditorStore";
-import {IAddSentenceShortCutsConfig} from "@/types/editor";
+import {IAddSentenceShortCutsConfig, ShortCutParse} from "@/types/editor";
 
 export enum addSentenceType {
   forward,
@@ -33,13 +32,15 @@ interface IAddSentenceProps {
   titleText: string;
   type: addSentenceType
   onChoose: (newSentence: string) => void;
+  displayButton?: boolean,
 }
 
 /* 快捷键输入控件通过操作获得返回值 */
 const AddSentenceShortCutsInput = React
-  .forwardRef((props:
-               {ShortCutConfig: IAddSentenceShortCutsConfig | undefined,
-                 type?: commandType}, ref) => {
+  .forwardRef((props: {
+                 ShortCutConfig: IAddSentenceShortCutsConfig | undefined,
+                 type?: commandType
+               }, ref) => {
     const displayInput = useValue(false);
     const configShortCutsConfig = (props.ShortCutConfig === undefined ?
       {
@@ -75,7 +76,7 @@ const AddSentenceShortCutsInput = React
     }));
 
     const keyInputHandle = (e: React.KeyboardEvent<any>) => {
-      const key = shortCutParse(e);
+      const key = ShortCutParse(e);
       if (key.toLowerCase() === "Backspace".toLowerCase()) {
         configInput.set("");
       } else {
@@ -90,10 +91,6 @@ const AddSentenceShortCutsInput = React
           ref={inputRef}
           value={configInput.value}
           style={{ display: !displayInput.value ? "none" : "block" }}
-          onKeyDown={(e) => {
-            keyInputHandle(e);
-            e.preventDefault();
-          }}
         />
       </div>
     );
@@ -102,9 +99,9 @@ const AddSentenceShortCutsInput = React
 export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IAddSentenceProps, ref) => {
   const settingMode = useValue(false);
   const AddSentenceShortCutsConfig = useEditorStore.getState().addSentenceShortCuts;
-  const updateShortConfigFunction = useEditorStore.use.updateAddSentenceConfig();
+  const updateShortConfigFunction = useEditorStore.use.updateAddSentenceShortCut();
   const addSentenceShortCutsHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const pressedKeys = shortCutParse(e);
+    const pressedKeys = ShortCutParse(e);
     const data =
       AddSentenceShortCutsConfig.find(
         (config) => pressedKeys.toLowerCase() === config.shortcuts.toLowerCase());
@@ -141,7 +138,6 @@ export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((pr
         if (shortCutConfigIndex !== -1){
           AddSentenceShortCutsConfig[shortCutConfigIndex] = shortCutResult;
         } else AddSentenceShortCutsConfig.push(shortCutResult);
-        console.info("设置快捷键：" + shortCutResult);
         updateShortConfigFunction(AddSentenceShortCutsConfig);
       }
     };
@@ -176,7 +172,9 @@ export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((pr
   }));
 
   return <>
-    <div className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
+    <div className={stylesGe.optionButton}
+      style={{display: props.displayButton === false ? "none" : "block"}}
+      onClick={() => isShowCallout.set(!isShowCallout.value)}>
       <Add strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"/>
       {propsTitle.value}
     </div>
@@ -201,9 +199,7 @@ export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((pr
             <div className={stylesAs.sentenceTypeButtonList}>
               {addSentenceButtons}
             </div>
-            <Button onClick={() => settingMode.set(!settingMode.value)}>
-              设置 {settingMode.value ? "开启中" : "关闭中"}
-            </Button>
+            Tips:
           </DialogContent>
         </DialogBody>
       </DialogSurface>

@@ -1,6 +1,17 @@
 import { IPage } from "@/hooks/useHashRoute";
 import {IGameEditorState} from "@/types/gameEditor";
 import {commandType} from "webgal-parser/src/interface/sceneInterface";
+import React from "react";
+
+export function ShortCutParse(e: KeyboardEvent | React.KeyboardEvent<any>) {
+  const keysPressed: string[] = [];
+  if (e.ctrlKey) keysPressed.push('Ctrl');
+  if (e.shiftKey) keysPressed.push('Shift');
+  if (e.altKey) keysPressed.push('Alt');
+  if (e.key && (e.key !== 'Ctrl' && e.key !== 'Control' && e.key !== 'Shift' && e.key !==  'Alt')) keysPressed.push(e.key);
+  // console.debug(keysPressed);
+  return keysPressed.join('+');
+}
 
 interface IEditorShortCutsConfig {
   // 快捷键，暂时用string储存
@@ -10,11 +21,6 @@ interface IEditorShortCutsConfig {
 export interface IAddSentenceShortCutsConfig extends IEditorShortCutsConfig {
   type: commandType | "custom",
   initialText?: string;
-}
-
-export enum SentenceLayerType {
-  'OUTER',
-  'INNER'
 }
 
 export enum SentenceActionType {
@@ -29,10 +35,13 @@ export enum SentenceActionType {
   'move_to_up',
   'move_to_down_or_insert',
   'copy_sentence_and_insert',
+  'select_correct_sentence'
 }
 
+export type SentenceLayerType = "onlyOnDiv" | "all";
+
 export interface ISentenceShortCutsConfig extends IEditorShortCutsConfig {
-  layers: SentenceLayerType[];
+  layers: SentenceLayerType;
   action: SentenceActionType
 }
 
@@ -51,7 +60,8 @@ export interface IEditorState {
 
   // 添加语句快捷键设置
   addSentenceShortCuts: IAddSentenceShortCutsConfig[],
-  sentenceShortCuts: ISentenceShortCutsConfig[],
+  // 图形界面快捷键设置
+  graphicalSentenceShortCuts: ISentenceShortCutsConfig[],
 }
 
 export interface IEditorAction {
@@ -66,6 +76,6 @@ export interface IEditorAction {
   updateIsAutoWarp: (isAutoWarp: IEditorState['isAutoWarp']) => void,
   updateIsUseExpFastSync: (isUseExpFastSync: IGameEditorState['isShowDebugger']) => void,
   updateIgnoreVersion: (ignoreVersion: IEditorState['ignoreVersion']) => void,
-  updateAddSentenceConfig: (config: IEditorState['addSentenceShortCuts']) => void,
-  updateSentenceConfig: (config: IEditorState['sentenceShortCuts']) => void,
+  updateAddSentenceShortCut: (config: IEditorState['addSentenceShortCuts']) => void,
+  updateGraphicalSentenceShortCut: (config: IEditorState['graphicalSentenceShortCuts']) => void,
 }
