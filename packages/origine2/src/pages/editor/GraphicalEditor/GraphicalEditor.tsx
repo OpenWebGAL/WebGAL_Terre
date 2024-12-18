@@ -205,6 +205,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   function focusOnSentence(targetIndex: number, delay=100, tryInsert=false) {
+    if (targetIndex < 0) return;
     selectorSentenceIndex.set(targetIndex);
     if (tryInsert && targetIndex >= parsedScene.sentenceList.length) {
       showUpAddSentence(targetIndex);
