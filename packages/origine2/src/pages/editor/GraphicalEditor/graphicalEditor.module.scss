@@ -22,7 +22,7 @@
 }
 
 .sentenceEditorContent:focus {
-  border: 1px solid var(--primary);
+  outline: var(--border-primary-md);
 }
 
 .lineNumber {
