@@ -13,7 +13,11 @@
 }
 
 .sentenceEditorWrapper:focus {
-  border: 1px solid var(--primary);
+  outline: none;
+}
+
+.sentenceEditorWrapper:focus .sentenceEditorContent {
+  outline: var(--border-primary-lg);
 }
 
 .sentenceEditorContent {
