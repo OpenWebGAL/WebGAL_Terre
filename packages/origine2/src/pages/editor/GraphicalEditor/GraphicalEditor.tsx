@@ -220,6 +220,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     setTimeout(() => {
       const targetBlock: HTMLDivElement | null = document.querySelector(`.sentence-editor-block-${targetIndex}`);
       focusFunction(targetBlock);
+      editorLineHolder.recordSceneEdittingLine(props.targetPath, targetIndex + 1);
     }, delay);
   }
 
@@ -230,6 +231,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   useEffect(() => {
     const targetLine = editorLineHolder.getSceneLine(props.targetPath);
+    focusOnSentence(targetLine - 1);
     const scrollToFunc = () => {
       console.debug("scrollToFunc", targetLine);
       const targetBlock = document.querySelector(`.sentence-editor-block-${targetLine}`);
@@ -329,7 +331,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                       </div>
                       <div className={`${styles.sentenceEditorContent} sentence-editor-block-${i}`} tabIndex={0}
                         style={{border: selectorSentenceIndex.value === i ? "1px solid var(--primary)" : ""}}
-                        onFocus={() => selectorSentenceIndex.set(i)}>
+                        onFocus={() => {
+                          selectorSentenceIndex.set(i);
+                          editorLineHolder.recordSceneEdittingLine(props.targetPath, i + 1);
+                        }}
+                      >
                         <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{line}</span>
                           <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
                             strokeWidth={3} tabIndex={-1}/>
