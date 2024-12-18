@@ -92,6 +92,8 @@ function useGraphicalEditorShortcut(functions: IGraphicalFunction){
   };
 }
 
+export let GraphicalEditorFunctions: IGraphicalFunction;
+
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   // Sentence 的标签 统一为 Index [0, )
@@ -104,16 +106,18 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const parsedScene =
     (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
 
+  GraphicalEditorFunctions = {
+    focusOnSentence: focusOnSentence,
+    syncToIndex: syncToIndex,
+    showUpAddSentence: showUpAddSentence,
+    addOneSentence: addOneSentence,
+    swapSentence: reorder,
+    deleteSentence: deleteOneSentence,
+    getSentence: getSentenceByIndex
+  };
+
   const sentenceShortCutHandle = useGraphicalEditorShortcut(
-    {
-      focusOnSentence: focusOnSentence,
-      syncToIndex: syncToIndex,
-      showUpAddSentence: showUpAddSentence,
-      addOneSentence: addOneSentence,
-      swapSentence: reorder,
-      deleteSentence: deleteOneSentence,
-      getSentence: getSentenceByIndex
-    }
+    GraphicalEditorFunctions
   );
 
   function updateScene() {
@@ -201,6 +205,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   function focusOnSentence(targetIndex: number, delay=100, tryInsert=false) {
+    selectorSentenceIndex.set(targetIndex);
     if (tryInsert && targetIndex >= parsedScene.sentenceList.length) {
       showUpAddSentence(targetIndex);
       return;
