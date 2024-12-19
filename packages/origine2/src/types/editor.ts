@@ -28,7 +28,7 @@ export interface IAddSentenceShortCutsConfig extends IEditorShortCutsConfig {
 
 export enum SentenceActionType {
   'run_sentence',
-  'insert_sentence',
+  'insert_sentence_below',
   'copy_sentence',
   'paste_sentence',
   'delete_sentence',
