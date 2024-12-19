@@ -5,7 +5,7 @@ import React, {useEffect, useRef} from "react";
 import {WsUtil} from "../../../utils/wsUtil";
 import {mergeToString, splitToArray} from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
+import {DragDropContext, Draggable, Droppable, DropResult} from "react-beautiful-dnd";
 import {sentenceEditorConfig, sentenceEditorDefault} from "./SentenceEditor";
 import {DeleteFive, DownOne, Play, RightOne, Sort} from "@icon-park/react";
 import {AddSentence, AddSentenceMethods, addSentenceType} from "./components/AddSentence";
@@ -137,7 +137,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }, []);
 
   function submitSceneAndUpdate(newScene: string, index: number) {
-    editorLineHolder.recordSceneEdittingLine(props.targetPath, index);
+    editorLineHolder.recordSceneEdittingLine(props.targetPath, index + 1);
     sceneText.set(newScene);
     const params = new URLSearchParams();
     params.append("gameName", gameName);
@@ -189,10 +189,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     submitSceneAndUpdate(mergeToString(result), endIndex);
   }
 
-  function onDragEnd(result: any) {
+  function onDragEnd(result: DropResult) {
     if (!result.destination) {
       return;
     }
+    focusOnSentence(result.destination.index);
     editorLineHolder.recordSceneEdittingLine(props.targetPath, result.destination.index);
     reorder(
       result.source.index,
@@ -206,7 +207,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   function focusOnSentence(targetIndex: number, delay=100, tryInsert=false) {
     if (targetIndex < 0) return;
-    selectorSentenceIndex.set(targetIndex);
     if (tryInsert && targetIndex >= parsedScene.sentenceList.length) {
       showUpAddSentence(targetIndex);
       return;
@@ -220,7 +220,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     setTimeout(() => {
       const targetBlock: HTMLDivElement | null = document.querySelector(`.sentence-editor-block-${targetIndex}`);
       focusFunction(targetBlock);
-      editorLineHolder.recordSceneEdittingLine(props.targetPath, targetIndex + 1);
     }, delay);
   }
 
@@ -230,11 +229,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   useEffect(() => {
-    const targetLine = editorLineHolder.getSceneLine(props.targetPath);
-    focusOnSentence(targetLine - 1);
+    const targetIndex = editorLineHolder.getSceneLine(props.targetPath) - 1;
+    focusOnSentence(targetIndex < 0 ? 0 : targetIndex);
     const scrollToFunc = () => {
-      console.debug("scrollToFunc", targetLine);
-      const targetBlock = document.querySelector(`.sentence-editor-block-${targetLine}`);
+      console.debug("scrollToFunc", targetIndex);
+      const targetBlock = document.querySelector(`.sentence-editor-block-${targetIndex}`);
       if (targetBlock) {
         targetBlock?.scrollIntoView?.({behavior: 'auto'});
       } else {
@@ -242,7 +241,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
         setTimeout(() => scrollToFunc(), 50);
       }
     };
-    if (targetLine > 3) {
+    if (targetIndex >= 3) {
       scrollToFunc();
     }
   }, []);
