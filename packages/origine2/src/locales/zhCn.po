@@ -497,7 +497,7 @@ msgstr "删除"
 msgid "删除属性"
 msgstr "删除属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:330
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:366
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:28
 msgid "删除本句"
 msgstr "删除本句"
@@ -838,6 +838,14 @@ msgstr "张开嘴"
 msgid "当前版本"
 msgstr "当前版本"
 
+#: src/pages/editor/GraphicalEditor/components/AddSentence.tsx:107
+msgid "快捷键："
+msgstr "快捷键："
+
+#: src/pages/editor/GraphicalEditor/components/AddSentence.tsx:258
+msgid "快捷键设置模式"
+msgstr "快捷键设置模式"
+
 #: src/pages/dashboard/DashBoard.tsx:170
 msgid "忽略此版本"
 msgstr "忽略此版本"
@@ -866,7 +874,11 @@ msgstr "打开效果编辑器"
 msgid "打开文件夹"
 msgstr "打开文件夹"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:338
+#: src/pages/editor/GraphicalEditor/components/AddSentence.tsx:261
+msgid "打开自定义语句设置"
+msgstr "打开自定义语句设置"
+
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:374
 msgid "执行到此句"
 msgstr "执行到此句"
 
@@ -1116,6 +1128,7 @@ msgid "旋转角度："
 msgstr "旋转角度："
 
 #: src/components/Assets/Assets.tsx:196
+#: src/pages/editor/GraphicalEditor/components/AddSentence.tsx:108
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
@@ -1165,11 +1178,11 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:299
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:331
 msgid "本句前插入句子"
 msgstr "本句前插入句子"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:284
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:307
 msgid "本句后插入句子"
 msgstr "本句后插入句子"
 
@@ -1301,6 +1314,10 @@ msgstr "添加属性"
 msgid "添加或切换指定位置的立绘"
 msgstr "添加或切换指定位置的立绘"
 
+#: src/pages/editor/GraphicalEditor/components/AddSentence.tsx:181
+msgid "添加新自定义语句"
+msgstr "添加新自定义语句"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:223
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:124
 msgid "添加新行"
@@ -1310,7 +1327,7 @@ msgstr "添加新行"
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:354
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:390
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
 #: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
@@ -1575,6 +1592,10 @@ msgstr "自定义值"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:66
 msgid "自定义特效名称"
 msgstr "自定义特效名称"
+
+#: src/pages/editor/GraphicalEditor/components/AddSentence.tsx:260
+msgid "自定义语句设置"
+msgstr "自定义语句设置"
 
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:45
 msgid "舞台对象控制"

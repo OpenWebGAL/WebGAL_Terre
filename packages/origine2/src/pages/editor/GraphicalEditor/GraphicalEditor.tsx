@@ -38,15 +38,15 @@ function useGraphicalEditorShortcut(functions: IGraphicalEditorFunction){
     [SentenceActionType.run_sentence, (index: number) => {
       functions.syncToIndex(index);
     }],
-    [SentenceActionType.insert_sentence, (index: number) => {
-      functions.showUpAddSentence(index);
+    [SentenceActionType.insert_sentence_below, (index: number) => {
+      functions.showUpAddSentence(index + 1);
     }],
     [SentenceActionType.warp_with_up, (index: number) => {
       functions.swapSentence(index, index - 1);
       functions.focusOnSentence(index - 1);
     }],
     [SentenceActionType.warp_with_down, (index: number) => {
-      functions.swapSentence(index - 1, index);
+      functions.swapSentence(index, index + 1);
       functions.focusOnSentence(index + 1);
     }],
     [SentenceActionType.move_to_up, (index: number) => {
@@ -67,7 +67,8 @@ function useGraphicalEditorShortcut(functions: IGraphicalEditorFunction){
       functions.focusOnSentence(index + 1, 0, true);
     }],
     [SentenceActionType.delete_sentence, (index: number) => {
-      functions.deleteSentence(index - 1);
+      functions.focusOnSentence(index - 1);
+      functions.deleteSentence(index);
     }],
     [SentenceActionType.copy_sentence_and_insert, (index: number) => {
       const copy_sentence = functions.getSentence(index);
@@ -75,7 +76,6 @@ function useGraphicalEditorShortcut(functions: IGraphicalEditorFunction){
     }],
     [SentenceActionType.select_correct_sentence, (index: number) => {
       functions.focusOnSentence(index);
-      console.debug("select_correct_sentence", index);
     }]
   ]);
   return (e: KeyboardEvent, index: number, layer: SentenceLayerType) => {
@@ -163,7 +163,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const showSentenceList = [...showSentence.value];
     showSentenceList.splice(updateIndex, 0, true);
     showSentence.set(showSentenceList);
-    focusOnSentence(updateIndex);
+    focusOnSentence(updateIndex, 200);
   }
 
   function deleteOneSentence(index: number) {
@@ -183,6 +183,8 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   // 重新记录数组顺序
   function reorder(startIndex: number, endIndex: number){
+    if (startIndex < 0 || endIndex < 0) return;
+    if (startIndex >= showSentence.value.length || endIndex >= showSentence.value.length) return;
     const result = splitToArray(sceneText.value);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -206,25 +208,19 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   function focusOnSentence(targetIndex: number, delay=100, tryInsert=false) {
-    if (targetIndex < 0) return;
-    if (targetIndex >= parsedScene.sentenceList.length) {
-      if (tryInsert) {
-        selectorSentenceIndex.set(targetIndex);
-        showUpAddSentence(targetIndex);
-      }
-      return;
-    }
-
-    selectorSentenceIndex.set(targetIndex);
-
-    const focusFunction = (targetBlock: HTMLDivElement | null) => {
+    const focusFunction = (index: number) => {
+      const targetBlock: HTMLDivElement | null = document.querySelector(`.sentence-editor-block-${index}`);
       targetBlock?.focus();
       targetBlock?.scrollIntoView?.({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
-      console.debug("focusOnSentence", targetIndex);
     };
     setTimeout(() => {
-      const targetBlock: HTMLDivElement | null = document.querySelector(`.sentence-editor-block-${targetIndex}`);
-      focusFunction(targetBlock);
+      if (targetIndex < 0) return;
+      if (targetIndex >= showSentence.value.length) {
+        if (tryInsert) showUpAddSentence(targetIndex);
+        return;
+      }
+      selectorSentenceIndex.set(targetIndex);
+      focusFunction(targetIndex);
     }, delay);
   }
 
@@ -237,7 +233,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const targetIndex = editorLineHolder.getSceneLine(props.targetPath) - 1;
     focusOnSentence(targetIndex < 0 ? 0 : targetIndex);
     const scrollToFunc = () => {
-      console.debug("scrollToFunc", targetIndex);
       const targetBlock = document.querySelector(`.sentence-editor-block-${targetIndex}`);
       if (targetBlock) {
         targetBlock?.scrollIntoView?.({behavior: 'auto'});
@@ -308,7 +303,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 onChoose={(newSentence) => {
                   if (newSentence && selectorSentenceIndex.value !== -1) {
                     addOneSentence(newSentence, selectorSentenceIndex.value);
-                    selectorSentenceIndex.set(selectorSentenceIndex.value + 1);
                   }
                 }} ref={addSentenceRef} displayButton={false}
               />
@@ -388,7 +382,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               {provided.placeholder}
               <div className={styles.addWrapper}>
                 <AddSentence titleText={t`添加语句`} type={addSentenceType.backward}
-                  onChoose={(newSentence: string) => addOneSentence(newSentence, splitToArray(sceneText.value).length)}/>
+                  onChoose={(newSentence: string) => {
+                    addOneSentence(newSentence, splitToArray(sceneText.value).length);
+                  }}/>
               </div>
             </div>
           )}

@@ -161,7 +161,7 @@ const defaultSentenceShortCuts: ISentenceShortCutsConfig[] = [
   },
   {
     "shortcuts": "Alt+Enter",
-    "action": SentenceActionType.insert_sentence,
+    "action": SentenceActionType.insert_sentence_below,
     "layers": "all",
   },
   {

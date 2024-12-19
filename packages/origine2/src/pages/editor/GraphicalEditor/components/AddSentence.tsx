@@ -78,7 +78,6 @@ const AddSentenceShortCutsInput =
       const shortcut = ShortCutParse(e);
       if (shortcut.toLowerCase() === 'backspace') configInput.set("");
       else configInput.set(shortcut);
-      console.debug(shortcut);
       e.stopPropagation();
       e.preventDefault();
     };
@@ -140,10 +139,6 @@ const CustomAddSentenceList =
       },
     }));
 
-    useEffect(() => {
-      console.debug("update");
-    }, [localAddSentenceShortCutsConfig]);
-
     function getMinAvailableIndex() {
       let index = 0;
 
@@ -164,7 +159,7 @@ const CustomAddSentenceList =
         index: getMinAvailableIndex()
       };
       const result =
-        updateShortCutInput(defaultConfig, localAddSentenceShortCutsConfig.length);
+        updateShortCutInput(defaultConfig, -1);
       if (result) setLocalAddSentenceShortCutsConfig([...result]);
     }
 
@@ -173,8 +168,6 @@ const CustomAddSentenceList =
       const result = deleteShortCutInput(index);
       if (result) setLocalAddSentenceShortCutsConfig([...result]);
     }
-
-    console.debug(localAddSentenceShortCutsConfig);
 
     return <Dialog
       open={isShowDialog.value}
