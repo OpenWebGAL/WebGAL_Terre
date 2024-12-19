@@ -27,11 +27,131 @@ const defaultAddSentenceShortCuts: IAddSentenceShortCutsConfig[] = [
     "type": commandType.changeFigure,
   },
   {
-    "shortcuts": "C",
-    "type": "custom",
-    "initialText": "changeFigure:stand.png -left -next;"
+    "shortcuts": "",
+    "type": commandType.changeBg,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.bgm,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.video,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.pixi,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.pixiInit,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.intro,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.miniAvatar,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.changeScene,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.choose,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.end,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setComplexAnimation,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setFilter,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.label,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.jumpLabel,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.chooseLabel,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setVar,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.if,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.callScene,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.showVars,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.unlockCg,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.unlockBgm,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.filmMode,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setTextbox,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setAnimation,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.playEffect,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setTempAnimation,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.comment,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setTransform,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.setTransition,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.getUserInput,
+  },
+  {
+    "shortcuts": "",
+    "type": commandType.applyStyle,
   }
 ];
+
 
 const defaultSentenceShortCuts: ISentenceShortCutsConfig[] = [
   {
