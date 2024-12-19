@@ -21,7 +21,7 @@ interface IGraphicalEditorProps {
   targetName: string;
 }
 
-interface IGraphicalFunction {
+interface IGraphicalEditorFunction {
   syncToIndex: (index: number) => void;
   showUpAddSentence: (index: number) => void;
   swapSentence: (firstIndex: number, secondIndex: number) => void;
@@ -31,7 +31,7 @@ interface IGraphicalFunction {
   deleteSentence: (index: number) => void;
 }
 
-function useGraphicalEditorShortcut(functions: IGraphicalFunction){
+function useGraphicalEditorShortcut(functions: IGraphicalEditorFunction){
   const clipboardSentence = useValue("");
   const sentenceActionShortCutConfig = useEditorStore.use.graphicalSentenceShortCuts();
   const sentenceShortCutActionMap: Map<SentenceActionType, (index: number) => void> = new Map([
@@ -92,7 +92,7 @@ function useGraphicalEditorShortcut(functions: IGraphicalFunction){
   };
 }
 
-export let GraphicalEditorFunctions: IGraphicalFunction;
+export let GraphicalEditorFunctions: IGraphicalEditorFunction;
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
@@ -207,10 +207,15 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   function focusOnSentence(targetIndex: number, delay=100, tryInsert=false) {
     if (targetIndex < 0) return;
-    if (tryInsert && targetIndex >= parsedScene.sentenceList.length) {
-      showUpAddSentence(targetIndex);
+    if (targetIndex >= parsedScene.sentenceList.length) {
+      if (tryInsert) {
+        selectorSentenceIndex.set(targetIndex);
+        showUpAddSentence(targetIndex);
+      }
       return;
     }
+
+    selectorSentenceIndex.set(targetIndex);
 
     const focusFunction = (targetBlock: HTMLDivElement | null) => {
       targetBlock?.focus();
@@ -329,7 +334,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                         </div>
                       </div>
                       <div className={`${styles.sentenceEditorContent} sentence-editor-block-${i}`} tabIndex={0}
-                        style={{border: selectorSentenceIndex.value === i ? "1px solid var(--primary)" : ""}}
+                        style={{outline: selectorSentenceIndex.value === i ? "2px solid var(--primary)" : ""}}
                         onFocus={() => {
                           selectorSentenceIndex.set(i);
                           editorLineHolder.recordSceneEdittingLine(props.targetPath, i + 1);

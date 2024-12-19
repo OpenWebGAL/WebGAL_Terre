@@ -14,10 +14,12 @@ import {Add} from "@icon-park/react";
 import stylesAs from "./addSentence.module.scss";
 import stylesGe from '../graphicalEditor.module.scss';
 import {commandType} from "webgal-parser/src/interface/sceneInterface";
-import {bundleIcon, Dismiss24Filled, Dismiss24Regular} from "@fluentui/react-icons";
-import React, {forwardRef, useImperativeHandle, useRef} from "react";
+import {bundleIcon, Dismiss24Filled, Dismiss24Regular, Delete24Filled, Delete24Regular} from "@fluentui/react-icons";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import useEditorStore from "@/store/useEditorStore";
 import {IAddSentenceShortCutsConfig, ShortCutParse} from "@/types/editor";
+import {t} from "@lingui/macro";
+import {InputTextarea} from "primereact/inputtextarea";
 
 export enum addSentenceType {
   forward,
@@ -35,75 +37,201 @@ interface IAddSentenceProps {
   displayButton?: boolean,
 }
 
+const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
+const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
+
+let updateShortConfigFunction: any;
+
+function updateShortCutInput(shortCutResult: IAddSentenceShortCutsConfig, shortCutConfigIndex: number) {
+  const addSentenceShortCutsConfig = useEditorStore.getState().addSentenceShortCuts;
+  if (!updateShortConfigFunction || !addSentenceShortCutsConfig) return;
+
+  if (shortCutResult) {
+    if (shortCutConfigIndex !== -1) {
+      if (shortCutResult.type !== 'custom') {
+        addSentenceShortCutsConfig[shortCutConfigIndex] = shortCutResult;
+      } else {
+        const targetIndex = addSentenceShortCutsConfig.
+          findIndex((config) => config.index === shortCutConfigIndex);
+        addSentenceShortCutsConfig[targetIndex] = shortCutResult;
+      }
+    } else addSentenceShortCutsConfig.push(shortCutResult);
+    updateShortConfigFunction(addSentenceShortCutsConfig);
+  }
+  return addSentenceShortCutsConfig;
+}
+
+function deleteShortCutInput(shortCutConfigIndex: number){
+  const addSentenceShortCutsConfig = useEditorStore.getState().addSentenceShortCuts;
+  const newConfig = addSentenceShortCutsConfig.filter(
+    config => config.index !== shortCutConfigIndex
+  );
+  updateShortConfigFunction(newConfig);
+  return newConfig;
+}
+
 /* 快捷键输入控件通过操作获得返回值 */
-const AddSentenceShortCutsInput = React
-  .forwardRef((props: {
-                 ShortCutConfig: IAddSentenceShortCutsConfig | undefined,
-                 type?: commandType
-               }, ref) => {
+const AddSentenceShortCutsInput =
+  (props: { ShortCutConfig: IAddSentenceShortCutsConfig}) => {
     const displayInput = useValue(false);
-    const configShortCutsConfig = (props.ShortCutConfig === undefined ?
-      {
-        shortcuts: "",
-        type: props.type,
-        initialText: "",
-      } : props.ShortCutConfig);
+    const keydownHandle = (e: KeyboardEvent | React.KeyboardEvent<any>) => {
+      const shortcut = ShortCutParse(e);
+      if (shortcut.toLowerCase() === 'backspace') configInput.set("");
+      else configInput.set(shortcut);
+      console.debug(shortcut);
+      e.stopPropagation();
+      e.preventDefault();
+    };
+    const configShortCutsConfig = props.ShortCutConfig;
     const configInput = useValue(configShortCutsConfig?.shortcuts || '');
     const inputRef = useRef<HTMLInputElement | null>(null);
-    useImperativeHandle(ref, () => ({
-      toggle: (): IAddSentenceShortCutsConfig | null => {
-        if (displayInput.value) {
-          displayInput.set(false);
-          return {
-            shortcuts: configInput.value,
-            type: (props.type === undefined) ? "custom" : props.type,
-            initialText: props.ShortCutConfig?.initialText,
-          };
-        } else {
-          displayInput.set(true);
-          setTimeout(() => inputRef.current?.focus(), 50);
-          return null;
-        }
-      },
-      close: () => {
-        displayInput.set(false);
-        return {
-          shortcuts: configInput.value,
-          type: (props.ShortCutConfig === undefined) ? "custom" : props.ShortCutConfig?.type,
-          initialText: props.ShortCutConfig?.initialText,
-        };
-      }
-    }));
 
-    const keyInputHandle = (e: React.KeyboardEvent<any>) => {
-      const key = ShortCutParse(e);
-      if (key.toLowerCase() === "Backspace".toLowerCase()) {
-        configInput.set("");
+    function toggle() {
+      if (displayInput.value) {
+        displayInput.set(false);
+        if (configShortCutsConfig.type !== 'custom') {
+          updateShortCutInput({
+            shortcuts: configInput.value,
+            type: configShortCutsConfig.type,
+          }, Number(configShortCutsConfig.type));
+        }
+        else if (configShortCutsConfig.type === 'custom' && configShortCutsConfig.index !== undefined) {
+          updateShortCutInput({
+            shortcuts: configInput.value,
+            type: configShortCutsConfig.type,
+            index: configShortCutsConfig.index,
+            initialText: props.ShortCutConfig?.initialText,
+          }, Number(configShortCutsConfig.index));
+        }
       } else {
-        configInput.set(key);
+        displayInput.set(true);
+        setTimeout(() => inputRef.current?.focus(), 50);
       }
-    };
+    }
 
     return (
-      <div style={{ width: "100%" }}>
-        <div style={{ display: displayInput.value ? "none" : "block" }}>{configInput.value}</div>
+      <div onClick={() => toggle()} onBlur={toggle}>
+        <div style={{display: displayInput.value ? "none" : "block"}}>
+          {t`快捷键：`}
+          {configInput.value ? configInput.value : t`无`}
+        </div>
         <Input
           ref={inputRef}
           value={configInput.value}
-          style={{ display: !displayInput.value ? "none" : "block" }}
+          style={{display: !displayInput.value ? "none" : "block", fontSize: "90%"}}
+          onKeyDown={keydownHandle}
         />
       </div>
     );
+  };
+
+const CustomAddSentenceList =
+  forwardRef<AddSentenceMethods>
+  ((props, ref) => {
+    const isShowDialog = useValue(false);
+    const dialogTitle = useValue("");
+    const [localAddSentenceShortCutsConfig, setLocalAddSentenceShortCutsConfig] =
+      useState(useEditorStore.getState().addSentenceShortCuts);
+
+    useImperativeHandle(ref, () => ({
+      showUp: (title?: string) => {
+        if (title) dialogTitle.set(title);
+        isShowDialog.set(!isShowDialog.value);
+      },
+    }));
+
+    useEffect(() => {
+      console.debug("update");
+    }, [localAddSentenceShortCutsConfig]);
+
+    function getMinAvailableIndex() {
+      let index = 0;
+
+      localAddSentenceShortCutsConfig
+        .filter((config) => config.index !== undefined)
+        // @ts-ignore
+        .sort((a, b) => a.index - b.index)
+        .forEach((config) => {
+          if (config.index === index) index ++;
+        });
+      return index;
+    }
+
+    function pushShortCutConfig() {
+      const defaultConfig: IAddSentenceShortCutsConfig = {
+        type: "custom",
+        shortcuts: "",
+        index: getMinAvailableIndex()
+      };
+      const result =
+        updateShortCutInput(defaultConfig, localAddSentenceShortCutsConfig.length);
+      if (result) setLocalAddSentenceShortCutsConfig([...result]);
+    }
+
+    function deleteShortCutConfig(index: number | undefined) {
+      if (!index) return;
+      const result = deleteShortCutInput(index);
+      if (result) setLocalAddSentenceShortCutsConfig([...result]);
+    }
+
+    console.debug(localAddSentenceShortCutsConfig);
+
+    return <Dialog
+      open={isShowDialog.value}
+      onOpenChange={() => isShowDialog.set(false)}>
+      <DialogSurface>
+        <DialogBody style={{minHeight: '500px'}}>
+          <DialogTitle
+            action={
+              <DialogTrigger action="close">
+                <Button
+                  appearance="subtle"
+                  aria-label="close"
+                  icon={<DismissIcon/>}
+                />
+              </DialogTrigger>
+            }
+          >{dialogTitle.value}
+          </DialogTitle>
+          <DialogContent>
+            {localAddSentenceShortCutsConfig.filter(e => e.type === 'custom').
+              map((value, key) => {
+                return <div className={stylesAs.sentenceTypeSettingArea} key={key}>
+                  <DeleteIcon onClick={() => {deleteShortCutConfig(value.index);}}/>
+                  序号：{value.index}
+                  <AddSentenceShortCutsInput ShortCutConfig={value}/>
+                  快捷指令：
+                  <InputTextarea style={{width: "100%"}} className={`custom-add-sentence-index-${value.index}`}
+                    onKeyDown={event => event.stopPropagation()}
+                    onBlur={() => {
+                      const newConfig = value;
+                      // @ts-ignore
+                      const textValue = document.querySelector(`.custom-add-sentence-index-${value.index}`)?.value;
+                      if (textValue && newConfig.index !== undefined) {
+                        newConfig.initialText = textValue;
+                        updateShortCutInput(newConfig, newConfig.index);
+                      }
+                    }} defaultValue={value.initialText}/>
+                </div>;
+              })}
+            <Button onClick={() => pushShortCutConfig()}>
+              {t`添加新自定义语句`}
+            </Button>
+          </DialogContent>
+        </DialogBody>
+      </DialogSurface>
+    </Dialog>;
   });
 
 export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((props: IAddSentenceProps, ref) => {
   const settingMode = useValue(false);
-  const AddSentenceShortCutsConfig = useEditorStore.getState().addSentenceShortCuts;
-  const updateShortConfigFunction = useEditorStore.use.updateAddSentenceShortCut();
+  const addSentenceShortCutsConfig = useEditorStore.getState().addSentenceShortCuts;
+  const customAddSentenceRef = useRef<AddSentenceMethods>(null);
+  updateShortConfigFunction = useEditorStore.use.updateAddSentenceShortCut();
   const addSentenceShortCutsHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const pressedKeys = ShortCutParse(e);
     const data =
-      AddSentenceShortCutsConfig.find(
+      addSentenceShortCutsConfig.find(
         (config) => pressedKeys.toLowerCase() === config.shortcuts.toLowerCase());
     if (data !== undefined && !settingMode.value) {
       const initialText = (data.type === "custom") ? data.initialText :
@@ -112,54 +240,40 @@ export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((pr
       isShowCallout.set(false);
     }
   };
-  const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
   const isShowCallout = useValue(false);
   const propsTitle = useValue(props.titleText);
 
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
-    const shortCutInputRef = useRef<any>(null);
-    const shortCutConfigIndex = AddSentenceShortCutsConfig.findIndex(
+    const shortCutConfigIndex = addSentenceShortCutsConfig.findIndex(
       (config) => config.type === sentenceConfig.type);
-    const shortCutConfig = AddSentenceShortCutsConfig[shortCutConfigIndex];
+    const shortCutConfig = (shortCutConfigIndex >= 0) ? addSentenceShortCutsConfig[shortCutConfigIndex] :
+      { shortcuts: "", type: sentenceConfig.type };
     const shortCutInputOnClick = (e: any) => {
-      if (settingMode.value) {
-        const shortCutResult = shortCutInputRef.current?.toggle();
-        updateShortCutInput(shortCutResult);
-      }
-      else {
+      if (!settingMode.value) {
         props.onChoose(sentenceConfig.initialText());
         isShowCallout.set(false);
       }
       e.preventDefault();
     };
 
-    const updateShortCutInput = (shortCutResult: IAddSentenceShortCutsConfig) => {
-      if (shortCutResult) {
-        if (shortCutConfigIndex !== -1){
-          AddSentenceShortCutsConfig[shortCutConfigIndex] = shortCutResult;
-        } else AddSentenceShortCutsConfig.push(shortCutResult);
-        updateShortConfigFunction(AddSentenceShortCutsConfig);
-      }
-    };
-
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type}
       onClick={shortCutInputOnClick} onBlur={shortCutInputOnClick}>
-      <div style={{padding:'1px 0 0 0'}}>
+      <div style={{padding: '1px 0 0 0'}}>
         {sentenceConfig.icon}
       </div>
       <div className={stylesAs.buttonDesc}>
         <div className={stylesAs.title}>
           {sentenceConfig.title()}
         </div>
-        <div style={{display: (settingMode.value ? 'none' : 'block')}} className={stylesAs.text}>
-          {sentenceConfig.descText()}
+        <div className={stylesAs.text}>
+          <div style={{display: (settingMode.value ? 'none' : 'block')}}>
+            {sentenceConfig.descText()}
+          </div>
+          <div style={{display: (!settingMode.value ? 'none' : 'block')}}>
+            <AddSentenceShortCutsInput
+              ShortCutConfig={shortCutConfig}/>
+          </div>
         </div>
-      </div>
-      <div style={{display: (!settingMode.value ? 'none' : 'block')}} className={stylesAs.text}>
-        <AddSentenceShortCutsInput
-          ShortCutConfig={shortCutConfig}
-          type={sentenceConfig.type}
-          ref={shortCutInputRef} />
       </div>
     </div>;
   });
@@ -171,18 +285,30 @@ export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((pr
     },
   }));
 
+  const BelowButtons = <div style={{display: "flex", gap: "10px"}}>
+    <Button onClick={() => settingMode.set(!settingMode.value)}>
+      {t`快捷键设置模式`}: {settingMode.value ? "On" : "Off"}
+    </Button>
+    <Button onClick={() => customAddSentenceRef.current?.showUp(t`自定义语句设置`)}>
+      {t`打开自定义语句设置`}
+    </Button>
+  </div>;
+
   return <>
     <div className={stylesGe.optionButton}
       style={{display: props.displayButton === false ? "none" : "block"}}
       onClick={() => isShowCallout.set(!isShowCallout.value)}>
-      <Add strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"/>
+      <Add strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="16"/>
       {propsTitle.value}
     </div>
     <Dialog
       open={isShowCallout.value}
-      onOpenChange={() => isShowCallout.set(false)}
+      onOpenChange={() => {
+        settingMode.set(false);
+        isShowCallout.set(false);
+      }}
     >
-      <DialogSurface style={{ maxWidth: "960px"}} onKeyDown={addSentenceShortCutsHandle}>
+      <DialogSurface style={{maxWidth: "960px"}} onKeyDown={addSentenceShortCutsHandle}>
         <DialogBody>
           <DialogTitle
             action={
@@ -190,7 +316,7 @@ export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((pr
                 <Button
                   appearance="subtle"
                   aria-label="close"
-                  icon={<DismissIcon />}
+                  icon={<DismissIcon/>}
                 />
               </DialogTrigger>
             }
@@ -199,9 +325,10 @@ export const AddSentence = forwardRef<AddSentenceMethods, IAddSentenceProps>((pr
             <div className={stylesAs.sentenceTypeButtonList}>
               {addSentenceButtons}
             </div>
-            Tips:
+            {BelowButtons}
           </DialogContent>
         </DialogBody>
+        <CustomAddSentenceList ref={customAddSentenceRef}/>
       </DialogSurface>
     </Dialog>
   </>;

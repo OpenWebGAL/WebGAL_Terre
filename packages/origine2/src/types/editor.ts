@@ -8,7 +8,8 @@ export function ShortCutParse(e: KeyboardEvent | React.KeyboardEvent<any>) {
   if (e.ctrlKey) keysPressed.push('Ctrl');
   if (e.shiftKey) keysPressed.push('Shift');
   if (e.altKey) keysPressed.push('Alt');
-  if (e.key && (e.key !== 'Ctrl' && e.key !== 'Control' && e.key !== 'Shift' && e.key !==  'Alt')) keysPressed.push(e.key);
+  if (e.key && (e.key !== 'Ctrl' && e.key !== 'Control' && e.key !== 'Shift' && e.key !==  'Alt'))
+    keysPressed.push(e.key.toUpperCase());
   // console.debug(keysPressed);
   return keysPressed.join('+');
 }
@@ -20,6 +21,8 @@ interface IEditorShortCutsConfig {
 
 export interface IAddSentenceShortCutsConfig extends IEditorShortCutsConfig {
   type: commandType | "custom",
+  // 以下信息仅在 type 为 'custom' 的时候使用
+  index?: number
   initialText?: string;
 }
 

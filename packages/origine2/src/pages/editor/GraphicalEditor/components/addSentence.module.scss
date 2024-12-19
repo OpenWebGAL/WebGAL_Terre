@@ -38,6 +38,19 @@
   background: var(--bg-button);
 }
 
+.sentenceTypeSettingArea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 6px 6px 6px 10px;
+  box-sizing: border-box;
+  background: var(--primary-5pct);
+  border-radius: var(--radius-md);
+  margin: 0 4px 6px 2px;
+  border: var(--border-trans-sm);
+  transition: all 0.33s;
+}
+
 .buttonDesc{
   padding: 0 0 0 10px;
 }
