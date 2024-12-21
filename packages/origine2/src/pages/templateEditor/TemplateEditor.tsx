@@ -32,11 +32,11 @@ export const sendComponentPreviewMessage = (componentPath: string, componentClas
     ]);
   }
   else if (componentPath.includes(useComponentTreeTextbox().path)) {
-    const miniAvatar = !componentClass.toLowerCase().includes("miniavataroff") ? "stand.png" : "";
-    WsUtil.createTempScene(`changeBg:bg.png -next;\nminiAvatar:${miniAvatar} -next;\n${useTemplateTempScene().textbox}`);
+    const miniAvatar = !componentClass.toLowerCase().includes("miniavataroff") ? "miniavatar.png" : "";
+    WsUtil.runTempScene(`changeBg:bg.png -next;\nminiAvatar:${miniAvatar} -next;\n${useTemplateTempScene().textbox}`);
   }
   else if (componentPath.includes(useComponentTreeChoose().path)) {
-    WsUtil.createTempScene(`changeBg:bg.png -next;${useTemplateTempScene().choose}`);
+    WsUtil.runTempScene(`changeBg:bg.png -next;\n${useTemplateTempScene().choose}`);
   }
 };
 

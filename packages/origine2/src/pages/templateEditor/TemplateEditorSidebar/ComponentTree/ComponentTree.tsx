@@ -55,7 +55,7 @@ export const useComponentTreeTextbox = () => {
 export const useTemplateTempScene = () => {
   return {
     textbox: `WebGal:${t`对话框文字`} -fontSize=default;`,
-    choose: `choose:${t`可选项`}:|${t`不可选项`}:;`
+    choose: `choose:${t`可选项`}:|[false]->${t`不可选项`}:;`
   };
 };
 
