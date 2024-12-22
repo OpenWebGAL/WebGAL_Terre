@@ -201,7 +201,11 @@ msgstr "Rain"
 msgid "下雪"
 msgstr "Snow"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+msgid "不可选项"
+msgstr ""
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:130
 msgid "不显示角色名"
 msgstr "Hide the role name"
 
@@ -217,7 +221,7 @@ msgstr "Align on both sides"
 msgid "个字"
 msgstr " Words"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:57
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:55
 msgid "中"
 msgstr "Medium"
 
@@ -361,7 +365,7 @@ msgstr "Show some texts on Full-screen"
 msgid "关于"
 msgstr "About"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:159
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:143
 msgid "关联立绘"
 msgstr "Associated figure"
 
@@ -470,7 +474,7 @@ msgstr "Create new game"
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:196
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:118
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:114
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
 msgid "删除"
 msgstr "Delete"
@@ -546,6 +550,10 @@ msgstr "Cancel"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:85
 msgid "变换"
 msgstr "Transform"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+msgid "可选项"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:52
 msgid "右侧"
@@ -635,7 +643,7 @@ msgstr "Outer Text"
 msgid "外边距"
 msgstr "Margin"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:56
 msgid "大"
 msgstr "Large"
 
@@ -687,9 +695,13 @@ msgstr "Experimental fast preview"
 msgid "宽度"
 msgstr "Width"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:110
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:106
 msgid "对话"
 msgstr "Dialogue"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:57
+msgid "对话框文字"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:32
 msgid "对话框标题"
@@ -717,7 +729,7 @@ msgstr "Export as webpage"
 msgid "将当前模板应用到选定的游戏"
 msgstr "Apply the current template to selected games"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:56
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:54
 msgid "小"
 msgstr "Small"
 
@@ -822,10 +834,6 @@ msgstr "Open mouth"
 msgid "当前版本"
 msgstr "Current version"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
-msgid "快速执行"
-msgstr ""
-
 #: src/pages/dashboard/DashBoard.tsx:170
 msgid "忽略此版本"
 msgstr "Ignore this version"
@@ -904,7 +912,7 @@ msgstr "Tip: Set the figure/background first, then apply the animation, otherwis
 msgid "提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。"
 msgstr "Tip: After editing, if you find any invalid CG/BGM in the appreciation gallery, select Clear All Data in the options of the WebGAL game interface to clear them."
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:86
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:82
 msgid "提示：换行符最多可达三行"
 msgstr "Tip: Line breaks can be up to three lines"
 
@@ -994,17 +1002,9 @@ msgstr "Sound effect file"
 #~ msgstr "File"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:230
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:181
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:165
 msgid "文字大小"
 msgstr "Font size"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
-msgid "文字展示完执行下一句"
-msgstr ""
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
-msgid "文字展示完等待"
-msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:290
 msgid "文字颜色"
@@ -1099,11 +1099,11 @@ msgstr "New template"
 msgid "新的游戏"
 msgstr "New game"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:130
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:126
 msgid "旁白模式"
 msgstr "Voiceover mode"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:95
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:91
 msgid "旁白模式，无角色名"
 msgstr "Voiceover mode, no role name"
 
@@ -1141,7 +1141,7 @@ msgstr "Show figure"
 msgid "显示背景"
 msgstr "Show background"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:130
 msgid "显示角色名"
 msgstr "Show role name"
 
@@ -1294,7 +1294,7 @@ msgid "添加或切换指定位置的立绘"
 msgstr "Add or switch the figure at the specified position"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:223
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:128
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:124
 msgid "添加新行"
 msgstr "Add new line"
 
@@ -1428,7 +1428,7 @@ msgid "立绘"
 msgstr "Figure"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:239
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:177
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:161
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:68
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:95
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:73
@@ -1443,7 +1443,7 @@ msgstr "Figure ID (optional)"
 msgid "立绘位置"
 msgstr "Figure position"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:169
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:153
 msgid "立绘插图的ID"
 msgstr "ID of figure illustration"
 
@@ -1605,7 +1605,7 @@ msgstr "Delete the property {0}?"
 msgid "覆盖"
 msgstr "Coverage"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:95
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:91
 msgid "角色名，留空以继承上句"
 msgstr "Role name, leave blank to inherit from previous sentence"
 
@@ -1695,7 +1695,7 @@ msgid "语言"
 msgstr "Language"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:148
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:132
 msgid "语音"
 msgstr "Voice"
 
@@ -1931,7 +1931,7 @@ msgstr "Height"
 msgid "高斯模糊："
 msgstr "Gaussian Blur:"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:55
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:53
 msgid "默认"
 msgstr "Default"
 
