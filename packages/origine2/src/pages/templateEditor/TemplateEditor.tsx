@@ -23,7 +23,6 @@ export default function TemplateEditor() {
 }
 
 export const sendComponentPreviewMessage = (componentPath: string, componentClass: string)=> {
-  console.debug(componentPath, componentClass);
   if (componentPath.includes(useComponentTreeTitle().path)) {
     // set scene to title
     WsUtil.setComponentVisibility([

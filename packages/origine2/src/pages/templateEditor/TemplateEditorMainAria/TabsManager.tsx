@@ -37,7 +37,7 @@ export default function TabsManager() {
   }
 
   function selectTab(tab: ITab) {
-    sendComponentPreviewMessage(tab.path, tab.name);
+    sendComponentPreviewMessage(tab.path, tab.class ?? "");
     updateCurrentTab(tab);
   }
 
