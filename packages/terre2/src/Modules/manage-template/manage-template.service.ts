@@ -25,15 +25,18 @@ export class ManageTemplateService {
     const templateList: Promise<TemplateInfoDto>[] = fileInfo
       .filter((file) => file.isDir)
       .map(async (item): Promise<TemplateInfoDto> => {
-        const templateConfig: TemplateConfigDto = await this.getTemplateConfig(
-          item.name,
-        );
-        return {
-          ...templateConfig,
-          dir: item.name,
-        };
+        try {
+          const templateConfig: TemplateConfigDto =
+            await this.getTemplateConfig(item.name);
+          return {
+            ...templateConfig,
+            dir: item.name,
+          };
+        } catch {
+          return null;
+        }
       });
-    return Promise.all(templateList);
+    return (await Promise.all(templateList)).filter((e) => e !== null);
   }
 
   /**
