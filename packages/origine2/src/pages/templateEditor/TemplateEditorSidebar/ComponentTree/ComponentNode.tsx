@@ -3,6 +3,7 @@ import styles from './componentNode.module.scss';
 import { ChevronDownFilled, ChevronDownRegular, ChevronUpFilled, ChevronUpRegular, bundleIcon } from "@fluentui/react-icons";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 import { ITab } from "@/types/templateEditor";
+import {sendComponentPreviewMessage} from "@/pages/templateEditor/TemplateEditor";
 
 const ChevronDownIcon = bundleIcon(ChevronDownFilled, ChevronDownRegular);
 const ChevronUpIcon = bundleIcon(ChevronUpFilled, ChevronUpRegular);
@@ -34,6 +35,7 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
       updateTabs([...tabs, newTab]);
     }
     updateCurrentTab(newTab);
+    sendComponentPreviewMessage(newTab.path, classNode.class);
   };
 
   return (
@@ -46,8 +48,8 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
         expand &&
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {
-            componentNode.nodes?.map((classNode) =>
-              <div
+            componentNode.nodes?.map((classNode) => {
+              return (<div
                 key={classNode.name}
                 className={
                   (currentTab && componentNode.path === currentTab.path && classNode.class === currentTab.class)
@@ -57,7 +59,8 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
                 onClick={() => handleClassNodeClick(classNode, componentNode.path)}
               >
                 {classNode.name}
-              </div>
+              </div>);
+            }
             )
           }
         </div>
