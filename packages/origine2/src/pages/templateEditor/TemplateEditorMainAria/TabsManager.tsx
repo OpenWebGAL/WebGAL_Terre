@@ -7,6 +7,7 @@ import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
 import { ITab } from '@/types/templateEditor';
 import { cloneDeep } from 'lodash';
 import IconWrapper from '@/components/iconWrapper/IconWrapper';
+import {sendComponentPreviewMessage} from "@/pages/templateEditor/TemplateEditor";
 
 export default function TabsManager() {
 
@@ -36,6 +37,7 @@ export default function TabsManager() {
   }
 
   function selectTab(tab: ITab) {
+    sendComponentPreviewMessage(tab.path, tab.class ?? "");
     updateCurrentTab(tab);
   }
 
