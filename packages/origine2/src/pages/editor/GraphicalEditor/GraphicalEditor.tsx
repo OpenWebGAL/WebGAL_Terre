@@ -251,7 +251,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               ref={provided.innerRef}
             >
               <div ref={parentRef} style={{
-                height: containerHeight.value -   14,
+                height: containerHeight.value - 14,
                 width: "100%",
                 overflowY: 'auto',
                 contain: "strict"
@@ -273,11 +273,8 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                         key={virtualRow.key}
                         data-index={virtualRow.index}
                         ref={rowVirtualRef.measureElement}
-                        className={
-                          virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'
-                        }
                       >
-                        {sentenceItem()[i]}
+                        {sentenceItem()[virtualRow.index]}
                       </div>
                     ))}
                     {provided.placeholder}
