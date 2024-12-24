@@ -1,7 +1,7 @@
 import {useValue} from "../../../hooks/useValue";
 import {parseScene} from "./parser";
 import axios from "axios";
-import {useEffect} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import {WsUtil} from "../../../utils/wsUtil";
 import {mergeToString, splitToArray} from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
@@ -14,6 +14,7 @@ import {eventBus} from "@/utils/eventBus";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
+import { useVirtualizer } from '@tanstack/react-virtual';
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -24,6 +25,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const sceneText = useValue("");
   const gameName = useEditorStore.use.subPage();
   const showSentence = useValue<Array<boolean>>([]);
+  const parentRef = useRef<HTMLDivElement>(null);
+  const parsedScene = (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerHeight = useValue(1000);
 
   function updateScene() {
     const path = props.targetPath;
@@ -143,8 +148,97 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     };
   }, [sceneText.value]);
 
-  const parsedScene = (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
-  return <div className={styles.main} id="graphical-editor-main">
+  useEffect(() => {
+    const handleResize = () => {
+      containerHeight.set(containerRef.current?.clientHeight ?? 1000);
+      console.debug("resize", containerRef.current?.clientHeight);
+    };
+    setTimeout(handleResize, 500);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const rowVirtualRef = useVirtualizer({
+    count: parsedScene.sentenceList.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 35,
+  });
+
+  const sentenceItem = useCallback(() => (
+    parsedScene.sentenceList.map((sentence, i) => {
+      const index = i + 1;
+      // console.log(sentence.command);
+      const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
+      const SentenceEditor = sentenceConfig.component;
+      return <Draggable key={JSON.stringify(sentence) + i}
+        draggableId={sentence.content + sentence.commandRaw + i} index={i}>
+        {(provided, snapshot) => (
+          <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
+            key={sentence.commandRaw + JSON.stringify(sentence.sentenceAssets) + i + 'inner'}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+          >
+            <div className={styles.addForwardArea}>
+              <div className={styles.addForwardAreaButtonGroup}>
+                <div className={styles.addForwardAreaButton}>
+                  <AddSentence titleText={t`本句前插入句子`} type={addSentenceType.forward}
+                    onChoose={(newSentence) => addOneSentence(newSentence, i)}/>
+                </div>
+              </div>
+            </div>
+            <div className={styles.sentenceEditorContent}>
+              <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{index}</span>
+                <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
+                  strokeWidth={3}/>
+              </div>
+              <div className={styles.seArea}>
+                <div className={styles.head}>
+                  <div className={styles.title}>
+                    {sentenceConfig.title()}
+                  </div>
+                  <div className={styles.optionButton}
+                    onClick={() => changeShowSentence(i)}>
+                    {showSentence.value[i] ?
+                      <DownOne strokeWidth={3} theme="outline" size="18"
+                        fill="#005CAF"/> :
+                      <RightOne strokeWidth={3} theme="outline" size="18"
+                        fill="#005CAF"/>}
+                  </div>
+                  <div className={styles.optionButtonContainer}>
+                    <div className={styles.optionButton}
+                      onClick={() => deleteOneSentence(i)}>
+                      <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
+                        fill="#333"/>
+                      <div>
+                        {t`删除本句`}
+                      </div>
+                    </div>
+                    <div className={styles.optionButton}
+                      onClick={() => syncToIndex(i)}>
+                      <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
+                        fill="#333"/>
+                      <div>
+                        {t`执行到此句`}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {showSentence.value[i] && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
+                  updateSentenceByIndex(newSentence, i);
+                }}/>}
+              </div>
+            </div>
+          </div>
+        )}
+      </Draggable>;
+    })
+  ), [sceneText.value]);
+
+  const items = rowVirtualRef.getVirtualItems();
+
+  return <div className={styles.main} id="graphical-editor-main" ref={containerRef}>
     <div style={{flex: 1, padding: '14px 4px 0 4px'}}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
@@ -156,78 +250,43 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
               ref={provided.innerRef}
             >
-              {parsedScene.sentenceList.map((sentence, i) => {
-                // 实际显示的行数
-                const index = i + 1;
-                // console.log(sentence.command);
-                const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
-                const SentenceEditor = sentenceConfig.component;
-                return <Draggable key={JSON.stringify(sentence) + i}
-                  draggableId={sentence.content + sentence.commandRaw + i} index={i}>
-                  {(provided, snapshot) => (
-                    <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
-                      key={sentence.commandRaw + JSON.stringify(sentence.sentenceAssets) + i + 'inner'}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                    >
-                      <div className={styles.addForwardArea}>
-                        <div className={styles.addForwardAreaButtonGroup}>
-                          <div className={styles.addForwardAreaButton}>
-                            <AddSentence titleText={t`本句前插入句子`} type={addSentenceType.forward}
-                              onChoose={(newSentence) => addOneSentence(newSentence, i)}/>
-                          </div>
-                        </div>
+              <div ref={parentRef} style={{
+                height: containerHeight.value -   14,
+                width: "100%",
+                overflowY: 'auto',
+                contain: "strict"
+              }}>
+                <div style={{
+                  height: rowVirtualRef.getTotalSize(),
+                  width: "100%",
+                  position: "relative"
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    transform: `translateY(${items[0]?.start ?? 0}px)`,
+                  }}>
+                    {items.map((virtualRow, i) => (
+                      <div
+                        key={virtualRow.key}
+                        data-index={virtualRow.index}
+                        ref={rowVirtualRef.measureElement}
+                        className={
+                          virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'
+                        }
+                      >
+                        {sentenceItem()[i]}
                       </div>
-                      <div className={styles.sentenceEditorContent}>
-                        <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{index}</span>
-                          <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
-                            strokeWidth={3}/>
-                        </div>
-                        <div className={styles.seArea}>
-                          <div className={styles.head}>
-                            <div className={styles.title}>
-                              {sentenceConfig.title()}
-                            </div>
-                            <div className={styles.optionButton}
-                              onClick={() => changeShowSentence(i)}>
-                              {showSentence.value[i] ?
-                                <DownOne strokeWidth={3} theme="outline" size="18"
-                                  fill="#005CAF"/> :
-                                <RightOne strokeWidth={3} theme="outline" size="18"
-                                  fill="#005CAF"/>}
-                            </div>
-                            <div className={styles.optionButtonContainer}>
-                              <div className={styles.optionButton}
-                                onClick={() => deleteOneSentence(i)}>
-                                <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
-                                  fill="#333"/>
-                                <div>
-                                  {t`删除本句`}
-                                </div>
-                              </div>
-                              <div className={styles.optionButton}
-                                onClick={() => syncToIndex(i)}>
-                                <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
-                                  fill="#333"/>
-                                <div>
-                                  {t`执行到此句`}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          {showSentence.value[i] && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
-                            updateSentenceByIndex(newSentence, i);
-                          }}/>}
-                        </div>
-                      </div>
+                    ))}
+                    {provided.placeholder}
+                    <div className={styles.addWrapper}>
+                      <AddSentence titleText={t`添加语句`} type={addSentenceType.backward}
+                        onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)}/>
                     </div>
-                  )}
-                </Draggable>;
-              })}
-              {provided.placeholder}
-              <div className={styles.addWrapper}>
-                <AddSentence titleText={t`添加语句`} type={addSentenceType.backward}
-                  onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)}/>
+                  </div>
+                </div>
               </div>
             </div>
           )}

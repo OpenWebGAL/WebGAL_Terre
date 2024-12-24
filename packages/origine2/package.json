@@ -33,6 +33,7 @@
     "@lingui/macro": "^4.8.0",
     "@lingui/react": "^4.8.0",
     "@monaco-editor/react": "^4.4.5",
+    "@tanstack/react-virtual": "^3.11.2",
     "@uiw/react-json-view": "^2.0.0-alpha.12",
     "axios": "^1.6.0",
     "classnames": "^2.5.1",
