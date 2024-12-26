@@ -9,7 +9,7 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import './logger';
 
 let WEBGAL_PORT = 3000; // default port
-export const version_number = `4.5.10`;
+export const version_number = `4.5.11`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }
