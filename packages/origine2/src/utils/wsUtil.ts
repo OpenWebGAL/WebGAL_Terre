@@ -1,8 +1,47 @@
 import {logger} from "./logger";
-import {DebugCommand, IDebugMessage} from "@/types/debugProtocol";
+import {DebugCommand, IComponentVisibilityCommand, IDebugMessage} from "@/types/debugProtocol";
 import useEditorStore from "@/store/useEditorStore";
 
 export class WsUtil {
+
+  public static sendMessageToCurrentWs(data: IDebugMessage['data'], event?: IDebugMessage['event']){
+    // @ts-ignore
+    if (window["currentWs"]) {
+      logger.debug("编辑器开始发送同步数据");
+      const sendMessage: IDebugMessage = {
+        event: event ?? "message",
+        data: data
+      };
+      // @ts-ignore
+      window["currentWs"].send(JSON.stringify(sendMessage));
+    }
+  }
+
+  public static setComponentVisibility(message: IComponentVisibilityCommand[]) {
+    const sendMessage = JSON.stringify(message);
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.SET_COMPONENT_VISIBILITY,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: sendMessage,
+    });
+  }
+
+  public static runTempScene(command: string) {
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.TEMP_SCENE,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: command,
+    });
+  }
+
   // eslint-disable-next-line max-params
   public static sendSyncCommand(scenePath: string, lineNumber: number, lineCommandString: string, force?: boolean) {
     function extractPathAfterScene(scenePath: string): string {
@@ -28,64 +67,41 @@ export class WsUtil {
     }
 
     // @ts-ignore
-    if (window["currentWs"] && this.getIsCurrentLineJump(lineCommandString)) { // @ts-ignore
-      logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.JUMP,
-          sceneMsg: {
-            scene: sceneName,
-            sentence: lineNumber
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
-        }
-      };
-      // @ts-ignore
-
-      window["currentWs"].send(JSON.stringify(message));
+    if (this.getIsCurrentLineJump(lineCommandString)) {
+      this.sendMessageToCurrentWs({
+        command: DebugCommand.JUMP,
+        sceneMsg: {
+          scene: sceneName,
+          sentence: lineNumber
+        },// @ts-ignore
+        stageSyncMsg: {},
+        message: useEditorStore.getState().isUseExpFastSync? 'exp':'Sync',
+      });
     }
   }
 
   public static sendExeCommand(command: string) {
-
-    // @ts-ignore
-    if (window["currentWs"]) { // @ts-ignore
-      logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.EXE_COMMAND,
-          sceneMsg: {
-            scene: 'temp',
-            sentence: 0
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: command
-        }
-      };
-      // @ts-ignore
-      window["currentWs"].send(JSON.stringify(message));
-    }
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.EXE_COMMAND,
+      sceneMsg: {
+        scene: 'temp',
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: command
+    });
   }
 
   public static sendTemplateRefetchCommand(){
-    // @ts-ignore
-    if (window["currentWs"]) { // @ts-ignore
-      logger.debug("编辑器开始发送同步数据");
-      const message: IDebugMessage = {
-        event: 'message', data: {
-          command: DebugCommand.REFETCH_TEMPLATE_FILES,
-          sceneMsg: {
-            scene: 'temp',
-            sentence: 0
-          },// @ts-ignore
-          stageSyncMsg: {},
-          message: ''
-        }
-      };
-      // @ts-ignore
-      window["currentWs"].send(JSON.stringify(message));
-    }
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.REFETCH_TEMPLATE_FILES,
+      sceneMsg: {
+        scene: 'temp',
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: ''
+    });
   };
 
   private static getIsCurrentLineJump(currentLineValue: string | null): boolean {

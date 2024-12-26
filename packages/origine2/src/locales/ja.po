@@ -201,9 +201,21 @@ msgstr "雨"
 msgid "下雪"
 msgstr "雪"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:130
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+msgid "不可选项"
+msgstr "選択できない選択肢"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "不拼接先前文本框内的语句"
+msgstr "前のテキストボックス内の文を結合しない"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
 msgid "不显示角色名"
 msgstr "キャラクター名は設定不可"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+#~ msgid "不继承上一句"
+#~ msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:22
 msgid "两端对齐"
@@ -213,7 +225,7 @@ msgstr "両端揃え"
 msgid "个字"
 msgstr " ワード"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:55
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:57
 msgid "中"
 msgstr "中央"
 
@@ -357,7 +369,7 @@ msgstr "全画面画面でテキストを表示する。独白やシーンの導
 msgid "关于"
 msgstr "About"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:143
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:159
 msgid "关联立绘"
 msgstr "関連する立ち絵"
 
@@ -385,7 +397,7 @@ msgstr "立ち絵を非表示"
 msgid "关闭背景"
 msgstr "背景画像を非表示"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:31
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
 msgid "内层文本"
 msgstr "内側テキスト"
 
@@ -466,7 +478,7 @@ msgstr "新しいゲームを作成"
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:196
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:114
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:118
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
 msgid "删除"
 msgstr "削除"
@@ -542,6 +554,10 @@ msgstr "キャンセル"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:85
 msgid "变换"
 msgstr "トランスフォーム"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+msgid "可选项"
+msgstr "選択可能な選択肢"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:52
 msgid "右侧"
@@ -623,7 +639,7 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:30
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
 msgstr "外側テキスト"
 
@@ -631,7 +647,7 @@ msgstr "外側テキスト"
 msgid "外边距"
 msgstr "マージン"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:56
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
 msgid "大"
 msgstr "大きい"
 
@@ -683,9 +699,13 @@ msgstr "実験的な高速プレビュー"
 msgid "宽度"
 msgstr "幅"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:106
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:110
 msgid "对话"
 msgstr "ダイアログ"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:57
+msgid "对话框文字"
+msgstr "ダイアログテキスト"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:32
 msgid "对话框标题"
@@ -713,15 +733,15 @@ msgstr "ウェブとしてエクスポート"
 msgid "将当前模板应用到选定的游戏"
 msgstr "選択したゲームに現在のテンプレートを適用する"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:54
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:56
 msgid "小"
 msgstr "小さい"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:35
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
 msgid "小头像图像"
 msgstr "アバター画像"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:34
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
 msgid "小头像容器"
 msgstr "アバターコンテナ"
 
@@ -818,6 +838,10 @@ msgstr "開いた口"
 msgid "当前版本"
 msgstr "現在のバージョン"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
+#~ msgid "快速执行"
+#~ msgstr ""
+
 #: src/pages/dashboard/DashBoard.tsx:170
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
@@ -853,6 +877,14 @@ msgstr "この文まで実行"
 #: src/components/Assets/Assets.tsx:194
 msgid "扩展名"
 msgstr "拡張子"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "拼接先前文本框内的语句"
+msgstr "前のテキストボックスの内容をつなげる"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
+msgid "拼接模式"
+msgstr "連結モード"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:88
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:91
@@ -896,7 +928,7 @@ msgstr "ヒント: 最初に立ち絵の描画/背景を設定してから、ア
 msgid "提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。"
 msgstr "ヒント: 編集後に無効なCG/BGMが見つかった場合は、WebGALゲームインターフェイスのオプションで[すべてのデータを消去]を選択して消去"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:82
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:86
 msgid "提示：换行符最多可达三行"
 msgstr "ヒント:改行は三行まで可能"
 
@@ -986,9 +1018,17 @@ msgstr "効果音ファイル"
 #~ msgstr "ファイル"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:230
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:165
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:181
 msgid "文字大小"
 msgstr "文字サイズ"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
+msgid "文字展示完执行下一句"
+msgstr "テキスト表示完了後、次の文を実行"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
+msgid "文字展示完等待"
+msgstr "テキスト表示完了待ち"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:290
 msgid "文字颜色"
@@ -998,24 +1038,28 @@ msgstr "文字色"
 msgid "文本对齐"
 msgstr "テキストの配置"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
+msgid "文本展示后连续执行"
+msgstr "テキスト表示後連続実行"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "文本显示"
 msgstr "テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:24
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:27
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:34
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:37
 msgid "文本框"
 msgstr "テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:28
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
 msgid "文本框（小头像关闭时）"
 msgstr "テキストボックス（アバターが閉じている場合）"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:39
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "文本框文本"
 msgstr "テキストボックスのテキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:29
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:40
 msgid "文本框背景"
 msgstr "テキストボックスの背景"
 
@@ -1083,11 +1127,11 @@ msgstr "新しいテンプレート"
 msgid "新的游戏"
 msgstr "新しいゲーム"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:126
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:130
 msgid "旁白模式"
 msgstr "ナレーションモード"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:91
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:95
 msgid "旁白模式，无角色名"
 msgstr "キャラクター名は設定不可"
 
@@ -1125,7 +1169,7 @@ msgstr "立ち絵を表示"
 msgid "显示背景"
 msgstr "背景画像を表示"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:130
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
 msgid "显示角色名"
 msgstr "キャラクター名を設定"
 
@@ -1163,24 +1207,24 @@ msgstr "この文が実行された後、次の文を実行"
 msgid "本句执行后等待"
 msgstr "この文が実行されるのを待つ"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:55
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:20
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:23
 msgid "标题"
 msgstr "タイトル"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:62
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:27
 msgid "标题备用背景"
 msgstr "タイトル代替背景"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:60
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:25
 msgid "标题按钮"
 msgstr "タイトルボタン"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:59
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:24
 msgid "标题按钮列表"
 msgstr "タイトルボタンリスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:61
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:26
 msgid "标题按钮文字"
 msgstr "タイトルボタンテキスト"
 
@@ -1278,7 +1322,7 @@ msgid "添加或切换指定位置的立绘"
 msgstr "指定位置の立ち絵を追加または切り替える"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:223
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:124
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:128
 msgid "添加新行"
 msgstr "新しい行を追加"
 
@@ -1412,7 +1456,7 @@ msgid "立绘"
 msgstr "Figure"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:239
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:161
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:177
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:68
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:95
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:73
@@ -1427,7 +1471,7 @@ msgstr "立ち絵ID(オプション)"
 msgid "立绘位置"
 msgstr "描画位置"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:153
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:169
 msgid "立绘插图的ID"
 msgstr "関連する立ち絵のID"
 
@@ -1462,6 +1506,14 @@ msgstr "ゲーム終了"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGPosition.tsx:17
 msgid "绝对"
 msgstr "絶対"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+#~ msgid "继承上一句"
+#~ msgstr ""
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
+#~ msgid "继承模式"
+#~ msgstr ""
 
 #: src/pages/dashboard/TemplateElement.tsx:82
 msgid "编辑模板"
@@ -1581,7 +1633,7 @@ msgstr "プロパティ{0}を削除しますか？"
 msgid "覆盖"
 msgstr "カバレッジ"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:91
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:95
 msgid "角色名，留空以继承上句"
 msgstr "キャラクター名を空白のままにすると前の文から継承"
 
@@ -1589,23 +1641,23 @@ msgstr "キャラクター名を空白のままにすると前の文から継承
 msgid "角色名，留空以继承上句:对话;"
 msgstr "キャラクター名を空白のままにすると前の文から継承;ダイアログ;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:38
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
 msgid "角色名内层文本"
 msgstr "キャラクター名内側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:37
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
 msgid "角色名外层文本"
 msgstr "キャラクター名外側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:36
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
 msgid "角色名容器"
 msgstr "キャラクター名コンテナ"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:32
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
 msgid "角色名文本框"
 msgstr "キャラクター名テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:33
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
 msgid "角色名文本框背景"
 msgstr "キャラクター名テキストボックスの背景"
 
@@ -1671,7 +1723,7 @@ msgid "语言"
 msgstr "言語"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:132
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:148
 msgid "语音"
 msgstr "ボイス"
 
@@ -1776,11 +1828,11 @@ msgid "选择预设目标"
 msgstr "事前設定されたターゲットを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:64
 msgid "选项"
 msgstr "選択肢を設定"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:67
 msgid "选项列表"
 msgstr "選択肢リスト"
 
@@ -1788,15 +1840,15 @@ msgstr "選択肢リスト"
 msgid "选项名称"
 msgstr "選択肢を設定"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:68
 msgid "选项按钮"
 msgstr "選択肢ボタン"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:69
 msgid "选项按钮（禁用）"
 msgstr "選択肢ボタン（無効状態）"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:70
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
 
@@ -1907,7 +1959,7 @@ msgstr "高さ"
 msgid "高斯模糊："
 msgstr "ぼかし："
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:53
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:55
 msgid "默认"
 msgstr "デフォルト"
 

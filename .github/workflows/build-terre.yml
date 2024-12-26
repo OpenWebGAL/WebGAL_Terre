@@ -1,9 +1,15 @@
 name: Build WebGAL Terre
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 jobs:
   build-linux:
@@ -15,17 +21,19 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-linux.sh
+      - name: Compress
+        run: 7z a -tzip release/WebGAL_Terre_Linux.zip release/*
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Linux
-          path: release
+          path: release/WebGAL_Terre_Linux.zip
   build-arm64:
     name: Build Linux ARM64 Binary
     runs-on: ubuntu-latest
@@ -35,7 +43,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build Stage 1
         run: |
@@ -110,11 +118,14 @@ jobs:
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/assets/webgal/.gitkeep
           rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
           echo "WebGAL Terre is now ready to be deployed."
+      - name: Compress
+        run: 7z a -tzip release/WebGAL_Terre_Linux_Arm64.zip release/*
+      
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Linux_Arm64
-          path: release
+          path: release/WebGAL_Terre_Linux_Arm64.zip
   build-mac:
     name: Build MacOS Binary
     runs-on: macos-14
@@ -124,17 +135,19 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-mac.sh
+      - name: Compress
+        run: 7z a -tzip release/WebGAL_Terre_Mac.zip release/*      
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Mac
-          path: release
+          path: release/WebGAL_Terre_Mac.zip
   build-windows:
     name: Build Windows Binary
     runs-on: windows-latest
@@ -144,16 +157,18 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         shell: bash
         run: ./release.sh
+      - name: Compress
+        run: 7z a -tzip release/WebGAL_Terre_Windows.zip release/*  
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Windows
-          path: release
+          path: release/WebGAL_Terre_Windows.zip
   build-windows-nsis:
     name: Build Windows Setup
     runs-on: windows-latest
@@ -163,7 +178,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           cache: 'yarn'
       - name: Build
         shell: bash
@@ -176,4 +191,3 @@ jobs:
         with:
           name: WebGAL_Terre_Windows_Setup
           path: bundle/WebGal_Terre_Setup.exe
-

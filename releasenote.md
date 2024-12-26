@@ -4,27 +4,17 @@
 
 #### 新功能
 
-支持通过配置文件控制是否要启用紧急回避界面
+对于导出的 Electron 游戏，支持将日志输出到文件。
 
-intro 支持关闭自动展示下一句，只有用户手动点击鼠标或按下键盘时才展示下一句
+CI 流程现可自动从 package.json 获取 Node.js 版本。
 
-为模板编辑器添加快速应用模板到游戏的菜单项
+新增对话连接先前文本与对话结束后连续执行选项。
 
-为选择器添加使用鼠标滚轮快速切换选项的功能
-
-脚本编辑器支持设置字号和字体
-
-支持创建模板时指定模板存储位置
+模板编辑器改进：游戏预览的组件响应模板编辑器的标签页切换。
 
 #### 修复
 
-优化文件列表文件名排序
-
-为 Live2D 相关选项添加翻译文本
-
-优化脚本编辑器下的编辑性能
-
-重复应用当前应用的模板时，偶发的找不到模板的问题
+修复了游戏列表和模板列表的解析问题。
 
 <!-- English Translation -->
 ## Release Notes
@@ -33,28 +23,17 @@ intro 支持关闭自动展示下一句，只有用户手动点击鼠标或按�
 
 #### New Features
 
-Support controlling whether to enable the emergency skip interface through the configuration file.
+For exported Electron games, log output to file is now supported.
 
-The intro now supports disabling automatic display of the next sentence.  The next sentence will only be displayed when the user manually clicks the mouse or presses a key.
+The CI process now automatically retrieves the Node.js version from package.json.
 
-Added a menu item to the template editor to quickly apply templates to the game.
+Added dialogue concatenation to connect previous text with options that execute sequentially after the dialogue ends.
 
-Added the ability to quickly switch options using the mouse wheel in the selector.
-
-The script editor now supports setting font size and font family.
-
-Support specifying the template storage location when creating a template.
-
+Template editor improvements: The game preview components now respond to tab switching in the template editor.
 
 #### Fixes
 
-Optimized file name sorting in the file list.
-
-Added translated text for Live2D related options.
-
-Optimized editing performance in the script editor.
-
-Fixed the occasional issue of not finding a template when repeatedly applying the currently applied template.
+Fixed parsing issues with the game list and template list.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -63,27 +42,17 @@ Fixed the occasional issue of not finding a template when repeatedly applying th
 
 #### 新機能
 
-設定ファイルで緊急回避インターフェースの有効/無効を切り替えられるようになりました。
+エクスポートされたElectronゲームにおいて、ログをファイルに出力できるようになりました。
 
-イントロで自動的に次の文章を表示する機能をオフにできるようになりました。ユーザーがマウスをクリックまたはキーボードを押したときにのみ、次の文章が表示されます。
+CIプロセスは、package.jsonからNode.jsのバージョンを自動的に取得するようになりました。
 
-テンプレートエディターに、ゲームにテンプレートをクイック適用するためのメニュー項目を追加しました。
+以前のテキストへの会話の接続と、会話終了後の連続実行オプションが追加されました。
 
-セレクターでマウスホイールを使用してオプションをすばやく切り替える機能を追加しました。
-
-スクリプトエディターでフォントサイズとフォントを設定できるようになりました。
-
-テンプレートの作成時にテンプレートの保存場所を指定できるようになりました。
+テンプレートエディターの改善：ゲームプレビューのコンポーネントが、テンプレートエディターのタブ切り替えに反応するようになりました。
 
 #### 修正
 
-ファイルリストのファイル名ソートを最適化しました。
-
-Live2D関連オプションに翻訳テキストを追加しました。
-
-スクリプトエディターのエディットパフォーマンスを最適化しました。
-
-現在適用されているテンプレートを再度適用するときに、テンプレートが見つからない場合がある問題を修正しました。
+ゲームリストとテンプレートリストの解析に関する問題を修正しました。
 
 [//]: # (<!-- French Translation -->)
 

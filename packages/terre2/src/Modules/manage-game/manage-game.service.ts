@@ -25,25 +25,29 @@ export class ManageGameService {
     const gameList: Promise<GameInfoDto>[] = dirInfo
       .filter((item) => item.isDir)
       .map(async (item): Promise<GameInfoDto> => {
-        const gameDir = item.name;
-        const gameConfig = await this.getGameConfig(gameDir);
-        const configFilePath = this.webgalFs.getPathFromRoot(
-          `/public/games/${gameDir}/game/template/template.json`,
-        );
-        const templateConfigString = await this.webgalFs.readTextFile(
-          configFilePath,
-        );
-        const templateConfig: TemplateConfigDto = JSON.parse(
-          templateConfigString as string,
-        );
-        return {
-          name: gameConfig.Game_name,
-          dir: item.name,
-          cover: gameConfig.Title_img,
-          template: templateConfig,
-        };
+        try {
+          const gameDir = item.name;
+          const gameConfig = await this.getGameConfig(gameDir);
+          const configFilePath = this.webgalFs.getPathFromRoot(
+            `/public/games/${gameDir}/game/template/template.json`,
+          );
+          const templateConfigString = await this.webgalFs.readTextFile(
+            configFilePath,
+          );
+          const templateConfig: TemplateConfigDto = JSON.parse(
+            templateConfigString as string,
+          );
+          return {
+            name: gameConfig.Game_name,
+            dir: item.name,
+            cover: gameConfig.Title_img,
+            template: templateConfig,
+          };
+        } catch (_) {
+          return null;
+        }
       });
-    return Promise.all(gameList);
+    return (await Promise.all(gameList)).filter((e) => e !== null);
   }
 
   /**

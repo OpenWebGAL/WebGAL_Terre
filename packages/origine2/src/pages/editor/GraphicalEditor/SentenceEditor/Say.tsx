@@ -30,6 +30,8 @@ export default function Say(props: ISentenceEditorProps) {
     [ "right", t`右侧立绘` ],
     [ "id",  t`使用立绘ID` ],
   ]);
+  const isConcat = useValue(!!getArgByKey(props.sentence, 'concat')); // 是否是继承语句
+  const isNotend = useValue(!!getArgByKey(props.sentence, 'notend')); // 是否有 notend 参数
 
   useEffect(() => {
     /**
@@ -71,10 +73,12 @@ export default function Say(props: ISentenceEditorProps) {
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = figureId.value !== "" ? ` -figureId=${figureId.value}` : "";
     const commitValue = currentValue.value.map(e=>e.replaceAll('\n','|'));
+    const isConcatStr = isConcat.value ? ' -concat' : '';
+    const isNotendStr = isNotend.value ? ' -notend' : '';
     if(figurePosition.value === "id"){
-      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value} -fontSize=${selectedFontSize}${pos}${idStr};`);
+      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr} -fontSize=${selectedFontSize}${pos}${idStr};`);
     } else {
-      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value} -fontSize=${selectedFontSize}${pos};`);
+      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr} -fontSize=${selectedFontSize}${pos};`);
     }
   };
 
@@ -128,6 +132,18 @@ export default function Say(props: ISentenceEditorProps) {
           isNoSpeaker.set(newValue);
           submit();
         }} onText={t`不显示角色名`} offText={t`显示角色名`} isChecked={isNoSpeaker.value}/>
+      </CommonOptions>
+      <CommonOptions key="isConcat" title={t`拼接模式`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          isConcat.set(newValue);
+          submit();
+        }} onText={t`拼接先前文本框内的语句`} offText={t`不拼接先前文本框内的语句`} isChecked={isConcat.value}/>
+      </CommonOptions>
+      <CommonOptions key="isNotend" title={t`文本展示后连续执行`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          isNotend.set(newValue);
+          submit();
+        }} onText={t`文字展示完执行下一句`} offText={t`文字展示完等待`} isChecked={isNotend.value}/>
       </CommonOptions>
       <CommonOptions key="Vocal" title={t`语音`}>
         <>
