@@ -203,15 +203,19 @@ msgstr "Snow"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
-msgstr ""
+msgstr "Not selectable item"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "不拼接先前文本框内的语句"
+msgstr "No concat with previous text"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
 msgid "不显示角色名"
 msgstr "Hide the role name"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-msgid "不继承上一句"
-msgstr ""
+#~ msgid "不继承上一句"
+#~ msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:22
 msgid "两端对齐"
@@ -553,7 +557,7 @@ msgstr "Transform"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "可选项"
-msgstr ""
+msgstr "Selectable options"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:52
 msgid "右侧"
@@ -701,7 +705,7 @@ msgstr "Dialogue"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:57
 msgid "对话框文字"
-msgstr ""
+msgstr "Text in Textbox"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:32
 msgid "对话框标题"
@@ -835,8 +839,8 @@ msgid "当前版本"
 msgstr "Current version"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
-msgid "快速执行"
-msgstr ""
+#~ msgid "快速执行"
+#~ msgstr ""
 
 #: src/pages/dashboard/DashBoard.tsx:170
 msgid "忽略此版本"
@@ -873,6 +877,14 @@ msgstr "Execute to this sentence"
 #: src/components/Assets/Assets.tsx:194
 msgid "扩展名"
 msgstr "Extension name"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "拼接先前文本框内的语句"
+msgstr "Concat the sentences with previous text"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
+msgid "拼接模式"
+msgstr "Concat mode"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:88
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:91
@@ -1012,11 +1024,11 @@ msgstr "Font size"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
 msgid "文字展示完执行下一句"
-msgstr ""
+msgstr "Text display complete, execute next sentence"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
 msgid "文字展示完等待"
-msgstr ""
+msgstr "Text display complete, wait"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:290
 msgid "文字颜色"
@@ -1025,6 +1037,10 @@ msgstr "Font color"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:60
 msgid "文本对齐"
 msgstr "Text alignment"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
+msgid "文本展示后连续执行"
+msgstr "Text display and continuous execution"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "文本显示"
@@ -1492,12 +1508,12 @@ msgid "绝对"
 msgstr "Absolutely"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-msgid "继承上一句"
-msgstr ""
+#~ msgid "继承上一句"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
-msgid "继承模式"
-msgstr ""
+#~ msgid "继承模式"
+#~ msgstr ""
 
 #: src/pages/dashboard/TemplateElement.tsx:82
 msgid "编辑模板"

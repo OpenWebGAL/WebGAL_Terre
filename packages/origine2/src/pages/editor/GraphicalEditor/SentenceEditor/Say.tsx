@@ -133,13 +133,13 @@ export default function Say(props: ISentenceEditorProps) {
           submit();
         }} onText={t`不显示角色名`} offText={t`显示角色名`} isChecked={isNoSpeaker.value}/>
       </CommonOptions>
-      <CommonOptions key="isConcat" title={t`继承模式`}>
+      <CommonOptions key="isConcat" title={t`拼接模式`}>
         <TerreToggle title="" onChange={(newValue) => {
           isConcat.set(newValue);
           submit();
-        }} onText={t`继承上一句`} offText={t`不继承上一句`} isChecked={isConcat.value}/>
+        }} onText={t`拼接先前文本框内的语句`} offText={t`不拼接先前文本框内的语句`} isChecked={isConcat.value}/>
       </CommonOptions>
-      <CommonOptions key="isNotend" title={t`快速执行`}>
+      <CommonOptions key="isNotend" title={t`文本展示后连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isNotend.set(newValue);
           submit();

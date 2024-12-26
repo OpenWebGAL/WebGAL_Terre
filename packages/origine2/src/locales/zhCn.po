@@ -221,13 +221,17 @@ msgstr "下雪"
 msgid "不可选项"
 msgstr "不可选项"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "不拼接先前文本框内的语句"
+msgstr "不拼接先前文本框内的语句"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
 msgid "不显示角色名"
 msgstr "不显示角色名"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-msgid "不继承上一句"
-msgstr "不继承上一句"
+#~ msgid "不继承上一句"
+#~ msgstr "不继承上一句"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:22
 msgid "两端对齐"
@@ -855,8 +859,8 @@ msgid "当前版本"
 msgstr "当前版本"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
-msgid "快速执行"
-msgstr "快速执行"
+#~ msgid "快速执行"
+#~ msgstr "快速执行"
 
 #: src/pages/dashboard/DashBoard.tsx:170
 msgid "忽略此版本"
@@ -893,6 +897,14 @@ msgstr "执行到此句"
 #: src/components/Assets/Assets.tsx:194
 msgid "扩展名"
 msgstr "扩展名"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "拼接先前文本框内的语句"
+msgstr "拼接先前文本框内的语句"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
+msgid "拼接模式"
+msgstr "拼接模式"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:88
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:91
@@ -1045,6 +1057,10 @@ msgstr "文字颜色"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:60
 msgid "文本对齐"
 msgstr "文本对齐"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
+msgid "文本展示后连续执行"
+msgstr "文本展示后连续执行"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "文本显示"
@@ -1512,12 +1528,12 @@ msgid "绝对"
 msgstr "绝对"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-msgid "继承上一句"
-msgstr "继承上一句"
+#~ msgid "继承上一句"
+#~ msgstr "继承上一句"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
-msgid "继承模式"
-msgstr "继承模式"
+#~ msgid "继承模式"
+#~ msgstr "继承模式"
 
 #: src/pages/dashboard/TemplateElement.tsx:82
 msgid "编辑模板"

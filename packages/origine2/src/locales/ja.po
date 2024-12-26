@@ -203,15 +203,19 @@ msgstr "雪"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
-msgstr ""
+msgstr "選択できない選択肢"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "不拼接先前文本框内的语句"
+msgstr "前のテキストボックス内の文を結合しない"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
 msgid "不显示角色名"
 msgstr "キャラクター名は設定不可"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-msgid "不继承上一句"
-msgstr ""
+#~ msgid "不继承上一句"
+#~ msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:22
 msgid "两端对齐"
@@ -553,7 +557,7 @@ msgstr "トランスフォーム"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "可选项"
-msgstr ""
+msgstr "選択可能な選択肢"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:52
 msgid "右侧"
@@ -701,7 +705,7 @@ msgstr "ダイアログ"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:57
 msgid "对话框文字"
-msgstr ""
+msgstr "ダイアログテキスト"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:32
 msgid "对话框标题"
@@ -835,8 +839,8 @@ msgid "当前版本"
 msgstr "現在のバージョン"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
-msgid "快速执行"
-msgstr ""
+#~ msgid "快速执行"
+#~ msgstr ""
 
 #: src/pages/dashboard/DashBoard.tsx:170
 msgid "忽略此版本"
@@ -873,6 +877,14 @@ msgstr "この文まで実行"
 #: src/components/Assets/Assets.tsx:194
 msgid "扩展名"
 msgstr "拡張子"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
+msgid "拼接先前文本框内的语句"
+msgstr "前のテキストボックスの内容をつなげる"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
+msgid "拼接模式"
+msgstr "連結モード"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:88
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:91
@@ -1012,11 +1024,11 @@ msgstr "文字サイズ"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
 msgid "文字展示完执行下一句"
-msgstr ""
+msgstr "テキスト表示完了後、次の文を実行"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:146
 msgid "文字展示完等待"
-msgstr ""
+msgstr "テキスト表示完了待ち"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:290
 msgid "文字颜色"
@@ -1025,6 +1037,10 @@ msgstr "文字色"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:60
 msgid "文本对齐"
 msgstr "テキストの配置"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
+msgid "文本展示后连续执行"
+msgstr "テキスト表示後連続実行"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "文本显示"
@@ -1492,12 +1508,12 @@ msgid "绝对"
 msgstr "絶対"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-msgid "继承上一句"
-msgstr ""
+#~ msgid "继承上一句"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
-msgid "继承模式"
-msgstr ""
+#~ msgid "继承模式"
+#~ msgstr ""
 
 #: src/pages/dashboard/TemplateElement.tsx:82
 msgid "编辑模板"
