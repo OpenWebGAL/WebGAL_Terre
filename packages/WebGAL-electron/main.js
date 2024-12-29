@@ -1,5 +1,6 @@
 const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
 const log = require('electron-log');
+const path = require('path');
 
 /**
  * 关闭默认菜单栏
@@ -23,7 +24,8 @@ app.whenReady().then(() => {
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 1600,
-        height: 900
+        height: 900,
+        icon: path.join(__dirname,'./public/icon.ico'),
     })
 
     win.loadFile('./public/index.html').then(r => {

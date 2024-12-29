@@ -25,6 +25,7 @@
     "@codingame/monaco-vscode-localization-service-override": "~4.3.2",
     "@codingame/monaco-vscode-rollup-vsix-plugin": "~4.3.2",
     "@fluentui/react": "^8.77.3",
+    "@fluentui/react-color-picker-preview": "^0.1.2",
     "@fluentui/react-components": "^9.44.1",
     "@fluentui/react-icons": "^2.0.224",
     "@fluentui/react-icons-mdl2": "^1.3.41",

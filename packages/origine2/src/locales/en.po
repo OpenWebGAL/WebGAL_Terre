@@ -22,11 +22,11 @@ msgstr "Comment"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:185
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:189
 msgid "<0>应用新的模板</0>"
 msgstr "<0>Apply a new template</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:164
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:168
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>Current template: {currentTemplateName}</0>"
 
@@ -310,6 +310,12 @@ msgstr "Sidebar"
 msgid "侧边栏游戏预览"
 msgstr "Sidebar Game Preview"
 
+#: src/components/IconCreator/IconCreator.tsx:608
+#: src/components/IconCreator/IconCreator.tsx:613
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:202
+msgid "修改游戏图标"
+msgstr "Change game icon"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:73
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGColor.tsx:32
 msgid "修改颜色"
@@ -505,6 +511,10 @@ msgstr "Refresh"
 msgid "刷新游戏"
 msgstr "Refresh game"
 
+#: src/components/IconCreator/IconCreator.tsx:669
+msgid "前景"
+msgstr "Foreground"
+
 #: src/pages/editor/Topbar/Topbar.tsx:125
 msgid "功能区显示"
 msgstr "Functional Area"
@@ -538,6 +548,8 @@ msgstr "Reflection film filter"
 msgid "发现新版本"
 msgstr "New version detected"
 
+#: src/components/ColorPickerPopup/ColorPickerPopup.tsx:116
+#: src/components/IconCreator/IconCreator.tsx:795
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
@@ -570,11 +582,11 @@ msgstr "Right Align"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:154
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:158
 msgid "启动图"
 msgstr "Startup image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:196
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "启用"
 msgstr "Enabled"
@@ -595,9 +607,26 @@ msgstr "Image"
 msgid "图形编辑器"
 msgstr "Graphical editor"
 
+#: src/components/IconCreator/IconCreator.tsx:594
+msgid "图标保存成功"
+msgstr ""
+
+#: src/components/IconCreator/IconCreator.tsx:716
+#: src/components/IconCreator/IconCreator.tsx:722
+msgid "图片"
+msgstr "Image"
+
+#: src/components/IconCreator/IconCreator.tsx:581
+msgid "圆形"
+msgstr "Circle"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:59
 msgid "圆角"
 msgstr "Rounded corners"
+
+#: src/components/IconCreator/IconCreator.tsx:582
+msgid "圆角矩形"
+msgstr "Rounded rectangle"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:176
 msgid "在对话框的左下角显示一个小头像"
@@ -809,7 +838,7 @@ msgstr "Tiling"
 msgid "应用"
 msgstr "Apply"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:162
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
 msgid "应用的模板"
 msgstr "Applied template"
 
@@ -1095,6 +1124,10 @@ msgstr "New template"
 msgid "新的游戏"
 msgstr "New game"
 
+#: src/components/IconCreator/IconCreator.tsx:580
+msgid "方形"
+msgstr "Square"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:126
 msgid "旁白模式"
 msgstr "Voiceover mode"
@@ -1196,11 +1229,11 @@ msgstr "Title Button List"
 msgid "标题按钮文字"
 msgstr "Title Button Text"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:138
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:142
 msgid "标题背景图片"
 msgstr "Title background image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:146
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:150
 msgid "标题背景音乐"
 msgstr "Title background music"
 
@@ -1322,23 +1355,27 @@ msgstr "Games"
 msgid "游戏列表"
 msgstr "Game list"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:133
 msgid "游戏包名"
 msgstr "Game package name"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:117
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:121
 msgid "游戏名称"
 msgstr "Game name"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:195
+msgid "游戏图标"
+msgstr "Game icon"
 
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:68
 msgid "游戏控制"
 msgstr "Game control"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:125
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
 msgid "游戏简介"
 msgstr "Game description"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:121
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:125
 msgid "游戏识别码"
 msgstr "Game ID"
 
@@ -1383,6 +1420,11 @@ msgstr "Relative"
 msgid "睁开眼睛"
 msgstr "Open eyes"
 
+#: src/components/ColorPickerPopup/ColorPickerPopup.tsx:125
+#: src/components/IconCreator/IconCreator.tsx:814
+msgid "确定"
+msgstr "OK"
+
 #: src/pages/dashboard/TemplateElement.tsx:131
 msgid "确定要删除 \"{templateName}\" 模板吗？"
 msgstr "Are you sure you want to delete the \"{templateName}\" template?"
@@ -1415,9 +1457,17 @@ msgstr "Video options"
 msgid "禁止跳过视频"
 msgstr "Disable skipping video"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:197
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:213
 msgid "禁用"
 msgstr "Disabled"
+
+#: src/components/IconCreator/IconCreator.tsx:700
+msgid "移动前景图片"
+msgstr "Move foreground image"
+
+#: src/components/IconCreator/IconCreator.tsx:761
+msgid "移动背景图片"
+msgstr "Move background image"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
 msgid "立绘"
@@ -1491,10 +1541,19 @@ msgstr "Edit component"
 msgid "缩放"
 msgstr "Scale"
 
+#: src/components/IconCreator/IconCreator.tsx:692
+msgid "缩放前景图片"
+msgstr "Resize the foreground image"
+
+#: src/components/IconCreator/IconCreator.tsx:753
+msgid "缩放背景图片"
+msgstr "Resize the background image"
+
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:117
 msgid "老电影滤镜"
 msgstr "Old film filter"
 
+#: src/components/IconCreator/IconCreator.tsx:714
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:105
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
@@ -1584,6 +1643,10 @@ msgstr "Get input"
 #: src/pages/editor/MainArea/EditorToolbar.tsx:56
 msgid "行脚本"
 msgstr "Line of script"
+
+#: src/components/IconCreator/IconCreator.tsx:777
+msgid "裁剪形状"
+msgstr "Clip Shape"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:98
 msgid "要删除属性{0}吗？"
@@ -1687,6 +1750,14 @@ msgstr "Language"
 msgid "语音"
 msgstr "Voice"
 
+#: src/components/IconCreator/IconCreator.tsx:689
+msgid "调整前景图片"
+msgstr "Resize foreground image"
+
+#: src/components/IconCreator/IconCreator.tsx:750
+msgid "调整背景图片"
+msgstr "Resize background image"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:28
 msgid "调用/切换场景"
 msgstr "Call/Change Scene"
@@ -1741,6 +1812,11 @@ msgstr "Choose"
 msgid "选择动画"
 msgstr "Choose Animation"
 
+#: src/components/IconCreator/IconCreator.tsx:683
+#: src/components/IconCreator/IconCreator.tsx:745
+msgid "选择图片"
+msgstr "Choose Image"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
 msgid "选择场景文件"
 msgstr "Choose Scene File"
@@ -1786,6 +1862,10 @@ msgstr "Choose Exit Animation"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:55
 msgid "选择预设目标"
 msgstr "Choose Preset Target"
+
+#: src/components/ColorPickerPopup/ColorPickerPopup.tsx:80
+msgid "选择颜色"
+msgstr "Select Color"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:59
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:64
@@ -1878,6 +1958,10 @@ msgstr "Hide Sidebar"
 msgid "隐藏文本框"
 msgstr "Hide Text Box"
 
+#: src/components/IconCreator/IconCreator.tsx:595
+msgid "需要前往资源管理器确认吗？"
+msgstr ""
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGPosition.tsx:15
 msgid "静态"
 msgstr "Static"
@@ -1906,6 +1990,8 @@ msgstr "Music"
 msgid "项目主页"
 msgstr "Project Homepage"
 
+#: src/components/IconCreator/IconCreator.tsx:716
+#: src/components/IconCreator/IconCreator.tsx:721
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:49
 msgid "颜色"

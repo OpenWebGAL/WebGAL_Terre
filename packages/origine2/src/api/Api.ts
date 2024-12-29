@@ -133,6 +133,11 @@ export interface RenameDto {
   newName: string;
 }
 
+export interface IconsDto {
+  /** The icons of the game */
+  platforms: string[];
+}
+
 export interface TemplateInfoDto {
   /** The name of the template */
   name: string;
@@ -785,6 +790,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerGetIcons
+     * @summary Get Game Icons
+     * @request GET:/api/manageGame/getIcons/{gameDir}
+     */
+    manageGameControllerGetIcons: (gameDir: string, params: RequestParams = {}) =>
+      this.request<IconsDto, void>({
+        path: `/api/manageGame/getIcons/${gameDir}`,
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
