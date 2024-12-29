@@ -8,6 +8,7 @@
 
 .wrapper:hover{
   background: var(--black-5pct);
+  border-radius: var(--radius-md);
 }
 
 .icon{
@@ -18,7 +19,15 @@
   align-items: center;
 }
 
+.icon svg{
+  color: var(--primary);
+  font-size: 25px;
+  height: 25px;
+  width: 25px;
+}
+
 .text{
+  color: var(--text-sub);
   font-size: 13px;
   margin-top: 3px;
 }

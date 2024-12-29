@@ -6,7 +6,8 @@
   min-height: 125px;
   overflow: auto;
   display: flex;
-  margin: 4px 8px;
+  margin: 0 4px 8px 4px;
+  padding: 4px 8px 0 8px;
 
   &::-webkit-scrollbar {
     //width: 3px;
