@@ -289,7 +289,6 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
    * @param imageBlob 要调整的图像。
    * @param size 新图像的尺寸。
    * @param padding 0-1 之间的值，表示边距占图像大小的比例。
-   * @param format 图像格式。
    * @returns 调整后的图像。
    */
   const resizeImage = async (
