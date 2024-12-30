@@ -17,7 +17,6 @@ import { t } from '@lingui/macro';
 
 import styles from './colorPickerPopup.module.scss';
 import { useEffect, useMemo, useState } from 'react';
-import { IColor } from '@fluentui/react';
 import { ArrowSwapFilled, ArrowSwapRegular, bundleIcon } from '@fluentui/react-icons';
 
 const ArrowSwapIcon = bundleIcon(ArrowSwapFilled, ArrowSwapRegular);
@@ -77,7 +76,7 @@ export const ColorPickerPopup = ({
       <PopoverTrigger disableButtonEnhancement>
         <Button style={{ paddingLeft: 0, height: '2rem' }}>
           <div style={{ backgroundColor: tinycolor(color).toRgbString(), height: '2rem', aspectRatio: '1/1' }} />
-          <span style={{ marginLeft: '0.5rem' }}>{t`选择颜色`}</span>
+          <span style={{ marginLeft: '0.5rem', textWrap: 'nowrap' }}>{t`选择颜色`}</span>
         </Button>
       </PopoverTrigger>
 

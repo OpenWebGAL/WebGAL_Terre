@@ -1,20 +1,19 @@
 import { api } from '@/api';
 import { IconsDto } from '@/api/Api';
-import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger, Dropdown, Link, Option, Slider, Spinner, Toast, ToastBody, Toaster, ToastFooter, ToastTitle, ToastTrigger, useId, useToastController } from '@fluentui/react-components';
+import { Button, Card, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger, Dropdown, Link, Option, Slider, Spinner, Toast, ToastBody, Toaster, ToastFooter, ToastTitle, ToastTrigger, useId, useToastController } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './iconCreator.module.scss';
 import axios from 'axios';
 import { ColorPickerPopup } from '../ColorPickerPopup/ColorPickerPopup';
 import { tinycolor } from '@ctrl/tinycolor';
-import { ArrowMoveFilled, ArrowMoveRegular, bundleIcon, DismissFilled, DismissRegular } from '@fluentui/react-icons';
+import { ArrowMoveFilled, ArrowMoveRegular, bundleIcon } from '@fluentui/react-icons';
 import { PngIcoConverter } from "@/utils/png2icojs";
 
 type IIconShape = 'circle' | 'square' | 'rounded-rectangle';
 type IBackgroundStyle = 'color' | 'image';
 
 const ArrowMoveIcon = bundleIcon(ArrowMoveFilled, ArrowMoveRegular);
-const DismissIcon = bundleIcon(DismissFilled, DismissRegular);
 
 const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButton: ReactElement }) => {
 
@@ -32,7 +31,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
   const foregroundCanvasRef = useRef<HTMLCanvasElement>(null);
   const backgroundCanvasRef = useRef<HTMLCanvasElement>(null);
-  const maskCanvasRef = useRef<HTMLCanvasElement>(null);
+  const gridCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const [foregroundImage, setForegroundImage] = useState<HTMLImageElement | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<HTMLImageElement | null>(null);
@@ -46,54 +45,51 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
   const [iconShape, setIconShape] = useState<IIconShape>('square');
   const [backgroundStyle, setBackgroundStyle] = useState<IBackgroundStyle>('color');
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+  const [gridLineColor, setGridLineColor] = useState<'#FFFFFF' | '#000000'>('#000000');
 
   const canvasSize = 1536;
 
   // 图标的裁剪方式为先从画布上裁剪正方形，然后再从正方形上裁剪出图标
   const clipInset = {
-    main: 256 / canvasSize,
+    main: 1 / 6,
     web: 0.0636,
     electron: 0.0636,
     android: {
-      playStore: 128 / canvasSize,
+      playStore: 1 / 12,
       roundedRectangle: 0.1042,
       circle: 0.0365,
     }
   };
 
-  const drawMask = useCallback(() => {
-    if (maskCanvasRef.current) {
-      const ctx = maskCanvasRef.current.getContext('2d');
+  const drawGrid = useCallback(async () => {
+    if (gridCanvasRef.current) {
+      const ctx = gridCanvasRef.current.getContext('2d');
       if (ctx) {
         ctx.clearRect(0, 0, canvasSize, canvasSize);
+        ctx.imageSmoothingEnabled = true;
 
-        ctx.fillStyle = 'rgb(0, 0, 0)';
-        ctx.fillRect(0, 0, canvasSize, canvasSize);
+        ctx.shadowColor = gridLineColor === '#000000' ? '#FFFFFF' : '#000000';
+        ctx.shadowBlur = 16;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
 
-        ctx.globalCompositeOperation = 'destination-out';
+        let clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.web * 2);
+        const centerX = canvasSize / 2;
+        const centerY = canvasSize / 2;
 
+        ctx.strokeStyle = gridLineColor;
+        ctx.lineWidth = 8;
+
+        // web and electron 图标网格
+        ctx.beginPath();
         if (iconShape === 'square') {
-          const clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.web * 2);
-          const centerX = canvasSize / 2;
-          const centerY = canvasSize / 2;
-          ctx.beginPath();
           ctx.rect(centerX - clippedSize / 2, centerY - clippedSize / 2, clippedSize, clippedSize);
-          ctx.closePath();
-          ctx.fill();
         } else if (iconShape === 'circle') {
-          const clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.web * 2);
-          const centerX = canvasSize / 2;
-          const centerY = canvasSize / 2;
-          ctx.beginPath();
           ctx.arc(centerX, centerY, clippedSize / 2, 0, Math.PI * 2);
-          ctx.closePath();
-          ctx.fill();
         } else if (iconShape === 'rounded-rectangle') {
-          const clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.web * 2);
-          const radius = 34 * (canvasSize * (1 - clipInset.main * 2) / foregroundCanvasRef?.current!.clientWidth);
+          const radius = 34 * (canvasSize * (1 - clipInset.main * 2) / gridCanvasRef.current.clientWidth);
           const startX = (canvasSize - clippedSize) / 2;
           const startY = (canvasSize - clippedSize) / 2;
-          ctx.beginPath();
           ctx.moveTo(startX + radius, startY);
           ctx.lineTo(startX + clippedSize - radius, startY);
           ctx.arcTo(startX + clippedSize, startY, startX + clippedSize, startY + radius, radius);
@@ -103,14 +99,51 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
           ctx.arcTo(startX, startY + clippedSize, startX, startY + clippedSize - radius, radius);
           ctx.lineTo(startX, startY + radius);
           ctx.arcTo(startX, startY, startX + radius, startY, radius);
-          ctx.closePath();
-          ctx.fill();
         }
+        ctx.closePath();
+        ctx.stroke();
 
-        ctx.globalCompositeOperation = 'source-over';
+        // maskable 图标网格
+        clippedSize = canvasSize * (1 - clipInset.main * 2);
+        ctx.beginPath();
+        ctx.rect(centerX - clippedSize / 2, centerY - clippedSize / 2, clippedSize, clippedSize);
+        ctx.closePath();
+        ctx.stroke();
+
+        // android rounded rectangle 图标网格
+        clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.android.roundedRectangle * 2);
+        const radius = 34 * (canvasSize * (1 - clipInset.main * 2) / gridCanvasRef.current.clientWidth);
+        const startX = (canvasSize - clippedSize) / 2;
+        const startY = (canvasSize - clippedSize) / 2;
+        ctx.beginPath();
+        ctx.moveTo(startX + radius, startY);
+        ctx.lineTo(startX + clippedSize - radius, startY);
+        ctx.arcTo(startX + clippedSize, startY, startX + clippedSize, startY + radius, radius);
+        ctx.lineTo(startX + clippedSize, startY + clippedSize - radius);
+        ctx.arcTo(startX + clippedSize, startY + clippedSize, startX + clippedSize - radius, startY + clippedSize, radius);
+        ctx.lineTo(startX + radius, startY + clippedSize);
+        ctx.arcTo(startX, startY + clippedSize, startX, startY + clippedSize - radius, radius);
+        ctx.lineTo(startX, startY + radius);
+        ctx.arcTo(startX, startY, startX + radius, startY, radius);
+        ctx.closePath();
+        ctx.stroke();
+
+        // android circle 图标网格
+        clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.android.circle * 2);
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, clippedSize / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.stroke();
+
+        // android play store 图标网格
+        clippedSize = canvasSize * (1 - clipInset.android.playStore * 2);
+        ctx.beginPath();
+        ctx.rect(centerX - clippedSize / 2, centerY - clippedSize / 2, clippedSize, clippedSize);
+        ctx.closePath();
+        ctx.stroke();
       }
     }
-  }, [iconShape]);
+  }, [iconShape, gridLineColor]);
 
   const drawForeground = useCallback(async () => {
     if (foregroundImage && foregroundCanvasRef.current) {
@@ -132,7 +165,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     }
   }, [foregroundImage, foregroundOffset, foregroundScale, iconShape]);
 
-  const drawBackground = useCallback(() => {
+  const drawBackground = useCallback(async () => {
     if (backgroundCanvasRef.current) {
       const ctx = backgroundCanvasRef.current.getContext('2d');
       if (ctx) {
@@ -140,54 +173,116 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
         if (backgroundStyle === 'color') {
           ctx.fillStyle = tinycolor(backgroundColor).toHex8String();
           ctx.fillRect(0, 0, canvasSize, canvasSize);
-        } else if (backgroundImage && backgroundStyle === 'image') {
-          const imageAspectRatio = backgroundImage.width / backgroundImage.height;
-          const drawWidth = (imageAspectRatio > 1 ? canvasSize : canvasSize * imageAspectRatio) * backgroundScale;
-          const drawHeight = (imageAspectRatio > 1 ? canvasSize / imageAspectRatio : canvasSize) * backgroundScale;
-
-          ctx.drawImage(
-            backgroundImage,
-            (canvasSize - drawWidth) / 2 + backgroundOffset.x,
-            (canvasSize - drawHeight) / 2 + backgroundOffset.y,
-            drawWidth,
-            drawHeight,
-          );
+        } else if (backgroundStyle === 'image') {
+          // ctx.fillStyle = '#FFFFFF';
+          // ctx.fillRect(0, 0, canvasSize, canvasSize);
+          if (backgroundImage) {
+            const imageAspectRatio = backgroundImage.width / backgroundImage.height;
+            const drawWidth = (imageAspectRatio > 1 ? canvasSize : canvasSize * imageAspectRatio) * backgroundScale;
+            const drawHeight = (imageAspectRatio > 1 ? canvasSize / imageAspectRatio : canvasSize) * backgroundScale;
+            ctx.drawImage(
+              backgroundImage,
+              (canvasSize - drawWidth) / 2 + backgroundOffset.x,
+              (canvasSize - drawHeight) / 2 + backgroundOffset.y,
+              drawWidth,
+              drawHeight,
+            );
+          }
         }
       }
     }
   }, [backgroundStyle, backgroundColor, backgroundImage, backgroundOffset, backgroundScale]);
 
+  const getCombinedBrightness = async (canvas1: HTMLCanvasElement, canvas2: HTMLCanvasElement) => {
+    const width = Math.max(canvas1.width, canvas2.width);
+    const height = Math.max(canvas1.height, canvas2.height);
+
+    const combinedCanvas = document.createElement('canvas');
+    combinedCanvas.width = width;
+    combinedCanvas.height = height;
+    const ctx = combinedCanvas.getContext('2d');
+
+    if (!ctx) {
+      return 255;
+    }
+
+    ctx.drawImage(canvas1, 0, 0);
+    ctx.drawImage(canvas2, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, combinedCanvas.width, combinedCanvas.height);
+    const data = imageData.data;
+
+    let totalBrightness = 0;
+    const pixelCount = data.length / 4;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const a = data[i + 3];
+
+      if (a === 0) {
+        totalBrightness += 0.299 * 255 + 0.587 * 255 + 0.114 * 255;
+      } else {
+        const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+        totalBrightness += brightness;
+      }
+    }
+
+    const averageBrightness = totalBrightness / pixelCount;
+    return averageBrightness;
+  };
+
+  const updateGridLineColor = async () => {
+    const brightness = await getCombinedBrightness(backgroundCanvasRef.current!, foregroundCanvasRef.current!);
+    if (brightness > 128) {
+      setGridLineColor('#000000');
+    } else {
+      setGridLineColor('#FFFFFF');
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
       drawBackground();
-      drawMask();
+      drawGrid();
     }
   }, [isOpen]);
 
   useEffect(() => {
-    drawMask();
-  }, [iconShape]);
+    drawGrid();
+  }, [iconShape, gridLineColor]);
 
   useEffect(() => {
-    drawForeground();
+    (async () => {
+      await drawForeground();
+      await updateGridLineColor();
+    })();
   }, [foregroundImage, foregroundOffset, foregroundScale]);
 
   useEffect(() => {
-    drawBackground();
+    (async () => {
+      await drawBackground();
+      await updateGridLineColor();
+    })();
   }, [backgroundStyle, backgroundColor, backgroundImage, backgroundOffset, backgroundScale]);
 
-  const updateImage = (file: File, layer: 'foreground' | 'background') => {
+  const selectImage = (file: File, layer: 'foreground' | 'background') => {
     if (layer === 'foreground') {
       const img = new Image();
       img.src = URL.createObjectURL(file);
       img.onload = () => {
         setForegroundImage(img);
+        setForegroundScale(1);
+        setForegroundOffset({ x: 0, y: 0 });
       };
     } else if (layer === 'background') {
       const img = new Image();
       img.src = URL.createObjectURL(file);
       img.onload = () => {
         setBackgroundImage(img);
+        setBackgroundScale(1);
+        setBackgroundOffset({ x: 0, y: 0 });
       };
     }
   };
@@ -282,7 +377,6 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     return clippedBlob;
   };
 
-
   /**
    * 调整图像大小。
    *
@@ -334,7 +428,6 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     }
 
     return resizedBlob;
-
   };
 
   const handleSave = async (): Promise<boolean> => {
@@ -543,6 +636,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     setBackgroundOffset({ x: 0, y: 0 });
     setForegroundScale(1);
     setBackgroundScale(1);
+    setGridLineColor('#000000');
   };
 
   const handleUpdateOffsetMouseDown = (
@@ -591,190 +685,152 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
           <DialogBody>
             <DialogTitle>{t`修改游戏图标`}</DialogTitle>
             <DialogContent>
-              <div>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', userSelect: 'none' }}>
-                  <div style={{ padding: '1rem' }}>
-                    <div
-                      className={styles.mosaicBg}
-                      style={{
-                        position: 'relative',
-                        aspectRatio: '1/1',
-                      }}>
-                      <canvas
-                        ref={backgroundCanvasRef}
-                        width={canvasSize}
-                        height={canvasSize}
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                      />
-                      <canvas
-                        ref={foregroundCanvasRef}
-                        width={canvasSize}
-                        height={canvasSize}
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                      />
-                      <canvas
-                        ref={maskCanvasRef}
-                        width={canvasSize}
-                        height={canvasSize}
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.125 }}
-                      />
-                      <div style={{
-                        position: 'absolute',
-                        top: `${1 / 6 * 100}%`,
-                        left: `${1 / 6 * 100}%`,
-                        width: `${4 / 6 * 100}%`,
-                        height: `${4 / 6 * 100}%`,
-                        border: '1px solid rgba(255, 255, 255, 0.5)',
-                      }} />
-                      <div style={{
-                        position: 'absolute',
-                        top: `${1 / 12 * 100}%`,
-                        left: `${1 / 12 * 100}%`,
-                        width: `${10 / 12 * 100}%`,
-                        height: `${10 / 12 * 100}%`,
-                        border: '1px solid rgba(255, 255, 255, 0.5)',
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', userSelect: 'none', gap: '1rem', }}>
+                <div className={styles.mosaicBg} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem' }} >
+                  <Card appearance='filled-alternative' className={styles.canvasContainer}>
+                    <canvas ref={backgroundCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
+                    <canvas ref={foregroundCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
+                    <canvas ref={gridCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
+                  </Card>
+                </div>
+                <div>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'start',
+                    gap: '0.5rem',
+                    marginTop: '0.5rem',
+                  }}>
+                    <span className={styles.title}>{t`前景`}</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="foreground-file-input"
+                      style={{ display: 'none' }}
+                      onChange={(event) => {
+                        if (!event.target.files) return;
+                        const file = event.target.files[0];
+                        selectImage(file, 'foreground');
                       }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'start',
-                      gap: '0.5rem',
-                      marginTop: '0.5rem',
-                    }}>
-                      <span className={styles.title}>{t`前景`}</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        id="foreground-file-input"
-                        style={{ display: 'none' }}
-                        onChange={(event) => {
-                          if (!event.target.files) return;
-                          const file = event.target.files[0];
-                          updateImage(file, 'foreground');
-                        }}
-                      />
-                      <Button className={styles.fileInput}>
-                        <label htmlFor="foreground-file-input">
-                          {t`选择图片`}
-                        </label>
-                      </Button>
+                    />
+                    <Button className={styles.fileInput}>
+                      <label htmlFor="foreground-file-input">
+                        {t`选择图片`}
+                      </label>
+                    </Button>
 
-                      {foregroundImage && (
-                        <>
-                          <span className={styles.title}>{t`调整前景图片`}</span>
-                          <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <Slider
-                              title={t`缩放前景图片`}
-                              min={0}
-                              max={300}
-                              value={foregroundScale * 100}
-                              onChange={(_, data) => setForegroundScale(data.value / 100)}
-                              style={{ width: '100%', flexGrow: 1 }}
-                            />
-                            <Button
-                              title={t`移动前景图片`}
-                              appearance='transparent'
-                              icon={<ArrowMoveIcon />}
-                              onMouseDown={(event) =>
-                                handleUpdateOffsetMouseDown({
-                                  event,
-                                  offset: foregroundOffset,
-                                  onChange: setForegroundOffset,
-                                })}
-                              style={{ cursor: 'grab' }}
-                            />
-                          </div>
-                        </>
-                      )}
-                      <span className={styles.title}>{t`背景`}</span>
-                      <Dropdown
-                        value={backgroundStyle === 'color' ? t`颜色` : t`图片`}
-                        style={{ minWidth: 0 }}
-                        selectedOptions={[backgroundStyle]}
-                        onOptionSelect={(event, data) => setBackgroundStyle(data.optionValue as IBackgroundStyle)}
-                      >
-                        <Option value="color" >{t`颜色`}</Option>
-                        <Option value="image">{t`图片`}</Option>
-                      </Dropdown>
-                      {backgroundStyle === 'color' &&
-                        <ColorPickerPopup
-                          color={backgroundColor}
-                          onChange={(color) => setBackgroundColor(color)}
-                        />
-                      }
-                      {backgroundStyle === 'image' &&
-                        <>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            id="background-file-input"
-                            style={{ display: 'none' }}
-                            onChange={(event) => {
-                              if (!event.target.files) return;
-                              const file = event.target.files[0];
-                              updateImage(file, 'background');
-                            }}
+                    {foregroundImage && (
+                      <>
+                        <span className={styles.title}>{t`调整前景图片`}</span>
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                          <Slider
+                            title={t`缩放前景图片`}
+                            min={0}
+                            max={300}
+                            value={foregroundScale * 100}
+                            onChange={(_, data) => setForegroundScale(data.value / 100)}
+                            style={{ width: '100%', flexGrow: 1 }}
                           />
-                          <Button className={styles.fileInput}>
-                            <label htmlFor="background-file-input">
-                              {t`选择图片`}
-                            </label>
-                          </Button>
-                          {backgroundImage && (
-                            <>
-                              <span className={styles.title}>{t`调整背景图片`}</span>
-                              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                <Slider
-                                  title={t`缩放背景图片`}
-                                  min={0}
-                                  max={300}
-                                  value={backgroundScale * 100}
-                                  onChange={(_, data) => setBackgroundScale(data.value / 100)}
-                                  style={{ width: '100%' }}
-                                />
-                                <Button
-                                  title={t`移动背景图片`}
-                                  appearance='transparent'
-                                  icon={<ArrowMoveIcon />}
-                                  onMouseDown={(event) =>
-                                    handleUpdateOffsetMouseDown({
-                                      event,
-                                      offset: backgroundOffset,
-                                      onChange: setBackgroundOffset,
-                                    })}
-                                  style={{ cursor: 'grab' }}
-                                />
-                              </div>
-                            </>
-                          )}
-                        </>
-                      }
-                      <span className={styles.title}>{t`裁剪形状`}</span>
-                      <Dropdown
-                        value={iconShapeMap.get(iconShape)}
-                        style={{ minWidth: 0 }}
-                        selectedOptions={[iconShape]}
-                        onOptionSelect={(_event, data) => setIconShape(data.optionValue as IIconShape)}
-                      >
-                        {Array.from(iconShapeMap).map(([key, value]) => (
-                          <Option key={key} value={key}>{value}</Option>
-                        ))}
-                      </Dropdown>
-                    </div>
+                          <Button
+                            title={t`移动前景图片`}
+                            appearance='transparent'
+                            icon={<ArrowMoveIcon />}
+                            onMouseDown={(event) =>
+                              handleUpdateOffsetMouseDown({
+                                event,
+                                offset: foregroundOffset,
+                                onChange: setForegroundOffset,
+                              })}
+                            style={{ cursor: 'grab' }}
+                          />
+                        </div>
+                      </>
+                    )}
+                    <span className={styles.title}>{t`背景`}</span>
+                    <Dropdown
+                      value={backgroundStyle === 'color' ? t`颜色` : t`图片`}
+                      style={{ minWidth: 0 }}
+                      selectedOptions={[backgroundStyle]}
+                      onOptionSelect={(event, data) => setBackgroundStyle(data.optionValue as IBackgroundStyle)}
+                    >
+                      <Option value="color" >{t`颜色`}</Option>
+                      <Option value="image">{t`图片`}</Option>
+                    </Dropdown>
+                    {backgroundStyle === 'color' &&
+                      <ColorPickerPopup
+                        color={backgroundColor}
+                        onChange={(color) => setBackgroundColor(color)}
+                      />
+                    }
+                    {backgroundStyle === 'image' &&
+                      <>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          id="background-file-input"
+                          style={{ display: 'none' }}
+                          onChange={(event) => {
+                            if (!event.target.files) return;
+                            const file = event.target.files[0];
+                            selectImage(file, 'background');
+                          }}
+                        />
+                        <Button className={styles.fileInput}>
+                          <label htmlFor="background-file-input">
+                            {t`选择图片`}
+                          </label>
+                        </Button>
+                        {backgroundImage && (
+                          <>
+                            <span className={styles.title}>{t`调整背景图片`}</span>
+                            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                              <Slider
+                                title={t`缩放背景图片`}
+                                min={0}
+                                max={300}
+                                value={backgroundScale * 100}
+                                onChange={(_, data) => setBackgroundScale(data.value / 100)}
+                                style={{ width: '100%' }}
+                              />
+                              <Button
+                                title={t`移动背景图片`}
+                                appearance='transparent'
+                                icon={<ArrowMoveIcon />}
+                                onMouseDown={(event) =>
+                                  handleUpdateOffsetMouseDown({
+                                    event,
+                                    offset: backgroundOffset,
+                                    onChange: setBackgroundOffset,
+                                  })}
+                                style={{ cursor: 'grab' }}
+                              />
+                            </div>
+                          </>
+                        )}
+                      </>
+                    }
+                    <span className={styles.title}>{t`裁剪形状`}</span>
+                    <Dropdown
+                      value={iconShapeMap.get(iconShape)}
+                      style={{ minWidth: 0 }}
+                      selectedOptions={[iconShape]}
+                      onOptionSelect={(_event, data) => setIconShape(data.optionValue as IIconShape)}
+                    >
+                      {Array.from(iconShapeMap).map(([key, value]) => (
+                        <Option key={key} value={key}>{value}</Option>
+                      ))}
+                    </Dropdown>
                   </div>
                 </div>
               </div>
             </DialogContent>
-            <DialogActions>
+            <DialogActions style={{ marginTop: '1rem' }}>
               <DialogTrigger disableButtonEnhancement>
                 <Button appearance='secondary'>{t`取消`}</Button>
               </DialogTrigger>
               <Button
                 appearance='primary'
+                disabled={isSaving}
                 onClick={async () => {
                   setIsSaving(true);
                   const result = await handleSave();
@@ -786,10 +842,11 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
                   flexDirection: 'row',
                   alignItems: 'center',
                   gap: '0.5rem',
+                  cursor: isSaving ? 'wait' : 'pointer',
                 }}
               >
-                {isSaving && <Spinner size='extra-tiny' style={{ transform: 'translateY(1.5px)' }} />}
-                <span>{t`确定`}</span>
+                {isSaving && <Spinner size='extra-tiny' />}
+                {!isSaving && <span>{t`确定`}</span>}
               </Button>
             </DialogActions>
           </DialogBody>
