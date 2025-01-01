@@ -344,6 +344,11 @@ msgstr "色を変更する"
 msgid "值"
 msgstr "値"
 
+#: src/components/Resizer/Resizer.tsx:229
+#: src/components/Resizer/Resizer.tsx:236
+msgid "偏移"
+msgstr "Offset"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:53
 msgid "偏移右侧距离（定位用）"
 msgstr "右側のオフセット（位置決め用）"
@@ -532,7 +537,7 @@ msgstr "ゲームをリフレッシュ"
 
 #: src/components/IconCreator/IconCreator.tsx:662
 msgid "前景"
-msgstr "フォアグラウンド"
+msgstr "Foreground"
 
 #: src/pages/editor/Topbar/Topbar.tsx:125
 msgid "功能区显示"
@@ -574,8 +579,6 @@ msgstr "新しいバージョンが検出されました"
 msgid "取消"
 msgstr "キャンセル"
 
-#: src/components/ResizerPopup/Resizer.tsx:229
-#: src/components/ResizerPopup/Resizer.tsx:236
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:85
 msgid "变换"
 msgstr "トランスフォーム"
@@ -1581,9 +1584,9 @@ msgstr "ゲームの編集"
 msgid "编辑组件"
 msgstr "コンポーネントの編集"
 
-#: src/components/ResizerPopup/Resizer.tsx:198
-#: src/components/ResizerPopup/Resizer.tsx:209
-#: src/components/ResizerPopup/Resizer.tsx:220
+#: src/components/Resizer/Resizer.tsx:198
+#: src/components/Resizer/Resizer.tsx:209
+#: src/components/Resizer/Resizer.tsx:220
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:94
 msgid "缩放"
 msgstr "スケール"

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { ColorPickerPopup } from '../ColorPickerPopup/ColorPickerPopup';
 import { tinycolor } from '@ctrl/tinycolor';
 import { PngIcoConverter } from "@/utils/png2icojs";
-import Resizer from '../ResizerPopup/Resizer';
+import Resizer from '../Resizer/Resizer';
 
 type IIconShape = 'circle' | 'square' | 'rounded-rectangle';
 type IBackgroundStyle = 'color' | 'image';

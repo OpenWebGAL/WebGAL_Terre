@@ -28,7 +28,7 @@ export interface ResizerProps {
   scaleMin?: number;
   scaleMax?: number;
   scaleLinked?: boolean;
-  isCompactButton?: boolean;
+  quickControl?: boolean;
   onOffsetChange?: (offset: IOffset) => void;
   onScaleChange?: (scale: IScale) => void;
 }
@@ -41,7 +41,7 @@ export interface ResizerProps {
  * @param scaleMin 最小缩放值。默认为0.1。
  * @param scaleMax 最大缩放值。默认为3。
  * @param scaleLinked 默认为false。开启时，x, y缩放比例相同。
- * @param isCompactButton 默认为 false。开启时可在按钮移动图标上拖动以调整偏移，滚轮以调整缩放。
+ * @param quickControl 默认为 false。开启时可在按钮移动图标上拖动以调整偏移，滚轮以调整缩放。
  * @param onOffsetChange 偏移变化回调。
  * @param onScaleChange 缩放变化回调。
  */
@@ -52,7 +52,7 @@ const Resizer = ({
   scaleMin = 0.1,
   scaleMax = 3,
   scaleLinked = false,
-  isCompactButton = false,
+  quickControl = false,
   onOffsetChange,
   onScaleChange,
 }: ResizerProps) => {
@@ -176,9 +176,9 @@ const Resizer = ({
     >
       <PopoverTrigger disableButtonEnhancement>
         <Button
-          style={{ paddingLeft: isCompactButton ? 0 : undefined }}
+          style={{ paddingLeft: quickControl ? 0 : undefined }}
           icon={
-            isCompactButton ?
+            quickControl ?
               <DragIcon
                 onMouseDown={(event) => handleUpdateOffsetMouseDown({ event, offset: offset!, onChange: onOffsetChange! })}
                 onWheel={(event) => handleScaleWheel(event, 'xy')}
@@ -226,14 +226,14 @@ const Resizer = ({
             }
             <Input
               type="number"
-              contentBefore={<Text wrap={false}>{t`变换` + ' X:'}</Text>}
+              contentBefore={<Text wrap={false}>{t`偏移` + ' X:'}</Text>}
               value={offset.x.toString()}
               className={styles.input}
               onChange={(_, data) => onOffsetChange({ x: Number(data.value), y: offset.y })}
             />
             <Input
               type="number"
-              contentBefore={<Text wrap={false}>{t`变换` + ' Y:'}</Text>}
+              contentBefore={<Text wrap={false}>{t`偏移` + ' Y:'}</Text>}
               value={offset.y.toString()}
               className={styles.input}
               onChange={(_, data) => onOffsetChange({ x: offset.x, y: Number(data.value) })}
