@@ -53,7 +53,7 @@ export const ColorPickerPopup = ({
     if (tinycolor(color).isValid) {
       setInputColor(forMater(inputColor));
     }
-  },[format]);
+  }, [format]);
 
   const handleChangeFormat = () => {
     const index = formats.indexOf(format);
@@ -76,7 +76,7 @@ export const ColorPickerPopup = ({
       <PopoverTrigger disableButtonEnhancement>
         <Button style={{ paddingLeft: 0, height: '2rem' }}>
           <div style={{ backgroundColor: tinycolor(color).toRgbString(), height: '2rem', aspectRatio: '1/1' }} />
-          <span style={{ marginLeft: '0.5rem', textWrap: 'nowrap' }}>{t`选择颜色`}</span>
+          <span style={{ marginLeft: '10px', textWrap: 'nowrap' }}>{t`选择颜色`}</span>
         </Button>
       </PopoverTrigger>
 

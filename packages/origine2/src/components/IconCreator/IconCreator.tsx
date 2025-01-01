@@ -1,33 +1,37 @@
 import { api } from '@/api';
-import { IconsDto } from '@/api/Api';
-import { Button, Card, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger, Dropdown, Link, Option, Slider, Spinner, Toast, ToastBody, Toaster, ToastFooter, ToastTitle, ToastTrigger, useId, useToastController } from '@fluentui/react-components';
+import { Button, Card, Carousel, CarouselCard, CarouselSlider, CarouselViewport, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Dropdown, Option, Spinner } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './iconCreator.module.scss';
 import axios from 'axios';
 import { ColorPickerPopup } from '../ColorPickerPopup/ColorPickerPopup';
 import { tinycolor } from '@ctrl/tinycolor';
-import { ArrowMoveFilled, ArrowMoveRegular, bundleIcon } from '@fluentui/react-icons';
 import { PngIcoConverter } from "@/utils/png2icojs";
+import Resizer from '../ResizerPopup/Resizer';
 
 type IIconShape = 'circle' | 'square' | 'rounded-rectangle';
 type IBackgroundStyle = 'color' | 'image';
-
-const ArrowMoveIcon = bundleIcon(ArrowMoveFilled, ArrowMoveRegular);
+interface Icon {
+  name: string;
+  src: string;
+}
+interface IIcons {
+  ico: Icon,
+  web: Icon,
+  webMaskable: Icon,
+  electron: Icon,
+  androidForeground: Icon,
+  androidBackground: Icon,
+  androidFullBleed: Icon,
+  androidLegacy: Icon,
+  androidRound: Icon,
+}
 
 const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButton: ReactElement }) => {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
-  const [platforms, setPlatforms] = useState<IconsDto['platforms']>([]);
-
-  useEffect(() => {
-    const getIcons = async () => {
-      const iconsData = (await api.manageGameControllerGetIcons(gameDir)).data;
-      setPlatforms(iconsData['platforms']);
-    };
-    getIcons();
-  }, []);
 
   const foregroundCanvasRef = useRef<HTMLCanvasElement>(null);
   const backgroundCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -46,6 +50,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
   const [backgroundStyle, setBackgroundStyle] = useState<IBackgroundStyle>('color');
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
   const [gridLineColor, setGridLineColor] = useState<'#FFFFFF' | '#000000'>('#000000');
+  const [icons, setIcons] = useState<IIcons | null>(null);
 
   const canvasSize = 1536;
 
@@ -55,9 +60,8 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     web: 0.0636,
     electron: 0.0636,
     android: {
-      playStore: 1 / 12,
-      roundedRectangle: 0.1042,
-      circle: 0.0365,
+      legacy: 0.1042,
+      round: 0.0365,
     }
   };
 
@@ -103,15 +107,15 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
         ctx.closePath();
         ctx.stroke();
 
-        // maskable 图标网格
+        // web maskable 图标网格
         clippedSize = canvasSize * (1 - clipInset.main * 2);
         ctx.beginPath();
         ctx.rect(centerX - clippedSize / 2, centerY - clippedSize / 2, clippedSize, clippedSize);
         ctx.closePath();
         ctx.stroke();
 
-        // android rounded rectangle 图标网格
-        clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.android.roundedRectangle * 2);
+        // android legacy 图标网格
+        clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.android.legacy * 2);
         const radius = 34 * (canvasSize * (1 - clipInset.main * 2) / gridCanvasRef.current.clientWidth);
         const startX = (canvasSize - clippedSize) / 2;
         const startY = (canvasSize - clippedSize) / 2;
@@ -128,17 +132,10 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
         ctx.closePath();
         ctx.stroke();
 
-        // android circle 图标网格
-        clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.android.circle * 2);
+        // android round 图标网格
+        clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.android.round * 2);
         ctx.beginPath();
         ctx.arc(centerX, centerY, clippedSize / 2, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.stroke();
-
-        // android play store 图标网格
-        clippedSize = canvasSize * (1 - clipInset.android.playStore * 2);
-        ctx.beginPath();
-        ctx.rect(centerX - clippedSize / 2, centerY - clippedSize / 2, clippedSize, clippedSize);
         ctx.closePath();
         ctx.stroke();
       }
@@ -234,7 +231,8 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
   };
 
   const updateGridLineColor = async () => {
-    const brightness = await getCombinedBrightness(backgroundCanvasRef.current!, foregroundCanvasRef.current!);
+    if (!backgroundCanvasRef.current || !foregroundCanvasRef.current) return;
+    const brightness = await getCombinedBrightness(backgroundCanvasRef.current, foregroundCanvasRef.current);
     if (brightness > 128) {
       setGridLineColor('#000000');
     } else {
@@ -254,18 +252,36 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
   }, [iconShape, gridLineColor]);
 
   useEffect(() => {
-    (async () => {
-      await drawForeground();
-      await updateGridLineColor();
-    })();
+    const timeoutId = setTimeout(updateGridLineColor, 1000);
+    drawForeground();
+    return () => clearTimeout(timeoutId);
   }, [foregroundImage, foregroundOffset, foregroundScale]);
 
   useEffect(() => {
-    (async () => {
-      await drawBackground();
-      await updateGridLineColor();
-    })();
+    const timeoutId = setTimeout(updateGridLineColor, 1000);
+    drawBackground();
+    return () => clearTimeout(timeoutId);
   }, [backgroundStyle, backgroundColor, backgroundImage, backgroundOffset, backgroundScale]);
+
+  // 切换到预览页面时，开始裁剪图标
+  useEffect(() => {
+    let isMounted = true;
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    if (activeIndex === 1) {
+      timeoutId = setTimeout(async () => {
+        const icons = await clipIcons();
+        if (!icons || !isMounted) return;
+        setIcons(icons);
+      }, 1000);
+    }
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+      setIcons(null);
+    };
+  }, [activeIndex]);
 
   const selectImage = (file: File, layer: 'foreground' | 'background') => {
     if (layer === 'foreground') {
@@ -287,47 +303,48 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     }
   };
 
-  const getCompositedImage = async (images: Blob[], size: number) => {
+  const getCompositedImage = async (imagesDataURL: string[], size: number): Promise<string | null> => {
     const compositeCanvas = document.createElement('canvas');
     compositeCanvas.width = size;
     compositeCanvas.height = size;
     const compositeContext = compositeCanvas.getContext('2d');
 
-    for (const blob of images) {
-      const img = new Image();
-      img.src = URL.createObjectURL(blob);
-      await new Promise((resolve) => {
-        img.onload = () => {
-          compositeContext?.drawImage(img, 0, 0);
-          resolve(null);
-        };
+    const loadImage = (src: string): Promise<HTMLImageElement> => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
       });
+    };
+
+    for (const url of imagesDataURL) {
+      try {
+        const img = await loadImage(url);
+        compositeContext?.drawImage(img, 0, 0);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    const compositeBlob = await new Promise<Blob | null>((resolve) => {
-      compositeCanvas.toBlob(resolve, 'image/png');
-    });
-
-    return compositeBlob;
+    return compositeCanvas.toDataURL();
   };
 
   /**
  * 裁剪图像。
  * 
- * @param {Blob} image 要裁剪的图像。
- * @param {number} inset 0-1 之间的值，表示裁剪区域的内边距百分比。
- * @param {IIconShape} shape 裁剪的形状。
- * @returns {Promise<Blob | null>} 裁剪后的图像。
+ * @param imageDataUTL 要裁剪的图像 Data URL。
+ * @param inset 0-1 之间的值，表示裁剪区域的内边距百分比。
+ * @param shape 裁剪的形状。
+ * @returns 裁剪后的图像 Data URL。
  */
-  const clipImage = async (image: Blob, inset: number, shape: IIconShape) => {
+  const clipImage = async (imageDataUTL: string, inset: number, shape: IIconShape): Promise<string> => {
     const img = new Image();
-    const imageUrl = URL.createObjectURL(image);
-    img.src = imageUrl;
+    img.src = imageDataUTL;
 
-    await new Promise((resolve) => {
-      img.onload = () => {
-        resolve(null);
-      };
+    await new Promise((resolve, reject) => {
+      img.onload = () => resolve(null);
+      img.onerror = (error) => reject(error);
     });
 
     const insetWidth = img.width * inset;
@@ -370,37 +387,29 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
     ctx.drawImage(img, drawX, drawY, img.width, img.height);
 
-    const clippedBlob = await new Promise<Blob | null>((resolve) => {
-      canvas.toBlob(resolve, 'image/png');
-    });
-
-    return clippedBlob;
+    return canvas.toDataURL();
   };
 
   /**
    * 调整图像大小。
    *
-   * @param imageBlob 要调整的图像。
+   * @param imageDataURL 要调整的图像 Data URL。
    * @param size 新图像的尺寸。
    * @param padding 0-1 之间的值，表示边距占图像大小的比例。
-   * @returns 调整后的图像。
+   * @returns 调整后的图像 Data URL。
    */
   const resizeImage = async (
-    image: Blob,
+    imageDataURL: string,
     size: number,
     padding = 0,
-  ) => {
+  ): Promise<string> => {
     const img = new Image();
+    img.src = imageDataURL;
 
-    const loadImage = () => {
-      return new Promise<void>((resolve, reject) => {
-        img.onload = () => resolve();
-        img.onerror = (error) => reject(error);
-        img.src = URL.createObjectURL(image);
-      });
-    };
-
-    await loadImage();
+    await new Promise((resolve, reject) => {
+      img.onload = () => resolve(null);
+      img.onerror = (error) => reject(error);
+    });
 
     const canvasSize = size;
     const canvas = document.createElement('canvas');
@@ -419,51 +428,65 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
     ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
 
-    const resizedBlob = await new Promise<Blob | null>((resolve) => {
-      canvas.toBlob(resolve, 'image/png');
-    });
+    return canvas.toDataURL();
+  };
 
-    if (!resizedBlob) {
-      throw new Error('Failed to resize image');
-    }
+  const clipIcons = async () => {
+    const foreground = foregroundCanvasRef?.current?.toDataURL();
+    const background = backgroundCanvasRef?.current?.toDataURL();
+    if (!foreground || !background) return null;
+    const composited = await getCompositedImage([background, foreground], canvasSize);
+    if (!composited) return null;
 
-    return resizedBlob;
+    const webMaskableIcon = await clipImage(composited, clipInset.main, 'square');
+    if (!webMaskableIcon) return null;
+    const icon = await clipImage(webMaskableIcon, clipInset.web, iconShape);
+    if (!icon) return null;
+
+    const androidLegacyIconImage = await clipImage(icon, clipInset.android.legacy, 'rounded-rectangle');
+    const androidRoundIconImage = await clipImage(icon, clipInset.android.round, 'circle');
+    if (!androidLegacyIconImage || !androidRoundIconImage) return null;
+
+    const androidLegacyIcon = await resizeImage(androidLegacyIconImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.legacy);
+    const androidRoundIcon = await resizeImage(androidRoundIconImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.round);
+    if (!androidLegacyIcon || !androidRoundIcon) return null;
+
+    const icoPngDataURL = await resizeImage(icon, 256);
+    if (!icoPngDataURL) return null;
+
+    const ico = await new PngIcoConverter().convertToBlobAsync([{ png: await dataURLToBlob(icoPngDataURL) }]);
+    const icoDataURL = URL.createObjectURL(new Blob([ico], { type: 'image/x-icon' }));
+
+    const icons: IIcons = {
+      ico: { name: 'ico', src: icoDataURL },
+      web: { name: 'Web', src: icon },
+      webMaskable: { name: 'Web Maskable', src: webMaskableIcon },
+      electron: { name: 'Electron', src: icoDataURL },
+      androidForeground: { name: 'Android Foreground', src: foreground },
+      androidBackground: { name: 'Android Background', src: background },
+      androidFullBleed: { name: 'Android Full Bleed', src: composited },
+      androidLegacy: { name: 'Android Legacy', src: androidLegacyIcon },
+      androidRound: { name: 'Android Round', src: androidRoundIcon },
+    };
+
+    setIcons(icons);
   };
 
   const handleSave = async (): Promise<boolean> => {
-    const foregroundImage = await new Promise<Blob | null>((resolve) => {
-      foregroundCanvasRef?.current?.toBlob(resolve, 'image/png');
-    });
-    const backgroundImage = await new Promise<Blob | null>((resolve) => {
-      backgroundCanvasRef?.current?.toBlob(resolve, 'image/png');
-    });
-    if (!foregroundImage || !backgroundImage) return false;
-    const compositedImage = await getCompositedImage([backgroundImage, foregroundImage], canvasSize);
-    if (!compositedImage) return false;
+    if (!icons) return false;
 
     // 上传 Web 图标
     try {
-      const maskableIcon = await clipImage(compositedImage, clipInset.main, 'square');
-      if (!maskableIcon) return false;
-      const icon = await clipImage(maskableIcon, clipInset.web, iconShape);
-      if (!icon) return false;
-
-      const pngIcoConverter = new PngIcoConverter();
-      const ico = await pngIcoConverter.convertToBlobAsync([{ png: await resizeImage(icon, 256) }]);
-
-      const formData = new FormData();
-
-      formData.append('targetDirectory', `games/${gameDir}/icons/web`);
-      formData.append('files', ico, 'favicon.ico');
-      formData.append('files', await resizeImage(icon, 180), 'apple-touch-icon.png');
-      formData.append('files', await resizeImage(icon, 192), 'icon-192.png');
-      formData.append('files', await resizeImage(maskableIcon, 192), 'icon-192-maskable.png');
-      formData.append('files', await resizeImage(icon, 512), 'icon-512.png');
-      formData.append('files', await resizeImage(maskableIcon, 512), 'icon-512-maskable.png');
-
       await api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/web` });
+      const formData = new FormData();
+      formData.append('targetDirectory', `games/${gameDir}/icons/web`);
+      formData.append('files', await dataURLToBlob(icons.ico.src), 'favicon.ico');
+      formData.append('files', await dataURLToBlob(await resizeImage(icons.web.src, 180)), 'apple-touch-icon.png');
+      formData.append('files', await dataURLToBlob(await resizeImage(icons.web.src, 192)), 'icon-192.png');
+      formData.append('files', await dataURLToBlob(await resizeImage(icons.webMaskable.src, 192)), 'icon-192-maskable.png');
+      formData.append('files', await dataURLToBlob(await resizeImage(icons.web.src, 512)), 'icon-512.png');
+      formData.append('files', await dataURLToBlob(await resizeImage(icons.webMaskable.src, 512)), 'icon-512-maskable.png');
       await axios.post('/api/assets/upload', formData);
-
       console.log('上传 web 图标成功');
     } catch (error) {
       console.error('上传 web 图标失败:', error);
@@ -472,22 +495,11 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
     // 上传 Electron 图标
     try {
-      const maskableIcon = await clipImage(compositedImage, clipInset.main, 'square');
-      if (!maskableIcon) return false;
-      const icon = await clipImage(maskableIcon, clipInset.electron, iconShape);
-      if (!icon) return false;
-
-      const pngIcoConverter = new PngIcoConverter();
-      const ico = await pngIcoConverter.convertToBlobAsync([{ png: await resizeImage(icon, 256) }]);
-
-      const formData = new FormData();
-
-      formData.append('targetDirectory', `games/${gameDir}/icons/electron`);
-      formData.append('files', ico, 'icon.ico');
-
       await api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/electron` });
+      const formData = new FormData();
+      formData.append('targetDirectory', `games/${gameDir}/icons/electron`);
+      formData.append('files', await dataURLToBlob(icons.ico.src), 'icon.ico');
       await axios.post('/api/assets/upload', formData);
-
       console.log('上传 Electron 图标成功');
     } catch (error) {
       console.error('上传 Electron 图标失败:', error);
@@ -497,23 +509,9 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     // 上传 Android 图标
     try {
       await api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/android` });
-
-      const icon = await clipImage(compositedImage, clipInset.main, 'square');
-      if (!icon) return false;
-
-      const roundedRectangleIcon = await clipImage(icon, clipInset.android.roundedRectangle, 'rounded-rectangle');
-      const circleIcon = await clipImage(icon, clipInset.android.circle, 'circle');
-
-      if (!roundedRectangleIcon || !circleIcon) return false;
-
-      // play store 图标
-      const playStoreIcon = await clipImage(compositedImage, clipInset.android.playStore, 'square');
-      if (!playStoreIcon) return false;
       const icLauncherPlayStoreFormData = new FormData();
-
       icLauncherPlayStoreFormData.append('targetDirectory', `games/${gameDir}/icons/android`);
-      icLauncherPlayStoreFormData.append('files', await resizeImage(playStoreIcon, 512, 0), 'ic_launcher-playstore.png');
-
+      icLauncherPlayStoreFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidFullBleed.src, 512)), 'ic_launcher-playstore.png');
       await axios.post('/api/assets/upload', icLauncherPlayStoreFormData);
 
       // values 文件夹
@@ -523,12 +521,9 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
   <color name="ic_launcher_background">${tinycolor(backgroundColor).toHexString()}</color>
 </resources>`;
         const icLauncherBackgroundXmlBlob = new Blob([icLauncherBackgroundXmlContent], { type: 'text/xml' });
-
         const valuesFormData = new FormData();
-
         valuesFormData.append('targetDirectory', `games/${gameDir}/icons/android/values`);
         valuesFormData.append('files', icLauncherBackgroundXmlBlob, 'ic_launcher_background.xml');
-
         await axios.post('/api/assets/upload', valuesFormData);
       }
 
@@ -539,85 +534,66 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
 </adaptive-icon>`;
       const icLauncherXmlBlob = new Blob([icLauncherXmlContent], { type: 'text/xml' });
-
       const AnydpiV26FormData = new FormData();
-
       AnydpiV26FormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-anydpi-v26`);
       AnydpiV26FormData.append('files', icLauncherXmlBlob, 'ic_launcher.xml');
       AnydpiV26FormData.append('files', icLauncherXmlBlob, 'ic_launcher_round.xml');
-
       await axios.post('/api/assets/upload', AnydpiV26FormData);
 
       // mipmap-xxxhdpi 文件夹
       const xxxhdpiFormData = new FormData();
-
       xxxhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xxxhdpi`);
-      xxxhdpiFormData.append('files', await resizeImage(roundedRectangleIcon, 192, clipInset.android.roundedRectangle), 'ic_launcher.png');
-      xxxhdpiFormData.append('files', await resizeImage(circleIcon, 192, clipInset.android.circle), 'ic_launcher_round.png');
-      xxxhdpiFormData.append('files', await resizeImage(foregroundImage, 432), 'ic_launcher_foreground.png');
-
+      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 192)), 'ic_launcher.png');
+      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 192)), 'ic_launcher_round.png');
+      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 432)), 'ic_launcher_foreground.png');
       if (backgroundStyle === 'image') {
-        xxxhdpiFormData.append('files', await resizeImage(backgroundImage, 432), 'ic_launcher_background.png');
+        xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 432)), 'ic_launcher_background.png');
       }
-
       await axios.post('/api/assets/upload', xxxhdpiFormData);
 
       // mipmap-xxhdpi 文件夹
       const xxhdpiFormData = new FormData();
-
       xxhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xxhdpi`);
-      xxhdpiFormData.append('files', await resizeImage(roundedRectangleIcon, 144, clipInset.android.roundedRectangle), 'ic_launcher.png');
-      xxhdpiFormData.append('files', await resizeImage(circleIcon, 144, clipInset.android.circle), 'ic_launcher_round.png');
-      xxhdpiFormData.append('files', await resizeImage(foregroundImage, 324), 'ic_launcher_foreground.png');
-
+      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 144)), 'ic_launcher.png');
+      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 144)), 'ic_launcher_round.png');
+      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 324)), 'ic_launcher_foreground.png');
       if (backgroundStyle === 'image') {
-        xxhdpiFormData.append('files', await resizeImage(backgroundImage, 324), 'ic_launcher_background.png');
+        xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 324)), 'ic_launcher_background.png');
       }
-
       await axios.post('/api/assets/upload', xxhdpiFormData);
 
       // mipmap-xhdpi 文件夹
       const xhdpiFormData = new FormData();
-
       xhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xhdpi`);
-      xhdpiFormData.append('files', await resizeImage(roundedRectangleIcon, 96, clipInset.android.roundedRectangle), 'ic_launcher.png');
-      xhdpiFormData.append('files', await resizeImage(circleIcon, 96, clipInset.android.circle), 'ic_launcher_round.png');
-      xhdpiFormData.append('files', await resizeImage(foregroundImage, 216), 'ic_launcher_foreground.png');
-
+      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 96)), 'ic_launcher.png');
+      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 96)), 'ic_launcher_round.png');
+      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 216)), 'ic_launcher_foreground.png');
       if (backgroundStyle === 'image') {
-        xhdpiFormData.append('files', await resizeImage(backgroundImage, 216), 'ic_launcher_background.png');
+        xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 216)), 'ic_launcher_background.png');
       }
-
       await axios.post('/api/assets/upload', xhdpiFormData);
 
       // mipmap-hdpi 文件夹
       const hdpiFormData = new FormData();
-
       hdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-hdpi`);
-      hdpiFormData.append('files', await resizeImage(roundedRectangleIcon, 72, clipInset.android.roundedRectangle), 'ic_launcher.png');
-      hdpiFormData.append('files', await resizeImage(circleIcon, 72, clipInset.android.circle), 'ic_launcher_round.png');
-      hdpiFormData.append('files', await resizeImage(foregroundImage, 162), 'ic_launcher_foreground.png');
-
+      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 72)), 'ic_launcher.png');
+      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 72)), 'ic_launcher_round.png');
+      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 162)), 'ic_launcher_foreground.png');
       if (backgroundStyle === 'image') {
-        hdpiFormData.append('files', await resizeImage(backgroundImage, 162), 'ic_launcher_background.png');
+        hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 162)), 'ic_launcher_background.png');
       }
-
       await axios.post('/api/assets/upload', hdpiFormData);
 
       // mipmap-mdpi 文件夹
       const mdpiFormData = new FormData();
-
       mdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-mdpi`);
-      mdpiFormData.append('files', await resizeImage(roundedRectangleIcon, 48, clipInset.android.roundedRectangle), 'mipmap-mdpi/ic_launcher.png');
-      mdpiFormData.append('files', await resizeImage(circleIcon, 48, clipInset.android.circle), 'mipmap-mdpi/ic_launcher_round.png');
-      mdpiFormData.append('files', await resizeImage(foregroundImage, 108), 'mipmap-mdpi/ic_launcher_foreground.png');
-
+      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 48)), 'mipmap-mdpi/ic_launcher.png');
+      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 48)), 'mipmap-mdpi/ic_launcher_round.png');
+      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 108)), 'mipmap-mdpi/ic_launcher_foreground.png');
       if (backgroundStyle === 'image') {
-        mdpiFormData.append('files', await resizeImage(backgroundImage, 108), 'ic_launcher_background.png');
+        mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 108)), 'ic_launcher_background.png');
       }
-
       await axios.post('/api/assets/upload', mdpiFormData);
-
       console.log('上传 Android 图标成功');
     } catch (error) {
       console.error('上传 Android 图标失败:', error);
@@ -637,36 +613,8 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     setForegroundScale(1);
     setBackgroundScale(1);
     setGridLineColor('#000000');
-  };
-
-  const handleUpdateOffsetMouseDown = (
-    { event, offset, onChange }: {
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>;
-      offset: { x: number; y: number; };
-      onChange: (value: { x: number; y: number; }) => void
-    }) => {
-    document.body.style.cursor = 'move';
-    const startX = event.clientX;
-    const startY = event.clientY;
-
-    const handleMouseMove = (moveEvent: { clientX: number; clientY: number; }) => {
-      const dx = moveEvent.clientX - startX;
-      const dy = moveEvent.clientY - startY;
-
-      onChange({
-        x: offset.x + dx * 4,
-        y: offset.y + dy * 4,
-      });
-    };
-
-    const handleMouseUp = () => {
-      document.body.style.cursor = 'default';
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    setActiveIndex(0);
+    setIcons(null);
   };
 
   const iconShapeMap = new Map<IIconShape, string>([
@@ -680,180 +628,195 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
       <div onClick={() => setIsOpen(!isOpen)}>
         {triggerButton ?? <Button>{t`修改游戏图标`}</Button>}
       </div>
-      <Dialog open={isOpen} onOpenChange={() => isOpen ? handleClose() : setIsOpen(!isOpen)}>
-        <DialogSurface>
+      <Dialog
+        open={isOpen}
+        onOpenChange={() => isOpen ? handleClose() : setIsOpen(!isOpen)}
+      >
+        <DialogSurface onWheel={(event) => event.stopPropagation()}>
           <DialogBody>
-            <DialogTitle>{t`修改游戏图标`}</DialogTitle>
+            <DialogTitle>{activeIndex === 0 ? t`编辑图标` : t`预览图标`}</DialogTitle>
             <DialogContent>
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', userSelect: 'none', gap: '1rem', }}>
-                <div className={styles.mosaicBg} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem' }} >
-                  <Card appearance='filled-alternative' className={styles.canvasContainer}>
-                    <canvas ref={backgroundCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
-                    <canvas ref={foregroundCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
-                    <canvas ref={gridCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
-                  </Card>
-                </div>
-                <div>
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'start',
-                    gap: '0.5rem',
-                    marginTop: '0.5rem',
-                  }}>
-                    <span className={styles.title}>{t`前景`}</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      id="foreground-file-input"
-                      style={{ display: 'none' }}
-                      onChange={(event) => {
-                        if (!event.target.files) return;
-                        const file = event.target.files[0];
-                        selectImage(file, 'foreground');
-                      }}
-                    />
-                    <Button className={styles.fileInput}>
-                      <label htmlFor="foreground-file-input">
-                        {t`选择图片`}
-                      </label>
-                    </Button>
-
-                    {foregroundImage && (
-                      <>
-                        <span className={styles.title}>{t`调整前景图片`}</span>
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
-                          <Slider
-                            title={t`缩放前景图片`}
-                            min={0}
-                            max={300}
-                            value={foregroundScale * 100}
-                            onChange={(_, data) => setForegroundScale(data.value / 100)}
-                            style={{ width: '100%', flexGrow: 1 }}
-                          />
-                          <Button
-                            title={t`移动前景图片`}
-                            appearance='transparent'
-                            icon={<ArrowMoveIcon />}
-                            onMouseDown={(event) =>
-                              handleUpdateOffsetMouseDown({
-                                event,
-                                offset: foregroundOffset,
-                                onChange: setForegroundOffset,
-                              })}
-                            style={{ cursor: 'grab' }}
-                          />
-                        </div>
-                      </>
-                    )}
-                    <span className={styles.title}>{t`背景`}</span>
-                    <Dropdown
-                      value={backgroundStyle === 'color' ? t`颜色` : t`图片`}
-                      style={{ minWidth: 0 }}
-                      selectedOptions={[backgroundStyle]}
-                      onOptionSelect={(event, data) => setBackgroundStyle(data.optionValue as IBackgroundStyle)}
-                    >
-                      <Option value="color" >{t`颜色`}</Option>
-                      <Option value="image">{t`图片`}</Option>
-                    </Dropdown>
-                    {backgroundStyle === 'color' &&
-                      <ColorPickerPopup
-                        color={backgroundColor}
-                        onChange={(color) => setBackgroundColor(color)}
-                      />
-                    }
-                    {backgroundStyle === 'image' &&
-                      <>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          id="background-file-input"
-                          style={{ display: 'none' }}
-                          onChange={(event) => {
-                            if (!event.target.files) return;
-                            const file = event.target.files[0];
-                            selectImage(file, 'background');
-                          }}
-                        />
-                        <Button className={styles.fileInput}>
-                          <label htmlFor="background-file-input">
-                            {t`选择图片`}
-                          </label>
-                        </Button>
-                        {backgroundImage && (
-                          <>
-                            <span className={styles.title}>{t`调整背景图片`}</span>
-                            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                              <Slider
-                                title={t`缩放背景图片`}
-                                min={0}
-                                max={300}
-                                value={backgroundScale * 100}
-                                onChange={(_, data) => setBackgroundScale(data.value / 100)}
-                                style={{ width: '100%' }}
-                              />
-                              <Button
-                                title={t`移动背景图片`}
-                                appearance='transparent'
-                                icon={<ArrowMoveIcon />}
-                                onMouseDown={(event) =>
-                                  handleUpdateOffsetMouseDown({
-                                    event,
-                                    offset: backgroundOffset,
-                                    onChange: setBackgroundOffset,
-                                  })}
-                                style={{ cursor: 'grab' }}
-                              />
-                            </div>
-                          </>
-                        )}
-                      </>
-                    }
-                    <span className={styles.title}>{t`裁剪形状`}</span>
-                    <Dropdown
-                      value={iconShapeMap.get(iconShape)}
-                      style={{ minWidth: 0 }}
-                      selectedOptions={[iconShape]}
-                      onOptionSelect={(_event, data) => setIconShape(data.optionValue as IIconShape)}
-                    >
-                      {Array.from(iconShapeMap).map(([key, value]) => (
-                        <Option key={key} value={key}>{value}</Option>
-                      ))}
-                    </Dropdown>
-                  </div>
-                </div>
-              </div>
-            </DialogContent>
-            <DialogActions style={{ marginTop: '1rem' }}>
-              <DialogTrigger disableButtonEnhancement>
-                <Button appearance='secondary'>{t`取消`}</Button>
-              </DialogTrigger>
-              <Button
-                appearance='primary'
-                disabled={isSaving}
-                onClick={async () => {
-                  setIsSaving(true);
-                  const result = await handleSave();
-                  setIsSaving(false);
-                  result && handleClose();
-                }}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  cursor: isSaving ? 'wait' : 'pointer',
-                }}
+              <Carousel
+                groupSize={1}
+                activeIndex={activeIndex}
               >
-                {isSaving && <Spinner size='extra-tiny' />}
-                {!isSaving && <span>{t`确定`}</span>}
-              </Button>
+                <CarouselViewport>
+                  <CarouselSlider>
+                    <CarouselCard>
+                      <div draggable={false} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', }}>
+                        <div className={styles.mosaicBg} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem' }} >
+                          <Card appearance='filled-alternative' className={styles.canvasContainer}>
+                            <canvas ref={backgroundCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
+                            <canvas ref={foregroundCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
+                            <canvas ref={gridCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
+                          </Card>
+                        </div>
+                        <div>
+                          <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'start',
+                            gap: '0.5rem',
+                            marginTop: '0.5rem',
+                          }}>
+                            <span className={styles.title}>{t`前景`}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              id="foreground-file-input"
+                              style={{ display: 'none' }}
+                              onChange={(event) => {
+                                if (!event.target.files) return;
+                                const file = event.target.files[0];
+                                selectImage(file, 'foreground');
+                              }}
+                            />
+                            <Button className={styles.fileInputButton}>
+                              <label htmlFor="foreground-file-input">
+                                {t`选择图片`}
+                              </label>
+                            </Button>
+
+                            {foregroundImage &&
+                              <Resizer
+                                title={t`调整前景图片`}
+                                offset={foregroundOffset}
+                                onOffsetChange={setForegroundOffset}
+                                scale={{ x: foregroundScale, y: foregroundScale }}
+                                scaleLinked
+                                onScaleChange={(scale) => setForegroundScale(scale.x)}
+                              />
+                            }
+                            <span className={styles.title}>{t`背景`}</span>
+                            <Dropdown
+                              value={backgroundStyle === 'color' ? t`颜色` : t`图片`}
+                              style={{ minWidth: 0 }}
+                              selectedOptions={[backgroundStyle]}
+                              onOptionSelect={(event, data) => setBackgroundStyle(data.optionValue as IBackgroundStyle)}
+                            >
+                              <Option value="color" >{t`颜色`}</Option>
+                              <Option value="image">{t`图片`}</Option>
+                            </Dropdown>
+                            {backgroundStyle === 'color' &&
+                              <ColorPickerPopup
+                                color={backgroundColor}
+                                onChange={(color) => setBackgroundColor(color)}
+                              />
+                            }
+                            {backgroundStyle === 'image' &&
+                              <>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  id="background-file-input"
+                                  style={{ display: 'none' }}
+                                  onChange={(event) => {
+                                    if (!event.target.files) return;
+                                    const file = event.target.files[0];
+                                    selectImage(file, 'background');
+                                  }}
+                                />
+                                <Button className={styles.fileInputButton}>
+                                  <label htmlFor="background-file-input">
+                                    {t`选择图片`}
+                                  </label>
+                                </Button>
+                                {backgroundImage &&
+                                  <Resizer
+                                    title={t`调整背景图片`}
+                                    offset={backgroundOffset}
+                                    onOffsetChange={setBackgroundOffset}
+                                    scale={{ x: backgroundScale, y: backgroundScale }}
+                                    scaleLinked
+                                    onScaleChange={(scale) => setBackgroundScale(scale.x)}
+                                  />
+                                }
+                              </>
+                            }
+                            <span className={styles.title}>{t`裁剪形状`}</span>
+                            <Dropdown
+                              value={iconShapeMap.get(iconShape)}
+                              style={{ minWidth: 0 }}
+                              selectedOptions={[iconShape]}
+                              onOptionSelect={(_event, data) => setIconShape(data.optionValue as IIconShape)}
+                            >
+                              {Array.from(iconShapeMap).map(([key, value]) => (
+                                <Option key={key} value={key}>{value}</Option>
+                              ))}
+                            </Dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </CarouselCard>
+                    <CarouselCard>
+                      {
+                        !icons
+                          ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                            <Spinner />
+                          </div>
+                          : <div className={[styles.mosaicBg, styles.previewContainer].join(' ')}>
+                            {
+                              Object
+                                .entries(icons)
+                                .filter(([key]) => !['ico', 'androidBackground', 'androidForeground'].includes(key))
+                                .map(([key, icon]) => (
+                                  <div key={key} className={styles.preview}>
+                                    <div className={styles.previewIcon}>
+                                      <img title={icon.name} src={icon.src} />
+                                    </div>
+                                    <span>{icon.name}</span>
+                                  </div>
+                                ))
+                            }
+                          </div>
+                      }
+                    </CarouselCard>
+                  </CarouselSlider>
+                </CarouselViewport>
+              </Carousel>
+            </DialogContent>
+            <DialogActions>
+              {
+                activeIndex === 0 ?
+                  <>
+                    <Button appearance='secondary' onClick={handleClose}>{t`取消`}</Button>
+                    <Button appearance='primary' onClick={() => setActiveIndex(1)}>{t`下一步`}</Button>
+                  </>
+                  : <>
+                    <Button appearance='secondary' onClick={() => setActiveIndex(0)}>{t`上一步`}</Button>
+                    <Button
+                      appearance='primary'
+                      disabled={isSaving || !icons}
+                      onClick={async () => {
+                        setIsSaving(true);
+                        const result = await handleSave();
+                        setIsSaving(false);
+                        result && handleClose();
+                      }}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        cursor: isSaving || !icons ? 'wait' : 'pointer',
+                      }}
+                    >
+                      {isSaving && <Spinner size='extra-tiny' />}
+                      {!isSaving && <span>{t`保存`}</span>}
+                    </Button>
+                  </>
+              }
             </DialogActions>
           </DialogBody>
         </DialogSurface>
-      </Dialog>
+      </Dialog >
     </>
   );
 };
 
 export default IconCreator;
+
+async function dataURLToBlob(dataURL: string): Promise<Blob> {
+  const response = await fetch(dataURL);
+  return await response.blob();
+};
