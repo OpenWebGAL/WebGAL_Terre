@@ -7,7 +7,7 @@ import axios from 'axios';
 import { ColorPickerPopup } from '../ColorPickerPopup/ColorPickerPopup';
 import { tinycolor } from '@ctrl/tinycolor';
 import { PngIcoConverter } from "@/utils/png2icojs";
-import Resizer from '../Resizer/Resizer';
+import Transformer from '../Transformer/Transformer';
 
 type IIconShape = 'circle' | 'square' | 'rounded-rectangle';
 type IBackgroundStyle = 'color' | 'image';
@@ -640,10 +640,10 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
                 groupSize={1}
                 activeIndex={activeIndex}
               >
-                <CarouselViewport>
+                <CarouselViewport draggable={false}>
                   <CarouselSlider>
                     <CarouselCard>
-                      <div draggable={false} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', }}>
                         <div className={styles.mosaicBg} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem' }} >
                           <Card appearance='filled-alternative' className={styles.canvasContainer}>
                             <canvas ref={backgroundCanvasRef} width={canvasSize} height={canvasSize} className={styles.canvas} />
@@ -678,7 +678,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
                             </Button>
 
                             {foregroundImage &&
-                              <Resizer
+                              <Transformer
                                 title={t`调整前景图片`}
                                 offset={foregroundOffset}
                                 onOffsetChange={setForegroundOffset}
@@ -722,7 +722,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
                                   </label>
                                 </Button>
                                 {backgroundImage &&
-                                  <Resizer
+                                  <Transformer
                                     title={t`调整背景图片`}
                                     offset={backgroundOffset}
                                     onOffsetChange={setBackgroundOffset}

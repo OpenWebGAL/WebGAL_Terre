@@ -3,7 +3,7 @@ import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Slider, Text } 
 import { t } from '@lingui/macro';
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDownFilled, ArrowDownRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowRightFilled, ArrowRightRegular, ArrowUpFilled, ArrowUpRegular, bundleIcon, DragFilled, DragRegular } from '@fluentui/react-icons';
-import styles from './resizer.module.scss';
+import styles from './transformer.module.scss';
 
 const DragIcon = bundleIcon(DragFilled, DragRegular);
 const ArrowUpIcon = bundleIcon(ArrowUpFilled, ArrowUpRegular);
@@ -21,14 +21,13 @@ export interface IScale {
   y: number;
 }
 
-export interface ResizerProps {
+export interface TransformerProps {
   title: string;
   offset?: IOffset;
   scale?: IScale;
   scaleMin?: number;
   scaleMax?: number;
   scaleLinked?: boolean;
-  quickControl?: boolean;
   onOffsetChange?: (offset: IOffset) => void;
   onScaleChange?: (scale: IScale) => void;
 }
@@ -41,21 +40,19 @@ export interface ResizerProps {
  * @param scaleMin 最小缩放值。默认为0.1。
  * @param scaleMax 最大缩放值。默认为3。
  * @param scaleLinked 默认为false。开启时，x, y缩放比例相同。
- * @param quickControl 默认为 false。开启时可在按钮移动图标上拖动以调整偏移，滚轮以调整缩放。
  * @param onOffsetChange 偏移变化回调。
  * @param onScaleChange 缩放变化回调。
  */
-const Resizer = ({
+const Transformer = ({
   title,
   offset,
   scale,
   scaleMin = 0.1,
   scaleMax = 3,
   scaleLinked = false,
-  quickControl = false,
   onOffsetChange,
   onScaleChange,
-}: ResizerProps) => {
+}: TransformerProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const intervalIdRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -175,116 +172,113 @@ const Resizer = ({
       onOpenChange={(_, data) => setPopoverOpen(data.open)}
     >
       <PopoverTrigger disableButtonEnhancement>
-        <Button
-          style={{ paddingLeft: quickControl ? 0 : undefined }}
-          icon={
-            quickControl ?
-              <DragIcon
-                onMouseDown={(event) => handleUpdateOffsetMouseDown({ event, offset: offset!, onChange: onOffsetChange! })}
-                onWheel={(event) => handleScaleWheel(event, 'xy')}
-              />
-              : undefined
-          }>{title}</Button>
+        <Button>{title}</Button>
       </PopoverTrigger>
 
       <PopoverSurface className={styles.surface}>
-        {
-          offset && onOffsetChange &&
-          <div className={styles.left}>
+        <div className={styles.left}>
+          {
+            scale && onScaleChange && scaleLinked &&
+            <Input
+              type="number"
+              contentBefore={<Text wrap={false}>{t`缩放` + ':'}</Text>}
+              value={scale.x.toString()}
+              className={styles.input}
+              step={0.01}
+              onChange={(_, data) => onScaleChange({ x: Number(data.value), y: Number(data.value) })}
+            />
+          }
+          {
+            scale && onScaleChange && !scaleLinked &&
+            <Input
+              type="number"
+              contentBefore={<Text wrap={false}>{t`缩放` + ' X:'}</Text>}
+              value={scale.x.toString()}
+              className={styles.input}
+              step={0.01}
+              onChange={(_, data) => onScaleChange({ x: Number(data.value), y: scale.y })}
+            />
+          }
+          {
+            scale && onScaleChange && !scaleLinked &&
+            <Input
+              type="number"
+              contentBefore={<Text wrap={false}>{t`缩放` + ' Y:'}</Text>}
+              value={scale.y.toString()}
+              className={styles.input}
+              step={0.01}
+              onChange={(_, data) => onScaleChange({ x: scale.x, y: Number(data.value) })}
+            />
+          }
+          {
+            offset && onOffsetChange &&
+            <>
+              <Input
+                type="number"
+                contentBefore={<Text wrap={false}>{t`偏移` + ' X:'}</Text>}
+                value={offset.x.toString()}
+                className={styles.input}
+                onChange={(_, data) => onOffsetChange({ x: Number(data.value), y: offset.y })}
+              />
+              <Input
+                type="number"
+                contentBefore={<Text wrap={false}>{t`偏移` + ' Y:'}</Text>}
+                value={offset.y.toString()}
+                className={styles.input}
+                onChange={(_, data) => onOffsetChange({ x: offset.x, y: Number(data.value) })}
+              />
+            </>
+          }
+          <div className={styles.buttons}>
+            {
+              offset && onOffsetChange &&
+            <div className={styles.offsetGrid}>
+              <Button
+                size='small'
+                icon={<ArrowUpIcon />}
+                style={{ gridArea: '1 / 2' }}
+                onClick={() => onOffsetChange({ x: offset.x, y: offset.y - 1 })}
+                onMouseDown={() => handleOffsetMouseDown('top')}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+              />
+              <Button
+                size='small'
+                icon={<ArrowDownIcon />}
+                style={{ gridArea: '3 / 2' }}
+                onClick={() => onOffsetChange({ x: offset.x, y: offset.y + 1 })}
+                onMouseDown={() => handleOffsetMouseDown('bottom')}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+              />
+              <Button
+                size='small'
+                icon={<ArrowLeftIcon />}
+                style={{ gridArea: '2 / 1' }}
+                onClick={() => onOffsetChange({ x: offset.x - 1, y: offset.y })}
+                onMouseDown={() => handleOffsetMouseDown('left')}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+              />
+              <Button
+                size='small'
+                icon={<ArrowRightIcon />}
+                style={{ gridArea: '2 / 3' }}
+                onClick={() => onOffsetChange({ x: offset.x + 1, y: offset.y })}
+                onMouseDown={() => handleOffsetMouseDown('right')}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+              />
+              <Button
+                size='small'
+                icon={<DragIcon />}
+                onMouseDown={(event) => handleUpdateOffsetMouseDown({ event, offset, onChange: onOffsetChange })}
+                style={{ gridArea: '2 / 2', cursor: 'move' }}
+              />
+            </div>
+            }
             {
               scale && onScaleChange && scaleLinked &&
-              <Input
-                type="number"
-                contentBefore={<Text wrap={false}>{t`缩放` + ':'}</Text>}
-                value={scale.x.toString()}
-                className={styles.input}
-                step={0.01}
-                onChange={(_, data) => onScaleChange({ x: Number(data.value), y: Number(data.value) })}
-              />
-            }
-            {
-              scale && onScaleChange && !scaleLinked &&
-              <Input
-                type="number"
-                contentBefore={<Text wrap={false}>{t`缩放` + ' X:'}</Text>}
-                value={scale.x.toString()}
-                className={styles.input}
-                step={0.01}
-                onChange={(_, data) => onScaleChange({ x: Number(data.value), y: scale.y })}
-              />
-            }
-            {
-              scale && onScaleChange && !scaleLinked &&
-              <Input
-                type="number"
-                contentBefore={<Text wrap={false}>{t`缩放` + ' Y:'}</Text>}
-                value={scale.y.toString()}
-                className={styles.input}
-                step={0.01}
-                onChange={(_, data) => onScaleChange({ x: scale.x, y: Number(data.value) })}
-              />
-            }
-            <Input
-              type="number"
-              contentBefore={<Text wrap={false}>{t`偏移` + ' X:'}</Text>}
-              value={offset.x.toString()}
-              className={styles.input}
-              onChange={(_, data) => onOffsetChange({ x: Number(data.value), y: offset.y })}
-            />
-            <Input
-              type="number"
-              contentBefore={<Text wrap={false}>{t`偏移` + ' Y:'}</Text>}
-              value={offset.y.toString()}
-              className={styles.input}
-              onChange={(_, data) => onOffsetChange({ x: offset.x, y: Number(data.value) })}
-            />
-            <div className={styles.buttons}>
-              <div className={styles.offsetGrid}>
-                <Button
-                  size='small'
-                  icon={<ArrowUpIcon />}
-                  style={{ gridArea: '1 / 2' }}
-                  onClick={() => onOffsetChange({ x: offset.x, y: offset.y - 1 })}
-                  onMouseDown={() => handleOffsetMouseDown('top')}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <Button
-                  size='small'
-                  icon={<ArrowDownIcon />}
-                  style={{ gridArea: '3 / 2' }}
-                  onClick={() => onOffsetChange({ x: offset.x, y: offset.y + 1 })}
-                  onMouseDown={() => handleOffsetMouseDown('bottom')}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <Button
-                  size='small'
-                  icon={<ArrowLeftIcon />}
-                  style={{ gridArea: '2 / 1' }}
-                  onClick={() => onOffsetChange({ x: offset.x - 1, y: offset.y })}
-                  onMouseDown={() => handleOffsetMouseDown('left')}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <Button
-                  size='small'
-                  icon={<ArrowRightIcon />}
-                  style={{ gridArea: '2 / 3' }}
-                  onClick={() => onOffsetChange({ x: offset.x + 1, y: offset.y })}
-                  onMouseDown={() => handleOffsetMouseDown('right')}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <Button
-                  size='small'
-                  icon={<DragIcon />}
-                  onMouseDown={(event) => handleUpdateOffsetMouseDown({ event, offset, onChange: onOffsetChange })}
-                  style={{ gridArea: '2 / 2', cursor: 'move' }}
-                />
-              </div>
-              {
-                scale && onScaleChange && scaleLinked &&
                 <div className={styles.scaleGrid}>
                   <Button
                     size='small'
@@ -303,9 +297,9 @@ const Resizer = ({
                     onMouseLeave={handleMouseLeave}
                   />
                 </div>
-              }
-              {
-                scale && onScaleChange && !scaleLinked &&
+            }
+            {
+              scale && onScaleChange && !scaleLinked &&
                 <div className={styles.scaleGrid}>
                   <Button
                     size='small'
@@ -324,9 +318,9 @@ const Resizer = ({
                     onMouseLeave={handleMouseLeave}
                   />
                 </div>
-              }
-              {
-                scale && onScaleChange && !scaleLinked &&
+            }
+            {
+              scale && onScaleChange && !scaleLinked &&
                 <div className={styles.scaleGrid}>
                   <Button
                     size='small'
@@ -345,10 +339,9 @@ const Resizer = ({
                     onMouseLeave={handleMouseLeave}
                   />
                 </div>
-              }
-            </div>
+            }
           </div>
-        }
+        </div>
         <div className={styles.right}>
           {
             scale && onScaleChange && scaleLinked &&
@@ -395,4 +388,4 @@ const Resizer = ({
   );
 };
 
-export default Resizer; 
+export default Transformer; 
