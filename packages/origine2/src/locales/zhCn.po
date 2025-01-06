@@ -200,7 +200,7 @@ msgstr "z-index"
 msgid "一直显示功能区"
 msgstr "一直显示功能区"
 
-#: src/components/IconCreator/IconCreator.tsx:786
+#: src/components/IconCreator/IconCreator.tsx:792
 msgid "上一步"
 msgstr "上一步"
 
@@ -213,7 +213,7 @@ msgstr "上传"
 msgid "上传资源"
 msgstr "上传资源"
 
-#: src/components/IconCreator/IconCreator.tsx:783
+#: src/components/IconCreator/IconCreator.tsx:789
 msgid "下一步"
 msgstr "下一步"
 
@@ -346,11 +346,11 @@ msgstr "侧边栏"
 msgid "侧边栏游戏预览"
 msgstr "侧边栏游戏预览"
 
-#: src/components/IconCreator/IconCreator.tsx:805
+#: src/components/IconCreator/IconCreator.tsx:811
 msgid "保存"
 msgstr "保存"
 
-#: src/components/IconCreator/IconCreator.tsx:629
+#: src/components/IconCreator/IconCreator.tsx:635
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:202
 msgid "修改游戏图标"
 msgstr "修改游戏图标"
@@ -364,8 +364,8 @@ msgstr "修改颜色"
 msgid "值"
 msgstr "值"
 
-#: src/components/Resizer/Resizer.tsx:229
-#: src/components/Resizer/Resizer.tsx:236
+#: src/components/Transformer/Transformer.tsx:218
+#: src/components/Transformer/Transformer.tsx:225
 msgid "偏移"
 msgstr "偏移"
 
@@ -555,7 +555,7 @@ msgstr "刷新"
 msgid "刷新游戏"
 msgstr "刷新游戏"
 
-#: src/components/IconCreator/IconCreator.tsx:662
+#: src/components/IconCreator/IconCreator.tsx:668
 msgid "前景"
 msgstr "前景"
 
@@ -593,7 +593,7 @@ msgid "发现新版本"
 msgstr "发现新版本"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
-#: src/components/IconCreator/IconCreator.tsx:782
+#: src/components/IconCreator/IconCreator.tsx:788
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
@@ -651,12 +651,12 @@ msgstr "图像"
 msgid "图形编辑器"
 msgstr "图形编辑器"
 
-#: src/components/IconCreator/IconCreator.tsx:692
 #: src/components/IconCreator/IconCreator.tsx:698
+#: src/components/IconCreator/IconCreator.tsx:704
 msgid "图片"
 msgstr "图片"
 
-#: src/components/IconCreator/IconCreator.tsx:622
+#: src/components/IconCreator/IconCreator.tsx:628
 msgid "圆形"
 msgstr "圆形"
 
@@ -664,7 +664,7 @@ msgstr "圆形"
 msgid "圆角"
 msgstr "圆角"
 
-#: src/components/IconCreator/IconCreator.tsx:623
+#: src/components/IconCreator/IconCreator.tsx:629
 msgid "圆角矩形"
 msgstr "圆角矩形"
 
@@ -1188,7 +1188,7 @@ msgstr "新的模板"
 msgid "新的游戏"
 msgstr "新的游戏"
 
-#: src/components/IconCreator/IconCreator.tsx:621
+#: src/components/IconCreator/IconCreator.tsx:627
 msgid "方形"
 msgstr "方形"
 
@@ -1596,7 +1596,7 @@ msgstr "绝对"
 #~ msgid "继承模式"
 #~ msgstr "继承模式"
 
-#: src/components/IconCreator/IconCreator.tsx:637
+#: src/components/IconCreator/IconCreator.tsx:643
 msgid "编辑图标"
 msgstr "编辑图标"
 
@@ -1612,9 +1612,9 @@ msgstr "编辑游戏"
 msgid "编辑组件"
 msgstr "编辑组件"
 
-#: src/components/Resizer/Resizer.tsx:198
-#: src/components/Resizer/Resizer.tsx:209
-#: src/components/Resizer/Resizer.tsx:220
+#: src/components/Transformer/Transformer.tsx:184
+#: src/components/Transformer/Transformer.tsx:195
+#: src/components/Transformer/Transformer.tsx:206
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:94
 msgid "缩放"
 msgstr "缩放"
@@ -1623,7 +1623,7 @@ msgstr "缩放"
 msgid "老电影滤镜"
 msgstr "老电影滤镜"
 
-#: src/components/IconCreator/IconCreator.tsx:690
+#: src/components/IconCreator/IconCreator.tsx:696
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:105
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
@@ -1714,7 +1714,7 @@ msgstr "获取输入"
 msgid "行脚本"
 msgstr "行脚本"
 
-#: src/components/IconCreator/IconCreator.tsx:736
+#: src/components/IconCreator/IconCreator.tsx:742
 msgid "裁剪形状"
 msgstr "裁剪形状"
 
@@ -1820,11 +1820,11 @@ msgstr "语言"
 msgid "语音"
 msgstr "语音"
 
-#: src/components/IconCreator/IconCreator.tsx:682
+#: src/components/IconCreator/IconCreator.tsx:688
 msgid "调整前景图片"
 msgstr "调整前景图片"
 
-#: src/components/IconCreator/IconCreator.tsx:726
+#: src/components/IconCreator/IconCreator.tsx:732
 msgid "调整背景图片"
 msgstr "调整背景图片"
 
@@ -1882,8 +1882,8 @@ msgstr "选择"
 msgid "选择动画"
 msgstr "选择动画"
 
-#: src/components/IconCreator/IconCreator.tsx:676
-#: src/components/IconCreator/IconCreator.tsx:721
+#: src/components/IconCreator/IconCreator.tsx:682
+#: src/components/IconCreator/IconCreator.tsx:727
 msgid "选择图片"
 msgstr "选择图片"
 
@@ -2056,12 +2056,12 @@ msgstr "音乐"
 msgid "项目主页"
 msgstr "项目主页"
 
-#: src/components/IconCreator/IconCreator.tsx:637
+#: src/components/IconCreator/IconCreator.tsx:643
 msgid "预览图标"
 msgstr "预览图标"
 
-#: src/components/IconCreator/IconCreator.tsx:692
-#: src/components/IconCreator/IconCreator.tsx:697
+#: src/components/IconCreator/IconCreator.tsx:698
+#: src/components/IconCreator/IconCreator.tsx:703
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:49
 msgid "颜色"

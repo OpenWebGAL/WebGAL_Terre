@@ -19,7 +19,7 @@ interface IIcons {
   ico: Icon,
   web: Icon,
   webMaskable: Icon,
-  electron: Icon,
+  desktop: Icon,
   androidForeground: Icon,
   androidBackground: Icon,
   androidFullBleed: Icon,
@@ -149,12 +149,11 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
         const imageAspectRatio = foregroundImage.width / foregroundImage.height;
         const drawWidth = (imageAspectRatio > 1 ? canvasSize : canvasSize * imageAspectRatio) * foregroundScale;
         const drawHeight = (imageAspectRatio > 1 ? canvasSize / imageAspectRatio : canvasSize) * foregroundScale;
-
         ctx.clearRect(0, 0, canvasSize, canvasSize);
         ctx.drawImage(
           foregroundImage,
-          (canvasSize - drawWidth) / 2 + foregroundOffset.x,
-          (canvasSize - drawHeight) / 2 + foregroundOffset.y,
+          (canvasSize - drawWidth) / 2 + foregroundOffset.x * foregroundScale,
+          (canvasSize - drawHeight) / 2 + foregroundOffset.y * foregroundScale,
           drawWidth,
           drawHeight,
         );
@@ -179,8 +178,8 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
             const drawHeight = (imageAspectRatio > 1 ? canvasSize / imageAspectRatio : canvasSize) * backgroundScale;
             ctx.drawImage(
               backgroundImage,
-              (canvasSize - drawWidth) / 2 + backgroundOffset.x,
-              (canvasSize - drawHeight) / 2 + backgroundOffset.y,
+              (canvasSize - drawWidth) / 2 + backgroundOffset.x * backgroundScale,
+              (canvasSize - drawHeight) / 2 + backgroundOffset.y * backgroundScale,
               drawWidth,
               drawHeight,
             );
@@ -303,11 +302,17 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     }
   };
 
-  const getCompositedImage = async (imagesDataURL: string[], size: number): Promise<string | null> => {
+  const getCompositedImage = async (imagesDataURL: string[], size: number, bgColor?: string): Promise<string | null> => {
     const compositeCanvas = document.createElement('canvas');
     compositeCanvas.width = size;
     compositeCanvas.height = size;
-    const compositeContext = compositeCanvas.getContext('2d');
+    const ctx = compositeCanvas.getContext('2d');
+    if (!ctx) return null;
+
+    if (bgColor) {
+      ctx.fillStyle = tinycolor(bgColor).toHexString();
+      ctx.fillRect(0, 0, size, size);
+    }
 
     const loadImage = (src: string): Promise<HTMLImageElement> => {
       return new Promise((resolve, reject) => {
@@ -321,7 +326,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     for (const url of imagesDataURL) {
       try {
         const img = await loadImage(url);
-        compositeContext?.drawImage(img, 0, 0);
+        ctx.drawImage(img, 0, 0);
       } catch (error) {
         console.error(error);
       }
@@ -438,35 +443,36 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     const composited = await getCompositedImage([background, foreground], canvasSize);
     if (!composited) return null;
 
-    const webMaskableIcon = await clipImage(composited, clipInset.main, 'square');
-    if (!webMaskableIcon) return null;
-    const icon = await clipImage(webMaskableIcon, clipInset.web, iconShape);
+    const maskable = await clipImage(composited, clipInset.main, 'square');
+    if (!maskable) return null;
+    const icon = await clipImage(maskable, clipInset.web, iconShape);
     if (!icon) return null;
 
-    const androidLegacyIconImage = await clipImage(icon, clipInset.android.legacy, 'rounded-rectangle');
-    const androidRoundIconImage = await clipImage(icon, clipInset.android.round, 'circle');
-    if (!androidLegacyIconImage || !androidRoundIconImage) return null;
+    const icoBlob = await new PngIcoConverter().convertToBlobAsync([
+      { png: await dataURLToBlob(await resizeImage(icon, 256)) },
+    ]);
+    const ico = URL.createObjectURL(new Blob([icoBlob], { type: 'image/x-icon' }));
 
-    const androidLegacyIcon = await resizeImage(androidLegacyIconImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.legacy);
-    const androidRoundIcon = await resizeImage(androidRoundIconImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.round);
-    if (!androidLegacyIcon || !androidRoundIcon) return null;
+    const androidFullBleed = await getCompositedImage([background, foreground], canvasSize, backgroundStyle === 'color' ? backgroundColor : undefined);
+    if (!androidFullBleed) return null;
+    const androidLegacyImage = await clipImage(maskable, clipInset.android.legacy, 'rounded-rectangle');
+    const androidRoundImage = await clipImage(maskable, clipInset.android.round, 'circle');
+    if (!androidLegacyImage || !androidRoundImage) return null;
 
-    const icoPngDataURL = await resizeImage(icon, 256);
-    if (!icoPngDataURL) return null;
-
-    const ico = await new PngIcoConverter().convertToBlobAsync([{ png: await dataURLToBlob(icoPngDataURL) }]);
-    const icoDataURL = URL.createObjectURL(new Blob([ico], { type: 'image/x-icon' }));
+    const androidLegacy = await resizeImage(androidLegacyImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.legacy);
+    const androidRound = await resizeImage(androidRoundImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.round);
+    if (!androidLegacy || !androidRound) return null;
 
     const icons: IIcons = {
-      ico: { name: 'ico', src: icoDataURL },
+      ico: { name: 'Ico', src: ico },
       web: { name: 'Web', src: icon },
-      webMaskable: { name: 'Web Maskable', src: webMaskableIcon },
-      electron: { name: 'Electron', src: icoDataURL },
+      webMaskable: { name: 'Web Maskable', src: maskable },
+      desktop: { name: 'Desktop', src: ico },
       androidForeground: { name: 'Android Foreground', src: foreground },
       androidBackground: { name: 'Android Background', src: background },
-      androidFullBleed: { name: 'Android Full Bleed', src: composited },
-      androidLegacy: { name: 'Android Legacy', src: androidLegacyIcon },
-      androidRound: { name: 'Android Round', src: androidRoundIcon },
+      androidFullBleed: { name: 'Android Full Bleed', src: androidFullBleed },
+      androidLegacy: { name: 'Android Legacy', src: androidLegacy },
+      androidRound: { name: 'Android Round', src: androidRound },
     };
 
     setIcons(icons);
@@ -498,7 +504,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
       await api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/electron` });
       const formData = new FormData();
       formData.append('targetDirectory', `games/${gameDir}/icons/electron`);
-      formData.append('files', await dataURLToBlob(icons.ico.src), 'icon.ico');
+      formData.append('files', await dataURLToBlob(icons.desktop.src), 'icon.ico');
       await axios.post('/api/assets/upload', formData);
       console.log('上传 Electron 图标成功');
     } catch (error) {
