@@ -1,4 +1,4 @@
-const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
+const { app, BrowserWindow, globalShortcut, Menu } = require('electron');
 const log = require('electron-log');
 const path = require('path');
 
@@ -25,7 +25,8 @@ const createWindow = () => {
     const win = new BrowserWindow({
         width: 1600,
         height: 900,
-        icon: path.join(__dirname,'./public/icon.ico'),
+        icon: path.join(__dirname, '../../icon.ico'),
+        useContentSize: true,
     })
 
     win.loadFile('./public/index.html').then(r => {

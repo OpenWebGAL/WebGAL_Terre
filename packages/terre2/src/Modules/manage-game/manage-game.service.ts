@@ -283,7 +283,7 @@ export class ManageGameService {
             this.webgalFs.getPathFromRoot(
               `/public/games/${gameName}/icons/electron/`,
             ),
-            `${electronExportDir}/resources/app/public/`,
+            `${electronExportDir}/`,
           );
         }
         // 创建 app.asar
@@ -342,7 +342,7 @@ export class ManageGameService {
             this.webgalFs.getPathFromRoot(
               `/public/games/${gameName}/icons/electron/`,
             ),
-            `${electronExportDir}/resources/app/public/`,
+            `${electronExportDir}/`,
           );
         }
         // 创建 app.asar
@@ -401,7 +401,7 @@ export class ManageGameService {
             this.webgalFs.getPathFromRoot(
               `/public/games/${gameName}/icons/electron/`,
             ),
-            `${electronExportDir}/resources/app/public/`,
+            `${electronExportDir}/`,
           );
         }
         // 创建 app.asar
