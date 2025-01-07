@@ -148,7 +148,6 @@ const Transformer = ({
   };
 
   const handleScaleWheel = (event: React.WheelEvent, type: 'x' | 'y' | 'xy') => {
-    console.log(event.deltaY);
     if (!onScaleChange || !scale) return;
     if (type === 'xy') {
       if (event.deltaY < 0) {

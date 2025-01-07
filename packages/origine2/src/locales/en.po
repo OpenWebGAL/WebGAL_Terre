@@ -344,8 +344,8 @@ msgstr "Edit Color"
 msgid "值"
 msgstr "Value"
 
-#: src/components/Transformer/Transformer.tsx:218
-#: src/components/Transformer/Transformer.tsx:225
+#: src/components/Transformer/Transformer.tsx:217
+#: src/components/Transformer/Transformer.tsx:224
 msgid "偏移"
 msgstr "Offset"
 
@@ -1584,9 +1584,9 @@ msgstr "Edit game"
 msgid "编辑组件"
 msgstr "Edit component"
 
-#: src/components/Transformer/Transformer.tsx:184
-#: src/components/Transformer/Transformer.tsx:195
-#: src/components/Transformer/Transformer.tsx:206
+#: src/components/Transformer/Transformer.tsx:183
+#: src/components/Transformer/Transformer.tsx:194
+#: src/components/Transformer/Transformer.tsx:205
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:94
 msgid "缩放"
 msgstr "Scale"
