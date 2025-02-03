@@ -48,7 +48,7 @@ jobs:
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: sh release-linux.sh         
+        run: sh release-linux-arm64.sh         
       - name: Compress
         run: 7z a -tzip release/WebGAL_Terre_Linux_Arm64.zip release/*
       
