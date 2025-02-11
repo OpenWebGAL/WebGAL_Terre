@@ -69,7 +69,7 @@
     "@typescript-eslint/parser": "^5.18.0",
     "@vitejs/plugin-react": "^4.0.4",
     "babel-plugin-macros": "^3.1.0",
-    "esbuild": "^0.18.11",
+    "esbuild": "^0.25.0",
     "eslint": "^8.13.0",
     "eslint-config-alloy": "^4.5.1",
     "eslint-plugin-react": "^7.29.4",
