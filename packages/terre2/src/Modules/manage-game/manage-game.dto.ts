@@ -108,3 +108,12 @@ export class RenameDto {
   @ApiProperty({ description: 'New name for renaming the game' })
   newName: string;
 }
+
+export type Platform = 'web' | 'electron' | 'android';
+
+export const platforms: Platform[] = ['web', 'electron', 'android'];
+
+export class IconsDto {
+  @ApiProperty({ description: 'The icons of the game' })
+  platforms: Platform[];
+}

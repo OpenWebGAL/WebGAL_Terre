@@ -767,6 +767,40 @@
         ]
       }
     },
+    "/api/manageGame/getIcons/{gameDir}": {
+      "get": {
+        "operationId": "ManageGameController_getIcons",
+        "summary": "Get Game Icons",
+        "parameters": [
+          {
+            "name": "gameDir",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned game icons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IconsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to get the game icons."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
     "/api/manageTemplate/templateList": {
       "get": {
         "operationId": "ManageTemplateController_getTemplateList",
@@ -1339,6 +1373,21 @@
         "required": [
           "gameName",
           "newName"
+        ]
+      },
+      "IconsDto": {
+        "type": "object",
+        "properties": {
+          "platforms": {
+            "description": "The icons of the game",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "platforms"
         ]
       },
       "TemplateInfoDto": {

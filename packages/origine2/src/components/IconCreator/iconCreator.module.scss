@@ -1,0 +1,78 @@
+.mosaicBg {
+  background-image:
+    linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.canvasContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  border: var(--border-lg) !important;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fileInputButton {
+  padding: 0 !important;
+  min-width: 0 !important;
+}
+
+.fileInputButton label {
+  cursor: pointer;
+  padding: 5px 12px;
+}
+
+.title {
+  display: block;
+  font-weight: 600;
+}
+
+.previewContainer {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.previewIcon {
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+
+.previewIcon img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+
+.preview span {
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  font-size: smaller;
+}

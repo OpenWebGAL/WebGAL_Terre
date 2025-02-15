@@ -33,6 +33,7 @@ import {
   EditTextFileDto,
   GameConfigDto,
   GameInfoDto,
+  IconsDto,
   MkDirDto,
   RenameDto,
   UploadFilesDto,
@@ -361,5 +362,17 @@ export class ManageGameController {
       ),
       fileOperationDto.newName,
     );
+  }
+
+  @Get('getIcons/:gameDir')
+  @ApiOperation({ summary: 'Get Game Icons' })
+  @ApiResponse({
+    status: 200,
+    type: IconsDto,
+    description: 'Returned game icons.',
+  })
+  @ApiResponse({ status: 400, description: 'Failed to get the game icons.' })
+  async getIcons(@Param('gameDir') gameDir: string): Promise<IconsDto> {
+    return this.manageGame.getIcons(gameDir);
   }
 }
