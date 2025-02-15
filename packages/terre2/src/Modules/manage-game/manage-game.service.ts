@@ -182,7 +182,7 @@ export class ManageGameService {
       .filter((name) => platforms.includes(name as Platform));
     return {
       platforms: platformDirs as Platform[],
-    }
+    };
   }
 
   /**
@@ -277,7 +277,7 @@ export class ManageGameService {
           `${electronExportDir}/resources/app/public/game/`,
         );
         // 复制图标
-        const icons = await this.getIcons(gameName)
+        const icons = await this.getIcons(gameName);
         if (icons.platforms.includes('electron')) {
           await this.webgalFs.copy(
             this.webgalFs.getPathFromRoot(
@@ -336,7 +336,7 @@ export class ManageGameService {
           `${electronExportDir}/resources/app/public/game/`,
         );
         // 复制图标
-        const icons = await this.getIcons(gameName)
+        const icons = await this.getIcons(gameName);
         if (icons.platforms.includes('electron')) {
           await this.webgalFs.copy(
             this.webgalFs.getPathFromRoot(
@@ -395,7 +395,7 @@ export class ManageGameService {
           `${electronExportDir}/Contents/Resources/app/public/game/`,
         );
         // 复制图标
-        const icons = await this.getIcons(gameName)
+        const icons = await this.getIcons(gameName);
         if (icons.platforms.includes('electron')) {
           await this.webgalFs.copy(
             this.webgalFs.getPathFromRoot(
@@ -492,9 +492,11 @@ export class ManageGameService {
         `${androidExportDir}/app/src/main/java/MainActivity.kt`,
       );
       // 复制图标
-      const icons = await this.getIcons(gameName)
+      const icons = await this.getIcons(gameName);
       if (icons.platforms.includes('android')) {
-        this.webgalFs.deleteFileOrDirectory( `${androidExportDir}/app/src/main/res/values/ic_launcher_background.xml`);
+        this.webgalFs.deleteFileOrDirectory(
+          `${androidExportDir}/app/src/main/res/values/ic_launcher_background.xml`,
+        );
         await this.webgalFs.copy(
           this.webgalFs.getPathFromRoot(
             `/public/games/${gameName}/icons/android`,
@@ -504,8 +506,10 @@ export class ManageGameService {
         await this.webgalFs.copy(
           `${androidExportDir}/app/src/main/res/ic_launcher-playstore.png`,
           `${androidExportDir}/app/src/main/ic_launcher-playstore.png`,
-        )
-        this.webgalFs.deleteFileOrDirectory( `${androidExportDir}/app/src/main/res/ic_launcher-playstore.png`);
+        );
+        this.webgalFs.deleteFileOrDirectory(
+          `${androidExportDir}/app/src/main/res/ic_launcher-playstore.png`,
+        );
       }
       await _open(androidExportDir);
     }
@@ -530,12 +534,10 @@ export class ManageGameService {
         [gameConfig.Description, gameConfig.Game_name],
       );
       // 复制图标
-      const icons = await this.getIcons(gameName)
+      const icons = await this.getIcons(gameName);
       if (icons.platforms.includes('web')) {
         await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot(
-            `/public/games/${gameName}/icons/web/`,
-          ),
+          this.webgalFs.getPathFromRoot(`/public/games/${gameName}/icons/web/`),
           `${webExportDir}/icons/`,
         );
       }
