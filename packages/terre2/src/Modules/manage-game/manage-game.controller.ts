@@ -141,9 +141,8 @@ export class ManageGameController {
   async ejectGameAsWeb(@Param('gameName') gameName: string) {
     // Fetch gameName using @Param decorator
     gameName = decodeURI(gameName); // Optionally decode the URI
-    this.manageGame
-      .exportGame(gameName, 'web')
-      .then(() => this.logger.log(`${gameName} exported as web app`));
+    const result = await this.manageGame.exportGame(gameName, 'web');
+    result && this.logger.log(`${gameName} exported as web app`);
   }
 
   @Get('ejectGameAsExe/:gameName')
@@ -159,9 +158,11 @@ export class ManageGameController {
   })
   async ejectGameAsExe(@Param('gameName') gameName: string) {
     gameName = decodeURI(gameName);
-    this.manageGame
-      .exportGame(gameName, 'electron-windows')
-      .then(() => this.logger.log(`${gameName} export as exe`));
+    const result = await this.manageGame.exportGame(
+      gameName,
+      'electron-windows',
+    );
+    result && this.logger.log(`${gameName} export as exe`);
   }
 
   @Get('ejectGameAsAndroid/:gameName')
@@ -177,9 +178,8 @@ export class ManageGameController {
   })
   async ejectGameAsAndroid(@Param('gameName') gameName: string) {
     gameName = decodeURI(gameName);
-    this.manageGame
-      .exportGame(gameName, 'android')
-      .then(() => this.logger.log(`${gameName} export as android`));
+    const result = await this.manageGame.exportGame(gameName, 'android');
+    result && this.logger.log(`${gameName} export as android`);
   }
 
   @Get('readGameAssets/:readDirPath(*)')

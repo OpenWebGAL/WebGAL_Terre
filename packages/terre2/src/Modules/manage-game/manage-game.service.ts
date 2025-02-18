@@ -193,7 +193,8 @@ export class ManageGameService {
   async exportGame(
     gameName: string,
     ejectPlatform: 'web' | 'electron-windows' | 'android',
-  ) {
+  ): Promise<boolean> {
+    try {
     // 检查是否使用了衍生版本
     const gameRootDir = `/public/games/${gameName}/`;
     const checkIsEngineTemplateExist = async () => {
@@ -545,6 +546,12 @@ export class ManageGameService {
       await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
       await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
       await _open(webExportDir);
+      }
+
+      return true;
+    } catch (error) {
+      this.logger.error('Error exporting game:', error);
+      return false;
     }
   }
 }
