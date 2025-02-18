@@ -65,11 +65,7 @@ export class ManageGameController {
   @ApiResponse({ status: 200, description: 'Game creation result.' })
   @ApiBody({ type: CreateGameDto, description: 'Game creation data' })
   async createGame(@Body() createGameData: CreateGameDto) {
-    const createResult = await this.manageGame.createGame(
-      createGameData.gameName,
-      createGameData.derivative,
-      createGameData.templateName,
-    );
+    const createResult = await this.manageGame.createGame(createGameData);
     if (createResult) {
       return { status: 'success' };
     } else {

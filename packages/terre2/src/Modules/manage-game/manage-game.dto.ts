@@ -4,10 +4,18 @@ import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 export class CreateGameDto {
   @ApiProperty({ description: 'The name of the game to be created' })
   gameName: string;
-  @ApiProperty({ description: 'The name of the derivative to be used' })
+  @ApiProperty({ description: 'The dir of the game to be created' })
+  gameDir: string;
+  @ApiProperty({
+    description: 'The name of the derivative to be used',
+    required: false,
+  })
   derivative?: string;
-  @ApiProperty({ description: 'The name of the template to be applied' })
-  templateName?: string;
+  @ApiProperty({
+    description: 'The dir of the template to be applied',
+    required: false,
+  })
+  templateDir?: string;
 }
 
 export class EditFileNameDto {

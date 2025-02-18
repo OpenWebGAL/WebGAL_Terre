@@ -15,13 +15,14 @@ import {AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon} fr
 import {t} from "@lingui/macro";
 import useSWR from "swr";
 import {api} from "@/api";
-import { GameInfoDto } from "@/api/Api";
+import {CreateGameDto, GameInfoDto} from "@/api/Api";
+import normalizeFileName from "@/utils/normalizeFileName";
 
 interface ISidebarProps {
   gameList: GameInfoDto[];
   currentSetGame: string | null;
   setCurrentGame: (currentGame: string) => void;
-  createGame: (name: string, derivative?: string, templateName?: string) => void;
+  createGame: (createGameData: CreateGameDto) => void;
   refreash?: () => void;
 }
 
@@ -31,7 +32,8 @@ const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
 export default function Sidebar(props: ISidebarProps) {
 
   const [createGameFormOpen, setCreateGameFormOpen] = useState(false);
-  const [newGameName, setNewGameName] = useState(t`新的游戏`);
+  const [gameName, setGameName] = useState(t`新的游戏`);
+  const [gameDir, setGameDir] = useState(t`新的游戏`);
   const [derivative, setDerivative] = useState<string | undefined>('__STANDARD__WG__');
   const [templateName, setTemplateName] = useState<string | undefined>('__STANDARD__WG__');
 
@@ -69,10 +71,15 @@ export default function Sidebar(props: ISidebarProps) {
   </Dropdown>;
 
   function createNewGame() {
-    if (newGameName && newGameName.trim() !== '' && !props.gameList.find((item) => item.dir === newGameName.trim())) {
-      props.createGame(newGameName, derivative === '__STANDARD__WG__' ? undefined : derivative, templateName === '__STANDARD__WG__' ? undefined : templateName);
+    if (gameName.trim() !== '' && gameDir.trim() !== '' && !props.gameList.find((item) => item.dir === gameDir.trim())) {
+      props.createGame({
+        gameName: gameName.trim(),
+        gameDir,
+        derivative: derivative === '__STANDARD__WG__' ? undefined : derivative,
+        templateDir: templateName === '__STANDARD__WG__' ? undefined : templateName,
+      });
       setCreateGameFormOpen(false);
-      setNewGameName(t`新的游戏`);
+      setGameName(t`新的游戏`);
     }
   }
 
@@ -92,17 +99,30 @@ export default function Sidebar(props: ISidebarProps) {
           <PopoverSurface>
             <form style={{display: "flex", flexDirection: "column", gap: '16px'}}>
               <Subtitle1>{t`创建新游戏`}</Subtitle1>
+              {t`游戏名称`}
               <Input
-                value={newGameName}
-                onChange={(event) => setNewGameName(event.target.value)}
+                value={gameName}
+                onChange={(event) => {
+                  setGameName(event.target.value);
+                  gameDir === normalizeFileName(gameName) && setGameDir(normalizeFileName(event.target.value));
+                }}
                 onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
                 defaultValue={t`新的游戏`}
-                placeholder={t`新游戏名`}/>
+                placeholder={t`新游戏名`}
+              />
+              {t`游戏目录`}
+              <Input
+                value={gameDir}
+                onChange={(event) => setGameDir(event.target.value)}
+                onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
+                defaultValue={gameDir}
+                placeholder={t`游戏目录`}
+              />
               {t`选择游戏引擎版本`}
               {selector}
               {t`选择应用的模板`}
               {selectorTemplate}
-              <Button appearance='primary' disabled={newGameName.trim() === ''}
+              <Button appearance='primary' disabled={gameName.trim() === ''}
                 onClick={createNewGame}>{t`创建`}</Button>
             </form>
           </PopoverSurface>
