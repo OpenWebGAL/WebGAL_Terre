@@ -108,7 +108,7 @@ export default function Sidebar(props: ISidebarProps) {
                 }}
                 onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
                 defaultValue={t`新的游戏`}
-                placeholder={t`新游戏名`}
+                placeholder={t`游戏名称`}
               />
               {t`游戏目录`}
               <Input
@@ -122,7 +122,7 @@ export default function Sidebar(props: ISidebarProps) {
               {selector}
               {t`选择应用的模板`}
               {selectorTemplate}
-              <Button appearance='primary' disabled={gameName.trim() === ''}
+              <Button appearance='primary' disabled={gameName.trim() === '' || gameDir.trim() === ''}
                 onClick={createNewGame}>{t`创建`}</Button>
             </form>
           </PopoverSurface>

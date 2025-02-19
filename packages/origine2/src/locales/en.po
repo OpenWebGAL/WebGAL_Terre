@@ -1145,14 +1145,6 @@ msgstr "New folder name"
 msgid "新标签页预览"
 msgstr "Preview in new tab"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:53
-#~ msgid "新模板名"
-#~ msgstr "New template name"
-
-#: src/pages/dashboard/Sidebar.tsx:111
-msgid "新游戏名"
-msgstr "New game name"
-
 #: src/pages/dashboard/TemplateSidebar.tsx:24
 #: src/pages/dashboard/TemplateSidebar.tsx:25
 #: src/pages/dashboard/TemplateSidebar.tsx:37
@@ -1405,6 +1397,7 @@ msgid "游戏包名"
 msgstr "Game package name"
 
 #: src/pages/dashboard/Sidebar.tsx:102
+#: src/pages/dashboard/Sidebar.tsx:111
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:121
 msgid "游戏名称"
 msgstr "Game name"
@@ -1964,15 +1957,15 @@ msgstr "Configuration"
 msgid "重命名"
 msgstr "Rename"
 
+#: src/pages/dashboard/TemplateElement.tsx:92
+#: src/pages/dashboard/TemplateElement.tsx:107
+msgid "重命名模板目录"
+msgstr "Rename template directory"
+
 #: src/pages/dashboard/GameElement.tsx:98
 #: src/pages/dashboard/GameElement.tsx:113
-#: src/pages/dashboard/TemplateElement.tsx:92
-msgid "重命名文件夹"
-msgstr "Rename Folder"
-
-#: src/pages/dashboard/TemplateElement.tsx:107
-msgid "重命名模板"
-msgstr "Rename Template"
+msgid "重命名游戏目录"
+msgstr "Rename game directory"
 
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:63
 msgid "鉴赏"
