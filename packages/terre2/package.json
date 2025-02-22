@@ -6,6 +6,7 @@
   "private": true,
   "license": "MPL-2.0",
   "scripts": {
+    "update-engine": "tsx update-webgal.ts",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build-standalone": "nest build --webpack --webpackPath=./standalone.js",
@@ -25,7 +26,6 @@
   },
   "dependencies": {
     "@babel/traverse": "7.23.2",
-    "webgal-engine": "4.5.11",
     "@electron/asar": "^3.2.10",
     "@fastify/static": "^7.0.1",
     "@nestjs/common": "^9.0.5",
@@ -45,9 +45,10 @@
     "swagger-ui-express": "^5.0.0",
     "vscode-languageserver": "^8.1.0",
     "vscode-languageserver-textdocument": "^1.0.11",
+    "webgal-engine": "4.5.11",
     "webgal-parser": "latest",
-    "webpack": "5.76.0",
-    "ws": "^8.16.0"
+    "webpack": "5.94.0",
+    "ws": "8.17.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -65,6 +66,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "fork-ts-checker-webpack-plugin": "^7.2.1",
+    "fs-extra": "^11.3.0",
     "jest": "28.0.3",
     "pkg": "^5.8.0",
     "prettier": "^2.3.2",
@@ -74,6 +76,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.0.0",
+    "tsx": "^4.19.3",
     "typescript": "^4.3.5"
   },
   "jest": {
@@ -92,5 +95,10 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "workspaces": {
+    "nohoist": [
+      "webgal-engine"
+    ]
   }
 }
