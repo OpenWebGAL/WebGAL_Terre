@@ -19,6 +19,15 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      {
+        test: /[\\/]src[\\/]main\.ts$/,
+        use: [
+          {
+            loader: path.resolve(__dirname, 'intl-polyfill-loader.js'),
+          },
+        ],
+        exclude: /node_modules/,
+      },
     ],
   },
   // 打包后的文件名称以及位置
