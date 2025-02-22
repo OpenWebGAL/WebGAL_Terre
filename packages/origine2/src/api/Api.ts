@@ -70,10 +70,12 @@ export interface GameInfoDto {
 export interface CreateGameDto {
   /** The name of the game to be created */
   gameName: string;
+  /** The dir of the game to be created */
+  gameDir: string;
   /** The name of the derivative to be used */
-  derivative: string;
-  /** The name of the template to be applied */
-  templateName: string;
+  derivative?: string;
+  /** The dir of the template to be applied */
+  templateDir?: string;
 }
 
 export interface EditFileNameDto {

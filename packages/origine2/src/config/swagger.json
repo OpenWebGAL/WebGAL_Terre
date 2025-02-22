@@ -1228,19 +1228,22 @@
             "type": "string",
             "description": "The name of the game to be created"
           },
+          "gameDir": {
+            "type": "string",
+            "description": "The dir of the game to be created"
+          },
           "derivative": {
             "type": "string",
             "description": "The name of the derivative to be used"
           },
-          "templateName": {
+          "templateDir": {
             "type": "string",
-            "description": "The name of the template to be applied"
+            "description": "The dir of the template to be applied"
           }
         },
         "required": [
           "gameName",
-          "derivative",
-          "templateName"
+          "gameDir"
         ]
       },
       "EditFileNameDto": {

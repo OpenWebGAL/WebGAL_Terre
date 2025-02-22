@@ -3,7 +3,13 @@ import { _open } from '../../util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as process from 'process';
 import * as asar from '@electron/asar';
-import { GameInfoDto, IconsDto, Platform, platforms } from './manage-game.dto';
+import {
+  CreateGameDto,
+  GameInfoDto,
+  IconsDto,
+  Platform,
+  platforms,
+} from './manage-game.dto';
 import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 
 @Injectable()
@@ -70,15 +76,10 @@ export class ManageGameService {
 
   /**
    * 从模板创建游戏
-   * @param gameName
-   * @param derivative
-   * @param templateName
+   * @param createGameData
    */
-  async createGame(
-    gameName: string,
-    derivative?: string,
-    templateName?: string,
-  ): Promise<boolean> {
+  async createGame(createGameData: CreateGameDto): Promise<boolean> {
+    const { gameName, gameDir, derivative, templateDir } = createGameData;
     // 检查是否存在这个游戏
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/games`),
@@ -96,28 +97,28 @@ export class ManageGameService {
     // 创建文件夹
     await this.webgalFs.mkdir(
       this.webgalFs.getPathFromRoot('/public/games'),
-      gameName,
+      gameDir,
     );
     if (derivative) {
       await this.webgalFs.copy(
         this.webgalFs.getPathFromRoot(
           `/assets/templates/Derivative_Engine/${derivative}/`,
         ),
-        this.webgalFs.getPathFromRoot(`/public/games/${gameName}/`),
+        this.webgalFs.getPathFromRoot(`/public/games/${gameDir}/`),
       );
     } else {
       await this.webgalFs.copy(
         this.webgalFs.getPathFromRoot(
           '/assets/templates/WebGAL_Template/game/',
         ),
-        this.webgalFs.getPathFromRoot(`/public/games/${gameName}/game/`),
+        this.webgalFs.getPathFromRoot(`/public/games/${gameDir}/game/`),
       );
     }
-    if (templateName) {
+    if (templateDir) {
       await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot(`/public/templates/${templateName}/`),
+        this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
         this.webgalFs.getPathFromRoot(
-          `/public/games/${gameName}/game/template/`,
+          `/public/games/${gameDir}/game/template/`,
         ),
       );
     }
@@ -193,7 +194,8 @@ export class ManageGameService {
   async exportGame(
     gameName: string,
     ejectPlatform: 'web' | 'electron-windows' | 'android',
-  ) {
+  ): Promise<boolean> {
+    try {
     // 检查是否使用了衍生版本
     const gameRootDir = `/public/games/${gameName}/`;
     const checkIsEngineTemplateExist = async () => {
@@ -545,6 +547,12 @@ export class ManageGameService {
       await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
       await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
       await _open(webExportDir);
+      }
+
+      return true;
+    } catch (error) {
+      this.logger.error('Error exporting game:', error);
+      return false;
     }
   }
 }

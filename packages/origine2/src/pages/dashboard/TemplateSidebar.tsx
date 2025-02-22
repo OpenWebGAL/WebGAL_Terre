@@ -5,6 +5,7 @@ import { AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon } 
 import TemplateElement from "./TemplateElement";
 import {t} from "@lingui/macro";
 import { CreateTemplateDto, TemplateInfoDto } from "@/api/Api";
+import normalizeFileName from "@/utils/normalizeFileName";
 
 interface ITemplateSidebarProps {
   templateList: TemplateInfoDto[];
@@ -59,7 +60,7 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
                 value={newTemplateName}
                 onChange={(event) => {
                   setNewTemplateName(event.target.value);
-                  newTemplateDir === newTemplateName && setNewTemplateDir(event.target.value);
+                  newTemplateDir === normalizeFileName(newTemplateName) && setNewTemplateDir(normalizeFileName(event.target.value));
                 }}
                 onKeyDown={(event) => (event.key === 'Enter') && createNewTemplate()}
                 defaultValue={t`新的模板`}

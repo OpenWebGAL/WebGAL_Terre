@@ -58,8 +58,14 @@ export class WebgalFsService {
    * @param src 源文件夹
    * @param dest 目标文件夹
    */
-  async copy(src: string, dest: string) {
-    return await fs.cp(decodeURI(src), decodeURI(dest), { recursive: true });
+  async copy(src: string, dest: string): Promise<boolean> {
+    try {
+      await fs.cp(decodeURI(src), decodeURI(dest), { recursive: true });
+      return true;
+    } catch (error) {
+      this.logger.error('Copy file failed');
+      return false;
+    }
   }
 
   /**
