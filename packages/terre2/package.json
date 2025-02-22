@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@babel/traverse": "7.23.2",
+    "webgal-engine": "4.5.11",
     "@electron/asar": "^3.2.10",
     "@fastify/static": "^7.0.1",
     "@nestjs/common": "^9.0.5",
