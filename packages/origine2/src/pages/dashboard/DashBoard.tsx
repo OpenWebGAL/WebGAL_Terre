@@ -50,7 +50,7 @@ import {redirect} from "@/hooks/useHashRoute";
 import {t} from "@lingui/macro";
 import { useRelease } from "@/hooks/useRelease";
 import { __INFO } from "@/config/info";
-import { CreateTemplateDto } from "@/api/Api";
+import {CreateGameDto, CreateTemplateDto} from "@/api/Api";
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -102,14 +102,10 @@ export default function DashBoard() {
 
   const setCurrentTemplate = (e: string | null) => currentTemplate.set(e);
 
-  async function createGame(gameName: string, derivative?: string, templateName?: string) {
-    const res = await api.manageGameControllerCreateGame({
-      gameName: gameName,
-      derivative: derivative as string,
-      templateName: templateName as string
-    }).then(r => r.data);
+  async function createGame(createGameData: CreateGameDto) {
+    const res = await api.manageGameControllerCreateGame(createGameData).then(r => r.data);
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`${gameName} ` + t`已创建`, 2000);
+    messageRef.current!.showMessage(`${createGameData.gameName} ` + t`已创建`, 2000);
     refreash();
   }
 

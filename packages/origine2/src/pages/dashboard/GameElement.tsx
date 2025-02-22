@@ -95,7 +95,7 @@ export default function GameElement(props: IGameElementProps) {
                 <MenuList>
                   <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t`在文件管理器中打开`}</MenuItem>
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
-                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名文件夹`}</MenuItem>
+                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名游戏目录`}</MenuItem>
                   <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除游戏`}</MenuItem>
                 </MenuList>
               </MenuPopover>
@@ -110,7 +110,7 @@ export default function GameElement(props: IGameElementProps) {
       >
         <DialogSurface>
           <DialogBody>
-            <DialogTitle>{t`重命名文件夹`}</DialogTitle>
+            <DialogTitle>{t`重命名游戏目录`}</DialogTitle>
             <DialogContent>
               <Input
                 style={{width:'100%'}}

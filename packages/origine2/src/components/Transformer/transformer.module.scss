@@ -1,0 +1,54 @@
+.surface {
+  display: flex;
+  flex-direction: row;
+  padding: 0 !important;
+}
+
+.input {
+  min-width: 0 !important;
+  width: 100%;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  flex-grow: 1;
+  padding: 0.25rem;
+  width: 150px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.offsetGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.25rem;
+  aspect-ratio: 1 / 1;
+  justify-content: center;
+  align-items: center;
+  max-width: 80px;
+}
+
+.scaleGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.right {
+  padding-right: 0.25rem;
+}
