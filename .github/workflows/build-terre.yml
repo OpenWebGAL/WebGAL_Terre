@@ -144,6 +144,7 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE }}" | base64 --decode > packages/terre-android/app/keystore.jks
       - name: Save key.properties
+        if: ${{ env.KEYSTORE != '' }}
         run: |
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> packages/terre-android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> packages/terre-android/key.properties
@@ -153,21 +154,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-android.sh
-      - name: Rename signed apk
-        if: ${{ env.KEYSTORE != '' }}
-        run: mv packages/terre-android/app/build/outputs/apk/release/app-release.apk release/WebGAL_Terre_Android.apk
-      - name: Upload Artifact
+      - name: Upload Release Artifact
         if: ${{ env.KEYSTORE != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: WebGAL_Terre_Android
           path: release/WebGAL_Terre_Android.apk
-      - name: Rename unsigned apk
-        if: ${{ env.KEYSTORE == '' }}
-        run: mv packages/terre-android/app/build/outputs/apk/release/app-release-unsigned.apk release/WebGAL_Terre_Android_unsigned.apk
-      - name: Upload unsigned Artifact
+      - name: Upload Debug Artifact
         if: ${{ env.KEYSTORE == '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: WebGAL_Terre_Android_unsigned
-          path: release/WebGAL_Terre_Android_unsigned.apk
+          name: WebGAL_Terre_Android_debug
+          path: release/WebGAL_Terre_Android_debug.apk

@@ -17,3 +17,7 @@ app/libnode/bin
 app/libnode/include
 app/libnode/nodejs-mobile-*
 app/src/main/assets/terre
+
+# key
+key.properties
+keystore.jks

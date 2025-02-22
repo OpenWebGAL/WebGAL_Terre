@@ -41,7 +41,19 @@ android {
             abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86_64"))
         }
     }
-
+    signingConfigs {
+        if (keystorePropertiesFile.exists())
+            create("release") {
+                keyAlias = keystoreProperties["keyAlias"] as? String
+                    ?: throw IllegalArgumentException("Key alias is missing")
+                keyPassword = keystoreProperties["keyPassword"] as? String
+                    ?: throw IllegalArgumentException("Key password is missing")
+                storeFile = (keystoreProperties["storeFile"] as? String)?.let { file(it) }
+                    ?: throw IllegalArgumentException("Store file is missing")
+                storePassword = keystoreProperties["storePassword"] as? String
+                    ?: throw IllegalArgumentException("Store password is missing")
+            }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -49,6 +61,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (keystorePropertiesFile.exists())
+                signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -71,19 +85,6 @@ android {
         getByName("main") {
             jniLibs.srcDirs("libnode/bin/")
         }
-    }
-    signingConfigs {
-        if (keystorePropertiesFile.exists())
-            create("release") {
-                keyAlias = keystoreProperties["keyAlias"] as? String
-                    ?: throw IllegalArgumentException("Key alias is missing")
-                keyPassword = keystoreProperties["keyPassword"] as? String
-                    ?: throw IllegalArgumentException("Key password is missing")
-                storeFile = (keystoreProperties["storeFile"] as? String)?.let { file(it) }
-                    ?: throw IllegalArgumentException("Store file is missing")
-                storePassword = keystoreProperties["storePassword"] as? String
-                    ?: throw IllegalArgumentException("Store password is missing")
-            }
     }
 }
 
