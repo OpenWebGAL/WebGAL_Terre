@@ -20,4 +20,5 @@ app/src/main/assets/terre
 
 # key
 key.properties
-keystore.jks
+**/*.keystore
+**/*.jks

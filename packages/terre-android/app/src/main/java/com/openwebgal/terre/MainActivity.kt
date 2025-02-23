@@ -368,7 +368,7 @@ fun LogcatView(terreViewModel: TerreViewModel) {
                         ) {
                             withContext(Dispatchers.Main) {
                                 terreViewModel.addLogLine(
-                                    logLine.split("$ADBTAG:").last().replace("\u001B", "").trim()
+                                    cleanLog(logLine)
                                 )
                             }
                         }
@@ -417,4 +417,10 @@ fun clearLogcat() {
         Log.e("LogcatView", "Error clearing logcat: ${e.message}")
         Thread.currentThread().interrupt()
     }
+}
+
+fun cleanLog(logLine: String): String {
+    val lastPart = logLine.split("$ADBTAG:").last()
+    val cleanedLog = lastPart.replace(Regex("\u001B\\[[;\\d]*m"), "").trim()
+    return cleanedLog
 }
