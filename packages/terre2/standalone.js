@@ -3,6 +3,9 @@ const path = require('path');
 const webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
+const args = process.argv.slice(2);
+const isIntlEnabled = args.includes('--intl');
+
 module.exports = {
   entry: './src/main',
   target: 'node',
@@ -19,15 +22,19 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
-      {
-        test: /[\\/]src[\\/]main\.ts$/,
-        use: [
+      ...(isIntlEnabled
+        ? [
           {
-            loader: path.resolve(__dirname, 'intl-polyfill-loader.js'),
+            test: /[\\/]src[\\/]main\.ts$/,
+            use: [
+              {
+                loader: path.resolve(__dirname, 'intl-polyfill-loader.js'),
+              },
+            ],
+            exclude: /node_modules/,
           },
-        ],
-        exclude: /node_modules/,
-      },
+        ]
+        : []),
     ],
   },
   // 打包后的文件名称以及位置

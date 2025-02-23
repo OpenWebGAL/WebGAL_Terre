@@ -10,6 +10,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build-standalone": "nest build --webpack --webpackPath=./standalone.js",
+    "build-standalone:intl": "nest build --webpack --webpackPath=./standalone.js -- --intl",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "rimraf dist && nest start --watch",

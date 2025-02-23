@@ -122,7 +122,7 @@ jobs:
           name: WebGAL_Terre_Windows_Setup
           path: bundle/WebGal_Terre_Setup.exe
   build-android:
-    name: Build Android Binary
+    name: Build Android APK
     runs-on: ubuntu-latest
     env:
       KEYSTORE: ${{ secrets.KEYSTORE }}

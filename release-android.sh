@@ -9,7 +9,7 @@ mkdir release
 
 # 进入 Terre 目录
 cd packages/terre2
-yarn run build-standalone
+yarn run build-standalone:intl
 cd dist
 cp -r main.js  ../../../release
 rm main.js
