@@ -3,7 +3,7 @@ import { Server, WebSocket } from 'ws';
 import {
   WebSocketMessageReader,
   WebSocketMessageWriter,
-} from '../../../terre-custom-libs/vscode-ws-jsonrpc-webgal/build/cjs';
+} from 'vscode-ws-jsonrpc-webgal';
 import { createWsConnection } from './webgalLsp';
 import { pprintJSON } from '../../util/strings';
 
