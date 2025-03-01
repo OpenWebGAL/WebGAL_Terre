@@ -22,8 +22,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "pkg": "cd dist && pkg main.js -o WebGAL_Terre",
-    "pkg:linux-arm64": "cd dist && pkg main.js -o WebGAL_Terre -t node18-linux-arm64"
+    "pkg": "cd dist && pkg src/main.js -o WebGAL_Terre",
+    "pkg:linux-arm64": "cd dist && pkg src/main.js -o WebGAL_Terre -t node18-linux-arm64"
   },
   "dependencies": {
     "@babel/traverse": "7.23.2",
