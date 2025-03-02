@@ -37,7 +37,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.openwebgal.terre.ui.theme.TerreTheme
 import kotlinx.coroutines.Dispatchers
@@ -83,19 +82,26 @@ class MainActivity : ComponentActivity() {
 
     fun start() {
         try {
-            val executor = Executors.newSingleThreadExecutor()
-            executor.submit {
-                val nodeDir =
-                    applicationContext.getExternalFilesDir(null)?.absolutePath + "/" + nodeDirName
+            applicationContext.getExternalFilesDir(null) // May return null, call to create directory
+            val externalFilesDir = applicationContext.getExternalFilesDir(null)
+            Log.i("ASSETS", externalFilesDir?.absolutePath.toString())
+            if (externalFilesDir != null) {
+                val nodeDir = "${externalFilesDir.absolutePath}/$nodeDirName"
                 copyAssets(nodeDir)
-                startNodeWithArguments(
-                    arrayOf(
-                        "node",
-                        "$nodeDir/main.js",
-                        "--cwd",
-                        nodeDir
+                val executor = Executors.newSingleThreadExecutor()
+                executor.submit {
+                    copyAssets(nodeDir)
+                    startNodeWithArguments(
+                        arrayOf(
+                            "node",
+                            "$nodeDir/main.js",
+                            "--cwd",
+                            nodeDir
+                        )
                     )
-                )
+                }
+            } else {
+                Log.e("StorageError", "External files directory is unavailable")
             }
         } catch (e: Exception) {
             e.printStackTrace()
