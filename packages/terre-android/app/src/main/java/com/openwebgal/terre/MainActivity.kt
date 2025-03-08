@@ -86,7 +86,7 @@ class MainActivity : ComponentActivity() {
             val externalFilesDir = applicationContext.getExternalFilesDir(null)
             Log.i("ASSETS", externalFilesDir?.absolutePath.toString())
             if (externalFilesDir != null) {
-                val nodeDir = "${externalFilesDir.absolutePath}/$nodeDirName"
+                val nodeDir = externalFilesDir.absolutePath
                 copyAssets(nodeDir)
                 val executor = Executors.newSingleThreadExecutor()
                 executor.submit {
