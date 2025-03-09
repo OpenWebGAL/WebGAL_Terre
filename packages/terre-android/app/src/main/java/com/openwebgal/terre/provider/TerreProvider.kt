@@ -96,7 +96,7 @@ class TerreProvider : DocumentsProvider() {
 
     private fun includeFile(cursor: MatrixCursor, file: File) {
         val flags = when {
-            file.isDirectory -> Document.FLAG_DIR_SUPPORTS_CREATE or Document.FLAG_SUPPORTS_DELETE or Document.FLAG_SUPPORTS_RENAME
+            file.isDirectory -> Document.FLAG_DIR_SUPPORTS_CREATE or Document.FLAG_SUPPORTS_REMOVE or Document.FLAG_SUPPORTS_DELETE or Document.FLAG_SUPPORTS_RENAME
             else -> Document.FLAG_SUPPORTS_WRITE or Document.FLAG_SUPPORTS_REMOVE or Document.FLAG_SUPPORTS_DELETE or Document.FLAG_SUPPORTS_RENAME
         }
 
@@ -189,20 +189,20 @@ class TerreProvider : DocumentsProvider() {
             throw IllegalArgumentException("Document ID and display name must not be null")
         }
 
-        val fileToRename = getFile(documentId)
-        if (!fileToRename.exists()) {
+        val file = getFile(documentId)
+        if (!file.exists()) {
             throw FileNotFoundException("File not found: $documentId")
         }
 
-        val parentDir = fileToRename.parentFile
+        val parentDir = file.parentFile
         val newFile = File(parentDir, displayName)
 
         if (newFile.exists()) {
             throw FileAlreadyExistsException(newFile)
         }
 
-        if (!fileToRename.renameTo(newFile)) {
-            throw IOException("Failed to rename file: ${fileToRename.absolutePath} to ${newFile.absolutePath}")
+        if (!file.renameTo(newFile)) {
+            throw IOException("Failed to rename file: ${file.absolutePath} to ${newFile.absolutePath}")
         }
 
         return getDocumentId(newFile)

@@ -1,4 +1,4 @@
-package com.openwebgal.terre
+package com.openwebgal.terre.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
