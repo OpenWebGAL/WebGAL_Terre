@@ -1,4 +1,6 @@
+import groovy.json.JsonSlurper
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.security.MessageDigest
 import java.nio.file.Files
 import java.net.URI
@@ -18,6 +20,19 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+fun getVersionFromPackageJson(): String {
+    val packageJsonFile = rootProject.file("../../package.json")
+    if (!packageJsonFile.exists()) {
+        throw FileNotFoundException("package.json not found at ${packageJsonFile.absolutePath}")
+    }
+
+    val jsonSlurper = JsonSlurper()
+    val json = jsonSlurper.parse(packageJsonFile) as Map<*, *>
+    val version = json["version"] as? String
+
+    return version ?: throw IllegalArgumentException("Version not found in package.json")
+}
+
 android {
     namespace = "com.openwebgal.terre"
     compileSdk = 35
@@ -27,7 +42,7 @@ android {
         minSdk = 24
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = getVersionFromPackageJson()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
