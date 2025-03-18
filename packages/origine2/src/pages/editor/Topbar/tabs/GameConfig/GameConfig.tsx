@@ -12,7 +12,7 @@ import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
 import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
-import {Dismiss24Filled, Dismiss24Regular, bundleIcon} from "@fluentui/react-icons";
+import {Dismiss24Filled, Dismiss24Regular, IconsFilled, IconsRegular, bundleIcon} from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
 import {api} from "@/api";
 import {t, Trans} from "@lingui/macro";
@@ -20,6 +20,10 @@ import useSWR from "swr";
 import axios from "axios";
 import {WsUtil} from "@/utils/wsUtil";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
+import { IconWithTextItem } from "../../components/IconWithTextItem";
+import IconCreator from "@/components/IconCreator/IconCreator";
+
+const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
 
 export default function GameConfig() {
   const gameDir = useEditorStore.use.subPage();
@@ -187,6 +191,18 @@ export default function GameConfig() {
             </Trans>
           </div>
         </div>
+      </TabItem>
+      <TabItem title={t`游戏图标`}>
+        <IconCreator
+          gameDir={gameDir}
+          triggerButton={
+            <IconWithTextItem
+              onClick={() => {}}
+              icon={<IconsIcon />}
+              text={t`修改游戏图标`}
+            />
+          }
+        />
       </TabItem>
       <TabItem title="紧急回避">
         <GameConfigEditorWithSelector

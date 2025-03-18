@@ -4,10 +4,18 @@ import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 export class CreateGameDto {
   @ApiProperty({ description: 'The name of the game to be created' })
   gameName: string;
-  @ApiProperty({ description: 'The name of the derivative to be used' })
+  @ApiProperty({ description: 'The dir of the game to be created' })
+  gameDir: string;
+  @ApiProperty({
+    description: 'The name of the derivative to be used',
+    required: false,
+  })
   derivative?: string;
-  @ApiProperty({ description: 'The name of the template to be applied' })
-  templateName?: string;
+  @ApiProperty({
+    description: 'The dir of the template to be applied',
+    required: false,
+  })
+  templateDir?: string;
 }
 
 export class EditFileNameDto {
@@ -107,4 +115,13 @@ export class RenameDto {
 
   @ApiProperty({ description: 'New name for renaming the game' })
   newName: string;
+}
+
+export type Platform = 'web' | 'electron' | 'android';
+
+export const platforms: Platform[] = ['web', 'electron', 'android'];
+
+export class IconsDto {
+  @ApiProperty({ description: 'The icons of the game' })
+  platforms: Platform[];
 }

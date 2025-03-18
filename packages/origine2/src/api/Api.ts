@@ -70,10 +70,12 @@ export interface GameInfoDto {
 export interface CreateGameDto {
   /** The name of the game to be created */
   gameName: string;
+  /** The dir of the game to be created */
+  gameDir: string;
   /** The name of the derivative to be used */
-  derivative: string;
-  /** The name of the template to be applied */
-  templateName: string;
+  derivative?: string;
+  /** The dir of the template to be applied */
+  templateDir?: string;
 }
 
 export interface EditFileNameDto {
@@ -131,6 +133,11 @@ export interface RenameDto {
   gameName: string;
   /** New name for renaming the game */
   newName: string;
+}
+
+export interface IconsDto {
+  /** The icons of the game */
+  platforms: string[];
 }
 
 export interface TemplateInfoDto {
@@ -785,6 +792,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerGetIcons
+     * @summary Get Game Icons
+     * @request GET:/api/manageGame/getIcons/{gameDir}
+     */
+    manageGameControllerGetIcons: (gameDir: string, params: RequestParams = {}) =>
+      this.request<IconsDto, void>({
+        path: `/api/manageGame/getIcons/${gameDir}`,
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
