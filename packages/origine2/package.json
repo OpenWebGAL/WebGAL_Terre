@@ -35,7 +35,7 @@
     "@lingui/react": "^4.8.0",
     "@monaco-editor/react": "^4.4.5",
     "@uiw/react-json-view": "^2.0.0-alpha.12",
-    "axios": "^1.6.0",
+    "axios": "^1.8.2",
     "classnames": "^2.5.1",
     "cloudlogjs": "^1.0.11",
     "lodash": "^4.17.21",
