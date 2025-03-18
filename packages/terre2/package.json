@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre-2",
-  "version": "4.5.11",
+  "version": "4.5.12",
   "description": "",
   "author": "",
   "private": true,
@@ -8,8 +8,8 @@
   "scripts": {
     "update-engine": "tsx update-webgal.ts",
     "prebuild": "rimraf dist",
-    "build": "nest build",
-    "build-standalone": "nest build --webpack --webpackPath=./standalone.js",
+    "build": "tsx update-webgal.ts && nest build",
+    "build-standalone": "tsx update-webgal.ts && nest build --webpack --webpackPath=./standalone.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "rimraf dist && nest start --watch",
@@ -46,7 +46,7 @@
     "vscode-languageserver": "^8.1.0",
     "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-ws-jsonrpc-webgal": "0.2.1",
-    "webgal-engine": "4.5.11",
+    "webgal-engine": "4.5.12",
     "webgal-parser": "latest",
     "webpack": "5.76.0",
     "ws": "8.17.1"

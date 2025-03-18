@@ -4,17 +4,15 @@
 
 #### 新功能
 
-对于导出的 Electron 游戏，支持将日志输出到文件。
+新增图标创建工具，可以创建多种尺寸和类型的图标，方便进一步打包。
 
-CI 流程现可自动从 package.json 获取 Node.js 版本。
+使用原生的 Arm64 构建流程。
 
-新增对话连接先前文本与对话结束后连续执行选项。
-
-模板编辑器改进：游戏预览的组件响应模板编辑器的标签页切换。
+优化了对不合理的游戏名称的处理，优化游戏创建指引。
 
 #### 修复
 
-修复了游戏列表和模板列表的解析问题。
+修复了导出游戏时的异常。
 
 <!-- English Translation -->
 ## Release Notes
@@ -23,17 +21,15 @@ CI 流程现可自动从 package.json 获取 Node.js 版本。
 
 #### New Features
 
-For exported Electron games, log output to file is now supported.
+Added icon creation tool, which can create icons of various sizes and types for easy further packaging.
 
-The CI process now automatically retrieves the Node.js version from package.json.
+Use the native Arm64 build process.
 
-Added dialogue concatenation to connect previous text with options that execute sequentially after the dialogue ends.
-
-Template editor improvements: The game preview components now respond to tab switching in the template editor.
+Optimized the handling of unreasonable game names and optimized the game creation guide.
 
 #### Fixes
 
-Fixed parsing issues with the game list and template list.
+Fixed an exception when exporting the game.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -42,17 +38,15 @@ Fixed parsing issues with the game list and template list.
 
 #### 新機能
 
-エクスポートされたElectronゲームにおいて、ログをファイルに出力できるようになりました。
+アイコン作成ツールが追加され、さまざまなサイズとタイプのアイコンを作成できるようになり、さらにパッケージ化するのが容易になりました。
 
-CIプロセスは、package.jsonからNode.jsのバージョンを自動的に取得するようになりました。
+ネイティブ Arm64 ビルドプロセスを使用します。
 
-以前のテキストへの会話の接続と、会話終了後の連続実行オプションが追加されました。
-
-テンプレートエディターの改善：ゲームプレビューのコンポーネントが、テンプレートエディターのタブ切り替えに反応するようになりました。
+不適切なゲーム名の処理を最適化し、ゲーム作成ガイダンスを改善しました。
 
 #### 修正
 
-ゲームリストとテンプレートリストの解析に関する問題を修正しました。
+ゲームのエクスポート時の例外を修正しました。
 
 [//]: # (<!-- French Translation -->)
 
