@@ -36,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.openwebgal.terre.ui.theme.TerreTheme
@@ -52,6 +53,8 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
 import java.util.concurrent.Executors
+import androidx.core.content.edit
+import androidx.core.net.toUri
 
 class MainActivity : ComponentActivity() {
 
@@ -219,13 +222,13 @@ class MainActivity : ComponentActivity() {
 
     private fun launchUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(url)
+            data = url.toUri()
         }
         try {
             startActivity(intent)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Could not open browser", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.could_not_open_browser), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -255,9 +258,9 @@ class MainActivity : ComponentActivity() {
         }
         val prefs =
             applicationContext.getSharedPreferences("NODEJS_MOBILE_PREFS", Context.MODE_PRIVATE)
-        val editor = prefs.edit()
-        editor.putLong("NODEJS_MOBILE_APK_LastUpdateTime", lastUpdateTime)
-        editor.apply()
+        prefs.edit() {
+            putLong("NODEJS_MOBILE_APK_LastUpdateTime", lastUpdateTime)
+        }
     }
 }
 
@@ -268,9 +271,6 @@ fun MainScreen(
     start: () -> Unit,
     stop: () -> Unit,
 ) {
-
-    val isCopyingAssets by terreViewModel.isCopyingAssets.collectAsState()
-
     LaunchedEffect(Unit) {
         terreViewModel.startNode(start)
     }
@@ -293,19 +293,6 @@ fun MainScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
-            if (isCopyingAssets)
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CircularProgressIndicator()
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = "正在复制资产，请稍候...",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
             LogcatView(terreViewModel)
         }
     }
@@ -321,7 +308,7 @@ fun TopAppBar(
 ) {
     val isNodeRunning by terreViewModel.isNodeRunning.collectAsState()
     TopAppBar(
-        title = { Text("WebGAL Terre") },
+        title = { Text(stringResource(R.string.app_name)) },
         actions = {
 //            if (!isNodeRunning) {
 //                TextButton(onClick = {
@@ -334,13 +321,13 @@ fun TopAppBar(
                 TextButton(onClick = {
                     launchUrl("http://localhost:3001/")
                 }) {
-                    Text("打开浏览器")
+                    Text(stringResource(R.string.open_browser))
                 }
             }
             TextButton(onClick = {
                 terreViewModel.stopNode(stop)
             }) {
-                Text("关闭")
+                Text(stringResource(R.string.close))
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

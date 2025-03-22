@@ -8,18 +8,11 @@ import kotlinx.coroutines.flow.asStateFlow
 class TerreViewModel : ViewModel() {
     private val MAX_LOG_LINES = 500
 
-    private val _isCopyingAssets = MutableStateFlow(false)
-    val isCopyingAssets: StateFlow<Boolean> = _isCopyingAssets.asStateFlow()
-
     private val _isNodeRunning = MutableStateFlow(false)
     val isNodeRunning: StateFlow<Boolean> = _isNodeRunning.asStateFlow()
 
     private val _logLines = MutableStateFlow<List<String>>(emptyList())
     val logLines: StateFlow<List<String>> = _logLines.asStateFlow()
-
-    fun updateIsCopyingAssets(isCopyingAssets: Boolean) {
-        _isCopyingAssets.value = isCopyingAssets
-    }
 
     fun startNode(start: () -> Unit) {
         if (!_isNodeRunning.value) {
