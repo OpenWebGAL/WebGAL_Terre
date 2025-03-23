@@ -101,6 +101,11 @@ android {
             jniLibs.srcDirs("libnode/bin/")
         }
     }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 }
 
 dependencies {
