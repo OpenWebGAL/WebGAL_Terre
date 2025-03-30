@@ -34,7 +34,7 @@ const About: React.FunctionComponent = () => {
           <Text as='b' block>
             <p>{t`视觉小说编辑，再进化`}</p>
             <small>
-              {t`当前版本`}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
+              {t`当前版本`}: {`${__INFO.version} (${__INFO.buildTime.toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
               {
                 latestRelease &&
                 <span>

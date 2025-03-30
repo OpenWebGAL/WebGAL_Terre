@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { env } from 'process';
 import { lingui } from "@lingui/vite-plugin";
-
+import Info from 'unplugin-info/vite';
 
 let WEBGAL_PORT = 3000; // default port
 if (env.WEBGAL_PORT) {
@@ -12,12 +12,14 @@ if (env.WEBGAL_PORT) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react({
-    babel: {
-      plugins: ["macros"],
-    },
-  }),
-  lingui()
+  plugins: [
+    react({
+      babel: {
+        plugins: ["macros"],
+      },
+    }),
+    lingui(),
+    Info()
   ],
   resolve: {
     alias: {
