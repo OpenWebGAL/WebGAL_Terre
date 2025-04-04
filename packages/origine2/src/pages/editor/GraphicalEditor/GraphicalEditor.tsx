@@ -1,7 +1,7 @@
 import {useValue} from "../../../hooks/useValue";
 import {parseScene} from "./parser";
 import axios from "axios";
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 import {WsUtil} from "../../../utils/wsUtil";
 import {mergeToString, splitToArray} from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
@@ -11,7 +11,6 @@ import {DeleteFive, Sort, DownOne, RightOne, Play} from "@icon-park/react";
 import AddSentence, {addSentenceType} from "./components/AddSentence";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
 import {eventBus} from "@/utils/eventBus";
-import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 
@@ -20,78 +19,80 @@ interface IGraphicalEditorProps {
   targetName: string;
 }
 
-export default function GraphicalEditor(props: IGraphicalEditorProps) {
-  const sceneText = useValue("");
-  const gameName = useEditorStore.use.subPage();
-  const showSentence = useValue<Array<boolean>>([]);
+interface SentenceItem {
+  id: string;
+  show: boolean;
+  content: string;
+}
 
-  function updateScene() {
-    const path = props.targetPath;
-    axios.get(path).then(res => res.data).then((data) => {
-      sceneText.set(data.toString());
-      eventBus.emit('update-scene', data.toString());
-      const arr = splitToArray(sceneText.value);
-      if (showSentence.value.length !== arr.length) {
-        showSentence.set(new Array(arr.length).fill(true));
-      }
-    });
-  }
+export default function GraphicalEditor(props: IGraphicalEditorProps) {
+  const sentenceData = useValue<SentenceItem[]>([]);
+
+  const generateSentenceItem = (content: string): SentenceItem => ({
+    id: crypto.randomUUID(),
+    content,
+    show: true,
+  });
 
   useEffect(() => {
-    updateScene();
+    const path = props.targetPath;
+    axios.get(path).then(res => res.data).then((data) => {
+      const text = data.toString();
+      const arr = splitToArray(text);
+      sentenceData.set(arr.map(content => generateSentenceItem(content)));
+      eventBus.emit('update-scene', text);
+    });
   }, []);
 
-  function submitSceneAndUpdate(newScene: string, index: number) {
+  function submitScene(newSentences: SentenceItem[], index: number) {
+    const newScene = mergeToString(newSentences.map(item => item.content));
     const updateIndex = index + 1;
     editorLineHolder.recordSceneEdittingLine(props.targetPath, updateIndex);
-    sceneText.set(newScene);
-    const params = new URLSearchParams();
-    params.append("gameName", gameName);
-    params.append("sceneName", props.targetName);
-    params.append("sceneData", JSON.stringify({value: sceneText.value}));
-    api.assetsControllerEditTextFile({textFile: newScene, path: props.targetPath}).then(() => {
-      const targetValue = sceneText.value.split("\n")[updateIndex - 1];
+
+    api.assetsControllerEditTextFile({
+      textFile: newScene,
+      path: props.targetPath
+    }).then(() => {
+      const targetValue = newSentences[index].content;
       WsUtil.sendSyncCommand(props.targetPath, updateIndex, targetValue);
-      updateScene();
     });
   }
 
-  function updateSentenceByIndex(newSentence: string, updateIndex: number) {
-    const arr = splitToArray(sceneText.value);
-    arr[updateIndex] = newSentence;
-    submitSceneAndUpdate(mergeToString(arr), updateIndex);
+  function updateSentenceByIndex(newContent: string, updateIndex: number) {
+    const newSentences = [...sentenceData.value];
+    newSentences[updateIndex] = { ...newSentences[updateIndex], content: newContent };
+    sentenceData.set(newSentences);
+    submitScene(newSentences, updateIndex);
   }
 
-  function addOneSentence(newSentence: string, updateIndex: number) {
-    const arr = sceneText.value === "" ? [] : splitToArray(sceneText.value);
-    arr.splice(updateIndex, 0, newSentence);
-    submitSceneAndUpdate(mergeToString(arr), updateIndex);
-    const showSentenceList = [...showSentence.value];
-    showSentenceList.splice(updateIndex, 0, true);
-    showSentence.set(showSentenceList);
+  function addOneSentence(newContent: string, insertIndex: number) {
+    const newSentence = generateSentenceItem(newContent);
+    const newSentences = [...sentenceData.value];
+    newSentences.splice(insertIndex, 0, newSentence);
+    sentenceData.set(newSentences);
+    submitScene(newSentences, insertIndex);
   }
 
   function deleteOneSentence(index: number) {
-    const arr = splitToArray(sceneText.value);
-    arr.splice(index, 1);
-    submitSceneAndUpdate(mergeToString(arr), index);
-    const showSentenceList = [...showSentence.value];
-    showSentenceList.splice(index, 1);
-    showSentence.set(showSentenceList);
+    const newSentences = [...sentenceData.value];
+    newSentences.splice(index, 1);
+    sentenceData.set(newSentences);
+    submitScene(newSentences, Math.min(index, newSentences.length - 1));
   }
 
   function changeShowSentence(index: number) {
-    const showSentenceList = [...showSentence.value];
-    showSentenceList[index] = !showSentenceList[index];
-    showSentence.set(showSentenceList);
+    const newSentences = [...sentenceData.value];
+    newSentences[index] = { ...newSentences[index], show: !newSentences[index].show };
+    sentenceData.set(newSentences);
   }
 
   // 重新记录数组顺序
   const reorder = (startIndex: number, endIndex: number) => {
-    const result = splitToArray(sceneText.value);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    submitSceneAndUpdate(mergeToString(result), endIndex);
+    const newSentences = [...sentenceData.value];
+    const [removed] = newSentences.splice(startIndex, 1);
+    newSentences.splice(endIndex, 0, removed);
+    sentenceData.set(newSentences);
+    submitScene(newSentences, endIndex);
   };
 
   function onDragEnd(result: any) {
@@ -105,33 +106,34 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     );
   }
 
+
+  function syncToIndex(index: number) {
+    const targetValue = sentenceData.value[index]?.content || "";
+    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue,true);
+  }
+
   useEffect(() => {
     const targetLine = editorLineHolder.getSceneLine(props.targetPath);
-    const scroolToFunc = () => {
+    const scrollToFunc = () => {
       const targetBlock = document.querySelector(`.sentence-block-${targetLine}`);
       if (targetBlock) {
         targetBlock?.scrollIntoView?.({behavior: 'auto'});
       } else {
         console.log('Retry scroll to in 50ms');
-        setTimeout(() => scroolToFunc(), 50);
+        setTimeout(() => scrollToFunc(), 50);
       }
     };
     if (targetLine > 3) {
-      scroolToFunc();
+      scrollToFunc();
     }
   }, []);
 
   function addNewSentenceAttach(sentence: string) {
-    addOneSentence(sentence, splitToArray(sceneText.value).length);
+    addOneSentence(sentence, sentenceData.value.length);
   }
 
   function handleAdd(sentence: string) {
     addNewSentenceAttach(sentence);
-  }
-
-  function syncToIndex(index: number) {
-    const targetValue = sceneText.value.split("\n")[index];
-    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue,true);
   }
 
   useEffect(() => {
@@ -141,14 +143,20 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       // @ts-ignore
       eventBus.off('topbar-add-sentence', handleAdd);
     };
-  }, [sceneText.value]);
+  }, [sentenceData.value]);
 
-  const parsedScene = (sceneText.value === "" ? {sentenceList: []} : parseScene(sceneText.value));
+  const mergedSceneText = useMemo(() =>
+    mergeToString(sentenceData.value.map(item => item.content)),
+  [sentenceData.value]
+  );
+
+  const parsedScene = mergedSceneText === "" ? {sentenceList: []} : parseScene(mergedSceneText);
+
   return <div className={styles.main} id="graphical-editor-main">
     <div style={{flex: 1, padding: '14px 4px 0 4px'}}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
+          {(provided) => (
             // 下面开始书写容器
             <div style={{height: "100%"}}
               // provided.droppableProps应用的相同元素.
@@ -162,11 +170,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 // console.log(sentence.command);
                 const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
-                return <Draggable key={JSON.stringify(sentence) + i}
-                  draggableId={sentence.content + sentence.commandRaw + i} index={i}>
-                  {(provided, snapshot) => (
+                const sentenceItem = sentenceData.value[i];
+                return <Draggable key={sentenceItem.id} draggableId={sentenceItem.id} index={i}>
+                  {(provided) => (
                     <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
-                      key={sentence.commandRaw + JSON.stringify(sentence.sentenceAssets) + i + 'inner'}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                     >
@@ -190,7 +197,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                             </div>
                             <div className={styles.optionButton}
                               onClick={() => changeShowSentence(i)}>
-                              {showSentence.value[i] ?
+                              {sentenceItem.show ?
                                 <DownOne strokeWidth={3} theme="outline" size="18"
                                   fill="#005CAF"/> :
                                 <RightOne strokeWidth={3} theme="outline" size="18"
@@ -215,7 +222,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               </div>
                             </div>
                           </div>
-                          {showSentence.value[i] && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
+                          {sentenceItem.show && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
                             updateSentenceByIndex(newSentence, i);
                           }}/>}
                         </div>
@@ -227,7 +234,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               {provided.placeholder}
               <div className={styles.addWrapper}>
                 <AddSentence titleText={t`添加语句`} type={addSentenceType.backward}
-                  onChoose={(newSentence) => addOneSentence(newSentence, splitToArray(sceneText.value).length)}/>
+                  onChoose={(newSentence) => addOneSentence(newSentence, sentenceData.value.length)}/>
               </div>
             </div>
           )}
