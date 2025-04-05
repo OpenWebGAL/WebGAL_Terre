@@ -21,8 +21,8 @@ interface IGraphicalEditorProps {
 
 interface SentenceItem {
   id: string;
-  show: boolean;
   content: string;
+  show: boolean;
 }
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
