@@ -204,7 +204,7 @@ export default function GameConfig() {
           }
         />
       </TabItem>
-      <TabItem title="紧急回避">
+      <TabItem title={t`紧急回避`}>
         <GameConfigEditorWithSelector
           key="isUserForward"
           value={getConfigContentAsString('Show_panic') ? getConfigContentAsString('Show_panic') : 'true'}
@@ -213,6 +213,16 @@ export default function GameConfig() {
             {key: 'false', text: t`禁用`}
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Show_panic', e)}/>
+      </TabItem>
+      <TabItem title={t`鉴赏功能`}>
+        <GameConfigEditorWithSelector
+          key="isUserForward"
+          value={getConfigContentAsString('Enable_Appreciation') ? getConfigContentAsString('Enable_Appreciation') : 'false'}
+          selectItems={[
+            {key: 'true', text: t`启用`},
+            {key: 'false', text: t`禁用`}
+          ]}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>
       </TabItem>
     </>
   );

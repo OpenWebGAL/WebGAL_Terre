@@ -611,6 +611,7 @@ msgid "启动图"
 msgstr "ロゴ"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:222
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "启用"
 msgstr "有効化"
@@ -1501,6 +1502,7 @@ msgid "禁止跳过视频"
 msgstr "動画のスキップを無効にする"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:213
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:223
 msgid "禁用"
 msgstr "無効化"
 
@@ -1531,6 +1533,10 @@ msgstr "関連する立ち絵のID"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:155
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
+msgid "紧急回避"
+msgstr "緊急回避"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
 msgid "纹理"
@@ -1970,6 +1976,10 @@ msgstr "ゲームディレクトリ名変更"
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:63
 msgid "鉴赏"
 msgstr "鑑賞"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:217
+msgid "鉴赏功能"
+msgstr "鑑賞機能"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:188
 msgid "鉴赏图片"
