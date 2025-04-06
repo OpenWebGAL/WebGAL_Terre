@@ -69,16 +69,16 @@ export default function Say(props: ISentenceEditorProps) {
   const fontSize = useValue(getInitialFontSize());
 
   const submit = () => {
-    const selectedFontSize = fontSize.value;
+    const selectedFontSize = fontSize.value !== 'default' ? ` -fontSize=${fontSize.value}` : '';
     const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
     const idStr = figureId.value !== "" ? ` -figureId=${figureId.value}` : "";
     const commitValue = currentValue.value.map(e=>e.replaceAll('\n','|'));
     const isConcatStr = isConcat.value ? ' -concat' : '';
     const isNotendStr = isNotend.value ? ' -notend' : '';
     if(figurePosition.value === "id"){
-      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr} -fontSize=${selectedFontSize}${pos}${idStr};`);
+      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr}${selectedFontSize}${pos}${idStr};`);
     } else {
-      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr} -fontSize=${selectedFontSize}${pos};`);
+      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr}${selectedFontSize}${pos};`);
     }
   };
 
