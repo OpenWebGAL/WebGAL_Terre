@@ -611,6 +611,7 @@ msgid "启动图"
 msgstr "Startup image"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:222
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
 msgid "启用"
 msgstr "Enabled"
@@ -1501,6 +1502,7 @@ msgid "禁止跳过视频"
 msgstr "Disable skipping video"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:213
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:223
 msgid "禁用"
 msgstr "Disabled"
 
@@ -1531,6 +1533,10 @@ msgstr "ID of figure illustration"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:155
 msgid "立绘文件"
 msgstr "Figure file"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
+msgid "紧急回避"
+msgstr "Emergency Evasion"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
 msgid "纹理"
@@ -1970,6 +1976,10 @@ msgstr "Rename game directory"
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:63
 msgid "鉴赏"
 msgstr "Appreciation"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:217
+msgid "鉴赏功能"
+msgstr "Gallery Feature"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:188
 msgid "鉴赏图片"
