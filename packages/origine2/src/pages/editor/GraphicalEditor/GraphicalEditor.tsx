@@ -34,14 +34,34 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     show: true,
   });
 
-  useEffect(() => {
-    const path = props.targetPath;
-    axios.get(path).then(res => res.data).then((data) => {
+  function fetchScene() {
+    const processFetchedData = (data: any) => {
       const text = data.toString();
-      const arr = splitToArray(text);
-      sentenceData.set(arr.map(content => generateSentenceItem(content)));
+      const newContents = splitToArray(text);
+      const currentSentences = sentenceData.value;
+
+      const newSentences = newContents.map((content, i) => {
+        const existing = currentSentences[i];
+        return existing && existing.content === content
+          ? existing
+          : {
+            id: crypto.randomUUID(),
+            content,
+            show: existing?.show ?? true
+          };
+      });
+
+      sentenceData.set(newSentences);
       eventBus.emit('update-scene', text);
-    });
+    };
+
+    axios.get(props.targetPath)
+      .then(res => res.data)
+      .then(processFetchedData);
+  }
+
+  useEffect(() => {
+    fetchScene();
   }, []);
 
   function submitScene(newSentences: SentenceItem[], index: number) {
@@ -55,6 +75,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     }).then(() => {
       const targetValue = newSentences[index].content;
       WsUtil.sendSyncCommand(props.targetPath, updateIndex, targetValue);
+      fetchScene();
     });
   }
 

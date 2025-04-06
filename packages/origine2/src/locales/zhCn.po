@@ -531,7 +531,7 @@ msgstr "删除"
 msgid "删除属性"
 msgstr "删除属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:212
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:233
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:28
 msgid "删除本句"
 msgstr "删除本句"
@@ -931,7 +931,7 @@ msgstr "打开效果编辑器"
 msgid "打开文件夹"
 msgstr "打开文件夹"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:220
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:241
 msgid "执行到此句"
 msgstr "执行到此句"
 
@@ -1247,7 +1247,7 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:183
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:204
 msgid "本句前插入句子"
 msgstr "本句前插入句子"
 
@@ -1388,7 +1388,7 @@ msgstr "添加新行"
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:236
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:257
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
 #: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
