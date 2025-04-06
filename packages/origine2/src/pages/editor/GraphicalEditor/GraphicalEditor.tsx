@@ -14,6 +14,8 @@ import {eventBus} from "@/utils/eventBus";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 
+import type { DropResult } from 'react-beautiful-dnd';
+
 interface IGraphicalEditorProps {
   targetPath: string;
   targetName: string;
@@ -132,7 +134,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     submitScene(newSentences, endIndex);
   };
 
-  function onDragEnd(result: any) {
+  function onDragEnd(result: DropResult) {
     if (!result.destination) {
       return;
     }
@@ -142,7 +144,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       result.destination.index
     );
   }
-
 
   function syncToIndex(index: number) {
     const targetValue = sentenceData.value[index]?.content || "";
