@@ -64,6 +64,22 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     fetchScene();
   }, []);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchScene();
+      }
+    };
+
+    window.addEventListener('focus', fetchScene);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('focus', fetchScene);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
   function submitScene(newSentences: SentenceItem[], index: number) {
     const newScene = mergeToString(newSentences.map(item => item.content));
     const updateIndex = index + 1;
