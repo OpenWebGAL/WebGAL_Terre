@@ -16,46 +16,67 @@ export default function WheelDropdown({
 }: WheelDropdownProps) {
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const optionKeys = Array.from(options.keys());
-
   const [internalValue, setInternalValue] = useState(value);
+  const [isFocusWithin, setIsFocusWithin] = useState(false);
 
   const debouncedOnValueChange = useCallback(
     debounce(onValueChange, 500),
     [onValueChange]
   );
 
+  // 处理焦点状态
+  useEffect(() => {
+    const dropdownElement = dropdownRef.current;
+    if (!dropdownElement) return;
+
+    const handleFocusIn = () => setIsFocusWithin(true);
+    const handleFocusOut = (e: FocusEvent) => {
+      // 当焦点转移目标不在容器内时才更新状态
+      if (!dropdownElement.contains(e.relatedTarget as Node)) {
+        setIsFocusWithin(false);
+      }
+    };
+
+    dropdownElement.addEventListener('focusin', handleFocusIn);
+    dropdownElement.addEventListener('focusout', handleFocusOut);
+
+    return () => {
+      dropdownElement.removeEventListener('focusin', handleFocusIn);
+      dropdownElement.removeEventListener('focusout', handleFocusOut);
+    };
+  }, []);
+
+  // 滚动处理
   const handleWheel = useCallback(
     (event: WheelEvent) => {
+      if (!isFocusWithin) return; // 非焦点状态下无效
+
+      const direction = Math.sign(event.deltaY);
+      if (direction === 0) return;
+
       event.preventDefault();
       event.stopPropagation();
 
-      // 判断滚动方向：向下滚动为 1，向上滚动为 -1
-      const direction = event.deltaY > 0 ? 1 : event.deltaY < 0 ? -1 : 0;
-      if (direction !== 0) {
-        const currentIndex = optionKeys.indexOf(internalValue);
-        const newIndex = (currentIndex + direction + options.size) % options.size;
-        const newTarget = optionKeys[newIndex];
+      const currentIndex = optionKeys.indexOf(internalValue);
+      const newIndex = (currentIndex + direction + options.size) % options.size;
+      const newTarget = optionKeys[newIndex];
 
-        setInternalValue(newTarget);
-        debouncedOnValueChange(newTarget);
-      }
+      setInternalValue(newTarget);
+      debouncedOnValueChange(newTarget);
     },
-    [optionKeys, options.size, internalValue, debouncedOnValueChange]
+    [optionKeys, options.size, internalValue, debouncedOnValueChange, isFocusWithin]
   );
 
+  // 滚动事件监听
   useEffect(() => {
     const dropdownElement = dropdownRef.current;
-    if (dropdownElement) {
-      dropdownElement.addEventListener('wheel', handleWheel, { passive: false });
-    }
+    if (!dropdownElement) return;
 
-    return () => {
-      if (dropdownElement) {
-        dropdownElement.removeEventListener('wheel', handleWheel);
-      }
-    };
+    dropdownElement.addEventListener('wheel', handleWheel, { passive: false });
+    return () => dropdownElement.removeEventListener('wheel', handleWheel);
   }, [handleWheel]);
 
+  // 同步外部值变化
   useEffect(() => {
     setInternalValue(value);
   }, [value]);
@@ -65,16 +86,12 @@ export default function WheelDropdown({
       ref={dropdownRef}
       value={options.get(internalValue) ?? internalValue}
       selectedOptions={[internalValue]}
-      onOptionSelect={(event, data) => {
-        onValueChange(data.optionValue);
-      }}
+      onOptionSelect={(_, data) => onValueChange(data.optionValue)}
       style={{ minWidth: 0 }}
       {...restProps}
     >
       {Array.from(options.entries()).map(([key, text]) => (
-        <Option key={key} value={key}>
-          {text}
-        </Option>
+        <Option key={key} value={key}>{text}</Option>
       ))}
     </Dropdown>
   );
