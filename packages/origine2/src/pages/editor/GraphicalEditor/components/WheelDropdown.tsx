@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { Dropdown, Option, DropdownProps } from "@fluentui/react-components";
-import { debounce } from '@/utils/debounce';
+import debounce from 'lodash/debounce';
 
 interface WheelDropdownProps extends DropdownProps {
   options: Map<string, string>;
