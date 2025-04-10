@@ -502,7 +502,7 @@ msgstr "切换背景图片"
 
 #: src/components/Assets/Assets.tsx:209
 #: src/components/Assets/Assets.tsx:249
-#: src/pages/dashboard/Sidebar.tsx:126
+#: src/pages/dashboard/Sidebar.tsx:132
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
 msgstr "创建"
