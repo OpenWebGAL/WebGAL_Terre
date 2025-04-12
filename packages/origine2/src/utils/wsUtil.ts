@@ -104,6 +104,18 @@ export class WsUtil {
     });
   };
 
+  public static sendFontOptimizationCommand(command: boolean) {
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.FONT_OPTIMIZATION,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: command.toString(),
+    });
+  };
+
   private static getIsCurrentLineJump(currentLineValue: string | null): boolean {
     const command = currentLineValue?.split(":")[0] ?? "";
     if (command === "unlockCg" || command === "unlockBgm") {
