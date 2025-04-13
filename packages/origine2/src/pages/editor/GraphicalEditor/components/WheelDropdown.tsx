@@ -17,39 +17,20 @@ export default function WheelDropdown({
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const optionKeys = Array.from(options.keys());
   const [internalValue, setInternalValue] = useState(value);
-  const [isFocusWithin, setIsFocusWithin] = useState(false);
 
   const debouncedOnValueChange = useCallback(
     debounce(onValueChange, 500),
     [onValueChange]
   );
 
-  // 处理焦点状态
-  useEffect(() => {
-    const dropdownElement = dropdownRef.current;
-    if (!dropdownElement) return;
-
-    const handleFocusIn = () => setIsFocusWithin(true);
-    const handleFocusOut = (e: FocusEvent) => {
-      // 当焦点转移目标不在容器内时才更新状态
-      if (!dropdownElement.contains(e.relatedTarget as Node)) {
-        setIsFocusWithin(false);
-      }
-    };
-
-    dropdownElement.addEventListener('focusin', handleFocusIn);
-    dropdownElement.addEventListener('focusout', handleFocusOut);
-
-    return () => {
-      dropdownElement.removeEventListener('focusin', handleFocusIn);
-      dropdownElement.removeEventListener('focusout', handleFocusOut);
-    };
-  }, []);
-
   // 滚动处理
   const handleWheel = useCallback(
     (event: WheelEvent) => {
-      if (!isFocusWithin) return; // 非焦点状态下无效
+      // 通过 activeElement 检查焦点状态
+      const isFocused = dropdownRef.current?.contains(document.activeElement) ||
+        dropdownRef.current === document.activeElement;
+
+      if (!isFocused) return; // 非焦点状态下无效
 
       const direction = Math.sign(event.deltaY);
       if (direction === 0) return;
@@ -64,7 +45,7 @@ export default function WheelDropdown({
       setInternalValue(newTarget);
       debouncedOnValueChange(newTarget);
     },
-    [optionKeys, options.size, internalValue, debouncedOnValueChange, isFocusWithin]
+    [optionKeys, options.size, internalValue, debouncedOnValueChange]
   );
 
   // 滚动事件监听
