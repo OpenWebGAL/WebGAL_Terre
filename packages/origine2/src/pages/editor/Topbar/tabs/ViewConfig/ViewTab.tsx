@@ -13,10 +13,13 @@ import {
   PanelLeft24Regular,
   PanelLeftContract24Filled,
   PanelLeftContract24Regular,
+  TextEffectsFilled,
+  TextEffectsRegular,
 } from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { t } from "@lingui/macro";
+import { Tooltip } from "@fluentui/react-components";
 
 const PanelLeftIcon = bundleIcon(PanelLeft24Filled, PanelLeft24Regular);
 const PanelLeftContractIcon = bundleIcon(PanelLeftContract24Filled, PanelLeftContract24Regular);
@@ -29,6 +32,8 @@ export function ViewTab() {
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const updateIsShowSidebar = useGameEditorContext((state) => state.updateIsShowSidebar);
+  const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
+  const updateIsUseFontOptimization = useEditorStore.use.updateIsUseFontOptimization();
 
   return <TopbarTab>
     <TabItem title={t`侧边栏`}>
@@ -55,6 +60,29 @@ export function ViewTab() {
         icon={<OpenIcon className={s.iconColor}/>}
         text={t`新标签页预览`}
       />
+    </TabItem>
+    <TabItem title={t`字体优化`}>
+      <Tooltip
+        content={<div
+          className={s.previewTips}
+        >
+          {t`字体优化将在游戏预览窗口低于特定尺寸时，关闭对话文本字体描边，以提升可读性。`}
+          <br />
+          {t`如果使用了自定义模板导致预览效果异常，请关闭此选项。`}
+        </div>}
+        relationship="description"
+        showDelay={0}
+        hideDelay={0}
+        withArrow
+      >
+        <div>
+          <IconWithTextItem
+            onClick={() => updateIsUseFontOptimization(!isUseFontOptimization)}
+            icon={isUseFontOptimization ? <TextEffectsRegular className={s.iconColor} /> : <TextEffectsFilled className={s.iconColor} />}
+            text={isUseFontOptimization ? t`启用` : t`关闭`}
+          />
+        </div>
+      </Tooltip>
     </TabItem>
   </TopbarTab>;
 }

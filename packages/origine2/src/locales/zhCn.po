@@ -284,11 +284,11 @@ msgstr "主要样式"
 msgid "主页"
 msgstr "主页"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:95
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:97
 msgid "代码编辑器"
 msgstr "代码编辑器"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:135
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:137
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 
@@ -338,11 +338,11 @@ msgstr "使用预设目标"
 msgid "例如：-100,-100,100,100"
 msgstr "例如：-100,-100,100,100"
 
-#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:34
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:39
 msgid "侧边栏"
 msgstr "侧边栏"
 
-#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:43
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:48
 msgid "侧边栏游戏预览"
 msgstr "侧边栏游戏预览"
 
@@ -415,7 +415,8 @@ msgstr "关于"
 msgid "关联立绘"
 msgstr "关联立绘"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:134
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:82
 msgid "关闭"
 msgstr "关闭"
 
@@ -547,11 +548,11 @@ msgid "删除游戏"
 msgstr "删除游戏"
 
 #: src/components/Assets/Assets.tsx:276
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:159
 msgid "刷新"
 msgstr "刷新"
 
-#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:49
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:54
 msgid "刷新游戏"
 msgstr "刷新游戏"
 
@@ -567,7 +568,7 @@ msgstr "功能区显示"
 msgid "加粗"
 msgstr "加粗"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:103
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:241
 msgid "动画"
 msgstr "动画"
@@ -632,7 +633,8 @@ msgstr "启动图"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:222
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:132
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:134
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:82
 msgid "启用"
 msgstr "启用"
 
@@ -680,7 +682,7 @@ msgstr "在文件管理器中打开"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:157
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:165
 msgid "在新标签页中预览"
 msgstr "在新标签页中预览"
 
@@ -688,8 +690,8 @@ msgstr "在新标签页中预览"
 msgid "在这里放置编辑组件"
 msgstr "在这里放置编辑组件"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:108
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:173
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
 msgid "场景"
 msgstr "场景"
 
@@ -713,12 +715,24 @@ msgstr "外边距"
 msgid "大"
 msgstr "大"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:99
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:71
+msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
+msgstr "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:101
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:58
 msgid "字体"
 msgstr "字体"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:105
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:64
+msgid "字体优化"
+msgstr "字体优化"
+
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:69
+msgid "字体优化将在游戏预览窗口低于特定尺寸时，关闭对话文本字体描边，以提升可读性。"
+msgstr "字体优化将在游戏预览窗口低于特定尺寸时，关闭对话文本字体描边，以提升可读性。"
+
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:107
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "字体大小"
 msgstr "字体大小"
@@ -735,25 +749,25 @@ msgstr "字重"
 msgid "定位方式"
 msgstr "定位方式"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:75
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:77
 msgid "实时预览"
 msgstr "实时预览"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:171
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:92
 msgid "实时预览关闭"
 msgstr "实时预览关闭"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:78
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:80
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:90
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:171
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:92
 msgid "实时预览打开"
 msgstr "实时预览打开"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:126
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:128
 msgid "实验性快速预览"
 msgstr "实验性快速预览"
 
@@ -1162,7 +1176,7 @@ msgstr "新文件名"
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
-#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:56
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:61
 msgid "新标签页预览"
 msgstr "新标签页预览"
 
@@ -1207,7 +1221,7 @@ msgstr "无"
 msgid "是否要删除 \"{gameName}\" ？"
 msgstr "是否要删除 \"{gameName}\" ？"
 
-#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:40
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:45
 msgid "显示侧边栏"
 msgstr "显示侧边栏"
 
@@ -1301,7 +1315,7 @@ msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:214
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:110
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
 msgid "模板"
 msgstr "模板"
 
@@ -1335,7 +1349,7 @@ msgstr "正常播放 BGM"
 msgid "此指令将结束游戏"
 msgstr "此指令将结束游戏"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:124
 msgid "永不换行"
 msgstr "永不换行"
 
@@ -1444,7 +1458,7 @@ msgstr "游戏简介"
 msgid "游戏识别码"
 msgstr "游戏识别码"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
 msgid "游戏配置"
 msgstr "游戏配置"
 
@@ -1505,7 +1519,7 @@ msgstr "视图"
 msgid "视觉小说编辑，再进化"
 msgstr "视觉小说编辑，再进化"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:112
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
 msgid "视频"
 msgstr "视频"
 
@@ -1534,7 +1548,7 @@ msgstr "禁用"
 #~ msgid "移动背景图片"
 #~ msgstr "移动背景图片"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:107
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
 msgid "立绘"
 msgstr "立绘"
 
@@ -1566,7 +1580,7 @@ msgstr "立绘文件"
 msgid "紧急回避"
 msgstr "紧急回避"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
 msgstr "纹理"
 
@@ -1630,7 +1644,7 @@ msgid "老电影滤镜"
 msgstr "老电影滤镜"
 
 #: src/components/IconCreator/IconCreator.tsx:696
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:105
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "背景"
@@ -1673,7 +1687,7 @@ msgstr "脚本编辑器"
 msgid "自动"
 msgstr "自动"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:122
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:124
 msgid "自动换行"
 msgstr "自动换行"
 
@@ -1816,13 +1830,13 @@ msgstr "该文件类型不支持预览"
 
 #: src/pages/dashboard/DashBoard.tsx:195
 #: src/pages/dashboard/DashBoard.tsx:196
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:56
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:62
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:58
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:64
 msgid "语言"
 msgstr "语言"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:215
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:148
 msgid "语音"
 msgstr "语音"
 
@@ -1850,7 +1864,7 @@ msgstr "调用场景"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "调用场景，新场景结束后返回父场景"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
 msgid "资源"
 msgstr "资源"
 
@@ -2029,7 +2043,7 @@ msgstr "闭上嘴"
 msgid "闭上眼睛"
 msgstr "闭上眼睛"
 
-#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:40
+#: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:45
 msgid "隐藏侧边栏"
 msgstr "隐藏侧边栏"
 
@@ -2058,7 +2072,7 @@ msgstr "靠右"
 msgid "靠左"
 msgstr "靠左"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:106
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
 msgid "音乐"
 msgstr "音乐"
 

@@ -12,6 +12,7 @@ export interface IEditorState {
   isEnableLivePreview: boolean, // 是否开启实时预览
   isAutoWarp: boolean, // 是否开启自动换行
   isUseExpFastSync: boolean,
+  isUseFontOptimization: boolean,
   ignoreVersion: string, // 忽略版本
 }
 
@@ -26,5 +27,6 @@ export interface IEditorAction {
   updateIsEnableLivePreview: (isEnableLivePreview: IEditorState['isEnableLivePreview']) => void,
   updateIsAutoWarp: (isAutoWarp: IEditorState['isAutoWarp']) => void,
   updateIsUseExpFastSync: (isUseExpFastSync: IGameEditorState['isShowDebugger']) => void,
+  updateIsUseFontOptimization: (isUseFontOptimization: IEditorState['isUseFontOptimization']) => void,
   updateIgnoreVersion: (ignoreVersion: IEditorState['ignoreVersion']) => void,
 }
