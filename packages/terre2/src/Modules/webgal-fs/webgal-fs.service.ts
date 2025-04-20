@@ -245,7 +245,7 @@ export class WebgalFsService {
    */
   async replaceTextFile(
     _path: string,
-    text: string | string[],
+    text: RegExp | string | RegExp[] | string[],
     newText: string | string[],
   ) {
     try {
@@ -257,18 +257,20 @@ export class WebgalFsService {
         let newTextFile: string = textFile;
         if (typeof text === 'string' && typeof newText === 'string') {
           newTextFile = newTextFile.replace(new RegExp(text, 'g'), newText);
-        } else if (typeof text === 'object' && typeof newText === 'string') {
+        } else if (text instanceof RegExp && typeof newText === 'string') {
+          newTextFile = newTextFile.replace(text, newText);
+        } else if (text instanceof Array && typeof newText === 'string') {
           text.map((item) => {
             newTextFile = newTextFile.replace(new RegExp(item, 'g'), newText);
           });
         } else if (
-          typeof text === 'object' &&
-          typeof newText === 'object' &&
+          text instanceof Array &&
+          text instanceof Array &&
           text.length === newText.length
         ) {
-          text.map((item, index) => {
+          text.map((item: RegExp | string, index: number) => {
             newTextFile = newTextFile.replace(
-              new RegExp(item, 'g'),
+              item instanceof RegExp ? item : new RegExp(item, 'g'),
               newText[index],
             );
           });
