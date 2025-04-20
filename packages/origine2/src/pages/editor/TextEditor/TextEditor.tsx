@@ -106,6 +106,22 @@ export default function TextEditor(props: ITextEditorProps) {
       });
   }
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        updateEditData();
+      }
+    };
+
+    window.addEventListener('focus', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('focus', handleVisibilityChange);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
   return (
     <div
       style={{ display: props.isHide ? 'none' : 'block', zIndex: 999, overflow: 'auto' }}
