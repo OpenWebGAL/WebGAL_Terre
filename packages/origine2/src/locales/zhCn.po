@@ -241,6 +241,10 @@ msgstr "不显示角色名"
 #~ msgid "不继承上一句"
 #~ msgstr "不继承上一句"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:232
+msgid "不设定"
+msgstr "不设定"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:22
 msgid "两端对齐"
 msgstr "两端对齐"
@@ -503,7 +507,7 @@ msgstr "切换背景图片"
 
 #: src/components/Assets/Assets.tsx:209
 #: src/components/Assets/Assets.tsx:249
-#: src/pages/dashboard/Sidebar.tsx:132
+#: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
 msgstr "创建"
@@ -914,6 +918,10 @@ msgstr "张开嘴"
 msgid "当前版本"
 msgstr "当前版本"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
+msgid "德语"
+msgstr "德语"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
 #~ msgid "快速执行"
 #~ msgstr "快速执行"
@@ -1217,6 +1225,10 @@ msgstr "旋转角度："
 msgid "无"
 msgstr "无"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+msgid "日语"
+msgstr "日语"
+
 #: src/pages/dashboard/GameElement.tsx:143
 msgid "是否要删除 \"{gameName}\" ？"
 msgstr "是否要删除 \"{gameName}\" ？"
@@ -1352,6 +1364,10 @@ msgstr "此指令将结束游戏"
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:124
 msgid "永不换行"
 msgstr "永不换行"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
+msgid "法语"
+msgstr "法语"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Comment.tsx:21
 msgid "注释"
@@ -1576,9 +1592,17 @@ msgstr "立绘插图的ID"
 msgid "立绘文件"
 msgstr "立绘文件"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:233
+msgid "简体中文"
+msgstr "简体中文"
+
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
 msgid "紧急回避"
 msgstr "紧急回避"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+msgid "繁体中文"
+msgstr "繁体中文"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
@@ -1717,6 +1741,10 @@ msgstr "自定义特效名称"
 msgid "舞台对象控制"
 msgstr "舞台对象控制"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
+msgid "英语"
+msgstr "英语"
+
 #: src/pages/dashboard/About.tsx:48
 #: src/pages/dashboard/DashBoard.tsx:162
 msgid "获取最新版本"
@@ -1836,7 +1864,7 @@ msgid "语言"
 msgstr "语言"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:148
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:215
 msgid "语音"
 msgstr "语音"
 
@@ -2115,6 +2143,10 @@ msgstr "默认值0"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:104
 msgid "默认值1"
 msgstr "默认值1"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:227
+msgid "默认语言"
+msgstr "默认语言"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/withStateEditor/SingleStateEditor.tsx:9
 #~ msgid "鼠标悬浮效果"

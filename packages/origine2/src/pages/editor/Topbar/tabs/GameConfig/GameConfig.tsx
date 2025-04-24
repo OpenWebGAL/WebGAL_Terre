@@ -224,6 +224,21 @@ export default function GameConfig() {
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>
       </TabItem>
+      <TabItem title={t`默认语言`}>
+        <GameConfigEditorWithSelector
+          key="language_select"
+          value={getConfigContentAsString('Default_Language') ? getConfigContentAsString('Default_Language') : ''}
+          selectItems={[
+            {key: '', text: t`不设定`},
+            {key: 'zh_CN', text: t`简体中文`},
+            {key: 'zh_TW', text: t`繁体中文`},
+            {key: 'en', text: t`英语`},
+            {key: 'ja', text: t`日语`},
+            {key: 'fr', text: t`法语`},
+            {key: 'de', text: t`德语`},
+          ]}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Default_Language', e)}/>
+      </TabItem>
     </>
   );
 }
