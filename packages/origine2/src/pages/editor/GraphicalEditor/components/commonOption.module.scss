@@ -28,7 +28,8 @@
 
 .content {
   flex: 1;
-  display: flex;
+  display: block;
   justify-content: left;
   align-items: center;
+  align-content: center;
 }
