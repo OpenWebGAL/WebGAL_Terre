@@ -2140,7 +2140,7 @@ msgstr "Default"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:122
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:126
 msgid "默认值0"
-msgstr "Default Value is 0"
+msgstr "Default 0"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:109
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:113
@@ -2150,13 +2150,13 @@ msgstr "Default Value is 0"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:139
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:142
 msgid "默认值1"
-msgstr "Default Value is 1"
+msgstr "Default 1"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:147
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:150
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:153
 msgid "默认值255"
-msgstr "Default Value is 255"
+msgstr "Default 255"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:227
 msgid "默认语言"
