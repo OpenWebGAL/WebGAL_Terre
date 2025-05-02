@@ -129,29 +129,31 @@ export function EffectEditor(props:{
     </CommonOptions>
     <CommonOptions key={4} title={t`颜色调整`}>
       <div>
-        {t`亮度：`}<Input value={brightness.value} placeholder={t`默认值1`} onChange={(_, data) => {
-          brightness.set(data.value);
-        }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
-        {t`对比度：`}<Input value={contrast.value} placeholder={t`默认值1`} onChange={(_, data) => {
-          contrast.set(data.value);
-        }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
-        {t`饱和度：`}<Input value={saturation.value} placeholder={t`默认值1`} onChange={(_, data) => {
-          saturation.set(data.value);
-        }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
-        {t`伽马值：`}<Input value={gamma.value} placeholder={t`默认值1`} onChange={(_, data) => {
-          gamma.set(data.value);
-        }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
-      </div>
-      <div style={{marginTop: 5}}>
-        {t`红色（0-255）：`}<Input value={colorRed.value} placeholder={t`默认值255`} onChange={(_, data) => {
-          colorRed.set(data.value);
-        }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
-        {t`绿色（0-255）：`}<Input value={colorGreen.value} placeholder={t`默认值255`} onChange={(_, data) => {
-          colorGreen.set(data.value);
-        }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
-        {t`蓝色（0-255）：`}<Input value={colorBlue.value} placeholder={t`默认值255`} onChange={(_, data) => {
-          colorBlue.set(data.value);
-        }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
+        <div>
+          {t`亮度：`}<Input value={brightness.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            brightness.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+          {t`对比度：`}<Input value={contrast.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            contrast.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+          {t`饱和度：`}<Input value={saturation.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            saturation.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+          {t`伽马值：`}<Input value={gamma.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            gamma.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+        </div>
+        <div style={{marginTop: 5}}>
+          {t`红色（0-255）：`}<Input value={colorRed.value} placeholder={t`默认值255`} onChange={(_, data) => {
+            colorRed.set(data.value);
+          }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
+          {t`绿色（0-255）：`}<Input value={colorGreen.value} placeholder={t`默认值255`} onChange={(_, data) => {
+            colorGreen.set(data.value);
+          }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
+          {t`蓝色（0-255）：`}<Input value={colorBlue.value} placeholder={t`默认值255`} onChange={(_, data) => {
+            colorBlue.set(data.value);
+          }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
+        </div>
       </div>
     </CommonOptions>
     <CommonOptions key={5} title={t`滤镜`}>

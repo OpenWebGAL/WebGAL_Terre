@@ -138,7 +138,7 @@ msgstr "playEffect:选择效果音文件;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo:选择视频文件;"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:162
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:164
 msgid "RGB电影滤镜"
 msgstr "RGB电影滤镜"
 
@@ -288,7 +288,7 @@ msgstr "主要样式"
 msgid "主页"
 msgstr "主页"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:132
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:133
 msgid "亮度："
 msgstr "亮度："
 
@@ -296,7 +296,7 @@ msgstr "亮度："
 msgid "代码编辑器"
 msgstr "代码编辑器"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:141
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:142
 msgid "伽马值："
 msgstr "伽马值："
 
@@ -406,7 +406,7 @@ msgstr "停止 BGM"
 msgid "像素"
 msgstr "像素"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:163
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:165
 msgid "光辉电影滤镜"
 msgstr "光辉电影滤镜"
 
@@ -597,7 +597,7 @@ msgstr "单位毫秒。 0~ 有效"
 msgid "单行注释"
 msgstr "单行注释"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:160
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:162
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
 
@@ -787,7 +787,7 @@ msgstr "实验性快速预览"
 msgid "宽度"
 msgstr "宽度"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:135
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:136
 msgid "对比度："
 msgstr "对比度："
 
@@ -1061,7 +1061,7 @@ msgstr "播放效果音"
 msgid "播放视频"
 msgstr "播放视频"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:161
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:163
 msgid "故障电影滤镜"
 msgstr "故障电影滤镜"
 
@@ -1494,7 +1494,7 @@ msgstr "游戏配置"
 msgid "源代码"
 msgstr "源代码"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:157
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:159
 msgid "滤镜"
 msgstr "滤镜"
 
@@ -1502,7 +1502,7 @@ msgstr "滤镜"
 msgid "点击或拖拽文件至此上传"
 msgstr "点击或拖拽文件至此上传"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:159
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:161
 msgid "点状电影滤镜"
 msgstr "点状电影滤镜"
 
@@ -1608,13 +1608,17 @@ msgstr "立绘文件"
 msgid "简体中文"
 msgstr "简体中文"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:146
-msgid "红色（0-255）："
-msgstr "红色（0-255）："
-
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
 msgid "紧急回避"
 msgstr "紧急回避"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+msgid "繁体中文"
+msgstr "繁体中文"
+
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:147
+msgid "红色（0-255）："
+msgstr "红色（0-255）："
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
@@ -1652,7 +1656,7 @@ msgstr "绝对"
 #~ msgid "继承模式"
 #~ msgstr "继承模式"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:149
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:150
 msgid "绿色（0-255）："
 msgstr "绿色（0-255）："
 
@@ -1672,10 +1676,6 @@ msgstr "编辑游戏"
 msgid "编辑组件"
 msgstr "编辑组件"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
-msgid "繁体中文"
-msgstr "繁体中文"
-
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194
 #: src/components/Transformer/Transformer.tsx:205
@@ -1683,7 +1683,7 @@ msgstr "繁体中文"
 msgid "缩放"
 msgstr "缩放"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:158
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:160
 msgid "老电影滤镜"
 msgstr "老电影滤镜"
 
@@ -1778,7 +1778,7 @@ msgstr "获取来自用户的字符输入"
 msgid "获取输入"
 msgstr "获取输入"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:152
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:153
 msgid "蓝色（0-255）："
 msgstr "蓝色（0-255）："
 
@@ -2147,7 +2147,7 @@ msgstr "颜色"
 msgid "颜色调整"
 msgstr "颜色调整"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:138
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:139
 msgid "饱和度："
 msgstr "饱和度："
 
@@ -2173,16 +2173,16 @@ msgstr "默认值0"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:109
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:113
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:118
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:132
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:135
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:138
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:141
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:133
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:136
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:139
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:142
 msgid "默认值1"
 msgstr "默认值1"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:146
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:149
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:152
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:147
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:150
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:153
 msgid "默认值255"
 msgstr "默认值255"
 
