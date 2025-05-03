@@ -70,6 +70,7 @@ echo 'cd "$(dirname "$0")"' >> run-webgal-on-mac.command
 echo 'cd WebGAL' >> run-webgal-on-mac.command
 echo './WebGAL_Terre' >> run-webgal-on-mac.command
 chmod +x run-webgal-on-mac.command
+chmod +x WebGAL/WebGAL_Terre
 
 # readme
 echo '你需要在本目录下执行 "chmod -R +x ."，并且使用 run-webgal-on-mac.command 脚本才能正确使用 WebGAL Terre' >> readme.txt
