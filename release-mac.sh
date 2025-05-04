@@ -72,10 +72,12 @@ echo './WebGAL_Terre' >> run-webgal-on-mac.command
 chmod +x run-webgal-on-mac.command
 chmod +x WebGAL/WebGAL_Terre
 
-# readme
-echo '你需要在本目录下执行 "chmod -R +x ."，并且使用 run-webgal-on-mac.command 脚本才能正确使用 WebGAL Terre' >> readme.txt
-echo 'You need to execute "chmod -R +x ." in this directory, and use run-webgal-on-mac.command to use WebGAL Terre correctly' >> readme.txt
-echo 'WebGAL Terre を正しく使用するには、このディレクトリで「chmod -R +x .」を実行し、run-webgal-on-mac.command スクリプトを使用する必要があります。' >> readme.txt
+# readme 多语言提示（现阶段说明）
+echo '请直接运行对应平台的脚本文件，即可完成 WebGAL Terre 的启动工作。' > readme.txt
+echo 'Simply run the script for your platform to complete the startup of WebGAL Terre.' >> readme.txt
+echo '対応するプラットフォーム用のスクリプトを実行するだけで、WebGAL Terre の起動が完了します。' >> readme.txt
+
+
 chmod -R +x .
 
 echo "WebGAL Terre is now ready to be deployed."
