@@ -73,9 +73,9 @@ chmod +x run-webgal-on-mac.command
 chmod +x WebGAL/WebGAL_Terre
 
 # readme 多语言提示（现阶段说明）
-echo '请直接运行对应平台的脚本文件，即可完成 WebGAL Terre 的启动工作。' > readme.txt
-echo 'Simply run the script for your platform to complete the startup of WebGAL Terre.' >> readme.txt
-echo '対応するプラットフォーム用のスクリプトを実行するだけで、WebGAL Terre の起動が完了します。' >> readme.txt
+echo '你需要为可执行文件设置正确的权限，并使用 run-webgal-on-mac.command 脚本才能正确使用 WebGAL Terre' > readme.txt
+echo 'You need to set the correct permissions for the executable file and use the run-webgal-on-mac.command script to use WebGAL Terre correctly' >> readme.txt
+echo 'WebGAL Terreを正しく使用するには、実行可能ファイルに正しいパーミッションを設定し、run-webgal-on-mac.command スクリプトを使用する必要があります。' >> readme.txt
 
 
 echo "WebGAL Terre is now ready to be deployed."
