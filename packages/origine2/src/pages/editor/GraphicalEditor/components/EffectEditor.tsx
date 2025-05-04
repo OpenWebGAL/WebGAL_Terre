@@ -27,6 +27,13 @@ export function EffectEditor(props:{
   const alpha = useValue(effectObject?.alpha ?? '');
   const rotation = useValue(effectObject?.rotation ?? '');
   const blur = useValue(effectObject?.blur ?? '');
+  const brightness = useValue(effectObject?.brightness ?? '');
+  const contrast = useValue(effectObject?.contrast ?? '');
+  const saturation = useValue(effectObject?.saturation ?? '');
+  const gamma = useValue(effectObject?.gamma ?? '');
+  const colorRed = useValue(effectObject?.colorRed ?? '');
+  const colorGreen = useValue(effectObject?.colorGreen ?? '');
+  const colorBlue = useValue(effectObject?.colorBlue ?? '');
   const oldFilm = useValue(effectObject?.oldFilm ?? '');
   const dotFilm = useValue(effectObject?.dotFilm ?? '');
   const reflectionFilm = useValue(effectObject?.reflectionFilm ?? '');
@@ -45,6 +52,13 @@ export function EffectEditor(props:{
     if(!isNaN(Number(alpha.value))&&alpha.value!==''){result.alpha = Number(alpha.value);};
     if(!isNaN(Number(rotation.value))&&rotation.value!==''){result.rotation = Number(rotation.value);};
     if(!isNaN(Number(blur.value))&&blur.value!==''){result.blur = Number(blur.value);};
+    if(!isNaN(Number(brightness.value))&&brightness.value!==''){result.brightness = Number(brightness.value);};
+    if(!isNaN(Number(contrast.value))&&contrast.value!==''){result.contrast = Number(contrast.value);};
+    if(!isNaN(Number(saturation.value))&&saturation.value!==''){result.saturation = Number(saturation.value);};
+    if(!isNaN(Number(gamma.value))&&gamma.value!==''){result.gamma = Number(gamma.value);};
+    if(!isNaN(Number(colorRed.value))&&colorRed.value!==''){result.colorRed = Number(colorRed.value);};
+    if(!isNaN(Number(colorGreen.value))&&colorGreen.value!==''){result.colorGreen = Number(colorGreen.value);};
+    if(!isNaN(Number(colorBlue.value))&&colorBlue.value!==''){result.colorBlue = Number(colorBlue.value);};
     if(oldFilm.value){result.oldFilm = 1;};
     if(dotFilm.value){result.dotFilm = 1;};
     if(reflectionFilm.value){result.reflectionFilm = 1;};
@@ -113,7 +127,36 @@ export function EffectEditor(props:{
         blur.set(data.value);
       }} onBlur={submit} style={{width: '140px'}}/>
     </CommonOptions>
-    <CommonOptions key={4} title={t`滤镜`}>
+    <CommonOptions key={4} title={t`颜色调整`}>
+      <div>
+        <div>
+          {t`亮度：`}<Input value={brightness.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            brightness.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+          {t`对比度：`}<Input value={contrast.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            contrast.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+          {t`饱和度：`}<Input value={saturation.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            saturation.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+          {t`伽马值：`}<Input value={gamma.value} placeholder={t`默认值1`} onChange={(_, data) => {
+            gamma.set(data.value);
+          }} onBlur={submit} style={{width: '100px'}}/>{'\u00a0'}
+        </div>
+        <div style={{marginTop: 5}}>
+          {t`红色（0-255）：`}<Input value={colorRed.value} placeholder={t`默认值255`} onChange={(_, data) => {
+            colorRed.set(data.value);
+          }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
+          {t`绿色（0-255）：`}<Input value={colorGreen.value} placeholder={t`默认值255`} onChange={(_, data) => {
+            colorGreen.set(data.value);
+          }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
+          {t`蓝色（0-255）：`}<Input value={colorBlue.value} placeholder={t`默认值255`} onChange={(_, data) => {
+            colorBlue.set(data.value);
+          }} onBlur={submit} style={{width: '120px'}}/>{'\u00a0'}
+        </div>
+      </div>
+    </CommonOptions>
+    <CommonOptions key={5} title={t`滤镜`}>
       <Checkbox checked={oldFilm.value === 1} onChange={(_, data) => { oldFilm.set(data.checked ? 1 : 0); submit(); }} label={t`老电影滤镜`} />{'\u00a0'}
       <Checkbox checked={dotFilm.value === 1} onChange={(_, data) => { dotFilm.set(data.checked ? 1 : 0); submit(); }} label={t`点状电影滤镜`}/>{'\u00a0'}
       <Checkbox checked={reflectionFilm.value === 1} onChange={(_, data) => { reflectionFilm.set(data.checked ? 1 : 0); submit(); }} label={t`反射电影滤镜`}/>{'\u00a0'}
