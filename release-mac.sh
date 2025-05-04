@@ -78,6 +78,4 @@ echo 'Simply run the script for your platform to complete the startup of WebGAL 
 echo '対応するプラットフォーム用のスクリプトを実行するだけで、WebGAL Terre の起動が完了します。' >> readme.txt
 
 
-chmod -R +x .
-
 echo "WebGAL Terre is now ready to be deployed."
