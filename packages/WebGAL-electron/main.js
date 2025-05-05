@@ -1,7 +1,6 @@
-global['isElectron'] = true;
 const { app, BrowserWindow, globalShortcut, Menu } = require('electron');
 const log = require('electron-log');
-require('./dist/main')
+const path = require('path');
 
 /**
  * 关闭默认菜单栏
@@ -25,10 +24,15 @@ app.whenReady().then(() => {
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 1600,
-        height: 900
+        height: 900,
+        icon: path.join(__dirname, '../../icon.ico'),
+        useContentSize: true,
     })
 
-    win.loadURL('http://localhost:3001').then(r => console.log(r));
+    win.loadFile('./public/index.html').then(r => {
+        console.log(r)
+        win.webContents.executeJavaScript('window.isElectron = true')
+    });
 
     // 注册快捷键 Ctrl + F12 切换开发者工具
     globalShortcut.register("Ctrl+F12", () => {
@@ -52,14 +56,14 @@ const createWindow = () => {
         }
 
         logMessage(message);
-		
-		/**
-		 * 侦听BrowserWindow关闭事件
-		 */
-		win.on("close", () => {
-			app.quit();
-		});
     });
+    
+    /**
+	 * 侦听BrowserWindow关闭事件
+	 */
+	win.on("close", () => {
+		app.quit();
+	});
 }
 
 /**
