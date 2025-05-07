@@ -30,5 +30,8 @@
     "concurrently": "^7.2.2",
     "iconv-lite": "^0.6.3"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "packageManager": "yarn@1.22.22"
 }
