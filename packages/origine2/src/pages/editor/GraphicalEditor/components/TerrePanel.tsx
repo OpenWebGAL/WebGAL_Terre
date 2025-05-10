@@ -1,10 +1,12 @@
-import React, {ReactNode} from "react";
-import { Button, DrawerBody, DrawerHeader, DrawerHeaderTitle, OverlayDrawer } from "@fluentui/react-components";
+import React, {ReactElement, ReactNode, ReactPortal} from "react";
+import { Button, DrawerBody, DrawerHeader, DrawerHeaderTitle, OverlayDrawer} from "@fluentui/react-components";
 import { Dismiss24Filled, Dismiss24Regular, bundleIcon } from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
+import styles from "./terrePanel.module.scss";
 
 export function TerrePanel(props: {
   children: ReactNode,
+  bottomBarChildren?: ReactNode[]
   width?: number,
   title: string,
   sentenceIndex: number,
@@ -19,7 +21,9 @@ export function TerrePanel(props: {
       open={isExpand}
       onOpenChange={() => updateExpand(0)}
       position="end"
+      className={styles.overlayDrawer}
       style={{width:`${width}px`}}
+      backdrop={null}
     >
       <DrawerHeader>
         <DrawerHeaderTitle
@@ -38,6 +42,9 @@ export function TerrePanel(props: {
       <DrawerBody>
         {props.children}
       </DrawerBody>
+      <div className={styles.bottomBar} style={{display: props.bottomBarChildren ? 'inherit' : 'none'}}>
+        {props.bottomBarChildren}
+      </div>
     </OverlayDrawer>
   );
 }

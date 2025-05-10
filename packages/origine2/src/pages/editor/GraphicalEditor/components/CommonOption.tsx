@@ -4,6 +4,7 @@ import styles from './commonOption.module.scss';
 interface ICommonOptionProps{
   title:string,
   children:ReactNode
+  row?:boolean
 }
 
 export default function CommonOptions(props:ICommonOptionProps){

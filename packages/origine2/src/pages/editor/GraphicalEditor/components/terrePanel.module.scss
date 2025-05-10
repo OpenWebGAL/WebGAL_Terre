@@ -1,0 +1,15 @@
+.bottomBar {
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 100%;
+    flex-wrap: wrap;
+    border: 0;
+    border-top: 1px;
+    border-color: rgb(219, 219, 219);
+    border-style: solid;
+}
