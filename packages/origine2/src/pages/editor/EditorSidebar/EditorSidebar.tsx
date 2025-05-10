@@ -9,6 +9,10 @@ import {IGameEditorSidebarTabs, IGameEditorTopbarTabs, ITag} from "@/types/gameE
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { WsUtil } from "@/utils/wsUtil";
+import {api} from "@/api";
+import { useValue } from "@/hooks/useValue";
+import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
+import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -24,6 +28,8 @@ export default function EditorSideBar() {
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
   const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
+  const canvasAspectRatio = useEditorStore.use.canvasAspectRatio();
+  const updateCanvasAspectRatio = useEditorStore.use.updateCanvasAspectRatio();
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -140,6 +146,32 @@ export default function EditorSideBar() {
     open: handleOpen,
   };
 
+  const gameDir = useEditorStore.use.subPage();
+  const gameConfig = useValue<WebgalConfig>([]);
+  const getGameConfig = () => {
+    api.manageGameControllerGetGameConfig(gameDir)
+      .then((r: any) => parseAndSetGameConfigState(r.data));
+  };
+
+  useEffect(() => {
+    getGameConfig();
+  }, []);
+
+  function getConfigContentAsString(key: string) {
+    return gameConfig.value.find(e => e.command === key)?.args?.join('') ?? '';
+  }
+
+  function parseAndSetGameConfigState(data: any) {
+    gameConfig.set(WebgalParser.parseConfig(data));
+    UpdateCanvasResolution();
+  }
+
+  function UpdateCanvasResolution() {
+    const width = getConfigContentAsString('Canvas_width');
+    const height = getConfigContentAsString('Canvas_height');
+    updateCanvasAspectRatio(Number(width) / Number(height));
+  }
+
   return <>
     {isShowSidebar &&
       <div className={styles.editor_sidebar}>
@@ -150,6 +182,7 @@ export default function EditorSideBar() {
             id="gamePreviewIframe"
             frameBorder="0"
             className={styles.previewWindow}
+            style={{aspectRatio: canvasAspectRatio}}
             src={`/games/${gameName}`}
           />
           <div className={styles.gamePreviewButons}>

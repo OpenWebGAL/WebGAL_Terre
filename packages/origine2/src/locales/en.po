@@ -22,11 +22,11 @@ msgstr "Comment"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:189
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:199
 msgid "<0>应用新的模板</0>"
 msgstr "<0>Apply a new template</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:168
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:178
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>Current template: {currentTemplateName}</0>"
 
@@ -223,9 +223,9 @@ msgstr "Hide the role name"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
 #~ msgid "不继承上一句"
-#~ msgstr ""
+#~ msgstr "Do not inherit the previous sentence"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:232
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:242
 msgid "不设定"
 msgstr "Not set"
 
@@ -343,7 +343,7 @@ msgid "保存"
 msgstr "Save"
 
 #: src/components/IconCreator/IconCreator.tsx:635
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:202
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
 msgid "修改游戏图标"
 msgstr "Change game icon"
 
@@ -540,7 +540,7 @@ msgid "删除游戏"
 msgstr "Delete game"
 
 #: src/components/Assets/Assets.tsx:276
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:159
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
 msgid "刷新"
 msgstr "Refresh"
 
@@ -560,7 +560,7 @@ msgstr "Functional Area"
 msgid "加粗"
 msgstr "Bold"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:117
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:241
 msgid "动画"
 msgstr "Animation"
@@ -619,12 +619,12 @@ msgstr "Right Align"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:158
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:168
 msgid "启动图"
 msgstr "Startup image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:222
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:232
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:134
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:82
 msgid "启用"
@@ -674,7 +674,7 @@ msgstr "Open in file explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:165
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:198
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -682,8 +682,8 @@ msgstr "Preview in new tab"
 msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:214
 msgid "场景"
 msgstr "Scene"
 
@@ -745,7 +745,7 @@ msgstr "Positioning"
 msgid "实时预览"
 msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:171
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:204
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:92
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -754,7 +754,7 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:171
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:204
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:92
 msgid "实时预览打开"
 msgstr "Live preview on"
@@ -762,6 +762,10 @@ msgstr "Live preview on"
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:128
 msgid "实验性快速预览"
 msgstr "Experimental fast preview"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:268
+msgid "宽"
+msgstr "Width"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:45
 msgid "宽度"
@@ -889,7 +893,7 @@ msgstr "Tiling"
 msgid "应用"
 msgstr "Apply"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:176
 msgid "应用的模板"
 msgstr "Applied template"
 
@@ -910,13 +914,13 @@ msgstr "Open mouth"
 msgid "当前版本"
 msgstr "Current version"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:248
 msgid "德语"
 msgstr "German"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
 #~ msgid "快速执行"
-#~ msgstr ""
+#~ msgstr "Quick execution"
 
 #: src/pages/dashboard/DashBoard.tsx:166
 msgid "忽略此版本"
@@ -1217,7 +1221,7 @@ msgstr "Rotation angle:"
 msgid "无"
 msgstr "None"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:246
 msgid "日语"
 msgstr "Japanese"
 
@@ -1253,6 +1257,10 @@ msgstr "Show role name"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:76
 msgid "普通对话"
 msgstr "General dialogue"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:257
+msgid "更改分辨率后需刷新游戏"
+msgstr "After changing the resolution, the game needs to be refreshed."
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:27
 msgid "未指定"
@@ -1305,11 +1313,11 @@ msgstr "Title Button List"
 msgid "标题按钮文字"
 msgstr "Title Button Text"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:142
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:152
 msgid "标题背景图片"
 msgstr "Title background image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:150
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:160
 msgid "标题背景音乐"
 msgstr "Title background music"
 
@@ -1319,7 +1327,7 @@ msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:214
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:124
 msgid "模板"
 msgstr "Template"
 
@@ -1357,9 +1365,13 @@ msgstr "This command will end the game"
 msgid "永不换行"
 msgstr "Never wrap"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:247
 msgid "法语"
 msgstr "French"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:259
+msgid "注意，更改分辨率会导致立绘、背景定位和游戏界面发生变化，推荐在项目一开始就确定好分辨率，并测试定位和界面是否合适"
+msgstr "Please note that changing the resolution will affect character illustrations, background positioning, and the game interface. It is recommended to determine the resolution at the beginning of the project and test the positioning and interface to ensure they are appropriate."
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Comment.tsx:21
 msgid "注释"
@@ -1435,17 +1447,17 @@ msgstr "Games"
 msgid "游戏列表"
 msgstr "Game list"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:133
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:143
 msgid "游戏包名"
 msgstr "Game package name"
 
 #: src/pages/dashboard/Sidebar.tsx:102
 #: src/pages/dashboard/Sidebar.tsx:111
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:121
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:131
 msgid "游戏名称"
 msgstr "Game name"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:195
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:205
 msgid "游戏图标"
 msgstr "Game icon"
 
@@ -1458,15 +1470,15 @@ msgstr "Game control"
 msgid "游戏目录"
 msgstr "Game directory"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:139
 msgid "游戏简介"
 msgstr "Game description"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:125
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:135
 msgid "游戏识别码"
 msgstr "Game ID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:128
 msgid "游戏配置"
 msgstr "Game configuration"
 
@@ -1489,6 +1501,10 @@ msgstr "Dot film filter"
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:50
 msgid "特殊演出"
 msgstr "Special performance"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:252
+msgid "画布分辨率"
+msgstr "Canvas resolution"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:56
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayEffect.tsx:50
@@ -1527,7 +1543,7 @@ msgstr "View"
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:126
 msgid "视频"
 msgstr "Video"
 
@@ -1543,12 +1559,12 @@ msgstr "Video options"
 msgid "禁止跳过视频"
 msgstr "Disable skipping video"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:213
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:223
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:233
 msgid "禁用"
 msgstr "Disabled"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
 msgid "立绘"
 msgstr "Figure"
 
@@ -1576,23 +1592,19 @@ msgstr "ID of figure illustration"
 msgid "立绘文件"
 msgstr "Figure file"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:233
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:243
 msgid "简体中文"
 msgstr "Simplified Chinese"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
-msgid "紧急回避"
-msgstr "Emergency Evasion"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
-msgid "繁体中文"
-msgstr "Traditional Chinese"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:147
 msgid "红色（0-255）："
 msgstr "Red (0-255):"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:217
+msgid "紧急回避"
+msgstr "Emergency Evasion"
+
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:125
 msgid "纹理"
 msgstr "Texture"
 
@@ -1622,11 +1634,11 @@ msgstr "Absolutely"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
 #~ msgid "继承上一句"
-#~ msgstr ""
+#~ msgstr "Inherit the previous sentence"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
 #~ msgid "继承模式"
-#~ msgstr ""
+#~ msgstr "Inheritance mode"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:150
 msgid "绿色（0-255）："
@@ -1648,6 +1660,10 @@ msgstr "Edit game"
 msgid "编辑组件"
 msgstr "Edit component"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:244
+msgid "繁体中文"
+msgstr "Traditional Chinese"
+
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194
 #: src/components/Transformer/Transformer.tsx:205
@@ -1660,7 +1676,7 @@ msgid "老电影滤镜"
 msgstr "Old film filter"
 
 #: src/components/IconCreator/IconCreator.tsx:696
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
@@ -1733,7 +1749,7 @@ msgstr "Custom effect name"
 msgid "舞台对象控制"
 msgstr "Stage object control"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:245
 msgid "英语"
 msgstr "English"
 
@@ -1859,7 +1875,7 @@ msgstr "This file type does not support preview"
 msgid "语言"
 msgstr "Language"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:127
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:215
 msgid "语音"
 msgstr "Voice"
@@ -1888,7 +1904,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:213
 msgid "资源"
 msgstr "Assets"
 
@@ -2039,11 +2055,15 @@ msgstr "Rename template directory"
 msgid "重命名游戏目录"
 msgstr "Rename game directory"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:285
+msgid "重置分辨率"
+msgstr "Reset resolution"
+
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:63
 msgid "鉴赏"
 msgstr "Appreciation"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:217
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:227
 msgid "鉴赏功能"
 msgstr "Gallery Feature"
 
@@ -2096,7 +2116,7 @@ msgstr "Right"
 msgid "靠左"
 msgstr "Left"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
 msgid "音乐"
 msgstr "Music"
 
@@ -2122,6 +2142,10 @@ msgstr "Color adjustment"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:139
 msgid "饱和度："
 msgstr "Saturation:"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:272
+msgid "高"
+msgstr "Height"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:48
 msgid "高度"
@@ -2158,7 +2182,7 @@ msgstr "Default 1"
 msgid "默认值255"
 msgstr "Default 255"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:227
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
 msgid "默认语言"
 msgstr "Default Language"
 
