@@ -10,9 +10,18 @@ import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { WsUtil } from "@/utils/wsUtil";
 
+enum DraggingDivider {
+  None,
+  EditorSideBarWidth,
+  PreviewWindowHeight,
+}
+
 let startX = 0;
+let startY = 0;
 let prevXvalue = 0;
+let prevYvalue = 0;
 let isMouseDown = false;
+let draggingDivider = DraggingDivider.None;
 
 const ArrowClockwiseIcon = bundleIcon(ArrowClockwiseFilled, ArrowClockwiseRegular);
 const OpenIcon = bundleIcon(OpenFilled, OpenRegular);
@@ -49,6 +58,7 @@ export default function EditorSideBar() {
 
   useEffect(() => {
     const storeWidth = localStorage.getItem('sidebar-width');
+    const storeHeight = localStorage.getItem('sidebar-height');
     if (!storeWidth) {
       const initWidth = window.innerWidth * 0.35;
       localStorage.setItem('sidebar-width', initWidth.toString());
@@ -56,45 +66,91 @@ export default function EditorSideBar() {
     } else {
       document.body.style.setProperty("--sidebar-width", `${storeWidth}px`);
     }
+    if (!storeHeight) {
+      const initHeight = window.innerHeight * 0.35;
+      localStorage.setItem('sidebar-height', initHeight.toString());
+      document.body.style.setProperty("--sidebar-height", `${initHeight}px`);
+    } else {
+      document.body.style.setProperty("--sidebar-height", `${storeHeight}px`);
+    }
   }, []);
 
-  const handleDragStart = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleVerticalDividerDragStart = (event: React.MouseEvent<HTMLDivElement>) => {
     startX = event.clientX;
     const prevX = document.body.style.getPropertyValue("--sidebar-width");
     prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
     isMouseDown = true;
+    draggingDivider = DraggingDivider.EditorSideBarWidth;
     const previewFrame = document.getElementById("gamePreviewIframe");
     if (previewFrame)
       previewFrame.style.pointerEvents = 'none';
   };
 
-  const handleDrag = (event: MouseEvent) => {
-    if (isMouseDown) {
+  const handleVerticalDividerDrag = (event: MouseEvent) => {
+    if (isMouseDown && draggingDivider === DraggingDivider.EditorSideBarWidth) {
       const deltaX = event.clientX - (startX);
       const newValue = prevXvalue + deltaX;
-      document.body.style.setProperty("--sidebar-width", `${(newValue < 240) ? 240 : newValue}px`);
+      document.body.style.setProperty("--sidebar-width", `${(newValue < 192) ? 192 : newValue}px`);
     }
 
   };
 
-  const handleDragEnd = (event: MouseEvent) => {
+  const handleVerticalDividerDragEnd = (event: MouseEvent) => {
     setTimeout(() => {
       const prevX = document.body.style.getPropertyValue("--sidebar-width");
       prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
       localStorage.setItem('sidebar-width', prevXvalue.toString());
     }, 10);
     isMouseDown = false;
+    draggingDivider = DraggingDivider.None;
+    const previewFrame = document.getElementById("gamePreviewIframe");
+    if (previewFrame)
+      previewFrame.style.pointerEvents = 'auto';
+  };
+
+  const handleHorizontalDividerDragStart = (event: React.MouseEvent<HTMLDivElement>) => {
+    startY = event.clientY;
+    const prevY = document.body.style.getPropertyValue("--sidebar-height");
+    prevYvalue = parseInt(prevY.substring(0, prevY.length - 2), 10);
+    isMouseDown = true;
+    draggingDivider = DraggingDivider.PreviewWindowHeight;
+    const previewFrame = document.getElementById("gamePreviewIframe");
+    if (previewFrame)
+      previewFrame.style.pointerEvents = 'none';
+  };
+
+  const handleHorizontalDividerDrag = (event: MouseEvent) => {
+    if (isMouseDown && draggingDivider === DraggingDivider.PreviewWindowHeight) {
+      const deltaY = event.clientY - (startY);
+      const newValue = prevYvalue + deltaY;
+      document.body.style.setProperty("--sidebar-height", `${(newValue < 108) ? 108 : newValue}px`);
+    }
+
+  };
+
+  const handleHorizontalDividerDragEnd = (event: MouseEvent) => {
+    setTimeout(() => {
+      const prevY = document.body.style.getPropertyValue("--sidebar-height");
+      prevYvalue = parseInt(prevY.substring(0, prevY.length - 2), 10);
+      localStorage.setItem('sidebar-height', prevYvalue.toString());
+    }, 10);
+    isMouseDown = false;
+    draggingDivider = DraggingDivider.None;
     const previewFrame = document.getElementById("gamePreviewIframe");
     if (previewFrame)
       previewFrame.style.pointerEvents = 'auto';
   };
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleDrag);
-    window.addEventListener('mouseup', handleDragEnd);
+    window.addEventListener('mousemove', handleVerticalDividerDrag);
+    window.addEventListener('mousemove', handleHorizontalDividerDrag);
+    window.addEventListener('mouseup', handleVerticalDividerDragEnd);
+    window.addEventListener('mouseup', handleHorizontalDividerDragEnd);
     return () => {
-      window.removeEventListener('mousemove', handleDrag);
-      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('mousemove', handleVerticalDividerDrag);
+      window.removeEventListener('mousemove', handleHorizontalDividerDrag);
+      window.removeEventListener('mouseup', handleVerticalDividerDragEnd);
+      window.removeEventListener('mouseup', handleHorizontalDividerDragEnd);
     };
   }, []);
 
@@ -145,13 +201,19 @@ export default function EditorSideBar() {
       <div className={styles.editor_sidebar}>
         <div className={styles.preview_container} id="gamePreview">
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          <iframe
-            ref={ifRef}
-            id="gamePreviewIframe"
-            frameBorder="0"
-            className={styles.previewWindow}
-            src={`/games/${gameName}`}
-          />
+          <div>
+            <iframe
+              ref={ifRef}
+              id="gamePreviewIframe"
+              frameBorder="0"
+              className={styles.previewWindow}
+              src={`/games/${gameName}`}
+            />
+            <div
+              className={styles.horizontalDivider}
+              onMouseDown={handleHorizontalDividerDragStart}
+            />
+          </div>
           <div className={styles.gamePreviewButons}>
             <Button
               appearance="subtle"
@@ -216,8 +278,8 @@ export default function EditorSideBar() {
         </div>
 
         <div
-          className={styles.divider}
-          onMouseDown={handleDragStart}
+          className={styles.verticalDivider}
+          onMouseDown={handleVerticalDividerDragStart}
         // onMouseUp={handleDragEnd}
         // onMouseLeave={handleDragEnd}
         />

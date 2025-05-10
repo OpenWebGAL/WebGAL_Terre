@@ -1,6 +1,6 @@
 import styles from "../topbarTabs.module.scss";
 import {useValue} from "../../../../../hooks/useValue";
-import {useEffect, useRef, useState} from "react";
+import {CSSProperties, useEffect, useRef, useState} from "react";
 import {cloneDeep} from "lodash";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -22,6 +22,7 @@ import {WsUtil} from "@/utils/wsUtil";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
+import { TextField } from "@fluentui/react";
 
 const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
 
@@ -239,6 +240,22 @@ export default function GameConfig() {
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Default_Language', e)}/>
       </TabItem>
+      <TabItem title={t`画布分辨率`}>
+        <div style={{flexDirection: "column", display: "flex"}}>
+          <div style={{flexDirection: "row", display: "flex"}}>
+            <div style={{marginLeft: '5px', marginRight: '15px', alignSelf: "center"}}>{t`宽`}</div>
+            <GameConfigEditor key="canvasWidth" value={getConfigContentAsString('Canvas_width')}
+            style={{width: '100px'}}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Canvas_width', e)}/>
+          </div>
+          <div style={{flexDirection: "row", display: "flex"}}>
+            <div style={{marginLeft: '5px', marginRight: '15px', alignSelf: "center"}}>{t`高`}</div>
+            <GameConfigEditor key="canvasHeight" value={getConfigContentAsString('Canvas_height')}
+            style={{width: '100px'}}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Canvas_height', e)}/>
+          </div>
+        </div>
+      </TabItem>
     </>
   );
 }
@@ -246,6 +263,7 @@ export default function GameConfig() {
 interface IGameConfigEditor {
   key: string;
   value: string;
+  style?: CSSProperties;
   onChange: Function;
 }
 
@@ -258,7 +276,8 @@ interface IGameConfigEditorMulti {
 function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
 
-  return <div className={styles.textEditArea} style={{maxWidth: 200}}>
+  return <div className={styles.textEditArea}
+    style={{maxWidth: 200, height: 32, alignItems: 'center', display: "flex"}}>
     {!showEditBox.value && props.value}
     {!showEditBox.value &&
       <span className={styles.editButton} onClick={() => showEditBox.set(true)}>
@@ -268,6 +287,7 @@ function GameConfigEditor(props: IGameConfigEditor) {
       <Input
         autoFocus
         defaultValue={props.value}
+        style={props.style}
         onBlur={(event) => {
           props.onChange(event.target.value);
           showEditBox.set(false);
