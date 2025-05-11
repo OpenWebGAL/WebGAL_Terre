@@ -1,5 +1,4 @@
 import {useValue} from "../../../hooks/useValue";
-import {useEffect, useMemo} from "react";
 import styles from "./chooseFile.module.scss";
 import {FolderOpen, FolderWithdrawal, Notes} from "@icon-park/react";
 import {Button, Input, Popover, PopoverSurface, PopoverTrigger} from "@fluentui/react-components";
@@ -8,9 +7,11 @@ import {api} from "@/api";
 import {t} from "@lingui/macro";
 import Assets, {IFile, IFileConfig, IFileFunction} from "@/components/Assets/Assets";
 import {join} from 'path';
+import { ReactNode } from "react";
 
 export interface IChooseFile {
   sourceBase: string;
+  button?: ReactNode; 
   selectedFileName?: string | null; // 默认选中文件名
   onChange: (choosedFile: IFile | null) => void;
   extName: string[]; // 拓展名，要加.
@@ -52,7 +53,9 @@ export default function ChooseFile(props: IChooseFile) {
       onOpenChange={toggleIsCalloutVisible}
     >
       <PopoverTrigger>
-        <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>
+        <div style={{display: 'inline-block'}}>
+          { props.button ?? <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>}      
+        </div>
       </PopoverTrigger>
       <PopoverSurface style={{padding: 0}}>
         <div className={styles.chooseFileContentWarpper}>
