@@ -1,11 +1,12 @@
 .file {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
   gap: 2px;
   padding: 0 8px;
   cursor: pointer;
   height: 28px;
+  width: 100%;
   border-radius: var(--radius-md);
 }
 
@@ -13,6 +14,7 @@
   visibility: hidden;
 }
 
+.fileSelected,
 .file:hover {
   background: var(--bg-button-hover);
 }

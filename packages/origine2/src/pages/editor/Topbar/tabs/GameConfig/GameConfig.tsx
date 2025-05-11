@@ -314,6 +314,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
       setTimeout(() => inputBoxRef.current?.focus(), 100);
     }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
     {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
+      selectedFileName={props.value}
       onChange={(file) => {
         if (file) {
           props.onChange(file.name);

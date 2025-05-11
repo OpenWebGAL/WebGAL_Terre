@@ -45,7 +45,10 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="2" title={t`鉴赏资源文件`}>
         <>
-          {fileName.value}{"\u00a0"}<ChooseFile sourceBase={unlockType.value === "unlockCg" ? "background" : "bgm"}
+          {fileName.value}{"\u00a0"}
+          <ChooseFile
+            sourceBase={unlockType.value === "unlockCg" ? "background" : "bgm"}
+            selectedFileName={fileName.value}
             onChange={(newFile) => {
               fileName.set(newFile?.name ?? "");
               submit();

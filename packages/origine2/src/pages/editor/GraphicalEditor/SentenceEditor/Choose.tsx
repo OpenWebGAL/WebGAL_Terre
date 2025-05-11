@@ -42,7 +42,7 @@ export default function Choose(props: ISentenceEditorProps) {
       {
         item[1] + "\u00a0"
       }
-      <ChooseFile sourceBase="scene" onChange={(newFile) => {
+      <ChooseFile sourceBase="scene" selectedFileName={item[1]} onChange={(newFile) => {
         const newValue = newFile?.name ?? "";
         const newList = cloneDeep(chooseItems.value);
         newList[i][1] = newValue;

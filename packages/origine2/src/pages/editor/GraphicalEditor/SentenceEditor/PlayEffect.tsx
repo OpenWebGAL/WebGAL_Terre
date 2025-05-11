@@ -32,7 +32,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
       {!isNoFile &&<CommonOptions key="1" title={t`效果音文件`}>
         <>
           {fileName.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="vocal" onChange={(fileDesc) => {
+          <ChooseFile sourceBase="vocal" selectedFileName={fileName.value} onChange={(fileDesc) => {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}

@@ -19,7 +19,7 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`场景文件`}>
         <>
           {fileName.value}{'\u00a0'}
-          <ChooseFile sourceBase="scene" onChange={(file) => {
+          <ChooseFile sourceBase="scene" selectedFileName={fileName.value} onChange={(file) => {
             fileName.set(file?.name ?? "");
             submit();
           }} extName={[".txt"]} />

@@ -1,9 +1,11 @@
 import { api } from "@/api";
 import { useValue } from "@/hooks/useValue";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useRef, useState } from "react";
 import styles from "./Assets.module.scss";
 import { Badge, Button, Field, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Radio, RadioGroup, Subtitle1, Tooltip } from "@fluentui/react-components";
 import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
+import { FixedSizeList } from 'react-window';
+import AutoSizer from "react-virtualized-auto-sizer";
 import FileElement from "./FileElement";
 import axios from "axios";
 import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
@@ -47,16 +49,26 @@ const MoreVerticalIcon = bundleIcon(MoreVerticalFilled, MoreVerticalRegular);
 const ArrowExportUpIcon = bundleIcon(ArrowExportUpFilled, ArrowExportUpRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
 
-export default function Assets({ basePath, isProtected = false, fileConfig, fileFunction }:
-  { basePath: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction }) {
+export default function Assets({ basePath, selectedFilePath = [], isProtected = false, fileConfig, fileFunction }:
+  { basePath: string[], selectedFilePath?: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction }) {
   const { mutate } = useSWRConfig();
 
   const currentPath = useValue(basePath);
   const currentPathString = useMemo(() => currentPath.value.join("/"), [currentPath]);
+  const lastPath = useValue<string[]>(selectedFilePath);
   const isBasePath = (currentPathString === basePath.join('/'));
   const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPathString.startsWith(key))?.[1].folderType : undefined;
   const extName = folderType ? dirNameToExtNameMap.get(folderType) : [];
   const filterText = useValue('');
+
+  const scrollRef = useRef<FixedSizeList | null>(null);
+
+  const scrollToIndex = (goToIndex: number) => {
+    if (scrollRef?.current) {
+      console.log('scroll to', goToIndex);
+      scrollRef.current.scrollToItem(goToIndex, 'center');
+    }
+  };
 
   const assetsFetcher = async () => {
     const res = await api.assetsControllerReadAssets(currentPathString);
@@ -71,16 +83,36 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
     } else return [];
   };
 
-  const { data: fileList } = useSWR(currentPathString, assetsFetcher);
+  const { data: files } = useSWR(currentPathString, assetsFetcher);
+
+  const filteredFiles = useMemo(
+    () => files?.filter(file => file.name.toLocaleLowerCase().includes(filterText.value.toLocaleLowerCase()) && !fileConfig?.get(file.path)?.isHidden) ?? [],
+    [files, filterText, fileConfig]
+  );
+
+  // 自动滚动
+  useMemo(
+    () => {
+      const index = filteredFiles.findIndex(item => item.path === lastPath.value.join('/'));
+      setTimeout(() => {
+        scrollToIndex(index);
+      }, 100);
+    },
+    [lastPath.value]
+  );
 
   const handleRefresh = () => mutate(currentPathString);
   const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathString);
   const handleBack = () => {
-    !isBasePath && currentPath.set(currentPath.value.slice(0, currentPath.value.length - 1));
-    filterText.set('');
+    if(!isBasePath) {
+      lastPath.value = currentPath.value;
+      currentPath.set(currentPath.value.slice(0, currentPath.value.length - 1));
+      filterText.set('');
+    }
   };
 
   const handleOpenFile = async (file: IFile) => {
+    lastPath.value = [...currentPath.value, file.name];
     if (file.isDir) {
       currentPath.set([...currentPath.value, file.name]);
       filterText.set('');
@@ -125,7 +157,7 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
   const newFileExtensionName = useValue(folderType === 'scene' ? '.txt' : '');
   const uploadAssetPopoverOpen = useValue(false);
 
-  const checkHasFile = (fileNmae: string) => fileList?.find((item) => item.name === fileNmae) ? true : false;
+  const checkHasFile = (fileNmae: string) => files?.find((item) => item.name === fileNmae) ? true : false;
   const disableCreateFile = useMemo(
     () => newFileName.value.trim() === ''
       || checkHasFile(newFileName.value.trim() + (createNewFilePopoverOpen.value ? newFileExtensionName.value : '')),
@@ -153,6 +185,13 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
       }}
     >
       <div className={styles.controll}>
+        <Input
+          value={filterText.value}
+          onChange={(_, data) => filterText.set(data.value)}
+          placeholder={t`过滤文件`}
+          size='small'
+          style={{ width: '100%' }}
+        />
         <div style={{ width: '100%', display: 'flex', gap: '0.25rem' }}>
           {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
           <Input
@@ -181,7 +220,6 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
                     relationship="description"
                     visible={checkHasFile(newFileName.value.trim() + newFileExtensionName.value)}
                     positioning="below"
-
                   >
                     <Input
                       value={newFileName.value}
@@ -279,13 +317,6 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
             </MenuPopover>
           </Menu>
         </div>
-        <Input
-          value={filterText.value}
-          onChange={(_, data) => filterText.set(data.value)}
-          placeholder={t`过滤文件`}
-          size='small'
-          style={{ width: '100%' }}
-        />
       </div>
       {
         extName && extName.length > 0 &&
@@ -293,7 +324,7 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
           {extName.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
         </div>
       }
-      <div style={{ overflow: 'auto', padding: '4px' }}
+      <div style={{ overflow: 'auto', padding: '4px', width: '100%', height: '100%' }}
         onDragEnter={(e) => handlePreventDefault(e)}
         onDragLeave={(e) => handlePreventDefault(e)}
         onDragOver={(e) => handlePreventDefault(e)}
@@ -312,24 +343,38 @@ export default function Assets({ basePath, isProtected = false, fileConfig, file
             }
           });
         }}>
+
         {
-          fileList
-            ?.filter(file => file.name.toLocaleLowerCase().includes(filterText.value.toLocaleLowerCase()))
-            .map(file =>
-              (fileConfig?.get(`${currentPathString}/${file.name}`)?.isHidden) // 判断是否隐藏
-                ? null
-                : <FileElement
-                  key={file.name}
-                  file={file}
-                  desc={fileConfig?.get(`${currentPathString}/${file.name}`)?.desc ?? undefined}
-                  currentPath={currentPath}
-                  isProtected={fileConfig?.get(`${currentPathString}/${file.name}`)?.isProtected ?? isProtected}
-                  handleOpenFile={handleOpenFile}
-                  handleRenameFile={handleRenameFile}
-                  handleDeleteFile={handleDeleteFile}
-                  checkHasFile={checkHasFile}
-                />
-            )
+          filteredFiles.length > 0 &&
+          <AutoSizer>
+            {({ height, width }) => 
+              <FixedSizeList
+                height={height}
+                width={width}
+                itemCount={filteredFiles.length}
+                itemSize={28}
+                ref={scrollRef}
+              >
+                {
+                  ({index, style}) =>
+                    <div style={style}>
+                      <FileElement
+                        key={filteredFiles[index].name}
+                        file={filteredFiles[index]}
+                        selected={filteredFiles[index].path === selectedFilePath.join('/')}
+                        desc={fileConfig?.get(`${currentPathString}/${filteredFiles[index].name}`)?.desc ?? undefined}
+                        currentPath={currentPath}
+                        isProtected={fileConfig?.get(`${currentPathString}/${filteredFiles[index].name}`)?.isProtected ?? isProtected}
+                        handleOpenFile={handleOpenFile}
+                        handleRenameFile={handleRenameFile}
+                        handleDeleteFile={handleDeleteFile}
+                        checkHasFile={checkHasFile}
+                      />          
+                    </div>
+                }
+              </FixedSizeList>
+            }
+          </AutoSizer>
         }
       </div>
     </div>

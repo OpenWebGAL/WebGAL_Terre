@@ -13,9 +13,10 @@ const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
 const ThumbIcon = bundleIcon(DesktopMacFilled, DesktopMacRegular);
 
 export default function FileElement(
-  { file, desc, currentPath, isProtected, handleOpenFile, handleRenameFile, handleDeleteFile, checkHasFile }
+  { file, selected, desc, currentPath, isProtected, handleOpenFile, handleRenameFile, handleDeleteFile, checkHasFile }
     : {
       file: IFile,
+      selected?: boolean,
       desc?: string,
       currentPath: any,
       isProtected?: boolean,
@@ -35,7 +36,7 @@ export default function FileElement(
       ref={FileItemSelfRef}
       key={file.name}
       onClick={() => handleOpenFile(file)}
-      className={styles.file}
+      className={`${styles.file} ${selected ? styles.fileSelected : ''}`}
     >
       {!file.isDir && <IconWrapper src={getFileIcon(file.name)} size={22} iconSize={20} />}
       {file.isDir && <IconWrapper src={getDirIcon(file.path)} size={22} iconSize={20} />}

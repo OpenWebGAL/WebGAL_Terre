@@ -11,9 +11,9 @@ import {join} from 'path';
 
 export interface IChooseFile {
   sourceBase: string;
+  selectedFileName?: string | null; // 默认选中文件名
   onChange: (choosedFile: IFile | null) => void;
-  // 拓展名，要加.
-  extName: string[];
+  extName: string[]; // 拓展名，要加.
   hiddenFiles?: string[];
   _hardBasePath?: string[]
 }
@@ -61,6 +61,13 @@ export default function ChooseFile(props: IChooseFile) {
           </div>
           <Assets
             basePath={props._hardBasePath ?? ['games', gameName, 'game', ...currentDirName.split('/')]}
+            selectedFilePath={
+              props.selectedFileName
+                ? props._hardBasePath
+                  ? [...props._hardBasePath, props.selectedFileName]
+                  : ['games', gameName, 'game', ...currentDirName.split('/'), props.selectedFileName]
+                : undefined
+            }
             isProtected
             fileFunction={fileFunction}
             fileConfig={fileConfig}

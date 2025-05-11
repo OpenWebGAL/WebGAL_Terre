@@ -188,12 +188,12 @@ msgstr "Always Show Toolbar"
 msgid "上一步"
 msgstr "Previous"
 
-#: src/components/Assets/Assets.tsx:369
-#: src/components/Assets/Assets.tsx:370
+#: src/components/Assets/Assets.tsx:408
+#: src/components/Assets/Assets.tsx:409
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:263
+#: src/components/Assets/Assets.tsx:301
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -493,8 +493,8 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:209
-#: src/components/Assets/Assets.tsx:249
+#: src/components/Assets/Assets.tsx:247
+#: src/components/Assets/Assets.tsx:287
 #: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
@@ -508,8 +508,8 @@ msgstr "Create new template"
 msgid "创建新游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/FileElement.tsx:104
-#: src/components/Assets/FileElement.tsx:111
+#: src/components/Assets/FileElement.tsx:105
+#: src/components/Assets/FileElement.tsx:112
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:196
@@ -539,7 +539,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:276
+#: src/components/Assets/Assets.tsx:314
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:159
 msgid "刷新"
 msgstr "Refresh"
@@ -860,9 +860,9 @@ msgstr "Left align"
 msgid "已创建"
 msgstr "Created"
 
-#: src/components/Assets/Assets.tsx:180
-#: src/components/Assets/Assets.tsx:228
-#: src/components/Assets/FileElement.tsx:70
+#: src/components/Assets/Assets.tsx:219
+#: src/components/Assets/Assets.tsx:266
+#: src/components/Assets/FileElement.tsx:71
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
 
@@ -942,7 +942,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/components/Assets/Assets.tsx:277
+#: src/components/Assets/Assets.tsx:315
 msgid "打开文件夹"
 msgstr "Open folder"
 
@@ -950,7 +950,7 @@ msgstr "Open folder"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:194
+#: src/components/Assets/Assets.tsx:232
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -1152,11 +1152,11 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:178
+#: src/components/Assets/Assets.tsx:217
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:226
+#: src/components/Assets/Assets.tsx:264
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -1168,11 +1168,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:188
+#: src/components/Assets/Assets.tsx:226
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:235
+#: src/components/Assets/Assets.tsx:273
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -1212,7 +1212,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:196
+#: src/components/Assets/Assets.tsx:234
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1580,17 +1580,13 @@ msgstr "Figure file"
 msgid "简体中文"
 msgstr "Simplified Chinese"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
-msgid "紧急回避"
-msgstr "Emergency Evasion"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
-msgid "繁体中文"
-msgstr "Traditional Chinese"
-
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:147
 msgid "红色（0-255）："
 msgstr "Red (0-255):"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
+msgid "紧急回避"
+msgstr "Emergency Evasion"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
@@ -1647,6 +1643,10 @@ msgstr "Edit game"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Template.tsx:11
 msgid "编辑组件"
 msgstr "Edit component"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+msgid "繁体中文"
+msgstr "Traditional Chinese"
 
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194
@@ -1898,7 +1898,7 @@ msgstr "Assets"
 msgid "输入目标 ID"
 msgstr "Enter Target ID"
 
-#: src/components/Assets/Assets.tsx:285
+#: src/components/Assets/Assets.tsx:191
 msgid "过滤文件"
 msgstr "Filter files"
 
@@ -2022,8 +2022,8 @@ msgstr "Enter different scenes through options"
 msgid "配置"
 msgstr "Configuration"
 
-#: src/components/Assets/FileElement.tsx:68
-#: src/components/Assets/FileElement.tsx:92
+#: src/components/Assets/FileElement.tsx:69
+#: src/components/Assets/FileElement.tsx:93
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"

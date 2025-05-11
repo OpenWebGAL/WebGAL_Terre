@@ -31,7 +31,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`选择进入动画`}>
         <>
           {enterFileName.value}{"\u00a0"}
-          <ChooseFile sourceBase="animation" onChange={(file) => {
+          <ChooseFile sourceBase="animation" selectedFileName={`${enterFileName.value}.json`} onChange={(file) => {
             enterFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
           }} extName={[".json"]} hiddenFiles={['animationTable.json']} />
@@ -40,7 +40,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
       <CommonOptions key="1.1" title={t`选择退出动画`}>
         <>
           {exitFileName.value}{"\u00a0"}
-          <ChooseFile sourceBase="animation" onChange={(file) => {
+          <ChooseFile sourceBase="animation" selectedFileName={`${exitFileName.value}.json`} onChange={(file) => {
             exitFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
           }} extName={[".json"]} hiddenFiles={['animationTable.json']} />
