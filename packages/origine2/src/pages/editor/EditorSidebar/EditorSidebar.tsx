@@ -32,6 +32,13 @@ export default function EditorSideBar() {
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
 
+  const assetsViewType = useGameEditorContext((state) => state.assetsViewType);
+  const updateAssetsViewType = useGameEditorContext((state) => state.updateAssetsViewType);
+  const sortBy = useGameEditorContext((state) => state.sortBy);
+  const updateSortBy = useGameEditorContext((state) => state.updateSortBy);
+  const sortOrder = useGameEditorContext((state) => state.sortOrder);
+  const updateSortOrder = useGameEditorContext((state) => state.updateSortOrder);
+
   const ifRef = useRef<HTMLIFrameElement | null>(null);
   useEffect(() => {
     if (ifRef.current) {
@@ -140,6 +147,15 @@ export default function EditorSideBar() {
     open: handleOpen,
   };
 
+  const assetsTabs =(
+    <TabList style={{padding:'0 0 2px 0'}} size="small" selectedValue={currentSidebarTab}
+      onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
+    >
+      <Tab value="asset">{t`资源`}</Tab>
+      <Tab value="scene">{t`场景`}</Tab>
+    </TabList>
+  );
+
   return <>
     {isShowSidebar &&
       <div className={styles.editor_sidebar}>
@@ -174,45 +190,37 @@ export default function EditorSideBar() {
           </div>
         </div>
 
-        <TabList style={{padding:'0 0 4px 0'}} size="small" selectedValue={currentSidebarTab}
-          onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
-        >
-          <Tab value="asset">{t`资源`}</Tab>
-          <Tab value="scene">{t`场景`}</Tab>
-        </TabList>
-        {/* <div className={styles.sidebarTab}> */}
-        {/*  <input */}
-        {/*    type="radio" */}
-        {/*    id="sidebarTabAssets" */}
-        {/*    name="sidebarTab" */}
-        {/*    value="assets" */}
-        {/*    checked={currentSidebarTab === 'asset'} */}
-        {/*    onChange={() => updateCurrentSidebarTab('asset')} */}
-        {/*  /> */}
-        {/*  <label htmlFor="sidebarTabAssets">{t`资源`}</label> */}
-        {/*  <input */}
-        {/*    type="radio" */}
-        {/*    id="sidebarTabScenes" */}
-        {/*    name="sidebarTab" */}
-        {/*    value="scene" */}
-        {/*    checked={currentSidebarTab === 'scene'} */}
-        {/*    onChange={() => updateCurrentSidebarTab('scene')} */}
-        {/*  /> */}
-        {/*  <label htmlFor="sidebarTabScenes">{t`场景`}</label> */}
-        {/* </div> */}
         <div className={styles.sidebarContent}>
-          {currentSidebarTab === 'asset' &&
+          {
+            currentSidebarTab === 'asset' &&
             <Assets
               basePath={['games', gameName, 'game']}
+              leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-            />}
-          {currentSidebarTab === 'scene' &&
+              viewType={assetsViewType}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              updateViewType={updateAssetsViewType}
+              updateSortBy={updateSortBy}
+              updateSortOrder={updateSortOrder}
+            />
+          }
+          {
+            currentSidebarTab === 'scene' &&
             <Assets
               basePath={['games', gameName, 'game', 'scene']}
+              leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-            />}
+              viewType={assetsViewType}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              updateViewType={updateAssetsViewType}
+              updateSortBy={updateSortBy}
+              updateSortOrder={updateSortOrder}
+            />
+          }
         </div>
 
         <div

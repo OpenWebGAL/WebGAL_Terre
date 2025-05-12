@@ -1,3 +1,5 @@
+import { ISortBy, ISortOrder, IViewType } from "@/components/Assets/Assets";
+
 export interface ITag {
   name: string,
   type: 'asset' | 'scene',
@@ -11,6 +13,9 @@ export interface IGameEditorState {
   currentTag: ITag | null,
   currentSidebarTab: IGameEditorSidebarTabs,
   currentTopbarTab: IGameEditorTopbarTabs | null,
+  assetsViewType: IViewType,
+  sortBy: ISortBy,
+  sortOrder: ISortOrder,
   isShowSidebar: boolean,
   isCodeMode: boolean,
   isShowDebugger: boolean,
@@ -23,6 +28,9 @@ export interface IGameEditorAction {
   updateCurrentTag: (currentTag: IGameEditorState['currentTag']) => void,
   updateCurrentSidebarTab: (sidebarTab: IGameEditorState['currentSidebarTab']) => void,
   updateCurrentTopbarTab: (currentTopbarTab: IGameEditorState['currentTopbarTab']) => void,
+  updateAssetsViewType: (viewType: IGameEditorState['assetsViewType']) => void,
+  updateSortBy: (sortBy: IGameEditorState['sortBy']) => void,
+  updateSortOrder: (sortOrder: IGameEditorState['sortOrder']) => void,
   updateIsShowSidebar: (isShowSidebar: IGameEditorState['isShowSidebar']) => void,
   updateIsCodeMode: (isCodeMode: IGameEditorState['isCodeMode']) => void,
   updateIsShowDebugger: (isShowDebugger: IGameEditorState['isShowDebugger']) => void,

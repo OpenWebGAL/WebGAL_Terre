@@ -22,11 +22,11 @@ msgstr ";コメント"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:189
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:190
 msgid "<0>应用新的模板</0>"
 msgstr "<0>新しいテンプレートを適用する</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:168
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:169
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 
@@ -188,12 +188,13 @@ msgstr "常にツールバーを表示"
 msgid "上一步"
 msgstr "先の"
 
-#: src/components/Assets/Assets.tsx:408
-#: src/components/Assets/Assets.tsx:409
+#: src/components/Assets/Assets.tsx:597
+#: src/components/Assets/Assets.tsx:598
 msgid "上传"
 msgstr "アップロード"
 
-#: src/components/Assets/Assets.tsx:301
+#: src/components/Assets/Assets.tsx:414
+#: src/components/Assets/Assets.tsx:420
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
@@ -221,11 +222,7 @@ msgstr "前のテキストボックス内の文を結合しない"
 msgid "不显示角色名"
 msgstr "キャラクター名は設定不可"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-#~ msgid "不继承上一句"
-#~ msgstr ""
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:232
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:233
 msgid "不设定"
 msgstr "未設定"
 
@@ -342,8 +339,12 @@ msgstr "サイドバーゲームプレビュー"
 msgid "保存"
 msgstr "セーブ"
 
+#: src/components/Assets/Assets.tsx:469
+msgid "修改时间"
+msgstr "最終更新"
+
 #: src/components/IconCreator/IconCreator.tsx:635
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:202
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:203
 msgid "修改游戏图标"
 msgstr "ゲームアイコンの変更"
 
@@ -403,7 +404,7 @@ msgstr "全画面画面でテキストを表示する。独白やシーンの導
 msgid "关于"
 msgstr "About"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:229
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:230
 msgid "关联立绘"
 msgstr "関連する立ち絵"
 
@@ -493,8 +494,12 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
-#: src/components/Assets/Assets.tsx:247
-#: src/components/Assets/Assets.tsx:287
+#: src/components/Assets/Assets.tsx:430
+msgid "列表视图"
+msgstr "リストビュー"
+
+#: src/components/Assets/Assets.tsx:362
+#: src/components/Assets/Assets.tsx:404
 #: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
@@ -508,8 +513,8 @@ msgstr "新しいテンプレートを作成"
 msgid "创建新游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/FileElement.tsx:105
-#: src/components/Assets/FileElement.tsx:112
+#: src/components/Assets/FileElement.tsx:150
+#: src/components/Assets/FileElement.tsx:158
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:196
@@ -539,8 +544,8 @@ msgstr "テンプレートを削除"
 msgid "删除游戏"
 msgstr "ゲームを削除"
 
-#: src/components/Assets/Assets.tsx:314
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:159
+#: src/components/Assets/Assets.tsx:445
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
 msgid "刷新"
 msgstr "更新"
 
@@ -560,7 +565,7 @@ msgstr "機能区の表示"
 msgid "加粗"
 msgstr "太字"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:241
 msgid "动画"
 msgstr "アニメーション"
@@ -587,7 +592,7 @@ msgstr "新しいバージョンが検出されました"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:788
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:57
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "キャンセル"
@@ -619,12 +624,12 @@ msgstr "右揃え"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "BGMの再生を開始、切り替え、または停止する"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:158
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:159
 msgid "启动图"
 msgstr "ロゴ"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:222
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:213
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:223
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:134
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:82
 msgid "启用"
@@ -667,6 +672,7 @@ msgstr "角丸方形"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "ダイアログの左下に小さなアバターを表示します"
 
+#: src/components/Assets/Assets.tsx:446
 #: src/pages/dashboard/GameElement.tsx:96
 #: src/pages/dashboard/TemplateElement.tsx:90
 msgid "在文件管理器中打开"
@@ -674,7 +680,7 @@ msgstr "ファイルエクスプローラーで開く"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:165
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
 
@@ -682,8 +688,8 @@ msgstr "新しいタブでプレビュー"
 msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:123
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
 msgid "场景"
 msgstr "シーン"
 
@@ -745,7 +751,7 @@ msgstr "位置決め方法"
 msgid "实时预览"
 msgstr "リアルタイムプレビュー"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:171
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:92
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
@@ -754,7 +760,7 @@ msgstr "リアルタイムプレビューオフ"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "リアルタイムプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:171
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:92
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
@@ -860,9 +866,9 @@ msgstr "左揃え"
 msgid "已创建"
 msgstr "作成済み"
 
-#: src/components/Assets/Assets.tsx:219
-#: src/components/Assets/Assets.tsx:266
-#: src/components/Assets/FileElement.tsx:71
+#: src/components/Assets/Assets.tsx:334
+#: src/components/Assets/Assets.tsx:383
+#: src/components/Assets/FileElement.tsx:116
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "ファイルまたはフォルダは既に存在します {0}"
 
@@ -889,7 +895,7 @@ msgstr "タイリング"
 msgid "应用"
 msgstr "適用"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:166
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:167
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
 
@@ -910,13 +916,9 @@ msgstr "開いた口"
 msgid "当前版本"
 msgstr "現在のバージョン"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
 msgid "德语"
 msgstr "ドイツ語"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:142
-#~ msgid "快速执行"
-#~ msgstr ""
 
 #: src/pages/dashboard/DashBoard.tsx:166
 msgid "忽略此版本"
@@ -942,15 +944,15 @@ msgstr "IDを手動で設定"
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
-#: src/components/Assets/Assets.tsx:315
-msgid "打开文件夹"
-msgstr "フォルダーを開く"
+#: src/components/Assets/Assets.tsx:424
+#~ msgid "打开文件夹"
+#~ msgstr "フォルダーを開く"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:258
 msgid "执行到此句"
 msgstr "この文まで実行"
 
-#: src/components/Assets/Assets.tsx:232
+#: src/components/Assets/Assets.tsx:347
 msgid "扩展名"
 msgstr "拡張子"
 
@@ -974,6 +976,10 @@ msgstr "持続時間（ミリ秒）"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:17
 msgid "指针"
 msgstr "ポインター"
+
+#: src/components/Assets/Assets.tsx:451
+msgid "排序方式"
+msgstr "並べ替え"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:208
 msgid "控制是否要显示文本框"
@@ -1093,8 +1099,16 @@ msgstr "効果音ファイル"
 #~ msgid "文件"
 #~ msgstr "ファイル"
 
+#: src/components/Assets/Assets.tsx:457
+msgid "文件名"
+msgstr "ファイル名"
+
+#: src/components/Assets/Assets.tsx:463
+msgid "文件大小"
+msgstr "ファイルサイズ"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:230
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:260
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:261
 msgid "文字大小"
 msgstr "文字サイズ"
 
@@ -1152,11 +1166,13 @@ msgstr "テキストシャドウ"
 msgid "文档"
 msgstr "ドキュメント"
 
-#: src/components/Assets/Assets.tsx:217
+#: src/components/Assets/Assets.tsx:326
+#: src/components/Assets/Assets.tsx:332
 msgid "新建文件"
 msgstr "新しいファイルを作成"
 
-#: src/components/Assets/Assets.tsx:264
+#: src/components/Assets/Assets.tsx:375
+#: src/components/Assets/Assets.tsx:381
 msgid "新建文件夹"
 msgstr "新しいフォルダーを作成"
 
@@ -1168,11 +1184,11 @@ msgstr "新しいテンプレートを作成"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/Assets.tsx:226
+#: src/components/Assets/Assets.tsx:341
 msgid "新文件名"
 msgstr "新しいファイル名"
 
-#: src/components/Assets/Assets.tsx:273
+#: src/components/Assets/Assets.tsx:390
 msgid "新文件夹名"
 msgstr "新しいフォルダー名"
 
@@ -1212,14 +1228,18 @@ msgstr "キャラクター名は設定不可"
 msgid "旋转角度："
 msgstr "回転："
 
-#: src/components/Assets/Assets.tsx:234
+#: src/components/Assets/Assets.tsx:349
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "Null"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
 msgid "日语"
 msgstr "日本語"
+
+#: src/components/Assets/FileElement.tsx:151
+msgid "是否要删除 \"{0}\" ？"
+msgstr "\"{0}\"を削除してもよろしいですか？"
 
 #: src/pages/dashboard/GameElement.tsx:143
 msgid "是否要删除 \"{gameName}\" ？"
@@ -1305,11 +1325,11 @@ msgstr "タイトルボタンリスト"
 msgid "标题按钮文字"
 msgstr "タイトルボタンテキスト"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:142
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:143
 msgid "标题背景图片"
 msgstr "タイトルの背景画像"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:150
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:151
 msgid "标题背景音乐"
 msgstr "タイトルのBGM"
 
@@ -1319,7 +1339,7 @@ msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:214
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:125
 msgid "模板"
 msgstr "テンプレート"
 
@@ -1357,7 +1377,7 @@ msgstr "このコマンドはすべてのゲームが終わるときに使用"
 msgid "永不换行"
 msgstr "折り返しなし"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
 msgid "法语"
 msgstr "フランス語"
 
@@ -1435,17 +1455,17 @@ msgstr "ゲーム"
 msgid "游戏列表"
 msgstr "ゲームリスト"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:133
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:134
 msgid "游戏包名"
 msgstr "パッケージ名"
 
 #: src/pages/dashboard/Sidebar.tsx:102
 #: src/pages/dashboard/Sidebar.tsx:111
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:121
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:122
 msgid "游戏名称"
 msgstr "ゲーム名"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:195
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:196
 msgid "游戏图标"
 msgstr "ゲームアイコン"
 
@@ -1458,15 +1478,15 @@ msgstr "ゲームコントロール"
 msgid "游戏目录"
 msgstr "ゲームディレクトリ"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:129
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:130
 msgid "游戏简介"
 msgstr "ゲーム概要"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:125
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:126
 msgid "游戏识别码"
 msgstr "ゲームID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:129
 msgid "游戏配置"
 msgstr "ゲーム構成"
 
@@ -1527,7 +1547,7 @@ msgstr "ビュー"
 msgid "视觉小说编辑，再进化"
 msgstr "Galgame Editing. Redefined"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:127
 msgid "视频"
 msgstr "Video"
 
@@ -1543,17 +1563,17 @@ msgstr "動画のオプション"
 msgid "禁止跳过视频"
 msgstr "動画のスキップを無効にする"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:213
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:223
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:214
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:224
 msgid "禁用"
 msgstr "無効化"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
 msgid "立绘"
 msgstr "Figure"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:239
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:255
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:256
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:68
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:95
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:73
@@ -1568,7 +1588,7 @@ msgstr "立ち絵ID(オプション)"
 msgid "立绘位置"
 msgstr "描画位置"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:240
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:241
 msgid "立绘插图的ID"
 msgstr "関連する立ち絵のID"
 
@@ -1576,7 +1596,7 @@ msgstr "関連する立ち絵のID"
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:233
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
 msgid "简体中文"
 msgstr "簡体字中国語"
 
@@ -1584,11 +1604,11 @@ msgstr "簡体字中国語"
 msgid "红色（0-255）："
 msgstr "赤(0-255):"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:208
 msgid "紧急回避"
 msgstr "緊急回避"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:126
 msgid "纹理"
 msgstr "Tex"
 
@@ -1616,14 +1636,6 @@ msgstr "ゲーム終了"
 msgid "绝对"
 msgstr "絶対"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:140
-#~ msgid "继承上一句"
-#~ msgstr ""
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:136
-#~ msgid "继承模式"
-#~ msgstr ""
-
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:150
 msgid "绿色（0-255）："
 msgstr "緑(0-255):"
@@ -1644,7 +1656,7 @@ msgstr "ゲームの編集"
 msgid "编辑组件"
 msgstr "コンポーネントの編集"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
 msgid "繁体中文"
 msgstr "繁体字中国語"
 
@@ -1655,12 +1667,16 @@ msgstr "繁体字中国語"
 msgid "缩放"
 msgstr "スケール"
 
+#: src/components/Assets/Assets.tsx:430
+msgid "网格视图"
+msgstr "グリッドビュー"
+
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:160
 msgid "老电影滤镜"
 msgstr "古い映画"
 
 #: src/components/IconCreator/IconCreator.tsx:696
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
@@ -1733,7 +1749,7 @@ msgstr "カスタムの特殊効果名"
 msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
 msgid "英语"
 msgstr "英語"
 
@@ -1804,7 +1820,7 @@ msgstr "コーナーアバター"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:72
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:63
-#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:56
+#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:59
 msgid "解锁名称"
 msgstr "CG/BGMの名前"
 
@@ -1816,7 +1832,7 @@ msgstr "BGMの名前"
 msgid "解锁的 CG 名称"
 msgstr "CGの名前"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:65
+#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:68
 msgid "解锁的 CG 或 BGM 名称"
 msgstr "CG/BGMの名前"
 
@@ -1859,7 +1875,7 @@ msgstr "このファイルタイプはプレビューをサポートしていま
 msgid "语言"
 msgstr "言語"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:128
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:215
 msgid "语音"
 msgstr "ボイス"
@@ -1888,7 +1904,7 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:154
 msgid "资源"
 msgstr "アセット"
 
@@ -1898,7 +1914,7 @@ msgstr "アセット"
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
 
-#: src/components/Assets/Assets.tsx:191
+#: src/components/Assets/Assets.tsx:302
 msgid "过滤文件"
 msgstr "ファイルのフィルタリング"
 
@@ -1917,8 +1933,8 @@ msgstr "戻る"
 msgid "连续执行"
 msgstr "連続実行"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:55
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:60
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:57
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:66
 msgid "选择"
 msgstr "選択"
 
@@ -2022,8 +2038,8 @@ msgstr "選択肢からシーンに切り替えることが可能です"
 msgid "配置"
 msgstr "設定"
 
-#: src/components/Assets/FileElement.tsx:69
-#: src/components/Assets/FileElement.tsx:93
+#: src/components/Assets/FileElement.tsx:114
+#: src/components/Assets/FileElement.tsx:138
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
@@ -2043,7 +2059,7 @@ msgstr "ゲームディレクトリ名変更"
 msgid "鉴赏"
 msgstr "鑑賞"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:217
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:218
 msgid "鉴赏功能"
 msgstr "鑑賞機能"
 
@@ -2096,7 +2112,7 @@ msgstr "右寄せ"
 msgid "靠左"
 msgstr "左寄せ"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
 msgid "音乐"
 msgstr "BGM"
 
@@ -2158,7 +2174,7 @@ msgstr "デフォルト値は1"
 msgid "默认值255"
 msgstr "デフォルト値は255"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:227
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:228
 msgid "默认语言"
 msgstr "デフォルト言語"
 

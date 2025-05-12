@@ -1,9 +1,9 @@
 import { api } from "@/api";
 import { useValue } from "@/hooks/useValue";
-import { ChangeEvent, useMemo, useRef, useState } from "react";
+import { ChangeEvent, CSSProperties, ReactNode, useMemo, useRef, useState } from "react";
 import styles from "./Assets.module.scss";
 import { Badge, Button, Field, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Radio, RadioGroup, Subtitle1, Tooltip } from "@fluentui/react-components";
-import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
+import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSortDownLinesFilled, ArrowSortDownLinesRegular, ArrowSortFilled, ArrowSortRegular, ArrowSortUpLinesFilled, ArrowSortUpLinesRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, GridFilled, GridRegular, ListFilled, ListRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
 import { FixedSizeList } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 import FileElement from "./FileElement";
@@ -20,6 +20,8 @@ export interface IFile {
   name: string;
   path: string;
   pathFromBase?: string;
+  size?: number;
+  lastModified?: number;
 }
 
 export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'template' | 'tex' | 'video' | 'vocal'
@@ -41,6 +43,10 @@ export interface IFileFunction {
   delete?: (source: string) => Promise<void>,
 };
 
+export type IViewType = 'list' | 'grid';
+export type ISortBy = 'name' | 'size' | 'lastModified';
+export type ISortOrder = 'asc' | 'desc';
+
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 const DocumentAddIcon = bundleIcon(DocumentAddFilled, DocumentAddRegular);
 const FolderAddIcon = bundleIcon(FolderAddFilled, FolderAddRegular);
@@ -48,9 +54,44 @@ const FolderOpenIcon = bundleIcon(FolderOpenFilled, FolderOpenRegular);
 const MoreVerticalIcon = bundleIcon(MoreVerticalFilled, MoreVerticalRegular);
 const ArrowExportUpIcon = bundleIcon(ArrowExportUpFilled, ArrowExportUpRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
+const ListIcon = bundleIcon(ListFilled, ListRegular);
+const GridIcon = bundleIcon(GridFilled, GridRegular);
+const ArrowSortIcon = bundleIcon(ArrowSortFilled, ArrowSortRegular);
+const ArrowSortDownLinesIcon = bundleIcon(ArrowSortDownLinesFilled, ArrowSortDownLinesRegular);
+const ArrowSortUpLinesIcon = bundleIcon(ArrowSortUpLinesFilled, ArrowSortUpLinesRegular);
 
-export default function Assets({ basePath, selectedFilePath = [], isProtected = false, fileConfig, fileFunction }:
-  { basePath: string[], selectedFilePath?: string[], isProtected?: boolean, fileConfig?: IFileConfig, fileFunction?: IFileFunction }) {
+export default function Assets(
+  {
+    basePath,
+    leading,
+    selectedFilePath = [],
+    isProtected = false,
+    fileConfig,
+    fileFunction,
+    viewType = 'list',
+    sortBy = 'name',
+    sortOrder = 'asc',
+    disableTooltip = false,
+    updateViewType,
+    updateSortBy,
+    updateSortOrder,
+  }
+  : {
+      basePath: string[],
+      leading?: ReactNode,
+      selectedFilePath?: string[],
+      isProtected?: boolean,
+      fileConfig?: IFileConfig,
+      fileFunction?: IFileFunction,
+      viewType?: IViewType,
+      sortBy?: ISortBy,
+      sortOrder?: ISortOrder,
+      disableTooltip?: boolean,
+      updateViewType?: (viewType: IViewType) => void,
+      updateSortBy?: (sortBy: ISortBy) => void,
+      updateSortOrder?: (sortOrder: ISortOrder) => void,
+    }
+) {
   const { mutate } = useSWRConfig();
 
   const currentPath = useValue(basePath);
@@ -61,12 +102,14 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
   const extName = folderType ? dirNameToExtNameMap.get(folderType) : [];
   const filterText = useValue('');
 
+  const cols = useValue(1);
+
   const scrollRef = useRef<FixedSizeList | null>(null);
 
   const scrollToIndex = (goToIndex: number) => {
     if (scrollRef?.current) {
       console.log('scroll to', goToIndex);
-      scrollRef.current.scrollToItem(goToIndex, 'center');
+      scrollRef.current.scrollToItem(goToIndex, 'smart');
     }
   };
 
@@ -75,11 +118,7 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
     const data = res.data as unknown as object;
     if ('dirInfo' in data && data.dirInfo) {
       const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: currentPathString + '/' + item.name }));
-      const dirs = dirInfo.filter((item) => item.isDir);
-      const files = dirInfo.filter((item) => !item.isDir).filter(e => e.name !== '.gitkeep');
-      dirs.sort((a, b) => naturalCompare(a.name, b.name));
-      files.sort((a, b) => naturalCompare(a.name, b.name));
-      return [...dirs, ...files];
+      return dirInfo.filter(e => e.name !== '.gitkeep');
     } else return [];
   };
 
@@ -90,12 +129,54 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
     [files, filterText, fileConfig]
   );
 
+  const sortedFiles = useMemo(
+    () => {
+      const dirs = filteredFiles.filter((item) => item.isDir);
+      const files = filteredFiles.filter((item) => !item.isDir);
+      if (sortBy === 'name') {
+        if (sortOrder === 'asc') {
+          dirs.sort((a, b) => naturalCompare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase()));
+          files.sort((a, b) => naturalCompare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase()));
+        } else {
+          dirs.sort((a, b) => naturalCompare(b.name.toLocaleLowerCase(), a.name.toLocaleLowerCase()));
+          files.sort((a, b) => naturalCompare(b.name.toLocaleLowerCase(), a.name.toLocaleLowerCase()));
+        }
+        return [...dirs, ...files];
+      }
+      if (sortBy === 'size') {
+        if (sortOrder === 'asc') {
+          dirs.sort((a, b) => naturalCompare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase()));
+          files.sort((a, b) => (a.size ?? 0) - (b.size ?? 0));
+        } else {
+          dirs.sort((a, b) => naturalCompare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase()));
+          files.sort((a, b) => (b.size ?? 0) - (a.size ?? 0));
+        }
+        return [...dirs, ...files];
+      }
+      if (sortBy === 'lastModified') {
+        if (sortOrder === 'asc') {
+          dirs.sort((a, b) => (a.lastModified ?? 0) - (b.lastModified ?? 0));
+          files.sort((a, b) => (a.lastModified ?? 0) - (b.lastModified ?? 0));
+        } else {
+          dirs.sort((a, b) => (b.lastModified ?? 0) - (a.lastModified ?? 0));
+          files.sort((a, b) => (b.lastModified ?? 0) - (a.lastModified ?? 0));
+        }
+        return [...dirs, ...files];
+      } else {
+        dirs.sort((a, b) => naturalCompare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase()));
+        files.sort((a, b) => naturalCompare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase()));
+        return [...dirs, ...files];
+      };
+    },
+    [filteredFiles, sortBy, sortOrder]
+  );
+
   // 自动滚动
   useMemo(
     () => {
-      const index = filteredFiles.findIndex(item => item.path === lastPath.value.join('/'));
+      const index = sortedFiles.findIndex(item => item.path === lastPath.value.join('/'));
       setTimeout(() => {
-        scrollToIndex(index);
+        scrollToIndex(Math.ceil(index / cols.value));
       }, 100);
     },
     [lastPath.value]
@@ -112,8 +193,8 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
   };
 
   const handleOpenFile = async (file: IFile) => {
-    lastPath.value = [...currentPath.value, file.name];
     if (file.isDir) {
+      // lastPath.value = [...currentPath.value, file.name];
       currentPath.set([...currentPath.value, file.name]);
       filterText.set('');
     } else {
@@ -164,6 +245,26 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
     [newFileName.value, newFileExtensionName.value, createNewFilePopoverOpen.value]
   );
 
+  const handleSort = (field: ISortBy) => {
+    if(!updateSortBy || !updateSortOrder) return;
+    if(sortBy === field) {
+      updateSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      updateSortBy(field);
+      switch(field) {
+      case 'name':
+        updateSortOrder('asc');
+        break;
+      case 'size':
+        updateSortOrder('desc');
+        break;
+      case 'lastModified':
+        updateSortOrder('desc');
+        break;
+      }
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', height: '100%' }}
       onDragEnter={(e) => handlePreventDefault(e)}
@@ -185,14 +286,26 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
       }}
     >
       <div className={styles.controll}>
-        <Input
-          value={filterText.value}
-          onChange={(_, data) => filterText.set(data.value)}
-          placeholder={t`过滤文件`}
-          size='small'
-          style={{ width: '100%' }}
-        />
-        <div style={{ width: '100%', display: 'flex', gap: '0.25rem' }}>
+        <div
+          style={{
+            display:'flex',
+            flexDirection: 'row',
+            flexGrow: 1,
+            alignItems: 'center',
+            padding: '0 4px',
+            paddingLeft: leading ? '0px' : '4px',
+          }}>
+          {leading}
+          <Input
+            value={filterText.value}
+            onChange={(_, data) => filterText.set(data.value)}
+            placeholder={t`过滤文件`}
+            size='small'
+            style={{ width: '100%', minWidth: 0 }}
+            type='search'
+          />
+        </div>
+        <div style={{ width: '100%', display: 'flex', gap: '0.25rem', padding: '2px 4px 4px 4px' }}>
           {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
           <Input
             value={isBasePath ? '/' : currentPathString.replace(basePath.join('/'), '')}
@@ -210,7 +323,9 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
               }}
             >
               <PopoverTrigger>
-                <Button icon={<DocumentAddIcon />} size='small' />
+                <Tooltip withArrow content={t`新建文件`} relationship="label" positioning="below"> 
+                  <Button icon={<DocumentAddIcon />} size='small' />
+                </Tooltip>
               </PopoverTrigger>
               <PopoverSurface>
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
@@ -257,7 +372,9 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
               }}
             >
               <PopoverTrigger>
-                <Button icon={<FolderAddIcon />} size='small' />
+                <Tooltip withArrow content={t`新建文件夹`} relationship="label" positioning="below"> 
+                  <Button icon={<FolderAddIcon />} size='small' />
+                </Tooltip>
               </PopoverTrigger>
               <PopoverSurface>
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
@@ -294,7 +411,9 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
               onOpenChange={() => uploadAssetPopoverOpen.set(!uploadAssetPopoverOpen.value)}
             >
               <PopoverTrigger>
-                <Button icon={<ArrowExportUpIcon />} size='small' />
+                <Tooltip withArrow content={t`上传资源`} relationship="label" positioning="below"> 
+                  <Button icon={<ArrowExportUpIcon />} size='small' />
+                </Tooltip>
               </PopoverTrigger>
               <PopoverSurface>
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
@@ -303,7 +422,19 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
                 </div>
               </PopoverSurface>
             </Popover>
-          </>}
+          </>
+          }
+
+          {
+            viewType && updateViewType &&
+            <Tooltip withArrow content={viewType === 'list' ? t`列表视图` : t`网格视图`} relationship="label" positioning="below">
+              <Button
+                icon={ viewType === 'list' ? <ListIcon /> : <GridIcon />}
+                size='small'
+                onClick={() => updateViewType(viewType === 'list' ? 'grid' : 'list')}
+              />
+            </Tooltip>
+          }
 
           <Menu>
             <MenuTrigger>
@@ -312,7 +443,37 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
             <MenuPopover>
               <MenuList>
                 <MenuItem icon={<ArrowSyncIcon />} onClick={handleRefresh} >{t`刷新`}</MenuItem>
-                <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder} >{t`打开文件夹`}</MenuItem>
+                <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder} >{t`在文件管理器中打开`}</MenuItem>
+                {
+                  updateSortBy && updateSortOrder &&
+                  <Menu>
+                    <MenuTrigger>
+                      <MenuItem icon={<ArrowSortIcon />} >{t`排序方式`}</MenuItem>
+                    </MenuTrigger>
+                    <MenuPopover>
+                      <MenuList>
+                        <MenuItem onClick={() => handleSort('name')}>
+                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
+                            {t`文件名`}
+                            {sortBy === 'name' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
+                          </div>
+                        </MenuItem>
+                        <MenuItem onClick={() => handleSort('size')}>
+                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
+                            {t`文件大小`}
+                            {sortBy === 'size' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
+                          </div>
+                        </MenuItem>
+                        <MenuItem onClick={() => handleSort('lastModified')}>
+                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
+                            {t`修改时间`}
+                            {sortBy === 'lastModified' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
+                          </div>
+                        </MenuItem>
+                      </MenuList>
+                    </MenuPopover>
+                  </Menu>
+                }
               </MenuList>
             </MenuPopover>
           </Menu>
@@ -320,7 +481,7 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
       </div>
       {
         extName && extName.length > 0 &&
-        <div style={{ display: 'flex', padding: '4px 8px', gap: '4px' }}>
+        <div style={{ display: 'flex', padding: '4px 8px 0px 8px', gap: '4px' }}>
           {extName.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
         </div>
       }
@@ -345,34 +506,56 @@ export default function Assets({ basePath, selectedFilePath = [], isProtected = 
         }}>
 
         {
-          filteredFiles.length > 0 &&
+          sortedFiles.length > 0 &&
           <AutoSizer>
-            {({ height, width }) => 
-              <FixedSizeList
-                height={height}
-                width={width}
-                itemCount={filteredFiles.length}
-                itemSize={28}
-                ref={scrollRef}
-              >
-                {
-                  ({index, style}) =>
-                    <div style={style}>
-                      <FileElement
-                        key={filteredFiles[index].name}
-                        file={filteredFiles[index]}
-                        selected={filteredFiles[index].path === selectedFilePath.join('/')}
-                        desc={fileConfig?.get(`${currentPathString}/${filteredFiles[index].name}`)?.desc ?? undefined}
-                        currentPath={currentPath}
-                        isProtected={fileConfig?.get(`${currentPathString}/${filteredFiles[index].name}`)?.isProtected ?? isProtected}
-                        handleOpenFile={handleOpenFile}
-                        handleRenameFile={handleRenameFile}
-                        handleDeleteFile={handleDeleteFile}
-                        checkHasFile={checkHasFile}
-                      />          
+            {
+              ({ height, width }) => {
+                const gridCols = Math.max(1, Math.floor(width / 96));
+                const listCols = Math.max(1, Math.floor(width / 192));
+
+                viewType === 'grid' ? cols.set(gridCols) : cols.set(listCols);
+
+                const rowRenderer = ({index, style}: { index: number, style: CSSProperties }) => {
+                  return (
+                    <div style={{...style, display: 'grid', gridTemplateColumns: `repeat(${cols.value}, 1fr)`}}>
+                      {
+                        Array.from({ length: cols.value }).map((_, i) => {
+                          const fileIndex = index * cols.value + i;
+                          if (fileIndex >= sortedFiles.length) return null;
+                          return (
+                            <FileElement
+                              key={sortedFiles[fileIndex].name}
+                              file={sortedFiles[fileIndex]}
+                              type={viewType}
+                              selected={sortedFiles[fileIndex].path === selectedFilePath.join('/')}
+                              desc={fileConfig?.get(`${currentPathString}/${sortedFiles[fileIndex].name}`)?.desc ?? undefined}
+                              currentPath={currentPath}
+                              isProtected={fileConfig?.get(`${currentPathString}/${sortedFiles[fileIndex].name}`)?.isProtected ?? isProtected}
+                              disableTooltip={disableTooltip}
+                              handleOpenFile={handleOpenFile}
+                              handleRenameFile={handleRenameFile}
+                              handleDeleteFile={handleDeleteFile}
+                              checkHasFile={checkHasFile}
+                            />
+                          );
+                        })
+                      }     
                     </div>
-                }
-              </FixedSizeList>
+                  );
+                };
+
+                return (
+                  <FixedSizeList
+                    height={height}
+                    width={width}
+                    itemCount={Math.ceil(sortedFiles.length / (viewType === 'list' ? listCols : gridCols))}
+                    itemSize={viewType === 'list' ? 28 : width / cols.value}
+                    ref={scrollRef}
+                  >
+                    {rowRenderer}
+                  </FixedSizeList>
+                );
+              }
             }
           </AutoSizer>
         }

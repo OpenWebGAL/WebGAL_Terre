@@ -11,12 +11,12 @@ import { ReactNode } from "react";
 
 export interface IChooseFile {
   sourceBase: string;
-  button?: ReactNode; 
+  button?: ReactNode;
   selectedFileName?: string | null; // 默认选中文件名
   onChange: (choosedFile: IFile | null) => void;
   extName: string[]; // 拓展名，要加.
   hiddenFiles?: string[];
-  _hardBasePath?: string[]
+  _hardBasePath?: string[];
 }
 
 export default function ChooseFile(props: IChooseFile) {
@@ -72,6 +72,7 @@ export default function ChooseFile(props: IChooseFile) {
                 : undefined
             }
             isProtected
+            disableTooltip
             fileFunction={fileFunction}
             fileConfig={fileConfig}
           />

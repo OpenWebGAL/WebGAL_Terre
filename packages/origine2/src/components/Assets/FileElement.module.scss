@@ -1,17 +1,22 @@
 .file {
   display: inline-flex;
-  flex-direction: row;
   align-items: center;
   gap: 2px;
   padding: 0 8px;
   cursor: pointer;
-  height: 28px;
   width: 100%;
   border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
-.file > button {
-  visibility: hidden;
+.list {
+  flex-direction: row;
+  height: 28px;
+}
+
+.grid {
+  flex-direction: column;
+  aspect-ratio: 1 / 1;
 }
 
 .fileSelected,
@@ -19,8 +24,14 @@
   background: var(--bg-button-hover);
 }
 
-.file:hover > button {
+.fileAction {
+  visibility: hidden;
+  width: 0;
+}
+
+.file:hover .fileAction {
   visibility: visible;
+  width: auto;
 }
 
 .mosaicBg {
