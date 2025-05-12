@@ -509,7 +509,7 @@ export default function Assets(
           sortedFiles.length > 0 &&
           <AutoSizer>
             {
-              ({ height, width }) => {
+              ({ height, width } : { height: number, width: number }) => {
                 const gridCols = Math.max(1, Math.floor(width / 96));
                 const listCols = Math.max(1, Math.floor(width / 192));
 
