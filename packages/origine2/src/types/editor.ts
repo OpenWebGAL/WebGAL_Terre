@@ -14,6 +14,7 @@ export interface IEditorState {
   isUseExpFastSync: boolean,
   isUseFontOptimization: boolean,
   ignoreVersion: string, // 忽略版本
+  canvasAspectRatio: number, // 画布宽高比
 }
 
 export interface IEditorAction {
@@ -29,4 +30,5 @@ export interface IEditorAction {
   updateIsUseExpFastSync: (isUseExpFastSync: IGameEditorState['isShowDebugger']) => void,
   updateIsUseFontOptimization: (isUseFontOptimization: IEditorState['isUseFontOptimization']) => void,
   updateIgnoreVersion: (ignoreVersion: IEditorState['ignoreVersion']) => void,
+  updateCanvasAspectRatio: (canvasAspectRatio: IEditorState['canvasAspectRatio']) => void,
 }

@@ -1,6 +1,7 @@
-import styles from "../topbarTabs.module.scss";
+import tabStyles from "../topbarTabs.module.scss";
+import gameConfigStyles from "./gameConfig.module.scss"
 import {useValue} from "../../../../../hooks/useValue";
-import {useEffect, useRef, useState} from "react";
+import {CSSProperties, useEffect, useRef, useState} from "react";
 import {cloneDeep} from "lodash";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -11,7 +12,7 @@ import {textboxThemes} from "./constants";
 import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
-import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
+import {Button, Dropdown, Input, Option, Tooltip} from "@fluentui/react-components";
 import {Dismiss24Filled, Dismiss24Regular, IconsFilled, IconsRegular, bundleIcon} from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
 import {api} from "@/api";
@@ -27,6 +28,7 @@ const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
 
 export default function GameConfig() {
   const gameDir = useEditorStore.use.subPage();
+  const updateCanvasAspectRatio = useEditorStore.use.updateCanvasAspectRatio();
 
   // 拿到游戏配置
   const gameConfig = useValue<WebgalConfig>([]);
@@ -90,6 +92,7 @@ export default function GameConfig() {
     }
     gameConfig.set(newConfig);
     updateGameConfig();
+    UpdateCanvasResolution()
   }
 
   function updateGameConfigArrayByKey(key: string, value: string[]) {
@@ -104,6 +107,7 @@ export default function GameConfig() {
 
     gameConfig.set(newConfig);
     updateGameConfig();
+    UpdateCanvasResolution()
   }
 
   function parseAndSetGameConfigState(data: string) {
@@ -114,6 +118,12 @@ export default function GameConfig() {
       const randomCode = (Math.random() * 100000).toString(16).replace(".", "d");
       updateGameConfigSimpleByKey("Game_key", randomCode);
     }
+  }
+
+  function UpdateCanvasResolution() {
+    const width = getConfigContentAsString('Canvas_width');
+    const height = getConfigContentAsString('Canvas_height');
+    updateCanvasAspectRatio(Number(width) / Number(height));
   }
 
   return (
@@ -148,7 +158,7 @@ export default function GameConfig() {
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
       </TabItem>
       <TabItem title={t`标题背景音乐`}>
-        <div className={styles.sidebar_gameconfig_title}>{}</div>
+        <div className={tabStyles.sidebar_gameconfig_title}>{}</div>
         <GameConfigEditorWithFileChoose
           extNameList={[".mp3", ".ogg", ".wav"]}
           sourceBase="bgm" key="titleBgm"
@@ -164,13 +174,13 @@ export default function GameConfig() {
           onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
       </TabItem>
       <TabItem title={t`应用的模板`}>
-        <div className={styles.applyTemplateWrapper}>
+        <div className={tabStyles.applyTemplateWrapper}>
           <Trans>
             <div>
               当前应用的模板：{currentTemplateName}
             </div>
           </Trans>
-          <div className={styles.applyTemplateSelectorLine}>
+          <div className={tabStyles.applyTemplateSelectorLine}>
             <Dropdown
               style={{minWidth: 150}}
               value={!selectedTemplate ? '' : selectedTemplate.name}
@@ -239,6 +249,45 @@ export default function GameConfig() {
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Default_Language', e)}/>
       </TabItem>
+      <TabItem title={t`画布分辨率`}>
+        <Tooltip
+          content={<div
+            className={gameConfigStyles.previewTips}
+          >
+            <div style={{fontSize: '120%', marginTop: '10px'}}>{t`更改分辨率后需刷新游戏`}</div>
+            <br />
+            {t`注意，更改分辨率会导致立绘、背景定位和游戏界面发生变化，推荐在项目一开始就确定好分辨率，并测试定位和界面是否合适`}
+          </div>}
+          relationship="description"
+          showDelay={0}
+          hideDelay={0}
+          withArrow
+        >
+          <div style={{flexDirection: "column", display: "flex"}}>
+            <div style={{flexDirection: "row", display: "flex"}}>
+              <div style={{marginLeft: '5px', marginRight: '15px', alignSelf: "center"}}>{t`宽`}</div>
+              <GameConfigEditor key="canvasWidth" value={getConfigContentAsString('Canvas_width')}
+              style={{width: '60px'}}
+              onChange={(e: string) => updateGameConfigSimpleByKey('Canvas_width', e)}/>
+              <div style={{marginLeft: '5px', marginRight: '15px', alignSelf: "center"}}>{t`高`}</div>
+              <GameConfigEditor key="canvasHeight" value={getConfigContentAsString('Canvas_height')}
+              style={{width: '60px'}}
+              onChange={(e: string) => updateGameConfigSimpleByKey('Canvas_height', e)}/>
+            </div>
+            <div style={{flexDirection: "row", display: "flex"}}>
+              <Button
+                style={{flexGrow: 1, marginTop: '5px'}}
+                onClick={()=>{
+                  updateGameConfigSimpleByKey('Canvas_width', '2560');
+                  updateGameConfigSimpleByKey('Canvas_height', '1440');
+                }}
+              >
+                {t`重置分辨率`}
+              </Button>
+            </div>
+          </div>
+        </Tooltip>
+      </TabItem>
     </>
   );
 }
@@ -246,6 +295,7 @@ export default function GameConfig() {
 interface IGameConfigEditor {
   key: string;
   value: string;
+  style?: CSSProperties;
   onChange: Function;
 }
 
@@ -258,16 +308,18 @@ interface IGameConfigEditorMulti {
 function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
 
-  return <div className={styles.textEditArea} style={{maxWidth: 200}}>
+  return <div className={tabStyles.textEditArea}
+    style={{maxWidth: 200, height: 32, alignItems: 'center', display: "flex"}}>
     {!showEditBox.value && props.value}
     {!showEditBox.value &&
-      <span className={styles.editButton} onClick={() => showEditBox.set(true)}>
+      <span className={tabStyles.editButton} onClick={() => showEditBox.set(true)}>
         <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
       </span>}
     {showEditBox.value &&
       <Input
         autoFocus
         defaultValue={props.value}
+        style={props.style}
         onBlur={(event) => {
           props.onChange(event.target.value);
           showEditBox.set(false);
@@ -307,9 +359,9 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
 }) {
   const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
-  return <div className={styles.textEditArea}>
+  return <div className={tabStyles.textEditArea}>
     {!showEditBox.value && props.value}
-    {!showEditBox.value && <span className={styles.editButton} onClick={() => {
+    {!showEditBox.value && <span className={tabStyles.editButton} onClick={() => {
       showEditBox.set(true);
       setTimeout(() => inputBoxRef.current?.focus(), 100);
     }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
@@ -354,8 +406,8 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
       {/* {props.value.join(' | ')} */}
       <div style={{display: 'flex'}}>
         {images.map((imageName, index) => (
-          <div key={index} className={styles.imageChooseItem}>
-            <img className={styles.imageChooseItemImage} src={`games/${gameDir}/game/${props.sourceBase}/${imageName}`}
+          <div key={index} className={tabStyles.imageChooseItem}>
+            <img className={tabStyles.imageChooseItemImage} src={`games/${gameDir}/game/${props.sourceBase}/${imageName}`}
               alt={`logo-${index}`}/>
             {/* <div className={styles.imageChooseItemText}>{imageName}</div> */}
             <Button
@@ -370,7 +422,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
         eventBus.emit('scrollTopbarToEnd');
         setTimeout(() => inputBoxRef.current?.focus(), 100);
       }}
-      className={styles.addIcon}
+      className={tabStyles.addIcon}
       ><Plus theme="outline" size="20" fill="#005CAF" strokeWidth={3}/></div>}
       {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
         onChange={(file) => {

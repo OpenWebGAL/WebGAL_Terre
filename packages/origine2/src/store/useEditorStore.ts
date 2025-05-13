@@ -25,6 +25,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isUseExpFastSync:false,
       isUseFontOptimization: false,
       ignoreVersion: '',
+      canvasAspectRatio: 16/9,
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
         set({ subPage });
@@ -56,6 +57,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateIsUseExpFastSync:(isUseExpFastSync)=> set({isUseExpFastSync}),
       updateIsUseFontOptimization: (isUseFontOptimization) => set({ isUseFontOptimization }),
       updateIgnoreVersion: (ignoreVersion) => set({ignoreVersion}),
+      updateCanvasAspectRatio: (canvasAspectRatio) => set({canvasAspectRatio}),
     }),
     {
       name: 'editor-storage',
