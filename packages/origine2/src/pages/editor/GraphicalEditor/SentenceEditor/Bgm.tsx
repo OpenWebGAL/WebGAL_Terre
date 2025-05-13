@@ -6,6 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {getArgByKey} from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
+import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function Bgm(props: ISentenceEditorProps) {
   const bgmFile = useValue(props.sentence.content);
@@ -38,11 +39,11 @@ export default function Bgm(props: ISentenceEditorProps) {
       {!isNoFile && <CommonOptions key="1" title={t`背景音乐文件`}>
         <>
           {bgmFile.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="bgm" selectedFileName={bgmFile.value} onChange={(fileDesc) => {
+          <ChooseFile basePath={['bgm']} selectedFileName={bgmFile.value} onChange={(fileDesc) => {
             bgmFile.set(fileDesc?.name ?? "");
             submit();
           }}
-          extName={[".mp3", ".ogg", ".wav"]} />
+          extNames={dirNameToExtNameMap.get('bgm')} />
         </>
       </CommonOptions>}
       {!isNoFile && <CommonOptions title={t`BGM 音量`} key="2">

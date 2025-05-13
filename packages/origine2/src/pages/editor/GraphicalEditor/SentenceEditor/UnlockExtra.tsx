@@ -8,6 +8,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonTips from "../components/CommonTips";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
 
@@ -47,13 +48,16 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
         <>
           {fileName.value}{"\u00a0"}
           <ChooseFile
-            sourceBase={unlockType.value === "unlockCg" ? "background" : "bgm"}
+            basePath={[unlockType.value === "unlockCg" ? "background" : "bgm"]}
             selectedFileName={fileName.value}
             onChange={(newFile) => {
               fileName.set(newFile?.name ?? "");
               submit();
             }}
-            extName={unlockType.value === "unlockCg" ? [".png", ".jpg", ".webp"] : [".mp3", ".ogg", ".wav"]} />
+            extNames={unlockType.value === "unlockCg" 
+              ? dirNameToExtNameMap.get('background') 
+              : dirNameToExtNameMap.get('bgm')}
+          />
         </>
       </CommonOptions>
       <CommonOptions title={t`解锁名称`}>

@@ -7,6 +7,7 @@
   width: 100%;
   border-radius: var(--radius-md);
   overflow: hidden;
+  position: relative;
 }
 
 .list {
@@ -25,13 +26,19 @@
 }
 
 .fileAction {
+  position: absolute;
   visibility: hidden;
-  width: 0;
+  right: 2px;
+  background-color: var(--bg-input);
+  border-radius: var(--radius-md);
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .file:hover .fileAction {
   visibility: visible;
-  width: auto;
 }
 
 .mosaicBg {

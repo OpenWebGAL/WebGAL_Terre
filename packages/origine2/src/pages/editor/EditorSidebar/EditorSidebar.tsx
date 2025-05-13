@@ -20,7 +20,7 @@ const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
 const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
 
 export default function EditorSideBar() {
-  const gameName = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
   const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
@@ -32,8 +32,8 @@ export default function EditorSideBar() {
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
 
-  const assetsViewType = useGameEditorContext((state) => state.assetsViewType);
-  const updateAssetsViewType = useGameEditorContext((state) => state.updateAssetsViewType);
+  const viewType = useGameEditorContext((state) => state.viewType);
+  const updateViewType = useGameEditorContext((state) => state.updateViewType);
   const sortBy = useGameEditorContext((state) => state.sortBy);
   const updateSortBy = useGameEditorContext((state) => state.updateSortBy);
   const sortOrder = useGameEditorContext((state) => state.sortOrder);
@@ -115,19 +115,19 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: IFileConfig = new Map([
-    [`games/${gameName}/game/animation`, { desc: t`动画`, folderType: 'animation', isProtected: true }],
-    [`games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
-    [`games/${gameName}/game/background`, { desc: t`背景`, folderType: 'background', isProtected: true }],
-    [`games/${gameName}/game/bgm`, { desc: t`音乐`, folderType: 'bgm', isProtected: true }],
-    [`games/${gameName}/game/figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
-    [`games/${gameName}/game/scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
-    [`games/${gameName}/game/scene/start.txt`, { isProtected: true }],
-    [`games/${gameName}/game/template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
-    [`games/${gameName}/game/tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
-    [`games/${gameName}/game/video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
-    [`games/${gameName}/game/vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
-    [`games/${gameName}/game/config.txt`, { desc: t`游戏配置`, isProtected: true }],
-    [`games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
+    [`animation`, { desc: t`动画`, folderType: 'animation', isProtected: true }],
+    [`animation/animationTable.json`, { isProtected: true }],
+    [`background`, { desc: t`背景`, folderType: 'background', isProtected: true }],
+    [`bgm`, { desc: t`音乐`, folderType: 'bgm', isProtected: true }],
+    [`figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
+    [`scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
+    [`scene/start.txt`, { isProtected: true }],
+    [`template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
+    [`tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
+    [`video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
+    [`vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
+    [`config.txt`, { desc: t`游戏配置`, isProtected: true }],
+    [`userStyleSheet.css`, { isProtected: true }],
   ]);
 
   const handleOpen: IFileFunction['open'] = async (file, type) => {
@@ -166,7 +166,7 @@ export default function EditorSideBar() {
             id="gamePreviewIframe"
             frameBorder="0"
             className={styles.previewWindow}
-            src={`/games/${gameName}`}
+            src={`/games/${gameDir}`}
           />
           <div className={styles.gamePreviewButons}>
             <Button
@@ -179,7 +179,7 @@ export default function EditorSideBar() {
               appearance="subtle"
               icon={<OpenIcon />}
               title={t`在新标签页中预览`}
-              onClick={() => window.open(`/games/${gameName}`, "_blank")}
+              onClick={() => window.open(`/games/${gameDir}`, "_blank")}
             />
             <Button
               appearance="subtle"
@@ -194,14 +194,14 @@ export default function EditorSideBar() {
           {
             currentSidebarTab === 'asset' &&
             <Assets
-              basePath={['games', gameName, 'game']}
+              rootPath={['games', gameDir, 'game']}
               leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-              viewType={assetsViewType}
+              viewType={viewType}
               sortBy={sortBy}
               sortOrder={sortOrder}
-              updateViewType={updateAssetsViewType}
+              updateViewType={updateViewType}
               updateSortBy={updateSortBy}
               updateSortOrder={updateSortOrder}
             />
@@ -209,14 +209,15 @@ export default function EditorSideBar() {
           {
             currentSidebarTab === 'scene' &&
             <Assets
-              basePath={['games', gameName, 'game', 'scene']}
+              rootPath={['games', gameDir, 'game']}
+              basePath={['scene']}
               leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-              viewType={assetsViewType}
+              viewType={viewType}
               sortBy={sortBy}
               sortOrder={sortOrder}
-              updateViewType={updateAssetsViewType}
+              updateViewType={updateViewType}
               updateSortBy={updateSortBy}
               updateSortOrder={updateSortOrder}
             />

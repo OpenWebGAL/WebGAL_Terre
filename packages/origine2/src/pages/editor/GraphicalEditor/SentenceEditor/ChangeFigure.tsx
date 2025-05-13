@@ -14,14 +14,14 @@ import {Button, Input} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
-  const currentEdit = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
   const updateExpand = useEditorStore.use.updateExpand();
-  const gameName = currentEdit;
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
   const figurePosition = useValue<FigurePosition>("");
@@ -60,7 +60,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   useEffect(() => {
     if (figureFile.value.includes('json')) {
       console.log('loading JSON file to get motion and expression');
-      axios.get(`/games/${gameName}/game/figure/${figureFile.value}`).then(resp => {
+      axios.get(`/games/${gameDir}/game/figure/${figureFile.value}`).then(resp => {
         const data = resp.data;
 
         if (data?.motions) {
@@ -155,11 +155,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         <CommonOptions key="1" title={t`立绘文件`}>
           <>
             {figureFile.value + "\u00a0\u00a0"}
-            <ChooseFile sourceBase="figure" selectedFileName={figureFile.value} onChange={(fileDesc) => {
+            <ChooseFile basePath={['figure']} selectedFileName={figureFile.value} onChange={(fileDesc) => {
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
-            extName={[".png", ".jpg", ".webp", ".json"]}/>
+            extNames={dirNameToExtNameMap.get('figure')}/>
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
@@ -288,53 +288,53 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             <CommonOptions key="6" title={t`张开嘴`}>
               <>
                 {mouthOpen.value + "\u00a0\u00a0"}
-                <ChooseFile sourceBase="figure" selectedFileName={mouthOpen.value} onChange={(fileDesc) => {
+                <ChooseFile basePath={['figure']} selectedFileName={mouthOpen.value} onChange={(fileDesc) => {
                   mouthOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]}/>
+                extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
             <CommonOptions key="7" title={t`半张嘴`}>
               <>
                 {mouthHalfOpen.value + "\u00a0\u00a0"}
-                <ChooseFile sourceBase="figure" selectedFileName={mouthHalfOpen.value} onChange={(fileDesc) => {
+                <ChooseFile basePath={['figure']} selectedFileName={mouthHalfOpen.value} onChange={(fileDesc) => {
                   mouthHalfOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]}/>
+                extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
             <CommonOptions key="8" title={t`闭上嘴`}>
               <>
                 {mouthClose.value + "\u00a0\u00a0"}
-                <ChooseFile sourceBase="figure" selectedFileName={mouthClose.value} onChange={(fileDesc) => {
+                <ChooseFile basePath={['figure']} selectedFileName={mouthClose.value} onChange={(fileDesc) => {
                   mouthClose.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]}/>
+                extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" && <CommonOptions key="9" title={t`睁开眼睛`}>
             <>
               {eyesOpen.value + "\u00a0\u00a0"}
-              <ChooseFile sourceBase="figure" selectedFileName={eyesOpen.value} onChange={(fileDesc) => {
+              <ChooseFile basePath={['figure']} selectedFileName={eyesOpen.value} onChange={(fileDesc) => {
                 eyesOpen.set(fileDesc?.name ?? "");
                 submit();
               }}
-              extName={[".png", ".jpg", ".webp"]}/>
+              extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
             </>
           </CommonOptions>}
           {animationFlag.value === "on" && <CommonOptions key="10" title={t`闭上眼睛`}>
             <>
               {eyesClose.value + "\u00a0\u00a0"}
-              <ChooseFile sourceBase="figure" selectedFileName={eyesClose.value} onChange={(fileDesc) => {
+              <ChooseFile basePath={['figure']} selectedFileName={eyesClose.value} onChange={(fileDesc) => {
                 eyesClose.set(fileDesc?.name ?? "");
                 submit();
               }}
-              extName={[".png", ".jpg", ".webp"]}/>
+              extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
             </>
           </CommonOptions>}
         </div>

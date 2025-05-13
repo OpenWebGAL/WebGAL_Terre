@@ -19,7 +19,6 @@ export interface IFile {
   isDir: boolean;
   name: string;
   path: string;
-  pathFromBase?: string;
   size?: number;
   lastModified?: number;
 }
@@ -62,31 +61,32 @@ const ArrowSortUpLinesIcon = bundleIcon(ArrowSortUpLinesFilled, ArrowSortUpLines
 
 export default function Assets(
   {
-    basePath,
-    leading,
+    rootPath,
+    basePath = [],
     selectedFilePath = [],
+    leading,
     isProtected = false,
     fileConfig,
     fileFunction,
     viewType = 'list',
     sortBy = 'name',
     sortOrder = 'asc',
-    disableTooltip = false,
+    allowedExtNames,
     updateViewType,
     updateSortBy,
     updateSortOrder,
-  }
-  : {
-      basePath: string[],
-      leading?: ReactNode,
+  }: {
+      rootPath: string[],
+      basePath?: string[], // 相对于rootPath的路径
       selectedFilePath?: string[],
+      leading?: ReactNode,
       isProtected?: boolean,
       fileConfig?: IFileConfig,
       fileFunction?: IFileFunction,
       viewType?: IViewType,
       sortBy?: ISortBy,
       sortOrder?: ISortOrder,
-      disableTooltip?: boolean,
+      allowedExtNames?: string[],
       updateViewType?: (viewType: IViewType) => void,
       updateSortBy?: (sortBy: ISortBy) => void,
       updateSortOrder?: (sortOrder: ISortOrder) => void,
@@ -95,11 +95,11 @@ export default function Assets(
   const { mutate } = useSWRConfig();
 
   const currentPath = useValue(basePath);
-  const currentPathString = useMemo(() => currentPath.value.join("/"), [currentPath]);
+  const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
   const lastPath = useValue<string[]>(selectedFilePath);
-  const isBasePath = (currentPathString === basePath.join('/'));
-  const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPathString.startsWith(key))?.[1].folderType : undefined;
-  const extName = folderType ? dirNameToExtNameMap.get(folderType) : [];
+  const isBasePath = (currentPath.value.join('/') === basePath.join('/'));
+  const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPath.value.join('/').startsWith(key))?.[1].folderType : undefined;
+  const extNames = folderType ? dirNameToExtNameMap.get(folderType) : allowedExtNames ?? [];
   const filterText = useValue('');
 
   const cols = useValue(1);
@@ -114,19 +114,24 @@ export default function Assets(
   };
 
   const assetsFetcher = async () => {
-    const res = await api.assetsControllerReadAssets(currentPathString);
+    const res = await api.assetsControllerReadAssets(currentFullPath.join('/'));
     const data = res.data as unknown as object;
+    const path = currentPath.value;
     if ('dirInfo' in data && data.dirInfo) {
-      const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: currentPathString + '/' + item.name }));
+      const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: [...path, item.name].join('/') }));
       return dirInfo.filter(e => e.name !== '.gitkeep');
     } else return [];
   };
 
-  const { data: files } = useSWR(currentPathString, assetsFetcher);
+  const { data: files } = useSWR(currentFullPath.join('/'), assetsFetcher);
 
   const filteredFiles = useMemo(
-    () => files?.filter(file => file.name.toLocaleLowerCase().includes(filterText.value.toLocaleLowerCase()) && !fileConfig?.get(file.path)?.isHidden) ?? [],
-    [files, filterText, fileConfig]
+    () => files?.filter(file =>
+      file.name.toLocaleLowerCase().includes(filterText.value.toLocaleLowerCase())
+        && !fileConfig?.get(file.path)?.isHidden
+        && (!allowedExtNames || allowedExtNames.includes(file.extName) || file.isDir)
+    ) ?? [],
+    [files, filterText, fileConfig, allowedExtNames]
   );
 
   const sortedFiles = useMemo(
@@ -182,8 +187,8 @@ export default function Assets(
     [lastPath.value]
   );
 
-  const handleRefresh = () => mutate(currentPathString);
-  const handleOpenFolder = () => api.assetsControllerOpenDict(currentPathString);
+  const handleRefresh = () => mutate(currentFullPath.join('/'));
+  const handleOpenFolder = () => api.assetsControllerOpenDict(currentFullPath.join('/'));
   const handleBack = () => {
     if(!isBasePath) {
       lastPath.value = currentPath.value;
@@ -198,9 +203,8 @@ export default function Assets(
       currentPath.set([...currentPath.value, file.name]);
       filterText.set('');
     } else {
-      const pathFromBase = (currentPath.value.slice(basePath.length)).concat([file.name]).join('/');
       const isScene = (folderType === 'scene') && file.name.endsWith('.txt');
-      fileFunction?.open && fileFunction.open({ ...file, pathFromBase }, isScene ? 'scene' : 'asset');
+      fileFunction?.open && fileFunction.open({ ...file }, isScene ? 'scene' : 'asset');
     }
   };
 
@@ -273,8 +277,9 @@ export default function Assets(
       onDrop={(e) => {
         handlePreventDefault(e);
         const files = e.dataTransfer.files;
+        if(files.length === 0) return;
         const formData = new FormData();
-        formData.append("targetDirectory", currentPathString);
+        formData.append("targetDirectory", currentFullPath.join('/'));
         [...files].forEach((file) => {
           formData.append("files", file);
         });
@@ -305,10 +310,18 @@ export default function Assets(
             type='search'
           />
         </div>
-        <div style={{ width: '100%', display: 'flex', gap: '0.25rem', padding: '2px 4px 4px 4px' }}>
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            gap: '0.25rem',
+            padding: '4px',
+            paddingTop: leading ? '1px': '4px',
+          }}
+        >
           {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
           <Input
-            value={isBasePath ? '/' : currentPathString.replace(basePath.join('/'), '')}
+            value={currentPath.value.join('/')}
             size='small'
             style={{ flexGrow: 1, minWidth: 0 }}
           />
@@ -323,15 +336,24 @@ export default function Assets(
               }}
             >
               <PopoverTrigger>
-                <Tooltip withArrow content={t`新建文件`} relationship="label" positioning="below"> 
+                <Tooltip content={t`新建文件`} relationship="label" positioning="below"> 
                   <Button icon={<DocumentAddIcon />} size='small' />
                 </Tooltip>
               </PopoverTrigger>
-              <PopoverSurface>
+              <PopoverSurface
+                onKeyDown={(event) => {
+                  event.stopPropagation();
+                  if((event.key === 'Enter') && !checkHasFile(newFileName.value.trim() + newFileExtensionName.value)){
+                    handleCreateNewFile(currentFullPath.join('/'), `${newFileName.value.trim()}${newFileExtensionName.value}`);
+                    createNewFilePopoverOpen.set(false);
+                    newFileName.set('');
+                  }
+                }}
+              >
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                   <Subtitle1>{t`新建文件`}</Subtitle1>
                   <Tooltip
-                    content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
+                    content={{ children: t`已存在文件或文件夹 ${newFileName.value.trim() + newFileExtensionName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
                     relationship="description"
                     visible={checkHasFile(newFileName.value.trim() + newFileExtensionName.value)}
                     positioning="below"
@@ -342,7 +364,8 @@ export default function Assets(
                       className={checkHasFile(newFileName.value.trim() + newFileExtensionName.value) ? styles.inputDanger : ''}
                       onChange={(_, data) => {
                         newFileName.set(data.value ?? "");
-                      }} />
+                      }}
+                    />
                   </Tooltip>
                   <Field label={t`扩展名`} size='small'>
                     <RadioGroup value={newFileExtensionName.value} onChange={(_, data) => newFileExtensionName.set(data.value)}>
@@ -355,7 +378,7 @@ export default function Assets(
                     appearance="primary"
                     disabled={disableCreateFile}
                     onClick={() => {
-                      handleCreateNewFile(currentPathString, `${newFileName.value.trim()}${newFileExtensionName.value}`);
+                      handleCreateNewFile(currentFullPath.join('/'), `${newFileName.value.trim()}${newFileExtensionName.value}`);
                       createNewFilePopoverOpen.set(false);
                       newFileName.set('');
                     }}
@@ -372,11 +395,20 @@ export default function Assets(
               }}
             >
               <PopoverTrigger>
-                <Tooltip withArrow content={t`新建文件夹`} relationship="label" positioning="below"> 
+                <Tooltip content={t`新建文件夹`} relationship="label" positioning="below"> 
                   <Button icon={<FolderAddIcon />} size='small' />
                 </Tooltip>
               </PopoverTrigger>
-              <PopoverSurface>
+              <PopoverSurface
+                onKeyDown={(event) => {
+                  event.stopPropagation();
+                  if((event.key === 'Enter') && !checkHasFile(newFileName.value)){
+                    handleCreateNewFolder(currentFullPath.join('/'), newFileName.value.trim());
+                    createNewFolderPopoverOpen.set(false);
+                    newFileName.set('');
+                  }
+                }}
+              >
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                   <Subtitle1>{t`新建文件夹`}</Subtitle1>
                   <Tooltip
@@ -391,13 +423,14 @@ export default function Assets(
                       className={checkHasFile(newFileName.value.trim()) ? styles.inputDanger : ''}
                       onChange={(_, data) => {
                         newFileName.set(data.value ?? "");
-                      }} />
+                      }}
+                    />
                   </Tooltip>
                   <Button
                     appearance="primary"
                     disabled={disableCreateFile}
                     onClick={() => {
-                      handleCreateNewFolder(currentPathString, newFileName.value.trim());
+                      handleCreateNewFolder(currentFullPath.join('/'), newFileName.value.trim());
                       createNewFolderPopoverOpen.set(false);
                       newFileName.set('');
                     }}
@@ -411,14 +444,14 @@ export default function Assets(
               onOpenChange={() => uploadAssetPopoverOpen.set(!uploadAssetPopoverOpen.value)}
             >
               <PopoverTrigger>
-                <Tooltip withArrow content={t`上传资源`} relationship="label" positioning="below"> 
+                <Tooltip content={t`上传资源`} relationship="label" positioning="below"> 
                   <Button icon={<ArrowExportUpIcon />} size='small' />
                 </Tooltip>
               </PopoverTrigger>
               <PopoverSurface>
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                   <Subtitle1>{t`上传资源`}</Subtitle1>
-                  <FileUploader onUpload={handleRefresh} targetDirectory={currentPathString} uploadUrl="/api/assets/upload" />
+                  <FileUploader onUpload={handleRefresh} targetDirectory={currentFullPath.join('/')} uploadUrl="/api/assets/upload" />
                 </div>
               </PopoverSurface>
             </Popover>
@@ -427,7 +460,7 @@ export default function Assets(
 
           {
             viewType && updateViewType &&
-            <Tooltip withArrow content={viewType === 'list' ? t`列表视图` : t`网格视图`} relationship="label" positioning="below">
+            <Tooltip content={viewType === 'list' ? t`列表视图` : t`网格视图`} relationship="label" positioning="below">
               <Button
                 icon={ viewType === 'list' ? <ListIcon /> : <GridIcon />}
                 size='small'
@@ -480,9 +513,9 @@ export default function Assets(
         </div>
       </div>
       {
-        extName && extName.length > 0 &&
+        extNames && extNames.length > 0 &&
         <div style={{ display: 'flex', padding: '4px 8px 0px 8px', gap: '4px' }}>
-          {extName.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
+          {extNames.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
         </div>
       }
       <div style={{ overflow: 'auto', padding: '4px', width: '100%', height: '100%' }}
@@ -492,8 +525,9 @@ export default function Assets(
         onDrop={(e) => {
           handlePreventDefault(e);
           const files = e.dataTransfer.files;
+          if(files.length === 0) return;
           const formData = new FormData();
-          formData.append("targetDirectory", currentPathString);
+          formData.append("targetDirectory", currentFullPath.join('/'));
           [...files].forEach((file) => {
             formData.append("files", file);
           });
@@ -525,13 +559,12 @@ export default function Assets(
                           return (
                             <FileElement
                               key={sortedFiles[fileIndex].name}
+                              rootPath={rootPath}
                               file={sortedFiles[fileIndex]}
                               type={viewType}
                               selected={sortedFiles[fileIndex].path === selectedFilePath.join('/')}
-                              desc={fileConfig?.get(`${currentPathString}/${sortedFiles[fileIndex].name}`)?.desc ?? undefined}
-                              currentPath={currentPath}
-                              isProtected={fileConfig?.get(`${currentPathString}/${sortedFiles[fileIndex].name}`)?.isProtected ?? isProtected}
-                              disableTooltip={disableTooltip}
+                              desc={fileConfig?.get(sortedFiles[fileIndex].path)?.desc ?? undefined}
+                              isProtected={fileConfig?.get(sortedFiles[fileIndex].path)?.isProtected ?? isProtected}
                               handleOpenFile={handleOpenFile}
                               handleRenameFile={handleRenameFile}
                               handleDeleteFile={handleDeleteFile}

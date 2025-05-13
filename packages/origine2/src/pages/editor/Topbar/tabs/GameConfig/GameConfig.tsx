@@ -310,7 +310,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
   return <div className={styles.textEditArea}>
     {props.value}
     <ChooseFile
-      sourceBase={props.sourceBase}
+      basePath={[props.sourceBase]}
       button={
         <span className={styles.editButton}>
           <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
@@ -322,7 +322,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
           props.onChange(file.name);
         }
       }}
-      extName={props.extNameList}/>
+      extNames={props.extNameList}/>
   </div>;
 }
 
@@ -365,7 +365,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
           </div>
         ))}</div>
       <ChooseFile
-        sourceBase={props.sourceBase}
+        basePath={[props.sourceBase]}
         button={<Button icon={<AddIcon/>} />}
         onChange={(file) => {
           if (file) {
@@ -373,7 +373,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
             // eventBus.emit('scrollTopbarToEnd');
           }
         }}
-        extName={props.extNameList}/>
+        extNames={props.extNameList}/>
     </div>
   );
 }

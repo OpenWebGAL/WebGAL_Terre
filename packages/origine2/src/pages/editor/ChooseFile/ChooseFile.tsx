@@ -10,19 +10,20 @@ import {join} from 'path';
 import { ReactNode } from "react";
 
 export interface IChooseFile {
-  sourceBase: string;
+  rootPath?: string[];
+  basePath?: string[]; // 相对于rootPath的路径
   button?: ReactNode;
   selectedFileName?: string | null; // 默认选中文件名
   onChange: (choosedFile: IFile | null) => void;
-  extName: string[]; // 拓展名，要加.
+  extNames?: string[]; // 允许的拓展名
   hiddenFiles?: string[];
-  _hardBasePath?: string[];
 }
 
 export default function ChooseFile(props: IChooseFile) {
-  const currentDirName = props.sourceBase;
-  const subPage = useEditorStore.use.subPage();
-  const gameName = subPage;
+  const gameDir = useEditorStore.use.subPage();
+
+  const rootPath = props.rootPath ?? ['games', gameDir, 'game'];
+  const basePath = props.basePath ?? [];
 
   const isShowChooseFileCallout = useValue(false);
 
@@ -32,7 +33,7 @@ export default function ChooseFile(props: IChooseFile) {
 
   async function onChooseFile(file: IFile, type: 'scene' | 'asset') {
     toggleIsCalloutVisible();
-    props.onChange({...file, name: file?.pathFromBase ?? ''});
+    props.onChange({...file, name: file?.path.split(`${[...basePath].join('/')}/`).slice(1).join('/') ?? ''});
   }
 
   const fileFunction: IFileFunction = {
@@ -41,7 +42,7 @@ export default function ChooseFile(props: IChooseFile) {
 
   const fileConfig: IFileConfig = new Map(
     props.hiddenFiles
-      ? props.hiddenFiles.map(item => [`games/${gameName}/game/${currentDirName}/${item}`, {isHidden: true}])
+      ? props.hiddenFiles.map(item => [[...basePath, item].join('/'), {isHidden: true}])
       : []
   );
 
@@ -63,18 +64,17 @@ export default function ChooseFile(props: IChooseFile) {
             {t`选择`}
           </div>
           <Assets
-            basePath={props._hardBasePath ?? ['games', gameName, 'game', ...currentDirName.split('/')]}
+            rootPath={rootPath}
+            basePath={basePath}
             selectedFilePath={
               props.selectedFileName
-                ? props._hardBasePath
-                  ? [...props._hardBasePath, props.selectedFileName]
-                  : ['games', gameName, 'game', ...currentDirName.split('/'), props.selectedFileName]
+                ? [...basePath, props.selectedFileName]
                 : undefined
             }
             isProtected
-            disableTooltip
             fileFunction={fileFunction}
             fileConfig={fileConfig}
+            allowedExtNames={props.extNames}
           />
         </div>
       </PopoverSurface>
