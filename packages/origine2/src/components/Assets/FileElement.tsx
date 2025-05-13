@@ -47,17 +47,20 @@ export default function FileElement(
     <Tooltip
       content={
         <div
-          style={{display: 'flex', flexDirection: 'column'}}
+          style={{display: 'flex', flexDirection: 'column', padding: 0}}
           onMouseEnter={() => showTooltip.set(false)}
           onMouseMove={() => showTooltip.set(false)}
         >
           {
             is_picture(file.extName)
-            && 
-            <img
-              src={filePath}
-              style={{ width: '100%', height: 'auto', objectFit: 'contain', marginTop: '8px', marginBottom: '4px'}}
-            />
+            &&
+            <div style={{ marginTop: '8px', marginBottom: '4px' }}>
+              <img
+                className={styles.mosaicBg}
+                src={filePath}
+                style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+              />
+            </div>
           }
           {file.path}
           {

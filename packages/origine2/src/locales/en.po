@@ -188,13 +188,13 @@ msgstr "Always Show Toolbar"
 msgid "上一步"
 msgstr "Previous"
 
-#: src/components/Assets/Assets.tsx:633
-#: src/components/Assets/Assets.tsx:634
+#: src/components/Assets/Assets.tsx:630
+#: src/components/Assets/Assets.tsx:631
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:449
-#: src/components/Assets/Assets.tsx:455
+#: src/components/Assets/Assets.tsx:447
+#: src/components/Assets/Assets.tsx:453
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -285,7 +285,7 @@ msgstr "Gamma:"
 msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:160
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:159
 msgid "使用中的模板："
 msgstr "Template in use: "
 
@@ -339,7 +339,7 @@ msgstr "Sidebar Game Preview"
 msgid "保存"
 msgstr "Save"
 
-#: src/components/Assets/Assets.tsx:504
+#: src/components/Assets/Assets.tsx:502
 msgid "修改时间"
 msgstr "Last modified"
 
@@ -494,12 +494,12 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:465
+#: src/components/Assets/Assets.tsx:463
 msgid "列表视图"
 msgstr "List view"
 
-#: src/components/Assets/Assets.tsx:387
-#: src/components/Assets/Assets.tsx:439
+#: src/components/Assets/Assets.tsx:385
+#: src/components/Assets/Assets.tsx:437
 #: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
@@ -513,9 +513,9 @@ msgstr "Create new template"
 msgid "创建新游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/FileElement.tsx:191
-#: src/components/Assets/FileElement.tsx:208
-#: src/components/Assets/FileElement.tsx:216
+#: src/components/Assets/FileElement.tsx:192
+#: src/components/Assets/FileElement.tsx:209
+#: src/components/Assets/FileElement.tsx:217
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:196
@@ -545,7 +545,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:480
+#: src/components/Assets/Assets.tsx:478
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
 msgid "刷新"
 msgstr "Refresh"
@@ -594,7 +594,7 @@ msgstr "New version detected"
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:788
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:58
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:172
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "Cancel"
 
@@ -673,7 +673,7 @@ msgstr "Rounded rectangle"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "Display a small avatar in the lower left corner of the dialog box"
 
-#: src/components/Assets/Assets.tsx:481
+#: src/components/Assets/Assets.tsx:479
 #: src/pages/dashboard/GameElement.tsx:96
 #: src/pages/dashboard/TemplateElement.tsx:90
 msgid "在文件管理器中打开"
@@ -807,8 +807,8 @@ msgstr "Export as Android project file"
 msgid "导出为网页"
 msgstr "Export as webpage"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:124
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:132
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:123
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
 msgid "将当前模板应用到选定的游戏"
 msgstr "Apply the current template to selected games"
 
@@ -867,9 +867,9 @@ msgstr "Left align"
 msgid "已创建"
 msgstr "Created"
 
-#: src/components/Assets/Assets.tsx:358
-#: src/components/Assets/Assets.tsx:417
-#: src/components/Assets/FileElement.tsx:162
+#: src/components/Assets/Assets.tsx:356
+#: src/components/Assets/Assets.tsx:415
+#: src/components/Assets/FileElement.tsx:163
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
 
@@ -892,7 +892,7 @@ msgstr "Regular performance"
 msgid "平铺"
 msgstr "Tiling"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:174
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:173
 msgid "应用"
 msgstr "Apply"
 
@@ -953,7 +953,7 @@ msgstr "Open effect editor"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:372
+#: src/components/Assets/Assets.tsx:370
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -978,7 +978,7 @@ msgstr "Duration (unit milliseconds)"
 msgid "指针"
 msgstr "Pointer"
 
-#: src/components/Assets/Assets.tsx:486
+#: src/components/Assets/Assets.tsx:484
 msgid "排序方式"
 msgstr "Sort by"
 
@@ -1100,11 +1100,11 @@ msgstr "Sound effect file"
 #~ msgid "文件"
 #~ msgstr "File"
 
-#: src/components/Assets/Assets.tsx:492
+#: src/components/Assets/Assets.tsx:490
 msgid "文件名"
 msgstr "File name"
 
-#: src/components/Assets/Assets.tsx:498
+#: src/components/Assets/Assets.tsx:496
 msgid "文件大小"
 msgstr "File size"
 
@@ -1167,13 +1167,13 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:341
-#: src/components/Assets/Assets.tsx:356
+#: src/components/Assets/Assets.tsx:339
+#: src/components/Assets/Assets.tsx:354
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:400
-#: src/components/Assets/Assets.tsx:415
+#: src/components/Assets/Assets.tsx:398
+#: src/components/Assets/Assets.tsx:413
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -1185,11 +1185,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:365
+#: src/components/Assets/Assets.tsx:363
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:424
+#: src/components/Assets/Assets.tsx:422
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -1229,7 +1229,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:374
+#: src/components/Assets/Assets.tsx:372
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1238,7 +1238,7 @@ msgstr "None"
 msgid "日语"
 msgstr "Japanese"
 
-#: src/components/Assets/FileElement.tsx:209
+#: src/components/Assets/FileElement.tsx:210
 msgid "是否要删除 \"{0}\" ？"
 msgstr "Are you sure you want to delete \"{0}\"?"
 
@@ -1668,7 +1668,7 @@ msgstr "Traditional Chinese"
 msgid "缩放"
 msgstr "Scale"
 
-#: src/components/Assets/Assets.tsx:465
+#: src/components/Assets/Assets.tsx:463
 msgid "网格视图"
 msgstr "Grid view"
 
@@ -1915,7 +1915,7 @@ msgstr "Assets"
 msgid "输入目标 ID"
 msgstr "Enter Target ID"
 
-#: src/components/Assets/Assets.tsx:309
+#: src/components/Assets/Assets.tsx:307
 msgid "过滤文件"
 msgstr "Filter files"
 
@@ -2023,7 +2023,7 @@ msgstr "Selection Button (disabled)"
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:113
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:112
 msgid "选项菜单"
 msgstr "Option Menu"
 
@@ -2039,9 +2039,9 @@ msgstr "Enter different scenes through options"
 msgid "配置"
 msgstr "Configuration"
 
-#: src/components/Assets/FileElement.tsx:141
-#: src/components/Assets/FileElement.tsx:160
-#: src/components/Assets/FileElement.tsx:184
+#: src/components/Assets/FileElement.tsx:142
+#: src/components/Assets/FileElement.tsx:161
+#: src/components/Assets/FileElement.tsx:185
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
