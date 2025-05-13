@@ -524,7 +524,7 @@ msgstr "Delete"
 msgid "删除属性"
 msgstr "Delete Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:250
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:251
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:28
 msgid "删除本句"
 msgstr "Delete this sentence"
@@ -946,7 +946,7 @@ msgstr "Open effect editor"
 msgid "打开文件夹"
 msgstr "Open folder"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:258
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:259
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
@@ -1266,7 +1266,7 @@ msgstr "Unrecognized"
 msgid "未识别的指令"
 msgstr "Unrecognized command"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:221
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:222
 msgid "本句前插入句子"
 msgstr "Insert sentence before this"
 
@@ -1411,7 +1411,7 @@ msgstr "Add new line"
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:274
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:275
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:63
 #: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
@@ -1580,17 +1580,13 @@ msgstr "Figure file"
 msgid "简体中文"
 msgstr "Simplified Chinese"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
-msgid "紧急回避"
-msgstr "Emergency Evasion"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
-msgid "繁体中文"
-msgstr "Traditional Chinese"
-
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:147
 msgid "红色（0-255）："
 msgstr "Red (0-255):"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
+msgid "紧急回避"
+msgstr "Emergency Evasion"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
@@ -1647,6 +1643,10 @@ msgstr "Edit game"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Template.tsx:11
 msgid "编辑组件"
 msgstr "Edit component"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+msgid "繁体中文"
+msgstr "Traditional Chinese"
 
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194

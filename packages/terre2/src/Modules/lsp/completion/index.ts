@@ -10,13 +10,11 @@ import { pprintJSON } from '../../../util/strings';
 import { webgalParser } from '../../../util/webgal-parser';
 import { handleFileSuggestions } from './fileSuggestion';
 import {
-  commandArgs,
   commandType,
-  makeCompletion,
-  shouldInsertDash,
 } from './commandArgs';
 import { lastVariables } from '../webgalLsp';
 import { getCommands } from '../suggestionRules/getCommands';
+import { getArgsKey } from '../suggestionRules/getArgsKey';
 
 /**
  * Cache the last document lines
@@ -83,17 +81,16 @@ export async function complete(
     start: { line: position.line, character: 0 },
     end: position,
   });
-
-  // Before receving `:`, consider waiting for a new command
-  // NOTE: this may not be the case if the same character is saying, but we
-  // don't have other ways to distinguish these two cases
-  if (!line.includes(':')) {
-    return getCommands(line);
-  }
-
+  
   // If cursor after comment region, disable completion
   if (line.includes(';') && position.character > line.indexOf(';')) {
     return [];
+  }
+
+  // If there's no ':' and cursor position is at the start of line
+  // consider waiting for a new command
+  if (line.match('^\\w*$')) {
+    return getCommands();
   }
 
   console.debug(`Line to complete: ${line}`);
@@ -115,28 +112,63 @@ export async function complete(
 
     let newSuggestions: CompletionItem[] = [];
 
-    if (line.charAt(params.position.character - 1) === ':') {
-      if (sentence.command === commandType.say) {
-        // No suggestions for conversation
-        newSuggestions = [];
-      } else if (sentence.command === commandType.setVar) {
-        // Suggest existing variables for value updates
-        newSuggestions = suggestVariables(params, '=');
-      } else {
-        // Encountering file name input. Do file suggestions
-        newSuggestions = await handleFileSuggestions(sentence, basePath);
-      }
-    } else if (line.charAt(params.position.character - 1) === '{') {
-      if (sentence.command === commandType.say) {
-        // Suggest variables
-        newSuggestions = suggestVariables(params, '}');
+    if (line.includes(' -')) {
+      if (line.match('\\s\\-(\\w*?)$')) {
+        newSuggestions = getArgsKey(line, sentence.command);
       }
     } else {
-      // No file suggestions. Check completion
-      newSuggestions = makeCompletion(
-        commandArgs[sentence.command],
-        shouldInsertDash(line, params),
-      );
+      switch (sentence.command) {
+        case (commandType.say): {
+          if (line.endsWith('{')) {
+            newSuggestions = suggestVariables(params, '}');
+          }
+          break;
+        }
+        case (commandType.changeBg): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.changeFigure): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.bgm): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.video): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.playEffect): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.miniAvatar): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.changeScene): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.callScene): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.unlockCg): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.unlockBgm): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+        case (commandType.choose): {
+          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+          break;
+        }
+      }
     }
 
     suggestions = suggestions.concat(newSuggestions);

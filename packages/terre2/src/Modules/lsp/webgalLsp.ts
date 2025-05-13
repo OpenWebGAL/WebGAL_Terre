@@ -46,7 +46,7 @@ export function createWsConnection(
       // Tell the client that this server supports code completion.
       completionProvider: {
         resolveProvider: true,
-        triggerCharacters: ['-', ':', '{'],
+        triggerCharacters: ['-', ':', '{', '/'],
       },
       semanticTokensProvider: {
         full: true,
