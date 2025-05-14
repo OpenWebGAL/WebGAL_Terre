@@ -8,7 +8,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonTips from "../components/CommonTips";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
 
@@ -55,8 +55,8 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
               submit();
             }}
             extNames={unlockType.value === "unlockCg" 
-              ? dirNameToExtNameMap.get('background') 
-              : dirNameToExtNameMap.get('bgm')}
+              ? extNameMap.get('background') 
+              : extNameMap.get('bgm')}
           />
         </>
       </CommonOptions>

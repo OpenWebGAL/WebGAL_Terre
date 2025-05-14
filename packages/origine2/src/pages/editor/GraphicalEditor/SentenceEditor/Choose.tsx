@@ -5,7 +5,7 @@ import { cloneDeep } from "lodash";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import { Button } from "@fluentui/react-components";
 import {t} from "@lingui/macro";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function Choose(props: ISentenceEditorProps) {
   const chooseItems = useValue(props.sentence.content.split("|").map(e => e.split(":")));
@@ -49,7 +49,7 @@ export default function Choose(props: ISentenceEditorProps) {
         newList[i][1] = newValue;
         chooseItems.set(newList);
         submit();
-      }} extNames={dirNameToExtNameMap.get('scene')} />
+      }} extNames={extNameMap.get('scene')} />
     </div>;
   });
   return <div className={styles.sentenceEditorContent}>

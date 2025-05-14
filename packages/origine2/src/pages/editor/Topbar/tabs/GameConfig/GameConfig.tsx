@@ -22,6 +22,7 @@ import {WsUtil} from "@/utils/wsUtil";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
+import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 
 const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
 const AddIcon = bundleIcon(AddFilled, AddRegular);
@@ -143,7 +144,7 @@ export default function GameConfig() {
       <TabItem title={t`标题背景图片`}>
         <GameConfigEditorWithFileChoose
           sourceBase="background"
-          extNameList={[".jpg", ".png", ".webp"]}
+          extNameList={extNameMap.get('background') ?? []}
           key="titleBackground"
           value={getConfigContentAsString('Title_img')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
@@ -151,7 +152,7 @@ export default function GameConfig() {
       <TabItem title={t`标题背景音乐`}>
         <div className={styles.sidebar_gameconfig_title}>{}</div>
         <GameConfigEditorWithFileChoose
-          extNameList={[".mp3", ".ogg", ".wav"]}
+          extNameList={extNameMap.get('bgm') ?? []}
           sourceBase="bgm" key="titleBgm"
           value={getConfigContentAsString('Title_bgm')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
@@ -159,7 +160,7 @@ export default function GameConfig() {
       <TabItem title={t`启动图`}>
         <GameConfigEditorWithImageFileChoose
           sourceBase="background"
-          extNameList={[".jpg", ".png", ".webp"]}
+          extNameList={extNameMap.get('background') ?? []}
           key="logoImage"
           value={getConfigContentAsStringArray('Game_Logo')}
           onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>

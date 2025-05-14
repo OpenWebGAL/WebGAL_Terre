@@ -6,7 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { getArgByKey } from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function PlayVideo(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
@@ -28,7 +28,7 @@ export default function PlayVideo(props: ISentenceEditorProps) {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}
-          extNames={dirNameToExtNameMap.get('video')} />
+          extNames={extNameMap.get('video')} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`视频选项`}>

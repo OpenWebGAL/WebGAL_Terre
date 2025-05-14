@@ -6,7 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function ChangeCallScene(props: ISentenceEditorProps) {
   const isCallScene = useValue(props.sentence.command === commandType.callScene);
@@ -23,7 +23,7 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
           <ChooseFile basePath={['scene']} selectedFileName={fileName.value} onChange={(file) => {
             fileName.set(file?.name ?? "");
             submit();
-          }} extNames={dirNameToExtNameMap.get('scene')} />
+          }} extNames={extNameMap.get('scene')} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`调用/切换场景`}>

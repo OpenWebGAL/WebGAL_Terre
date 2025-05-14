@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type FigurePosition = "" | "left" | "right" | "center" | "id";
 type FontSize = "default" | "small" | "medium" | "large";
@@ -224,7 +224,7 @@ export default function Say(props: ISentenceEditorProps) {
                 vocal.value === "" ? volume.set("") : volume.set(volume.value);
                 submit();
               }}
-              extNames={dirNameToExtNameMap.get('vocal')}
+              extNames={extNameMap.get('vocal')}
             />
           </>
         </CommonOptions>

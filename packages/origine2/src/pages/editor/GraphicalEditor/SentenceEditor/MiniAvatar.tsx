@@ -5,7 +5,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {t} from "@lingui/macro";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function MiniAvatar(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
@@ -32,7 +32,7 @@ export default function MiniAvatar(props: ISentenceEditorProps) {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}
-          extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json' && item !== '.jpg')} />
+          extNames={extNameMap.get('figure')?.filter(item => item !== '.json' && item !== '.jpg')} />
         </>
       </CommonOptions>}
     </div>

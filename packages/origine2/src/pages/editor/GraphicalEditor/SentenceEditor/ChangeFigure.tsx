@@ -14,7 +14,7 @@ import {Button, Input} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -159,7 +159,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
-            extNames={dirNameToExtNameMap.get('figure')}/>
+            extNames={extNameMap.get('figure')}/>
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
@@ -292,7 +292,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   mouthOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
+                extNames={extNameMap.get('figure')?.filter(item => item !== '.json')}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
@@ -303,7 +303,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   mouthHalfOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
+                extNames={extNameMap.get('figure')?.filter(item => item !== '.json')}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" &&
@@ -314,7 +314,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   mouthClose.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
+                extNames={extNameMap.get('figure')?.filter(item => item !== '.json')}/>
               </>
             </CommonOptions>}
           {animationFlag.value === "on" && <CommonOptions key="9" title={t`睁开眼睛`}>
@@ -324,7 +324,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 eyesOpen.set(fileDesc?.name ?? "");
                 submit();
               }}
-              extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
+              extNames={extNameMap.get('figure')?.filter(item => item !== '.json')}/>
             </>
           </CommonOptions>}
           {animationFlag.value === "on" && <CommonOptions key="10" title={t`闭上眼睛`}>
@@ -334,7 +334,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 eyesClose.set(fileDesc?.name ?? "");
                 submit();
               }}
-              extNames={dirNameToExtNameMap.get('figure')?.filter(item => item !== '.json')}/>
+              extNames={extNameMap.get('figure')?.filter(item => item !== '.json')}/>
             </>
           </CommonOptions>}
         </div>

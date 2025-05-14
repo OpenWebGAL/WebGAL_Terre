@@ -11,7 +11,7 @@ import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -51,7 +51,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
             bgFile.set(fileDesc?.name ?? "");
             submit();
           }}
-          extNames={dirNameToExtNameMap.get('background')}/>
+          extNames={extNameMap.get('background')}/>
         </>
       </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>

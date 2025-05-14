@@ -6,7 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function PlayEffect(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
@@ -37,7 +37,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}
-          extNames={dirNameToExtNameMap.get('vocal')} />
+          extNames={extNameMap.get('vocal')} />
         </>
       </CommonOptions>}
       <CommonOptions title={t`效果音 音量`} key="2">

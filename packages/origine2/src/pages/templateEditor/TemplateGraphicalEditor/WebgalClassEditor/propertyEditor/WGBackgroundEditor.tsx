@@ -7,7 +7,7 @@ import WGColorPicker
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/components/WGColorPicker";
 import ChooseFile from "@/pages/editor/ChooseFile/ChooseFile";
 import useEditorStore from "@/store/useEditorStore";
-import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
+import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 
 
 type InputType = 'hex' | 'image' | 'gradient' | 'unknown'
@@ -88,7 +88,7 @@ export default function WGBackgroundEditor(props: IPropertyEditorProps) {
       <span>{extractFilePath(value)?.replace('game/template/assets/', '')}</span>
       <ChooseFile
         rootPath={rootPath}
-        extNames={dirNameToExtNameMap.get('background')}
+        extNames={extNameMap.get('background')}
         onChange={(file) => {
           file && setValue(`url("game/template/assets/${file.path.replace(rootPath.join('/'), '')}")`);
         }}

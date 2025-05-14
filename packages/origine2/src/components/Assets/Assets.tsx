@@ -8,7 +8,7 @@ import { FixedSizeList } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 import FileElement from "./FileElement";
 import axios from "axios";
-import { dirNameToExtNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
+import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 import useSWR, { useSWRConfig } from "swr";
 import { t } from '@lingui/macro';
 import Upload from "./Upload";
@@ -99,7 +99,7 @@ export default function Assets(
   const lastPath = useValue<string[]>(selectedFilePath);
   const isBasePath = (currentPath.value.join('/') === basePath.join('/'));
   const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPath.value.join('/').startsWith(key))?.[1].folderType : undefined;
-  const extNames = folderType ? dirNameToExtNameMap.get(folderType) : allowedExtNames ?? [];
+  const extNames = folderType ? extNameMap.get(folderType) : allowedExtNames ?? [];
   const filterText = useValue('');
 
   const cols = useValue(1);

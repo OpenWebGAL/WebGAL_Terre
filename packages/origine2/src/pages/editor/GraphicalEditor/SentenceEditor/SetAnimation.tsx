@@ -8,7 +8,7 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonTips from "../components/CommonTips";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
-import { dirNameToExtNameMap } from "../../ChooseFile/chooseFileConfig";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -39,7 +39,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           <ChooseFile basePath={['animation']} selectedFileName={`${fileName.value}.json`} onChange={(file) => {
             fileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extNames={dirNameToExtNameMap.get('animation')} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('animation')} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>
