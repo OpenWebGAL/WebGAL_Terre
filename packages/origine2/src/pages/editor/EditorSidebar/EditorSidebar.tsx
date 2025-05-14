@@ -20,7 +20,7 @@ const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
 const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
 
 export default function EditorSideBar() {
-  const gameName = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
   const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
@@ -31,6 +31,13 @@ export default function EditorSideBar() {
   const tags = useGameEditorContext((state) => state.tags);
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
+
+  const viewType = useGameEditorContext((state) => state.viewType);
+  const updateViewType = useGameEditorContext((state) => state.updateViewType);
+  const sortBy = useGameEditorContext((state) => state.sortBy);
+  const updateSortBy = useGameEditorContext((state) => state.updateSortBy);
+  const sortOrder = useGameEditorContext((state) => state.sortOrder);
+  const updateSortOrder = useGameEditorContext((state) => state.updateSortOrder);
 
   const ifRef = useRef<HTMLIFrameElement | null>(null);
   useEffect(() => {
@@ -108,19 +115,19 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: IFileConfig = new Map([
-    [`games/${gameName}/game/animation`, { desc: t`动画`, folderType: 'animation', isProtected: true }],
-    [`games/${gameName}/game/animation/animationTable.json`, { isProtected: true }],
-    [`games/${gameName}/game/background`, { desc: t`背景`, folderType: 'background', isProtected: true }],
-    [`games/${gameName}/game/bgm`, { desc: t`音乐`, folderType: 'bgm', isProtected: true }],
-    [`games/${gameName}/game/figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
-    [`games/${gameName}/game/scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
-    [`games/${gameName}/game/scene/start.txt`, { isProtected: true }],
-    [`games/${gameName}/game/template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
-    [`games/${gameName}/game/tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
-    [`games/${gameName}/game/video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
-    [`games/${gameName}/game/vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
-    [`games/${gameName}/game/config.txt`, { desc: t`游戏配置`, isProtected: true }],
-    [`games/${gameName}/game/userStyleSheet.css`, { isProtected: true }],
+    [`animation`, { desc: t`动画`, folderType: 'animation', isProtected: true }],
+    [`animation/animationTable.json`, { isProtected: true }],
+    [`background`, { desc: t`背景`, folderType: 'background', isProtected: true }],
+    [`bgm`, { desc: t`音乐`, folderType: 'bgm', isProtected: true }],
+    [`figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
+    [`scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
+    [`scene/start.txt`, { isProtected: true }],
+    [`template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
+    [`tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
+    [`video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
+    [`vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
+    [`config.txt`, { desc: t`游戏配置`, isProtected: true }],
+    [`userStyleSheet.css`, { isProtected: true }],
   ]);
 
   const handleOpen: IFileFunction['open'] = async (file, type) => {
@@ -140,6 +147,15 @@ export default function EditorSideBar() {
     open: handleOpen,
   };
 
+  const assetsTabs =(
+    <TabList style={{padding: '0 3px 0 4px'}} size="small" selectedValue={currentSidebarTab}
+      onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
+    >
+      <Tab value="asset" style={{ padding: '2px 2px 3.5px 2px' }}>{t`资源`}</Tab>
+      <Tab value="scene" style={{ padding: '2px 2px 3.5px 2px' }}>{t`场景`}</Tab>
+    </TabList>
+  );
+
   return <>
     {isShowSidebar &&
       <div className={styles.editor_sidebar}>
@@ -150,7 +166,7 @@ export default function EditorSideBar() {
             id="gamePreviewIframe"
             frameBorder="0"
             className={styles.previewWindow}
-            src={`/games/${gameName}`}
+            src={`/games/${gameDir}`}
           />
           <div className={styles.gamePreviewButons}>
             <Button
@@ -163,7 +179,7 @@ export default function EditorSideBar() {
               appearance="subtle"
               icon={<OpenIcon />}
               title={t`在新标签页中预览`}
-              onClick={() => window.open(`/games/${gameName}`, "_blank")}
+              onClick={() => window.open(`/games/${gameDir}`, "_blank")}
             />
             <Button
               appearance="subtle"
@@ -174,45 +190,38 @@ export default function EditorSideBar() {
           </div>
         </div>
 
-        <TabList style={{padding:'0 0 4px 0'}} size="small" selectedValue={currentSidebarTab}
-          onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
-        >
-          <Tab value="asset">{t`资源`}</Tab>
-          <Tab value="scene">{t`场景`}</Tab>
-        </TabList>
-        {/* <div className={styles.sidebarTab}> */}
-        {/*  <input */}
-        {/*    type="radio" */}
-        {/*    id="sidebarTabAssets" */}
-        {/*    name="sidebarTab" */}
-        {/*    value="assets" */}
-        {/*    checked={currentSidebarTab === 'asset'} */}
-        {/*    onChange={() => updateCurrentSidebarTab('asset')} */}
-        {/*  /> */}
-        {/*  <label htmlFor="sidebarTabAssets">{t`资源`}</label> */}
-        {/*  <input */}
-        {/*    type="radio" */}
-        {/*    id="sidebarTabScenes" */}
-        {/*    name="sidebarTab" */}
-        {/*    value="scene" */}
-        {/*    checked={currentSidebarTab === 'scene'} */}
-        {/*    onChange={() => updateCurrentSidebarTab('scene')} */}
-        {/*  /> */}
-        {/*  <label htmlFor="sidebarTabScenes">{t`场景`}</label> */}
-        {/* </div> */}
         <div className={styles.sidebarContent}>
-          {currentSidebarTab === 'asset' &&
+          {
+            currentSidebarTab === 'asset' &&
             <Assets
-              basePath={['games', gameName, 'game']}
+              rootPath={['games', gameDir, 'game']}
+              leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-            />}
-          {currentSidebarTab === 'scene' &&
+              viewType={viewType}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              updateViewType={updateViewType}
+              updateSortBy={updateSortBy}
+              updateSortOrder={updateSortOrder}
+            />
+          }
+          {
+            currentSidebarTab === 'scene' &&
             <Assets
-              basePath={['games', gameName, 'game', 'scene']}
+              rootPath={['games', gameDir, 'game']}
+              basePath={['scene']}
+              leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-            />}
+              viewType={viewType}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              updateViewType={updateViewType}
+              updateSortBy={updateSortBy}
+              updateSortOrder={updateSortOrder}
+            />
+          }
         </div>
 
         <div

@@ -8,12 +8,15 @@ const initState: IGameEditorState = {
   currentTag: null,
   currentSidebarTab: 'asset',
   currentTopbarTab: 'config',
+  viewType: 'list',
+  sortBy: 'name',
+  sortOrder: 'asc',
   isShowSidebar: true,
   isCodeMode: false,
   isShowDebugger: false,
 };
 
-export const createGameEditorStore = (gameName: string) =>
+export const createGameEditorStore = (gameDir: string) =>
   create<IGameEditorState & IGameEditorAction>()(
     persist(
       (set) => ({
@@ -24,12 +27,15 @@ export const createGameEditorStore = (gameName: string) =>
         updateCurrentTag: (currentTag) => set({ currentTag }),
         updateCurrentSidebarTab: (currentSidebarTab) => set({ currentSidebarTab }),
         updateCurrentTopbarTab: (currentTopbarTab) => set({ currentTopbarTab }),
+        updateViewType: (viewType) => set({ viewType }),
+        updateSortBy: (sortBy) => set({ sortBy }),
+        updateSortOrder: (sortOrder) => set({ sortOrder }),
         updateIsShowSidebar: (isShowSidebar) => set({ isShowSidebar }),
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
       }),
       {
-        name: `game-editor-storage-${gameName}`,
+        name: `game-editor-storage-${gameDir}`,
         storage: createJSONStorage(() => localStorage),
       },
     )

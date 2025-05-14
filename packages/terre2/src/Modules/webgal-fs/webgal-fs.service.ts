@@ -7,6 +7,8 @@ export interface IFileInfo {
   isDir: boolean;
   extName: string;
   path: string;
+  size?: number;
+  lastModified?: number;
 }
 
 export interface IUploadFileInfo {
@@ -45,6 +47,8 @@ export class WebgalFsService {
             isDir: result.isDirectory(),
             extName: extname(elementPath),
             path: elementPath,
+            size: result.isDirectory() ? 0 : result.size,
+            lastModified: result.mtimeMs,
           };
           resolve(ret);
         });

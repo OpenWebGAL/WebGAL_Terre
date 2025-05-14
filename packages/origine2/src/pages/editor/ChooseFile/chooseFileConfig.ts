@@ -1,10 +1,12 @@
-export const dirNameToExtNameMap = new Map<string, string[]>();
+import { IFolderType } from "@/components/Assets/Assets";
 
-dirNameToExtNameMap.set('animation', ['.json']);
-dirNameToExtNameMap.set('background', ['.jpg', '.png', '.webp']);
-dirNameToExtNameMap.set('bgm', ['.mp3', '.ogg', '.wav']);
-dirNameToExtNameMap.set('figure', ['.png', '.webp', '.json']);
-dirNameToExtNameMap.set('scene', ['.txt']);
-dirNameToExtNameMap.set('tex', ['.png', '.webp']);
-dirNameToExtNameMap.set('video', ['.mp4']);
-dirNameToExtNameMap.set('vocal', ['.mp3', '.ogg', '.wav']);
+export const extNameMap = new Map<IFolderType, string[]>([]);
+
+extNameMap.set('animation', ['.json']);
+extNameMap.set('background', ['.png', '.jpg', '.webp']);
+extNameMap.set('bgm', ['.mp3', '.ogg', '.wav']);
+extNameMap.set('figure', ['.png', '.jpg', '.webp', '.json']);
+extNameMap.set('scene', ['.txt']);
+extNameMap.set('tex', ['.png', '.webp']);
+extNameMap.set('video', ['.mp4', '.webm', '.ogg']);
+extNameMap.set('vocal', ['.mp3', '.ogg', '.wav']);
