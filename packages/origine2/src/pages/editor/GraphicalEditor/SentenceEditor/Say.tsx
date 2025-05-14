@@ -218,7 +218,7 @@ export default function Say(props: ISentenceEditorProps) {
             {vocal.value !== "" ? `${vocal.value}\u00a0\u00a0` : ""}
             <ChooseFile
               basePath={['vocal']}
-              selectedFileName={vocal.value}
+              selectedFilePath={vocal.value}
               onChange={(newName) => {
                 vocal.set(newName?.name ?? "");
                 vocal.value === "" ? volume.set("") : volume.set(volume.value);

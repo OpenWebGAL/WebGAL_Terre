@@ -317,7 +317,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
           <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
         </span>
       }
-      selectedFileName={props.value}
+      selectedFilePath={props.value}
       onChange={(file) => {
         if (file) {
           props.onChange(file.name);

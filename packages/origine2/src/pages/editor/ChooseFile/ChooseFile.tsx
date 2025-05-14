@@ -13,7 +13,7 @@ export interface IChooseFile {
   rootPath?: string[];
   basePath?: string[]; // 相对于rootPath的路径
   button?: ReactNode;
-  selectedFileName?: string | null; // 默认选中文件名
+  selectedFilePath?: string | null; // 默认选中文件路径
   onChange: (choosedFile: IFile | null) => void;
   extNames?: string[]; // 允许的拓展名
   hiddenFiles?: string[];
@@ -66,11 +66,7 @@ export default function ChooseFile(props: IChooseFile) {
           <Assets
             rootPath={rootPath}
             basePath={basePath}
-            selectedFilePath={
-              props.selectedFileName
-                ? [...basePath, props.selectedFileName]
-                : undefined
-            }
+            selectedFilePath={props.selectedFilePath?.split('/')}
             isProtected
             fileFunction={fileFunction}
             fileConfig={fileConfig}

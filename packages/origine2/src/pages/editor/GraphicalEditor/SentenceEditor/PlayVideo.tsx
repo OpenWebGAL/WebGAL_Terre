@@ -24,7 +24,7 @@ export default function PlayVideo(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`视频文件`}>
         <>
           {fileName.value + "\u00a0\u00a0"}
-          <ChooseFile basePath={['video']} selectedFileName={fileName.value} onChange={(fileDesc) => {
+          <ChooseFile basePath={['video']} selectedFilePath={fileName.value} onChange={(fileDesc) => {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}

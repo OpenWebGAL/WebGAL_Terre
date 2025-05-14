@@ -36,7 +36,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`选择动画`}>
         <>
           {fileName.value}{"\u00a0"}
-          <ChooseFile basePath={['animation']} selectedFileName={`${fileName.value}.json`} onChange={(file) => {
+          <ChooseFile basePath={['animation']} selectedFilePath={`${fileName.value}.json`} onChange={(file) => {
             fileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
           }} extNames={extNameMap.get('animation')} hiddenFiles={['animationTable.json']} />

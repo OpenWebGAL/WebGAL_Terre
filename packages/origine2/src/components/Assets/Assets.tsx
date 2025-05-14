@@ -1,6 +1,6 @@
 import { api } from "@/api";
 import { useValue } from "@/hooks/useValue";
-import { ChangeEvent, CSSProperties, ReactNode, useMemo, useRef, useState } from "react";
+import { ChangeEvent, CSSProperties, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Assets.module.scss";
 import { Badge, Button, Field, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Popover, PopoverSurface, PopoverTrigger, Radio, RadioGroup, Subtitle1, Tooltip } from "@fluentui/react-components";
 import { ArrowExportUpFilled, ArrowExportUpRegular, ArrowLeftFilled, ArrowLeftRegular, ArrowSortDownLinesFilled, ArrowSortDownLinesRegular, ArrowSortFilled, ArrowSortRegular, ArrowSortUpLinesFilled, ArrowSortUpLinesRegular, ArrowSyncFilled, ArrowSyncRegular, DocumentAddFilled, DocumentAddRegular, FolderAddFilled, FolderAddRegular, FolderOpenFilled, FolderOpenRegular, GridFilled, GridRegular, ListFilled, ListRegular, MoreVerticalFilled, MoreVerticalRegular, bundleIcon } from "@fluentui/react-icons";
@@ -94,9 +94,9 @@ export default function Assets(
 ) {
   const { mutate } = useSWRConfig();
 
-  const currentPath = useValue(basePath);
+  const currentPath = useValue([...basePath, ...selectedFilePath.slice(0, -1)]);
   const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
-  const lastPath = useValue<string[]>(selectedFilePath);
+  const lastPath = useValue<string[]>([...basePath, ...selectedFilePath]);
   const isBasePath = (currentPath.value.join('/') === basePath.join('/'));
   const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPath.value.join('/').startsWith(key))?.[1].folderType : undefined;
   const extNames = folderType ? extNameMap.get(folderType) : allowedExtNames ?? [];
@@ -108,7 +108,6 @@ export default function Assets(
 
   const scrollToIndex = (goToIndex: number) => {
     if (scrollRef?.current) {
-      console.log('scroll to', goToIndex);
       scrollRef.current.scrollToItem(goToIndex, 'smart');
     }
   };
@@ -123,7 +122,13 @@ export default function Assets(
     } else return [];
   };
 
-  const { data: files } = useSWR(currentFullPath.join('/'), assetsFetcher);
+  const { data: files, error: filesError } = useSWR(currentFullPath.join('/'), assetsFetcher);
+
+  useEffect(() => {
+    if (filesError) {
+      currentPath.set(basePath);
+    }
+  }, [filesError]);
 
   const filteredFiles = useMemo(
     () => files?.filter(file =>
@@ -297,7 +302,7 @@ export default function Assets(
             flexDirection: 'row',
             flexGrow: 1,
             alignItems: 'center',
-            padding: '0 4px',
+            padding: '4px',
             paddingLeft: leading ? '0px' : '4px',
           }}>
           {leading}
@@ -315,8 +320,7 @@ export default function Assets(
             width: '100%',
             display: 'flex',
             gap: '0.25rem',
-            padding: '4px',
-            paddingTop: leading ? '1px': '4px',
+            padding: '0 4px 4px 4px',
           }}
         >
           {!isBasePath && <Button icon={<ArrowLeftIcon />} size='small' onClick={handleBack} />}
@@ -562,7 +566,7 @@ export default function Assets(
                               rootPath={rootPath}
                               file={sortedFiles[fileIndex]}
                               type={viewType}
-                              selected={sortedFiles[fileIndex].path === selectedFilePath.join('/')}
+                              selected={sortedFiles[fileIndex].path === [...basePath, ...selectedFilePath].join('/')}
                               desc={fileConfig?.get(sortedFiles[fileIndex].path)?.desc ?? undefined}
                               isProtected={fileConfig?.get(sortedFiles[fileIndex].path)?.isProtected ?? isProtected}
                               handleOpenFile={handleOpenFile}

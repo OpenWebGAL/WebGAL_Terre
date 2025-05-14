@@ -49,7 +49,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           {fileName.value}{"\u00a0"}
           <ChooseFile
             basePath={[unlockType.value === "unlockCg" ? "background" : "bgm"]}
-            selectedFileName={fileName.value}
+            selectedFilePath={fileName.value}
             onChange={(newFile) => {
               fileName.set(newFile?.name ?? "");
               submit();

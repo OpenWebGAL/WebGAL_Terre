@@ -148,11 +148,11 @@ export default function EditorSideBar() {
   };
 
   const assetsTabs =(
-    <TabList style={{padding:'0 0 2px 0'}} size="small" selectedValue={currentSidebarTab}
+    <TabList style={{padding: '0 3px 0 4px'}} size="small" selectedValue={currentSidebarTab}
       onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
     >
-      <Tab value="asset">{t`资源`}</Tab>
-      <Tab value="scene">{t`场景`}</Tab>
+      <Tab value="asset" style={{ padding: '2px 2px 3.5px 2px' }}>{t`资源`}</Tab>
+      <Tab value="scene" style={{ padding: '2px 2px 3.5px 2px' }}>{t`场景`}</Tab>
     </TabList>
   );
 

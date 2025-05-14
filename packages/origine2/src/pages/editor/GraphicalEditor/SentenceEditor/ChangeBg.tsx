@@ -47,7 +47,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       {!isNoFile && <CommonOptions key="1" title={t`背景文件`}>
         <>
           {bgFile.value + "\u00a0\u00a0"}
-          <ChooseFile basePath={['background']} selectedFileName={bgFile.value} onChange={(fileDesc) => {
+          <ChooseFile basePath={['background']} selectedFilePath={bgFile.value} onChange={(fileDesc) => {
             bgFile.set(fileDesc?.name ?? "");
             submit();
           }}

@@ -155,7 +155,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         <CommonOptions key="1" title={t`立绘文件`}>
           <>
             {figureFile.value + "\u00a0\u00a0"}
-            <ChooseFile basePath={['figure']} selectedFileName={figureFile.value} onChange={(fileDesc) => {
+            <ChooseFile basePath={['figure']} selectedFilePath={figureFile.value} onChange={(fileDesc) => {
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
@@ -288,7 +288,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             <CommonOptions key="6" title={t`张开嘴`}>
               <>
                 {mouthOpen.value + "\u00a0\u00a0"}
-                <ChooseFile basePath={['figure']} selectedFileName={mouthOpen.value} onChange={(fileDesc) => {
+                <ChooseFile basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
                   mouthOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
@@ -299,7 +299,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             <CommonOptions key="7" title={t`半张嘴`}>
               <>
                 {mouthHalfOpen.value + "\u00a0\u00a0"}
-                <ChooseFile basePath={['figure']} selectedFileName={mouthHalfOpen.value} onChange={(fileDesc) => {
+                <ChooseFile basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
                   mouthHalfOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
@@ -310,7 +310,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             <CommonOptions key="8" title={t`闭上嘴`}>
               <>
                 {mouthClose.value + "\u00a0\u00a0"}
-                <ChooseFile basePath={['figure']} selectedFileName={mouthClose.value} onChange={(fileDesc) => {
+                <ChooseFile basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
                   mouthClose.set(fileDesc?.name ?? "");
                   submit();
                 }}
@@ -320,7 +320,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           {animationFlag.value === "on" && <CommonOptions key="9" title={t`睁开眼睛`}>
             <>
               {eyesOpen.value + "\u00a0\u00a0"}
-              <ChooseFile basePath={['figure']} selectedFileName={eyesOpen.value} onChange={(fileDesc) => {
+              <ChooseFile basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
                 eyesOpen.set(fileDesc?.name ?? "");
                 submit();
               }}
@@ -330,7 +330,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           {animationFlag.value === "on" && <CommonOptions key="10" title={t`闭上眼睛`}>
             <>
               {eyesClose.value + "\u00a0\u00a0"}
-              <ChooseFile basePath={['figure']} selectedFileName={eyesClose.value} onChange={(fileDesc) => {
+              <ChooseFile basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
                 eyesClose.set(fileDesc?.name ?? "");
                 submit();
               }}
