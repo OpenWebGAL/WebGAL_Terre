@@ -20,6 +20,7 @@ import { getArgsKey } from '../suggestionRules/getArgsKey';
  * Cache the last document lines
  */
 let lastDocumentLines = [];
+let variableList: Map<string, number> = new Map<string, number>();
 
 export function checkTriggerCompletion(
   params: TextDocumentChangeEvent<TextDocument>,
@@ -27,6 +28,14 @@ export function checkTriggerCompletion(
 ) {
   const currentDocumentLines: string[] = [];
   let changedLine = -1;
+
+  variableList.clear();
+  variableList.set('Game_name', -1);
+  variableList.set('Game_key', -1);
+  variableList.set('Title_img', -1);
+  variableList.set('Title_bgm', -1);
+  variableList.set('Game_Logo', -1);
+
   for (let i = 0; i < params.document.lineCount; i++) {
     const line = params.document
       .getText({
@@ -40,6 +49,16 @@ export function checkTriggerCompletion(
     if (lastDocumentLines && lastDocumentLines[i] !== line) {
       lastDocumentLines[i] = line;
       changedLine = i;
+    }
+
+    const variable = line.match('(?<=setVar:\\s*)\\w*');
+    if (variable) {
+      variableList.set(variable[0], i);
+    }
+
+    const userInput = line.match('(?<=getUserInput:\\s*)\\w*');
+    if (userInput) {
+      variableList.set(userInput[0], i);
     }
   }
   if (!lastDocumentLines) {
@@ -55,14 +74,14 @@ export function checkTriggerCompletion(
   }
 }
 
-function suggestVariables(params: CompletionParams, postfix = '') {
+function suggestVariables(params: CompletionParams) {
   const result = [];
 
-  lastVariables.forEach((v, k) => {
+  variableList.forEach((v, k) => {
     if (v <= params.position.line) {
       result.push({
         label: k,
-        insertText: k + postfix,
+        insertText: k,
         kind: CompletionItemKind.Variable,
       });
     }
@@ -85,6 +104,10 @@ export async function complete(
   // If cursor after comment region, disable completion
   if (line.includes(';') && position.character > line.indexOf(';')) {
     return [];
+  }
+
+  if (line.endsWith('{')) {
+    return suggestVariables(params);
   }
 
   // If there's no ':' and cursor position is at the start of line
@@ -119,9 +142,6 @@ export async function complete(
     } else {
       switch (sentence.command) {
         case (commandType.say): {
-          if (line.endsWith('{')) {
-            newSuggestions = suggestVariables(params, '}');
-          }
           break;
         }
         case (commandType.changeBg): {

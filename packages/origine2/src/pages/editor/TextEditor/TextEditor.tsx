@@ -55,7 +55,11 @@ export default function TextEditor(props: ITextEditorProps) {
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
     }));
-    editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false }, wordWrap: isAutoWarp ? 'on' : 'off' });
+    editor.updateOptions({
+      unicodeHighlight: { ambiguousCharacters: false },
+      wordWrap: isAutoWarp ? 'on' : 'off' ,
+      smoothScrolling: true,
+    });
     updateEditData();
   }
 
@@ -71,10 +75,6 @@ export default function TextEditor(props: ITextEditorProps) {
       ],
     }
     monaco.languages.setLanguageConfiguration('webgal', languageConfiguration);
-
-    const opition = editor.getRawOptions();
-    opition.smoothScrolling = true;
-    editor.updateOptions(opition);
   }
 
   useEffect(() => {

@@ -126,17 +126,19 @@ export function createWsConnection(
    * request instead of `connection.languages.semanticTokens.on()`.
    * Reference: https://github.com/microsoft/vscode-discussions/discussions/819
    */
-  connection.onRequest(
-    'textDocument/semanticTokens/full',
-    (params: SemanticTokensParams): SemanticTokens => {
-      const result = makeSemanticTokensFullResponse(
-        params,
-        documents.get(params.textDocument.uri),
-      );
-      // console.log(`semanticTokens: data: ${result.data}`);
-      return result;
-    },
-  );
+  // 由于 TextEditor.tsx 配置了 setLanguageConfiguration
+  // 这里似乎不再起作用，因而把部分逻辑搬至其他地方
+  // connection.onRequest(
+  //   'textDocument/semanticTokens/full',
+  //   (params: SemanticTokensParams): SemanticTokens => {
+  //     const result = makeSemanticTokensFullResponse(
+  //       params,
+  //       documents.get(params.textDocument.uri),
+  //     );
+  //     // console.log(`semanticTokens: data: ${result.data}`);
+  //     return result;
+  //   },
+  // );
 
   /*************************** USER CONFIGURATION ****************************/
   /**
