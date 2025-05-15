@@ -1,12 +1,12 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.5.12",
+  "version": "4.5.13",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "lingui extract && lingui compile --typescript && vite --host",
-    "build": "lingui extract && lingui compile --typescript && node version-sync.js && tsc && vite build --base=./",
-    "build-lowram": "lingui extract && lingui compile --typescript && node version-sync.js && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
+    "build": "lingui extract && lingui compile --typescript && tsc && vite build --base=./",
+    "build-lowram": "lingui extract && lingui compile --typescript && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
     "lint": "eslint src/** --fix",
     "openapi": "tsx openapi.ts",
@@ -79,6 +79,7 @@
     "swagger-typescript-api": "^13.0.3",
     "tsx": "^3.14.0",
     "typescript": "^4.6.3",
+    "unplugin-info": "^1.2.1",
     "vite": "^4.4.9"
   }
 }

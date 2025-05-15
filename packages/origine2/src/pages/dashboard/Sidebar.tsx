@@ -122,8 +122,17 @@ export default function Sidebar(props: ISidebarProps) {
               {selector}
               {t`选择应用的模板`}
               {selectorTemplate}
-              <Button appearance='primary' disabled={gameName.trim() === '' || gameDir.trim() === ''}
-                onClick={createNewGame}>{t`创建`}</Button>
+              <Button
+                appearance='primary'
+                disabled={
+                  gameName.trim() === ''
+                  || gameDir.trim() === ''
+                  || props.gameList.find((item) => item.dir === gameDir.trim()) !== undefined
+                }
+                onClick={createNewGame}
+              >
+                {t`创建`}
+              </Button>
             </form>
           </PopoverSurface>
         </Popover>

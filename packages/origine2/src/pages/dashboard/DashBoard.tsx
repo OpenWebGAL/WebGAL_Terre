@@ -153,7 +153,7 @@ export default function DashBoard() {
         </ToastTitle>
         <ToastBody>
           <Text size={200} style={{lineHeight: 1.5}}>
-            {t`当前版本`}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
+            {t`当前版本`}: {`${__INFO.version} (${__INFO.buildTime.toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
             {t`最新版本`}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
           </Text>
         </ToastBody>
@@ -173,7 +173,7 @@ export default function DashBoard() {
 
     releaseHasNotified.current = true;
   };
-  
+
   useEffect(
     () => {
       if (latestRelease?.hasNewVersion) {

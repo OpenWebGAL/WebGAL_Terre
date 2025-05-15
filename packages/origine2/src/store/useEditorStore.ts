@@ -23,6 +23,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isEnableLivePreview: false,
       isAutoWarp: false,
       isUseExpFastSync:false,
+      isUseFontOptimization: false,
       ignoreVersion: '',
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
@@ -53,6 +54,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateIsEnableLivePreview: (isEnableLivePreview) => set({isEnableLivePreview}),
       updateIsAutoWarp: (isAutoWarp) => set({isAutoWarp}),
       updateIsUseExpFastSync:(isUseExpFastSync)=> set({isUseExpFastSync}),
+      updateIsUseFontOptimization: (isUseFontOptimization) => set({ isUseFontOptimization }),
       updateIgnoreVersion: (ignoreVersion) => set({ignoreVersion}),
     }),
     {

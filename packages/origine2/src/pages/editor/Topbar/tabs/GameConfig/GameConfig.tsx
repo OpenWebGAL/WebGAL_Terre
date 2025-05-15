@@ -204,7 +204,7 @@ export default function GameConfig() {
           }
         />
       </TabItem>
-      <TabItem title="紧急回避">
+      <TabItem title={t`紧急回避`}>
         <GameConfigEditorWithSelector
           key="isUserForward"
           value={getConfigContentAsString('Show_panic') ? getConfigContentAsString('Show_panic') : 'true'}
@@ -213,6 +213,31 @@ export default function GameConfig() {
             {key: 'false', text: t`禁用`}
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Show_panic', e)}/>
+      </TabItem>
+      <TabItem title={t`鉴赏功能`}>
+        <GameConfigEditorWithSelector
+          key="isUserForward"
+          value={getConfigContentAsString('Enable_Appreciation') ? getConfigContentAsString('Enable_Appreciation') : 'false'}
+          selectItems={[
+            {key: 'true', text: t`启用`},
+            {key: 'false', text: t`禁用`}
+          ]}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>
+      </TabItem>
+      <TabItem title={t`默认语言`}>
+        <GameConfigEditorWithSelector
+          key="language_select"
+          value={getConfigContentAsString('Default_Language') ? getConfigContentAsString('Default_Language') : ''}
+          selectItems={[
+            {key: '', text: t`不设定`},
+            {key: 'zh_CN', text: t`简体中文`},
+            {key: 'zh_TW', text: t`繁体中文`},
+            {key: 'en', text: t`英语`},
+            {key: 'ja', text: t`日语`},
+            {key: 'fr', text: t`法语`},
+            {key: 'de', text: t`德语`},
+          ]}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Default_Language', e)}/>
       </TabItem>
     </>
   );

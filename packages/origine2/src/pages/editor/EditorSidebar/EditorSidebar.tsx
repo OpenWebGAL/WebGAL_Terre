@@ -8,6 +8,7 @@ import { useGameEditorContext } from "@/store/useGameEditorStore";
 import {IGameEditorSidebarTabs, IGameEditorTopbarTabs, ITag} from "@/types/gameEditor";
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
+import { WsUtil } from "@/utils/wsUtil";
 
 let startX = 0;
 let prevXvalue = 0;
@@ -22,6 +23,7 @@ export default function EditorSideBar() {
   const gameName = useEditorStore.use.subPage();
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
+  const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -30,14 +32,20 @@ export default function EditorSideBar() {
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
 
-  const ifRef = useRef(null);
+  const ifRef = useRef<HTMLIFrameElement | null>(null);
   useEffect(() => {
     if (ifRef.current) {
       // @ts-ignore
       ifRef!.current!.contentWindow.console.log = function () {
       };
+
+      ifRef.current.onload = () => setTimeout(() => WsUtil.sendFontOptimizationCommand(isUseFontOptimization), 1000);
     }
   });
+
+  useEffect(() => {
+    WsUtil.sendFontOptimizationCommand(isUseFontOptimization);
+  }, [isUseFontOptimization]);
 
   useEffect(() => {
     const storeWidth = localStorage.getItem('sidebar-width');
