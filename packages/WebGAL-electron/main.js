@@ -57,6 +57,13 @@ const createWindow = () => {
 
         logMessage(message);
     });
+    
+    /**
+	 * 侦听BrowserWindow关闭事件
+	 */
+	win.on("close", () => {
+		app.quit();
+	});
 }
 
 /**
