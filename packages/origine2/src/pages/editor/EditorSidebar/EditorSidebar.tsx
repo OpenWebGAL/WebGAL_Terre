@@ -5,7 +5,7 @@ import { eventBus } from "@/utils/eventBus";
 import {Button, Tab, TabList} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
-import {IGameEditorSidebarTabs, IGameEditorTopbarTabs, ITag} from "@/types/gameEditor";
+import {IGameEditorSidebarTabs, ITag} from "@/types/gameEditor";
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { WsUtil } from "@/utils/wsUtil";
@@ -31,13 +31,6 @@ export default function EditorSideBar() {
   const tags = useGameEditorContext((state) => state.tags);
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
-
-  const viewType = useGameEditorContext((state) => state.viewType);
-  const updateViewType = useGameEditorContext((state) => state.updateViewType);
-  const sortBy = useGameEditorContext((state) => state.sortBy);
-  const updateSortBy = useGameEditorContext((state) => state.updateSortBy);
-  const sortOrder = useGameEditorContext((state) => state.sortOrder);
-  const updateSortOrder = useGameEditorContext((state) => state.updateSortOrder);
 
   const ifRef = useRef<HTMLIFrameElement | null>(null);
   useEffect(() => {
@@ -198,12 +191,6 @@ export default function EditorSideBar() {
               leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-              viewType={viewType}
-              sortBy={sortBy}
-              sortOrder={sortOrder}
-              updateViewType={updateViewType}
-              updateSortBy={updateSortBy}
-              updateSortOrder={updateSortOrder}
             />
           }
           {
@@ -214,12 +201,6 @@ export default function EditorSideBar() {
               leading={assetsTabs}
               fileConfig={fileConfig}
               fileFunction={fileFunction}
-              viewType={viewType}
-              sortBy={sortBy}
-              sortOrder={sortOrder}
-              updateViewType={updateViewType}
-              updateSortBy={updateSortBy}
-              updateSortOrder={updateSortOrder}
             />
           }
         </div>

@@ -188,13 +188,13 @@ msgstr "Always Show Toolbar"
 msgid "上一步"
 msgstr "Previous"
 
-#: src/components/Assets/Assets.tsx:635
-#: src/components/Assets/Assets.tsx:636
+#: src/components/Assets/Assets.tsx:627
+#: src/components/Assets/Assets.tsx:628
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:452
-#: src/components/Assets/Assets.tsx:458
+#: src/components/Assets/Assets.tsx:447
+#: src/components/Assets/Assets.tsx:453
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -339,7 +339,7 @@ msgstr "Sidebar Game Preview"
 msgid "保存"
 msgstr "Save"
 
-#: src/components/Assets/Assets.tsx:507
+#: src/components/Assets/Assets.tsx:500
 msgid "修改时间"
 msgstr "Last modified"
 
@@ -494,12 +494,12 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:468
+#: src/components/Assets/Assets.tsx:463
 msgid "列表视图"
 msgstr "List view"
 
-#: src/components/Assets/Assets.tsx:390
-#: src/components/Assets/Assets.tsx:442
+#: src/components/Assets/Assets.tsx:385
+#: src/components/Assets/Assets.tsx:437
 #: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
@@ -545,8 +545,8 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:483
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
+#: src/components/Assets/Assets.tsx:478
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:168
 msgid "刷新"
 msgstr "Refresh"
 
@@ -566,7 +566,7 @@ msgstr "Functional Area"
 msgid "加粗"
 msgstr "Bold"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:241
 msgid "动画"
 msgstr "Animation"
@@ -673,7 +673,7 @@ msgstr "Rounded rectangle"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "Display a small avatar in the lower left corner of the dialog box"
 
-#: src/components/Assets/Assets.tsx:484
+#: src/components/Assets/Assets.tsx:479
 #: src/pages/dashboard/GameElement.tsx:96
 #: src/pages/dashboard/TemplateElement.tsx:90
 msgid "在文件管理器中打开"
@@ -681,7 +681,7 @@ msgstr "Open in File Explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:174
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -689,8 +689,8 @@ msgstr "Preview in new tab"
 msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:123
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:155
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:148
 msgid "场景"
 msgstr "Scene"
 
@@ -752,7 +752,7 @@ msgstr "Positioning"
 msgid "实时预览"
 msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:91
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -761,7 +761,7 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:91
 msgid "实时预览打开"
 msgstr "Live preview on"
@@ -867,8 +867,8 @@ msgstr "Left align"
 msgid "已创建"
 msgstr "Created"
 
-#: src/components/Assets/Assets.tsx:361
-#: src/components/Assets/Assets.tsx:420
+#: src/components/Assets/Assets.tsx:356
+#: src/components/Assets/Assets.tsx:415
 #: src/components/Assets/FileElement.tsx:163
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
@@ -953,7 +953,7 @@ msgstr "Open effect editor"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:375
+#: src/components/Assets/Assets.tsx:370
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -978,7 +978,7 @@ msgstr "Duration (unit milliseconds)"
 msgid "指针"
 msgstr "Pointer"
 
-#: src/components/Assets/Assets.tsx:489
+#: src/components/Assets/Assets.tsx:482
 msgid "排序方式"
 msgstr "Sort by"
 
@@ -1100,11 +1100,11 @@ msgstr "Sound effect file"
 #~ msgid "文件"
 #~ msgstr "File"
 
-#: src/components/Assets/Assets.tsx:495
+#: src/components/Assets/Assets.tsx:488
 msgid "文件名"
 msgstr "File name"
 
-#: src/components/Assets/Assets.tsx:501
+#: src/components/Assets/Assets.tsx:494
 msgid "文件大小"
 msgstr "File size"
 
@@ -1167,13 +1167,13 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:344
-#: src/components/Assets/Assets.tsx:359
+#: src/components/Assets/Assets.tsx:339
+#: src/components/Assets/Assets.tsx:354
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:403
-#: src/components/Assets/Assets.tsx:418
+#: src/components/Assets/Assets.tsx:398
+#: src/components/Assets/Assets.tsx:413
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -1185,11 +1185,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:368
+#: src/components/Assets/Assets.tsx:363
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:427
+#: src/components/Assets/Assets.tsx:422
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -1229,7 +1229,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:377
+#: src/components/Assets/Assets.tsx:372
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1340,7 +1340,7 @@ msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:214
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:125
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
 msgid "模板"
 msgstr "Template"
 
@@ -1487,7 +1487,7 @@ msgstr "Game description"
 msgid "游戏识别码"
 msgstr "Game ID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:129
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
 msgid "游戏配置"
 msgstr "Game configuration"
 
@@ -1548,7 +1548,7 @@ msgstr "View"
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:127
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
 msgid "视频"
 msgstr "Video"
 
@@ -1569,7 +1569,7 @@ msgstr "Disable skipping video"
 msgid "禁用"
 msgstr "Disabled"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
 msgid "立绘"
 msgstr "Figure"
 
@@ -1609,7 +1609,7 @@ msgstr "Red (0-255):"
 msgid "紧急回避"
 msgstr "Emergency Evasion"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:126
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
 msgstr "Texture"
 
@@ -1668,7 +1668,7 @@ msgstr "Traditional Chinese"
 msgid "缩放"
 msgstr "Scale"
 
-#: src/components/Assets/Assets.tsx:468
+#: src/components/Assets/Assets.tsx:463
 msgid "网格视图"
 msgstr "Grid view"
 
@@ -1677,7 +1677,7 @@ msgid "老电影滤镜"
 msgstr "Old film filter"
 
 #: src/components/IconCreator/IconCreator.tsx:696
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
@@ -1876,7 +1876,7 @@ msgstr "This file type does not support preview"
 msgid "语言"
 msgstr "Language"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:128
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:216
 msgid "语音"
 msgstr "Voice"
@@ -1905,7 +1905,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:154
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:147
 msgid "资源"
 msgstr "Assets"
 
@@ -1915,7 +1915,7 @@ msgstr "Assets"
 msgid "输入目标 ID"
 msgstr "Enter Target ID"
 
-#: src/components/Assets/Assets.tsx:313
+#: src/components/Assets/Assets.tsx:308
 msgid "过滤文件"
 msgstr "Filter files"
 
@@ -2114,7 +2114,7 @@ msgstr "Right"
 msgid "靠左"
 msgstr "Left"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
 msgid "音乐"
 msgstr "Music"
 

@@ -13,6 +13,7 @@ import useSWR, { useSWRConfig } from "swr";
 import { t } from '@lingui/macro';
 import Upload from "./Upload";
 import naturalCompare from 'natural-compare-lite';
+import useEditorStore from "@/store/useEditorStore";
 
 export interface IFile {
   extName: string;
@@ -68,13 +69,7 @@ export default function Assets(
     isProtected = false,
     fileConfig,
     fileFunction,
-    viewType = 'list',
-    sortBy = 'name',
-    sortOrder = 'asc',
     allowedExtNames,
-    updateViewType,
-    updateSortBy,
-    updateSortOrder,
   }: {
       rootPath: string[],
       basePath?: string[], // 相对于rootPath的路径
@@ -83,16 +78,17 @@ export default function Assets(
       isProtected?: boolean,
       fileConfig?: IFileConfig,
       fileFunction?: IFileFunction,
-      viewType?: IViewType,
-      sortBy?: ISortBy,
-      sortOrder?: ISortOrder,
       allowedExtNames?: string[],
-      updateViewType?: (viewType: IViewType) => void,
-      updateSortBy?: (sortBy: ISortBy) => void,
-      updateSortOrder?: (sortOrder: ISortOrder) => void,
     }
 ) {
   const { mutate } = useSWRConfig();
+
+  const viewType = useEditorStore.use.viewType();
+  const updateViewType = useEditorStore.use.updateViewType();
+  const sortBy = useEditorStore.use.sortBy();
+  const updateSortBy = useEditorStore.use.updateSortBy();
+  const sortOrder = useEditorStore.use.sortOrder();
+  const updateSortOrder = useEditorStore.use.updateSortOrder();
 
   const currentPath = useValue([...basePath, ...selectedFilePath.slice(0, -1)]);
   const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
@@ -481,36 +477,33 @@ export default function Assets(
               <MenuList>
                 <MenuItem icon={<ArrowSyncIcon />} onClick={handleRefresh} >{t`刷新`}</MenuItem>
                 <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder} >{t`在文件管理器中打开`}</MenuItem>
-                {
-                  updateSortBy && updateSortOrder &&
-                  <Menu>
-                    <MenuTrigger>
-                      <MenuItem icon={<ArrowSortIcon />} >{t`排序方式`}</MenuItem>
-                    </MenuTrigger>
-                    <MenuPopover>
-                      <MenuList>
-                        <MenuItem onClick={() => handleSort('name')}>
-                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
-                            {t`文件名`}
-                            {sortBy === 'name' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
-                          </div>
-                        </MenuItem>
-                        <MenuItem onClick={() => handleSort('size')}>
-                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
-                            {t`文件大小`}
-                            {sortBy === 'size' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
-                          </div>
-                        </MenuItem>
-                        <MenuItem onClick={() => handleSort('lastModified')}>
-                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
-                            {t`修改时间`}
-                            {sortBy === 'lastModified' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
-                          </div>
-                        </MenuItem>
-                      </MenuList>
-                    </MenuPopover>
-                  </Menu>
-                }
+                <Menu>
+                  <MenuTrigger>
+                    <MenuItem icon={<ArrowSortIcon />} >{t`排序方式`}</MenuItem>
+                  </MenuTrigger>
+                  <MenuPopover>
+                    <MenuList>
+                      <MenuItem onClick={() => handleSort('name')}>
+                        <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
+                          {t`文件名`}
+                          {sortBy === 'name' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
+                        </div>
+                      </MenuItem>
+                      <MenuItem onClick={() => handleSort('size')}>
+                        <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
+                          {t`文件大小`}
+                          {sortBy === 'size' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
+                        </div>
+                      </MenuItem>
+                      <MenuItem onClick={() => handleSort('lastModified')}>
+                        <div style={{ display: 'flex', gap: '4px', justifyContent: 'space-between', alignItems: 'center' }}>
+                          {t`修改时间`}
+                          {sortBy === 'lastModified' && (sortOrder === 'asc' ? <ArrowSortUpLinesIcon /> : <ArrowSortDownLinesIcon />)}
+                        </div>
+                      </MenuItem>
+                    </MenuList>
+                  </MenuPopover>
+                </Menu>
               </MenuList>
             </MenuPopover>
           </Menu>
