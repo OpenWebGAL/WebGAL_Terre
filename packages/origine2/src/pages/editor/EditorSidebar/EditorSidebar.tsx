@@ -108,17 +108,17 @@ export default function EditorSideBar() {
   }, []);
 
   const fileConfig: IFileConfig = new Map([
-    [`animation`, { desc: t`动画`, folderType: 'animation', isProtected: true }],
+    [`animation`, { desc: t`动画`, extNameTypes: ['json'], isProtected: true }],
     [`animation/animationTable.json`, { isProtected: true }],
-    [`background`, { desc: t`背景`, folderType: 'background', isProtected: true }],
-    [`bgm`, { desc: t`音乐`, folderType: 'bgm', isProtected: true }],
-    [`figure`, { desc: t`立绘`, folderType: 'figure', isProtected: true }],
-    [`scene`, { desc: t`场景`, folderType: 'scene', isProtected: true }],
+    [`background`, { desc: t`背景`, extNameTypes: ['image', 'video'], isProtected: true }],
+    [`bgm`, { desc: t`音乐`, extNameTypes: ['audio'], isProtected: true }],
+    [`figure`, { desc: t`立绘`, extNameTypes: ['image', 'json'], isProtected: true }],
+    [`scene`, { desc: t`场景`, extNameTypes: ['scene'], isProtected: true }],
     [`scene/start.txt`, { isProtected: true }],
-    [`template`, { desc: t`模板`, folderType: 'template', isProtected: true }],
-    [`tex`, { desc: t`纹理`, folderType: 'tex', isProtected: true }],
-    [`video`, { desc: t`视频`, folderType: 'video', isProtected: true }],
-    [`vocal`, { desc: t`语音`, folderType: 'vocal', isProtected: true }],
+    [`template`, { desc: t`模板`, isProtected: true }],
+    [`tex`, { desc: t`纹理`, extNameTypes: ['tex'], isProtected: true }],
+    [`video`, { desc: t`视频`, extNameTypes: ['video'], isProtected: true }],
+    [`vocal`, { desc: t`语音`, extNameTypes: ['audio'], isProtected: true }],
     [`config.txt`, { desc: t`游戏配置`, isProtected: true }],
     [`userStyleSheet.css`, { isProtected: true }],
   ]);

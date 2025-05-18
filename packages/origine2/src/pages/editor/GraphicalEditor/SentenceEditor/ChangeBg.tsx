@@ -38,7 +38,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       <CommonOptions key="isNoDialog" title={t`关闭背景`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            bgFile.set(t`选择背景图片`);
+            bgFile.set(t`选择背景文件`);
           } else
             bgFile.set("none");
           submit();
@@ -47,11 +47,11 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       {!isNoFile && <CommonOptions key="1" title={t`背景文件`}>
         <>
           {bgFile.value + "\u00a0\u00a0"}
-          <ChooseFile basePath={['background']} selectedFilePath={bgFile.value} onChange={(fileDesc) => {
+          <ChooseFile title={t`选择背景文件`} basePath={['background']} selectedFilePath={bgFile.value} onChange={(fileDesc) => {
             bgFile.set(fileDesc?.name ?? "");
             submit();
           }}
-          extNames={extNameMap.get('background')}/>
+          extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('video') ?? []]}/>
         </>
       </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>

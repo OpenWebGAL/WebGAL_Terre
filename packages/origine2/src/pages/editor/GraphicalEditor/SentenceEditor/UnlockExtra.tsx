@@ -48,6 +48,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
         <>
           {fileName.value}{"\u00a0"}
           <ChooseFile
+            title={t`选择鉴赏资源文件`}
             basePath={[unlockType.value === "unlockCg" ? "background" : "bgm"]}
             selectedFilePath={fileName.value}
             onChange={(newFile) => {
@@ -55,8 +56,8 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
               submit();
             }}
             extNames={unlockType.value === "unlockCg" 
-              ? extNameMap.get('background') 
-              : extNameMap.get('bgm')}
+              ? extNameMap.get('image') 
+              : extNameMap.get('audio')}
           />
         </>
       </CommonOptions>

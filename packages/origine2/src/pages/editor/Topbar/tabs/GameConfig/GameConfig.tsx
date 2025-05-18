@@ -144,7 +144,7 @@ export default function GameConfig() {
       <TabItem title={t`标题背景图片`}>
         <GameConfigEditorWithFileChoose
           sourceBase="background"
-          extNameList={extNameMap.get('background') ?? []}
+          extNameList={extNameMap.get('image') ?? []}
           key="titleBackground"
           value={getConfigContentAsString('Title_img')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
@@ -152,7 +152,7 @@ export default function GameConfig() {
       <TabItem title={t`标题背景音乐`}>
         <div className={styles.sidebar_gameconfig_title}>{}</div>
         <GameConfigEditorWithFileChoose
-          extNameList={extNameMap.get('bgm') ?? []}
+          extNameList={extNameMap.get('audio') ?? []}
           sourceBase="bgm" key="titleBgm"
           value={getConfigContentAsString('Title_bgm')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
@@ -160,7 +160,7 @@ export default function GameConfig() {
       <TabItem title={t`启动图`}>
         <GameConfigEditorWithImageFileChoose
           sourceBase="background"
-          extNameList={extNameMap.get('background') ?? []}
+          extNameList={extNameMap.get('image') ?? []}
           key="logoImage"
           value={getConfigContentAsStringArray('Game_Logo')}
           onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
@@ -366,6 +366,7 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
           </div>
         ))}</div>
       <ChooseFile
+        title={t`选择图片文件`}
         basePath={[props.sourceBase]}
         button={<Button icon={<AddIcon/>} />}
         onChange={(file) => {

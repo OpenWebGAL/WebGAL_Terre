@@ -8,7 +8,7 @@ import { FixedSizeList } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 import FileElement from "./FileElement";
 import axios from "axios";
-import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
+import { extNameMap, IExtNameType } from "@/pages/editor/ChooseFile/chooseFileConfig";
 import useSWR, { useSWRConfig } from "swr";
 import { t } from '@lingui/macro';
 import Upload from "./Upload";
@@ -24,13 +24,11 @@ export interface IFile {
   lastModified?: number;
 }
 
-export type IFolderType = 'animation' | 'background' | 'bgm' | 'figure' | 'scene' | 'template' | 'tex' | 'video' | 'vocal'
-
 export type IFileConfig = Map<
   string,
   {
     desc?: string,
-    folderType?: IFolderType,
+    extNameTypes?: IExtNameType[],
     isProtected?: boolean,
     isHidden?: boolean,
   }
@@ -94,8 +92,8 @@ export default function Assets(
   const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
   const lastPath = useValue<string[]>([...basePath, ...selectedFilePath]);
   const isBasePath = (currentPath.value.join('/') === basePath.join('/'));
-  const folderType = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPath.value.join('/').startsWith(key))?.[1].folderType : undefined;
-  const extNames = folderType ? extNameMap.get(folderType) : allowedExtNames ?? [];
+  const extNameTypes = fileConfig ? Array.from(fileConfig.entries()).find(([key]) => currentPath.value.join('/').startsWith(key))?.[1].extNameTypes : undefined;
+  const extNames = extNameTypes?.length ? extNameTypes.map((item) => extNameMap.get(item)).flat() : allowedExtNames ?? [];
   const filterText = useValue('');
 
   const cols = useValue(1);
@@ -130,7 +128,7 @@ export default function Assets(
     () => files?.filter(file =>
       file.name.toLocaleLowerCase().includes(filterText.value.toLocaleLowerCase())
         && !fileConfig?.get(file.path)?.isHidden
-        && (!allowedExtNames || allowedExtNames.includes(file.extName) || file.isDir)
+        && (!allowedExtNames || allowedExtNames.length === 0 || allowedExtNames.includes(file.extName.toLocaleLowerCase()) || file.isDir)
     ) ?? [],
     [files, filterText, fileConfig, allowedExtNames]
   );
@@ -204,7 +202,7 @@ export default function Assets(
       currentPath.set([...currentPath.value, file.name]);
       filterText.set('');
     } else {
-      const isScene = (folderType === 'scene') && file.name.endsWith('.txt');
+      const isScene = (extNameTypes?.includes('scene')) && file.name.endsWith('.txt');
       fileFunction?.open && fileFunction.open({ ...file }, isScene ? 'scene' : 'asset');
     }
   };
@@ -240,7 +238,7 @@ export default function Assets(
   const createNewFilePopoverOpen = useValue(false);
   const createNewFolderPopoverOpen = useValue(false);
   const newFileName = useValue('');
-  const newFileExtensionName = useValue(folderType === 'scene' ? '.txt' : '');
+  const newFileExtensionName = useValue(extNameTypes?.includes('scene') ? '.txt' : '');
   const uploadAssetPopoverOpen = useValue(false);
 
   const checkHasFile = (fileNmae: string) => files?.find((item) => item.name === fileNmae) ? true : false;
@@ -511,7 +509,7 @@ export default function Assets(
       </div>
       {
         extNames && extNames.length > 0 &&
-        <div style={{ display: 'flex', padding: '4px 8px 0px 8px', gap: '4px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', padding: '4px 8px 0px 8px', gap: '4px' }}>
           {extNames.map(item => <Badge appearance='outline' key={item}>{item}</Badge>)}
         </div>
       }

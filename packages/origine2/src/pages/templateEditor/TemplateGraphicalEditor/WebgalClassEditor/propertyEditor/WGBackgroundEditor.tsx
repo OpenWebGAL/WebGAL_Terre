@@ -88,7 +88,7 @@ export default function WGBackgroundEditor(props: IPropertyEditorProps) {
       <span>{extractFilePath(value)?.replace('game/template/assets/', '')}</span>
       <ChooseFile
         rootPath={rootPath}
-        extNames={extNameMap.get('background')}
+        extNames={extNameMap.get('image')}
         onChange={(file) => {
           file && setValue(`url("game/template/assets/${file.path.replace(rootPath.join('/'), '')}")`);
         }}

@@ -1,12 +1,10 @@
-import { IFolderType } from "@/components/Assets/Assets";
 
-export const extNameMap = new Map<IFolderType, string[]>([]);
+export type IExtNameType = 'scene' | 'image' | 'audio' | 'video' | 'tex' | 'json';
+export const extNameMap = new Map<IExtNameType, string[]>([]);
 
-extNameMap.set('animation', ['.json']);
-extNameMap.set('background', ['.png', '.jpg', '.webp']);
-extNameMap.set('bgm', ['.mp3', '.ogg', '.wav']);
-extNameMap.set('figure', ['.png', '.jpg', '.webp', '.json']);
 extNameMap.set('scene', ['.txt']);
+extNameMap.set('image', ['.png', '.jpg', '.jpeg', '.webp']);
+extNameMap.set('video', ['.mp4', '.webm', 'mov', 'avi', 'mkv']);
+extNameMap.set('audio', ['.mp3', '.ogg', '.wav']);
 extNameMap.set('tex', ['.png', '.webp']);
-extNameMap.set('video', ['.mp4', '.webm', '.ogg']);
-extNameMap.set('vocal', ['.mp3', '.ogg', '.wav']);
+extNameMap.set('json', ['.json']);

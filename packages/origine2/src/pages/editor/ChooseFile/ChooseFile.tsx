@@ -10,6 +10,7 @@ import {join} from 'path';
 import { ReactNode } from "react";
 
 export interface IChooseFile {
+  title?: string;
   rootPath?: string[];
   basePath?: string[]; // 相对于rootPath的路径
   button?: ReactNode;
@@ -61,7 +62,7 @@ export default function ChooseFile(props: IChooseFile) {
       <PopoverSurface style={{padding: 0}}>
         <div className={styles.chooseFileContentWarpper}>
           <div className={styles.chooseFileTitle}>
-            {t`选择`}
+            {props.title ?? t`选择文件`}
           </div>
           <Assets
             rootPath={rootPath}

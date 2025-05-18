@@ -32,19 +32,19 @@ export default function SetTransition(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`选择进入动画`}>
         <>
           {enterFileName.value}{"\u00a0"}
-          <ChooseFile basePath={['animation']} selectedFilePath={`${enterFileName.value}.json`} onChange={(file) => {
+          <ChooseFile title={t`选择进入动画文件`} basePath={['animation']} selectedFilePath={`${enterFileName.value}.json`} onChange={(file) => {
             enterFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extNames={extNameMap.get('animation')} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('json')} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="1.1" title={t`选择退出动画`}>
         <>
           {exitFileName.value}{"\u00a0"}
-          <ChooseFile basePath={['animation']} selectedFilePath={`${exitFileName.value}.json`} onChange={(file) => {
+          <ChooseFile title={t`选择退出动画文件`} basePath={['animation']} selectedFilePath={`${exitFileName.value}.json`} onChange={(file) => {
             exitFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extNames={extNameMap.get('animation')} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('json')} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>

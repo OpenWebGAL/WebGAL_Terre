@@ -39,11 +39,11 @@ export default function Bgm(props: ISentenceEditorProps) {
       {!isNoFile && <CommonOptions key="1" title={t`背景音乐文件`}>
         <>
           {bgmFile.value + "\u00a0\u00a0"}
-          <ChooseFile basePath={['bgm']} selectedFilePath={bgmFile.value} onChange={(fileDesc) => {
+          <ChooseFile title={t`选择背景音乐`} basePath={['bgm']} selectedFilePath={bgmFile.value} onChange={(fileDesc) => {
             bgmFile.set(fileDesc?.name ?? "");
             submit();
           }}
-          extNames={extNameMap.get('bgm')} />
+          extNames={extNameMap.get('audio')} />
         </>
       </CommonOptions>}
       {!isNoFile && <CommonOptions title={t`BGM 音量`} key="2">

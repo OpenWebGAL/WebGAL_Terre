@@ -217,6 +217,7 @@ export default function Say(props: ISentenceEditorProps) {
           <>
             {vocal.value !== "" ? `${vocal.value}\u00a0\u00a0` : ""}
             <ChooseFile
+              title={t`选择语音文件`}
               basePath={['vocal']}
               selectedFilePath={vocal.value}
               onChange={(newName) => {
@@ -224,7 +225,7 @@ export default function Say(props: ISentenceEditorProps) {
                 vocal.value === "" ? volume.set("") : volume.set(volume.value);
                 submit();
               }}
-              extNames={extNameMap.get('vocal')}
+              extNames={extNameMap.get('video')}
             />
           </>
         </CommonOptions>
