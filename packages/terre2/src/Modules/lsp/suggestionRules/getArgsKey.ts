@@ -200,7 +200,7 @@ changeBg:testBG03.jpg -next; // 会立刻执行下一条语句
 const durationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'duration',
-  insertText: 'duration',
+  insertText: 'duration=',
   detail: '持续时间',
   documentation: markdown(`
 这个时间片的持续时间，单位为毫秒(ms)
@@ -210,7 +210,7 @@ const durationKey: CompletionItem = {
 const figureIdKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'figureId',
-  insertText: 'figureId',
+  insertText: 'figureId=',
   detail: '指定立绘ID',
   documentation: markdown(`
 为对话指定立绘ID，可同步该立绘的唇形
@@ -220,7 +220,7 @@ const figureIdKey: CompletionItem = {
 const fontSizeKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'fontSize',
-  insertText: 'fontSize',
+  insertText: 'fontSize=',
   detail: '字体大小',
   documentation: markdown(`
 调整字体大小
@@ -342,7 +342,7 @@ changeFigure:none -right;
 const idFigureKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'id',
-  insertText: 'id',
+  insertText: 'id=',
   detail: '设置id',
   documentation: markdown(`
 如果你想要更精确地控制立绘，或使用超过 3 个立绘，可以为立绘指定 \`id\` 和初始位置：
@@ -361,7 +361,7 @@ changeFigure:none -id=test1;
 const idSoundKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'id',
-  insertText: 'id',
+  insertText: 'id=',
   detail: '设置id',
   documentation: markdown(`
 为效果音赋予一个 \`id\` 将会自动启用效果音循环，后续使用相同的 \`id\` 来停止。
@@ -376,7 +376,7 @@ playEffect:none -id=xxx; // 停止这个循环的效果音
 const transformKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'transform',
-  insertText: 'transform',
+  insertText: 'transform=',
   detail: '设置变换效果',
   documentation: markdown(`
 有关效果的字段说明，请参考 [动画](https://docs.openwebgal.com/webgal-script/animation.html)
@@ -392,7 +392,7 @@ changeFigure:stand.png -transform={"alpha":1,"position":{"x":0,"y":500},"scale":
 const zIndexKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'zIndex',
-  insertText: 'zIndex',
+  insertText: 'zIndex=',
   detail: '图层排序',
   documentation: markdown(`
 图层排序索引值，值越大越靠上，值相同时晚加入的靠上
@@ -407,7 +407,7 @@ changeFigure:yyy.png -id=yyy -zIndex=1;
 const animationFlagKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'animationFlag',
-  insertText: 'animationFlag',
+  insertText: 'animationFlag=',
   detail: '唇形同步与眨眼',
   documentation: markdown(`
 当 \`animationFlag\` 设置为 \`on\` 时，可为图片立绘开启唇形同步与眨眼
@@ -422,7 +422,7 @@ changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=
 const eyesOpenKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'eyesOpen',
-  insertText: 'eyesOpen',
+  insertText: 'eyesOpen=',
   detail: '眼睛睁开的图片立绘',
   documentation: markdown(`
 当 \`animationFlag\` 设置为 \`on\` 时，可为图片立绘开启唇形同步与眨眼
@@ -437,7 +437,7 @@ changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=
 const eyesCloseKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'eyesClose',
-  insertText: 'eyesClose',
+  insertText: 'eyesClose=',
   detail: '眼睛闭上的图片立绘',
   documentation: markdown(`
 当 \`animationFlag\` 设置为 \`on\` 时，可为图片立绘开启唇形同步与眨眼
@@ -452,7 +452,7 @@ changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=
 const mouthOpenKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'mouthOpen',
-  insertText: 'mouthOpen',
+  insertText: 'mouthOpen=',
   detail: '嘴巴张开的图片立绘',
   documentation: markdown(`
 当 \`animationFlag\` 设置为 \`on\` 时，可为图片立绘开启唇形同步与眨眼
@@ -467,7 +467,7 @@ changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=
 const mouthHalfOpenKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'mouthHalfOpen',
-  insertText: 'mouthHalfOpen',
+  insertText: 'mouthHalfOpen=',
   detail: '嘴巴半张开的图片立绘',
   documentation: markdown(`
 当 \`animationFlag\` 设置为 \`on\` 时，可为图片立绘开启唇形同步与眨眼
@@ -482,7 +482,7 @@ changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=
 const mouthCloseKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'mouthClose',
-  insertText: 'mouthClose',
+  insertText: 'mouthClose=',
   detail: '嘴巴闭上的图片立绘',
   documentation: markdown(`
 当 \`animationFlag\` 设置为 \`on\` 时，可为图片立绘开启唇形同步与眨眼
@@ -497,7 +497,7 @@ changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=
 const motionKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'motion',
-  insertText: 'motion',
+  insertText: 'motion=',
   detail: 'live2D的动作',
   documentation: markdown(`
 你可以使用 \`-motion=motionName\` 或 \`-expression=expressionName\` 参数来切换表情，如：
@@ -511,7 +511,7 @@ changeFigure:xxx.json -motion=angry -expression=angry01;
 const expressionKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'expression',
-  insertText: 'expression',
+  insertText: 'expression=',
   detail: 'live2D的表情',
   documentation: markdown(`
 你可以使用 \`-motion=motionName\` 或 \`-expression=expressionName\` 参数来切换表情，如：
@@ -525,7 +525,7 @@ changeFigure:xxx.json -motion=angry -expression=angry01;
 const boundsKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'bounds',
-  insertText: 'bounds',
+  insertText: 'bounds=',
   detail: 'live2D的边界',
   documentation: markdown(`
 当live2D默认显示范围不足时，调整此参数以拓展边界
@@ -539,7 +539,7 @@ changeFigure:xxx.json -bounds=0,50,0,50;
 const unlocknameKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'unlockname',
-  insertText: 'unlockname',
+  insertText: 'unlockname=',
   detail: '解锁名称',
   documentation: markdown(`
 CG或音乐解锁进鉴赏模式的命名
@@ -549,7 +549,7 @@ CG或音乐解锁进鉴赏模式的命名
 const seriesKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'series',
-  insertText: 'series',
+  insertText: 'series=',
   detail: '鉴赏系列名称',
   documentation: markdown(`
 CG或音乐解锁进鉴赏模式后应当放在哪个系列
@@ -559,7 +559,7 @@ CG或音乐解锁进鉴赏模式后应当放在哪个系列
 const targetKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'target',
-  insertText: 'target',
+  insertText: 'target=',
   detail: '指定目标',
   documentation: markdown(`
 将动画或效果应用于指定目标
@@ -601,7 +601,7 @@ changeScene:二周目剧情.txt;
 const nameKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'name',
-  insertText: 'name',
+  insertText: 'name=',
   detail: '名称',
   documentation: markdown(`
 指定名称
@@ -611,7 +611,7 @@ const nameKey: CompletionItem = {
 const backgroundColorKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'backgroundColor',
-  insertText: 'backgroundColor',
+  insertText: 'backgroundColor=',
   detail: '背景颜色',
   documentation: markdown(`
 指定背景颜色
@@ -621,7 +621,7 @@ const backgroundColorKey: CompletionItem = {
 const fontColorKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'fontColor',
-  insertText: 'fontColor',
+  insertText: 'fontColor=',
   detail: '字体颜色',
   documentation: markdown(`
 指定字体颜色
@@ -631,7 +631,7 @@ const fontColorKey: CompletionItem = {
 const animationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'animation',
-  insertText: 'animation',
+  insertText: 'animation=',
   detail: '动画',
   documentation: markdown(`
 指定动画
@@ -662,7 +662,7 @@ const userForwardKey: CompletionItem = {
 const delayTimeKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'delayTime',
-  insertText: 'delayTime',
+  insertText: 'delayTime=',
   detail: '延迟时长',
   documentation: markdown(`
 延迟时长
@@ -672,7 +672,7 @@ const delayTimeKey: CompletionItem = {
 const volumeKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'volume',
-  insertText: 'volume',
+  insertText: 'volume=',
   detail: '音量大小',
   documentation: markdown(`
 设置音量大小
@@ -682,7 +682,7 @@ const volumeKey: CompletionItem = {
 const enterBgmKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'enter',
-  insertText: 'enter',
+  insertText: 'enter=',
   detail: '音量淡入时长',
   documentation: markdown(`
 音量淡入时间
@@ -692,7 +692,7 @@ const enterBgmKey: CompletionItem = {
 const enterAnimationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'enter',
-  insertText: 'enter',
+  insertText: 'enter=',
   detail: '入场动画',
   documentation: markdown(`
 设置入场动画
@@ -702,7 +702,7 @@ const enterAnimationKey: CompletionItem = {
 const exitAnimationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'exit',
-  insertText: 'exit',
+  insertText: 'exit=',
   detail: '退场动画',
   documentation: markdown(`
 设置退场动画
@@ -722,7 +722,7 @@ const skipOffKey: CompletionItem = {
 const titleKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'title',
-  insertText: 'title',
+  insertText: 'title=',
   detail: '对话框标题',
   documentation: markdown(`
 对话框标题
@@ -732,7 +732,7 @@ const titleKey: CompletionItem = {
 const buttonTextKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'buttonText',
-  insertText: 'buttonText',
+  insertText: 'buttonText=',
   detail: '确认按钮文本',
   documentation: markdown(`
 确认按钮文本
@@ -752,7 +752,7 @@ const defaultValueKey: CompletionItem = {
 const vocalKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'vocal',
-  insertText: 'vocal',
+  insertText: 'vocal=',
   detail: '播放语音文件',
   documentation: markdown(`
 播放语言文件
@@ -762,7 +762,7 @@ const vocalKey: CompletionItem = {
 const speakerKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'speaker',
-  insertText: 'speaker',
+  insertText: 'speaker=',
   detail: '说话者',
   documentation: markdown(`
 说话者
