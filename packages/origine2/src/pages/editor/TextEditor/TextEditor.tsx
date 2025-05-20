@@ -112,7 +112,7 @@ export default function TextEditor(props: ITextEditorProps) {
         isEditorReady.value = true;
         const targetPosition = editorLineHolder.getScenePosition(props.targetPath);
         editorRef?.current?.setPosition(targetPosition);
-        editorRef?.current?.revealPositionInCenterIfOutsideViewport(targetPosition);
+        editorRef?.current?.revealPositionInCenterIfOutsideViewport(targetPosition, monaco.editor.ScrollType.Immediate);
       });
   }
 
