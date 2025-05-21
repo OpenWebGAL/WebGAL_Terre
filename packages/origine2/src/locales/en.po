@@ -188,13 +188,13 @@ msgstr "Always Show Toolbar"
 msgid "上一步"
 msgstr "Previous"
 
-#: src/components/Assets/Assets.tsx:627
-#: src/components/Assets/Assets.tsx:628
+#: src/components/Assets/Assets.tsx:625
+#: src/components/Assets/Assets.tsx:626
 msgid "上传"
 msgstr "Upload"
 
-#: src/components/Assets/Assets.tsx:447
-#: src/components/Assets/Assets.tsx:453
+#: src/components/Assets/Assets.tsx:445
+#: src/components/Assets/Assets.tsx:451
 msgid "上传资源"
 msgstr "Upload asset"
 
@@ -339,7 +339,7 @@ msgstr "Sidebar Game Preview"
 msgid "保存"
 msgstr "Save"
 
-#: src/components/Assets/Assets.tsx:500
+#: src/components/Assets/Assets.tsx:498
 msgid "修改时间"
 msgstr "Last modified"
 
@@ -404,7 +404,7 @@ msgstr "Show some texts on Full-screen"
 msgid "关于"
 msgstr "About"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:231
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:232
 msgid "关联立绘"
 msgstr "Associated figure"
 
@@ -494,12 +494,12 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
-#: src/components/Assets/Assets.tsx:463
+#: src/components/Assets/Assets.tsx:461
 msgid "列表视图"
 msgstr "List view"
 
-#: src/components/Assets/Assets.tsx:385
-#: src/components/Assets/Assets.tsx:437
+#: src/components/Assets/Assets.tsx:383
+#: src/components/Assets/Assets.tsx:435
 #: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
@@ -545,7 +545,7 @@ msgstr "Delete template"
 msgid "删除游戏"
 msgstr "Delete game"
 
-#: src/components/Assets/Assets.tsx:478
+#: src/components/Assets/Assets.tsx:476
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:168
 msgid "刷新"
 msgstr "Refresh"
@@ -593,7 +593,7 @@ msgstr "New version detected"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:788
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:58
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "Cancel"
@@ -673,7 +673,7 @@ msgstr "Rounded rectangle"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "Display a small avatar in the lower left corner of the dialog box"
 
-#: src/components/Assets/Assets.tsx:479
+#: src/components/Assets/Assets.tsx:477
 #: src/pages/dashboard/GameElement.tsx:96
 #: src/pages/dashboard/TemplateElement.tsx:90
 msgid "在文件管理器中打开"
@@ -867,8 +867,8 @@ msgstr "Left align"
 msgid "已创建"
 msgstr "Created"
 
-#: src/components/Assets/Assets.tsx:356
-#: src/components/Assets/Assets.tsx:415
+#: src/components/Assets/Assets.tsx:354
+#: src/components/Assets/Assets.tsx:413
 #: src/components/Assets/FileElement.tsx:163
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
@@ -953,7 +953,7 @@ msgstr "Open effect editor"
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
-#: src/components/Assets/Assets.tsx:370
+#: src/components/Assets/Assets.tsx:368
 msgid "扩展名"
 msgstr "Extension name"
 
@@ -978,7 +978,7 @@ msgstr "Duration (unit milliseconds)"
 msgid "指针"
 msgstr "Pointer"
 
-#: src/components/Assets/Assets.tsx:482
+#: src/components/Assets/Assets.tsx:480
 msgid "排序方式"
 msgstr "Sort by"
 
@@ -1100,16 +1100,16 @@ msgstr "Sound effect file"
 #~ msgid "文件"
 #~ msgstr "File"
 
-#: src/components/Assets/Assets.tsx:488
+#: src/components/Assets/Assets.tsx:486
 msgid "文件名"
 msgstr "File name"
 
-#: src/components/Assets/Assets.tsx:494
+#: src/components/Assets/Assets.tsx:492
 msgid "文件大小"
 msgstr "File size"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:230
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:262
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:263
 msgid "文字大小"
 msgstr "Font size"
 
@@ -1167,13 +1167,13 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
-#: src/components/Assets/Assets.tsx:339
-#: src/components/Assets/Assets.tsx:354
+#: src/components/Assets/Assets.tsx:337
+#: src/components/Assets/Assets.tsx:352
 msgid "新建文件"
 msgstr "Create new file"
 
-#: src/components/Assets/Assets.tsx:398
-#: src/components/Assets/Assets.tsx:413
+#: src/components/Assets/Assets.tsx:396
+#: src/components/Assets/Assets.tsx:411
 msgid "新建文件夹"
 msgstr "Create new folder"
 
@@ -1185,11 +1185,11 @@ msgstr "Create new template"
 msgid "新建游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/Assets.tsx:363
+#: src/components/Assets/Assets.tsx:361
 msgid "新文件名"
 msgstr "New file name"
 
-#: src/components/Assets/Assets.tsx:422
+#: src/components/Assets/Assets.tsx:420
 msgid "新文件夹名"
 msgstr "New folder name"
 
@@ -1229,7 +1229,7 @@ msgstr "Voiceover mode, no role name"
 msgid "旋转角度："
 msgstr "Rotation angle:"
 
-#: src/components/Assets/Assets.tsx:372
+#: src/components/Assets/Assets.tsx:370
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "None"
@@ -1574,7 +1574,7 @@ msgid "立绘"
 msgstr "Figure"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:239
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:257
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:258
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:69
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:95
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:74
@@ -1589,7 +1589,7 @@ msgstr "Figure ID (optional)"
 msgid "立绘位置"
 msgstr "Figure position"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:242
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:243
 msgid "立绘插图的ID"
 msgstr "ID of figure illustration"
 
@@ -1668,7 +1668,7 @@ msgstr "Traditional Chinese"
 msgid "缩放"
 msgstr "Scale"
 
-#: src/components/Assets/Assets.tsx:463
+#: src/components/Assets/Assets.tsx:461
 msgid "网格视图"
 msgstr "Grid view"
 
@@ -1821,7 +1821,7 @@ msgstr "Corner avatar"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:73
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:64
-#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:63
+#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:64
 msgid "解锁名称"
 msgstr "Unlock name"
 
@@ -1833,7 +1833,7 @@ msgstr "Name of unlocked BGM"
 msgid "解锁的 CG 名称"
 msgstr "Name of unlocked CG"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:72
+#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:73
 msgid "解锁的 CG 或 BGM 名称"
 msgstr "Name of unlocked CG or BGM"
 
@@ -1915,7 +1915,7 @@ msgstr "Assets"
 msgid "输入目标 ID"
 msgstr "Enter Target ID"
 
-#: src/components/Assets/Assets.tsx:308
+#: src/components/Assets/Assets.tsx:306
 msgid "过滤文件"
 msgstr "Filter files"
 
@@ -1934,8 +1934,7 @@ msgstr "Return"
 msgid "连续执行"
 msgstr "Execute Continuously"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:58
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:64
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 msgid "选择"
 msgstr "Choose"
 
@@ -1943,11 +1942,21 @@ msgstr "Choose"
 msgid "选择动画"
 msgstr "Choose Animation"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:39
+msgid "选择动画文件"
+msgstr ""
+
 #: src/components/IconCreator/IconCreator.tsx:682
 #: src/components/IconCreator/IconCreator.tsx:727
 msgid "选择图片"
 msgstr "Choose Image"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:369
+msgid "选择图片文件"
+msgstr ""
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:23
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:46
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:60
 msgid "选择场景文件"
 msgstr "Choose Scene File"
@@ -1956,37 +1965,78 @@ msgstr "Choose Scene File"
 msgid "选择小头像"
 msgstr "Choose Avatar"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:31
+msgid "选择小头像文件"
+msgstr ""
+
 #: src/pages/dashboard/Sidebar.tsx:123
 msgid "选择应用的模板"
 msgstr "Select apply template"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayEffect.tsx:27
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PlayEffect.tsx:36
 msgid "选择效果音文件"
 msgstr "Choose Sound Effect File"
+
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:65
+msgid "选择文件"
+msgstr ""
 
 #: src/pages/dashboard/Sidebar.tsx:121
 msgid "选择游戏引擎版本"
 msgstr "Select game engine version"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:27
+msgid "选择视频文件"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:158
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:291
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:302
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:313
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:323
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:333
 msgid "选择立绘文件"
 msgstr "Choose Figure File"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
-msgid "选择背景图片"
-msgstr "Choose Background Image"
+#~ msgid "选择背景图片"
+#~ msgstr "Choose Background Image"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:50
+msgid "选择背景文件"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:33
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:42
 msgid "选择背景音乐"
 msgstr "Choose Background Music"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:220
+msgid "选择语音文件"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:32
 msgid "选择进入动画"
 msgstr "Choose Enter Animation"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:35
+msgid "选择进入动画文件"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:41
 msgid "选择退出动画"
 msgstr "Choose Exit Animation"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:44
+msgid "选择退出动画文件"
+msgstr ""
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:51
+msgid "选择鉴赏资源文件"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:51
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:77
