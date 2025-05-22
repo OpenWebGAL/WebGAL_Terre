@@ -27,6 +27,14 @@ const getFiles = (fileList?: FileList|null) => {
   return files;
 };
 
+// File item render component
+const renderFileItem = (file?: string) => (
+  <div className={styles['upload-file']}>
+    <img src={getFileIcon(file!)} alt="icon" />
+    <span>{file}</span>
+  </div>
+);
+
 export default function Upload({ name, className, title, multiple, onChange }: IUploadProps) {
   const [files, setFiles] = useState<string[]>([]);
 
@@ -41,9 +49,6 @@ export default function Upload({ name, className, title, multiple, onChange }: I
       <div>{t`点击或拖拽文件至此上传`}</div>
       <input className={styles['upload-input']} name={name} type="file" title={title} multiple={multiple} onChange={onChangeHandler} />
     </div>
-    <List items={files} onRenderCell={(file) => <div className={styles['upload-file']}>
-      <img src={getFileIcon(file!)} alt="icon" />
-      <span>{file}</span>
-    </div>}/>
+    <List items={files} onRenderCell={renderFileItem}/>
   </div>;
 }
