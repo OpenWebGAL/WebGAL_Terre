@@ -245,10 +245,6 @@ export class WebgalFsService {
    */
   async updateTextFile(path: string, content: string) {
     return await new Promise(async (resolve) => {
-      if (!(await this.exists(path))) {
-        await this.createEmptyFile(path);
-      }
-
       fs.writeFile(decodeURI(path), content)
         .then(() => resolve('Updated.'))
         .catch(() => resolve('path error or no right.'));
