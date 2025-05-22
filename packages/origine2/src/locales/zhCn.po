@@ -138,7 +138,7 @@ msgstr "playEffect:选择效果音文件;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo:选择视频文件;"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:393
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:396
 msgid "RGB电影滤镜"
 msgstr "RGB电影滤镜"
 
@@ -176,7 +176,7 @@ msgstr "WebGAL Classic"
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:188
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:191
 msgid "X轴位移"
 msgstr "X轴位移"
 
@@ -184,7 +184,7 @@ msgstr "X轴位移"
 #~ msgid "X轴位移："
 #~ msgstr "X轴位移："
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:215
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:218
 msgid "X轴缩放"
 msgstr "X轴缩放"
 
@@ -192,7 +192,7 @@ msgstr "X轴缩放"
 #~ msgid "X轴缩放："
 #~ msgstr "X轴缩放："
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:197
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:200
 msgid "Y轴位移"
 msgstr "Y轴位移"
 
@@ -200,7 +200,7 @@ msgstr "Y轴位移"
 #~ msgid "Y轴位移："
 #~ msgstr "Y轴位移："
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:224
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:227
 msgid "Y轴缩放"
 msgstr "Y轴缩放"
 
@@ -304,8 +304,8 @@ msgstr "主要样式"
 msgid "主页"
 msgstr "主页"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:261
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:316
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:264
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:319
 msgid "亮度"
 msgstr "亮度"
 
@@ -318,7 +318,7 @@ msgstr "亮度"
 msgid "代码编辑器"
 msgstr "代码编辑器"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:288
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:291
 msgid "伽马值"
 msgstr "伽马值"
 
@@ -398,7 +398,7 @@ msgstr "修改游戏图标"
 msgid "修改颜色"
 msgstr "修改颜色"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:344
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:347
 msgid "倒角"
 msgstr "倒角"
 
@@ -436,7 +436,7 @@ msgstr "停止 BGM"
 msgid "像素"
 msgstr "像素"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:394
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:397
 msgid "光辉电影滤镜"
 msgstr "光辉电影滤镜"
 
@@ -627,7 +627,7 @@ msgstr "单位毫秒。 0~ 有效"
 msgid "单行注释"
 msgstr "单行注释"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:360
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:363
 msgid "厚度"
 msgstr "厚度"
 
@@ -635,7 +635,7 @@ msgstr "厚度"
 #~ msgid "厚度："
 #~ msgstr "厚度："
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:391
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:394
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
 
@@ -650,7 +650,7 @@ msgstr "发现新版本"
 msgid "取消"
 msgstr "取消"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:187
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:190
 msgid "变换"
 msgstr "变换"
 
@@ -829,7 +829,7 @@ msgstr "实验性快速预览"
 msgid "宽度"
 msgstr "宽度"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:270
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:273
 msgid "对比度"
 msgstr "对比度"
 
@@ -959,8 +959,8 @@ msgstr "应用"
 msgid "应用的模板"
 msgstr "应用的模板"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:302
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:384
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:305
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:387
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:301
 msgid "应用颜色变化"
 msgstr "应用颜色变化"
@@ -973,8 +973,8 @@ msgstr "延迟时间（秒）"
 msgid "张开嘴"
 msgstr "张开嘴"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:307
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:351
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:310
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:354
 msgid "强度"
 msgstr "强度"
 
@@ -1119,11 +1119,11 @@ msgstr "播放效果音"
 msgid "播放视频"
 msgstr "播放视频"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:392
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:395
 msgid "故障电影滤镜"
 msgstr "故障电影滤镜"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:234
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:237
 msgid "效果"
 msgstr "效果"
 
@@ -1290,11 +1290,11 @@ msgstr "旁白模式，无角色名"
 #~ msgid "旋转："
 #~ msgstr "旋转："
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:206
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:209
 msgid "旋转（弧度）"
 msgstr "旋转（弧度）"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:369
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
 msgid "旋转（角度）"
 msgstr "旋转（角度）"
 
@@ -1427,7 +1427,7 @@ msgstr "模板名称"
 msgid "模板目录"
 msgstr "模板目录"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:325
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:328
 msgid "模糊"
 msgstr "模糊"
 
@@ -1459,7 +1459,7 @@ msgstr "永不换行"
 msgid "法语"
 msgstr "法语"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:306
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:309
 msgid "泛光"
 msgstr "泛光"
 
@@ -1576,15 +1576,15 @@ msgstr "游戏配置"
 msgid "源代码"
 msgstr "源代码"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:388
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:391
 msgid "滤镜"
 msgstr "滤镜"
 
-#: src/components/Assets/Upload.tsx:41
+#: src/components/Assets/Upload.tsx:49
 msgid "点击或拖拽文件至此上传"
 msgstr "点击或拖拽文件至此上传"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:390
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:393
 msgid "点状电影滤镜"
 msgstr "点状电影滤镜"
 
@@ -1768,7 +1768,7 @@ msgstr "繁体中文"
 msgid "缩放"
 msgstr "缩放"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:389
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:392
 msgid "老电影滤镜"
 msgstr "老电影滤镜"
 
@@ -2123,7 +2123,7 @@ msgstr "选项按钮外层"
 msgid "选项菜单"
 msgstr "选项菜单"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:235
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:238
 msgid "透明度（0-1）"
 msgstr "透明度（0-1）"
 
@@ -2184,7 +2184,7 @@ msgstr "闭上嘴"
 msgid "闭上眼睛"
 msgstr "闭上眼睛"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:334
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:337
 msgid "阈值"
 msgstr "阈值"
 
@@ -2240,11 +2240,11 @@ msgstr "预览图标"
 msgid "颜色"
 msgstr "颜色"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:254
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:257
 msgid "颜色调整"
 msgstr "颜色调整"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:279
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:282
 msgid "饱和度"
 msgstr "饱和度"
 
@@ -2260,7 +2260,7 @@ msgstr "饱和度"
 msgid "高度"
 msgstr "高度"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:244
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:247
 msgid "高斯模糊"
 msgstr "高斯模糊"
 
@@ -2272,27 +2272,27 @@ msgstr "高斯模糊"
 msgid "默认"
 msgstr "默认"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:191
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:200
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:209
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:247
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:310
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:328
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:337
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:354
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:363
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:194
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:203
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:212
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:250
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:313
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:331
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:340
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:357
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:366
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:375
 msgid "默认值0"
 msgstr "默认值0"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:218
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:227
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:238
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:264
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:273
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:282
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:291
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:319
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:221
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:230
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:241
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:267
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:276
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:285
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:294
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:322
 msgid "默认值1"
 msgstr "默认值1"
 
