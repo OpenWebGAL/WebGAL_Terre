@@ -7,7 +7,9 @@ import { t } from "@lingui/macro";
 import { ColorPicker, IColor } from "@fluentui/react";
 import { useState } from "react";
 import styles from "./effectEditor.module.scss";
+import React from "react";
 
+// eslint-disable-next-line complexity
 export function EffectEditor(props:{
   json:string,onChange:(newJson:string)=>void
 }){
@@ -119,6 +121,7 @@ export function EffectEditor(props:{
     bevelBlue.set(newColor.b);
   };
 
+  // eslint-disable-next-line complexity
   const updateObject = () => {
     const result:{[key: string]: any;} = {};
     console.log(x.value);

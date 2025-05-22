@@ -270,7 +270,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               }}
             />
           </CommonOptions>,
-          <div style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+          <div key="mouth-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="6" title={t`张开嘴`}>
               <>
                 {mouthOpen.value + "\u00a0\u00a0"}
@@ -282,7 +282,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               </>
             </CommonOptions>
           </div>,
-          <div style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+          <div key="mouth-half-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="7" title={t`半张嘴`}>
               <>
                 {mouthHalfOpen.value + "\u00a0\u00a0"}
@@ -294,7 +294,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               </>
             </CommonOptions>
           </div>,
-          <div style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+          <div key="mouth-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="8" title={t`闭上嘴`}>
               <>
                 {mouthClose.value + "\u00a0\u00a0"}
@@ -306,7 +306,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               </>
             </CommonOptions>
           </div>,
-          <div style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+          <div key="eyes-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="9" title={t`睁开眼睛`}>
               <>
                 {eyesOpen.value + "\u00a0\u00a0"}
@@ -318,7 +318,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               </>
             </CommonOptions>
           </div>,
-          <div style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+          <div key="eyes-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="10" title={t`闭上眼睛`}>
               <>
                 {eyesClose.value + "\u00a0\u00a0"}
