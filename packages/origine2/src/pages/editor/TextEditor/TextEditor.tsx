@@ -89,13 +89,13 @@ export default function TextEditor(props: ITextEditorProps) {
   const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     if(!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
-    const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
+    const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value) currentText.value = value;
     eventBus.emit('update-scene', currentText.value);
     api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
-      const targetValue = currentText.value.split('\n')[previousCursorPosition.lineNumber - 1];
-      WsUtil.sendSyncCommand(target?.path??'', previousCursorPosition.lineNumber, targetValue);
+      const targetValue = currentText.value.split('\n')[lineNumber - 1];
+      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
     });
   }, 500);
 
