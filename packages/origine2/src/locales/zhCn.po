@@ -2045,10 +2045,6 @@ msgid "选择立绘文件"
 msgstr "选择立绘文件"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
-#~ msgid "选择背景图片"
-#~ msgstr "选择背景图片"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:50
 msgid "选择背景文件"
 msgstr "选择背景文件"

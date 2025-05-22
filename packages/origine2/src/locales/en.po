@@ -1940,34 +1940,34 @@ msgstr "Choose"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:36
 msgid "选择动画"
-msgstr "Choose Animation"
+msgstr "Choose animation"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:39
 msgid "选择动画文件"
-msgstr ""
+msgstr "Choose animation file"
 
 #: src/components/IconCreator/IconCreator.tsx:682
 #: src/components/IconCreator/IconCreator.tsx:727
 msgid "选择图片"
-msgstr "Choose Image"
+msgstr "Choose image"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:369
 msgid "选择图片文件"
-msgstr ""
+msgstr "Choose image file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:23
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:46
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:60
 msgid "选择场景文件"
-msgstr "Choose Scene File"
+msgstr "Choose scene file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:22
 msgid "选择小头像"
-msgstr "Choose Avatar"
+msgstr "Choose avatar"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:31
 msgid "选择小头像文件"
-msgstr ""
+msgstr "Choose avatar file"
 
 #: src/pages/dashboard/Sidebar.tsx:123
 msgid "选择应用的模板"
@@ -1976,11 +1976,11 @@ msgstr "Select apply template"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayEffect.tsx:27
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayEffect.tsx:36
 msgid "选择效果音文件"
-msgstr "Choose Sound Effect File"
+msgstr "Choose sound effect file"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:65
 msgid "选择文件"
-msgstr ""
+msgstr "Choose file"
 
 #: src/pages/dashboard/Sidebar.tsx:121
 msgid "选择游戏引擎版本"
@@ -1988,7 +1988,7 @@ msgstr "Select game engine version"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:27
 msgid "选择视频文件"
-msgstr ""
+msgstr "Choose video file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:158
@@ -2001,13 +2001,9 @@ msgid "选择立绘文件"
 msgstr "Choose Figure File"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
-#~ msgid "选择背景图片"
-#~ msgstr "Choose Background Image"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:50
 msgid "选择背景文件"
-msgstr ""
+msgstr "Choose background file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:33
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:42
@@ -2016,27 +2012,27 @@ msgstr "Choose Background Music"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:220
 msgid "选择语音文件"
-msgstr ""
+msgstr "Choose voice file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:32
 msgid "选择进入动画"
-msgstr "Choose Enter Animation"
+msgstr "Choose enter animation"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:35
 msgid "选择进入动画文件"
-msgstr ""
+msgstr "Choose enter animation file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:41
 msgid "选择退出动画"
-msgstr "Choose Exit Animation"
+msgstr "Choose exit animation"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:44
 msgid "选择退出动画文件"
-msgstr ""
+msgstr "Choose exit animation file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:51
 msgid "选择鉴赏资源文件"
-msgstr ""
+msgstr "Choose appreciation asset file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:51
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:77

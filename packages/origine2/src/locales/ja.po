@@ -1944,7 +1944,7 @@ msgstr "アニメーションを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:39
 msgid "选择动画文件"
-msgstr ""
+msgstr "アニメーションファイルを選択"
 
 #: src/components/IconCreator/IconCreator.tsx:682
 #: src/components/IconCreator/IconCreator.tsx:727
@@ -1953,7 +1953,7 @@ msgstr "画像を選択"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:369
 msgid "选择图片文件"
-msgstr ""
+msgstr "画像ファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:23
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:46
@@ -1967,7 +1967,7 @@ msgstr "アバターを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:31
 msgid "选择小头像文件"
-msgstr ""
+msgstr "アバター画像ファイルを選択"
 
 #: src/pages/dashboard/Sidebar.tsx:123
 msgid "选择应用的模板"
@@ -1980,7 +1980,7 @@ msgstr "効果音ファイルを選択"
 
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:65
 msgid "选择文件"
-msgstr ""
+msgstr "ファイルを選択"
 
 #: src/pages/dashboard/Sidebar.tsx:121
 msgid "选择游戏引擎版本"
@@ -1988,7 +1988,7 @@ msgstr "ゲームエンジンのバージョンを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:27
 msgid "选择视频文件"
-msgstr ""
+msgstr "動画ファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:158
@@ -2001,13 +2001,9 @@ msgid "选择立绘文件"
 msgstr "立ち絵ファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
-#~ msgid "选择背景图片"
-#~ msgstr "背景画像を選択"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:50
 msgid "选择背景文件"
-msgstr ""
+msgstr "背景画像ファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:33
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:42
@@ -2016,7 +2012,7 @@ msgstr "BGMを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:220
 msgid "选择语音文件"
-msgstr ""
+msgstr "音声ファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:32
 msgid "选择进入动画"
@@ -2024,7 +2020,7 @@ msgstr "入るアニメーションを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:35
 msgid "选择进入动画文件"
-msgstr ""
+msgstr "入るアニメーションファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:41
 msgid "选择退出动画"
@@ -2032,11 +2028,11 @@ msgstr "出るアニメーションを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:44
 msgid "选择退出动画文件"
-msgstr ""
+msgstr "出るアニメーションファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:51
 msgid "选择鉴赏资源文件"
-msgstr ""
+msgstr "CG/BGMファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:51
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:77
