@@ -12,12 +12,12 @@ class EditorLineHolder{
   private mapSceneUrlToSentence = new Map<string,Position>();
   
   public recordSceneEditingLine(sceneUrl: string, lineNumber: number) {
-    this.mapSceneUrlToSentence.set(sceneUrl, new Position(lineNumber, 0))
+    this.mapSceneUrlToSentence.set(sceneUrl, new Position(lineNumber, 0));
     // console.log(this.mapSceneUrlToSentence);
   }
 
   public recordSceneEditingPosition(sceneUrl: string, position: Position) {
-    this.mapSceneUrlToSentence.set(sceneUrl, position)
+    this.mapSceneUrlToSentence.set(sceneUrl, position);
     // console.log(this.mapSceneUrlToSentence);
   }
 

@@ -1,15 +1,12 @@
-import {
-  CompletionItem,
-  CompletionItemKind,
-} from 'vscode-languageserver';
+import { CompletionItem, CompletionItemKind } from 'vscode-languageserver';
 import { commandType, markdown } from '../completion/commandArgs';
 
 export function getArgsKey(
   line: string,
-  command: commandType
+  command: commandType,
 ): CompletionItem[] {
-  switch(command) {
-    case (commandType.say): {
+  switch (command) {
+    case commandType.say: {
       return [
         whenKey,
         notendKey,
@@ -22,7 +19,7 @@ export function getArgsKey(
         clearKey,
       ];
     }
-    case (commandType.changeBg): {
+    case commandType.changeBg: {
       return [
         whenKey,
         nextKey,
@@ -32,30 +29,16 @@ export function getArgsKey(
         seriesKey,
       ];
     }
-    case (commandType.choose): {
-      return [
-        whenKey,
-      ];
+    case commandType.choose: {
+      return [whenKey];
     }
-    case (commandType.getUserInput): {
-      return [
-        whenKey,
-        nextKey,
-        titleKey,
-        buttonTextKey,
-        defaultValueKey,
-      ];
+    case commandType.getUserInput: {
+      return [whenKey, nextKey, titleKey, buttonTextKey, defaultValueKey];
     }
-    case (commandType.bgm): {
-      return [
-        whenKey,
-        volumeKey,
-        enterBgmKey,
-        unlocknameKey,
-        seriesKey,
-      ];
+    case commandType.bgm: {
+      return [whenKey, volumeKey, enterBgmKey, unlocknameKey, seriesKey];
     }
-    case (commandType.changeFigure): {
+    case commandType.changeFigure: {
       return [
         whenKey,
         nextKey,
@@ -76,7 +59,7 @@ export function getArgsKey(
         mouthCloseKey,
       ];
     }
-    case (commandType.intro): {
+    case commandType.intro: {
       return [
         whenKey,
         backgroundColorKey,
@@ -88,66 +71,32 @@ export function getArgsKey(
         userForwardKey,
       ];
     }
-    case (commandType.playEffect): {
-      return [
-        whenKey,
-        volumeKey,
-        idSoundKey,
-      ];
+    case commandType.playEffect: {
+      return [whenKey, volumeKey, idSoundKey];
     }
-    case (commandType.video): {
-      return [
-        whenKey,
-        skipOffKey,
-      ];
+    case commandType.video: {
+      return [whenKey, skipOffKey];
     }
-    case (commandType.setAnimation): {
-      return [
-        whenKey,
-        nextKey,
-        targetKey,
-      ];
+    case commandType.setAnimation: {
+      return [whenKey, nextKey, targetKey];
     }
-    case (commandType.setTransform): {
-      return [
-        whenKey,
-        nextKey,
-        targetKey,
-        durationKey,
-      ];
+    case commandType.setTransform: {
+      return [whenKey, nextKey, targetKey, durationKey];
     }
-    case (commandType.setTransition): {
-      return [
-        whenKey,
-        targetKey,
-        enterAnimationKey,
-        exitAnimationKey,
-      ];
+    case commandType.setTransition: {
+      return [whenKey, targetKey, enterAnimationKey, exitAnimationKey];
     }
-    case (commandType.setVar): {
-      return [
-        whenKey,
-        globalKey,
-      ];
+    case commandType.setVar: {
+      return [whenKey, globalKey];
     }
-    case (commandType.unlockCg): {
-      return [
-        whenKey,
-        nameKey,
-        seriesKey,
-      ];
+    case commandType.unlockCg: {
+      return [whenKey, nameKey, seriesKey];
     }
-    case (commandType.unlockBgm): {
-      return [
-        whenKey,
-        nameKey,
-        seriesKey,
-      ];
+    case commandType.unlockBgm: {
+      return [whenKey, nameKey, seriesKey];
     }
     default: {
-      return [
-        whenKey,
-      ]
+      return [whenKey];
     }
   }
 }
@@ -178,8 +127,7 @@ changeScene:3.txt;
 
 任何语句都可以加上 \`-when\` 参数来控制是否执行。通过组合 \`-when\` 参数和 \`jumpLabel\` \`callScene\` \`changeScene\`，你可以实现带条件判断的流程控制。
   `),
-}
-
+};
 
 const nextKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -195,7 +143,7 @@ const nextKey: CompletionItem = {
 changeBg:testBG03.jpg -next; // 会立刻执行下一条语句
 \`\`\`
   `),
-}
+};
 
 const durationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -205,7 +153,7 @@ const durationKey: CompletionItem = {
   documentation: markdown(`
 这个时间片的持续时间，单位为毫秒(ms)
   `),
-}
+};
 
 const figureIdKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -215,7 +163,7 @@ const figureIdKey: CompletionItem = {
   documentation: markdown(`
 为对话指定立绘ID，可同步该立绘的唇形
   `),
-}
+};
 
 const fontSizeKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -225,7 +173,7 @@ const fontSizeKey: CompletionItem = {
   documentation: markdown(`
 调整字体大小
   `),
-}
+};
 
 const notendKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -257,7 +205,7 @@ changeFigure:k2.png -next;
 用户点击鼠标后才会转到第二句 -concat;
 \`\`\`
   `),
-}
+};
 
 const concatKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -289,7 +237,7 @@ changeFigure:k2.png -next;
 用户点击鼠标后才会转到第二句 -concat;
 \`\`\`
   `),
-}
+};
 
 const leftKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -313,7 +261,7 @@ changeFigure:none;
 changeFigure:none -right;
 \`\`\`
   `),
-}
+};
 
 const rightKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -337,7 +285,7 @@ changeFigure:none;
 changeFigure:none -right;
 \`\`\`
   `),
-}
+};
 
 const idFigureKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -356,7 +304,7 @@ changeFigure:none -id=test1;
 
 > 如果你要重设某个带ID立绘的位置，请先关闭再重新打开。
   `),
-}
+};
 
 const idSoundKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -371,7 +319,7 @@ playEffect:xxx.mp3 -id=xxx;
 playEffect:none -id=xxx; // 停止这个循环的效果音
 \`\`\`
   `),
-}
+};
 
 const transformKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -387,7 +335,7 @@ const transformKey: CompletionItem = {
 changeFigure:stand.png -transform={"alpha":1,"position":{"x":0,"y":500},"scale":{"x":1,"y":1},"rotation":0,"blur":0,"brightness":1,"contrast":1,"saturation":1,"gamma":1,"colorRed":255,"colorGreen":255,"colorBlue":255,"oldFilm":0,"dotFilm":0,"reflectionFilm":0,"glitchFilm":0,"rgbFilm":0,"godrayFilm":0} -next;
 \`\`\`
   `),
-}
+};
 
 const zIndexKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -402,7 +350,7 @@ changeFigure:xxx.png -id=xxx -zIndex=0;
 changeFigure:yyy.png -id=yyy -zIndex=1;
 \`\`\`
   `),
-}
+};
 
 const animationFlagKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -417,7 +365,7 @@ const animationFlagKey: CompletionItem = {
 changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=char_eyes_close.png -mouthOpen=mouth.png -mouthHalfOpen=char_mouth_half_open.png -mouthClose=char_mouth_close.png; 
 \`\`\`
   `),
-}
+};
 
 const eyesOpenKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -432,7 +380,7 @@ const eyesOpenKey: CompletionItem = {
 changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=char_eyes_close.png -mouthOpen=mouth.png -mouthHalfOpen=char_mouth_half_open.png -mouthClose=char_mouth_close.png; 
 \`\`\`
   `),
-}
+};
 
 const eyesCloseKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -447,7 +395,7 @@ const eyesCloseKey: CompletionItem = {
 changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=char_eyes_close.png -mouthOpen=mouth.png -mouthHalfOpen=char_mouth_half_open.png -mouthClose=char_mouth_close.png; 
 \`\`\`
   `),
-}
+};
 
 const mouthOpenKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -462,7 +410,7 @@ const mouthOpenKey: CompletionItem = {
 changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=char_eyes_close.png -mouthOpen=mouth.png -mouthHalfOpen=char_mouth_half_open.png -mouthClose=char_mouth_close.png; 
 \`\`\`
   `),
-}
+};
 
 const mouthHalfOpenKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -477,7 +425,7 @@ const mouthHalfOpenKey: CompletionItem = {
 changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=char_eyes_close.png -mouthOpen=mouth.png -mouthHalfOpen=char_mouth_half_open.png -mouthClose=char_mouth_close.png; 
 \`\`\`
   `),
-}
+};
 
 const mouthCloseKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -492,7 +440,7 @@ const mouthCloseKey: CompletionItem = {
 changeFigure:char.png -animationFlag=on -eyesOpen=char_eyes_open.png -eyesClose=char_eyes_close.png -mouthOpen=mouth.png -mouthHalfOpen=char_mouth_half_open.png -mouthClose=char_mouth_close.png; 
 \`\`\`
   `),
-}
+};
 
 const motionKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -506,7 +454,7 @@ const motionKey: CompletionItem = {
 changeFigure:xxx.json -motion=angry -expression=angry01;
 \`\`\`
   `),
-}
+};
 
 const expressionKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -520,7 +468,7 @@ const expressionKey: CompletionItem = {
 changeFigure:xxx.json -motion=angry -expression=angry01;
 \`\`\`
   `),
-}
+};
 
 const boundsKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -534,7 +482,7 @@ const boundsKey: CompletionItem = {
 changeFigure:xxx.json -bounds=0,50,0,50;
 \`\`\`
   `),
-}
+};
 
 const unlocknameKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -544,7 +492,7 @@ const unlocknameKey: CompletionItem = {
   documentation: markdown(`
 CG或音乐解锁进鉴赏模式的命名
   `),
-}
+};
 
 const seriesKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -554,7 +502,7 @@ const seriesKey: CompletionItem = {
   documentation: markdown(`
 CG或音乐解锁进鉴赏模式后应当放在哪个系列
   `),
-}
+};
 
 const targetKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -564,7 +512,7 @@ const targetKey: CompletionItem = {
   documentation: markdown(`
 将动画或效果应用于指定目标
   `),
-}
+};
 
 const globalKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -596,7 +544,7 @@ label:turn-2;
 changeScene:二周目剧情.txt;
 \`\`\`
   `),
-}
+};
 
 const nameKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -606,7 +554,7 @@ const nameKey: CompletionItem = {
   documentation: markdown(`
 指定名称
   `),
-}
+};
 
 const backgroundColorKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -616,7 +564,7 @@ const backgroundColorKey: CompletionItem = {
   documentation: markdown(`
 指定背景颜色
   `),
-}
+};
 
 const fontColorKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -626,7 +574,7 @@ const fontColorKey: CompletionItem = {
   documentation: markdown(`
 指定字体颜色
   `),
-}
+};
 
 const animationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -636,7 +584,7 @@ const animationKey: CompletionItem = {
   documentation: markdown(`
 指定动画
   `),
-}
+};
 
 const holdKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -647,7 +595,7 @@ const holdKey: CompletionItem = {
 在手动播放模式下，文字显示完不自动播放下一句
 > 注：此参数对自动播放模式无效
   `),
-}
+};
 
 const userForwardKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -657,7 +605,7 @@ const userForwardKey: CompletionItem = {
   documentation: markdown(`
 手动播放一行一行文字
   `),
-}
+};
 
 const delayTimeKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -667,7 +615,7 @@ const delayTimeKey: CompletionItem = {
   documentation: markdown(`
 延迟时长
   `),
-}
+};
 
 const volumeKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -677,7 +625,7 @@ const volumeKey: CompletionItem = {
   documentation: markdown(`
 设置音量大小
   `),
-}
+};
 
 const enterBgmKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -687,7 +635,7 @@ const enterBgmKey: CompletionItem = {
   documentation: markdown(`
 音量淡入时间
   `),
-}
+};
 
 const enterAnimationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -697,7 +645,7 @@ const enterAnimationKey: CompletionItem = {
   documentation: markdown(`
 设置入场动画
   `),
-}
+};
 
 const exitAnimationKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -707,7 +655,7 @@ const exitAnimationKey: CompletionItem = {
   documentation: markdown(`
 设置退场动画
   `),
-}
+};
 
 const skipOffKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -717,7 +665,7 @@ const skipOffKey: CompletionItem = {
   documentation: markdown(`
 禁止跳过
   `),
-}
+};
 
 const titleKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -727,7 +675,7 @@ const titleKey: CompletionItem = {
   documentation: markdown(`
 对话框标题
   `),
-}
+};
 
 const buttonTextKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -737,7 +685,7 @@ const buttonTextKey: CompletionItem = {
   documentation: markdown(`
 确认按钮文本
   `),
-}
+};
 
 const defaultValueKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -747,7 +695,7 @@ const defaultValueKey: CompletionItem = {
   documentation: markdown(`
 默认值
   `),
-}
+};
 
 const vocalKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -757,7 +705,7 @@ const vocalKey: CompletionItem = {
   documentation: markdown(`
 播放语言文件
   `),
-}
+};
 
 const speakerKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -767,7 +715,7 @@ const speakerKey: CompletionItem = {
   documentation: markdown(`
 说话者
   `),
-}
+};
 
 const clearKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -777,4 +725,4 @@ const clearKey: CompletionItem = {
   documentation: markdown(`
 清除说话者
   `),
-}
+};

@@ -45,7 +45,7 @@ export default function TextEditor(props: ITextEditorProps) {
     configureMonaco(editor, monaco);
 
     editor.onDidChangeCursorPosition(debounce((event:monaco.editor.ICursorPositionChangedEvent) => {
-      const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath)
+      const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
@@ -73,7 +73,7 @@ export default function TextEditor(props: ITextEditorProps) {
         ["[", "]"],
         ["(", ")"],
       ],
-    }
+    };
     monaco.languages.setLanguageConfiguration('webgal', languageConfiguration);
   }
 
@@ -89,7 +89,7 @@ export default function TextEditor(props: ITextEditorProps) {
   const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     if(!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
-    const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath)
+    const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value) currentText.value = value;
     eventBus.emit('update-scene', currentText.value);

@@ -9,9 +9,7 @@ import { IScene } from 'webgal-parser/build/types/interface/sceneInterface';
 import { pprintJSON } from '../../../util/strings';
 import { webgalParser } from '../../../util/webgal-parser';
 import { handleFileSuggestions } from './fileSuggestion';
-import {
-  commandType,
-} from './commandArgs';
+import { commandType } from './commandArgs';
 import { lastVariables } from '../webgalLsp';
 import { getCommands } from '../suggestionRules/getCommands';
 import { getArgsKey } from '../suggestionRules/getArgsKey';
@@ -20,7 +18,7 @@ import { getArgsKey } from '../suggestionRules/getArgsKey';
  * Cache the last document lines
  */
 let lastDocumentLines = [];
-let variableList: Map<string, number> = new Map<string, number>();
+const variableList: Map<string, number> = new Map<string, number>();
 
 export function checkTriggerCompletion(
   params: TextDocumentChangeEvent<TextDocument>,
@@ -100,7 +98,7 @@ export async function complete(
     start: { line: position.line, character: 0 },
     end: position,
   });
-  
+
   // If cursor after comment region, disable completion
   if (line.includes(';') && position.character > line.indexOf(';')) {
     return [];
@@ -141,51 +139,95 @@ export async function complete(
       }
     } else {
       switch (sentence.command) {
-        case (commandType.say): {
+        case commandType.say: {
           break;
         }
-        case (commandType.changeBg): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.changeBg: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.changeFigure): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.changeFigure: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.bgm): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.bgm: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.video): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.video: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.playEffect): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.playEffect: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.miniAvatar): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.miniAvatar: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.changeScene): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.changeScene: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.callScene): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.callScene: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.unlockCg): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.unlockCg: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.unlockBgm): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.unlockBgm: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
-        case (commandType.choose): {
-          newSuggestions = await handleFileSuggestions(sentence, basePath, line);
+        case commandType.choose: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
           break;
         }
       }

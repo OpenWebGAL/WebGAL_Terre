@@ -1,7 +1,4 @@
-import {
-  MarkupContent,
-  MarkupKind,
-} from 'vscode-languageserver';
+import { MarkupContent, MarkupKind } from 'vscode-languageserver';
 // FIXME: Error: Cannot find module 'webgal-parser/src/interface/sceneInterface'
 // import { commandType } from 'webgal-parser/src/interface/sceneInterface';
 
@@ -47,6 +44,6 @@ export enum commandType {
 export function markdown(content: string): MarkupContent {
   return {
     kind: MarkupKind.Markdown,
-    value: content
-  }
+    value: content,
+  };
 }

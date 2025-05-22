@@ -11,7 +11,10 @@ import { IFileInfo, WebgalFsService } from '../../webgal-fs/webgal-fs.service';
 import { ConsoleLogger } from '@nestjs/common';
 
 function setKind(item: CompletionItem, isDir: boolean) {
-  return { ...item, kind: isDir ? CompletionItemKind.Folder : CompletionItemKind.File };
+  return {
+    ...item,
+    kind: isDir ? CompletionItemKind.Folder : CompletionItemKind.File,
+  };
 }
 
 export function makeFileSuggestion(files: IFileInfo[]): CompletionItem[] {
@@ -21,7 +24,7 @@ export function makeFileSuggestion(files: IFileInfo[]): CompletionItem[] {
         label: f.name,
         insertText: f.name,
       },
-      f.isDir
+      f.isDir,
     ),
   );
 }
@@ -42,7 +45,7 @@ function getPath(line: string): string {
   // 匹配第一个冒号到最后一个斜杠之间的内容
   // 包括最后一个斜杠，不包括第一个冒号以及紧接着的一个或多个空格
   const result = line.match('(?<=:\\s*)\\S.*/');
-  return result ? result[0] : "";
+  return result ? result[0] : '';
 }
 
 export async function handleFileSuggestions(
