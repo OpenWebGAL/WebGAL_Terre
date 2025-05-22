@@ -264,7 +264,7 @@
       }
     }
   ],
-  "semanticHighlighting": true,
+  "semanticHighlighting": false,
   "semanticTokenColors": {
     "variable": "#cf7000",
     "keyword": "#9966b8",

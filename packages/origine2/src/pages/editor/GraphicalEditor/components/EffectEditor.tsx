@@ -7,7 +7,9 @@ import { t } from "@lingui/macro";
 import { ColorPicker, IColor } from "@fluentui/react";
 import { useState } from "react";
 import styles from "./effectEditor.module.scss";
+import React from "react";
 
+// eslint-disable-next-line complexity
 export function EffectEditor(props:{
   json:string,onChange:(newJson:string)=>void
 }){
@@ -59,15 +61,15 @@ export function EffectEditor(props:{
     const r = red / 255;
     const g = green / 255;
     const b = blue / 255;
-    const cmax = Math.max(r, g, b), cmin = Math.min(r, g, b);
+    const cmax = Math.max(r, g, b); const cmin = Math.min(r, g, b);
     let delta = cmax - cmin;
     
     let h = 0;
     if (delta !== 0) {
-        if (cmax === r) h = ((g - b) / delta) * 60;
-        else if (cmax === g) h = ((b - r) / delta) * 60 + 120;
-        else h = ((r - g) / delta) * 60 + 240;
-        if (h < 0) h += 360;
+      if (cmax === r) h = ((g - b) / delta) * 60;
+      else if (cmax === g) h = ((b - r) / delta) * 60 + 120;
+      else h = ((r - g) / delta) * 60 + 240;
+      if (h < 0) h += 360;
     }
 
     let s = (cmax === 0) ? 0 : (delta / cmax) * 100.0;
@@ -83,22 +85,22 @@ export function EffectEditor(props:{
       v,
       hex: `${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}`,
       str: `rgba(${red}, ${green}, ${blue}, 100)`,
-    }
-  }
+    };
+  };
 
   const getColor = (): IColor => {
     const r = colorRed.value === "" ? 255 : colorRed.value;
     const g = colorGreen.value === "" ? 255 : colorGreen.value;
     const b = colorBlue.value === "" ? 255 : colorBlue.value;
     return rgbColor(r, g, b);
-  }
+  };
 
   const getBevelColor = (): IColor => {
     const r = bevelRed.value === "" ? 255 : bevelRed.value;
     const g = bevelGreen.value === "" ? 255 : bevelGreen.value;
     const b = bevelBlue.value === "" ? 255 : bevelBlue.value;
     return rgbColor(r, g, b);
-  }
+  };
 
   const color = useValue(getColor());
   const bevelColor = useValue(getBevelColor());
@@ -119,6 +121,7 @@ export function EffectEditor(props:{
     bevelBlue.set(newColor.b);
   };
 
+  // eslint-disable-next-line complexity
   const updateObject = () => {
     const result:{[key: string]: any;} = {};
     console.log(x.value);
@@ -185,51 +188,51 @@ export function EffectEditor(props:{
 
   return <>
     <OptionCategory key={1} title={t`变换`}>
-        <CommonOptions title={t`X轴位移`}>
-          <Input
-            value={x.value}
-            placeholder={t`默认值0`}
-            onChange={(_, data) => {
-              x.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`Y轴位移`}>
-          <Input
-            value={y.value}
-            placeholder={t`默认值0`}
-            onChange={(_, data) => {
-              y.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`旋转（弧度）`}>
-          <Input
-            value={rotation.value}
-            placeholder={t`默认值0`}
-            onChange={(_, data) => {
-              rotation.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`X轴缩放`}>
-          <Input
-            value={scaleX.value}
-            placeholder={t`默认值1`}
-            onChange={(_, data) => {
-              scaleX.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`Y轴缩放`}>
-          <Input
-            value={scaleY.value}
-            placeholder={t`默认值1`}
-            onChange={(_, data) => {
-              scaleY.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
+      <CommonOptions title={t`X轴位移`}>
+        <Input
+          value={x.value}
+          placeholder={t`默认值0`}
+          onChange={(_, data) => {
+            x.set(data.value);
+          }}
+          onBlur={submit}/>
+      </CommonOptions>
+      <CommonOptions title={t`Y轴位移`}>
+        <Input
+          value={y.value}
+          placeholder={t`默认值0`}
+          onChange={(_, data) => {
+            y.set(data.value);
+          }}
+          onBlur={submit}/>
+      </CommonOptions>
+      <CommonOptions title={t`旋转（弧度）`}>
+        <Input
+          value={rotation.value}
+          placeholder={t`默认值0`}
+          onChange={(_, data) => {
+            rotation.set(data.value);
+          }}
+          onBlur={submit}/>
+      </CommonOptions>
+      <CommonOptions title={t`X轴缩放`}>
+        <Input
+          value={scaleX.value}
+          placeholder={t`默认值1`}
+          onChange={(_, data) => {
+            scaleX.set(data.value);
+          }}
+          onBlur={submit}/>
+      </CommonOptions>
+      <CommonOptions title={t`Y轴缩放`}>
+        <Input
+          value={scaleY.value}
+          placeholder={t`默认值1`}
+          onChange={(_, data) => {
+            scaleY.set(data.value);
+          }}
+          onBlur={submit}/>
+      </CommonOptions>
     </OptionCategory>
     <OptionCategory key={2} title={t`效果`}>
       <CommonOptions title={t`透明度（0-1）`}>
@@ -277,13 +280,13 @@ export function EffectEditor(props:{
             onBlur={submit}/>
         </CommonOptions>
         <CommonOptions title={t`饱和度`}>
-        <Input
-          value={saturation.value}
-          placeholder={t`默认值1`}
-          onChange={(_, data) => {
-            saturation.set(data.value);
-          }}
-          onBlur={submit}/>
+          <Input
+            value={saturation.value}
+            placeholder={t`默认值1`}
+            onChange={(_, data) => {
+              saturation.set(data.value);
+            }}
+            onBlur={submit}/>
         </CommonOptions>
         <CommonOptions title={t`伽马值`}>
           <Input
@@ -298,7 +301,7 @@ export function EffectEditor(props:{
         <Button
           style={{ marginBottom: '14px' }}
           onClick={submit}
-          >
+        >
           {t`应用颜色变化`}
         </Button>
       </div>
@@ -378,10 +381,10 @@ export function EffectEditor(props:{
         </CommonOptions>
         <div style={{flexGrow: 1}}/>
         <Button
-            style={{ marginBottom: '14px' }}
-            onClick={submit}
-          >
-            {t`应用颜色变化`}
+          style={{ marginBottom: '14px' }}
+          onClick={submit}
+        >
+          {t`应用颜色变化`}
         </Button>
       </div>
     </OptionCategory>

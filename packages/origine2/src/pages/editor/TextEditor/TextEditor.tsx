@@ -20,8 +20,6 @@ interface ITextEditorProps {
   isHide: boolean;
 }
 
-let isAfterMount = false;
-
 export default function TextEditor(props: ITextEditorProps) {
   const target = useGameEditorContext((state) => state.currentTag);
   const tags = useGameEditorContext((state) => state.tags);
@@ -43,21 +41,40 @@ export default function TextEditor(props: ITextEditorProps) {
     logger.debug('脚本编辑器挂载');
     lspSceneName.value = sceneName;
     editorRef.current = editor;
+
+    configureMonaco(editor, monaco);
+
     editor.onDidChangeCursorPosition(debounce((event:monaco.editor.ICursorPositionChangedEvent) => {
-      const lineNumber = event.position.lineNumber;
+      const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
       const editorValue = editor.getValue();
-      const targetValue = editorValue.split('\n')[lineNumber - 1];
-      // const trueLineNumber = getTrueLinenumber(lineNumber, editorRef.current?.getValue()??'');
-      if (!isAfterMount) {
-        editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
-      }
+      const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
-        WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
+        if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
+          WsUtil.sendSyncCommand(target?.path??'', event.position.lineNumber, targetValue);
+        }
       }
-    }, 500));
-    editor.updateOptions({ unicodeHighlight: { ambiguousCharacters: false }, wordWrap: isAutoWarp ? 'on' : 'off' });
-    isAfterMount = true;
+      editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
+    }));
+    editor.updateOptions({
+      unicodeHighlight: { ambiguousCharacters: false },
+      wordWrap: isAutoWarp ? 'on' : 'off' ,
+      smoothScrolling: true,
+    });
     updateEditData();
+  }
+
+  function configureMonaco(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
+    const languageConfiguration: monaco.languages.LanguageConfiguration = {
+      comments: {
+        lineComment: ";",
+      },
+      brackets: [
+        ["{", "}"],
+        ["[", "]"],
+        ["(", ")"],
+      ],
+    };
+    monaco.languages.setLanguageConfiguration('webgal', languageConfiguration);
   }
 
   useEffect(() => {
@@ -72,17 +89,13 @@ export default function TextEditor(props: ITextEditorProps) {
   const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     if(!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
-    const lineNumber = ev.changes[0].range.startLineNumber;
-    if (!isAfterMount) {
-      editorLineHolder.recordSceneEdittingLine(props.targetPath, lineNumber);
-    }
-
+    const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value) currentText.value = value;
     eventBus.emit('update-scene', currentText.value);
     api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
-      const targetValue = currentText.value.split('\n')[lineNumber - 1];
-      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
+      const targetValue = currentText.value.split('\n')[previousCursorPosition.lineNumber - 1];
+      WsUtil.sendSyncCommand(target?.path??'', previousCursorPosition.lineNumber, targetValue);
     });
   }, 500);
 
@@ -97,12 +110,9 @@ export default function TextEditor(props: ITextEditorProps) {
         eventBus.emit('update-scene', data.toString());
         editorRef.current?.getModel()?.setValue(currentText.value);
         isEditorReady.value = true;
-        if (isAfterMount) {
-          const targetLine = editorLineHolder.getSceneLine(props.targetPath);
-          editorRef?.current?.setPosition({ lineNumber: targetLine, column: 0 });
-          editorRef?.current?.revealLineInCenter(targetLine, 0);
-          isAfterMount = false;
-        }
+        const targetPosition = editorLineHolder.getScenePosition(props.targetPath);
+        editorRef?.current?.setPosition(targetPosition);
+        editorRef?.current?.revealPositionInCenterIfOutsideViewport(targetPosition, monaco.editor.ScrollType.Immediate);
       });
   }
 
