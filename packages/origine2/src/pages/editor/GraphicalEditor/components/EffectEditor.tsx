@@ -8,6 +8,7 @@ import { ColorPicker, IColor } from "@fluentui/react";
 import { useState } from "react";
 import styles from "./effectEditor.module.scss";
 import React from "react";
+import { debounce } from "lodash";
 
 // eslint-disable-next-line complexity
 export function EffectEditor(props:{
@@ -107,19 +108,19 @@ export function EffectEditor(props:{
   const [localColor, setLocalColor] = useState(color.value);
   const [localBevelColor, setLocalBevelColor] = useState(bevelColor.value);
 
-  const handleLocalColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+  const handleLocalColorChange = debounce((ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
     setLocalColor(newColor);
     colorRed.set(newColor.r);
     colorGreen.set(newColor.g);
     colorBlue.set(newColor.b);
-  };
+  }, 500);
 
-  const handleLocalBevelColorChange = (ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+  const handleLocalBevelColorChange = debounce((ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
     setLocalBevelColor(newColor);
     bevelRed.set(newColor.r);
     bevelGreen.set(newColor.g);
     bevelBlue.set(newColor.b);
-  };
+  }, 500);
 
   // eslint-disable-next-line complexity
   const updateObject = () => {
