@@ -7,6 +7,7 @@ import WGColorPicker
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/components/WGColorPicker";
 import ChooseFile from "@/pages/editor/ChooseFile/ChooseFile";
 import useEditorStore from "@/store/useEditorStore";
+import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 
 
 type InputType = 'hex' | 'image' | 'gradient' | 'unknown'
@@ -64,6 +65,8 @@ export default function WGBackgroundEditor(props: IPropertyEditorProps) {
     return match ? match[1] : null;
   }
 
+  const rootPath = ['templates', templateName, 'assets'];
+
   return <div className={s.propertyEditor}>
     {selector}
     {valueType === 'hex' && <Popover open={isShowColorPicker} onOpenChange={(_, data) => {
@@ -83,11 +86,13 @@ export default function WGBackgroundEditor(props: IPropertyEditorProps) {
     />}
     {valueType === 'image' && <div style={{marginLeft: 8}}>
       <span>{extractFilePath(value)?.replace('game/template/assets/', '')}</span>
-      <ChooseFile sourceBase="" extName={[".png", ".jpg", ".webp"]}
+      <ChooseFile
+        rootPath={rootPath}
+        extNames={extNameMap.get('image')}
         onChange={(file) => {
-          setValue(`url("game/template/assets/${file?.pathFromBase ?? ""}")`);
+          file && setValue(`url("game/template/assets/${file.path.replace(rootPath.join('/'), '')}")`);
         }}
-        _hardBasePath={['templates', templateName, 'assets']}/>
+      />
     </div>}
     <Button style={{marginLeft: 8}} onClick={submit}>{t`提交修改`}</Button>
   </div>;

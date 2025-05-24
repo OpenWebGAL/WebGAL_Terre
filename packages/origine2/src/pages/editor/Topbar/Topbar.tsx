@@ -41,7 +41,7 @@ const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
 const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
 
 export default function TopBar() {
-  const gameName = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
 
   const isAutoHideToolbar = useEditorStore.use.isAutoHideToolbar();
   const updateIsAutoHideToolbar = useEditorStore.use.updateIisAutoHideToolbar();
@@ -110,7 +110,7 @@ export default function TopBar() {
         </Tab>}
       </TabList>
       <div className={styles.topbar_gamename}>
-        {gameName}
+        {gameDir}
       </div>
       <Menu>
         <MenuTrigger>

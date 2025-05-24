@@ -189,6 +189,11 @@ export class ManageTemplateService {
    */
   async getStyleByClass(path: string, className: string): Promise<string> {
     const targetPath = this.webgalFs.getPathFromRoot(`/public/${path}`);
+
+    if (!(await this.webgalFs.exists(targetPath))) {
+      await this.webgalFs.createEmptyFile(targetPath);
+    }
+
     const file = await fsp.readFile(targetPath);
     const str = file.toString();
     const classes = webgalParser.parseScssToWebgalStyleObj(str);

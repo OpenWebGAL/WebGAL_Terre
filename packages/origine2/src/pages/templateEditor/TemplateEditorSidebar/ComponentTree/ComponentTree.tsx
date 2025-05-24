@@ -87,13 +87,11 @@ export default function ComponentTree() {
     useComponentTreeChoose(),
   ];
 
-  const templateName = useEditorStore.use.subPage();
-  const basePath = `templates/${templateName}`;
-  const tree = componentTree.map(e => ({...e, path: `${basePath}/${e.path}`}));
+  const templateDir = useEditorStore.use.subPage();
 
   return (
     <div className={styles.componentTree}>
-      {tree.map((componentNode) =>
+      {componentTree.map((componentNode) =>
         <ComponentNode key={componentNode.name} componentNode={componentNode}/>
       )}
     </div>

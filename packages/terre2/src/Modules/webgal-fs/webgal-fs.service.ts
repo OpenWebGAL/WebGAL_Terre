@@ -1,12 +1,14 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { extname, join } from 'path';
+import { dirname, extname, join } from 'path';
 
 export interface IFileInfo {
   name: string;
   isDir: boolean;
   extName: string;
   path: string;
+  size?: number;
+  lastModified?: number;
 }
 
 export interface IUploadFileInfo {
@@ -45,6 +47,8 @@ export class WebgalFsService {
             isDir: result.isDirectory(),
             extName: extname(elementPath),
             path: elementPath,
+            size: result.isDirectory() ? 0 : result.size,
+            lastModified: result.mtimeMs,
           };
           resolve(ret);
         });
@@ -218,11 +222,20 @@ export class WebgalFsService {
    * @param path 文件路径
    */
   async createEmptyFile(path: string) {
-    return await new Promise<string>((resolve) => {
-      fs.writeFile(decodeURI(path), '')
-        .then(() => resolve('created'))
-        .catch(() => resolve('path error or no right.'));
-    });
+    try {
+      const decodedPath = decodeURI(path);
+      const directory = dirname(decodedPath);
+
+      if (!(await this.existsDir(directory))) {
+        await fs.mkdir(directory, { recursive: true });
+      }
+
+      await fs.writeFile(decodedPath, '');
+      return 'created';
+    } catch (error) {
+      this.logger.error(`创建文件失败: ${error.message}`);
+      return 'path error or no right.';
+    }
   }
 
   /**
@@ -231,7 +244,7 @@ export class WebgalFsService {
    * @param content 文本内容
    */
   async updateTextFile(path: string, content: string) {
-    return await new Promise((resolve) => {
+    return await new Promise(async (resolve) => {
       fs.writeFile(decodeURI(path), content)
         .then(() => resolve('Updated.'))
         .catch(() => resolve('path error or no right.'));

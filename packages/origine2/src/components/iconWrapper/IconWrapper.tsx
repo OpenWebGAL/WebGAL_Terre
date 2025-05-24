@@ -16,9 +16,14 @@ export default function IconWrapper(props: IIconWrapperProps) {
       width: `${size}px`,
       height: `${size}px`
     }}>
-    <img alt="icon" src={props.src} style={{
-      width: `${iconSize}px`,
-      height: `${iconSize}px`
-    }} />
+    <img
+      draggable='false'
+      alt="icon"
+      src={props.src}
+      style={{
+        width: `${iconSize}px`,
+        height: `${iconSize}px`
+      }}
+    />
   </div>;
 }

@@ -73,7 +73,6 @@ export function ViewTab() {
         relationship="description"
         showDelay={0}
         hideDelay={0}
-        withArrow
       >
         <div>
           <IconWithTextItem
