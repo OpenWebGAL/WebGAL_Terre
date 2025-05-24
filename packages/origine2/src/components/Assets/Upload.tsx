@@ -7,13 +7,13 @@ import {t} from '@lingui/macro';
 import { List } from '@fluentui/react';
 import { getFileIcon } from '@/utils/getFileIcon';
 
-export type IUploadProps = {
+export interface IUploadProps {
   name?: string;
   className?: string;
   title?: string;
   multiple?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
-};
+}
 
 const ArrowUploadIcon = bundleIcon(ArrowUpload32Filled, ArrowUpload32Regular);
 const ClosedCaptionIcon = bundleIcon(Delete20Filled, Delete20Regular);
@@ -22,16 +22,24 @@ const getFiles = (fileList?: FileList|null) => {
 
   const files = [];
   for (const file of fileList) {
-    files.push(file.name)
+    files.push(file.name);
   }
   return files;
-}
+};
+
+// File item render component
+const renderFileItem = (file?: string) => (
+  <div className={styles['upload-file']}>
+    <img src={getFileIcon(file!)} alt="icon" />
+    <span>{file}</span>
+  </div>
+);
 
 export default function Upload({ name, className, title, multiple, onChange }: IUploadProps) {
   const [files, setFiles] = useState<string[]>([]);
 
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (ev) => {
-    setFiles(getFiles(ev.target.files))
+    setFiles(getFiles(ev.target.files));
     onChange?.(ev);
   };
 
@@ -41,9 +49,6 @@ export default function Upload({ name, className, title, multiple, onChange }: I
       <div>{t`点击或拖拽文件至此上传`}</div>
       <input className={styles['upload-input']} name={name} type="file" title={title} multiple={multiple} onChange={onChangeHandler} />
     </div>
-    <List items={files} onRenderCell={(file) => <div className={styles['upload-file']}>
-        <img src={getFileIcon(file!)} alt="icon" />
-        <span>{file}</span>
-    </div>}/>
+    <List items={files} onRenderCell={renderFileItem}/>
   </div>;
 }

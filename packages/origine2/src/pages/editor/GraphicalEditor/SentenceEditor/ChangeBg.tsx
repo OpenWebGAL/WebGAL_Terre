@@ -78,14 +78,10 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           updateExpand(props.index);
         }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
-      <TerrePanel sentenceIndex={props.index} title={t`效果编辑器`}>
-        <div>
-          <CommonTips
-            text={t`提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令`}/>
-          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
-            json.set(newJson);
-            submit();
-          }}/>
+      <TerrePanel
+        sentenceIndex={props.index}
+        title={t`效果编辑器`}
+        bottomBarChildren={[
           <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
             <div>
               <Input
@@ -95,13 +91,22 @@ export default function ChangeBg(props: ISentenceEditorProps) {
                   const newDuration = Number(data.value);
                   if (isNaN(newDuration) || data.value === '')
                     duration.set("");
+
                   else
                     duration.set(newDuration);
-                }}
-                onBlur={submit}
-              />
+                } }
+                onBlur={submit} />
             </div>
-          </CommonOptions>
+          </CommonOptions>,
+        ]}
+      >
+        <div>
+          <CommonTips
+            text={t`提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令`}/>
+          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
+            json.set(newJson);
+            submit();
+          }}/>
         </div>
       </TerrePanel>
     </div>

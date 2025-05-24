@@ -248,14 +248,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       <TerrePanel
         title={t`效果编辑器`}
         sentenceIndex={props.index}
-      >
-        <div>
-          <CommonTips
-            text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
-          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
-            json.set(newJson);
-            submit();
-          }}/>
+        bottomBarChildren={[
           <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
             <div>
               <Input placeholder={t`持续时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
@@ -266,14 +259,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   duration.set(newDuration);
               }} onBlur={submit}/>
             </div>
-          </CommonOptions>
-        </div>
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '8px',
-          width: animationFlag.value !== "on" ? 'auto' : '100%'
-        }}>
+          </CommonOptions>,
           <CommonOptions title={t`唇形同步与眨眼`} key="5">
             <WheelDropdown
               options={animationFlags}
@@ -283,8 +269,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 submit();
               }}
             />
-          </CommonOptions>
-          {animationFlag.value === "on" &&
+          </CommonOptions>,
+          <div key="mouth-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="6" title={t`张开嘴`}>
               <>
                 {mouthOpen.value + "\u00a0\u00a0"}
@@ -294,8 +280,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 }}
                 extNames={extNameMap.get('image')}/>
               </>
-            </CommonOptions>}
-          {animationFlag.value === "on" &&
+            </CommonOptions>
+          </div>,
+          <div key="mouth-half-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="7" title={t`半张嘴`}>
               <>
                 {mouthHalfOpen.value + "\u00a0\u00a0"}
@@ -305,8 +292,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 }}
                 extNames={extNameMap.get('image')}/>
               </>
-            </CommonOptions>}
-          {animationFlag.value === "on" &&
+            </CommonOptions>
+          </div>,
+          <div key="mouth-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="8" title={t`闭上嘴`}>
               <>
                 {mouthClose.value + "\u00a0\u00a0"}
@@ -316,28 +304,40 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 }}
                 extNames={extNameMap.get('image')}/>
               </>
-            </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="9" title={t`睁开眼睛`}>
-            <>
-              {eyesOpen.value + "\u00a0\u00a0"}
-              <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
-                eyesOpen.set(fileDesc?.name ?? "");
-                submit();
-              }}
-              extNames={extNameMap.get('image')}/>
-            </>
-          </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="10" title={t`闭上眼睛`}>
-            <>
-              {eyesClose.value + "\u00a0\u00a0"}
-              <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
-                eyesClose.set(fileDesc?.name ?? "");
-                submit();
-              }}
-              extNames={extNameMap.get('image')}/>
-            </>
-          </CommonOptions>}
-        </div>
+            </CommonOptions>
+          </div>,
+          <div key="eyes-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+            <CommonOptions key="9" title={t`睁开眼睛`}>
+              <>
+                {eyesOpen.value + "\u00a0\u00a0"}
+                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
+                  eyesOpen.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extNames={extNameMap.get('image')}/>
+              </>
+            </CommonOptions>
+          </div>,
+          <div key="eyes-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+            <CommonOptions key="10" title={t`闭上眼睛`}>
+              <>
+                {eyesClose.value + "\u00a0\u00a0"}
+                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
+                  eyesClose.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extNames={extNameMap.get('image')}/>
+              </>
+            </CommonOptions>
+          </div>,
+        ]}
+      >
+        <CommonTips
+          text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
+        <EffectEditor json={json.value.toString()} onChange={(newJson) => {
+          json.set(newJson);
+          submit();
+        }}/>
       </TerrePanel>
 
     </div>
