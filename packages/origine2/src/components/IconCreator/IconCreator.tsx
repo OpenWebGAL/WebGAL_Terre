@@ -341,9 +341,11 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
  * @param imageDataUTL 要裁剪的图像 Data URL。
  * @param inset 0-1 之间的值，表示裁剪区域的内边距百分比。
  * @param shape 裁剪的形状。
+ * @param format 图像格式。默认为 'png'。
  * @returns 裁剪后的图像 Data URL。
  */
-  const clipImage = async (imageDataUTL: string, inset: number, shape: IIconShape): Promise<string> => {
+  // eslint-disable-next-line max-params
+  const clipImage = async (imageDataUTL: string, inset: number, shape: IIconShape, format = 'png'): Promise<string> => {
     const img = new Image();
     img.src = imageDataUTL;
 
@@ -392,7 +394,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
     ctx.drawImage(img, drawX, drawY, img.width, img.height);
 
-    return canvas.toDataURL();
+    return canvas.toDataURL(`image/${format}`);
   };
 
   /**
@@ -401,12 +403,15 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
    * @param imageDataURL 要调整的图像 Data URL。
    * @param size 新图像的尺寸。
    * @param padding 0-1 之间的值，表示边距占图像大小的比例。
+   * @param format 图像格式。默认为 'png'。
    * @returns 调整后的图像 Data URL。
    */
   const resizeImage = async (
     imageDataURL: string,
     size: number,
     padding = 0,
+    format = 'png',
+    // eslint-disable-next-line max-params
   ): Promise<string> => {
     const img = new Image();
     img.src = imageDataURL;
@@ -433,7 +438,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
     ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
 
-    return canvas.toDataURL();
+    return canvas.toDataURL(`image/${format}`);
   };
 
   const clipIcons = async () => {
@@ -520,23 +525,10 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
       icLauncherPlayStoreFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidFullBleed.src, 512)), 'ic_launcher-playstore.png');
       await axios.post('/api/assets/upload', icLauncherPlayStoreFormData);
 
-      // values 文件夹
-      if (backgroundStyle === 'color') {
-        const icLauncherBackgroundXmlContent = `<?xml version="1.0" encoding="utf-8"?>
-  <resources>
-  <color name="ic_launcher_background">${tinycolor(backgroundColor).toHexString()}</color>
-</resources>`;
-        const icLauncherBackgroundXmlBlob = new Blob([icLauncherBackgroundXmlContent], { type: 'text/xml' });
-        const valuesFormData = new FormData();
-        valuesFormData.append('targetDirectory', `games/${gameDir}/icons/android/values`);
-        valuesFormData.append('files', icLauncherBackgroundXmlBlob, 'ic_launcher_background.xml');
-        await axios.post('/api/assets/upload', valuesFormData);
-      }
-
       // mipmap-anydpi-v26 文件夹
       const icLauncherXmlContent = `<?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="${backgroundStyle === 'color' ? '@color' : '@mipmap'}/ic_launcher_background"/>
+    <background android:drawable="@mipmap/ic_launcher_background"/>
     <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
 </adaptive-icon>`;
       const icLauncherXmlBlob = new Blob([icLauncherXmlContent], { type: 'text/xml' });
@@ -549,56 +541,46 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
       // mipmap-xxxhdpi 文件夹
       const xxxhdpiFormData = new FormData();
       xxxhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xxxhdpi`);
-      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 192)), 'ic_launcher.png');
-      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 192)), 'ic_launcher_round.png');
-      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 432)), 'ic_launcher_foreground.png');
-      if (backgroundStyle === 'image') {
-        xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 432)), 'ic_launcher_background.png');
-      }
+      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 192, 0, 'webp')), 'ic_launcher.webp');
+      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 192, 0, 'webp')), 'ic_launcher_round.webp');
+      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 432, 0, 'webp')), 'ic_launcher_foreground.webp');
+      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 432, 0, 'webp')), 'ic_launcher_background.webp');
       await axios.post('/api/assets/upload', xxxhdpiFormData);
 
       // mipmap-xxhdpi 文件夹
       const xxhdpiFormData = new FormData();
       xxhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xxhdpi`);
-      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 144)), 'ic_launcher.png');
-      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 144)), 'ic_launcher_round.png');
-      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 324)), 'ic_launcher_foreground.png');
-      if (backgroundStyle === 'image') {
-        xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 324)), 'ic_launcher_background.png');
-      }
+      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 144, 0, 'webp')), 'ic_launcher.webp');
+      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 144, 0, 'webp')), 'ic_launcher_round.webp');
+      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 324, 0, 'webp')), 'ic_launcher_foreground.webp');
+      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 324, 0, 'webp')), 'ic_launcher_background.webp');
       await axios.post('/api/assets/upload', xxhdpiFormData);
 
       // mipmap-xhdpi 文件夹
       const xhdpiFormData = new FormData();
       xhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xhdpi`);
-      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 96)), 'ic_launcher.png');
-      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 96)), 'ic_launcher_round.png');
-      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 216)), 'ic_launcher_foreground.png');
-      if (backgroundStyle === 'image') {
-        xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 216)), 'ic_launcher_background.png');
-      }
+      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 96, 0, 'webp')), 'ic_launcher.webp');
+      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 96, 0, 'webp')), 'ic_launcher_round.webp');
+      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 216, 0, 'webp')), 'ic_launcher_foreground.webp');
+      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 216, 0, 'webp')), 'ic_launcher_background.webp');
       await axios.post('/api/assets/upload', xhdpiFormData);
 
       // mipmap-hdpi 文件夹
       const hdpiFormData = new FormData();
       hdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-hdpi`);
-      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 72)), 'ic_launcher.png');
-      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 72)), 'ic_launcher_round.png');
-      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 162)), 'ic_launcher_foreground.png');
-      if (backgroundStyle === 'image') {
-        hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 162)), 'ic_launcher_background.png');
-      }
+      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 72, 0, 'webp')), 'ic_launcher.webp');
+      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 72, 0, 'webp')), 'ic_launcher_round.webp');
+      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 162, 0, 'webp')), 'ic_launcher_foreground.webp');
+      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 162, 0, 'webp')), 'ic_launcher_background.webp');
       await axios.post('/api/assets/upload', hdpiFormData);
 
       // mipmap-mdpi 文件夹
       const mdpiFormData = new FormData();
       mdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-mdpi`);
-      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 48)), 'mipmap-mdpi/ic_launcher.png');
-      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 48)), 'mipmap-mdpi/ic_launcher_round.png');
-      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 108)), 'mipmap-mdpi/ic_launcher_foreground.png');
-      if (backgroundStyle === 'image') {
-        mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 108)), 'ic_launcher_background.png');
-      }
+      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 48, 0, 'webp')), 'mipmap-mdpi/ic_launcher.webp');
+      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 48, 0, 'webp')), 'mipmap-mdpi/ic_launcher_round.webp');
+      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 108, 0, 'webp')), 'mipmap-mdpi/ic_launcher_foreground.webp');
+      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 108, 0, 'webp')), 'ic_launcher_background.webp');
       await axios.post('/api/assets/upload', mdpiFormData);
       console.log('上传 Android 图标成功');
     } catch (error) {
