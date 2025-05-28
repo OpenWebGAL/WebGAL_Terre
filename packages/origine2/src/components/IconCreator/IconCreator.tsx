@@ -48,7 +48,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
   const [iconShape, setIconShape] = useState<IIconShape>('square');
   const [backgroundStyle, setBackgroundStyle] = useState<IBackgroundStyle>('color');
-  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF00');
   const [gridLineColor, setGridLineColor] = useState<'#FFFFFF' | '#000000'>('#000000');
   const [icons, setIcons] = useState<IIcons | null>(null);
 
@@ -167,7 +167,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
       if (ctx) {
         ctx.clearRect(0, 0, canvasSize, canvasSize);
         if (backgroundStyle === 'color') {
-          ctx.fillStyle = tinycolor(backgroundColor).toHex8String();
+          ctx.fillStyle = backgroundColor;
           ctx.fillRect(0, 0, canvasSize, canvasSize);
         } else if (backgroundStyle === 'image') {
           // ctx.fillStyle = '#FFFFFF';
@@ -458,7 +458,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     ]);
     const ico = URL.createObjectURL(new Blob([icoBlob], { type: 'image/x-icon' }));
 
-    const androidFullBleed = await getCompositedImage([background, foreground], canvasSize, backgroundStyle === 'color' ? backgroundColor : undefined);
+    const androidFullBleed = await getCompositedImage([background, foreground], canvasSize);
     if (!androidFullBleed) return null;
     const androidLegacyImage = await clipImage(maskable, clipInset.android.legacy, 'rounded-rectangle');
     const androidRoundImage = await clipImage(maskable, clipInset.android.round, 'circle');
@@ -595,7 +595,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     setIsOpen(false);
     setForegroundImage(null);
     setBackgroundImage(null);
-    setBackgroundColor('#FFFFFF');
+    setBackgroundColor('#FFFFFF00');
     setForegroundOffset({ x: 0, y: 0 });
     setBackgroundOffset({ x: 0, y: 0 });
     setForegroundScale(1);
