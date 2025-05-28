@@ -200,7 +200,7 @@ msgstr "z-index"
 msgid "一直显示功能区"
 msgstr "Always Show Toolbar"
 
-#: src/components/IconCreator/IconCreator.tsx:792
+#: src/components/IconCreator/IconCreator.tsx:774
 msgid "上一步"
 msgstr "Previous"
 
@@ -213,7 +213,7 @@ msgstr "Upload"
 msgid "上传资源"
 msgstr "Upload asset"
 
-#: src/components/IconCreator/IconCreator.tsx:789
+#: src/components/IconCreator/IconCreator.tsx:771
 msgid "下一步"
 msgstr "Next"
 
@@ -364,11 +364,11 @@ msgstr "Sidebar"
 msgid "侧边栏游戏预览"
 msgstr "Sidebar Game Preview"
 
-#: src/components/IconCreator/IconCreator.tsx:811
+#: src/components/IconCreator/IconCreator.tsx:793
 msgid "保存"
 msgstr "Save"
 
-#: src/components/IconCreator/IconCreator.tsx:635
+#: src/components/IconCreator/IconCreator.tsx:617
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:202
 msgid "修改游戏图标"
 msgstr "Change game icon"
@@ -578,7 +578,7 @@ msgstr "Refresh"
 msgid "刷新游戏"
 msgstr "Refresh game"
 
-#: src/components/IconCreator/IconCreator.tsx:668
+#: src/components/IconCreator/IconCreator.tsx:650
 msgid "前景"
 msgstr "Foreground"
 
@@ -624,7 +624,7 @@ msgid "发现新版本"
 msgstr "New version detected"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
-#: src/components/IconCreator/IconCreator.tsx:788
+#: src/components/IconCreator/IconCreator.tsx:770
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:55
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
@@ -684,12 +684,12 @@ msgstr "Image"
 msgid "图形编辑器"
 msgstr "Graphical editor"
 
-#: src/components/IconCreator/IconCreator.tsx:698
-#: src/components/IconCreator/IconCreator.tsx:704
+#: src/components/IconCreator/IconCreator.tsx:680
+#: src/components/IconCreator/IconCreator.tsx:686
 msgid "图片"
 msgstr "Image"
 
-#: src/components/IconCreator/IconCreator.tsx:628
+#: src/components/IconCreator/IconCreator.tsx:610
 msgid "圆形"
 msgstr "Circle"
 
@@ -697,7 +697,7 @@ msgstr "Circle"
 msgid "圆角"
 msgstr "Rounded corners"
 
-#: src/components/IconCreator/IconCreator.tsx:629
+#: src/components/IconCreator/IconCreator.tsx:611
 msgid "圆角矩形"
 msgstr "Rounded rectangle"
 
@@ -1254,7 +1254,7 @@ msgstr "New template"
 msgid "新的游戏"
 msgstr "New game"
 
-#: src/components/IconCreator/IconCreator.tsx:627
+#: src/components/IconCreator/IconCreator.tsx:609
 msgid "方形"
 msgstr "Square"
 
@@ -1714,7 +1714,7 @@ msgstr "Absolutely"
 #~ msgid "绿色（0-255）："
 #~ msgstr "Green (0-255)"
 
-#: src/components/IconCreator/IconCreator.tsx:643
+#: src/components/IconCreator/IconCreator.tsx:625
 msgid "编辑图标"
 msgstr "Edit icon"
 
@@ -1744,7 +1744,7 @@ msgstr "Scale"
 msgid "老电影滤镜"
 msgstr "Old film filter"
 
-#: src/components/IconCreator/IconCreator.tsx:696
+#: src/components/IconCreator/IconCreator.tsx:678
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
@@ -1843,7 +1843,7 @@ msgstr "Get input"
 msgid "行脚本"
 msgstr "Line of script"
 
-#: src/components/IconCreator/IconCreator.tsx:742
+#: src/components/IconCreator/IconCreator.tsx:724
 msgid "裁剪形状"
 msgstr "Clip Shape"
 
@@ -1949,11 +1949,11 @@ msgstr "Language"
 msgid "语音"
 msgstr "Voice"
 
-#: src/components/IconCreator/IconCreator.tsx:688
+#: src/components/IconCreator/IconCreator.tsx:670
 msgid "调整前景图片"
 msgstr "Resize foreground image"
 
-#: src/components/IconCreator/IconCreator.tsx:732
+#: src/components/IconCreator/IconCreator.tsx:714
 msgid "调整背景图片"
 msgstr "Resize background image"
 
@@ -2011,8 +2011,8 @@ msgstr "Choose"
 msgid "选择动画"
 msgstr "Choose Animation"
 
-#: src/components/IconCreator/IconCreator.tsx:682
-#: src/components/IconCreator/IconCreator.tsx:727
+#: src/components/IconCreator/IconCreator.tsx:664
+#: src/components/IconCreator/IconCreator.tsx:709
 msgid "选择图片"
 msgstr "Choose Image"
 
@@ -2201,12 +2201,12 @@ msgstr "Music"
 msgid "项目主页"
 msgstr "Project Homepage"
 
-#: src/components/IconCreator/IconCreator.tsx:643
+#: src/components/IconCreator/IconCreator.tsx:625
 msgid "预览图标"
 msgstr "Preview icon"
 
-#: src/components/IconCreator/IconCreator.tsx:698
-#: src/components/IconCreator/IconCreator.tsx:703
+#: src/components/IconCreator/IconCreator.tsx:680
+#: src/components/IconCreator/IconCreator.tsx:685
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:49
 msgid "颜色"
