@@ -509,9 +509,6 @@ export class ManageGameService {
         // 复制图标
         const icons = await this.getIcons(gameName);
         if (icons.platforms.includes('android')) {
-          this.webgalFs.deleteFileOrDirectory(
-            `${androidExportDir}/app/src/main/res/values/ic_launcher_background.xml`,
-          );
           await this.webgalFs.copy(
             this.webgalFs.getPathFromRoot(
               `/public/games/${gameName}/icons/android`,

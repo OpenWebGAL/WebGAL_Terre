@@ -85,7 +85,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   function submitScene(newSentences: SentenceItem[], index: number) {
     const newScene = mergeToString(newSentences.map(item => item.content));
     const updateIndex = index + 1;
-    editorLineHolder.recordSceneEdittingLine(props.targetPath, updateIndex);
+    editorLineHolder.recordSceneEditingLine(props.targetPath, updateIndex);
 
     api.assetsControllerEditTextFile({
       textFile: newScene,
@@ -138,7 +138,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     if (!result.destination) {
       return;
     }
-    editorLineHolder.recordSceneEdittingLine(props.targetPath, result.destination.index);
+    editorLineHolder.recordSceneEditingLine(props.targetPath, result.destination.index);
     reorder(
       result.source.index,
       result.destination.index
@@ -148,6 +148,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   function syncToIndex(index: number) {
     const targetValue = sentenceData.value[index]?.content || "";
     WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue,true);
+    editorLineHolder.recordSceneEditingLine(props.targetPath, index + 1);
   }
 
   useEffect(() => {
