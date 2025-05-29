@@ -279,6 +279,7 @@ msgstr "主页"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:320
 msgid "亮度"
 msgstr "亮度"
+
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:96
 msgid "代码编辑器"
 msgstr "代码编辑器"
@@ -349,10 +350,8 @@ msgstr "保存"
 msgid "修改时间"
 msgstr "修改时间"
 
-#: src/components/IconCreator/IconCreator.tsx:635
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:204
 #: src/components/IconCreator/IconCreator.tsx:617
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:202
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:204
 msgid "修改游戏图标"
 msgstr "修改游戏图标"
 
@@ -613,10 +612,8 @@ msgid "发现新版本"
 msgstr "发现新版本"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
-#: src/components/IconCreator/IconCreator.tsx:788
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 #: src/components/IconCreator/IconCreator.tsx:770
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "取消"
@@ -1714,7 +1711,6 @@ msgstr "缩放"
 msgid "网格视图"
 msgstr "网格视图"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:392
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:393
 msgid "老电影滤镜"
 msgstr "老电影滤镜"
@@ -1985,8 +1981,6 @@ msgstr "选择动画"
 msgid "选择动画文件"
 msgstr "选择动画文件"
 
-#: src/components/IconCreator/IconCreator.tsx:682
-#: src/components/IconCreator/IconCreator.tsx:727
 #: src/components/IconCreator/IconCreator.tsx:664
 #: src/components/IconCreator/IconCreator.tsx:709
 msgid "选择图片"

@@ -351,10 +351,8 @@ msgstr "セーブ"
 msgid "修改时间"
 msgstr "最終更新"
 
-#: src/components/IconCreator/IconCreator.tsx:635
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:204
 #: src/components/IconCreator/IconCreator.tsx:617
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:202
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:204
 msgid "修改游戏图标"
 msgstr "ゲームアイコンの変更"
 
@@ -615,10 +613,8 @@ msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
-#: src/components/IconCreator/IconCreator.tsx:788
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 #: src/components/IconCreator/IconCreator.tsx:770
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:55
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "キャンセル"
@@ -1716,7 +1712,6 @@ msgstr "スケール"
 msgid "网格视图"
 msgstr "グリッドビュー"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:392
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:393
 msgid "老电影滤镜"
 msgstr "古い映画"
@@ -1987,8 +1982,6 @@ msgstr "アニメーションを選択"
 msgid "选择动画文件"
 msgstr "アニメーションファイルを選択"
 
-#: src/components/IconCreator/IconCreator.tsx:682
-#: src/components/IconCreator/IconCreator.tsx:727
 #: src/components/IconCreator/IconCreator.tsx:664
 #: src/components/IconCreator/IconCreator.tsx:709
 msgid "选择图片"
