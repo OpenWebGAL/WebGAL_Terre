@@ -217,14 +217,6 @@ msgstr "アセットのアップロード"
 msgid "下一步"
 msgstr "次に"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
-msgid "下雨"
-msgstr "雨"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:13
-msgid "下雪"
-msgstr "雪"
-
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
 msgstr "選択できない選択肢"
@@ -318,12 +310,12 @@ msgstr "実験的な高速プレビューを有効にすると、リアルタイ
 msgid "使用中的模板："
 msgstr "使用中のテンプレート："
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:47
 msgid "使用引擎内置的特效"
 msgstr "デフォルトの特殊効果を使用"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:124
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:40
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:41
 msgid "使用特效"
 msgstr "特殊効果を使う"
 
@@ -331,12 +323,12 @@ msgstr "特殊効果を使う"
 msgid "使用立绘ID"
 msgstr "立ち絵のIDを使用"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:47
 msgid "使用自定义特效"
 msgstr "カスタムの特殊効果を使用"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:42
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:43
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:49
 msgid "使用预制特效"
 msgstr "プレハブ効果を使用"
 
@@ -744,6 +736,10 @@ msgstr "マージン"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:59
 msgid "大"
 msgstr "大きい"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
+msgid "大雪"
+msgstr "大雪"
 
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:71
 msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
@@ -1415,7 +1411,7 @@ msgstr "ぼやける"
 #~ msgid "模糊："
 #~ msgstr "ぼやける"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:16
 msgid "櫻花"
 msgstr "桜"
 
@@ -1504,8 +1500,8 @@ msgid "清除当前舞台的特殊效果"
 msgstr "現在のステージの特殊効果をクリア"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:132
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:33
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:40
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:34
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:41
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
@@ -1809,8 +1805,8 @@ msgstr "Live2D 描画範囲のカスタマイズ"
 msgid "自定义值"
 msgstr "カスタム値"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:58
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:66
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:59
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:67
 msgid "自定义特效名称"
 msgstr "カスタムの特殊効果名"
 
@@ -2172,6 +2168,14 @@ msgstr "サイドバーを隠す"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTextbox.tsx:20
 msgid "隐藏文本框"
 msgstr "テキストボックスを非表示"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
+msgid "雨"
+msgstr "雨"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:13
+msgid "雪"
+msgstr "雪"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGPosition.tsx:15
 msgid "静态"

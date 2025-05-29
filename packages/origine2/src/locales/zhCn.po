@@ -233,14 +233,6 @@ msgstr "上传资源"
 msgid "下一步"
 msgstr "下一步"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
-msgid "下雨"
-msgstr "下雨"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:13
-msgid "下雪"
-msgstr "下雪"
-
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
 msgstr "不可选项"
@@ -338,12 +330,12 @@ msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览
 msgid "使用中的模板："
 msgstr "使用中的模板："
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:47
 msgid "使用引擎内置的特效"
 msgstr "使用引擎内置的特效"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:124
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:40
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:41
 msgid "使用特效"
 msgstr "使用特效"
 
@@ -351,12 +343,12 @@ msgstr "使用特效"
 msgid "使用立绘ID"
 msgstr "使用立绘ID"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:46
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:47
 msgid "使用自定义特效"
 msgstr "使用自定义特效"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:42
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:43
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:49
 msgid "使用预制特效"
 msgstr "使用预制特效"
 
@@ -764,6 +756,10 @@ msgstr "外边距"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:59
 msgid "大"
 msgstr "大"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:14
+msgid "大雪"
+msgstr "大雪"
 
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:71
 msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
@@ -1435,7 +1431,7 @@ msgstr "模糊"
 #~ msgid "模糊："
 #~ msgstr "模糊："
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:16
 msgid "櫻花"
 msgstr "櫻花"
 
@@ -1524,8 +1520,8 @@ msgid "清除当前舞台的特殊效果"
 msgstr "清除当前舞台的特殊效果"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:132
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:33
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:40
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:34
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:41
 msgid "清除特效"
 msgstr "清除特效"
 
@@ -1837,8 +1833,8 @@ msgstr "自定义 Live2D 绘制范围"
 msgid "自定义值"
 msgstr "自定义值"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:58
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:66
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:59
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:67
 msgid "自定义特效名称"
 msgstr "自定义特效名称"
 
@@ -2200,6 +2196,14 @@ msgstr "隐藏侧边栏"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTextbox.tsx:20
 msgid "隐藏文本框"
 msgstr "隐藏文本框"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
+msgid "雨"
+msgstr "雨"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:13
+msgid "雪"
+msgstr "雪"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGPosition.tsx:15
 msgid "静态"
