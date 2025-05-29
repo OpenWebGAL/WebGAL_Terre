@@ -88,14 +88,6 @@
   background: var(--primary-10pct);
 }
 
-.addIcon {
-  padding: 5px 5px 4px 5px;
-  background: var(--primary-10pct);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  margin: 0 10px 0 0;
-}
-
 .addIcon:hover {
   background: rgba(0, 92, 175, 0.15);
 }
@@ -104,10 +96,11 @@
   position: relative;
   display: flex;
   width: 100%;
-  padding: 10px;
-  margin: 0 5px 0 0;
+  padding: 8px;
+  padding-right: 4px;
+  margin: 0 6px 0 0;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
   border-radius: var(--radius-md);
 }
 
@@ -119,6 +112,7 @@
   width: 96px;
   height: 54px;
   object-fit: cover;
+  border-radius: var(--radius-sm);
 }
 
 .imageChooseItemText {

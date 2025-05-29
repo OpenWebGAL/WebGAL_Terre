@@ -1,3 +1,5 @@
+import { ISortBy, ISortOrder, IViewType } from "@/components/Assets/Assets";
+
 export interface ITag {
   name: string,
   type: 'asset' | 'scene',

@@ -1,23 +1,43 @@
 .file {
-  display: flex;
-  flex-direction: row;
+  display: inline-flex;
   align-items: center;
   gap: 2px;
   padding: 0 8px;
   cursor: pointer;
-  height: 28px;
+  width: 100%;
   border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
 }
 
-.file > button {
-  visibility: hidden;
+.list {
+  flex-direction: row;
+  height: 28px;
 }
 
+.grid {
+  flex-direction: column;
+  aspect-ratio: 1 / 1;
+}
+
+.fileSelected,
 .file:hover {
   background: var(--bg-button-hover);
 }
 
-.file:hover > button {
+.fileAction {
+  position: absolute;
+  visibility: hidden;
+  right: 2px;
+  background-color: var(--bg-input);
+  border-radius: var(--radius-md);
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.file:hover .fileAction {
   visibility: visible;
 }
 

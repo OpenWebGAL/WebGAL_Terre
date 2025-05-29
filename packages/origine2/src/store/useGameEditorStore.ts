@@ -13,7 +13,7 @@ const initState: IGameEditorState = {
   isShowDebugger: false,
 };
 
-export const createGameEditorStore = (gameName: string) =>
+export const createGameEditorStore = (gameDir: string) =>
   create<IGameEditorState & IGameEditorAction>()(
     persist(
       (set) => ({
@@ -29,7 +29,7 @@ export const createGameEditorStore = (gameName: string) =>
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
       }),
       {
-        name: `game-editor-storage-${gameName}`,
+        name: `game-editor-storage-${gameDir}`,
         storage: createJSONStorage(() => localStorage),
       },
     )

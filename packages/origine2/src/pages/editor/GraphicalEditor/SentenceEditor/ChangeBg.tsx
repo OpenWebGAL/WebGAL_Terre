@@ -11,6 +11,7 @@ import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -37,7 +38,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       <CommonOptions key="isNoDialog" title={t`关闭背景`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            bgFile.set(t`选择背景图片`);
+            bgFile.set(t`选择背景文件`);
           } else
             bgFile.set("none");
           submit();
@@ -46,11 +47,11 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       {!isNoFile && <CommonOptions key="1" title={t`背景文件`}>
         <>
           {bgFile.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="background" onChange={(fileDesc) => {
+          <ChooseFile title={t`选择背景文件`} basePath={['background']} selectedFilePath={bgFile.value} onChange={(fileDesc) => {
             bgFile.set(fileDesc?.name ?? "");
             submit();
           }}
-          extName={[".png", ".jpg", ".webp"]}/>
+          extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('video') ?? []]}/>
         </>
       </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
