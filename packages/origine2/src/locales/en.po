@@ -1403,7 +1403,6 @@ msgstr "Template name"
 msgid "模板目录"
 msgstr "Template directory"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:16
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:329
 msgid "模糊"
 msgstr "Blur"
@@ -1412,7 +1411,7 @@ msgstr "Blur"
 #~ msgid "模糊："
 #~ msgstr "Blur"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:16
 msgid "櫻花"
 msgstr "Cherry blossoms"
 

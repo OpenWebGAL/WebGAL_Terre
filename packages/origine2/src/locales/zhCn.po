@@ -1423,7 +1423,6 @@ msgstr "模板名称"
 msgid "模板目录"
 msgstr "模板目录"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:16
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:329
 msgid "模糊"
 msgstr "模糊"
@@ -1432,7 +1431,7 @@ msgstr "模糊"
 #~ msgid "模糊："
 #~ msgstr "模糊："
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:15
+#: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:16
 msgid "櫻花"
 msgstr "櫻花"
 
