@@ -10,8 +10,9 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 export default function PixiPerform(props: ISentenceEditorProps) {
 
   const effects = new Map([
-    ["snow", t`下雪`],
-    ["rain", t`下雨`],
+    ["snow", t`雪`],
+    ["heavySnow", t`大雪`],
+    ["rain", t`雨`],
     ["cherryBlossoms", t`櫻花`],
   ]);
 
