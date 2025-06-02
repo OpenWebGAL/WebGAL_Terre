@@ -225,19 +225,19 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   },
   {
     type: commandType.setTransition,
-    title: () => t`设置转场`,
+    title: () => t`进出场动画`,
     initialText: () => t`setTransition:;`,
     component: SetTransition,
     icon: <Transform theme="multi-color" className={styles.iconSvg} size="24"/>,
-    descText: () => t`设置转场效果`
+    descText: () => t`设置立绘或背景的进出场动画`
   },
   {
     type:commandType.setTransform,
-    title:() => t`设置效果`,
+    title:() => t`效果与变换`,
     initialText: () => t`setTransform: -duration=0;`,
     component:SetTransform,
     icon: <ApplicationEffect theme="multi-color" className={styles.iconSvg} size="24"/>,
-    descText: () => t`为立绘或背景图片设置效果`
+    descText: () => t`为立绘或背景图片设置效果或变换`
   },
   {
     type:commandType.getUserInput,

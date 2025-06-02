@@ -269,8 +269,12 @@ msgid "为立绘或背景图片设置动画效果"
 msgstr "立ち絵や背景画像にアニメーションを指定する"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:240
-msgid "为立绘或背景图片设置效果"
-msgstr "立ち絵や背景画像のエフェクトを使う"
+#~ msgid "为立绘或背景图片设置效果"
+#~ msgstr "立ち絵や背景画像のエフェクトを使う"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:240
+msgid "为立绘或背景图片设置效果或变换"
+msgstr "人物や背景画像にエフェクトや変形を設定する。"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/TemplateGraphicalEditor.tsx:60
 msgid "主要样式"
@@ -1103,6 +1107,10 @@ msgstr "グリッチ映画"
 msgid "效果"
 msgstr "エフェクト"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:236
+msgid "效果与变换"
+msgstr "効果と変身"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:180
 msgid "效果声音"
 msgstr "効果音"
@@ -1914,16 +1922,24 @@ msgid "设置动画"
 msgstr "アニメーション"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:236
-msgid "设置效果"
-msgstr "エフェクトを使う"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
-msgid "设置转场"
-msgstr "トランジションを使う"
+#~ msgid "设置效果"
+#~ msgstr "エフェクトを使う"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
-msgid "设置转场效果"
-msgstr "トランジション効果を使う"
+msgid "设置立绘或背景的进出场动画"
+msgstr "人物や背景のアニメーションを設定する。"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
+#~ msgid "设置立绘或背景的进出场效果"
+#~ msgstr "人物や背景の出入りの効果を設定する。"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
+#~ msgid "设置转场"
+#~ msgstr "トランジションを使う"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
+#~ msgid "设置转场效果"
+#~ msgstr "トランジション効果を使う"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Unrecognized.tsx:12
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
@@ -1990,6 +2006,10 @@ msgstr "ファイルのフィルタリング"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:106
 msgid "返回"
 msgstr "戻る"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
+msgid "进出场动画"
+msgstr "入退場アニメーション"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:56
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:165
