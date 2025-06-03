@@ -5,14 +5,21 @@ import { cloneDeep } from "lodash";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import { Button } from "@fluentui/react-components";
 import {t} from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 
 export default function Choose(props: ISentenceEditorProps) {
   const chooseItems = useValue(props.sentence.content.split("|").map(e => e.split(":")));
 
   const submit = () => {
     const chooseItemsStr = chooseItems.value.map(e => e.join(":"));
-    const submitStr = chooseItemsStr.join("|");
-    props.onSubmit(`choose:${submitStr};`);
+    const contentStr = chooseItemsStr.join("|");
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      contentStr,
+      props.sentence.args,
+      [],
+    );
+    props.onSubmit(submitString);
   };
 
   const chooseList = chooseItems.value.map((item, i) => {
