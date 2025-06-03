@@ -6,6 +6,7 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 
 export default function PixiPerform(props: ISentenceEditorProps) {
 
@@ -21,12 +22,13 @@ export default function PixiPerform(props: ISentenceEditorProps) {
   const isUsePreset = useValue(Array.from(effects.keys()).includes(effectName.value));
 
   const submit = () => {
-    if (isSetEffectsOff.value) {
-      props.onSubmit("pixiInit;");
-      return;
-    } else {
-      props.onSubmit(`pixiPerform:${effectName.value};`);
-    }
+    const submitString = combineSubmitString(
+      isSetEffectsOff.value ? "pixiInit" : "pixiPerform",
+      isSetEffectsOff.value ? "" : effectName.value,
+      props.sentence.args,
+      [],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>

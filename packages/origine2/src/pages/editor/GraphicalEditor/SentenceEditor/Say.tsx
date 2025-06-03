@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type FigurePosition = "" | "left" | "right" | "center" | "id";
@@ -69,17 +70,32 @@ export default function Say(props: ISentenceEditorProps) {
   const fontSize = useValue(getInitialFontSize());
 
   const submit = () => {
-    const selectedFontSize = fontSize.value !== 'default' ? ` -fontSize=${fontSize.value}` : '';
-    const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
-    const idStr = figureId.value !== "" ? ` -figureId=${figureId.value}` : "";
     const commitValue = currentValue.value.map(e => e.replaceAll('\n', '|').replaceAll(';', '\\;'));
-    const isConcatStr = isConcat.value ? ' -concat' : '';
-    const isNotendStr = isNotend.value ? ' -notend' : '';
-    if (figurePosition.value === "id") {
-      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr}${selectedFontSize}${pos}${idStr};`);
-    } else {
-      props.onSubmit(`${isNoSpeaker.value ? "" : currentSpeaker.value}${isNoSpeaker.value || currentSpeaker.value !== "" ? ":" : ""}${commitValue.join("|")}${vocal.value === "" ? "" : " -" + vocal.value}${isConcatStr}${isNotendStr}${selectedFontSize}${pos};`);
-    }
+    const submitString = combineSubmitString(
+      (isNoSpeaker.value || currentSpeaker.value !== "") ? (isNoSpeaker.value ? "" : currentSpeaker.value) : undefined,
+      commitValue.join("|"),
+      props.sentence.args,
+      [
+        // 移除 -speaker=somebody
+        {key: "speaker", value: false},
+        // 移除 -vocal=path/to/vocal.wav
+        {key: "vocal", value: false},
+        // 添加 -path/to/vocal.wav
+        ...(vocal.value !== "" ? [
+          {key: vocal.value, value: true},
+        ] : []),
+
+        {key: "concat", value: isConcat.value},
+        {key: "notend", value: isNotend.value},
+        {key: "fontSize", value: (fontSize.value !== "default" ? fontSize.value : "")},
+        {key: "left", value: figurePosition.value === "left"},
+        {key: "right", value: figurePosition.value === "right"},
+        {key: "center", value: figurePosition.value === "center"},
+        {key: "id", value: figurePosition.value === "id"},
+        {key: "figureId", value: (figurePosition.value === "id" ? figureId.value : "")},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   const submitRef = useRef(submit);
