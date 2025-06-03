@@ -8,6 +8,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonTips from "../components/CommonTips";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
 
@@ -21,10 +22,18 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
   const unlockName = useValue(getArgByKey(props.sentence, "name").toString() ?? "");
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const submit = () => {
-    if (unlockName.value === "") {
-      props.onSubmit(`${unlockType.value}:;`);
-    }
-    props.onSubmit(`${unlockType.value}:${fileName.value}${unlockName.value !== "" ? " -name=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
+    const submitString = combineSubmitString(
+      unlockType.value,
+      (unlockName.value === "" ? "" : fileName.value),
+      props.sentence.args,
+      [
+        ...(unlockName.value === "" ? [
+          {key: "name", value: unlockName.value},
+          {key: "series", value: unlockSeries.value},
+        ] : []),
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>

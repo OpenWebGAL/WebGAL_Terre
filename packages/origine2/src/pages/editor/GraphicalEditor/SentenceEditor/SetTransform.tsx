@@ -10,6 +10,7 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -32,9 +33,17 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
   const submit = () => {
-    const isGoNextStr = isGoNext.value ? " -next" : "";
-    const str = `setTransform:${transform.value} -target=${target.value} -duration=${duration.value}${isGoNextStr};`;
-    props.onSubmit(str);
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      transform.value,
+      props.sentence.args,
+      [
+        {key: "target", value: target.value},
+        {key: "duration", value: duration.value},
+        {key: "next", value: isGoNext.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>

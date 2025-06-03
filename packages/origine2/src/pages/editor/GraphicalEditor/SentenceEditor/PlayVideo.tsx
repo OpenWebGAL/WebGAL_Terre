@@ -6,16 +6,21 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { getArgByKey } from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 
 export default function PlayVideo(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const isSkipOff = useValue(!!getArgByKey(props.sentence, "skipOff"));
   const submit = () => {
-    if(isSkipOff.value){
-      props.onSubmit(`playVideo:${fileName.value} -skipOff=${isSkipOff.value};`);
-    } else {
-      props.onSubmit(`playVideo:${fileName.value};`);
-    }
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      fileName.value,
+      props.sentence.args,
+      [
+        {key: "skipOff", value: isSkipOff.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
