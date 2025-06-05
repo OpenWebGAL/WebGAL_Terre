@@ -6,6 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function PlayEffect(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
@@ -32,11 +33,11 @@ export default function PlayEffect(props: ISentenceEditorProps) {
       {!isNoFile &&<CommonOptions key="1" title={t`效果音文件`}>
         <>
           {fileName.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="vocal" onChange={(fileDesc) => {
+          <ChooseFile title={t`选择效果音文件`} basePath={['vocal']} selectedFilePath={fileName.value} onChange={(fileDesc) => {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}
-          extName={[".mp3", ".ogg", ".wav"]} />
+          extNames={extNameMap.get('audio')} />
         </>
       </CommonOptions>}
       <CommonOptions title={t`效果音 音量`} key="2">

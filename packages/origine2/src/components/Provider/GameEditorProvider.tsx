@@ -36,8 +36,8 @@ const GameEditorProvider = ({ children }: { children: ReactNode }) => {
 };
 
 const GameEditorContextProvider = ({ children }: { children: ReactNode }) => {
-  const gameName = useEditorStore.use.subPage();
-  const gameEditorStore = useRef(createGameEditorStore(gameName)).current;
+  const gameDir = useEditorStore.use.subPage();
+  const gameEditorStore = useRef(createGameEditorStore(gameDir)).current;
   return (
     <GameEditorContext.Provider value={gameEditorStore}>
       {children}

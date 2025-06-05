@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type FigurePosition = "" | "left" | "right" | "center" | "id";
 type FontSize = "default" | "small" | "medium" | "large";
@@ -216,13 +217,15 @@ export default function Say(props: ISentenceEditorProps) {
           <>
             {vocal.value !== "" ? `${vocal.value}\u00a0\u00a0` : ""}
             <ChooseFile
-              sourceBase="vocal"
+              title={t`选择语音文件`}
+              basePath={['vocal']}
+              selectedFilePath={vocal.value}
               onChange={(newName) => {
                 vocal.set(newName?.name ?? "");
                 vocal.value === "" ? volume.set("") : volume.set(volume.value);
                 submit();
               }}
-              extName={[".ogg", ".mp3", ".wav"]}
+              extNames={extNameMap.get('video')}
             />
           </>
         </CommonOptions>

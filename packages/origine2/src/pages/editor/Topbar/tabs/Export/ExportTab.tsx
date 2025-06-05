@@ -9,20 +9,19 @@ import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 
 export function ExportTab() {
-  const subPage = useEditorStore.use.subPage();
-  const gameName = subPage;
+  const gameDir = useEditorStore.use.subPage();
   const GlobeIcon = bundleIcon(Globe24Filled, Globe24Regular);
   const DesktopIcon = bundleIcon(Desktop24Filled, Desktop24Regular);
 
   return <TopbarTab>
     <TabItem title={t`导出`}>
-      <IconWithTextItem onClick={() => api.manageGameControllerEjectGameAsWeb(gameName)}
+      <IconWithTextItem onClick={() => api.manageGameControllerEjectGameAsWeb(gameDir)}
         icon={<GlobeIcon aria-label="Export Web" className={s.iconColor}/>}
         text={t`导出为网页`}/>
-      <IconWithTextItem onClick={() => api.manageGameControllerEjectGameAsExe(gameName)}
+      <IconWithTextItem onClick={() => api.manageGameControllerEjectGameAsExe(gameDir)}
         icon={<DesktopIcon aria-label="Export Exe" className={s.iconColor}/>}
         text={t`导出为可执行文件`}/>
-      <IconWithTextItem onClick={() => api.manageGameControllerEjectGameAsAndroid(gameName)}
+      <IconWithTextItem onClick={() => api.manageGameControllerEjectGameAsAndroid(gameDir)}
         icon={<img src={AndroidIcon} className={s.iconColor} alt="Export Android"/>}
         text={t`导出为安卓项目文件`}/>
     </TabItem>

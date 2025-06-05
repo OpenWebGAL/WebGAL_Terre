@@ -1,15 +1,13 @@
 .chooseFileTitle{
   font-weight: bold;
-  font-size: large;
-  padding: 8px 0 2px 8px;
+  padding: 8px 0 0px 8px;
 }
 
 .chooseFileContentWarpper{
   display: flex;
   flex-flow: column;
-  height: 100%;
-  max-height: 40vh;
-  width: 16rem;
+  height: 45vh;
+  width: 32rem;
   gap: 4px;
 }
 
