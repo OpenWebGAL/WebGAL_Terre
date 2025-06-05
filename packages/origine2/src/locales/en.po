@@ -262,8 +262,12 @@ msgid "为立绘或背景图片设置动画效果"
 msgstr "Set the animation effect for the figure or background"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:240
-msgid "为立绘或背景图片设置效果"
-msgstr "Set effect for figure or background"
+#~ msgid "为立绘或背景图片设置效果"
+#~ msgstr "Set effect for figure or background"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:240
+msgid "为立绘或背景图片设置效果或变换"
+msgstr "Setting effects or transformations for a figure or background image."
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/TemplateGraphicalEditor.tsx:60
 msgid "主要样式"
@@ -1076,6 +1080,10 @@ msgstr "Glitch film filter"
 msgid "效果"
 msgstr "Effect"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:236
+msgid "效果与变换"
+msgstr "Effects and Transformations"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:180
 msgid "效果声音"
 msgstr "Sound effect"
@@ -1887,16 +1895,24 @@ msgid "设置动画"
 msgstr "Set animation"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:236
-msgid "设置效果"
-msgstr "Set effect"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
-msgid "设置转场"
-msgstr "Set transition"
+#~ msgid "设置效果"
+#~ msgstr "Set effect"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
-msgid "设置转场效果"
-msgstr "Set transition effect"
+msgid "设置立绘或背景的进出场动画"
+msgstr "Setting the animation of the figure or background."
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
+#~ msgid "设置立绘或背景的进出场效果"
+#~ msgstr "Setting the entry and exit effects of the figure or background."
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
+#~ msgid "设置转场"
+#~ msgstr "Set transition"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
+#~ msgid "设置转场效果"
+#~ msgstr "Set transition effect"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Unrecognized.tsx:12
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
@@ -1963,6 +1979,10 @@ msgstr "Filter files"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:106
 msgid "返回"
 msgstr "Return"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
+msgid "进出场动画"
+msgstr "Entry and exit animation"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:57
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:165

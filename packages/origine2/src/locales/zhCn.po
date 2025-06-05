@@ -264,8 +264,12 @@ msgid "为立绘或背景图片设置动画效果"
 msgstr "为立绘或背景图片设置动画效果"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:240
-msgid "为立绘或背景图片设置效果"
-msgstr "为立绘或背景图片设置效果"
+#~ msgid "为立绘或背景图片设置效果"
+#~ msgstr "为立绘或背景图片设置效果"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:240
+msgid "为立绘或背景图片设置效果或变换"
+msgstr "为立绘或背景图片设置效果或变换"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/TemplateGraphicalEditor.tsx:60
 msgid "主要样式"
@@ -1078,6 +1082,10 @@ msgstr "故障电影滤镜"
 msgid "效果"
 msgstr "效果"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:236
+msgid "效果与变换"
+msgstr "效果与变换"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:180
 msgid "效果声音"
 msgstr "效果声音"
@@ -1885,16 +1893,24 @@ msgid "设置动画"
 msgstr "设置动画"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:236
-msgid "设置效果"
-msgstr "设置效果"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
-msgid "设置转场"
-msgstr "设置转场"
+#~ msgid "设置效果"
+#~ msgstr "设置效果"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
-msgid "设置转场效果"
-msgstr "设置转场效果"
+msgid "设置立绘或背景的进出场动画"
+msgstr "设置立绘或背景的进出场动画"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
+#~ msgid "设置立绘或背景的进出场效果"
+#~ msgstr "设置立绘或背景的进出场效果"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
+#~ msgid "设置转场"
+#~ msgstr "设置转场"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:232
+#~ msgid "设置转场效果"
+#~ msgstr "设置转场效果"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Unrecognized.tsx:12
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
@@ -1961,6 +1977,10 @@ msgstr "过滤文件"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:106
 msgid "返回"
 msgstr "返回"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:228
+msgid "进出场动画"
+msgstr "进出场动画"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:57
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:165
