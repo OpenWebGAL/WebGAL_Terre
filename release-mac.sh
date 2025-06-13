@@ -22,6 +22,7 @@ cd ../../
 # 进入 Origine 目录
 cd packages/origine2
 #npm install esbuild-darwin-arm64
+export NODE_OPTIONS="--max-old-space-size=8192"
 yarn run build
 cp -rf dist/* ../../release/public/
 cd ../../
