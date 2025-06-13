@@ -48,6 +48,7 @@ export function EffectEditor(props:{
   const bevel = useValue(effectObject?.bevel ?? '');
   const bevelThickness = useValue(effectObject?.bevelThickness ?? '');
   const bevelRotation = useValue(effectObject?.bevelRotation ?? '');
+  const bevelSoftness = useValue(effectObject?.bevelSoftness ?? '');
   const bevelRed = useValue(effectObject?.bevelRed ?? '');
   const bevelGreen = useValue(effectObject?.bevelGreen ?? '');
   const bevelBlue = useValue(effectObject?.bevelBlue ?? '');
@@ -148,6 +149,7 @@ export function EffectEditor(props:{
     if(!isNaN(Number(bevel.value))&&bevel.value!==''){result.bevel = Number(bevel.value);};
     if(!isNaN(Number(bevelThickness.value))&&bevelThickness.value!==''){result.bevelThickness = Number(bevelThickness.value);};
     if(!isNaN(Number(bevelRotation.value))&&bevelRotation.value!==''){result.bevelRotation = Number(bevelRotation.value);};
+    if(!isNaN(Number(bevelSoftness.value))&&bevelSoftness.value!==''){result.bevelSoftness = Number(bevelSoftness.value);};
     if(!isNaN(Number(bevelRed.value))&&bevelRed.value!==''){result.bevelRed = Number(bevelRed.value);};
     if(!isNaN(Number(bevelGreen.value))&&bevelGreen.value!==''){result.bevelGreen = Number(bevelGreen.value);};
     if(!isNaN(Number(bevelBlue.value))&&bevelBlue.value!==''){result.bevelBlue = Number(bevelBlue.value);};
@@ -352,7 +354,7 @@ export function EffectEditor(props:{
         onChange={handleLocalBevelColorChange}
       />
       <div style={{display: "flex", flexDirection: "column", alignSelf: "stretch"}}>
-        <CommonOptions title={t`强度`}>
+        <CommonOptions title={t`透明度（0-1）`}>
           <Input
             value={bevel.value}
             placeholder={t`默认值0`}
@@ -376,6 +378,16 @@ export function EffectEditor(props:{
             placeholder={t`默认值0`}
             onChange={(_, data) => {
               bevelRotation.set(data.value);
+            }}
+            onBlur={submit}/>
+          <div style={{flexGrow: 1}}/>
+        </CommonOptions>
+        <CommonOptions title={t`软化（0-1）`}>
+          <Input
+            value={bevelSoftness.value}
+            placeholder={t`默认值0`}
+            onChange={(_, data) => {
+              bevelSoftness.set(data.value);
             }}
             onBlur={submit}/>
           <div style={{flexGrow: 1}}/>
