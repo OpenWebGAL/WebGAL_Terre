@@ -12,6 +12,7 @@ import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import WheelDropdown from "../components/WheelDropdown";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -21,15 +22,35 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
+  const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeType = new Map<string, string>([
+    [ "", t`默认` ],
+    [ "linear", t`线性` ],
+    [ "easeIn", t`缓入` ],
+    [ "easeOut", t`缓出` ],
+    [ "easeInOut", t`缓入缓出` ],
+    [ "circIn", t`圆形缓入` ],
+    [ "circOut", t`圆形缓出` ],
+    [ "circInOut", t`圆形缓入缓出` ],
+    [ "backIn", t`起点回弹` ],
+    [ "backOut", t`终点回弹` ],
+    [ "backInOut", t`起止回弹` ],
+    [ "bounceIn", t`起点弹跳` ],
+    [ "bounceOut", t`终点弹跳` ],
+    [ "bounceInOut", t`起止弹跳` ],
+    [ "anticipate", t`预先反向` ],
+  ]);
+  
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
     const isGoNextStr = isGoNext.value ? " -next" : "";
     const durationStr = duration.value === "" ? '' : ` -duration=${duration.value}`;
     const transformStr = json.value === "" ? '' : ` -transform=${json.value}`;
+    const easeStr = ease.value !== '' ? ` -ease=${ease.value}` : '';
     if (bgFile.value !== "none") {
-      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${durationStr}${transformStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
+      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${durationStr}${transformStr}${easeStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
     } else {
-      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr};`);
+      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${durationStr}${easeStr};`);
     }
   };
 
@@ -60,6 +81,16 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           submit();
         }} onText={t`本句执行后执行下一句`}
         offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
+      </CommonOptions>
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeType}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
+        />
       </CommonOptions>
       {!isNoFile && <CommonOptions key="3" title={t`解锁名称`}>
         <input value={unlockName.value}

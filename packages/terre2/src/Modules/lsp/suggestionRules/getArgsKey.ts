@@ -27,6 +27,9 @@ export function getArgsKey(
         transformKey,
         unlocknameKey,
         seriesKey,
+        enterAnimationKey,
+        exitAnimationKey,
+        easeKey,
       ];
     }
     case commandType.choose: {
@@ -57,6 +60,9 @@ export function getArgsKey(
         mouthOpenKey,
         mouthHalfOpenKey,
         mouthCloseKey,
+        enterAnimationKey,
+        exitAnimationKey,
+        easeKey,
       ];
     }
     case commandType.intro: {
@@ -78,10 +84,33 @@ export function getArgsKey(
       return [whenKey, skipOffKey];
     }
     case commandType.setAnimation: {
-      return [whenKey, nextKey, targetKey];
+      return [
+        whenKey,
+        nextKey,
+        targetKey,
+        writeDefaultKey,
+        keepKey,
+      ];
+    }
+    case commandType.setTempAnimation: {
+      return [
+        whenKey,
+        nextKey,
+        targetKey,
+        writeDefaultKey,
+        keepKey,
+      ];
     }
     case commandType.setTransform: {
-      return [whenKey, nextKey, targetKey, durationKey];
+      return [
+        whenKey,
+        nextKey,
+        targetKey,
+        easeKey,
+        writeDefaultKey,
+        keepKey,
+        durationKey,
+      ];
     }
     case commandType.setTransition: {
       return [whenKey, targetKey, enterAnimationKey, exitAnimationKey];
@@ -511,6 +540,52 @@ const targetKey: CompletionItem = {
   detail: '指定目标',
   documentation: markdown(`
 将动画或效果应用于指定目标
+  `),
+};
+
+const easeKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'ease',
+  insertText: 'ease=',
+  detail: '缓动类型',
+  documentation: markdown(`
+为动画设置缓动类型
+可用的缓动类型有
+- linear
+- anticipate
+- easeIn
+- easeOut
+- easeInOut (默认值)
+- circIn
+- circOut
+- circInOut
+- backIn
+- backOut
+- backInOut
+- bounceIn
+- bounceOut
+- bounceInOut
+  `),
+};
+
+const writeDefaultKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'writeDefault',
+  insertText: 'writeDefault=',
+  detail: '补充默认值',
+  documentation: markdown(`
+若变换与效果中有未填写的属性时, 补充默认值, 否则继承现有的值
+  `),
+};
+
+const keepKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'keep',
+  insertText: 'keep=',
+  detail: '跨语句动画',
+  documentation: markdown(`
+开启后, 动画可以跨对话播放, 直至被下一个同目标的
+\`setTransform\` \`setAnimation\` \`setTempAnimation\` 打断
   `),
 };
 
