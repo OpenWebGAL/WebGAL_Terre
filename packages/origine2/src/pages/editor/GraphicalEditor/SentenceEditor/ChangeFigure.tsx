@@ -60,6 +60,25 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["on", "ON"],
   ]);
 
+  const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeType = new Map<string, string>([
+    [ "", t`默认` ],
+    [ "linear", t`线性` ],
+    [ "easeIn", t`缓入` ],
+    [ "easeOut", t`缓出` ],
+    [ "easeInOut", t`缓入缓出` ],
+    [ "circIn", t`圆形缓入` ],
+    [ "circOut", t`圆形缓出` ],
+    [ "circInOut", t`圆形缓入缓出` ],
+    [ "backIn", t`起点回弹` ],
+    [ "backOut", t`终点回弹` ],
+    [ "backInOut", t`起止回弹` ],
+    [ "bounceIn", t`起点弹跳` ],
+    [ "bounceOut", t`终点弹跳` ],
+    [ "bounceInOut", t`起止弹跳` ],
+    [ "anticipate", t`预先反向` ],
+  ]);
+
   useEffect(() => {
     if (figureFile.value.includes('json')) {
       console.log('loading JSON file to get motion and expression');
@@ -163,6 +182,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "motion", value: currentMotion.value},
         {key: "expression", value: currentExpression.value},
         {key: "bounds", value: bounds.value},
+        {key: "ease", value: ease.value},
         {key: "zIndex", value: zIndex.value},
         {key: "next", value: isGoNext.value},
       ],
@@ -270,6 +290,16 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           className={styles.sayInput}
           placeholder={t`立绘 ID`}
           style={{width: "100%"}}
+        />
+      </CommonOptions>
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeType}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
         />
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>

@@ -688,6 +688,24 @@ msgstr "Image"
 msgid "圆形"
 msgstr "Circle"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:32
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:67
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:41
+msgid "圆形缓入"
+msgstr "Circ in"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:34
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:69
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:43
+msgid "圆形缓入缓出"
+msgstr "Circ in out"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:33
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:68
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:42
+msgid "圆形缓出"
+msgstr "Circ out"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:59
 msgid "圆角"
 msgstr "Rounded corners"
@@ -1670,6 +1688,12 @@ msgstr "Emergency Evasion"
 msgid "纹理"
 msgstr "Texture"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:28
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:63
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:37
+msgid "线性"
+msgstr "Linear"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:52
 msgid "线性渐变"
 msgstr "Linear gradient"
@@ -1703,9 +1727,43 @@ msgstr "Absolutely"
 #~ msgid "继承模式"
 #~ msgstr "Inheritance mode"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:81
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
+msgid "继承现有效果"
+msgstr "Inherit current effect"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:81
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
+msgid "继承默认效果"
+msgstr "Inherit default effect"
+
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:150
 #~ msgid "绿色（0-255）："
 #~ msgstr "Green (0-255)"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:29
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:64
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:38
+msgid "缓入"
+msgstr "Ease in"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:31
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:66
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:40
+msgid "缓入缓出"
+msgstr "Ease in out"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:30
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:65
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:39
+msgid "缓出"
+msgstr "Ease out"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:85
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:263
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:123
+msgid "缓动类型"
+msgstr "Ease type"
 
 #: src/components/IconCreator/IconCreator.tsx:625
 msgid "编辑图标"
@@ -1839,6 +1897,11 @@ msgstr "Get input"
 #: src/pages/editor/MainArea/EditorToolbar.tsx:56
 msgid "行脚本"
 msgstr "Line of script"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:77
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:133
+msgid "补充默认值"
+msgstr "Write default"
 
 #: src/components/IconCreator/IconCreator.tsx:724
 msgid "裁剪形状"
@@ -1981,6 +2044,35 @@ msgstr "Call scene, return to parent scene after new scene ends"
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:147
 msgid "资源"
 msgstr "Assets"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:37
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:72
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:46
+msgid "起止回弹"
+msgstr "Back in out"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:40
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:75
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:49
+msgid "起止弹跳"
+msgstr "Bounce in out"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:35
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:70
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:44
+msgid "起点回弹"
+msgstr "Back in"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:38
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:73
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:47
+msgid "起点弹跳"
+msgstr "Bounce in"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:83
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:139
+msgid "跨语句动画"
+msgstr "Keep animation"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:385
 msgid "软化（0-1）"
@@ -2261,6 +2353,12 @@ msgstr "Music"
 #: src/pages/dashboard/About.tsx:63
 msgid "项目主页"
 msgstr "Project Homepage"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:41
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:76
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:50
+msgid "预先反向"
+msgstr "Anticipate"
 
 #: src/components/IconCreator/IconCreator.tsx:625
 msgid "预览图标"
