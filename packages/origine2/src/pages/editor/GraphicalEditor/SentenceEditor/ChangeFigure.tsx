@@ -14,6 +14,7 @@ import {Button, Input} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type FigurePosition = "" | "left" | "right";
@@ -117,27 +118,39 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     }
   }, [animationFlag.value]);
   const submit = () => {
-    const isGoNextStr = isGoNext.value ? " -next" : "";
-    const pos = figurePosition.value !== "" ? ` -${figurePosition.value}` : "";
-    const idStr = id.value !== "" ? ` -id=${id.value}` : "";
-    const durationStr = duration.value === "" ? '' : ` -duration=${duration.value}`;
-    const transformStr = json.value === "" || json.value === "{}" ? '' : ` -transform=${json.value}`;
-    const animationStr = animationFlag.value !== "" ? ` -animationFlag=${animationFlag.value}` : "";
-    const mouthOpenFile = mouthOpen.value !== "" ? ` -mouthOpen=${mouthOpen.value}` : "";
-    const mouthHalfOpenFile = mouthHalfOpen.value !== "" ? ` -mouthHalfOpen=${mouthHalfOpen.value}` : "";
-    const mouthCloseFile = mouthClose.value !== "" ? ` -mouthClose=${mouthClose.value}` : "";
-    const eyesOpenFile = eyesOpen.value !== "" ? ` -eyesOpen=${eyesOpen.value}` : "";
-    const eyesCloseFile = eyesClose.value !== "" ? ` -eyesClose=${eyesClose.value}` : "";
-    const motionArgs = currentMotion.value !== '' ? ` -motion=${currentMotion.value}` : "";
-    const expressionArgs = currentExpression.value !== '' ? ` -expression=${currentExpression.value}` : "";
-    const boundsArgs = bounds.value !== '' ? ` -bounds=${bounds.value}` : "";
-    const zIndexArgs = zIndex.value !== '' ? ` -zIndex=${zIndex.value}` : "";
-
-    if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
-    } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
-    }
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      figureFile.value,
+      props.sentence.args,
+      [
+        {key: "left", value: figurePosition.value === "left"},
+        {key: "right", value: figurePosition.value === "right"},
+        {key: "id", value: id.value},
+        {key: "transform", value: json.value},
+        {key: "duration", value: duration.value},
+        ...(animationFlag.value !== "" ? [
+          {key: "animationFlag", value: animationFlag.value},
+          {key: "eyesOpen", value: eyesOpen.value},
+          {key: "eyesClose", value: eyesClose.value},
+          {key: "mouthOpen", value: mouthOpen.value},
+          {key: "mouthHalfOpen", value: mouthHalfOpen.value},
+          {key: "mouthClose", value: mouthClose.value},
+        ] : [
+          {key: "animationFlag", value: ""},
+          {key: "eyesOpen", value: ""},
+          {key: "eyesClose", value: ""},
+          {key: "mouthOpen", value: ""},
+          {key: "mouthHalfOpen", value: ""},
+          {key: "mouthClose", value: ""},
+        ]),
+        {key: "motion", value: currentMotion.value},
+        {key: "expression", value: currentExpression.value},
+        {key: "bounds", value: bounds.value},
+        {key: "zIndex", value: zIndex.value},
+        {key: "next", value: isGoNext.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>

@@ -11,6 +11,7 @@ import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
@@ -23,14 +24,25 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
-    const isGoNextStr = isGoNext.value ? " -next" : "";
-    const durationStr = duration.value === "" ? '' : ` -duration=${duration.value}`;
-    const transformStr = json.value === "" ? '' : ` -transform=${json.value}`;
-    if (bgFile.value !== "none") {
-      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${durationStr}${transformStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
-    } else {
-      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr};`);
-    }
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      bgFile.value,
+      props.sentence.args,
+      [
+        ...(bgFile.value !== "none" ? [
+          {key: "transform", value: json.value},
+          {key: "unlockname", value: unlockName.value},
+          {key: "series", value: unlockSeries.value},
+        ] : [
+          {key: "transform", value: ""},
+          {key: "unlockname", value: ""},
+          {key: "series", value: ""},
+        ]),
+        {key: "duration", value: duration.value},
+        {key: "next", value: isGoNext.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
