@@ -57,6 +57,25 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["on", "ON"],
   ]);
 
+  const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeType = new Map<string, string>([
+    [ "", t`默认` ],
+    [ "linear", t`线性` ],
+    [ "easeIn", t`缓入` ],
+    [ "easeOut", t`缓出` ],
+    [ "easeInOut", t`缓入缓出` ],
+    [ "circIn", t`圆形缓入` ],
+    [ "circOut", t`圆形缓出` ],
+    [ "circInOut", t`圆形缓入缓出` ],
+    [ "backIn", t`起点回弹` ],
+    [ "backOut", t`终点回弹` ],
+    [ "backInOut", t`起止回弹` ],
+    [ "bounceIn", t`起点弹跳` ],
+    [ "bounceOut", t`终点弹跳` ],
+    [ "bounceInOut", t`起止弹跳` ],
+    [ "anticipate", t`预先反向` ],
+  ]);
+
   useEffect(() => {
     if (figureFile.value.includes('json')) {
       console.log('loading JSON file to get motion and expression');
@@ -132,11 +151,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const expressionArgs = currentExpression.value !== '' ? ` -expression=${currentExpression.value}` : "";
     const boundsArgs = bounds.value !== '' ? ` -bounds=${bounds.value}` : "";
     const zIndexArgs = zIndex.value !== '' ? ` -zIndex=${zIndex.value}` : "";
+    const easeStr = ease.value !== '' ? ` -ease=${ease.value}` : '';
 
     if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${easeStr}${zIndexArgs};`);
     } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${easeStr}${zIndexArgs};`);
     }
   };
 
@@ -238,6 +258,16 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           className={styles.sayInput}
           placeholder={t`立绘 ID`}
           style={{width: "100%"}}
+        />
+      </CommonOptions>
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeType}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
         />
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>

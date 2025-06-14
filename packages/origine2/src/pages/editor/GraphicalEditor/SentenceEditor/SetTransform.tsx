@@ -31,9 +31,33 @@ export default function SetTransform(props: ISentenceEditorProps) {
   ]);
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
+  const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeType = new Map<string, string>([
+    [ "", t`默认` ],
+    [ "linear", t`线性` ],
+    [ "easeIn", t`缓入` ],
+    [ "easeOut", t`缓出` ],
+    [ "easeInOut", t`缓入缓出` ],
+    [ "circIn", t`圆形缓入` ],
+    [ "circOut", t`圆形缓出` ],
+    [ "circInOut", t`圆形缓入缓出` ],
+    [ "backIn", t`起点回弹` ],
+    [ "backOut", t`终点回弹` ],
+    [ "backInOut", t`起止回弹` ],
+    [ "bounceIn", t`起点弹跳` ],
+    [ "bounceOut", t`终点弹跳` ],
+    [ "bounceInOut", t`起止弹跳` ],
+    [ "anticipate", t`预先反向` ],
+  ]);
+  const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
+  const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
+
   const submit = () => {
+    const easeStr = ease.value !== '' ? ` -ease=${ease.value}` : '';
+    const writeDefaultStr = writeDefault.value ? ` -writeDefault` : '';
+    const keepStr = keep.value ? ` -keep` : '';
     const isGoNextStr = isGoNext.value ? " -next" : "";
-    const str = `setTransform:${transform.value} -target=${target.value} -duration=${duration.value}${isGoNextStr};`;
+    const str = `setTransform:${transform.value} -target=${target.value} -duration=${duration.value}${easeStr}${writeDefaultStr}${keepStr}${isGoNextStr};`;
     props.onSubmit(str);
   };
 
@@ -96,6 +120,28 @@ export default function SetTransform(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeType}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
+        />
+      </CommonOptions>
+      <CommonOptions key="6" title={t`补充默认值`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          writeDefault.set(newValue);
+          submit();
+        }} onText={t`继承默认效果`} offText={t`继承现有效果`} isChecked={writeDefault.value} />
+      </CommonOptions>
+      <CommonOptions key="7" title={t`跨语句动画`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          keep.set(newValue);
+          submit();
+        }} onText={t`开启`} offText={t`关闭`} isChecked={keep.value} />
+      </CommonOptions>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
