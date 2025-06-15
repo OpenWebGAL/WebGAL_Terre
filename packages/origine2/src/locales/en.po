@@ -741,10 +741,6 @@ msgstr "Large"
 msgid "大雪"
 msgstr "Heavy snow"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
-#~ msgid "失败"
-#~ msgstr "Failed"
-
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:71
 msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
 msgstr "If the use of a custom template causes abnormal display issues, please disable this option."
@@ -973,10 +969,6 @@ msgstr "German"
 #: src/pages/dashboard/DashBoard.tsx:166
 msgid "忽略此版本"
 msgstr "Ignore this version"
-
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
-#~ msgid "成功"
-#~ msgstr "Success"
 
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"

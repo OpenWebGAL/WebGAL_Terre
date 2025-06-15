@@ -743,10 +743,6 @@ msgstr "大"
 msgid "大雪"
 msgstr "大雪"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
-#~ msgid "失败"
-#~ msgstr "失败"
-
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:71
 msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
 msgstr "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
@@ -975,10 +971,6 @@ msgstr "德语"
 #: src/pages/dashboard/DashBoard.tsx:166
 msgid "忽略此版本"
 msgstr "忽略此版本"
-
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
-#~ msgid "成功"
-#~ msgstr "成功"
 
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
