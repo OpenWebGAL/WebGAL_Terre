@@ -421,6 +421,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:133
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "关闭"
@@ -740,6 +741,10 @@ msgstr "Large"
 msgid "大雪"
 msgstr "Heavy snow"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#~ msgid "失败"
+#~ msgstr "Failed"
+
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:71
 msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
 msgstr "If the use of a custom template causes abnormal display issues, please disable this option."
@@ -816,22 +821,34 @@ msgstr "Text in Textbox"
 msgid "对话框标题"
 msgstr "Dialog title"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:17
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:60
 #: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "Export"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:23
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:36
+msgid "导出中..."
+msgstr "Exporting..."
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:81
 msgid "导出为可执行文件"
 msgstr "Export as executable file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:26
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:92
 msgid "导出为安卓项目文件"
 msgstr "Export as Android project file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:20
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:70
 msgid "导出为网页"
 msgstr "Export as webpage"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+msgid "导出失败！"
+msgstr "Export Failed!"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+msgid "导出成功！"
+msgstr "Export Success!"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:123
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
@@ -957,6 +974,10 @@ msgstr "German"
 msgid "忽略此版本"
 msgstr "Ignore this version"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#~ msgid "成功"
+#~ msgstr "Success"
+
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
 msgstr "I'm sure to delete the game"
@@ -1030,6 +1051,10 @@ msgstr "Submit"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGTextShadow.tsx:32
 msgid "提交修改"
 msgstr "Submit changes"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
+msgid "提示"
+msgstr "Tip"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:33
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -1649,6 +1674,10 @@ msgstr "Simplified Chinese"
 msgid "紧急回避"
 msgstr "Emergency Evasion"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+msgid "繁体中文"
+msgstr "Traditional Chinese"
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
 msgstr "Texture"
@@ -1706,10 +1735,6 @@ msgstr "Edit game"
 msgid "编辑组件"
 msgstr "Edit component"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
-msgid "繁体中文"
-msgstr "Traditional Chinese"
-
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194
 #: src/components/Transformer/Transformer.tsx:205
@@ -1723,6 +1748,10 @@ msgstr "Grid view"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:405
 msgid "老电影滤镜"
 msgstr "Old film filter"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:50
+msgid "耗时"
+msgstr "Time taken"
 
 #: src/components/IconCreator/IconCreator.tsx:678
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113

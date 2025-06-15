@@ -424,6 +424,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "関連する立ち絵"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:133
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "关闭"
@@ -743,6 +744,10 @@ msgstr "大きい"
 msgid "大雪"
 msgstr "大雪"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#~ msgid "失败"
+#~ msgstr ""
+
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:71
 msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
 msgstr "カスタムテンプレートの使用が異常な表示問題を引き起こす場合は、このオプションを無効にしてください。"
@@ -819,22 +824,34 @@ msgstr "ダイアログテキスト"
 msgid "对话框标题"
 msgstr "ダイアログタイトル"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:17
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:60
 #: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "エクスポート"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:23
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:36
+msgid "导出中..."
+msgstr "導出中です…"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:81
 msgid "导出为可执行文件"
 msgstr "実行可能ファイルとしてエクスポート"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:26
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:92
 msgid "导出为安卓项目文件"
 msgstr "Andoroidアプリとしてエクスポート"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:20
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:70
 msgid "导出为网页"
 msgstr "ウェブとしてエクスポート"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+msgid "导出失败！"
+msgstr "失敗を導き出します!"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+msgid "导出成功！"
+msgstr "導出成功です!"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:123
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
@@ -960,6 +977,10 @@ msgstr "ドイツ語"
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#~ msgid "成功"
+#~ msgstr ""
+
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
 msgstr "ゲームを削除することを確認しました"
@@ -1033,6 +1054,10 @@ msgstr "提出"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGTextShadow.tsx:32
 msgid "提交修改"
 msgstr "変更を送信"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
+msgid "提示"
+msgstr "ヒント"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:33
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -1648,6 +1673,10 @@ msgstr "簡体字中国語"
 msgid "紧急回避"
 msgstr "緊急回避"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+msgid "繁体中文"
+msgstr "繁体字中国語"
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
 msgstr "Tex"
@@ -1705,10 +1734,6 @@ msgstr "ゲームの編集"
 msgid "编辑组件"
 msgstr "コンポーネントの編集"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
-msgid "繁体中文"
-msgstr "繁体字中国語"
-
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194
 #: src/components/Transformer/Transformer.tsx:205
@@ -1722,6 +1747,10 @@ msgstr "グリッドビュー"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:405
 msgid "老电影滤镜"
 msgstr "古い映画"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:50
+msgid "耗时"
+msgstr "時間がかかります"
 
 #: src/components/IconCreator/IconCreator.tsx:678
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
