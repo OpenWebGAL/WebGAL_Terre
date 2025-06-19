@@ -24,6 +24,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
+  const isHaveSpineArg = figureFile.value.includes('?type=spine');
   const figurePosition = useValue<FigurePosition>("");
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
@@ -75,7 +76,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         } else {
           // Live2D 格式
           setIsSpineJsonFormat(false);
-          
+
           if (data?.motions) {
             // 处理 motions
             const motions = Object.keys(data.motions);
@@ -148,11 +149,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const expressionArgs = (!isSpineJsonFormat && currentExpression.value !== '') ? ` -expression=${currentExpression.value}` : "";
     const boundsArgs = bounds.value !== '' ? ` -bounds=${bounds.value}` : "";
     const zIndexArgs = zIndex.value !== '' ? ` -zIndex=${zIndex.value}` : "";
+    const spineArgs = isSpineJsonFormat &&!isHaveSpineArg?'?type=spine':'';
 
     if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${spineArgs}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
     } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${spineArgs}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
     }
   };
 
