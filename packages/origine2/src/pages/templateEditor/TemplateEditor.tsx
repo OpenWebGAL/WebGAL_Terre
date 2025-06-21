@@ -49,12 +49,18 @@ function SideberResizer() {
   const [isDragging, setIsDragging] = useState(false);
   const [initX, setInitX] = useState(0);
 
+  const previewFrame = document.getElementById("templatePreviewIframe");
+  const templateEditorAria = document.getElementById('templateEditorAria');
+
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setInitX(event.clientX);
-    const previewFrame = document.getElementById("templatePreviewIframe");
+
     if (previewFrame) {
       previewFrame.style.pointerEvents = 'none';
+    }
+    if (templateEditorAria) {
+      templateEditorAria.style.pointerEvents = 'none';
     }
   };
 
@@ -69,9 +75,12 @@ function SideberResizer() {
 
       const upHandler = () => {
         setIsDragging(false);
-        const previewFrame = document.getElementById("templatePreviewIframe");
+
         if (previewFrame) {
           previewFrame.style.pointerEvents = 'auto';
+        }
+        if (templateEditorAria) {
+          templateEditorAria.style.pointerEvents = 'auto';
         }
       };
 

@@ -14,16 +14,17 @@ import {Button, Input} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
 
 export default function ChangeFigure(props: ISentenceEditorProps) {
-  const currentEdit = useEditorStore.use.subPage();
+  const gameDir = useEditorStore.use.subPage();
   const updateExpand = useEditorStore.use.updateExpand();
-  const gameName = currentEdit;
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
+  const isHaveSpineArg = figureFile.value.includes('?type=spine');
   const figurePosition = useValue<FigurePosition>("");
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
@@ -40,6 +41,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
+  const [isSpineJsonFormat, setIsSpineJsonFormat] = useState(false);
 
   const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
   const currentExpression = useValue(
@@ -60,33 +62,48 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   useEffect(() => {
     if (figureFile.value.includes('json')) {
       console.log('loading JSON file to get motion and expression');
-      axios.get(`/games/${gameName}/game/figure/${figureFile.value}`).then(resp => {
+      axios.get(`/games/${gameDir}/game/figure/${figureFile.value}`).then(resp => {
         const data = resp.data;
 
-        if (data?.motions) {
-          // 处理 motions
-          const motions = Object.keys(data.motions);
-          setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
-        }
+        // 检测是否为 Spine JSON 格式
+        if (data?.animations) {
+          // 处理 Spine JSON 格式的 animations
+          setIsSpineJsonFormat(true);
+          const animations = Object.keys(data.animations);
+          setL2dMotionsList(animations.sort((a, b) => a.localeCompare(b)));
+          // Spine JSON 格式忽略 expressions
+          setL2dExpressionsList([]);
+        } else {
+          // Live2D 格式
+          setIsSpineJsonFormat(false);
 
-        // 处理 expressions
-        if (data?.expressions) {
-          const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
-          setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
-        }
+          if (data?.motions) {
+            // 处理 motions
+            const motions = Object.keys(data.motions);
+            setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+          }
 
-        // 处理 v3 版本的 model
-        if (data?.['FileReferences']?.['Motions']) {
-          const motions = Object.keys(data['FileReferences']['Motions']);
-          setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
-        }
+          // 处理 expressions
+          if (data?.expressions) {
+            const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
+            setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+          }
 
-        if (data?.['FileReferences']?.['Expressions']) {
-          const expressions: string[] = data['FileReferences']['Expressions'].map((exp: { Name: string }) => exp.Name);
-          setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+          // 处理 v3 版本的 model
+          if (data?.['FileReferences']?.['Motions']) {
+            const motions = Object.keys(data['FileReferences']['Motions']);
+            setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+          }
+
+          if (data?.['FileReferences']?.['Expressions']) {
+            const expressions: string[] = data['FileReferences']['Expressions'].map((exp: { Name: string }) => exp.Name);
+            setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+          }
         }
 
       });
+    } else {
+      setIsSpineJsonFormat(false);
     }
   }, [figureFile.value]);
   const toggleAccordion = () => {
@@ -129,14 +146,15 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     const eyesOpenFile = eyesOpen.value !== "" ? ` -eyesOpen=${eyesOpen.value}` : "";
     const eyesCloseFile = eyesClose.value !== "" ? ` -eyesClose=${eyesClose.value}` : "";
     const motionArgs = currentMotion.value !== '' ? ` -motion=${currentMotion.value}` : "";
-    const expressionArgs = currentExpression.value !== '' ? ` -expression=${currentExpression.value}` : "";
+    const expressionArgs = (!isSpineJsonFormat && currentExpression.value !== '') ? ` -expression=${currentExpression.value}` : "";
     const boundsArgs = bounds.value !== '' ? ` -bounds=${bounds.value}` : "";
     const zIndexArgs = zIndex.value !== '' ? ` -zIndex=${zIndex.value}` : "";
+    const spineArgs = isSpineJsonFormat &&!isHaveSpineArg?'?type=spine':'';
 
     if (animationFlag.value === "") {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${spineArgs}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
     } else {
-      props.onSubmit(`changeFigure:${figureFile.value}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
+      props.onSubmit(`changeFigure:${figureFile.value}${spineArgs}${pos}${idStr}${transformStr}${durationStr}${isGoNextStr}${animationStr}${eyesOpenFile}${eyesCloseFile}${mouthOpenFile}${mouthHalfOpenFile}${mouthCloseFile}${motionArgs}${expressionArgs}${boundsArgs}${zIndexArgs};`);
     }
   };
 
@@ -155,11 +173,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         <CommonOptions key="1" title={t`立绘文件`}>
           <>
             {figureFile.value + "\u00a0\u00a0"}
-            <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+            <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={figureFile.value} onChange={(fileDesc) => {
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
-            extName={[".png", ".jpg", ".webp", ".json"]}/>
+            extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? [] ]}/>
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
@@ -183,7 +201,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {figureFile.value.includes('.json') && (
         <>
-          <CommonOptions key="24" title={t`Live2D 动作`}>
+          <CommonOptions key="24" title={isSpineJsonFormat ? t`Spine 动画` : t`Live2D 动作`}>
             <WheelDropdown
               options={new Map(l2dMotionsList.map(item => [item, item]))}
               value={currentMotion.value}
@@ -193,16 +211,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               }}
             />
           </CommonOptions>
-          <CommonOptions key="25" title={t`Live2D 表情`}>
-            <WheelDropdown
-              options={new Map(l2dExpressionsList.map(item => [item, item]))}
-              value={currentExpression.value}
-              onValueChange={(newValue) =>{
-                newValue && currentExpression.set(newValue);
-                submit();
-              }}
-            />
-          </CommonOptions>
+          {!isSpineJsonFormat && (
+            <CommonOptions key="25" title={t`Live2D 表情`}>
+              <WheelDropdown
+                options={new Map(l2dExpressionsList.map(item => [item, item]))}
+                value={currentExpression.value}
+                onValueChange={(newValue) =>{
+                  newValue && currentExpression.set(newValue);
+                  submit();
+                }}
+              />
+            </CommonOptions>
+          )}
           <CommonOptions title={t`自定义 Live2D 绘制范围`} key="bounds">
             <input value={bounds.value}
               onChange={(ev) => {
@@ -248,14 +268,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       <TerrePanel
         title={t`效果编辑器`}
         sentenceIndex={props.index}
-      >
-        <div>
-          <CommonTips
-            text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
-          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
-            json.set(newJson);
-            submit();
-          }}/>
+        bottomBarChildren={[
           <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
             <div>
               <Input placeholder={t`持续时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
@@ -266,14 +279,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                   duration.set(newDuration);
               }} onBlur={submit}/>
             </div>
-          </CommonOptions>
-        </div>
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '8px',
-          width: animationFlag.value !== "on" ? 'auto' : '100%'
-        }}>
+          </CommonOptions>,
           <CommonOptions title={t`唇形同步与眨眼`} key="5">
             <WheelDropdown
               options={animationFlags}
@@ -283,61 +289,75 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 submit();
               }}
             />
-          </CommonOptions>
-          {animationFlag.value === "on" &&
+          </CommonOptions>,
+          <div key="mouth-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="6" title={t`张开嘴`}>
               <>
                 {mouthOpen.value + "\u00a0\u00a0"}
-                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
                   mouthOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]}/>
+                extNames={extNameMap.get('image')}/>
               </>
-            </CommonOptions>}
-          {animationFlag.value === "on" &&
+            </CommonOptions>
+          </div>,
+          <div key="mouth-half-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="7" title={t`半张嘴`}>
               <>
                 {mouthHalfOpen.value + "\u00a0\u00a0"}
-                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
                   mouthHalfOpen.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]}/>
+                extNames={extNameMap.get('image')}/>
               </>
-            </CommonOptions>}
-          {animationFlag.value === "on" &&
+            </CommonOptions>
+          </div>,
+          <div key="mouth-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
             <CommonOptions key="8" title={t`闭上嘴`}>
               <>
                 {mouthClose.value + "\u00a0\u00a0"}
-                <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
                   mouthClose.set(fileDesc?.name ?? "");
                   submit();
                 }}
-                extName={[".png", ".jpg", ".webp"]}/>
+                extNames={extNameMap.get('image')}/>
               </>
-            </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="9" title={t`睁开眼睛`}>
-            <>
-              {eyesOpen.value + "\u00a0\u00a0"}
-              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                eyesOpen.set(fileDesc?.name ?? "");
-                submit();
-              }}
-              extName={[".png", ".jpg", ".webp"]}/>
-            </>
-          </CommonOptions>}
-          {animationFlag.value === "on" && <CommonOptions key="10" title={t`闭上眼睛`}>
-            <>
-              {eyesClose.value + "\u00a0\u00a0"}
-              <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
-                eyesClose.set(fileDesc?.name ?? "");
-                submit();
-              }}
-              extName={[".png", ".jpg", ".webp"]}/>
-            </>
-          </CommonOptions>}
-        </div>
+            </CommonOptions>
+          </div>,
+          <div key="eyes-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+            <CommonOptions key="9" title={t`睁开眼睛`}>
+              <>
+                {eyesOpen.value + "\u00a0\u00a0"}
+                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
+                  eyesOpen.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extNames={extNameMap.get('image')}/>
+              </>
+            </CommonOptions>
+          </div>,
+          <div key="eyes-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
+            <CommonOptions key="10" title={t`闭上眼睛`}>
+              <>
+                {eyesClose.value + "\u00a0\u00a0"}
+                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
+                  eyesClose.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extNames={extNameMap.get('image')}/>
+              </>
+            </CommonOptions>
+          </div>,
+        ]}
+      >
+        <CommonTips
+          text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
+        <EffectEditor json={json.value.toString()} onChange={(newJson) => {
+          json.set(newJson);
+          submit();
+        }}/>
       </TerrePanel>
 
     </div>

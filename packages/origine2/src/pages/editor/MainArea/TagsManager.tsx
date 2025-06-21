@@ -7,6 +7,7 @@ import { getFileIcon } from "@/utils/getFileIcon";
 import React, { useRef } from "react";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { ITag } from "@/types/gameEditor";
+import { Tooltip } from "@fluentui/react-components";
 
 export default function TagsManager() {
   // 获取 Tags 数据
@@ -96,27 +97,28 @@ export default function TagsManager() {
                   <Draggable key={item.path} draggableId={item.path} index={index}>
                     {(provided, snapshot) => (
                       // 下面开始书写可拖拽的元素
-                      <div
-                        title={item.path}
-                        onClick={() => selectTag(item)}
-                        onMouseDown={(event: any) => {
-                          if (event.button === 1) {
-                            closeTag(event, item);
-                          }
-                        }}
-                        className={item.path === currentTag?.path ? `${styles.tag} ${styles.tag_active}` : styles.tag}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
-                        <div>
-                          {item.name}
+                      <Tooltip content={item.path} relationship='label' positioning='below-start'>
+                        <div
+                          onClick={() => selectTag(item)}
+                          onMouseDown={(event: any) => {
+                            if (event.button === 1) {
+                              closeTag(event, item);
+                            }
+                          }}
+                          className={item.path === currentTag?.path ? `${styles.tag} ${styles.tag_active}` : styles.tag}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
+                          <div>
+                            {item.name}
+                          </div>
+                          <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item)}>
+                            <CloseSmall theme="outline" size="15" strokeWidth={3} />
+                          </div>
                         </div>
-                        <div className={styles.closeIcon} onClick={(event: any) => closeTag(event, item)}>
-                          <CloseSmall theme="outline" size="15" strokeWidth={3} />
-                        </div>
-                      </div>
+                      </Tooltip>
                     )}
                   </Draggable>
                 ))}

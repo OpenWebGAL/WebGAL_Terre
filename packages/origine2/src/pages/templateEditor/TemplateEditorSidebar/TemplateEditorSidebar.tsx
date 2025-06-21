@@ -75,7 +75,7 @@ export default function TemplateEditorSidebar() {
       <div className={styles.assets}>
         <CommonTips style={{margin:4}} text={t`提示：样式中用到的资源放在 assets 目录下`}/>
         <Assets
-          basePath={['templates', templateDir]}
+          rootPath={['templates', templateDir]}
           // isProtected
           fileFunction={{open: handleOpen}}
         />

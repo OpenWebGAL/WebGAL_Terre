@@ -8,6 +8,7 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonTips from "../components/CommonTips";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -31,19 +32,19 @@ export default function SetTransition(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`选择进入动画`}>
         <>
           {enterFileName.value}{"\u00a0"}
-          <ChooseFile sourceBase="animation" onChange={(file) => {
+          <ChooseFile title={t`选择进入动画文件`} basePath={['animation']} selectedFilePath={`${enterFileName.value}.json`} onChange={(file) => {
             enterFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('json')} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="1.1" title={t`选择退出动画`}>
         <>
           {exitFileName.value}{"\u00a0"}
-          <ChooseFile sourceBase="animation" onChange={(file) => {
+          <ChooseFile title={t`选择退出动画文件`} basePath={['animation']} selectedFilePath={`${exitFileName.value}.json`} onChange={(file) => {
             exitFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extName={[".json"]} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('json')} hiddenFiles={['animationTable.json']} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>

@@ -1,7 +1,7 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.5.13",
+  "version": "4.5.14",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "lingui extract && lingui compile --typescript && vite --host",
@@ -52,6 +52,8 @@
     "react": "^18.0.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^18.0.0",
+    "react-virtualized-auto-sizer": "^1.0.26",
+    "react-window": "^1.8.11",
     "sass": "^1.51.0",
     "swr": "^2.2.4",
     "webgal-parser": "latest",
@@ -65,6 +67,7 @@
     "@types/react": "^18.0.0",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^18.0.0",
+    "@types/react-window": "^1.8.8",
     "@types/vscode": "^1.88.0",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",

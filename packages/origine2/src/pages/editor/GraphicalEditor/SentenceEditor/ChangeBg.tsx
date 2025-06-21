@@ -11,6 +11,7 @@ import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -37,7 +38,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       <CommonOptions key="isNoDialog" title={t`关闭背景`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            bgFile.set(t`选择背景图片`);
+            bgFile.set(t`选择背景文件`);
           } else
             bgFile.set("none");
           submit();
@@ -46,11 +47,11 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       {!isNoFile && <CommonOptions key="1" title={t`背景文件`}>
         <>
           {bgFile.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="background" onChange={(fileDesc) => {
+          <ChooseFile title={t`选择背景文件`} basePath={['background']} selectedFilePath={bgFile.value} onChange={(fileDesc) => {
             bgFile.set(fileDesc?.name ?? "");
             submit();
           }}
-          extName={[".png", ".jpg", ".webp"]}/>
+          extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('video') ?? []]}/>
         </>
       </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
@@ -77,14 +78,10 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           updateExpand(props.index);
         }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
-      <TerrePanel sentenceIndex={props.index} title={t`效果编辑器`}>
-        <div>
-          <CommonTips
-            text={t`提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令`}/>
-          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
-            json.set(newJson);
-            submit();
-          }}/>
+      <TerrePanel
+        sentenceIndex={props.index}
+        title={t`效果编辑器`}
+        bottomBarChildren={[
           <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
             <div>
               <Input
@@ -94,13 +91,22 @@ export default function ChangeBg(props: ISentenceEditorProps) {
                   const newDuration = Number(data.value);
                   if (isNaN(newDuration) || data.value === '')
                     duration.set("");
+
                   else
                     duration.set(newDuration);
-                }}
-                onBlur={submit}
-              />
+                } }
+                onBlur={submit} />
             </div>
-          </CommonOptions>
+          </CommonOptions>,
+        ]}
+      >
+        <div>
+          <CommonTips
+            text={t`提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令`}/>
+          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
+            json.set(newJson);
+            submit();
+          }}/>
         </div>
       </TerrePanel>
     </div>

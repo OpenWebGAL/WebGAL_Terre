@@ -12,7 +12,7 @@ import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
 import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
-import {Dismiss24Filled, Dismiss24Regular, IconsFilled, IconsRegular, bundleIcon} from "@fluentui/react-icons";
+import {AddFilled, AddRegular, Dismiss24Filled, Dismiss24Regular, IconsFilled, IconsRegular, bundleIcon} from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
 import {api} from "@/api";
 import {t, Trans} from "@lingui/macro";
@@ -22,8 +22,10 @@ import {WsUtil} from "@/utils/wsUtil";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
+import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 
 const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
+const AddIcon = bundleIcon(AddFilled, AddRegular);
 
 export default function GameConfig() {
   const gameDir = useEditorStore.use.subPage();
@@ -142,7 +144,7 @@ export default function GameConfig() {
       <TabItem title={t`标题背景图片`}>
         <GameConfigEditorWithFileChoose
           sourceBase="background"
-          extNameList={[".jpg", ".png", ".webp"]}
+          extNameList={extNameMap.get('image') ?? []}
           key="titleBackground"
           value={getConfigContentAsString('Title_img')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
@@ -150,7 +152,7 @@ export default function GameConfig() {
       <TabItem title={t`标题背景音乐`}>
         <div className={styles.sidebar_gameconfig_title}>{}</div>
         <GameConfigEditorWithFileChoose
-          extNameList={[".mp3", ".ogg", ".wav"]}
+          extNameList={extNameMap.get('audio') ?? []}
           sourceBase="bgm" key="titleBgm"
           value={getConfigContentAsString('Title_bgm')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
@@ -158,7 +160,7 @@ export default function GameConfig() {
       <TabItem title={t`启动图`}>
         <GameConfigEditorWithImageFileChoose
           sourceBase="background"
-          extNameList={[".jpg", ".png", ".webp"]}
+          extNameList={extNameMap.get('image') ?? []}
           key="logoImage"
           value={getConfigContentAsStringArray('Game_Logo')}
           onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
@@ -305,24 +307,23 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
   sourceBase: string,
   extNameList: string[]
 }) {
-  const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
   return <div className={styles.textEditArea}>
-    {!showEditBox.value && props.value}
-    {!showEditBox.value && <span className={styles.editButton} onClick={() => {
-      showEditBox.set(true);
-      setTimeout(() => inputBoxRef.current?.focus(), 100);
-    }}><Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/></span>}
-    {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
+    {props.value}
+    <ChooseFile
+      basePath={[props.sourceBase]}
+      button={
+        <span className={styles.editButton}>
+          <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
+        </span>
+      }
+      selectedFilePath={props.value}
       onChange={(file) => {
         if (file) {
           props.onChange(file.name);
-          showEditBox.set(false);
-        } else {
-          showEditBox.set(false);
         }
       }}
-      extName={props.extNameList}/>}
+      extNames={props.extNameList}/>
   </div>;
 }
 
@@ -331,7 +332,6 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   extNameList: string[]
 }) {
   const gameDir = useEditorStore.use.subPage();
-  const showEditBox = useValue(false);
   const inputBoxRef = useRef<HTMLInputElement>(null);
   const images = props.value;
 
@@ -365,24 +365,17 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
             />
           </div>
         ))}</div>
-      {!showEditBox.value && <div onClick={() => {
-        showEditBox.set(true);
-        eventBus.emit('scrollTopbarToEnd');
-        setTimeout(() => inputBoxRef.current?.focus(), 100);
-      }}
-      className={styles.addIcon}
-      ><Plus theme="outline" size="20" fill="#005CAF" strokeWidth={3}/></div>}
-      {showEditBox.value && <ChooseFile sourceBase={props.sourceBase}
+      <ChooseFile
+        title={t`选择图片文件`}
+        basePath={[props.sourceBase]}
+        button={<Button icon={<AddIcon/>} />}
         onChange={(file) => {
           if (file) {
             addImage(file.name);
-            showEditBox.set(false);
-            eventBus.emit('scrollTopbarToEnd');
-          } else {
-            showEditBox.set(false);
+            // eventBus.emit('scrollTopbarToEnd');
           }
         }}
-        extName={props.extNameList}/>}
+        extNames={props.extNameList}/>
     </div>
   );
 }
