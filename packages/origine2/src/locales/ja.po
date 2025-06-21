@@ -1669,6 +1669,10 @@ msgstr "簡体字中国語"
 msgid "紧急回避"
 msgstr "緊急回避"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+msgid "繁体中文"
+msgstr "繁体字中国語"
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
 msgstr "Tex"
@@ -1725,10 +1729,6 @@ msgstr "ゲームの編集"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Template.tsx:11
 msgid "编辑组件"
 msgstr "コンポーネントの編集"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
-msgid "繁体中文"
-msgstr "繁体字中国語"
 
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194

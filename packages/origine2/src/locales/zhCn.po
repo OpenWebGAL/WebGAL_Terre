@@ -1668,6 +1668,10 @@ msgstr "简体中文"
 msgid "紧急回避"
 msgstr "紧急回避"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+msgid "繁体中文"
+msgstr "繁体中文"
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
 msgstr "纹理"
@@ -1724,10 +1728,6 @@ msgstr "编辑游戏"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Template.tsx:11
 msgid "编辑组件"
 msgstr "编辑组件"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
-msgid "繁体中文"
-msgstr "繁体中文"
 
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194

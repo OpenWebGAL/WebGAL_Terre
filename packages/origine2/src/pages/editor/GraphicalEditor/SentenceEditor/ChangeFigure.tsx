@@ -15,6 +15,7 @@ import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -202,8 +203,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       {figureFile.value.includes('.json') && (
         <>
           <CommonOptions key="24" title={isSpineJsonFormat ? t`Spine 动画` : t`Live2D 动作`}>
-            <WheelDropdown
-              options={new Map(l2dMotionsList.map(item => [item, item]))}
+            <SearchableCascader
+              optionList={l2dMotionsList}
               value={currentMotion.value}
               onValueChange={(newValue) =>{
                 newValue && currentMotion.set(newValue);
@@ -213,8 +214,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           </CommonOptions>
           {!isSpineJsonFormat && (
             <CommonOptions key="25" title={t`Live2D 表情`}>
-              <WheelDropdown
-                options={new Map(l2dExpressionsList.map(item => [item, item]))}
+              <SearchableCascader
+                optionList={l2dExpressionsList}
                 value={currentExpression.value}
                 onValueChange={(newValue) =>{
                   newValue && currentExpression.set(newValue);

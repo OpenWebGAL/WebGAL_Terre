@@ -1670,6 +1670,10 @@ msgstr "Simplified Chinese"
 msgid "紧急回避"
 msgstr "Emergency Evasion"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+msgid "繁体中文"
+msgstr "Traditional Chinese"
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "纹理"
 msgstr "Texture"
@@ -1726,10 +1730,6 @@ msgstr "Edit game"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Template.tsx:11
 msgid "编辑组件"
 msgstr "Edit component"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
-msgid "繁体中文"
-msgstr "Traditional Chinese"
 
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194
