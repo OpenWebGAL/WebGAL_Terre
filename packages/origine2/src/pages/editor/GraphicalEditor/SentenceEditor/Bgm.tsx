@@ -6,6 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {getArgByKey} from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
+import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function Bgm(props: ISentenceEditorProps) {
@@ -16,13 +17,24 @@ export default function Bgm(props: ISentenceEditorProps) {
   const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const submit = () => {
-    const volumeStr = volume.value !== "" ? ` -volume=${volume.value}` : "";
-    const enterStr = enter.value !== "" ? ` -enter=${enter.value}` : "";
-    if(bgmFile.value !== "none"){
-      props.onSubmit(`bgm:${bgmFile.value}${volumeStr}${enterStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
-    } else {
-      props.onSubmit(`bgm:${bgmFile.value}${enterStr};`);
-    }
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      bgmFile.value,
+      props.sentence.args,
+      [
+        {key: "enter", value: enter.value},
+        ...(bgmFile.value !== "none" ? [
+          {key: "volume", value: volume.value},
+          {key: "unlockname", value: unlockName.value},
+          {key: "series", value: unlockSeries.value},
+        ] : [
+          {key: "volume", value: ""},
+          {key: "unlockname", value: ""},
+          {key: "series", value: ""},
+        ]),
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>

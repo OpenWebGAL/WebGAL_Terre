@@ -8,6 +8,7 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import CommonTips from "../components/CommonTips";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
@@ -26,8 +27,16 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
 
   const submit = () => {
-    const isGoNextStr = isGoNext.value ? " -next" : "";
-    props.onSubmit(`setAnimation:${fileName.value} -target=${target.value}${isGoNextStr};`);
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      fileName.value,
+      props.sentence.args,
+      [
+        {key: "target", value: target.value},
+        {key: "next", value: isGoNext.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
   return <div className={styles.sentenceEditorContent}>
     <CommonTips text={t`提示：先设置立绘/背景，再应用动画，否则找不到目标。`} />

@@ -6,13 +6,20 @@ import { useValue } from "../../../../hooks/useValue";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function ChangeCallScene(props: ISentenceEditorProps) {
   const isCallScene = useValue(props.sentence.command === commandType.callScene);
   const fileName = useValue(props.sentence.content);
   const submit = () => {
-    props.onSubmit(`${isCallScene.value ? "callScene" : "changeScene"}:${fileName.value}`);
+    const submitString = combineSubmitString(
+      isCallScene.value ? "callScene" : "changeScene",
+      fileName.value,
+      props.sentence.args,
+      [],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
