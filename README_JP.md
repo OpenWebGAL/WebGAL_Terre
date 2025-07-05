@@ -19,7 +19,7 @@
 
 ##### ダウンロードリンク
 
-https://github.com/MakinoharaShoko/WebGAL_Terre/releases
+https://github.com/OpenWebGAL/WebGAL_Terre/releases
 
 ## 使用説明
 
