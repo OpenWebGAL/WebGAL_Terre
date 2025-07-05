@@ -4,37 +4,31 @@
 
 #### 新功能
 
-自动注入构建信息，方便快速定位版本。
+资源管理优化：改进资源管理和文件选择器组件，增强文件浏览体验。
 
-字体系统升级：当选择非默认字号时，条件性地添加 fontSize 参数，并新增字体优化选项。
+动画支持：新增 JSON 格式的 Spine 动画支持，自动检测并加载 Spine 动画数据。
 
-编辑器改进：在浏览器重新获得焦点时自动重新加载场景文件（图形编辑器与文本编辑器）。
+编辑器增强：改进文本编辑器体验，优化行号匹配逻辑，提升编辑流畅度。
 
-场景管理：新增 fetchScene 方法，支持按需拉取场景数据。
+视觉效果：新增斜面滤镜（Bevel Filter）的柔和度选项，支持更细腻的视觉效果调节。
 
-滚轮交互优化：仅当编辑器聚焦时才响应滚轮缩放，并采用 activeElement 提升焦点检测性能。
+特效组件：在 PixiPerform 组件中新增 `heavySnow` 效果，丰富雪花特效选项。
 
-Say 组件支持在 IME 组合输入期间实时提交文本变化。
+用户体验：添加导出提示功能，改善用户操作引导。
 
-图像处理：新增调整滤镜（Adjustment Filter）功能。
-
-体验改进：新增默认语言选择和窗口关闭事件支持。
-
-性能优化：将自定义防抖实现替换为 lodash，提高编辑流畅度。
+性能优化：修复拖动斜面和调整滤镜颜色选择器时的卡顿问题。
 
 #### 修复
 
-修复游戏创建过程中名称未更新、目录异常等问题。
+修复资源文件扩展名映射错误，将音频文件正确归类。
 
-修复在发送同步消息前未正确检查 WebSocket 连接的问题。
+修复半角分号在提交值中的转义问题，确保格式正确。
 
-修复 issue #388 相关的异常。
+修复卸载程序缺少确认页面的问题。
 
-修复 macOS 下因系统完整性保护（SIP）导致的编译问题。
+修复图标背景使用图片时的显示问题，支持透明背景创建图标。
 
-修复 EffectEditor 布局与输入分组异常。
-
-修复 release 脚本中多余权限指令导致的构建失败。
+修复文件不存在时创建文件的异常处理。
 
 <!-- English Translation -->
 ## Release Notes
@@ -43,37 +37,31 @@ Say 组件支持在 IME 组合输入期间实时提交文本变化。
 
 #### New Features
 
-Auto-inject build information to quickly identify versions.
+Asset management optimization: improved assets management and file chooser components for enhanced file browsing experience.
 
-Font system enhancements: conditionally add the `fontSize` parameter when a non‑default size is chosen and introduce font optimization options.
+Animation support: added JSON format Spine animation support with automatic detection and loading of Spine animation data.
 
-Editors now automatically reload the scene file when the browser regains focus (Graphical Editor & Text Editor).
+Editor enhancement: improved text editor experience with optimized line number matching logic for smoother editing.
 
-Scene management: added `fetchScene` to retrieve scene data on demand.
+Visual effects: added softness option for Bevel Filter, enabling more refined visual effect adjustments.
 
-Wheel interaction improvements: zoom/scroll only when the editor is focused, with more accurate focus detection via `activeElement`.
+Effect components: added `heavySnow` effect to PixiPerform component, enriching snow effect options.
 
-The Say component now supports real‑time text change submission during IME composition.
+User experience: added export tips feature to improve user guidance.
 
-Image processing: added an Adjustment Filter feature.
-
-UX improvements: added default language selection and a close‑event hook.
-
-Performance optimization: replaced the custom debounce with a lodash implementation for smoother editing.
+Performance optimization: fixed lag issues when dragging bevel and adjustment filter color pickers.
 
 #### Fixes
 
-Fixed game‑creation issues where the name wasn’t updated and directories were mishandled.
+Fixed asset file extension mapping errors, correctly categorizing audio files.
 
-Fixed missing WebSocket connection check before sending sync messages.
+Fixed semicolon escaping issues in commit values to ensure proper formatting.
 
-Fixed the exception described in issue #388.
+Fixed missing confirmation page in uninstaller.
 
-Fixed macOS build failures caused by SIP restrictions.
+Fixed icon background display issues when using images, supporting transparent background icon creation.
 
-Fixed layout and input‑grouping issues in EffectEditor.
-
-Fixed build failures caused by redundant permission commands in the release script.
+Fixed exception handling when creating files that don't exist.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -82,37 +70,31 @@ Fixed build failures caused by redundant permission commands in the release scri
 
 #### 新機能
 
-ビルド情報を自動挿入し、バージョンの特定を容易にしました。
+アセット管理の最適化：アセット管理とファイル選択コンポーネントを改善し、ファイルブラウジング体験を向上させました。
 
-フォントシステムを強化：既定外のフォントサイズが選択された場合に `fontSize` パラメータを条件付きで追加し、フォント最適化オプションを提供します。
+アニメーションサポート：JSON形式のSpineアニメーションをサポートし、Spineアニメーションデータの自動検出と読み込みを実装しました。
 
-ブラウザがフォーカスを取り戻した際、エディターがシーンファイルを自動的に再読込するようになりました（グラフィカルエディターとテキストエディター）。
+エディターの強化：テキストエディターの体験を改善し、行番号マッチングロジックを最適化してよりスムーズな編集を実現しました。
 
-シーン管理：オンデマンドでシーンを取得できる `fetchScene` 関数を追加しました。
+ビジュアルエフェクト：ベベルフィルターにソフトネスオプションを追加し、より細かいビジュアル効果の調整を可能にしました。
 
-ホイール操作の改良：エディターがフォーカスされている場合のみズーム／スクロールを行い、`activeElement` を利用して焦点検出を最適化しました。
+エフェクトコンポーネント：PixiPerformコンポーネントに`heavySnow`エフェクトを追加し、雪のエフェクトオプションを充実させました。
 
-Say コンポーネントで IME 変換中でもリアルタイムでテキスト変更を送信できるようになりました。
+ユーザー体験：エクスポートのヒント機能を追加し、ユーザーガイダンスを改善しました。
 
-画像処理：調整フィルター（Adjustment Filter）機能を追加しました。
-
-UX 改善：既定言語の選択とウィンドウクローズイベントを追加しました。
-
-パフォーマンス最適化：独自のデバウンスを lodash 実装に置き換え、編集をよりスムーズにしました。
+パフォーマンス最適化：ベベルおよび調整フィルターのカラーピッカーをドラッグする際のラグを修正しました。
 
 #### 修正
 
-ゲーム作成時に名前が更新されずディレクトリが適切に処理されない問題を修正しました。
+アセットファイルの拡張子マッピングエラーを修正し、オーディオファイルを正しく分類するようにしました。
 
-同期メッセージ送信前に WebSocket 接続を確認しない問題を修正しました。
+コミット値でのセミコロンのエスケープ問題を修正し、適切なフォーマットを保証しました。
 
-issue #388 に関連する例外を修正しました。
+アンインストーラーに確認ページがない問題を修正しました。
 
-macOS で SIP により発生するビルドエラーを修正しました。
+画像を使用した際のアイコン背景の表示問題を修正し、透明背景でのアイコン作成をサポートしました。
 
-EffectEditor のレイアウトと入力グループ化の問題を修正しました。
-
-リリーススクリプトの不要な権限コマンドによりビルドが失敗する問題を修正しました。
+存在しないファイルを作成する際の例外処理を修正しました。
 
 [//]: # (<!-- French Translation -->)
 

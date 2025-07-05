@@ -142,6 +142,10 @@ msgstr "setTransform: -duration=0;"
 msgid "setTransition:;"
 msgstr "setTransition:;"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:204
+msgid "Spine 动画"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:197
 msgid "unlockBgm:;"
 msgstr "unlockBgm:;"
@@ -421,6 +425,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:133
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "关闭"
@@ -816,22 +821,34 @@ msgstr "Text in Textbox"
 msgid "对话框标题"
 msgstr "Dialog title"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:17
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:60
 #: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "Export"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:23
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:36
+msgid "导出中..."
+msgstr "Exporting..."
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:81
 msgid "导出为可执行文件"
 msgstr "Export as executable file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:26
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:92
 msgid "导出为安卓项目文件"
 msgstr "Export as Android project file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:20
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:70
 msgid "导出为网页"
 msgstr "Export as webpage"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+msgid "导出失败！"
+msgstr "Export Failed!"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+msgid "导出成功！"
+msgstr "Export Success!"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:123
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
@@ -1723,6 +1740,10 @@ msgstr "Grid view"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:405
 msgid "老电影滤镜"
 msgstr "Old film filter"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:50
+msgid "耗时"
+msgstr "Time taken"
 
 #: src/components/IconCreator/IconCreator.tsx:678
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113

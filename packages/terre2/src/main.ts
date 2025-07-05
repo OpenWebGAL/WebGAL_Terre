@@ -11,7 +11,7 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 
 let WEBGAL_PORT = 3000; // 默认端口
-export const version_number = `4.5.13`;
+export const version_number = `4.5.14`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }

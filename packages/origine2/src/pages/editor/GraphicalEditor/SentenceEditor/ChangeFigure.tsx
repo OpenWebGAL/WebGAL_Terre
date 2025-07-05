@@ -25,6 +25,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const figureFile = useValue(props.sentence.content);
+  const isHaveSpineArg = figureFile.value.includes('?type=spine');
   const figurePosition = useValue<FigurePosition>("");
   const isNoFile = props.sentence.content === "";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
@@ -41,6 +42,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
+  const [isSpineJsonFormat, setIsSpineJsonFormat] = useState(false);
 
   const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
   const currentExpression = useValue(
@@ -64,30 +66,45 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       axios.get(`/games/${gameDir}/game/figure/${figureFile.value}`).then(resp => {
         const data = resp.data;
 
-        if (data?.motions) {
-          // 处理 motions
-          const motions = Object.keys(data.motions);
-          setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
-        }
+        // 检测是否为 Spine JSON 格式
+        if (data?.animations) {
+          // 处理 Spine JSON 格式的 animations
+          setIsSpineJsonFormat(true);
+          const animations = Object.keys(data.animations);
+          setL2dMotionsList(animations.sort((a, b) => a.localeCompare(b)));
+          // Spine JSON 格式忽略 expressions
+          setL2dExpressionsList([]);
+        } else {
+          // Live2D 格式
+          setIsSpineJsonFormat(false);
 
-        // 处理 expressions
-        if (data?.expressions) {
-          const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
-          setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
-        }
+          if (data?.motions) {
+            // 处理 motions
+            const motions = Object.keys(data.motions);
+            setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+          }
 
-        // 处理 v3 版本的 model
-        if (data?.['FileReferences']?.['Motions']) {
-          const motions = Object.keys(data['FileReferences']['Motions']);
-          setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
-        }
+          // 处理 expressions
+          if (data?.expressions) {
+            const expressions: string[] = data.expressions.map((exp: { name: string }) => exp.name);
+            setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+          }
 
-        if (data?.['FileReferences']?.['Expressions']) {
-          const expressions: string[] = data['FileReferences']['Expressions'].map((exp: { Name: string }) => exp.Name);
-          setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+          // 处理 v3 版本的 model
+          if (data?.['FileReferences']?.['Motions']) {
+            const motions = Object.keys(data['FileReferences']['Motions']);
+            setL2dMotionsList(motions.sort((a, b) => a.localeCompare(b)));
+          }
+
+          if (data?.['FileReferences']?.['Expressions']) {
+            const expressions: string[] = data['FileReferences']['Expressions'].map((exp: { Name: string }) => exp.Name);
+            setL2dExpressionsList(expressions.sort((a, b) => a.localeCompare(b)));
+          }
         }
 
       });
+    } else {
+      setIsSpineJsonFormat(false);
     }
   }, [figureFile.value]);
   const toggleAccordion = () => {
@@ -196,7 +213,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {figureFile.value.includes('.json') && (
         <>
-          <CommonOptions key="24" title={t`Live2D 动作`}>
+          <CommonOptions key="24" title={isSpineJsonFormat ? t`Spine 动画` : t`Live2D 动作`}>
             <WheelDropdown
               options={new Map(l2dMotionsList.map(item => [item, item]))}
               value={currentMotion.value}
@@ -206,16 +223,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               }}
             />
           </CommonOptions>
-          <CommonOptions key="25" title={t`Live2D 表情`}>
-            <WheelDropdown
-              options={new Map(l2dExpressionsList.map(item => [item, item]))}
-              value={currentExpression.value}
-              onValueChange={(newValue) =>{
-                newValue && currentExpression.set(newValue);
-                submit();
-              }}
-            />
-          </CommonOptions>
+          {!isSpineJsonFormat && (
+            <CommonOptions key="25" title={t`Live2D 表情`}>
+              <WheelDropdown
+                options={new Map(l2dExpressionsList.map(item => [item, item]))}
+                value={currentExpression.value}
+                onValueChange={(newValue) =>{
+                  newValue && currentExpression.set(newValue);
+                  submit();
+                }}
+              />
+            </CommonOptions>
+          )}
           <CommonOptions title={t`自定义 Live2D 绘制范围`} key="bounds">
             <input value={bounds.value}
               onChange={(ev) => {

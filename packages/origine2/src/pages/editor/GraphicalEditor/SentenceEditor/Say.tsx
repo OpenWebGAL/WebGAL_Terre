@@ -241,7 +241,7 @@ export default function Say(props: ISentenceEditorProps) {
                 vocal.value === "" ? volume.set("") : volume.set(volume.value);
                 submit();
               }}
-              extNames={extNameMap.get('video')}
+              extNames={extNameMap.get('audio')}
             />
           </>
         </CommonOptions>
