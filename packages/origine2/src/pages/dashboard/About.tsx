@@ -8,16 +8,15 @@ import { t } from '@lingui/macro';
 import { dateTimeOptions } from './DashBoard';
 import useSWR from 'swr';
 import { api } from '@/api';
+import { useOsInfo } from '@/hooks/useOsInfo';
 
 const InfoIcon = bundleIcon(InfoFilled, InfoRegular);
-
-export const osInfoFetcher = () => api.appControllerGetOsInfo().then((res) => res.data.platform);
 
 const About: React.FunctionComponent = () => {
   const [open, setOpen] = useState(false);
 
   const latestRelease = useRelease();
-  const { data: platform } = useSWR('osinfo', osInfoFetcher);
+  const { data: platform } = useOsInfo();
 
   return (
     <Popover

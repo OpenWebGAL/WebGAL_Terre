@@ -20,7 +20,7 @@ import {
 } from '@fluentui/react-components';
 import { useRef } from 'react';
 import useSWR from 'swr';
-import { osInfoFetcher } from '@/pages/dashboard/About';
+import { useOsInfo } from '@/hooks/useOsInfo';
 
 export function ExportTab() {
   const gameDir = useEditorStore.use.subPage();
@@ -29,7 +29,7 @@ export function ExportTab() {
   const toasterId = useId('toaster');
   const { dispatchToast, dismissAllToasts } = useToastController(toasterId);
   const timeCurrent = useRef(0);
-  const { data: platform } = useSWR('osinfo', osInfoFetcher);
+  const { data: platform } = useOsInfo();
 
   const startExport = () => {
     timeCurrent.current = Date.now();
