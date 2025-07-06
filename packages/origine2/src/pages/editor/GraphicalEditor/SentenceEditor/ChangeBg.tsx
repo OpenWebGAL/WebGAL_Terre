@@ -14,6 +14,7 @@ import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "../components/WheelDropdown";
+import { easeType } from "../utils/constants";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -24,23 +25,6 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
-  const easeType = new Map<string, string>([
-    [ "", t`默认` ],
-    [ "linear", t`线性` ],
-    [ "easeIn", t`缓入` ],
-    [ "easeOut", t`缓出` ],
-    [ "easeInOut", t`缓入缓出` ],
-    [ "circIn", t`圆形缓入` ],
-    [ "circOut", t`圆形缓出` ],
-    [ "circInOut", t`圆形缓入缓出` ],
-    [ "backIn", t`起点回弹` ],
-    [ "backOut", t`终点回弹` ],
-    [ "backInOut", t`起止回弹` ],
-    [ "bounceIn", t`起点弹跳` ],
-    [ "bounceOut", t`终点弹跳` ],
-    [ "bounceInOut", t`起止弹跳` ],
-    [ "anticipate", t`预先反向` ],
-  ]);
   
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {

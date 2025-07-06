@@ -11,6 +11,7 @@ import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
+import { easeType } from "../utils/constants";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -33,23 +34,6 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
-  const easeType = new Map<string, string>([
-    [ "", t`默认` ],
-    [ "linear", t`线性` ],
-    [ "easeIn", t`缓入` ],
-    [ "easeOut", t`缓出` ],
-    [ "easeInOut", t`缓入缓出` ],
-    [ "circIn", t`圆形缓入` ],
-    [ "circOut", t`圆形缓出` ],
-    [ "circInOut", t`圆形缓入缓出` ],
-    [ "backIn", t`起点回弹` ],
-    [ "backOut", t`终点回弹` ],
-    [ "backInOut", t`起止回弹` ],
-    [ "bounceIn", t`起点弹跳` ],
-    [ "bounceOut", t`终点弹跳` ],
-    [ "bounceInOut", t`起止弹跳` ],
-    [ "anticipate", t`预先反向` ],
-  ]);
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
 

@@ -16,6 +16,7 @@ import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import { easeType } from "../utils/constants";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -61,23 +62,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   ]);
 
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
-  const easeType = new Map<string, string>([
-    [ "", t`默认` ],
-    [ "linear", t`线性` ],
-    [ "easeIn", t`缓入` ],
-    [ "easeOut", t`缓出` ],
-    [ "easeInOut", t`缓入缓出` ],
-    [ "circIn", t`圆形缓入` ],
-    [ "circOut", t`圆形缓出` ],
-    [ "circInOut", t`圆形缓入缓出` ],
-    [ "backIn", t`起点回弹` ],
-    [ "backOut", t`终点回弹` ],
-    [ "backInOut", t`起止回弹` ],
-    [ "bounceIn", t`起点弹跳` ],
-    [ "bounceOut", t`终点弹跳` ],
-    [ "bounceInOut", t`起止弹跳` ],
-    [ "anticipate", t`预先反向` ],
-  ]);
 
   useEffect(() => {
     if (figureFile.value.includes('json')) {
