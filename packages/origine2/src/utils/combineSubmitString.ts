@@ -9,38 +9,38 @@ import { arg } from "webgal-parser/src/interface/sceneInterface";
  * @returns 合并后的用于提交的字符串
  */
 export function combineSubmitString (
-    commandStr: string | undefined,
-    content: string,
-    originalArgs: Array<arg>,
-    newArgs: Array<{key: string, value: string | boolean | number, fullMode?: boolean}>
+  commandStr: string | undefined,
+  content: string,
+  originalArgs: Array<arg>,
+  newArgs: Array<{key: string, value: string | boolean | number, fullMode?: boolean}>
 ): string {
-    const argStrings: Array<string> = [];
-    const combinedArg = new Map<string, string | boolean | number>()
+  const argStrings: Array<string> = [];
+  const combinedArg = new Map<string, string | boolean | number>();
 
-    originalArgs.forEach(oArg => combinedArg.set(oArg.key, oArg.value));
-    newArgs.forEach((nArg) => {
-        if (!nArg.fullMode && (nArg.value === true || nArg.value === false || nArg.value === "")) {
-            combinedArg.delete(nArg.key);
-            if (nArg.value === "") {
-                nArg.value = false;
-            }
-            argStrings.push(argToSimplifiedString(nArg.key, nArg.value));
-        } else {
-            combinedArg.set(nArg.key, nArg.value)
-        }
-    });
-
-    combinedArg.forEach((v, k, m) => {
-        argStrings.push(argToString(k, v));
-    });
-    
-    let combinedString = "";
-    if (commandStr === "" || commandStr) {
-        combinedString += `${commandStr}:`
+  originalArgs.forEach(oArg => combinedArg.set(oArg.key, oArg.value));
+  newArgs.forEach((nArg) => {
+    if (!nArg.fullMode && (nArg.value === true || nArg.value === false || nArg.value === "")) {
+      combinedArg.delete(nArg.key);
+      if (nArg.value === "") {
+        nArg.value = false;
+      }
+      argStrings.push(argToSimplifiedString(nArg.key, nArg.value));
+    } else {
+      combinedArg.set(nArg.key, nArg.value);
     }
-    combinedString += `${content}${argStrings.join("")};`;
+  });
 
-    return combinedString;
+  combinedArg.forEach((v, k, m) => {
+    argStrings.push(argToString(k, v));
+  });
+    
+  let combinedString = "";
+  if (commandStr === "" || commandStr) {
+    combinedString += `${commandStr}:`;
+  }
+  combinedString += `${content}${argStrings.join("")};`;
+
+  return combinedString;
 }
 
 /**
@@ -50,10 +50,10 @@ export function combineSubmitString (
  * @returns 转换后的字符串
  */
 export function argToString(
-    key: string,
-    value: string | boolean | number,
+  key: string,
+  value: string | boolean | number,
 ): string {
-    return ` -${key}=${value}`;
+  return ` -${key}=${value}`;
 }
 
 /**
@@ -63,12 +63,12 @@ export function argToString(
  * @returns 转换后的字符串
  */
 export function argToSimplifiedString(
-    key: string,
-    value: boolean,
+  key: string,
+  value: boolean,
 ): string {
-    if (value) {
-        return ` -${key}`;
-    } else {
-        return ``;
-    }
+  if (value) {
+    return ` -${key}`;
+  } else {
+    return ``;
+  }
 }

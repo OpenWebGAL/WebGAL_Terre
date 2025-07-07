@@ -25,7 +25,9 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
-
+  const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
+  const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
+  
   const submit = () => {
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
@@ -33,6 +35,8 @@ export default function SetAnimation(props: ISentenceEditorProps) {
       props.sentence.args,
       [
         {key: "target", value: target.value},
+        {key: "writeDefault", value: writeDefault.value},
+        {key: "keep", value: keep.value},
         {key: "next", value: isGoNext.value},
       ],
     );
@@ -79,7 +83,19 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-      <CommonOptions key="5" title={t`连续执行`}>
+      <CommonOptions key="5" title={t`补充默认值`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          writeDefault.set(newValue);
+          submit();
+        }} onText={t`继承默认效果`} offText={t`继承现有效果`} isChecked={writeDefault.value} />
+      </CommonOptions>
+      <CommonOptions key="6" title={t`跨语句动画`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          keep.set(newValue);
+          submit();
+        }} onText={t`开启`} offText={t`关闭`} isChecked={keep.value} />
+      </CommonOptions>
+      <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();

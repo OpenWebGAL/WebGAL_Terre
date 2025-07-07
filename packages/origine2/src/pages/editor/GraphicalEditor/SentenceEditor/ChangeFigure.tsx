@@ -16,6 +16,7 @@ import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import { easeType } from "../utils/constants";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -59,6 +60,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["", "OFF"],
     ["on", "ON"],
   ]);
+
+  const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
 
   useEffect(() => {
     if (figureFile.value.includes('json')) {
@@ -163,6 +166,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "motion", value: currentMotion.value},
         {key: "expression", value: currentExpression.value},
         {key: "bounds", value: bounds.value},
+        {key: "ease", value: ease.value},
         {key: "zIndex", value: zIndex.value},
         {key: "next", value: isGoNext.value},
       ],
@@ -270,6 +274,16 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           className={styles.sayInput}
           placeholder={t`立绘 ID`}
           style={{width: "100%"}}
+        />
+      </CommonOptions>
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeType}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
         />
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
