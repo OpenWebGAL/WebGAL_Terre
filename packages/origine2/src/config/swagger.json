@@ -21,7 +21,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Returns the OS platform.",
+            "description": "Returns the OS information.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1103,10 +1103,15 @@
           "platform": {
             "type": "string",
             "description": "The platform of the operating system"
+          },
+          "arch": {
+            "type": "string",
+            "description": "The architecture of the operating system"
           }
         },
         "required": [
-          "platform"
+          "platform",
+          "arch"
         ]
       },
       "CreateNewFileDto": {

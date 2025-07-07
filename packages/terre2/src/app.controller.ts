@@ -16,7 +16,7 @@ export class AppController {
   @Get('/api/osinfo')
   @ApiResponse({
     status: 200,
-    description: 'Returns the OS platform.',
+    description: 'Returns the OS information.',
     type: OsInfoDto,
   })
   getOsInfo(): OsInfoDto {

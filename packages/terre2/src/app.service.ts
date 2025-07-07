@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { platform } from 'os';
+import { arch, platform } from 'os';
 import { OsInfoDto } from './app.dto';
 
 @Injectable()
@@ -11,6 +11,7 @@ export class AppService {
   getOsInfo(): OsInfoDto {
     return {
       platform: platform(),
+      arch: arch(),
     };
   }
 }

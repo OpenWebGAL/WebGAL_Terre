@@ -8,7 +8,7 @@ import { t } from '@lingui/macro';
 import { dateTimeOptions } from './DashBoard';
 import useSWR from 'swr';
 import { api } from '@/api';
-import { useOsInfo } from '@/hooks/useOsInfo';
+import useOsInfo from '@/hooks/useOsInfo';
 
 const InfoIcon = bundleIcon(InfoFilled, InfoRegular);
 
@@ -16,7 +16,7 @@ const About: React.FunctionComponent = () => {
   const [open, setOpen] = useState(false);
 
   const latestRelease = useRelease();
-  const { data: platform } = useOsInfo();
+  const { data: osInfo } = useOsInfo();
 
   return (
     <Popover
@@ -50,7 +50,7 @@ const About: React.FunctionComponent = () => {
                 </>
               }
 
-              <span>{t`运行平台`}: {platform}</span>
+              <span>{t`运行平台`}: {osInfo?.platform} {osInfo?.arch}</span>
               <br />
               <p>
                 {

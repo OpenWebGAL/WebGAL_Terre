@@ -2001,7 +2001,7 @@ msgstr "ファイルのフィルタリング"
 
 #: src/pages/dashboard/About.tsx:53
 msgid "运行平台"
-msgstr "Platform"
+msgstr "プラットフォーム"
 
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155

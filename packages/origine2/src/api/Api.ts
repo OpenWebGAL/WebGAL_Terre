@@ -12,6 +12,8 @@
 export interface OsInfoDto {
   /** The platform of the operating system */
   platform: string;
+  /** The architecture of the operating system */
+  arch: string;
 }
 
 export interface CreateNewFileDto {

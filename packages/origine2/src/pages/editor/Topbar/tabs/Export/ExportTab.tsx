@@ -19,8 +19,7 @@ import {
   useToastController,
 } from '@fluentui/react-components';
 import { useRef } from 'react';
-import useSWR from 'swr';
-import { useOsInfo } from '@/hooks/useOsInfo';
+import useOsInfo from '@/hooks/useOsInfo';
 
 export function ExportTab() {
   const gameDir = useEditorStore.use.subPage();
@@ -29,7 +28,7 @@ export function ExportTab() {
   const toasterId = useId('toaster');
   const { dispatchToast, dismissAllToasts } = useToastController(toasterId);
   const timeCurrent = useRef(0);
-  const { data: platform } = useOsInfo();
+  const { data: osInfo } = useOsInfo();
 
   const startExport = () => {
     timeCurrent.current = Date.now();
@@ -72,7 +71,7 @@ export function ExportTab() {
             icon={<GlobeIcon aria-label="Export Web" className={s.iconColor} />}
             text={t`导出为网页`}
           />
-          {platform !== 'android' && (
+          {osInfo?.platform !== 'android' && (
             <IconWithTextItem
               onClick={() => {
                 startExport();

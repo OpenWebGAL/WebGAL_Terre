@@ -1,8 +1,10 @@
 import useSWR from 'swr';
 import { api } from '@/api';
 
-export const osInfoFetcher = () => api.appControllerGetOsInfo().then((res) => res.data.platform);
+const osInfoFetcher = () => api.appControllerGetOsInfo().then((res) => res.data);
 
-export const useOsInfo = () => {
+const useOsInfo = () => {
   return useSWR('osinfo', osInfoFetcher);
 };
+
+export default useOsInfo;
