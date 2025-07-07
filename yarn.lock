@@ -12203,10 +12203,10 @@ web-streams-polyfill@^3.0.3:
   resolved "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-3.3.3.tgz"
   integrity sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==
 
-webgal-engine@4.5.13:
-  version "4.5.13"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.13.tgz#a6ef350b581a24a1a04d73612cf48f9cf20b30fa"
-  integrity sha512-f6Q9WPtghIC3ROxQ8QQRG2nFvdSk+5qfzf+C46NVGavOiAVVXSFfTbzHnu39aiNoqIMtaLWNqQdBeiRzVhrfnA==
+webgal-engine@4.5.14:
+  version "4.5.14"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.14.tgz#339986413091fbe80d0217154bb395341b77669f"
+  integrity sha512-+sQ3HHyR4Mfr/5NhRO87ReP29Lbe5gRzqIyfU/hezqaTsKsAEBo36/viVe3mLJ6p5CQnXEDH0qx4OtFSAZb7Gg==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"

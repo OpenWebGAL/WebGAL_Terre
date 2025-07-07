@@ -11,7 +11,28 @@
           }
         },
         "tags": [
-          "Test Server"
+          "App"
+        ]
+      }
+    },
+    "/api/osinfo": {
+      "get": {
+        "operationId": "AppController_getOsInfo",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the OS information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsInfoDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "App"
         ]
       }
     },
@@ -1076,6 +1097,23 @@
   "servers": [],
   "components": {
     "schemas": {
+      "OsInfoDto": {
+        "type": "object",
+        "properties": {
+          "platform": {
+            "type": "string",
+            "description": "The platform of the operating system"
+          },
+          "arch": {
+            "type": "string",
+            "description": "The architecture of the operating system"
+          }
+        },
+        "required": [
+          "platform",
+          "arch"
+        ]
+      },
       "CreateNewFileDto": {
         "type": "object",
         "properties": {

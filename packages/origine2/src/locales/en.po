@@ -416,8 +416,8 @@ msgstr "Full-screen text"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "Show some texts on Full-screen"
 
-#: src/pages/dashboard/About.tsx:25
-#: src/pages/dashboard/About.tsx:26
+#: src/pages/dashboard/About.tsx:29
+#: src/pages/dashboard/About.tsx:30
 msgid "关于"
 msgstr "About"
 
@@ -477,7 +477,7 @@ msgstr "Min Width"
 msgid "最小高度"
 msgstr "Min Height"
 
-#: src/pages/dashboard/About.tsx:41
+#: src/pages/dashboard/About.tsx:47
 #: src/pages/dashboard/DashBoard.tsx:157
 msgid "最新版本"
 msgstr "Latest Version"
@@ -835,32 +835,32 @@ msgstr "Text in Textbox"
 msgid "对话框标题"
 msgstr "Dialog title"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:60
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:63
 #: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "Export"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:36
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:39
 msgid "导出中..."
 msgstr "Exporting..."
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:81
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:85
 msgid "导出为可执行文件"
 msgstr "Export as executable file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:92
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:97
 msgid "导出为安卓项目文件"
 msgstr "Export as Android project file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:70
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:73
 msgid "导出为网页"
 msgstr "Export as webpage"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
 msgid "导出失败！"
 msgstr "Export Failed!"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
 msgid "导出成功！"
 msgstr "Export Success!"
 
@@ -980,7 +980,7 @@ msgstr "Open mouth"
 msgid "强度"
 msgstr "Intensity"
 
-#: src/pages/dashboard/About.tsx:37
+#: src/pages/dashboard/About.tsx:41
 #: src/pages/dashboard/DashBoard.tsx:156
 msgid "当前版本"
 msgstr "Current version"
@@ -1225,7 +1225,7 @@ msgstr "Text length (em)"
 msgid "文本阴影"
 msgstr "Text Shadow"
 
-#: src/pages/dashboard/About.tsx:66
+#: src/pages/dashboard/About.tsx:77
 msgid "文档"
 msgstr "Document"
 
@@ -1628,7 +1628,7 @@ msgstr "Confirm button text"
 msgid "视图"
 msgstr "View"
 
-#: src/pages/dashboard/About.tsx:35
+#: src/pages/dashboard/About.tsx:39
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
@@ -1804,7 +1804,7 @@ msgstr "Grid view"
 msgid "老电影滤镜"
 msgstr "Old film filter"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:50
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
 msgid "耗时"
 msgstr "Time taken"
 
@@ -1886,7 +1886,7 @@ msgstr "Stage object control"
 msgid "英语"
 msgstr "English"
 
-#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/About.tsx:59
 #: src/pages/dashboard/DashBoard.tsx:162
 msgid "获取最新版本"
 msgstr "Download Latest Version"
@@ -2084,6 +2084,10 @@ msgstr "Enter Target ID"
 #: src/components/Assets/Assets.tsx:306
 msgid "过滤文件"
 msgstr "Filter files"
+
+#: src/pages/dashboard/About.tsx:53
+msgid "运行平台"
+msgstr "Platform"
 
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
@@ -2347,7 +2351,7 @@ msgstr "Left"
 msgid "音乐"
 msgstr "Music"
 
-#: src/pages/dashboard/About.tsx:63
+#: src/pages/dashboard/About.tsx:74
 msgid "项目主页"
 msgstr "Project Homepage"
 

@@ -418,8 +418,8 @@ msgstr "全屏文字"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "全屏显示一段文字，用于独白或引出场景"
 
-#: src/pages/dashboard/About.tsx:25
-#: src/pages/dashboard/About.tsx:26
+#: src/pages/dashboard/About.tsx:29
+#: src/pages/dashboard/About.tsx:30
 msgid "关于"
 msgstr "关于"
 
@@ -479,7 +479,7 @@ msgstr "最小宽度"
 msgid "最小高度"
 msgstr "最小高度"
 
-#: src/pages/dashboard/About.tsx:41
+#: src/pages/dashboard/About.tsx:47
 #: src/pages/dashboard/DashBoard.tsx:157
 msgid "最新版本"
 msgstr "最新版本"
@@ -837,32 +837,32 @@ msgstr "对话框文字"
 msgid "对话框标题"
 msgstr "对话框标题"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:60
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:63
 #: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "导出"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:36
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:39
 msgid "导出中..."
 msgstr "导出中..."
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:81
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:85
 msgid "导出为可执行文件"
 msgstr "导出为可执行文件"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:92
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:97
 msgid "导出为安卓项目文件"
 msgstr "导出为安卓项目文件"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:70
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:73
 msgid "导出为网页"
 msgstr "导出为网页"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
 msgid "导出失败！"
 msgstr "导出失败！"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
 msgid "导出成功！"
 msgstr "导出成功！"
 
@@ -982,7 +982,7 @@ msgstr "张开嘴"
 msgid "强度"
 msgstr "强度"
 
-#: src/pages/dashboard/About.tsx:37
+#: src/pages/dashboard/About.tsx:41
 #: src/pages/dashboard/DashBoard.tsx:156
 msgid "当前版本"
 msgstr "当前版本"
@@ -1223,7 +1223,7 @@ msgstr "文本长度 (em)"
 msgid "文本阴影"
 msgstr "文本阴影"
 
-#: src/pages/dashboard/About.tsx:66
+#: src/pages/dashboard/About.tsx:77
 msgid "文档"
 msgstr "文档"
 
@@ -1626,7 +1626,7 @@ msgstr "确认按钮文本"
 msgid "视图"
 msgstr "视图"
 
-#: src/pages/dashboard/About.tsx:35
+#: src/pages/dashboard/About.tsx:39
 msgid "视觉小说编辑，再进化"
 msgstr "视觉小说编辑，再进化"
 
@@ -1802,7 +1802,7 @@ msgstr "网格视图"
 msgid "老电影滤镜"
 msgstr "老电影滤镜"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:50
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
 msgid "耗时"
 msgstr "耗时"
 
@@ -1884,7 +1884,7 @@ msgstr "舞台对象控制"
 msgid "英语"
 msgstr "英语"
 
-#: src/pages/dashboard/About.tsx:48
+#: src/pages/dashboard/About.tsx:59
 #: src/pages/dashboard/DashBoard.tsx:162
 msgid "获取最新版本"
 msgstr "获取最新版本"
@@ -2082,6 +2082,10 @@ msgstr "输入目标 ID"
 #: src/components/Assets/Assets.tsx:306
 msgid "过滤文件"
 msgstr "过滤文件"
+
+#: src/pages/dashboard/About.tsx:53
+msgid "运行平台"
+msgstr "运行平台"
 
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
@@ -2345,7 +2349,7 @@ msgstr "靠左"
 msgid "音乐"
 msgstr "音乐"
 
-#: src/pages/dashboard/About.tsx:63
+#: src/pages/dashboard/About.tsx:74
 msgid "项目主页"
 msgstr "项目主页"
 
