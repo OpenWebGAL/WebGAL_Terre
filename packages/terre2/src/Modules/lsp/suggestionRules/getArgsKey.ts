@@ -84,22 +84,10 @@ export function getArgsKey(
       return [whenKey, skipOffKey];
     }
     case commandType.setAnimation: {
-      return [
-        whenKey,
-        nextKey,
-        targetKey,
-        writeDefaultKey,
-        keepKey,
-      ];
+      return [whenKey, nextKey, targetKey, writeDefaultKey, keepKey];
     }
     case commandType.setTempAnimation: {
-      return [
-        whenKey,
-        nextKey,
-        targetKey,
-        writeDefaultKey,
-        keepKey,
-      ];
+      return [whenKey, nextKey, targetKey, writeDefaultKey, keepKey];
     }
     case commandType.setTransform: {
       return [
