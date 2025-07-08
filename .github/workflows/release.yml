@@ -191,7 +191,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    needs: ['build-linux','build-arm64','build-mac','build-windows','build-windows-nsis']
+    needs: ['build-linux','build-arm64','build-mac','build-windows','build-windows-nsis','build-android']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -260,3 +260,15 @@ jobs:
           asset_path: WebGAL_Terre_Windows_Setup/WebGal_Terre_Setup.exe
           asset_name: WebGAL_Terre_Windows_Setup_${{ github.ref_name }}.exe
           asset_content_type: application/vnd.microsoft.portable-executable
+
+      - name: Upload Android Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+        if: ${{ env.KEYSTORE != '' }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: WebGAL_Terre_Android/WebGAL_Terre_Android.apk
+          asset_name: WebGAL_Terre_Android_${{ github.ref_name }}.apk
+          asset_content_type: application/vnd.android.package-archive
