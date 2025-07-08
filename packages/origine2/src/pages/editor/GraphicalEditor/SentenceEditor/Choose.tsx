@@ -5,14 +5,22 @@ import { cloneDeep } from "lodash";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import { Button } from "@fluentui/react-components";
 import {t} from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function Choose(props: ISentenceEditorProps) {
   const chooseItems = useValue(props.sentence.content.split("|").map(e => e.split(":")));
 
   const submit = () => {
     const chooseItemsStr = chooseItems.value.map(e => e.join(":"));
-    const submitStr = chooseItemsStr.join("|");
-    props.onSubmit(`choose:${submitStr};`);
+    const contentStr = chooseItemsStr.join("|");
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      contentStr,
+      props.sentence.args,
+      [],
+    );
+    props.onSubmit(submitString);
   };
 
   const chooseList = chooseItems.value.map((item, i) => {
@@ -42,13 +50,13 @@ export default function Choose(props: ISentenceEditorProps) {
       {
         item[1] + "\u00a0"
       }
-      <ChooseFile sourceBase="scene" onChange={(newFile) => {
+      <ChooseFile title={t`选择场景文件`} basePath={['scene']} selectedFilePath={item[1]} onChange={(newFile) => {
         const newValue = newFile?.name ?? "";
         const newList = cloneDeep(chooseItems.value);
         newList[i][1] = newValue;
         chooseItems.set(newList);
         submit();
-      }} extName={[".txt"]} />
+      }} extNames={extNameMap.get('scene')} />
     </div>;
   });
   return <div className={styles.sentenceEditorContent}>

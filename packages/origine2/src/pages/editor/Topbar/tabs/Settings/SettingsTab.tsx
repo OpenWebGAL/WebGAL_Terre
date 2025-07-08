@@ -3,17 +3,19 @@ import TopbarTab from "@/pages/editor/Topbar/components/TopbarTab";
 import { TabItem } from "@/pages/editor/Topbar/components/TabItem";
 import { IconWithTextItem } from "@/pages/editor/Topbar/components/IconWithTextItem";
 import {
-  ArrowEnterLeft24Filled,
-  ArrowEnterLeft24Regular, ArrowRepeatAll24Filled, ArrowRepeatAllOff24Regular,
+  ArrowEnterLeftFilled,
+  ArrowEnterLeftRegular,
+  ArrowRepeatAllFilled,
+  ArrowRepeatAllOffRegular,
   bundleIcon,
-  Live24Filled,
-  Live24Regular,
-  LiveOff24Filled,
-  LiveOff24Regular,
-  LocalLanguage24Filled,
-  LocalLanguage24Regular,
-  Navigation24Filled,
-  Navigation24Regular,
+  LiveFilled,
+  LiveRegular,
+  LiveOffFilled,
+  LiveOffRegular,
+  LocalLanguageFilled,
+  LocalLanguageRegular,
+  NavigationFilled,
+  NavigationRegular,
 } from '@fluentui/react-icons';
 import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Tooltip, Input, Combobox, Option } from '@fluentui/react-components';
 import useEditorStore from '@/store/useEditorStore';
@@ -25,11 +27,11 @@ export function SettingsTab() {
 
   const updateLanguage = useEditorStore.use.updateLanguage();
 
-  const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regular);
-  const LiveIcon = bundleIcon(Live24Filled, Live24Regular);
-  const LiveOffIcon = bundleIcon(LiveOff24Filled, LiveOff24Regular);
-  const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeft24Filled, ArrowEnterLeft24Regular);
-  const NavigationIcon = bundleIcon(Navigation24Filled, Navigation24Regular);
+  const LocalLanguageIcon = bundleIcon(LocalLanguageFilled, LocalLanguageRegular);
+  const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
+  const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
+  const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeftFilled, ArrowEnterLeftRegular);
+  const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 
   const isAutoWarp = useEditorStore.use.isAutoWarp();
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
@@ -79,7 +81,6 @@ export function SettingsTab() {
         relationship="description"
         showDelay={0}
         hideDelay={0}
-        withArrow
       >
         <div>
           <IconWithTextItem
@@ -128,7 +129,7 @@ export function SettingsTab() {
         onClick={() => {
           updateIsUseExpSyncFast(!isUseExpSyncFast);
         }}
-        icon={isUseExpSyncFast ? <ArrowRepeatAll24Filled className={s.iconColor} /> : <ArrowRepeatAllOff24Regular className={s.iconColor} />}
+        icon={isUseExpSyncFast ? <ArrowRepeatAllFilled className={s.iconColor} /> : <ArrowRepeatAllOffRegular className={s.iconColor} />}
         text={isUseExpSyncFast ? t`启用` : t`关闭`}
       />
       {isUseExpSyncFast && <div className={s.tips}>

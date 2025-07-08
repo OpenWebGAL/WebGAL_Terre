@@ -6,16 +6,22 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { getArgByKey } from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function PlayVideo(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const isSkipOff = useValue(!!getArgByKey(props.sentence, "skipOff"));
   const submit = () => {
-    if(isSkipOff.value){
-      props.onSubmit(`playVideo:${fileName.value} -skipOff=${isSkipOff.value};`);
-    } else {
-      props.onSubmit(`playVideo:${fileName.value};`);
-    }
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      fileName.value,
+      props.sentence.args,
+      [
+        {key: "skipOff", value: isSkipOff.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -23,11 +29,11 @@ export default function PlayVideo(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`视频文件`}>
         <>
           {fileName.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="video" onChange={(fileDesc) => {
+          <ChooseFile title={t`选择视频文件`} basePath={['video']} selectedFilePath={fileName.value} onChange={(fileDesc) => {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}
-          extName={[".mp4", ".webm", ".ogg"]} />
+          extNames={extNameMap.get('video')} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`视频选项`}>

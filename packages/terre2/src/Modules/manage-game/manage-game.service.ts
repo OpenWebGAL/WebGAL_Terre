@@ -87,7 +87,7 @@ export class ManageGameService {
     let isThisGameExist = false;
     checkDir.forEach((e) => {
       const info: IFileInfo = e as IFileInfo;
-      if (info.name === gameName && info.isDir) {
+      if (info.name === gameDir && info.isDir) {
         isThisGameExist = true;
       }
     });
@@ -114,6 +114,13 @@ export class ManageGameService {
         this.webgalFs.getPathFromRoot(`/public/games/${gameDir}/game/`),
       );
     }
+
+    await this.webgalFs.replaceTextFile(
+      this.webgalFs.getPathFromRoot(`/public/games/${gameDir}/game/config.txt`),
+      /Game_name:.*?;/,
+      `Game_name:${gameName};`,
+    );
+
     if (templateDir) {
       await this.webgalFs.copy(
         this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
@@ -196,357 +203,362 @@ export class ManageGameService {
     ejectPlatform: 'web' | 'electron-windows' | 'android',
   ): Promise<boolean> {
     try {
-    // 检查是否使用了衍生版本
-    const gameRootDir = `/public/games/${gameName}/`;
-    const checkIsEngineTemplateExist = async () => {
-      const dirInfo = await this.webgalFs.getDirInfo(
-        this.webgalFs.getPathFromRoot(gameRootDir),
-      );
-      return !!dirInfo.find((e) => e.name === 'index.html');
-    };
-
-    const isEngineTemplateExist = await checkIsEngineTemplateExist();
-
-    // 根据 GameName 找到游戏所在目录
-    const gameDir = this.webgalFs.getPathFromRoot(
-      `/public/games/${gameName}/game/`,
-    );
-    // 如果导出文件夹不存在就创建
-    if (!(await this.webgalFs.existsDir('Exported_Games')))
-      await this.webgalFs.mkdir('Exported_Games', '');
-    // 检查导出文件夹是否存在这个游戏
-    const exportedGamesDir = await this.webgalFs.getDirInfo(
-      this.webgalFs.getPathFromRoot(`/Exported_Games`),
-    );
-    let isThisGameExist = false;
-    exportedGamesDir.forEach((e) => {
-      const info: IFileInfo = e as IFileInfo;
-      if (info.name === gameName && info.isDir) {
-        isThisGameExist = true;
-      }
-    });
-    // 获取游戏配置
-    const gameConfig = await this.getGameConfig(gameName);
-    // 获取导出目录
-    const exportDir = this.webgalFs.getPathFromRoot(
-      `/Exported_Games/${gameName}`,
-    );
-    if (!isThisGameExist) {
-      // 创建游戏导出目录
-      await this.webgalFs.mkdir(exportDir, '');
-    }
-
-    // 将游戏复制到导出目录，并附加对应的模板
-    // 导出 electron-windows
-    if (ejectPlatform === 'electron-windows') {
-      if (process.platform === 'win32') {
-        const electronExportDir = this.webgalFs.getPath(
-          `${exportDir}/electron-windows`,
-        );
-        await this.webgalFs.mkdir(electronExportDir, '');
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot(
-            `/assets/templates/WebGAL_Electron_Template/`,
-          ),
-          `${electronExportDir}/`,
-        );
-        if (!isEngineTemplateExist)
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-            `${electronExportDir}/resources/app/public/`,
-          );
-        else
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot(gameRootDir),
-            `${electronExportDir}/resources/app/public/`,
-          );
-        // 修改 manifest.json
-        await this.webgalFs.replaceTextFile(
-          `${electronExportDir}/resources/app/public/manifest.json`,
-          ['WebGAL DEMO', 'WebGAL'],
-          [gameConfig.Description, gameConfig.Game_name],
-        );
-        // 删掉 Service Worker
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
-        );
-        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/resources/app/public/game/`,
-        );
-        await this.webgalFs.copy(
-          gameDir,
-          `${electronExportDir}/resources/app/public/game/`,
-        );
-        // 复制图标
-        const icons = await this.getIcons(gameName);
-        if (icons.platforms.includes('electron')) {
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot(
-              `/public/games/${gameName}/icons/electron/`,
-            ),
-            `${electronExportDir}/`,
-          );
-        }
-        // 创建 app.asar
-        await asar.createPackage(
-          `${electronExportDir}/resources/app/`,
-          `${electronExportDir}/resources/app.asar`,
-        );
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/resources/app/`,
-        );
-        await _open(electronExportDir);
-      }
-      if (process.platform === 'linux') {
-        const electronExportDir = this.webgalFs.getPath(
-          `${exportDir}/electron-linux`,
-        );
-        await this.webgalFs.mkdir(electronExportDir, '');
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot(
-            `/assets/templates/WebGAL_Electron_Template/`,
-          ),
-          `${electronExportDir}/`,
-        );
-        if (!isEngineTemplateExist)
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-            `${electronExportDir}/resources/app/public/`,
-          );
-        else
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot(gameRootDir),
-            `${electronExportDir}/resources/app/public/`,
-          );
-        // 修改 manifest.json
-        await this.webgalFs.replaceTextFile(
-          `${electronExportDir}/resources/app/public/manifest.json`,
-          ['WebGAL DEMO', 'WebGAL'],
-          [gameConfig.Description, gameConfig.Game_name],
-        );
-        // 删掉 Service Worker
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
-        );
-        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/resources/app/public/game/`,
-        );
-        await this.webgalFs.copy(
-          gameDir,
-          `${electronExportDir}/resources/app/public/game/`,
-        );
-        // 复制图标
-        const icons = await this.getIcons(gameName);
-        if (icons.platforms.includes('electron')) {
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot(
-              `/public/games/${gameName}/icons/electron/`,
-            ),
-            `${electronExportDir}/`,
-          );
-        }
-        // 创建 app.asar
-        await asar.createPackage(
-          `${electronExportDir}/resources/app/`,
-          `${electronExportDir}/resources/app.asar`,
-        );
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/resources/app/`,
-        );
-        await _open(electronExportDir);
-      }
-      if (process.platform === 'darwin') {
-        const electronExportDir = this.webgalFs.getPath(
-          `${exportDir}/WebGAL.app`,
-        );
-        await this.webgalFs.mkdir(electronExportDir, '');
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot(
-            `/assets/templates/WebGAL_Electron_Template/`,
-          ),
-          `${electronExportDir}/`,
-        );
-        if (!isEngineTemplateExist)
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-            `${electronExportDir}/Contents/Resources/app/public/`,
-          );
-        else
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot(gameRootDir),
-            `${electronExportDir}/Contents/Resources/app/public/`,
-          );
-        // 修改 manifest.json
-        await this.webgalFs.replaceTextFile(
-          `${electronExportDir}/Contents/Resources/app/public/manifest.json`,
-          ['WebGAL DEMO', 'WebGAL'],
-          [gameConfig.Description, gameConfig.Game_name],
-        );
-        // 删掉 Service Worker
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/Contents/Resources/app/public/webgal-serviceworker.js`,
-        );
-        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/Contents/Resources/app/public/game/`,
-        );
-        await this.webgalFs.copy(
-          gameDir,
-          `${electronExportDir}/Contents/Resources/app/public/game/`,
-        );
-        // 复制图标
-        const icons = await this.getIcons(gameName);
-        if (icons.platforms.includes('electron')) {
-          await this.webgalFs.copy(
-            this.webgalFs.getPathFromRoot(
-              `/public/games/${gameName}/icons/electron/`,
-            ),
-            `${electronExportDir}/`,
-          );
-        }
-        // 创建 app.asar
-        await asar.createPackage(
-          `${electronExportDir}/Contents/Resources/app/`,
-          `${electronExportDir}/Contents/Resources/app.asar`,
-        );
-        await this.webgalFs.deleteFileOrDirectory(
-          `${electronExportDir}/Contents/Resources/app/`,
-        );
-        await _open(exportDir);
-      }
-    }
-    // 导出 android
-    if (ejectPlatform === 'android') {
-      const androidExportDir = this.webgalFs.getPath(`${exportDir}/android`);
-      await this.webgalFs.mkdir(androidExportDir, '');
-      // 复制模板前尝试删除文件夹，防止包名更改后有多余文件
-      await this.webgalFs.deleteFileOrDirectory(
-        `${androidExportDir}/app/src/main/java/`,
-      );
-      await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot(
-          `/assets/templates/WebGAL_Android_Template/`,
-        ),
-        `${androidExportDir}/`,
-      );
-      if (!isEngineTemplateExist)
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-          `${androidExportDir}/app/src/main/assets/webgal/`,
-        );
-      else
-        await this.webgalFs.copy(
+      // 检查是否使用了衍生版本
+      const gameRootDir = `/public/games/${gameName}/`;
+      const checkIsEngineTemplateExist = async () => {
+        const dirInfo = await this.webgalFs.getDirInfo(
           this.webgalFs.getPathFromRoot(gameRootDir),
-          `${androidExportDir}/app/src/main/assets/webgal/`,
         );
-      // 修改 manifest.json
-      await this.webgalFs.replaceTextFile(
-        `${androidExportDir}/app/src/main/assets/webgal/manifest.json`,
-        ['WebGAL DEMO', 'WebGAL'],
-        [gameConfig.Description, gameConfig.Game_name],
+        return !!dirInfo.find((e) => e.name === 'index.html');
+      };
+
+      const isEngineTemplateExist = await checkIsEngineTemplateExist();
+
+      // 根据 GameName 找到游戏所在目录
+      const gameDir = this.webgalFs.getPathFromRoot(
+        `/public/games/${gameName}/game/`,
       );
-      // 删掉 Service Worker
-      await this.webgalFs.deleteFileOrDirectory(
-        `${androidExportDir}/app/src/main/assets/webgal/webgal-serviceworker.js`,
+      // 如果导出文件夹不存在就创建
+      if (!(await this.webgalFs.existsDir('Exported_Games')))
+        await this.webgalFs.mkdir('Exported_Games', '');
+      // 检查导出文件夹是否存在这个游戏
+      const exportedGamesDir = await this.webgalFs.getDirInfo(
+        this.webgalFs.getPathFromRoot(`/Exported_Games`),
       );
-      // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
-      await this.webgalFs.deleteFileOrDirectory(
-        `${androidExportDir}/app/src/main/assets/webgal/game/`,
+      let isThisGameExist = false;
+      exportedGamesDir.forEach((e) => {
+        const info: IFileInfo = e as IFileInfo;
+        if (info.name === gameName && info.isDir) {
+          isThisGameExist = true;
+        }
+      });
+      // 获取游戏配置
+      const gameConfig = await this.getGameConfig(gameName);
+      // 获取导出目录
+      const exportDir = this.webgalFs.getPathFromRoot(
+        `/Exported_Games/${gameName}`,
       );
-      await this.webgalFs.copy(
-        gameDir,
-        `${androidExportDir}/app/src/main/assets/webgal/game/`,
-      );
-      // 修改信息
-      await this.webgalFs.replaceTextFile(
-        `${androidExportDir}/settings.gradle`,
-        'WebGAL',
-        gameName,
-      );
-      await this.webgalFs.replaceTextFile(
-        `${androidExportDir}/app/src/main/res/values/strings.xml`,
-        'WebGAL',
-        gameConfig.Game_name,
-      );
-      await this.webgalFs.replaceTextFile(
-        `${androidExportDir}/app/build.gradle`,
-        'com.openwebgal.demo',
-        gameConfig.Package_name,
-      );
-      await this.webgalFs.replaceTextFile(
-        `${androidExportDir}/app/src/main/java/MainActivity.kt`,
-        'com.openwebgal.demo',
-        gameConfig.Package_name,
-      );
-      await this.webgalFs.mkdir(
-        // eslint-disable-next-line prettier/prettier
-        `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}`,
-        '',
-      );
-      await this.webgalFs.copy(
-        `${androidExportDir}/app/src/main/java/MainActivity.kt`,
-        // eslint-disable-next-line prettier/prettier
-        `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}/MainActivity.kt`
-      );
-      await this.webgalFs.deleteFileOrDirectory(
-        `${androidExportDir}/app/src/main/java/MainActivity.kt`,
-      );
-      // 复制图标
-      const icons = await this.getIcons(gameName);
-      if (icons.platforms.includes('android')) {
-        this.webgalFs.deleteFileOrDirectory(
-          `${androidExportDir}/app/src/main/res/values/ic_launcher_background.xml`,
+      if (!isThisGameExist) {
+        // 创建游戏导出目录
+        await this.webgalFs.mkdir(exportDir, '');
+      }
+
+      // 将游戏复制到导出目录，并附加对应的模板
+      // 导出 electron-windows
+      if (ejectPlatform === 'electron-windows') {
+        if (process.platform === 'win32') {
+          const electronExportDir = this.webgalFs.getPath(
+            `${exportDir}/electron-windows`,
+          );
+          await this.webgalFs.mkdir(electronExportDir, '');
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(
+              `/assets/templates/WebGAL_Electron_Template/`,
+            ),
+            `${electronExportDir}/`,
+          );
+          if (!isEngineTemplateExist)
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(
+                '/assets/templates/WebGAL_Template',
+              ),
+              `${electronExportDir}/resources/app/public/`,
+            );
+          else
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(gameRootDir),
+              `${electronExportDir}/resources/app/public/`,
+            );
+          // 修改 manifest.json
+          await this.webgalFs.replaceTextFile(
+            `${electronExportDir}/resources/app/public/manifest.json`,
+            ['WebGAL DEMO', 'WebGAL'],
+            [gameConfig.Description, gameConfig.Game_name],
+          );
+          // 删掉 Service Worker
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
+          );
+          // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/resources/app/public/game/`,
+          );
+          await this.webgalFs.copy(
+            gameDir,
+            `${electronExportDir}/resources/app/public/game/`,
+          );
+          // 复制图标
+          const icons = await this.getIcons(gameName);
+          if (icons.platforms.includes('electron')) {
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(
+                `/public/games/${gameName}/icons/electron/`,
+              ),
+              `${electronExportDir}/`,
+            );
+          }
+          // 创建 app.asar
+          await asar.createPackage(
+            `${electronExportDir}/resources/app/`,
+            `${electronExportDir}/resources/app.asar`,
+          );
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/resources/app/`,
+          );
+          await _open(electronExportDir);
+        }
+        if (process.platform === 'linux') {
+          const electronExportDir = this.webgalFs.getPath(
+            `${exportDir}/electron-linux`,
+          );
+          await this.webgalFs.mkdir(electronExportDir, '');
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(
+              `/assets/templates/WebGAL_Electron_Template/`,
+            ),
+            `${electronExportDir}/`,
+          );
+          if (!isEngineTemplateExist)
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(
+                '/assets/templates/WebGAL_Template',
+              ),
+              `${electronExportDir}/resources/app/public/`,
+            );
+          else
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(gameRootDir),
+              `${electronExportDir}/resources/app/public/`,
+            );
+          // 修改 manifest.json
+          await this.webgalFs.replaceTextFile(
+            `${electronExportDir}/resources/app/public/manifest.json`,
+            ['WebGAL DEMO', 'WebGAL'],
+            [gameConfig.Description, gameConfig.Game_name],
+          );
+          // 删掉 Service Worker
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/resources/app/public/webgal-serviceworker.js`,
+          );
+          // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/resources/app/public/game/`,
+          );
+          await this.webgalFs.copy(
+            gameDir,
+            `${electronExportDir}/resources/app/public/game/`,
+          );
+          // 复制图标
+          const icons = await this.getIcons(gameName);
+          if (icons.platforms.includes('electron')) {
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(
+                `/public/games/${gameName}/icons/electron/`,
+              ),
+              `${electronExportDir}/`,
+            );
+          }
+          // 创建 app.asar
+          await asar.createPackage(
+            `${electronExportDir}/resources/app/`,
+            `${electronExportDir}/resources/app.asar`,
+          );
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/resources/app/`,
+          );
+          await _open(electronExportDir);
+        }
+        if (process.platform === 'darwin') {
+          const electronExportDir = this.webgalFs.getPath(
+            `${exportDir}/WebGAL.app`,
+          );
+          await this.webgalFs.mkdir(electronExportDir, '');
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(
+              `/assets/templates/WebGAL_Electron_Template/`,
+            ),
+            `${electronExportDir}/`,
+          );
+          if (!isEngineTemplateExist)
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(
+                '/assets/templates/WebGAL_Template',
+              ),
+              `${electronExportDir}/Contents/Resources/app/public/`,
+            );
+          else
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(gameRootDir),
+              `${electronExportDir}/Contents/Resources/app/public/`,
+            );
+          // 修改 manifest.json
+          await this.webgalFs.replaceTextFile(
+            `${electronExportDir}/Contents/Resources/app/public/manifest.json`,
+            ['WebGAL DEMO', 'WebGAL'],
+            [gameConfig.Description, gameConfig.Game_name],
+          );
+          // 删掉 Service Worker
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/Contents/Resources/app/public/webgal-serviceworker.js`,
+          );
+          // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/Contents/Resources/app/public/game/`,
+          );
+          await this.webgalFs.copy(
+            gameDir,
+            `${electronExportDir}/Contents/Resources/app/public/game/`,
+          );
+          // 复制图标
+          const icons = await this.getIcons(gameName);
+          if (icons.platforms.includes('electron')) {
+            await this.webgalFs.copy(
+              this.webgalFs.getPathFromRoot(
+                `/public/games/${gameName}/icons/electron/`,
+              ),
+              `${electronExportDir}/`,
+            );
+          }
+          // 创建 app.asar
+          await asar.createPackage(
+            `${electronExportDir}/Contents/Resources/app/`,
+            `${electronExportDir}/Contents/Resources/app.asar`,
+          );
+          await this.webgalFs.deleteFileOrDirectory(
+            `${electronExportDir}/Contents/Resources/app/`,
+          );
+          await _open(exportDir);
+        }
+      }
+      // 导出 android
+      if (ejectPlatform === 'android') {
+        const androidExportDir = this.webgalFs.getPath(`${exportDir}/android`);
+        await this.webgalFs.mkdir(androidExportDir, '');
+        // 复制模板前尝试删除文件夹，防止包名更改后有多余文件
+        await this.webgalFs.deleteFileOrDirectory(
+          `${androidExportDir}/app/src/main/java/`,
         );
         await this.webgalFs.copy(
           this.webgalFs.getPathFromRoot(
-            `/public/games/${gameName}/icons/android`,
+            `/assets/templates/WebGAL_Android_Template/`,
           ),
-          `${androidExportDir}/app/src/main/res/`,
+          `${androidExportDir}/`,
+        );
+        if (!isEngineTemplateExist)
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+            `${androidExportDir}/app/src/main/assets/webgal/`,
+          );
+        else
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(gameRootDir),
+            `${androidExportDir}/app/src/main/assets/webgal/`,
+          );
+        // 修改 manifest.json
+        await this.webgalFs.replaceTextFile(
+          `${androidExportDir}/app/src/main/assets/webgal/manifest.json`,
+          ['WebGAL DEMO', 'WebGAL'],
+          [gameConfig.Description, gameConfig.Game_name],
+        );
+        // 删掉 Service Worker
+        await this.webgalFs.deleteFileOrDirectory(
+          `${androidExportDir}/app/src/main/assets/webgal/webgal-serviceworker.js`,
+        );
+        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+        await this.webgalFs.deleteFileOrDirectory(
+          `${androidExportDir}/app/src/main/assets/webgal/game/`,
         );
         await this.webgalFs.copy(
-          `${androidExportDir}/app/src/main/res/ic_launcher-playstore.png`,
-          `${androidExportDir}/app/src/main/ic_launcher-playstore.png`,
+          gameDir,
+          `${androidExportDir}/app/src/main/assets/webgal/game/`,
         );
-        this.webgalFs.deleteFileOrDirectory(
-          `${androidExportDir}/app/src/main/res/ic_launcher-playstore.png`,
+        // 修改信息
+        await this.webgalFs.replaceTextFile(
+          `${androidExportDir}/settings.gradle`,
+          'WebGAL',
+          gameName,
         );
+        await this.webgalFs.replaceTextFile(
+          `${androidExportDir}/app/src/main/res/values/strings.xml`,
+          'WebGAL',
+          gameConfig.Game_name,
+        );
+        await this.webgalFs.replaceTextFile(
+          `${androidExportDir}/app/build.gradle`,
+          'com.openwebgal.demo',
+          gameConfig.Package_name,
+        );
+        await this.webgalFs.replaceTextFile(
+          `${androidExportDir}/app/src/main/java/MainActivity.kt`,
+          'com.openwebgal.demo',
+          gameConfig.Package_name,
+        );
+        await this.webgalFs.mkdir(
+          // eslint-disable-next-line prettier/prettier
+          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}`,
+          '',
+        );
+        await this.webgalFs.copy(
+          `${androidExportDir}/app/src/main/java/MainActivity.kt`,
+          // eslint-disable-next-line prettier/prettier
+          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}/MainActivity.kt`
+        );
+        await this.webgalFs.deleteFileOrDirectory(
+          `${androidExportDir}/app/src/main/java/MainActivity.kt`,
+        );
+        // 复制图标
+        const icons = await this.getIcons(gameName);
+        if (icons.platforms.includes('android')) {
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(
+              `/public/games/${gameName}/icons/android`,
+            ),
+            `${androidExportDir}/app/src/main/res/`,
+          );
+          await this.webgalFs.copy(
+            `${androidExportDir}/app/src/main/res/ic_launcher-playstore.png`,
+            `${androidExportDir}/app/src/main/ic_launcher-playstore.png`,
+          );
+          this.webgalFs.deleteFileOrDirectory(
+            `${androidExportDir}/app/src/main/res/ic_launcher-playstore.png`,
+          );
+        }
+        await _open(androidExportDir);
       }
-      await _open(androidExportDir);
-    }
-    // 导出 Web
-    if (ejectPlatform === 'web') {
-      const webExportDir = this.webgalFs.getPath(`${exportDir}/web`);
-      await this.webgalFs.mkdir(webExportDir, '');
-      if (!isEngineTemplateExist)
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
-          `${webExportDir}/`,
+      // 导出 Web
+      if (ejectPlatform === 'web') {
+        const webExportDir = this.webgalFs.getPath(`${exportDir}/web`);
+        await this.webgalFs.mkdir(webExportDir, '');
+        if (!isEngineTemplateExist)
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot('/assets/templates/WebGAL_Template'),
+            `${webExportDir}/`,
+          );
+        else
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(gameRootDir),
+            `${webExportDir}/`,
+          );
+        // 修改 manifest.json
+        await this.webgalFs.replaceTextFile(
+          `${webExportDir}/manifest.json`,
+          ['WebGAL DEMO', 'WebGAL'],
+          [gameConfig.Description, gameConfig.Game_name],
         );
-      else
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot(gameRootDir),
-          `${webExportDir}/`,
-        );
-      // 修改 manifest.json
-      await this.webgalFs.replaceTextFile(
-        `${webExportDir}/manifest.json`,
-        ['WebGAL DEMO', 'WebGAL'],
-        [gameConfig.Description, gameConfig.Game_name],
-      );
-      // 复制图标
-      const icons = await this.getIcons(gameName);
-      if (icons.platforms.includes('web')) {
-        await this.webgalFs.copy(
-          this.webgalFs.getPathFromRoot(`/public/games/${gameName}/icons/web/`),
-          `${webExportDir}/icons/`,
-        );
-      }
-      // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
-      await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
-      await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
-      await _open(webExportDir);
+        // 复制图标
+        const icons = await this.getIcons(gameName);
+        if (icons.platforms.includes('web')) {
+          await this.webgalFs.copy(
+            this.webgalFs.getPathFromRoot(
+              `/public/games/${gameName}/icons/web/`,
+            ),
+            `${webExportDir}/icons/`,
+          );
+        }
+        // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
+        await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
+        await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
+        await _open(webExportDir);
       }
 
       return true;

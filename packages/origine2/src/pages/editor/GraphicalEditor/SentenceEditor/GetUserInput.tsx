@@ -4,6 +4,7 @@ import styles from "./sentenceEditor.module.scss";
 import {useValue} from "@/hooks/useValue";
 import {getArgByKey} from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 
 export default function GetUserInput(props: ISentenceEditorProps) {
   const titleFromArgs = getArgByKey(props.sentence, "title");
@@ -13,7 +14,16 @@ export default function GetUserInput(props: ISentenceEditorProps) {
   const varKey = useValue(props.sentence.content);
   const submit = () => {
     console.log(varKey.value, title.value, buttonText.value);
-    props.onSubmit(`getUserInput:${varKey.value} -title=${title.value} -buttonText=${buttonText.value};`);
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      varKey.value,
+      props.sentence.args,
+      [
+        {key: "title", value: title.value},
+        {key: "buttonText", value: buttonText.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>

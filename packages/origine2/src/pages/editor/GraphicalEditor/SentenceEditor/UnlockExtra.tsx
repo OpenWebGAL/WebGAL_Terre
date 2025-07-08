@@ -8,6 +8,8 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import CommonTips from "../components/CommonTips";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { combineSubmitString } from "@/utils/combineSubmitString";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function UnlockExtra(props: ISentenceEditorProps) {
 
@@ -21,10 +23,18 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
   const unlockName = useValue(getArgByKey(props.sentence, "name").toString() ?? "");
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const submit = () => {
-    if (unlockName.value === "") {
-      props.onSubmit(`${unlockType.value}:;`);
-    }
-    props.onSubmit(`${unlockType.value}:${fileName.value}${unlockName.value !== "" ? " -name=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
+    const submitString = combineSubmitString(
+      unlockType.value,
+      (unlockName.value === "" ? "" : fileName.value),
+      props.sentence.args,
+      [
+        ...(unlockName.value === "" ? [
+          {key: "name", value: unlockName.value},
+          {key: "series", value: unlockSeries.value},
+        ] : []),
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -45,12 +55,19 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="2" title={t`鉴赏资源文件`}>
         <>
-          {fileName.value}{"\u00a0"}<ChooseFile sourceBase={unlockType.value === "unlockCg" ? "background" : "bgm"}
+          {fileName.value}{"\u00a0"}
+          <ChooseFile
+            title={t`选择鉴赏资源文件`}
+            basePath={[unlockType.value === "unlockCg" ? "background" : "bgm"]}
+            selectedFilePath={fileName.value}
             onChange={(newFile) => {
               fileName.set(newFile?.name ?? "");
               submit();
             }}
-            extName={unlockType.value === "unlockCg" ? [".png", ".jpg", ".webp"] : [".mp3", ".ogg", ".wav"]} />
+            extNames={unlockType.value === "unlockCg" 
+              ? extNameMap.get('image') 
+              : extNameMap.get('audio')}
+          />
         </>
       </CommonOptions>
       <CommonOptions title={t`解锁名称`}>

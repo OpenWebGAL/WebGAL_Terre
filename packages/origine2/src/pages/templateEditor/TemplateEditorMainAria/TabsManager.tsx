@@ -8,6 +8,7 @@ import { ITab } from '@/types/templateEditor';
 import { cloneDeep } from 'lodash';
 import IconWrapper from '@/components/iconWrapper/IconWrapper';
 import {sendComponentPreviewMessage} from "@/pages/templateEditor/TemplateEditor";
+import { Tooltip } from '@fluentui/react-components';
 
 export default function TabsManager() {
 
@@ -96,30 +97,32 @@ export default function TabsManager() {
                   <Draggable key={`${item.path}${item.class}`} draggableId={`${item.path}${item.class}`} index={index}>
                     {(provided, snapshot) => (
                       // 下面开始书写可拖拽的元素
-                      <div
-                        onClick={() => selectTab(item)}
-                        onMouseDown={(event: any) => {
-                          if (event.button === 1) {
-                            closeTab(event, item);
+                      <Tooltip content={item.path} relationship='label' positioning='below-start'>
+                        <div
+                          onClick={() => selectTab(item)}
+                          onMouseDown={(event: any) => {
+                            if (event.button === 1) {
+                              closeTab(event, item);
+                            }
+                          }}
+                          className={
+                            item.path === currentTab?.path && item.class === currentTab.class
+                              ? `${styles.tab} ${styles.tab_active}`
+                              : styles.tab
                           }
-                        }}
-                        className={
-                          item.path === currentTab?.path && item.class === currentTab.class
-                            ? `${styles.tab} ${styles.tab_active}`
-                            : styles.tab
-                        }
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
-                        <div>
-                          {item.name}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <IconWrapper src={getFileIcon(item.path)} size={24} iconSize={18} />
+                          <div>
+                            {item.name}
+                          </div>
+                          <div className={styles.closeIcon} onClick={(event: any) => closeTab(event, item)}>
+                            <CloseSmall theme="outline" size="15" strokeWidth={3} />
+                          </div>
                         </div>
-                        <div className={styles.closeIcon} onClick={(event: any) => closeTab(event, item)}>
-                          <CloseSmall theme="outline" size="15" strokeWidth={3} />
-                        </div>
-                      </div>
+                      </Tooltip>
                     )}
                   </Draggable>
                 ))}

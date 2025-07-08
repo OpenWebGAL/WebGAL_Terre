@@ -4,15 +4,31 @@
 
 #### 新功能
 
-新增图标创建工具，可以创建多种尺寸和类型的图标，方便进一步打包。
+资源管理优化：改进资源管理和文件选择器组件，增强文件浏览体验。
 
-使用原生的 Arm64 构建流程。
+动画支持：新增 JSON 格式的 Spine 动画支持，自动检测并加载 Spine 动画数据。
 
-优化了对不合理的游戏名称的处理，优化游戏创建指引。
+编辑器增强：改进文本编辑器体验，优化行号匹配逻辑，提升编辑流畅度。
+
+视觉效果：新增斜面滤镜（Bevel Filter）的柔和度选项，支持更细腻的视觉效果调节。
+
+特效组件：在 PixiPerform 组件中新增 `heavySnow` 效果，丰富雪花特效选项。
+
+用户体验：添加导出提示功能，改善用户操作引导。
+
+性能优化：修复拖动斜面和调整滤镜颜色选择器时的卡顿问题。
 
 #### 修复
 
-修复了导出游戏时的异常。
+修复资源文件扩展名映射错误，将音频文件正确归类。
+
+修复半角分号在提交值中的转义问题，确保格式正确。
+
+修复卸载程序缺少确认页面的问题。
+
+修复图标背景使用图片时的显示问题，支持透明背景创建图标。
+
+修复文件不存在时创建文件的异常处理。
 
 <!-- English Translation -->
 ## Release Notes
@@ -21,15 +37,31 @@
 
 #### New Features
 
-Added icon creation tool, which can create icons of various sizes and types for easy further packaging.
+Asset management optimization: improved assets management and file chooser components for enhanced file browsing experience.
 
-Use the native Arm64 build process.
+Animation support: added JSON format Spine animation support with automatic detection and loading of Spine animation data.
 
-Optimized the handling of unreasonable game names and optimized the game creation guide.
+Editor enhancement: improved text editor experience with optimized line number matching logic for smoother editing.
+
+Visual effects: added softness option for Bevel Filter, enabling more refined visual effect adjustments.
+
+Effect components: added `heavySnow` effect to PixiPerform component, enriching snow effect options.
+
+User experience: added export tips feature to improve user guidance.
+
+Performance optimization: fixed lag issues when dragging bevel and adjustment filter color pickers.
 
 #### Fixes
 
-Fixed an exception when exporting the game.
+Fixed asset file extension mapping errors, correctly categorizing audio files.
+
+Fixed semicolon escaping issues in commit values to ensure proper formatting.
+
+Fixed missing confirmation page in uninstaller.
+
+Fixed icon background display issues when using images, supporting transparent background icon creation.
+
+Fixed exception handling when creating files that don't exist.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -38,15 +70,31 @@ Fixed an exception when exporting the game.
 
 #### 新機能
 
-アイコン作成ツールが追加され、さまざまなサイズとタイプのアイコンを作成できるようになり、さらにパッケージ化するのが容易になりました。
+アセット管理の最適化：アセット管理とファイル選択コンポーネントを改善し、ファイルブラウジング体験を向上させました。
 
-ネイティブ Arm64 ビルドプロセスを使用します。
+アニメーションサポート：JSON形式のSpineアニメーションをサポートし、Spineアニメーションデータの自動検出と読み込みを実装しました。
 
-不適切なゲーム名の処理を最適化し、ゲーム作成ガイダンスを改善しました。
+エディターの強化：テキストエディターの体験を改善し、行番号マッチングロジックを最適化してよりスムーズな編集を実現しました。
+
+ビジュアルエフェクト：ベベルフィルターにソフトネスオプションを追加し、より細かいビジュアル効果の調整を可能にしました。
+
+エフェクトコンポーネント：PixiPerformコンポーネントに`heavySnow`エフェクトを追加し、雪のエフェクトオプションを充実させました。
+
+ユーザー体験：エクスポートのヒント機能を追加し、ユーザーガイダンスを改善しました。
+
+パフォーマンス最適化：ベベルおよび調整フィルターのカラーピッカーをドラッグする際のラグを修正しました。
 
 #### 修正
 
-ゲームのエクスポート時の例外を修正しました。
+アセットファイルの拡張子マッピングエラーを修正し、オーディオファイルを正しく分類するようにしました。
+
+コミット値でのセミコロンのエスケープ問題を修正し、適切なフォーマットを保証しました。
+
+アンインストーラーに確認ページがない問題を修正しました。
+
+画像を使用した際のアイコン背景の表示問題を修正し、透明背景でのアイコン作成をサポートしました。
+
+存在しないファイルを作成する際の例外処理を修正しました。
 
 [//]: # (<!-- French Translation -->)
 
@@ -75,4 +123,3 @@ Fixed an exception when exporting the game.
 
 [//]: # ()
 [//]: # (Correction d'un certain nombre d'erreurs dans le moteur)
-

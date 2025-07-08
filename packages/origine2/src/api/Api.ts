@@ -9,6 +9,13 @@
  * ---------------------------------------------------------------
  */
 
+export interface OsInfoDto {
+  /** The platform of the operating system */
+  platform: string;
+  /** The architecture of the operating system */
+  arch: string;
+}
+
 export interface CreateNewFileDto {
   /** The source path where the directory will be created */
   source: string;
@@ -322,7 +329,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Test Server
+     * @tags App
      * @name AppControllerApiTest
      * @request GET:/api/test
      */
@@ -330,6 +337,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<void, any>({
         path: `/api/test`,
         method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags App
+     * @name AppControllerGetOsInfo
+     * @request GET:/api/osinfo
+     */
+    appControllerGetOsInfo: (params: RequestParams = {}) =>
+      this.request<OsInfoDto, any>({
+        path: `/api/osinfo`,
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 

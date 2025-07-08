@@ -6,12 +6,20 @@ import { useValue } from "../../../../hooks/useValue";
 import ChooseFile from "../../ChooseFile/ChooseFile";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function ChangeCallScene(props: ISentenceEditorProps) {
   const isCallScene = useValue(props.sentence.command === commandType.callScene);
   const fileName = useValue(props.sentence.content);
   const submit = () => {
-    props.onSubmit(`${isCallScene.value ? "callScene" : "changeScene"}:${fileName.value}`);
+    const submitString = combineSubmitString(
+      isCallScene.value ? "callScene" : "changeScene",
+      fileName.value,
+      props.sentence.args,
+      [],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -19,10 +27,10 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
       <CommonOptions key="1" title={t`场景文件`}>
         <>
           {fileName.value}{'\u00a0'}
-          <ChooseFile sourceBase="scene" onChange={(file) => {
+          <ChooseFile title={t`选择场景文件`} basePath={['scene']} selectedFilePath={fileName.value} onChange={(file) => {
             fileName.set(file?.name ?? "");
             submit();
-          }} extName={[".txt"]} />
+          }} extNames={extNameMap.get('scene')} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`调用/切换场景`}>

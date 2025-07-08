@@ -7,7 +7,7 @@
 
 ; 常量
 !define NAME "WebGal_Terre"
-!define VERSION "4.5.10" ; 版本号变量
+!define VERSION "4.5.13" ; 版本号变量
 !define PRODUCT_VERSION "${VERSION}.0"
 !define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; 版权信息
 !define ICON_PATH ".\assets\nsis.ico"
@@ -53,7 +53,9 @@ VIProductVersion "${PRODUCT_VERSION}" ; product verion(actual replace FileVersio
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
+!insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
 
 Section -Install
     SetOutPath $INSTDIR

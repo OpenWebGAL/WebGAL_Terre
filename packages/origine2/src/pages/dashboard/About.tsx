@@ -6,6 +6,9 @@ import { InfoFilled, InfoRegular, bundleIcon } from '@fluentui/react-icons';
 import { useState } from 'react';
 import { t } from '@lingui/macro';
 import { dateTimeOptions } from './DashBoard';
+import useSWR from 'swr';
+import { api } from '@/api';
+import useOsInfo from '@/hooks/useOsInfo';
 
 const InfoIcon = bundleIcon(InfoFilled, InfoRegular);
 
@@ -13,6 +16,7 @@ const About: React.FunctionComponent = () => {
   const [open, setOpen] = useState(false);
 
   const latestRelease = useRelease();
+  const { data: osInfo } = useOsInfo();
 
   return (
     <Popover
@@ -34,13 +38,20 @@ const About: React.FunctionComponent = () => {
           <Text as='b' block>
             <p>{t`视觉小说编辑，再进化`}</p>
             <small>
-              {t`当前版本`}: {`${__INFO.version} (${new Date(__INFO.buildTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
+              {t`当前版本`}: {`${__INFO.version} (${__INFO.buildTime.toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
+              <br />
               {
                 latestRelease &&
-                <span>
-                  {t`最新版本`}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
-                </span>
+                <>
+                  <span>
+                    {t`最新版本`}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
+                  </span>
+                  <br />
+                </>
               }
+
+              <span>{t`运行平台`}: {osInfo?.platform} {osInfo?.arch}</span>
+              <br />
               <p>
                 {
                   latestRelease?.hasNewVersion &&
@@ -58,14 +69,14 @@ const About: React.FunctionComponent = () => {
               </div>
             </small>
           </Text>
-          <div style={{display:'flex', gap:'0.5rem', marginTop:'1rem'}}>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
             <Link href="https://openwebgal.com/" target="_blank">
               {t`项目主页`}
             </Link>
             <Link href="https://docs.openwebgal.com/" target="_blank">
               {t`文档`}
             </Link>
-            <Link href="https://github.com/MakinoharaShoko/WebGAL_Terre" target="_blank">
+            <Link href="https://github.com/OpenWebGAL/WebGAL_Terre" target="_blank">
               GitHub
             </Link>
           </div>

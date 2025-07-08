@@ -5,12 +5,20 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {t} from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function MiniAvatar(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const submit = () => {
-    props.onSubmit(`miniAvatar:${fileName.value};`);
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      fileName.value,
+      props.sentence.args,
+      [],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -27,11 +35,11 @@ export default function MiniAvatar(props: ISentenceEditorProps) {
       {!isNoFile && <CommonOptions key="1" title={t`小头像文件`}>
         <>
           {fileName.value + "\u00a0\u00a0"}
-          <ChooseFile sourceBase="figure" onChange={(fileDesc) => {
+          <ChooseFile title={t`选择小头像文件`} basePath={['figure']} selectedFilePath={fileName.value} onChange={(fileDesc) => {
             fileName.set(fileDesc?.name ?? "");
             submit();
           }}
-          extName={[".png", ".webp"]} />
+          extNames={extNameMap.get('image')?.filter(item => item !== '.jpg')} />
         </>
       </CommonOptions>}
     </div>

@@ -13,33 +13,20 @@
     "argument-list": {
       "patterns": [
         {
-          "comment": "only one argument left, ie kwarg0=val0",
-          "match": "(?!.*\\s\\-).+",
-          "captures": {
-            "0": {
-              "patterns": [
-                {
-                  "include": "#parameter"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "comment": ">1 arguments left, ie [kwarg0=val0] -[kwarg1=val1]",
-          "match": "(.*?)(\\s\\-)(.*?)$",
+          "comment": ">1 arguments left, ie -kwarg0=val0 -kwarg1=val1 ...",
+          "match": "(\\s\\-)(.*?)(\\s\\-.*)$",
           "captures": {
             "1": {
               "patterns": [
                 {
-                  "include": "#parameter"
+                  "include": "#operator"
                 }
               ]
             },
             "2": {
               "patterns": [
                 {
-                  "include": "#operator"
+                  "include": "#parameter"
                 }
               ]
             },
@@ -47,6 +34,26 @@
               "patterns": [
                 {
                   "include": "#argument-list"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "comment": "only one argument left, ie -kwarg0=val0",
+          "match": "(\\s\\-)(.*)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#operator"
+                }
+              ]
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#parameter"
                 }
               ]
             }
@@ -75,7 +82,7 @@
         {
           "comment": "value only, ie val0",
           "match": "(?!.*\\=).+",
-          "name": "variable.other.webgal"
+          "name": "variable.parameter.webgal"
         },
         {
           "comment": "name and value, ie [kwarg0]=[val0]",
@@ -92,7 +99,7 @@
               ]
             },
             "3": {
-              "name": "variable.other.webgal"
+              "name": "markup.quote"
             }
           }
         }
@@ -111,19 +118,12 @@
         },
         {
           "comment": "utterance and argument list",
-          "match": "(.*?)(\\s\\-)(.*?)$",
+          "match": "(.*?)(\\s\\-.*?)$",
           "captures": {
             "1": {
               "name": "string.unquoted.utterance.webgal"
             },
             "2": {
-              "patterns": [
-                {
-                  "include": "#operator"
-                }
-              ]
-            },
-            "3": {
               "patterns": [
                 {
                   "include": "#argument-list"
@@ -136,7 +136,7 @@
     },
     "character-colon": {
       "comment": "[char]:[utt[ -args]][;cmt]",
-      "match": "^(?!(?:intro|changeBg|changeFigure|miniAvatar|playEffect|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation)\\:)(.*?)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
+      "match": "^(?!(?:intro|changeBg|changeFigure|miniAvatar|playEffect|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)\\:)(.*?)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
       "captures": {
         "1": {
           "name": "meta.character.webgal",
@@ -171,7 +171,7 @@
     },
     "command-colon": {
       "comment": "cmd:[arg0[ -args]][;cmt]",
-      "match": "^(intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
+      "match": "^(intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
       "captures": {
         "1": {
           "name": "meta.command.webgal",
@@ -206,7 +206,7 @@
     },
     "command-semicolon": {
       "comment": "cmd;[cmt]",
-      "match": "^(intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation)($|\\;.*?$)",
+      "match": "^(intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)($|\\;.*?$)",
       "captures": {
         "1": {
           "name": "meta.command.webgal",
@@ -227,7 +227,7 @@
     },
     "utterance-semicolon": {
       "comment": "utt[ -args];[cmt]",
-      "match": "^(?!(?:intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation)\\;)([^\\:\\;\\n]+?)(\\;.*?$)",
+      "match": "^(?!(?:intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)\\;)([^\\:\\;\\n]+?)(\\;.*?$)",
       "captures": {
         "1": {
           "patterns": [

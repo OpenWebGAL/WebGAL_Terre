@@ -7,24 +7,35 @@ import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugge
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { ITag } from "@/types/gameEditor";
 import { t } from "@lingui/macro";
+import useEditorStore from "@/store/useEditorStore";
+import { useMemo } from "react";
 
 export default function EditArea() {
+  const gameDir = useEditorStore.use.subPage();
   const currentTag = useGameEditorContext((state) => state.currentTag);
   const tags = useGameEditorContext((state) => state.tags);
   const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
   const isShowDebugger = useGameEditorContext((state) => state.isShowDebugger);
 
-  // 生成每个 Tag 对应的编辑器主体
+  const basePath = useMemo(() => ['games', gameDir, 'game'], [gameDir]);
 
+  // 生成每个 Tag 对应的编辑器主体
   const tag = tags.find(tag => tag.path === currentTag?.path);
   const isScene = tag?.type === "scene";
 
   const getTagPage = (tag: ITag) => {
+    const targetPath = [
+      ...basePath,
+      tag.path.startsWith(basePath.join('/'))
+        ? tag.path.slice(basePath.join('/').length + 1) // 兼容旧版本路径
+        : tag.path,
+    ].join('/');
+
     if (tag.type === "scene") {
       if (isCodeMode)
         return <TextEditor isHide={tag.path !== currentTag?.path} key={tag.path}
-          targetPath={tag.path}/>;
-      else return <GraphicalEditor key={tag.path} targetPath={tag.path} targetName={tag.name}/>;
+          targetPath={targetPath}/>;
+      else return <GraphicalEditor key={tag.path} targetPath={targetPath} targetName={tag.name}/>;
     } else {
       const fileType = getFileType(tag.name);
       if (!fileType) {
@@ -33,7 +44,7 @@ export default function EditArea() {
       return <ResourceDisplay
         isHidden={tag.path !== currentTag?.path}
         resourceType={fileType}
-        resourceUrl={tag.path}
+        resourceUrl={targetPath}
       />;
     }
   };

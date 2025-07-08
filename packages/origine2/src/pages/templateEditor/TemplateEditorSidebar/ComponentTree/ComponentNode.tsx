@@ -4,6 +4,7 @@ import { ChevronDownFilled, ChevronDownRegular, ChevronUpFilled, ChevronUpRegula
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 import { ITab } from "@/types/templateEditor";
 import {sendComponentPreviewMessage} from "@/pages/templateEditor/TemplateEditor";
+import { Tooltip } from "@fluentui/react-components";
 
 const ChevronDownIcon = bundleIcon(ChevronDownFilled, ChevronDownRegular);
 const ChevronUpIcon = bundleIcon(ChevronUpFilled, ChevronUpRegular);
@@ -49,17 +50,30 @@ export default function ComponentNode({ componentNode }: { componentNode: ICompo
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {
             componentNode.nodes?.map((classNode) => {
-              return (<div
-                key={classNode.name}
-                className={
-                  (currentTab && componentNode.path === currentTab.path && classNode.class === currentTab.class)
-                    ? `${styles.classNode} ${styles.classNodeActive}`
-                    : styles.classNode
-                }
-                onClick={() => handleClassNodeClick(classNode, componentNode.path)}
-              >
-                {classNode.name}
-              </div>);
+              return (
+                <Tooltip
+                  key={classNode.name}
+                  content={
+                    <div>
+                      {componentNode.path}
+                      <div style={{ color: 'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', }}>.{classNode.class}</div>
+                    </div>
+                  } 
+                  relationship='label'
+                  positioning='after-top'
+                >
+                  <div
+                    className={
+                      (currentTab && componentNode.path === currentTab.path && classNode.class === currentTab.class)
+                        ? `${styles.classNode} ${styles.classNodeActive}`
+                        : styles.classNode
+                    }
+                    onClick={() => handleClassNodeClick(classNode, componentNode.path)}
+                  >
+                    {classNode.name}
+                  </div>
+                </Tooltip>
+              );
             }
             )
           }
