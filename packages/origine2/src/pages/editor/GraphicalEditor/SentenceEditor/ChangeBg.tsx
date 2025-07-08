@@ -11,7 +11,10 @@ import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import WheelDropdown from "../components/WheelDropdown";
+import { easeType } from "../utils/constants";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -21,16 +24,31 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
+  const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
-    const isGoNextStr = isGoNext.value ? " -next" : "";
-    const durationStr = duration.value === "" ? '' : ` -duration=${duration.value}`;
-    const transformStr = json.value === "" ? '' : ` -transform=${json.value}`;
-    if (bgFile.value !== "none") {
-      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr}${durationStr}${transformStr}${unlockName.value !== "" ? " -unlockname=" + unlockName.value : ""}${unlockSeries.value !== "" ? " -series=" + unlockSeries.value : ""};`);
-    } else {
-      props.onSubmit(`changeBg:${bgFile.value}${isGoNextStr};`);
-    }
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      bgFile.value,
+      props.sentence.args,
+      [
+        ...(bgFile.value !== "none" ? [
+          {key: "transform", value: json.value},
+          {key: "ease", value: ease.value},
+          {key: "unlockname", value: unlockName.value},
+          {key: "series", value: unlockSeries.value},
+        ] : [
+          {key: "transform", value: ""},
+          {key: "ease", value: ""},
+          {key: "unlockname", value: ""},
+          {key: "series", value: ""},
+        ]),
+        {key: "duration", value: duration.value},
+        {key: "next", value: isGoNext.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -60,6 +78,16 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           submit();
         }} onText={t`本句执行后执行下一句`}
         offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
+      </CommonOptions>
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeType}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
+        />
       </CommonOptions>
       {!isNoFile && <CommonOptions key="3" title={t`解锁名称`}>
         <input value={unlockName.value}

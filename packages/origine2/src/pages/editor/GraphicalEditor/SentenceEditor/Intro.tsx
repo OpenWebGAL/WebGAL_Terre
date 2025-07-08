@@ -13,6 +13,7 @@ import { Button, Switch } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 
 type FontSize = "small" | "medium" | "large";
 type Animation = "fadeIn" | "slideIn" | "typingEffect" | "pixelateEffect" | "revealAnimation";
@@ -173,14 +174,23 @@ export default function Intro(props: ISentenceEditorProps) {
 
   const submit = () => {
     const introText = introTextList.value.join("|");
-    const selectedFontSize = fontSize.value;
-    const selectedAnimation = animation.value;
-    const selectedDelayTime = delayTime.value;
     const backgroundRgbaColor = `rgba(${backgroundColor.value.r}, ${backgroundColor.value.g}, ${backgroundColor.value.b}, ${backgroundColor.value.a ? backgroundColor.value.a / 100 : 1})`;
     const fontRgbaColor = `rgba(${fontColor.value.r}, ${fontColor.value.g}, ${fontColor.value.b}, ${fontColor.value.a ? fontColor.value.a / 100 : 1})`;
-    const holdStr = isHold.value ? ` -hold` : '';
-    const userForwardStr = isUserForward.value ? ` -userForward` : '';
-    props.onSubmit(`intro:${introText} -fontSize=${selectedFontSize} -backgroundColor=${backgroundRgbaColor} -fontColor=${fontRgbaColor} -animation=${selectedAnimation} -delayTime=${selectedDelayTime}${holdStr}${userForwardStr};`);
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      introText,
+      props.sentence.args,
+      [
+        {key: "fontSize", value: fontSize.value},
+        {key: "backgroundColor", value: backgroundRgbaColor},
+        {key: "fontColor", value: fontRgbaColor},
+        {key: "animation", value: animation.value},
+        {key: "delayTime", value: delayTime.value},
+        {key: "hold", value: isHold.value},
+        {key: "userForward", value: isUserForward.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   const introCompList = introTextList.value.map((text, index) => {

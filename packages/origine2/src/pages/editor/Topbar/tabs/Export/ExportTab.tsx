@@ -19,6 +19,7 @@ import {
   useToastController,
 } from '@fluentui/react-components';
 import { useRef } from 'react';
+import useOsInfo from '@/hooks/useOsInfo';
 
 export function ExportTab() {
   const gameDir = useEditorStore.use.subPage();
@@ -27,6 +28,7 @@ export function ExportTab() {
   const toasterId = useId('toaster');
   const { dispatchToast, dismissAllToasts } = useToastController(toasterId);
   const timeCurrent = useRef(0);
+  const { data: osInfo } = useOsInfo();
 
   const startExport = () => {
     timeCurrent.current = Date.now();
@@ -69,17 +71,19 @@ export function ExportTab() {
             icon={<GlobeIcon aria-label="Export Web" className={s.iconColor} />}
             text={t`导出为网页`}
           />
-          <IconWithTextItem
-            onClick={() => {
-              startExport();
-              api
-                .manageGameControllerEjectGameAsExe(gameDir)
-                .then(() => notify())
-                .catch(() => notify('error'));
-            }}
-            icon={<DesktopIcon aria-label="Export Exe" className={s.iconColor} />}
-            text={t`导出为可执行文件`}
-          />
+          {osInfo?.platform !== 'android' && (
+            <IconWithTextItem
+              onClick={() => {
+                startExport();
+                api
+                  .manageGameControllerEjectGameAsExe(gameDir)
+                  .then(() => notify())
+                  .catch(() => notify('error'));
+              }}
+              icon={<DesktopIcon aria-label="Export Exe" className={s.iconColor} />}
+              text={t`导出为可执行文件`}
+            />
+          )}
           <IconWithTextItem
             onClick={() => {
               startExport();
