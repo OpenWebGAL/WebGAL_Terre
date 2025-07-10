@@ -63,7 +63,7 @@ class TerreProvider : DocumentsProvider() {
                     "csv" -> "text/csv"
                     "xml" -> "application/xml"
                     "json" -> "application/json"
-                    "js" -> "application/javascript"
+                    "js", "mjs" -> "application/javascript"
                     "yaml", "yml" -> "application/x-yaml"
                     "html", "htm" -> "text/html"
                     "css" -> "text/css"

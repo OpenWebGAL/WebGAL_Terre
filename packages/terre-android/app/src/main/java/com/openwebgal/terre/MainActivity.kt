@@ -59,12 +59,12 @@ class MainActivity : ComponentActivity() {
                                 showDialog.value = false
                                 stop()
                             }) {
-                                Text("确认")
+                                Text(getString(R.string.confirm))
                             }
                         },
                         dismissButton = {
                             TextButton(onClick = { showDialog.value = false }) {
-                                Text("取消")
+                                Text(getString(R.string.cancel))
                             }
                         }
                     )
