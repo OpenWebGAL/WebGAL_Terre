@@ -98,9 +98,16 @@ export class ManageGameController {
       'Returns a list of directories representing available derivative engines.',
   }) // <-- Describe the response and status code of this endpoint
   async getDerivativeEngines() {
-    const readDirResult = await this.webgalFs.getDirInfo(
-      this.webgalFs.getPathFromRoot('/assets/templates/Derivative_Engine/'),
+    const path = this.webgalFs.getPathFromRoot(
+      '/assets/templates/Derivative_Engine/',
     );
+    if (!(await this.webgalFs.existsDir(path))) {
+      await this.webgalFs.mkdir(
+        this.webgalFs.getPathFromRoot('/assets/templates'),
+        'Derivative_Engine',
+      );
+    }
+    const readDirResult = await this.webgalFs.getDirInfo(path);
     return readDirResult.filter((e) => e.isDir).map((e) => e.name);
   }
 

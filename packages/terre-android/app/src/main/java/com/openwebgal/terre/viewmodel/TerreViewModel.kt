@@ -1,5 +1,6 @@
 package com.openwebgal.terre.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,7 @@ class TerreViewModel : ViewModel() {
     val logLines: StateFlow<List<String>> = _logLines.asStateFlow()
 
     fun startNode(start: () -> Unit) {
+        Log.i("NODE", _isNodeRunning.value.toString())
         if (!_isNodeRunning.value) {
             start()
             _isNodeRunning.value = true
