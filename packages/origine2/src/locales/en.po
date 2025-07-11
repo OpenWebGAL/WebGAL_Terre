@@ -427,7 +427,7 @@ msgstr "Associated figure"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:136
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:133
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "关闭"
@@ -835,32 +835,32 @@ msgstr "Text in Textbox"
 msgid "对话框标题"
 msgstr "Dialog title"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:63
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:62
 #: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "Export"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:39
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:38
 msgid "导出中..."
 msgstr "Exporting..."
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:84
 msgid "导出为可执行文件"
 msgstr "Export as executable file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:97
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:96
 msgid "导出为安卓项目文件"
 msgstr "Export as Android project file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:73
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:72
 msgid "导出为网页"
 msgstr "Export as webpage"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
 msgid "导出失败！"
 msgstr "Export Failed!"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
 msgid "导出成功！"
 msgstr "Export Success!"
 
@@ -1067,7 +1067,7 @@ msgstr "Submit"
 msgid "提交修改"
 msgstr "Submit changes"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 msgid "提示"
 msgstr "Tip"
 
@@ -1804,7 +1804,7 @@ msgstr "Grid view"
 msgid "老电影滤镜"
 msgstr "Old film filter"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:52
 msgid "耗时"
 msgstr "Time taken"
 

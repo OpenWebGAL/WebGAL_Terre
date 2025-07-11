@@ -429,7 +429,7 @@ msgstr "关联立绘"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:136
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:133
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "关闭"
@@ -837,32 +837,32 @@ msgstr "对话框文字"
 msgid "对话框标题"
 msgstr "对话框标题"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:63
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:62
 #: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "导出"
 msgstr "导出"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:39
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:38
 msgid "导出中..."
 msgstr "导出中..."
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:85
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:84
 msgid "导出为可执行文件"
 msgstr "导出为可执行文件"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:97
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:96
 msgid "导出为安卓项目文件"
 msgstr "导出为安卓项目文件"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:73
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:72
 msgid "导出为网页"
 msgstr "导出为网页"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
 msgid "导出失败！"
 msgstr "导出失败！"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:54
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
 msgid "导出成功！"
 msgstr "导出成功！"
 
@@ -1069,7 +1069,7 @@ msgstr "提交"
 msgid "提交修改"
 msgstr "提交修改"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:49
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 msgid "提示"
 msgstr "提示"
 
@@ -1802,7 +1802,7 @@ msgstr "网格视图"
 msgid "老电影滤镜"
 msgstr "老电影滤镜"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:52
 msgid "耗时"
 msgstr "耗时"
 
