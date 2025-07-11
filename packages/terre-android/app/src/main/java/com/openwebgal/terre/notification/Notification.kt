@@ -1,4 +1,4 @@
-package com.openwebgal.terre
+package com.openwebgal.terre.notification
 
 import android.Manifest
 import android.app.Notification
@@ -14,6 +14,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.openwebgal.terre.MainActivity
+import com.openwebgal.terre.R
 
 object Notification {
 

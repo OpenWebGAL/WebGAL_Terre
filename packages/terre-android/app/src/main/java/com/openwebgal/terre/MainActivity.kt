@@ -3,15 +3,14 @@ package com.openwebgal.terre
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.net.toUri
-import com.openwebgal.terre.Notification.checkAndShowNotification
-import com.openwebgal.terre.Notification.requestNotificationPermission
+import com.openwebgal.terre.notification.Notification
+import com.openwebgal.terre.notification.Notification.checkAndShowNotification
+import com.openwebgal.terre.notification.Notification.requestNotificationPermission
 import com.openwebgal.terre.service.TerreService
 import com.openwebgal.terre.ui.screen.MainScreen
 import com.openwebgal.terre.ui.theme.TerreTheme
@@ -35,23 +34,8 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                MainScreen(
-                    launchUrl = ::launchUrl,
-                )
+                MainScreen()
             }
-        }
-    }
-
-    private fun launchUrl(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = url.toUri()
-        }
-        try {
-            startActivity(intent)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, getString(R.string.could_not_open_browser), Toast.LENGTH_SHORT)
-                .show()
         }
     }
 

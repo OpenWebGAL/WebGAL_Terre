@@ -63,7 +63,7 @@ int start_redirecting_stdout_stderr() {
 
 //node's libUV requires all arguments being on contiguous memory.
 extern "C" jint JNICALL
-Java_com_openwebgal_terre_service_TerreServer_startNodeWithArguments(
+Java_com_openwebgal_terre_server_TerreServer_startNodeWithArguments(
         JNIEnv *env,
         jobject /* this */,
         jobjectArray arguments) {
@@ -114,7 +114,7 @@ Java_com_openwebgal_terre_service_TerreServer_startNodeWithArguments(
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_openwebgal_terre_service_TerreServer_stopNode(
+Java_com_openwebgal_terre_server_TerreServer_stopNode(
         JNIEnv *env,
         jobject /* this */) {
     return jint(node::Stop(reinterpret_cast<node::Environment *>(env)));

@@ -1,6 +1,5 @@
-package com.openwebgal.terre
+package com.openwebgal.terre.utils
 
-import android.app.Activity.MODE_PRIVATE
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
@@ -111,7 +110,7 @@ object Assets {
 
     private fun wasAPKUpdated(context: Context): Boolean {
         val prefs =
-            context.getSharedPreferences("NODEJS_MOBILE_PREFS", MODE_PRIVATE)
+            context.getSharedPreferences("NODEJS_MOBILE_PREFS", Context.MODE_PRIVATE)
         val previousLastUpdateTime = prefs.getLong("NODEJS_MOBILE_APK_LastUpdateTime", 0)
         var lastUpdateTime: Long = 1
         try {
@@ -134,7 +133,7 @@ object Assets {
             e.printStackTrace()
         }
         val prefs =
-            context.getSharedPreferences("NODEJS_MOBILE_PREFS", MODE_PRIVATE)
+            context.getSharedPreferences("NODEJS_MOBILE_PREFS", Context.MODE_PRIVATE)
         prefs.edit() {
             putLong("NODEJS_MOBILE_APK_LastUpdateTime", lastUpdateTime)
         }

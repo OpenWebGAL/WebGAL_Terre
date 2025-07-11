@@ -10,24 +10,24 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.net.toUri
 import com.openwebgal.terre.R
 import com.openwebgal.terre.service.TerreService
-import com.openwebgal.terre.viewmodel.TerreViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(
-    terreViewModel: TerreViewModel,
-    launchUrl: (String) -> Unit,
-) {
+fun AppBar() {
     val context = LocalContext.current
 
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
         actions = {
-            TextButton(onClick = {
-                launchUrl("http://localhost:3001/")
-            }) {
+            TextButton(
+                onClick = {
+                    val intent = Intent(Intent.ACTION_VIEW, "http://localhost:3001".toUri())
+                    context.startActivity(intent)
+                }
+            ) {
                 Text(stringResource(R.string.open_browser))
             }
             TextButton(onClick = {

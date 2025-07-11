@@ -1,8 +1,8 @@
-package com.openwebgal.terre.service
+package com.openwebgal.terre.server
 
 import android.content.Context
 import android.util.Log
-import com.openwebgal.terre.Assets.copyAssets
+import com.openwebgal.terre.utils.Assets.copyAssets
 import java.util.concurrent.Executors
 
 class TerreServer(private val applicationContext: Context) {
