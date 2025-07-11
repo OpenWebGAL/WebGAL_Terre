@@ -34,6 +34,7 @@
     "@lingui/macro": "^4.8.0",
     "@lingui/react": "^4.8.0",
     "@monaco-editor/react": "^4.4.5",
+    "@types/parse-path": "^7.1.0",
     "@uiw/react-json-view": "^2.0.0-alpha.12",
     "axios": "^1.6.0",
     "classnames": "^2.5.1",
