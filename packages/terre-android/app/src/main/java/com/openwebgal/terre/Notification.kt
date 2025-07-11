@@ -1,6 +1,7 @@
 package com.openwebgal.terre
 
 import android.Manifest
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -17,7 +18,7 @@ import androidx.core.net.toUri
 object Notification {
 
     private const val NOTIFICATION_CHANNEL_ID = "terre_channel"
-    private const val NOTIFICATION_ID = 1
+    const val NOTIFICATION_ID = 1
     private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 100
 
     fun createNotificationChannel(context: Context) {
@@ -50,7 +51,10 @@ object Notification {
         }
     }
 
-    fun showNotification(context: Context) {
+    fun createNotification(context: Context): Notification {
+
+        createNotificationChannel(context)
+
         val browserIntent = Intent(Intent.ACTION_VIEW, "http://localhost:3001".toUri())
         val browserPendingIntent: PendingIntent = PendingIntent.getActivity(
             context,
@@ -76,17 +80,17 @@ object Notification {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setOngoing(true)
             .setContentIntent(appPendingIntent)
-            .addAction(0, context.getString(R.string.open_browser), browserPendingIntent)
 
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
+        builder.addAction(0, context.getString(R.string.open_browser), browserPendingIntent)
+
+        return builder.build()
     }
 
-    fun cancelNotification(context: Context) {
+    fun showNotification(context: Context) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(NOTIFICATION_ID)
+        val notification = createNotification(context)
+        notificationManager.notify(NOTIFICATION_ID, notification)
     }
 
     private fun isNotificationVisible(context: Context): Boolean {
@@ -101,7 +105,7 @@ object Notification {
         return false
     }
 
-    fun checkAndCreateNotification(context: Context) {
+    fun checkAndShowNotification(context: Context) {
         if (!isNotificationVisible(context)) {
             showNotification(context)
         }
@@ -113,9 +117,7 @@ object Notification {
         grantResults: IntArray
     ) {
         if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showNotification(context)
-            } else {
+            if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(
                     context,
                     context.getString(R.string.notification_permission_denied),

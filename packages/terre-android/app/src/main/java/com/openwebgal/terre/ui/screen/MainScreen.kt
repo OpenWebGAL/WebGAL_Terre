@@ -16,20 +16,13 @@ import com.openwebgal.terre.viewmodel.TerreViewModel
 fun MainScreen(
     terreViewModel: TerreViewModel = viewModel(),
     launchUrl: (String) -> Unit,
-    start: () -> Unit,
-    stop: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        terreViewModel.startNode(start)
-    }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             AppBar(
                 terreViewModel = terreViewModel,
                 launchUrl = launchUrl,
-                stop = stop
             )
         },
     ) { innerPadding ->
