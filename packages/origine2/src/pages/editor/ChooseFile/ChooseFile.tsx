@@ -34,7 +34,14 @@ export default function ChooseFile(props: IChooseFile) {
 
   async function onChooseFile(file: IFile, type: 'scene' | 'asset') {
     toggleIsCalloutVisible();
-    props.onChange({...file, name: file?.path.split(`${[...basePath].join('/')}/`).slice(1).join('/') ?? ''});
+    const combinedBasePath = basePath.join('/');
+    // 移除开头的 basePath/
+    const basePathRegex = new RegExp(`^${combinedBasePath}/`, 'g');
+    let fileName = file?.path.replace(basePathRegex, '');
+    props.onChange({
+      ...file,
+      name: fileName,
+    });
   }
 
   const fileFunction: IFileFunction = {
