@@ -89,7 +89,9 @@ export default function TextEditor(props: ITextEditorProps) {
   const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     if(!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
-    const lineNumber = ev.changes[0].range.startLineNumber;
+    // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
+    const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
+    // const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value) currentText.value = value;
     eventBus.emit('update-scene', currentText.value);
@@ -108,7 +110,14 @@ export default function TextEditor(props: ITextEditorProps) {
         // currentText.set(data);
         currentText.value = data.toString();
         eventBus.emit('update-scene', data.toString());
-        editorRef.current?.getModel()?.setValue(currentText.value);
+        const model = editorRef.current?.getModel();
+        model?.applyEdits([
+          {
+            range: model.getFullModelRange(),
+            text: currentText.value,
+            forceMoveMarkers: true
+          }
+        ]);
         isEditorReady.value = true;
         const targetPosition = editorLineHolder.getScenePosition(props.targetPath);
         editorRef?.current?.setPosition(targetPosition);
