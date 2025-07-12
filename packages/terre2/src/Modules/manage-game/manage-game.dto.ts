@@ -82,7 +82,7 @@ export class GameInfoDto {
   @ApiProperty({ description: 'The cover of the game' })
   cover: string;
   @ApiProperty({ description: 'The template config of the game' })
-  template: TemplateConfigDto;
+  template: TemplateConfigDto | null;
 }
 
 export class UploadFilesDto {
