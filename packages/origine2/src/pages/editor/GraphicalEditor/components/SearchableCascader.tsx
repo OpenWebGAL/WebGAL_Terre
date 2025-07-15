@@ -10,6 +10,7 @@ import styles from './searchableCascader.module.scss';
 import stylesSe from "../SentenceEditor/sentenceEditor.module.scss";
 import { debounce, escapeRegExp } from 'lodash';
 import { t } from "@lingui/macro";
+import { CloseSmall } from "@icon-park/react";
 
 export interface CascaderOptionNode {
   value: string;
@@ -109,7 +110,7 @@ export default function SearchableCascader ({
     }
     return levels;
   }, [options, levelLabels, isPinned]);
-  
+
   // 处理搜索框输入变化
   const handleInputChange = debounce((input:string)=> {
     if (!input.trim()) {
@@ -254,6 +255,9 @@ export default function SearchableCascader ({
           ) : (
             <div className={styles.cascader}>{optionLevels}</div>
           )}
+          <div className={styles.closeIcon} onClick={() => setOpenPopover(false)}>
+            <CloseSmall theme="outline" size="15" strokeWidth={3} />
+          </div>
         </PopoverSurface>
       </Popover>
     </div>
