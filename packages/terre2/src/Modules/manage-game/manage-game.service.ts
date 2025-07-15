@@ -34,15 +34,16 @@ export class ManageGameService {
         try {
           const gameDir = item.name;
           const gameConfig = await this.getGameConfig(gameDir);
+          let templateConfig: TemplateConfigDto = null;
           const configFilePath = this.webgalFs.getPathFromRoot(
             `/public/games/${gameDir}/game/template/template.json`,
           );
-          const templateConfigString = await this.webgalFs.readTextFile(
-            configFilePath,
-          );
-          const templateConfig: TemplateConfigDto = JSON.parse(
-            templateConfigString as string,
-          );
+          if (await this.webgalFs.exists(configFilePath)) {
+            const templateConfigString = await this.webgalFs.readTextFile(
+              configFilePath,
+            );
+            templateConfig = JSON.parse(templateConfigString as string);
+          }
           return {
             name: gameConfig.Game_name,
             dir: item.name,

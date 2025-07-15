@@ -28,7 +28,7 @@ async function downloadSwaggerJson(): Promise<void> {
 
 function generateTypescriptApi(): void {
   exec(
-    `swagger-typescript-api -p ${SWAGGER_JSON_PATH} -o ${API_OUTPUT_PATH} --axios`,
+    `swagger-typescript-api generate -p ${SWAGGER_JSON_PATH} -o ${API_OUTPUT_PATH} --axios`,
     (error, stdout, stderr) => {
       if (error) {
         console.error('Error generating TypeScript API:', error.message);
