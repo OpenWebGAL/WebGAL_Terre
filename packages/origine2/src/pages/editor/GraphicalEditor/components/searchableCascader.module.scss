@@ -129,3 +129,22 @@
   font-weight: bold;
   padding: 0 2px;
 }
+
+.closeIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  justify-items: center;
+  align-items: center;
+  border-radius: 100px;
+  display: grid;
+  grid: 1 1;
+  transition: all 0.33s;
+  width: 22px;
+  aspect-ratio: 1 / 1;
+}
+
+.closeIcon:hover {
+  background: var(--bg-button-hover);
+  cursor: pointer;
+}
