@@ -14,7 +14,7 @@ import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "../components/WheelDropdown";
-import { easeType } from "../utils/constants";
+import { getEaseType } from "../utils/constants";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -81,7 +81,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="5" title={t`缓动类型`}>
         <WheelDropdown
-          options={easeType}
+          options={getEaseType()}
           value={ease.value}
           onValueChange={(newValue) => {
             ease.set(newValue?.toString() ?? "");

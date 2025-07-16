@@ -16,7 +16,7 @@ import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
-import { easeType } from "../utils/constants";
+import { getEaseType } from "../utils/constants";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -278,7 +278,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="5" title={t`缓动类型`}>
         <WheelDropdown
-          options={easeType}
+          options={getEaseType()}
           value={ease.value}
           onValueChange={(newValue) => {
             ease.set(newValue?.toString() ?? "");

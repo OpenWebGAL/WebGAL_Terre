@@ -622,7 +622,7 @@ msgstr "New version detected"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:770
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "Cancel"
@@ -690,15 +690,15 @@ msgstr "Image"
 msgid "圆形"
 msgstr "Circle"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:9
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:10
 msgid "圆形缓入"
 msgstr "Circ in"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:11
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:12
 msgid "圆形缓入缓出"
 msgstr "Circ in out"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:10
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:11
 msgid "圆形缓出"
 msgstr "Circ out"
 
@@ -1693,7 +1693,7 @@ msgstr "Emergency Evasion"
 msgid "纹理"
 msgstr "Texture"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:5
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:6
 msgid "线性"
 msgstr "Linear"
 
@@ -1701,11 +1701,11 @@ msgstr "Linear"
 msgid "线性渐变"
 msgstr "Linear gradient"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:13
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:14
 msgid "终点回弹"
 msgstr "Back out"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:16
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:17
 msgid "终点弹跳"
 msgstr "Bounce out"
 
@@ -1752,15 +1752,15 @@ msgstr "Inherit default effect"
 #~ msgid "绿色（0-255）："
 #~ msgstr "Green (0-255)"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:6
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:7
 msgid "缓入"
 msgstr "Ease in"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:8
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:9
 msgid "缓入缓出"
 msgstr "Ease in out"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:7
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:8
 msgid "缓出"
 msgstr "Ease out"
 
@@ -2050,19 +2050,19 @@ msgstr "Call scene, return to parent scene after new scene ends"
 msgid "资源"
 msgstr "Assets"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:14
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:15
 msgid "起止回弹"
 msgstr "Back in out"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:17
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:18
 msgid "起止弹跳"
 msgstr "Bounce in out"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:12
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:13
 msgid "起点回弹"
 msgstr "Back in"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:15
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:16
 msgid "起点弹跳"
 msgstr "Bounce in"
 
@@ -2108,7 +2108,7 @@ msgstr "Entry and exit animation"
 msgid "连续执行"
 msgstr "Execute Continuously"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 msgid "选择"
 msgstr "Choose"
 
@@ -2152,7 +2152,7 @@ msgstr "Select apply template"
 msgid "选择效果音文件"
 msgstr "Choose sound effect file"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:65
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:73
 msgid "选择文件"
 msgstr "Choose file"
 
@@ -2355,7 +2355,7 @@ msgstr "Music"
 msgid "项目主页"
 msgstr "Project Homepage"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:18
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:19
 msgid "预先反向"
 msgstr "Anticipate"
 
@@ -2387,7 +2387,7 @@ msgid "高斯模糊"
 msgstr "Gaussian Blur"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:4
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:5
 msgid "默认"
 msgstr "Default"
 

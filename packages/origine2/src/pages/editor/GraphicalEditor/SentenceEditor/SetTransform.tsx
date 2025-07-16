@@ -11,7 +11,7 @@ import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
-import { easeType } from "../utils/constants";
+import { getEaseType } from "../utils/constants";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -115,7 +115,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
       </CommonOptions>}
       <CommonOptions key="5" title={t`缓动类型`}>
         <WheelDropdown
-          options={easeType}
+          options={getEaseType()}
           value={ease.value}
           onValueChange={(newValue) => {
             ease.set(newValue?.toString() ?? "");

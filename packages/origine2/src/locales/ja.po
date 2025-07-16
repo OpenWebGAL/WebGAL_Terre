@@ -625,7 +625,7 @@ msgstr "新しいバージョンが検出されました"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:770
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "キャンセル"
@@ -693,15 +693,15 @@ msgstr "画像"
 msgid "圆形"
 msgstr "円形"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:9
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:10
 msgid "圆形缓入"
 msgstr "サークイン"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:11
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:12
 msgid "圆形缓入缓出"
 msgstr "サークインアウト"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:10
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:11
 msgid "圆形缓出"
 msgstr "サークアウト"
 
@@ -1692,7 +1692,7 @@ msgstr "緊急回避"
 msgid "纹理"
 msgstr "Tex"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:5
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:6
 msgid "线性"
 msgstr "リニア"
 
@@ -1700,11 +1700,11 @@ msgstr "リニア"
 msgid "线性渐变"
 msgstr "線形グラデーション"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:13
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:14
 msgid "终点回弹"
 msgstr "バックアウト"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:16
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:17
 msgid "终点弹跳"
 msgstr "バウンスアウト"
 
@@ -1751,15 +1751,15 @@ msgstr "デフォルトの効果を継承する"
 #~ msgid "绿色（0-255）："
 #~ msgstr "緑(0-255):"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:6
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:7
 msgid "缓入"
 msgstr "イーズイン"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:8
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:9
 msgid "缓入缓出"
 msgstr "イーズインアウト"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:7
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:8
 msgid "缓出"
 msgstr "イーズアウト"
 
@@ -2049,19 +2049,19 @@ msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに
 msgid "资源"
 msgstr "アセット"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:14
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:15
 msgid "起止回弹"
 msgstr "バックインアウト"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:17
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:18
 msgid "起止弹跳"
 msgstr "バウンスインアウト"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:12
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:13
 msgid "起点回弹"
 msgstr "バックイン"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:15
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:16
 msgid "起点弹跳"
 msgstr "バウンスイン"
 
@@ -2107,7 +2107,7 @@ msgstr "入退場アニメーション"
 msgid "连续执行"
 msgstr "連続実行"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 msgid "选择"
 msgstr "選択"
 
@@ -2151,7 +2151,7 @@ msgstr "適用テンプレートを選択"
 msgid "选择效果音文件"
 msgstr "効果音ファイルを選択"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:65
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:73
 msgid "选择文件"
 msgstr "ファイルを選択"
 
@@ -2354,7 +2354,7 @@ msgstr "BGM"
 msgid "项目主页"
 msgstr "プロジェクトホームページ"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:18
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:19
 msgid "预先反向"
 msgstr "アンティシペート"
 
@@ -2386,7 +2386,7 @@ msgid "高斯模糊"
 msgstr "ぼかし"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:4
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:5
 msgid "默认"
 msgstr "デフォルト"
 

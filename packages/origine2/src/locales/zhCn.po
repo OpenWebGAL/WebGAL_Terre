@@ -624,7 +624,7 @@ msgstr "发现新版本"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:770
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "取消"
@@ -692,15 +692,15 @@ msgstr "图片"
 msgid "圆形"
 msgstr "圆形"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:9
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:10
 msgid "圆形缓入"
 msgstr "圆形缓入"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:11
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:12
 msgid "圆形缓入缓出"
 msgstr "圆形缓入缓出"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:10
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:11
 msgid "圆形缓出"
 msgstr "圆形缓出"
 
@@ -1691,7 +1691,7 @@ msgstr "紧急回避"
 msgid "纹理"
 msgstr "纹理"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:5
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:6
 msgid "线性"
 msgstr "线性"
 
@@ -1699,11 +1699,11 @@ msgstr "线性"
 msgid "线性渐变"
 msgstr "线性渐变"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:13
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:14
 msgid "终点回弹"
 msgstr "终点回弹"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:16
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:17
 msgid "终点弹跳"
 msgstr "终点弹跳"
 
@@ -1750,15 +1750,15 @@ msgstr "继承默认效果"
 #~ msgid "绿色（0-255）："
 #~ msgstr "绿色（0-255）："
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:6
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:7
 msgid "缓入"
 msgstr "缓入"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:8
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:9
 msgid "缓入缓出"
 msgstr "缓入缓出"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:7
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:8
 msgid "缓出"
 msgstr "缓出"
 
@@ -2048,19 +2048,19 @@ msgstr "调用场景，新场景结束后返回父场景"
 msgid "资源"
 msgstr "资源"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:14
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:15
 msgid "起止回弹"
 msgstr "起止回弹"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:17
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:18
 msgid "起止弹跳"
 msgstr "起止弹跳"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:12
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:13
 msgid "起点回弹"
 msgstr "起点回弹"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:15
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:16
 msgid "起点弹跳"
 msgstr "起点弹跳"
 
@@ -2106,7 +2106,7 @@ msgstr "进出场动画"
 msgid "连续执行"
 msgstr "连续执行"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:59
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 msgid "选择"
 msgstr "选择"
 
@@ -2150,7 +2150,7 @@ msgstr "选择应用的模板"
 msgid "选择效果音文件"
 msgstr "选择效果音文件"
 
-#: src/pages/editor/ChooseFile/ChooseFile.tsx:65
+#: src/pages/editor/ChooseFile/ChooseFile.tsx:73
 msgid "选择文件"
 msgstr "选择文件"
 
@@ -2353,7 +2353,7 @@ msgstr "音乐"
 msgid "项目主页"
 msgstr "项目主页"
 
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:18
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:19
 msgid "预先反向"
 msgstr "预先反向"
 
@@ -2385,7 +2385,7 @@ msgid "高斯模糊"
 msgstr "高斯模糊"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
-#: src/pages/editor/GraphicalEditor/utils/constants.ts:4
+#: src/pages/editor/GraphicalEditor/utils/constants.ts:5
 msgid "默认"
 msgstr "默认"
 
