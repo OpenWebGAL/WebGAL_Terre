@@ -12,6 +12,7 @@ import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { getEaseType } from "../utils/constants";
+import { useMemo } from "react";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -34,6 +35,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeTypeOptions = useMemo(() => getEaseType(), []);
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
 
@@ -115,7 +117,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
       </CommonOptions>}
       <CommonOptions key="5" title={t`缓动类型`}>
         <WheelDropdown
-          options={getEaseType()}
+          options={easeTypeOptions}
           value={ease.value}
           onValueChange={(newValue) => {
             ease.set(newValue?.toString() ?? "");

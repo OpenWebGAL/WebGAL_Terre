@@ -15,6 +15,7 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "../components/WheelDropdown";
 import { getEaseType } from "../utils/constants";
+import { useMemo } from "react";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -25,6 +26,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeTypeOptions = useMemo(() => getEaseType(), []);
   
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
@@ -81,7 +83,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="5" title={t`缓动类型`}>
         <WheelDropdown
-          options={getEaseType()}
+          options={easeTypeOptions}
           value={ease.value}
           onValueChange={(newValue) => {
             ease.set(newValue?.toString() ?? "");

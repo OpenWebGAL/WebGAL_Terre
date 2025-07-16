@@ -5,7 +5,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import {useValue} from "../../../../hooks/useValue";
 import {getArgByKey} from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
@@ -62,6 +62,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   ]);
 
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeTypeOptions = useMemo(() => getEaseType(), []);
 
   useEffect(() => {
     if (figureFile.value.includes('json')) {
@@ -278,7 +279,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="5" title={t`缓动类型`}>
         <WheelDropdown
-          options={getEaseType()}
+          options={easeTypeOptions}
           value={ease.value}
           onValueChange={(newValue) => {
             ease.set(newValue?.toString() ?? "");
