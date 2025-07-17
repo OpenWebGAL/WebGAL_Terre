@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { t } from "@lingui/macro";
 
-export const getEaseType = (): Map<string, string> => {
-  return new Map<string, string>([
+export const useEaseTypeOptions = () => {
+  return useMemo(() => new Map<string, string>([
     [ "", t`默认` ],
     [ "linear", t`线性` ],
     [ "easeIn", t`缓入` ],
@@ -17,5 +18,5 @@ export const getEaseType = (): Map<string, string> => {
     [ "bounceOut", t`终点弹跳` ],
     [ "bounceInOut", t`起止弹跳` ],
     [ "anticipate", t`预先反向` ],
-  ]);
-}
+  ]), []);
+};

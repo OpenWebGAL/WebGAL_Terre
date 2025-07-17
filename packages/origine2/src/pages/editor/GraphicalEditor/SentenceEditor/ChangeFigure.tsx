@@ -16,7 +16,7 @@ import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
-import { getEaseType } from "../utils/constants";
+import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -62,7 +62,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   ]);
 
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
-  const easeTypeOptions = useMemo(() => getEaseType(), []);
+  const easeTypeOptions = useEaseTypeOptions();
 
   useEffect(() => {
     if (figureFile.value.includes('json')) {

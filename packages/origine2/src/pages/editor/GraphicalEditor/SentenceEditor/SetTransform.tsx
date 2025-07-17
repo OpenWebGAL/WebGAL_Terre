@@ -11,8 +11,7 @@ import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
-import { getEaseType } from "../utils/constants";
-import { useMemo } from "react";
+import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -35,7 +34,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
-  const easeTypeOptions = useMemo(() => getEaseType(), []);
+  const easeTypeOptions = useEaseTypeOptions();
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
 

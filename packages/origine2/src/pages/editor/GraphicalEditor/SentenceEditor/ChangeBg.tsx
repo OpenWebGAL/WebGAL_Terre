@@ -14,8 +14,7 @@ import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "../components/WheelDropdown";
-import { getEaseType } from "../utils/constants";
-import { useMemo } from "react";
+import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -26,7 +25,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
-  const easeTypeOptions = useMemo(() => getEaseType(), []);
+  const easeTypeOptions = useEaseTypeOptions();
   
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
