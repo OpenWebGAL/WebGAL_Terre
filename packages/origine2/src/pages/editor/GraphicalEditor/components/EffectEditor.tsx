@@ -153,8 +153,7 @@ const EffectCheckboxField = memo(
 export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
   const isInitialMount = useRef(true);
   // 状态：存储所有效果参数的当前值（键为EffectKey，值为数值或undefined）
-  const initialFields = useMemo(() => getInitialFields(props.json), []);
-  const [effectFields, setEffectFields] = useState<EffectFields>(initialFields);
+  const [effectFields, setEffectFields] = useState<EffectFields>(() => getInitialFields(props.json));
   // 当父组件传递的 json 变化时，重新初始化状态
   useEffect(() => {
     setEffectFields(getInitialFields(props.json));
