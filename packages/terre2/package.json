@@ -23,7 +23,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "pkg": "cd dist && pkg src/main.js -o WebGAL_Terre",
-    "pkg:linux-arm64": "cd dist && pkg src/main.js -o WebGAL_Terre -t node18-linux-arm64"
+    "pkg:linux-arm64": "cd dist && pkg src/main.js -o WebGAL_Terre -t node20-linux-arm64"
   },
   "dependencies": {
     "@babel/traverse": "7.23.2",
@@ -38,7 +38,7 @@
     "@nestjs/swagger": "^7.1.13",
     "@nestjs/websockets": "^10.3.6",
     "@types/parse-path": "^7.1.0",
-    "@yao-pkg/pkg": "^6.4.1",
+    "@yao-pkg/pkg": "6.4.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "date-time-format-timezone": "^1.0.22",

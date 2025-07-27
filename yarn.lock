@@ -4988,10 +4988,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@yao-pkg/pkg-fetch@3.5.23":
-  version "3.5.23"
-  resolved "https://registry.yarnpkg.com/@yao-pkg/pkg-fetch/-/pkg-fetch-3.5.23.tgz#1fd05bba850a12293899715a1e557f55e45d9dc6"
-  integrity sha512-rn45sqVQSkcJNSBdTnYze3n+kyub4CN8aiWYlPgA9yp9FZeEF+BlpL68kSIm3HaVuANniF+7RBMH5DkC4zlHZA==
+"@yao-pkg/pkg-fetch@3.5.21":
+  version "3.5.21"
+  resolved "https://registry.yarnpkg.com/@yao-pkg/pkg-fetch/-/pkg-fetch-3.5.21.tgz#2243f0bc1af8a9decbacb3470c83df4fff34dd71"
+  integrity sha512-nlJ+rXersw70CQVSph7OfIN8lN6nCStjU7koXzh0WXiPvztZGqkoQTScHQCe1K8/tuKpeL0bEOYW0rP4QqMJ9A==
   dependencies:
     https-proxy-agent "^5.0.0"
     node-fetch "^2.6.6"
@@ -5001,15 +5001,15 @@
     tar-fs "^2.1.1"
     yargs "^16.2.0"
 
-"@yao-pkg/pkg@^6.4.1":
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/@yao-pkg/pkg/-/pkg-6.5.1.tgz#d7c12b5a2bc37c0e47b6dc7140adeb607308b9a2"
-  integrity sha512-z6XlySYfnqfm1AfVlBN8A3yeAQniIwL7TKQfDCGsswYSVYLt2snbRefQYsfQQ3pw5lVXrZdLqgTjzaqID9IkWA==
+"@yao-pkg/pkg@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@yao-pkg/pkg/-/pkg-6.4.1.tgz#77fbd649fe3191d04bca7f44a6103e8912dd4c4b"
+  integrity sha512-pjePVt+DQP+HaJI5DfEZDX1pGsMMFjv1wuqfy/BwXlnffVIRk8lXjw7yVYvLQRcomf8Eaz2chDE5B6gR2SSaQw==
   dependencies:
     "@babel/generator" "^7.23.0"
     "@babel/parser" "^7.23.0"
     "@babel/types" "^7.23.0"
-    "@yao-pkg/pkg-fetch" "3.5.23"
+    "@yao-pkg/pkg-fetch" "3.5.21"
     into-stream "^6.0.0"
     minimist "^1.2.6"
     multistream "^4.1.0"
