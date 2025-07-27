@@ -297,9 +297,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         title={t`效果编辑器`}
         sentenceIndex={props.index}
         bottomBarChildren={[
-          <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
+          <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
             <div>
-              <Input placeholder={t`持续时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
+              <Input placeholder={t`过渡时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
                 const newDuration = Number(data.value);
                 if (isNaN(newDuration) || data.value === '')
                   duration.set("");
