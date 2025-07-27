@@ -68,10 +68,10 @@ export default function SetTransform(props: ISentenceEditorProps) {
           }}/>
         </TerrePanel>
       </CommonOptions>
-      <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
+      <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
         <div>
           <input
-            placeholder={t`持续时间（单位为毫秒）`}
+            placeholder={t`过渡时间（单位为毫秒）`}
             value={duration.value.toString()}
             className={styles.sayInput}
             style={{ width: "100%" }}

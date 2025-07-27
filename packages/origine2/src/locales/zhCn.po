@@ -971,7 +971,7 @@ msgstr "应用"
 msgid "应用的模板"
 msgstr "应用的模板"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:302
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:261
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "应用颜色变化"
@@ -1048,8 +1048,8 @@ msgstr "拼接模式"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:302
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:71
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:74
-msgid "持续时间（单位为毫秒）"
-msgstr "持续时间（单位为毫秒）"
+#~ msgid "持续时间（单位为毫秒）"
+#~ msgstr "持续时间（单位为毫秒）"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:17
 msgid "指针"
@@ -2127,6 +2127,15 @@ msgstr "软化（0-1）"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:76
 msgid "输入目标 ID"
 msgstr "输入目标 ID"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:114
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:117
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:300
+#: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:302
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:71
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:74
+msgid "过渡时间（单位为毫秒）"
+msgstr "过渡时间（单位为毫秒）"
 
 #: src/components/Assets/Assets.tsx:306
 msgid "过滤文件"
