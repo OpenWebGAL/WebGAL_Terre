@@ -58,7 +58,7 @@ export interface EffectConfig {
 /** 所有效果参数的键值对类型，值为数值或undefined */
 export type EffectFields = Record<EffectKey, number | undefined>;
 
-export const useEffctEditorConfig = () => {
+export const useEffectEditorConfig = () => {
   return useMemo(() => {
     /**
      * 所有效果参数的配置映射表

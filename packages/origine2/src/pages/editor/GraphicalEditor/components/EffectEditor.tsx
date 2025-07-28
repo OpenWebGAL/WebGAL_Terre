@@ -7,7 +7,7 @@ import { logger } from '@/utils/logger';
 import { OptionCategory } from '@/pages/editor/GraphicalEditor/components/OptionCategory';
 import CommonOptions from '@/pages/editor/GraphicalEditor/components/CommonOption';
 import styles from './effectEditor.module.scss';
-import { useEffctEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import type { EffectKey, EffectFields } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 
@@ -58,7 +58,7 @@ const EffectInputField = memo(
     submit: () => void;
   }) => {
     const { effectFields, fieldKey, submit, updateField } = props;
-    const { effectConfig } = useEffctEditorConfig();
+    const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
     let [innerVal, setInnerVal] = useState((val ?? '').toString());
     const config = effectConfig[fieldKey];
@@ -101,7 +101,7 @@ const EffectCheckboxField = memo(
     checkboxEffectLabel: boolean;
   }) => {
     const { effectFields, fieldKey, updateField, setCheckbox, checkboxEffectLabel } = props;
-    const { effectConfig } = useEffctEditorConfig();
+    const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
     const config = effectConfig[fieldKey];
     const handleChange = useCallback(
@@ -125,7 +125,7 @@ const EffectCheckboxField = memo(
 
 export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
   const isInitialMount = useRef(true);
-  const { effectConfig, fieldGroups } = useEffctEditorConfig();
+  const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
    * 解析初始JSON字符串，生成效果参数的初始状态
    * @param json 初始效果配置的JSON字符串
