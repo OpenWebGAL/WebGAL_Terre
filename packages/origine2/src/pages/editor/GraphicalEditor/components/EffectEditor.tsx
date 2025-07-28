@@ -7,12 +7,8 @@ import { logger } from '@/utils/logger';
 import { OptionCategory } from '@/pages/editor/GraphicalEditor/components/OptionCategory';
 import CommonOptions from '@/pages/editor/GraphicalEditor/components/CommonOption';
 import styles from './effectEditor.module.scss';
-import {
-  EffectKey,
-  effectConfig,
-  EffectFields,
-  fieldGroups,
-} from '@/pages/editor/GraphicalEditor/utils/effectEditorConfig';
+import { useEffctEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import type { EffectKey, EffectFields } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 
 /**
@@ -52,31 +48,6 @@ const setValueByPath = (obj: Record<string, any>, path: string, value: any) => {
 };
 
 /**
- * 解析初始JSON字符串，生成效果参数的初始状态
- * @param json 初始效果配置的JSON字符串
- * @returns 初始EffectFields对象
- */
-const getInitialFields = (json: string) => {
-  let effectObject = {} as any;
-  try {
-    if (json !== '') {
-      effectObject = JSON.parse(json);
-    }
-  } catch (e) {
-    logger.error('EffectEditor JSON.parse error', e);
-  }
-  let effectFields = {} as any;
-  try {
-    for (const key of Object.keys(effectConfig)) {
-      effectFields[key] = getValueByPath(effectObject, effectConfig[key as EffectKey].path);
-    }
-  } catch (e) {
-    logger.error('EffectEditor getEffectFields error', e);
-  }
-  return effectFields as EffectFields;
-};
-
-/**
  * 效果输入框字段
  */
 const EffectInputField = memo(
@@ -87,6 +58,7 @@ const EffectInputField = memo(
     submit: () => void;
   }) => {
     const { effectFields, fieldKey, submit, updateField } = props;
+    const { effectConfig } = useEffctEditorConfig();
     const val = effectFields[fieldKey];
     let [innerVal, setInnerVal] = useState((val ?? '').toString());
     const config = effectConfig[fieldKey];
@@ -129,6 +101,7 @@ const EffectCheckboxField = memo(
     checkboxEffectLabel: boolean;
   }) => {
     const { effectFields, fieldKey, updateField, setCheckbox, checkboxEffectLabel } = props;
+    const { effectConfig } = useEffctEditorConfig();
     const val = effectFields[fieldKey];
     const config = effectConfig[fieldKey];
     const handleChange = useCallback(
@@ -152,6 +125,31 @@ const EffectCheckboxField = memo(
 
 export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
   const isInitialMount = useRef(true);
+  const { effectConfig, fieldGroups } = useEffctEditorConfig();
+  /**
+   * 解析初始JSON字符串，生成效果参数的初始状态
+   * @param json 初始效果配置的JSON字符串
+   * @returns 初始EffectFields对象
+   */
+  const getInitialFields = useCallback((json: string) => {
+    let effectObject = {} as any;
+    try {
+      if (json !== '') {
+        effectObject = JSON.parse(json);
+      }
+    } catch (e) {
+      logger.error('EffectEditor JSON.parse error', e);
+    }
+    let effectFields = {} as any;
+    try {
+      for (const key of Object.keys(effectConfig)) {
+        effectFields[key] = getValueByPath(effectObject, effectConfig[key as EffectKey].path);
+      }
+    } catch (e) {
+      logger.error('EffectEditor getEffectFields error', e);
+    }
+    return effectFields as EffectFields;
+  }, []);
   // 状态：存储所有效果参数的当前值（键为EffectKey，值为数值或undefined）
   const [effectFields, setEffectFields] = useState<EffectFields>(() => getInitialFields(props.json));
   // 当父组件传递的 json 变化时，重新初始化状态
