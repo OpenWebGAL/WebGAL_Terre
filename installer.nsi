@@ -1,33 +1,33 @@
-; ����
+; 依赖
 !include MUI2.nsh
 
 
-; ����
+; 变量
 
 
-; ����
+; 常量
 !define NAME "WebGal_Terre"
-!define VERSION "4.5.13" ; �汾�ű���
+!define VERSION "4.5.13" ; 版本号变量
 !define PRODUCT_VERSION "${VERSION}.0"
-!define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; ��Ȩ��Ϣ
+!define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; 版权信息
 !define ICON_PATH ".\assets\icon.ico"
-!define UNINSTALL_KEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall${NAME}" ; ����ע��
-!define RELEASE_PATH ".\release" ; �����ļ�����λ��
+!define UNINSTALL_KEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall${NAME}" ; 软件注册
+!define RELEASE_PATH ".\release" ; 构建文件所在位置
 
 
-; ��װ��Ϣ
-Name "${NAME} v${version} Setup" ; ��װ��������
-OutFile "./bundle/WebGal_Terre_Setup.exe" ; ��װ�����·��
-RequestExecutionLevel admin ; ���ð�װ���Թ���ԱȨ������
-; ͼ��
+; 安装信息
+Name "${NAME} v${version} Setup" ; 安装程序名称
+OutFile "./bundle/WebGal_Terre_Setup.exe" ; 安装包输出路径
+RequestExecutionLevel admin ; 设置安装包以管理员权限运行
+; 图标
 Icon "${ICON_PATH}"
 !define MUI_ICON "${ICON_PATH}"
 !define MUI_UNICON "${ICON_PATH}"
-!define MUI_ABORTWARNING ; �˳�ʱ����
-; Ĭ�ϰ�װ·��
+!define MUI_ABORTWARNING ; 退出时警告
+; 默认安装路径
 InstallDir "$LOCALAPPDATA\${NAME}"
 
-; �汾��Ϣ
+; 版本信息
 VIAddVersionKey ProductName "${NAME} Installer" ; product name
 VIAddVersionKey ProductVersion "${VERSION}" ; product version
 VIAddVersionKey Comments "${NAME} is WebGal's web graphics editor." ; description
@@ -60,19 +60,19 @@ VIProductVersion "${PRODUCT_VERSION}" ; product verion(actual replace FileVersio
 Section -Install
     SetOutPath $INSTDIR
 
-    ; �ɸ�д���
+    ; 可覆写情况
     SetOverwrite ifnewer
 
-    ; ж�س���
+    ; 卸载程序
     WriteUninstaller "$INSTDIR\uninstall.exe"
 
-    ; ��װ�����ļ�
+    ; 安装包内文件
     File /r "${RELEASE_PATH}\*.*"
 
-    ; ��ݷ�ʽ
+    ; 快捷方式
     CreateShortCut "$DESKTOP\${NAME}.lnk" "$INSTDIR\${NAME}.exe"
 
-    ; ��ʼ�˵�
+    ; 开始菜单
     CreateShortCut "$SMPROGRAMS\${NAME}.lnk" "$INSTDIR\${NAME}.exe"
 
     ; Register the installed software
@@ -82,7 +82,7 @@ Section -Install
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\uninstallerIcon.ico"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "${VERSION}"
 
-    ; �ó����Թ���Ա��������
+    ; 让程序以管理员身份运行
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\WebGal_Terre.exe" "RUNASADMIN"
 SectionEnd
 
@@ -110,6 +110,6 @@ SectionEnd
 !insertmacro MUI_LANGUAGE "SimpChinese"
 
 
-; ��ʼ������
+; 初始化函数
 Function .onInit
 FunctionEnd
