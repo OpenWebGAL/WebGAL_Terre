@@ -122,7 +122,7 @@ msgstr "playEffect: 効果音を選択;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo: 動画を選択;"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:97
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:103
 msgid "RGB电影滤镜"
 msgstr "RGB映画"
 
@@ -164,7 +164,7 @@ msgstr "WebGAL Classic"
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:63
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:69
 msgid "X轴位移"
 msgstr "X軸位移"
 
@@ -173,7 +173,7 @@ msgstr "X軸位移"
 #~ msgid "X轴位移："
 #~ msgstr "X軸位移："
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:66
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:72
 msgid "X轴缩放"
 msgstr "X軸スケール"
 
@@ -182,7 +182,7 @@ msgstr "X軸スケール"
 #~ msgid "X轴缩放："
 #~ msgstr "X軸スケール："
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:64
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:70
 msgid "Y轴位移"
 msgstr "Y軸位移"
 
@@ -191,7 +191,7 @@ msgstr "Y軸位移"
 #~ msgid "Y轴位移："
 #~ msgstr "Y軸位移："
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:67
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:73
 msgid "Y轴缩放"
 msgstr "Y軸スケール"
 
@@ -284,8 +284,8 @@ msgstr "メインスタイル"
 msgid "主页"
 msgstr "WebGALホーム"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:72
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:81
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:78
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:87
 msgid "亮度"
 msgstr "輝度"
 
@@ -293,7 +293,7 @@ msgstr "輝度"
 msgid "代码编辑器"
 msgstr "コードエディタ"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:75
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:81
 msgid "伽马值"
 msgstr "ガンマ"
 
@@ -369,7 +369,7 @@ msgstr "ゲームアイコンの変更"
 msgid "修改颜色"
 msgstr "色を変更する"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:110
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:112
 msgid "倒角"
 msgstr "面取り"
 
@@ -407,7 +407,7 @@ msgstr "BGMを停止"
 msgid "像素"
 msgstr "ピクセル"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:98
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:104
 msgid "光辉电影滤镜"
 msgstr "ゴッドレイ映画"
 
@@ -608,7 +608,7 @@ msgstr "ミリ秒単位。 0~ 有効"
 msgid "单行注释"
 msgstr "一行コメント"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:86
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:92
 msgid "厚度"
 msgstr "厚さ"
 
@@ -617,7 +617,7 @@ msgstr "厚さ"
 #~ msgid "厚度："
 #~ msgstr "厚さ"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:95
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:101
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
@@ -636,7 +636,7 @@ msgstr "キャンセル"
 msgid "取消固定"
 msgstr ""
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:106
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:108
 msgid "变换"
 msgstr "トランスフォーム"
 
@@ -834,7 +834,7 @@ msgstr "実験的な高速プレビュー"
 msgid "宽度"
 msgstr "幅"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:73
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:79
 msgid "对比度"
 msgstr "コントラスト"
 
@@ -972,7 +972,7 @@ msgstr "適用"
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:261
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:259
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "色の変更を適用"
@@ -990,7 +990,7 @@ msgstr "有効化"
 msgid "张开嘴"
 msgstr "開いた口"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:80
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:86
 msgid "强度"
 msgstr "強度"
 
@@ -1129,11 +1129,11 @@ msgstr "効果音を再生"
 msgid "播放视频"
 msgstr "動画の再生"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:96
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:102
 msgid "故障电影滤镜"
 msgstr "グリッチ映画"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:107
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:109
 msgid "效果"
 msgstr "エフェクト"
 
@@ -1306,11 +1306,11 @@ msgstr "キャラクター名は設定不可"
 #~ msgid "旋转："
 #~ msgstr "回転"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:65
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:71
 msgid "旋转（弧度）"
 msgstr "回転(ラジアン)"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:87
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:93
 msgid "旋转（角度）"
 msgstr "回転(かくど)"
 
@@ -1457,7 +1457,7 @@ msgstr "テンプレート名"
 msgid "模板目录"
 msgstr "テンプレートディレクトリ"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:82
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:88
 msgid "模糊"
 msgstr "ぼやける"
 
@@ -1490,7 +1490,7 @@ msgstr "折り返しなし"
 msgid "法语"
 msgstr "フランス語"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:109
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:111
 msgid "泛光"
 msgstr "ブルーム"
 
@@ -1607,7 +1607,7 @@ msgstr "ゲーム構成"
 msgid "源代码"
 msgstr "ソースコード"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:111
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:113
 msgid "滤镜"
 msgstr "フィルター"
 
@@ -1619,7 +1619,7 @@ msgstr "ここまでクリックかドラッグでアップロードします"
 msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
 msgstr ""
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:94
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:100
 msgid "点状电影滤镜"
 msgstr "ドット映画"
 
@@ -1832,7 +1832,7 @@ msgstr "スケール"
 msgid "网格视图"
 msgstr "グリッドビュー"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:93
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:99
 msgid "老电影滤镜"
 msgstr "古い映画"
 
@@ -2119,7 +2119,7 @@ msgstr "バウンスイン"
 msgid "跨语句动画"
 msgstr "アニメーションを維持する"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:88
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:94
 msgid "软化（0-1）"
 msgstr "柔らかさ (0-1)"
 
@@ -2304,8 +2304,8 @@ msgstr "選択肢ボタン外層"
 msgid "选项菜单"
 msgstr "オプションメニュー"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:69
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:85
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:75
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:91
 msgid "透明度（0-1）"
 msgstr "透明度（０－１）"
 
@@ -2363,7 +2363,7 @@ msgstr "閉じた口"
 msgid "闭上眼睛"
 msgstr "閉じた目"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:83
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:89
 msgid "阈值"
 msgstr "閾値"
 
@@ -2427,11 +2427,11 @@ msgstr "プレビューアイコン"
 msgid "颜色"
 msgstr "色"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:108
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:110
 msgid "颜色调整"
 msgstr "色調節"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:74
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:80
 msgid "饱和度"
 msgstr "彩度"
 
@@ -2439,7 +2439,7 @@ msgstr "彩度"
 msgid "高度"
 msgstr "高さ"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:70
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:76
 msgid "高斯模糊"
 msgstr "ぼかし"
 
@@ -2448,28 +2448,28 @@ msgstr "ぼかし"
 msgid "默认"
 msgstr "デフォルト"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:63
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:64
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:65
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:70
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:80
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:82
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:83
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:85
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:86
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:87
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:88
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:69
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:70
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:71
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:76
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:86
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:88
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:89
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:91
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:92
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:93
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:94
 msgid "默认值0"
 msgstr "デフォルト値は0"
 
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:66
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:67
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:69
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:72
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:73
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:74
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:75
-#: src/pages/editor/GraphicalEditor/utils/effectEditorConfig.ts:81
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:72
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:73
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:75
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:78
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:79
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:80
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:81
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:87
 msgid "默认值1"
 msgstr "デフォルト値は1"
 
