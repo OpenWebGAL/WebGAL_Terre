@@ -11,6 +11,7 @@ mkdir release
 cd packages/terre2
 yarn run build
 yarn run pkg
+yarn run update-exe-resources
 cd dist
 cp -r WebGAL_Terre.exe  ../../../release
 rm WebGAL_Terre.exe

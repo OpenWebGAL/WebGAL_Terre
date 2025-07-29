@@ -1,33 +1,33 @@
-; ÒÀÀµ
+; ï¿½ï¿½ï¿½ï¿½
 !include MUI2.nsh
 
 
-; ±äÁ¿
+; ï¿½ï¿½ï¿½ï¿½
 
 
-; ³£Á¿
+; ï¿½ï¿½ï¿½ï¿½
 !define NAME "WebGal_Terre"
-!define VERSION "4.5.13" ; °æ±¾ºÅ±äÁ¿
+!define VERSION "4.5.13" ; ï¿½æ±¾ï¿½Å±ï¿½ï¿½ï¿½
 !define PRODUCT_VERSION "${VERSION}.0"
-!define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; °æÈ¨ÐÅÏ¢
-!define ICON_PATH ".\assets\nsis.ico"
-!define UNINSTALL_KEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall${NAME}" ; Èí¼þ×¢²á
-!define RELEASE_PATH ".\release" ; ¹¹½¨ÎÄ¼þËùÔÚÎ»ÖÃ
+!define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; ï¿½ï¿½È¨ï¿½ï¿½Ï¢
+!define ICON_PATH ".\assets\icon.ico"
+!define UNINSTALL_KEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall${NAME}" ; ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
+!define RELEASE_PATH ".\release" ; ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
 
-; °²×°ÐÅÏ¢
-Name "${NAME} v${version} Setup" ; °²×°³ÌÐòÃû³Æ
-OutFile "./bundle/WebGal_Terre_Setup.exe" ; °²×°°üÊä³öÂ·¾¶
-RequestExecutionLevel admin ; ÉèÖÃ°²×°°üÒÔ¹ÜÀíÔ±È¨ÏÞÔËÐÐ
-; Í¼±ê
+; ï¿½ï¿½×°ï¿½ï¿½Ï¢
+Name "${NAME} v${version} Setup" ; ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+OutFile "./bundle/WebGal_Terre_Setup.exe" ; ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
+RequestExecutionLevel admin ; ï¿½ï¿½ï¿½Ã°ï¿½×°ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½Ô±È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+; Í¼ï¿½ï¿½
 Icon "${ICON_PATH}"
 !define MUI_ICON "${ICON_PATH}"
 !define MUI_UNICON "${ICON_PATH}"
-!define MUI_ABORTWARNING ; ÍË³öÊ±¾¯¸æ
-; Ä¬ÈÏ°²×°Â·¾¶
+!define MUI_ABORTWARNING ; ï¿½Ë³ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+; Ä¬ï¿½Ï°ï¿½×°Â·ï¿½ï¿½
 InstallDir "$LOCALAPPDATA\${NAME}"
 
-; °æ±¾ÐÅÏ¢
+; ï¿½æ±¾ï¿½ï¿½Ï¢
 VIAddVersionKey ProductName "${NAME} Installer" ; product name
 VIAddVersionKey ProductVersion "${VERSION}" ; product version
 VIAddVersionKey Comments "${NAME} is WebGal's web graphics editor." ; description
@@ -60,19 +60,19 @@ VIProductVersion "${PRODUCT_VERSION}" ; product verion(actual replace FileVersio
 Section -Install
     SetOutPath $INSTDIR
 
-    ; ¿É¸²Ð´Çé¿ö
+    ; ï¿½É¸ï¿½Ð´ï¿½ï¿½ï¿½
     SetOverwrite ifnewer
 
-    ; Ð¶ÔØ³ÌÐò
+    ; Ð¶ï¿½Ø³ï¿½ï¿½ï¿½
     WriteUninstaller "$INSTDIR\uninstall.exe"
 
-    ; °²×°°üÄÚÎÄ¼þ
+    ; ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
     File /r "${RELEASE_PATH}\*.*"
 
-    ; ¿ì½Ý·½Ê½
+    ; ï¿½ï¿½Ý·ï¿½Ê½
     CreateShortCut "$DESKTOP\${NAME}.lnk" "$INSTDIR\${NAME}.exe"
 
-    ; ¿ªÊ¼²Ëµ¥
+    ; ï¿½ï¿½Ê¼ï¿½Ëµï¿½
     CreateShortCut "$SMPROGRAMS\${NAME}.lnk" "$INSTDIR\${NAME}.exe"
 
     ; Register the installed software
@@ -82,7 +82,7 @@ Section -Install
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\uninstallerIcon.ico"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "${VERSION}"
 
-    ; ÈÃ³ÌÐòÒÔ¹ÜÀíÔ±Éí·ÝÔËÐÐ
+    ; ï¿½Ã³ï¿½ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\WebGal_Terre.exe" "RUNASADMIN"
 SectionEnd
 
@@ -110,6 +110,6 @@ SectionEnd
 !insertmacro MUI_LANGUAGE "SimpChinese"
 
 
-; ³õÊ¼»¯º¯Êý
+; ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 Function .onInit
 FunctionEnd
