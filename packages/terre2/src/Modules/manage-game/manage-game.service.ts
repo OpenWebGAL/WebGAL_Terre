@@ -11,6 +11,7 @@ import {
   platforms,
 } from './manage-game.dto';
 import { TemplateConfigDto } from '../manage-template/manage-template.dto';
+import * as rcedit from 'rcedit';
 
 @Injectable()
 export class ManageGameService {
@@ -288,7 +289,7 @@ export class ManageGameService {
             gameDir,
             `${electronExportDir}/resources/app/public/game/`,
           );
-          // 复制图标
+          // 复制并替换可执行文件图标
           const icons = await this.getIcons(gameName);
           if (icons.platforms.includes('electron')) {
             await this.webgalFs.copy(
@@ -297,6 +298,7 @@ export class ManageGameService {
               ),
               `${electronExportDir}/`,
             );
+            await rcedit(`${electronExportDir}/WebGAL.exe`, { icon: `${electronExportDir}/icon.ico` });
           }
           // 创建 app.asar
           await asar.createPackage(

@@ -1,10 +1,9 @@
 {
   "name": "webgal-electron-project",
   "version": "1.0.0",
-  "description": "WebGAL Electron Support",
+  "description": "WebGAL Electron",
   "main": "main.js",
-  "repository": "https://github.com/WebGAL-Technical-Committee/WebGAL-Electron-Project.git",
-  "author": "Mahiru <makinoharashoko@outlook.com>",
+  "author": "OpenWebGAL <contact@openwebgal.com>",
   "license": "MPL-2.0",
   "scripts": {
     "start": "electron .",
@@ -19,7 +18,7 @@
   "build": {
     "productName": "WebGAL",
     "appId": "com.openwebgal.webgal",
-    "copyright": "webgal",
+    "copyright": "Copyright © 2022 OpenWebGAL All rights reserved.",
     "directories": {
       "output": "build"
     },
