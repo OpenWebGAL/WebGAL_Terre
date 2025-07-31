@@ -76,7 +76,7 @@ object Notification {
         )
 
         val builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.drawable.notification_small_icon)
             .setContentTitle(context.getString(R.string.notification_title))
             .setContentText(context.getString(R.string.notification_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
