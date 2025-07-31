@@ -11,7 +11,8 @@ import {
   platforms,
 } from './manage-game.dto';
 import { TemplateConfigDto } from '../manage-template/manage-template.dto';
-import * as rcedit from 'rcedit';
+import { promisify } from 'util';
+import { execFile } from 'child_process';
 
 @Injectable()
 export class ManageGameService {
@@ -298,7 +299,22 @@ export class ManageGameService {
               ),
               `${electronExportDir}/`,
             );
-            await rcedit(`${electronExportDir}/WebGAL.exe`, { icon: `${electronExportDir}/icon.ico` });
+            try {
+              const rceditPath = this.webgalFs.getPathFromRoot(
+                '/lib/rcedit-x64.exe',
+              );
+              if (await this.webgalFs.exists(rceditPath)) {
+                await promisify(execFile)(rceditPath, [
+                  `${electronExportDir}/WebGAL.exe`,
+                  '--set-icon',
+                  `${electronExportDir}/icon.ico`,
+                ]);
+              } else {
+                this.logger.log(`${rceditPath} 不存在, 跳过修改图标`);
+              }
+            } catch (error) {
+              this.logger.error('无法修改图标', error);
+            }
           }
           // 创建 app.asar
           await asar.createPackage(
