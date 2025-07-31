@@ -20,6 +20,10 @@ mkdir Exported_Games
 cp -r public assets Exported_Games ../../release
 cd ../../
 
+# 下载 rcedit
+mkdir release/lib
+curl -L https://github.com/electron/rcedit/releases/latest/download/rcedit-x64.exe -o release/lib/rcedit-x64.exe
+
 # 进入 Origine 目录
 cd packages/origine2
 yarn run build

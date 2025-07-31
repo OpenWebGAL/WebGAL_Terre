@@ -47,7 +47,6 @@
     "intl-pluralrules": "^2.0.1",
     "open": "^8.4.0",
     "original-fs": "^1.2.0",
-    "rcedit": "^4.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
