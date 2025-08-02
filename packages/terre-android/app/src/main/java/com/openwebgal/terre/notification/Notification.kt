@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.openwebgal.terre.MainActivity
 import com.openwebgal.terre.R
+import com.openwebgal.terre.store.TerreStore
 
 object Notification {
 
@@ -108,6 +109,10 @@ object Notification {
     }
 
     fun checkAndShowNotification(context: Context) {
+        val isRunning = TerreStore.isRunning.value
+        if (!isRunning) {
+            return
+        }
         if (!isNotificationVisible(context)) {
             showNotification(context)
         }

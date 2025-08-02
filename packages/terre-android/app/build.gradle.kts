@@ -1,9 +1,9 @@
 import groovy.json.JsonSlurper
 import java.io.FileInputStream
 import java.io.FileNotFoundException
-import java.security.MessageDigest
-import java.nio.file.Files
 import java.net.URI
+import java.nio.file.Files
+import java.security.MessageDigest
 import java.util.Properties
 import java.util.zip.ZipInputStream
 

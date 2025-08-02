@@ -12,4 +12,5 @@
     <string name="confirm_exit_message">Unsaved data will be lost!!!</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="start">Start</string>
 </resources>

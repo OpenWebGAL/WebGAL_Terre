@@ -8,16 +8,20 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import com.openwebgal.terre.R
 import com.openwebgal.terre.service.TerreService
+import com.openwebgal.terre.store.TerreStore
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar() {
     val context = LocalContext.current
+    val isRunning by TerreStore.isRunning.collectAsState()
 
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
@@ -32,9 +36,17 @@ fun AppBar() {
             }
             TextButton(onClick = {
                 val serviceIntent = Intent(context, TerreService::class.java)
-                context.stopService(serviceIntent)
+                if (isRunning) {
+                    context.stopService(serviceIntent)
+                } else {
+                    context.startService(serviceIntent)
+                }
             }) {
-                Text(stringResource(R.string.stop))
+                if (isRunning) {
+                    Text(stringResource(R.string.stop))
+                } else {
+                    Text(stringResource(R.string.start))
+                }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
