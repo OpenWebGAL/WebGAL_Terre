@@ -30,6 +30,7 @@ fun Logcat() {
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(scrollState)
+            .padding(bottom = 96.dp)
     ) {
         logs.forEach { log ->
             Text(
