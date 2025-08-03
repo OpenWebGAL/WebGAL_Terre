@@ -15,6 +15,10 @@ object LogStore {
         _logs.value = (_logs.value + message).takeLast(MAX_LOG_LINES)
     }
 
+    fun setLogs(logs: List<String>) {
+        _logs.value = logs.takeLast(MAX_LOG_LINES)
+    }
+
     fun resetLogs() {
         print("reset")
         _logs.value = emptyList()
