@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import com.openwebgal.terre.R
-import com.openwebgal.terre.service.TerreService
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,24 +20,23 @@ fun AppBar() {
 
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.inversePrimary
+        ),
         actions = {
+
             TextButton(
                 onClick = {
-                    val intent = Intent(Intent.ACTION_VIEW, "http://localhost:3001".toUri())
+                    val intent =
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            "https://github.com/OpenWebGAL/WebGAL_Terre".toUri()
+                        )
                     context.startActivity(intent)
                 }
             ) {
-                Text(stringResource(R.string.open_browser))
-            }
-            TextButton(onClick = {
-                val serviceIntent = Intent(context, TerreService::class.java)
-                context.stopService(serviceIntent)
-            }) {
-                Text(stringResource(R.string.stop))
+                Text("GitHub")
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.inversePrimary
-        )
     )
 }

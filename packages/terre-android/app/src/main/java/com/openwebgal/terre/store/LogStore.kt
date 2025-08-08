@@ -7,15 +7,19 @@ import kotlinx.coroutines.flow.asStateFlow
 object LogStore {
     private const val MAX_LOG_LINES = 500
 
-    private val _logLines = MutableStateFlow<List<String>>(emptyList())
+    private val _logs = MutableStateFlow<List<String>>(emptyList())
 
-    val logLines: StateFlow<List<String>> = _logLines.asStateFlow()
+    val logs: StateFlow<List<String>> = _logs.asStateFlow()
 
-    fun addLogLine(message: String) {
-        _logLines.value = (_logLines.value + message).takeLast(MAX_LOG_LINES)
+    fun addLog(message: String) {
+        _logs.value = (_logs.value + message).takeLast(MAX_LOG_LINES)
     }
 
-    fun clearLogLines() {
-        _logLines.value = emptyList()
+    fun setLogs(logs: List<String>) {
+        _logs.value = logs.takeLast(MAX_LOG_LINES)
+    }
+
+    fun resetLogs() {
+        _logs.value = emptyList()
     }
 }

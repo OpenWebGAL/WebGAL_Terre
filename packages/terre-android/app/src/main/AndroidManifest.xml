@@ -34,6 +34,7 @@
             android:name=".service.TerreService"
             android:enabled="true"
             android:exported="false"
+            android:process=":node"
             android:foregroundServiceType="dataSync" />
 
         <provider
@@ -46,5 +47,15 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
+
+        <receiver
+            android:name=".receiver.StoreUpdateReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.openwebgal.terre.ACTION_UPDATE_STORE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>
