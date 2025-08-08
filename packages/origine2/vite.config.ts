@@ -26,6 +26,10 @@ export default defineConfig({
       '@': resolve('src'),
     },
   },
+  optimizeDeps: {
+    include: ['buffer'],
+    exclude: ['img2ico'],
+  },
   server: {
     port: WEBGAL_PORT,
     proxy: {

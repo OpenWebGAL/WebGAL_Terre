@@ -1,3 +1,4 @@
+/* eslint-disable max-params */
 import { api } from '@/api';
 import { Button, Card, Carousel, CarouselCard, CarouselSlider, CarouselViewport, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Dropdown, Option, Spinner } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
@@ -5,8 +6,7 @@ import { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './iconCreator.module.scss';
 import axios from 'axios';
 import { ColorPickerPopup } from '../ColorPickerPopup/ColorPickerPopup';
-import { tinycolor } from '@ctrl/tinycolor';
-import { PngIcoConverter } from "@/utils/png2icojs";
+import img2ico from 'img2ico';
 import Transformer from '../Transformer/Transformer';
 
 type IIconShape = 'circle' | 'square' | 'rounded-rectangle';
@@ -49,12 +49,35 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
   const [iconShape, setIconShape] = useState<IIconShape>('square');
   const [backgroundStyle, setBackgroundStyle] = useState<IBackgroundStyle>('color');
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF00');
-  const [gridLineColor, setGridLineColor] = useState<'#FFFFFF' | '#000000'>('#000000');
+  const [gridLineColor, setGridLineColor] = useState<'#FFFFFFAA' | '#000000AA'>('#000000AA');
   const [icons, setIcons] = useState<IIcons | null>(null);
+
+  const [generatedFiles, setGeneratedFiles] = useState<Record<string, { blob: Blob, name: string }> | null>(null);
 
   const canvasSize = 1536;
 
-  // 图标的裁剪方式为先从画布上裁剪正方形，然后再从正方形上裁剪出图标
+  /**
+ * 定义各级图标在裁剪时，单边裁切的内边距（inset）百分比。
+ *
+ * ### 裁剪步骤
+ *
+ * 1.  **定义核心安全区域 (Safe Zone)**
+ * 首先，从 1536px 的原始画布的每一边裁掉由 `main` 属性定义的百分比（例如 1/6）。
+ * 这会形成一个中心的安全区域，其宽度为原始画布的 2/3。所有重要的、必须可见的
+ * 图标内容都应完全放置在这个安全区域内。
+ *
+ * 2.  **从安全区域到最终图标**
+ * 接着，在第一步产生的安全区域的基础上，为不同平台（Web, Electron, Android）
+ * 生成最终图标时，再从每一边额外裁掉相应属性（如 `web`, `electron`, `android.legacy`）
+ * 定义的距离百分比。这确保了图标在不同平台的特定形状遮罩下依然有最佳的视觉表现。
+ *
+ * @property {number} main - **第一步裁剪**: 定义核心安全区域的内边距百分比。
+ * @property {number} web - **第二步裁剪**: 为生成 Web 图标，在安全区域基础上额外裁切的内边距。
+ * @property {number} electron - **第二步裁剪**: 为生成 Electron 桌面应用图标，在安全区域基础上额外裁切的内边距。
+ * @property {object} android - **第二步裁剪**: 针对 Android 不同图标类型的额外裁切配置。
+ * @property {number} android.legacy - 用于生成旧版 Android (API < 26) 传统图标的额外内边距。
+ * @property {number} android.round - 用于生成圆形 Android 图标（例如在 Pixel 设备上）的额外内边距。
+ */
   const clipInset = {
     main: 1 / 6,
     web: 0.0636,
@@ -65,14 +88,19 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     }
   };
 
+  const getRoundedRectangleRadius = () => gridCanvasRef.current !== null 
+    ? 34 * (canvasSize * (1 - clipInset.main * 2) / gridCanvasRef.current.clientWidth)
+    : null;
+
   const drawGrid = useCallback(async () => {
     if (gridCanvasRef.current) {
       const ctx = gridCanvasRef.current.getContext('2d');
       if (ctx) {
         ctx.clearRect(0, 0, canvasSize, canvasSize);
         ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
 
-        ctx.shadowColor = gridLineColor === '#000000' ? '#FFFFFF' : '#000000';
+        ctx.shadowColor = gridLineColor === '#000000AA' ? '#FFFFFF' : '#000000';
         ctx.shadowBlur = 16;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
@@ -84,6 +112,12 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
         ctx.strokeStyle = gridLineColor;
         ctx.lineWidth = 8;
 
+        const radius = getRoundedRectangleRadius();
+        if (radius === null) {
+          console.error("无法获取圆角大小！");
+          return;
+        }
+
         // web and electron 图标网格
         ctx.beginPath();
         if (iconShape === 'square') {
@@ -91,7 +125,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
         } else if (iconShape === 'circle') {
           ctx.arc(centerX, centerY, clippedSize / 2, 0, Math.PI * 2);
         } else if (iconShape === 'rounded-rectangle') {
-          const radius = 34 * (canvasSize * (1 - clipInset.main * 2) / gridCanvasRef.current.clientWidth);
+          
           const startX = (canvasSize - clippedSize) / 2;
           const startY = (canvasSize - clippedSize) / 2;
           ctx.moveTo(startX + radius, startY);
@@ -116,7 +150,6 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
         // android legacy 图标网格
         clippedSize = canvasSize * (1 - clipInset.main * 2) * (1 - clipInset.android.legacy * 2);
-        const radius = 34 * (canvasSize * (1 - clipInset.main * 2) / gridCanvasRef.current.clientWidth);
         const startX = (canvasSize - clippedSize) / 2;
         const startY = (canvasSize - clippedSize) / 2;
         ctx.beginPath();
@@ -150,6 +183,8 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
         const drawWidth = (imageAspectRatio > 1 ? canvasSize : canvasSize * imageAspectRatio) * foregroundScale;
         const drawHeight = (imageAspectRatio > 1 ? canvasSize / imageAspectRatio : canvasSize) * foregroundScale;
         ctx.clearRect(0, 0, canvasSize, canvasSize);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(
           foregroundImage,
           (canvasSize - drawWidth) / 2 + foregroundOffset.x * foregroundScale,
@@ -166,6 +201,8 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
       const ctx = backgroundCanvasRef.current.getContext('2d');
       if (ctx) {
         ctx.clearRect(0, 0, canvasSize, canvasSize);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
         if (backgroundStyle === 'color') {
           ctx.fillStyle = backgroundColor;
           ctx.fillRect(0, 0, canvasSize, canvasSize);
@@ -233,9 +270,9 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     if (!backgroundCanvasRef.current || !foregroundCanvasRef.current) return;
     const brightness = await getCombinedBrightness(backgroundCanvasRef.current, foregroundCanvasRef.current);
     if (brightness > 128) {
-      setGridLineColor('#000000');
+      setGridLineColor('#000000AA');
     } else {
-      setGridLineColor('#FFFFFF');
+      setGridLineColor('#FFFFFFAA');
     }
   };
 
@@ -262,23 +299,32 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     return () => clearTimeout(timeoutId);
   }, [backgroundStyle, backgroundColor, backgroundImage, backgroundOffset, backgroundScale]);
 
-  // 切换到预览页面时，开始裁剪图标
   useEffect(() => {
     let isMounted = true;
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     if (activeIndex === 1) {
-      timeoutId = setTimeout(async () => {
-        const icons = await clipIcons();
-        if (!icons || !isMounted) return;
-        setIcons(icons);
-      }, 1000);
+      const ANIMATION_DURATION = 750; 
+
+      timeoutId = setTimeout(() => {
+        generateAllIcons().then(() => {
+          if (!isMounted) {
+            setIcons(null);
+            setGeneratedFiles(null);
+          }
+        });
+      }, ANIMATION_DURATION);
     }
 
     return () => {
-      isMounted = false;
-      clearTimeout(timeoutId);
+      isMounted = false; 
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
       setIcons(null);
+      setGeneratedFiles(null);
     };
   }, [activeIndex]);
 
@@ -302,80 +348,44 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     }
   };
 
-  const getCompositedImage = async (imagesDataURL: string[], size: number, bgColor?: string): Promise<string | null> => {
-    const compositeCanvas = document.createElement('canvas');
-    compositeCanvas.width = size;
-    compositeCanvas.height = size;
-    const ctx = compositeCanvas.getContext('2d');
-    if (!ctx) return null;
-
-    if (bgColor) {
-      ctx.fillStyle = tinycolor(bgColor).toHexString();
-      ctx.fillRect(0, 0, size, size);
-    }
-
-    const loadImage = (src: string): Promise<HTMLImageElement> => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = src;
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
-      });
-    };
-
-    for (const url of imagesDataURL) {
-      try {
-        const img = await loadImage(url);
-        ctx.drawImage(img, 0, 0);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    return compositeCanvas.toDataURL();
-  };
-
   /**
- * 裁剪图像。
- * 
- * @param imageDataUTL 要裁剪的图像 Data URL。
- * @param inset 0-1 之间的值，表示裁剪区域的内边距百分比。
- * @param shape 裁剪的形状。
- * @param format 图像格式。默认为 'png'。
- * @returns 裁剪后的图像 Data URL。
+ * 将源 Canvas 的一部分裁剪到一个新的 Canvas 中。
+ *
+ * @param sourceCanvas 要从中裁剪的源 Canvas。
+ * @param inset 裁剪内边距百分比 (0-1)。
+ * @param shape 期望的输出形状。
+ * @param radius - (可选) 如果形状是圆角矩形，需要提供计算好的圆角半径。
+ * @param preservePadding - (可选) 如果为 true，则返回的画布尺寸与 sourceCanvas 相同，
+ * 并将裁剪后的内容居中放置，从而保留周围的空白边距。
+ * 默认为 false，返回紧凑的、无边距的画布。
+ * @returns 一个包含平滑裁剪后图像的新 HTMLCanvasElement。
  */
-  // eslint-disable-next-line max-params
-  const clipImage = async (imageDataUTL: string, inset: number, shape: IIconShape, format = 'png'): Promise<string> => {
-    const img = new Image();
-    img.src = imageDataUTL;
+  const clipToCanvas = (
+    sourceCanvas: HTMLCanvasElement,
+    inset: number,
+    shape: IIconShape,
+    radius?: number,
+    preservePadding = false,
+  ): HTMLCanvasElement => {
 
-    await new Promise((resolve, reject) => {
-      img.onload = () => resolve(null);
-      img.onerror = (error) => reject(error);
-    });
+    const insetWidth = sourceCanvas.width * inset;
+    const insetHeight = sourceCanvas.height * inset;
+    const clippedWidth = sourceCanvas.width - insetWidth * 2;
+    const clippedHeight = sourceCanvas.height - insetHeight * 2;
 
-    const insetWidth = img.width * inset;
-    const insetHeight = img.height * inset;
-    const clippedWidth = img.width - insetWidth * 2;
-    const clippedHeight = img.height - insetHeight * 2;
+    const croppedIconCanvas = document.createElement('canvas');
+    croppedIconCanvas.width = clippedWidth;
+    croppedIconCanvas.height = clippedHeight;
+    const ctx = croppedIconCanvas.getContext('2d')!;
 
-    const canvas = document.createElement('canvas');
-    canvas.width = clippedWidth;
-    canvas.height = clippedHeight;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      throw new Error('Failed to get 2D context');
-    }
-
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
     if (shape === 'circle') {
-      ctx.beginPath();
       ctx.arc(clippedWidth / 2, clippedHeight / 2, Math.min(clippedWidth, clippedHeight) / 2, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-    } else if (shape === 'rounded-rectangle') {
-      const radius = 34 * (img.width / foregroundCanvasRef?.current!.clientWidth);
-      ctx.beginPath();
+    } else if (shape === 'rounded-rectangle' && radius) {
       ctx.moveTo(radius, 0);
       ctx.lineTo(clippedWidth - radius, 0);
       ctx.arcTo(clippedWidth, 0, clippedWidth, radius, radius);
@@ -386,209 +396,203 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
       ctx.lineTo(0, radius);
       ctx.arcTo(0, 0, radius, 0, radius);
       ctx.closePath();
-      ctx.clip();
+    } else {
+      ctx.rect(0, 0, clippedWidth, clippedHeight);
     }
+    ctx.fill();
 
-    const drawX = -insetWidth;
-    const drawY = -insetHeight;
+    ctx.globalCompositeOperation = 'source-in';
+    ctx.drawImage(sourceCanvas, -insetWidth, -insetHeight, sourceCanvas.width, sourceCanvas.height);
+    ctx.globalCompositeOperation = 'source-over';
 
-    ctx.drawImage(img, drawX, drawY, img.width, img.height);
+    if (!preservePadding) {
+      return croppedIconCanvas;
+    } else {
+      const paddedCanvas = document.createElement('canvas');
+      paddedCanvas.width = sourceCanvas.width;
+      paddedCanvas.height = sourceCanvas.height;
+      const paddedCtx = paddedCanvas.getContext('2d')!;
+      paddedCtx.imageSmoothingEnabled = true;
+      paddedCtx.imageSmoothingQuality = 'high';
 
-    return canvas.toDataURL(`image/${format}`);
+      paddedCtx.drawImage(croppedIconCanvas, insetWidth, insetHeight);
+
+      return paddedCanvas;
+    }
   };
 
   /**
-   * 调整图像大小。
-   *
-   * @param imageDataURL 要调整的图像 Data URL。
-   * @param size 新图像的尺寸。
-   * @param padding 0-1 之间的值，表示边距占图像大小的比例。
-   * @param format 图像格式。默认为 'png'。
-   * @returns 调整后的图像 Data URL。
-   */
-  const resizeImage = async (
-    imageDataURL: string,
+ * 将源 Canvas 调整为指定尺寸和格式的新图像。
+ * @returns 一个 Promise，它解析为调整大小后图像的 Blob 对象。
+ */
+  const resizeCanvasToBlob = (
+    sourceCanvas: HTMLCanvasElement,
     size: number,
-    padding = 0,
-    format = 'png',
-    // eslint-disable-next-line max-params
-  ): Promise<string> => {
-    const img = new Image();
-    img.src = imageDataURL;
+    format: 'png' | 'webp' = 'png',
+  ): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d')!;
 
-    await new Promise((resolve, reject) => {
-      img.onload = () => resolve(null);
-      img.onerror = (error) => reject(error);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      ctx.drawImage(sourceCanvas, 0, 0, size, size);
+
+      canvas.toBlob(blob => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error('从 Canvas 创建 Blob 失败。'));
+        }
+      }, `image/${format}`);
     });
-
-    const canvasSize = size;
-    const canvas = document.createElement('canvas');
-    canvas.width = canvasSize;
-    canvas.height = canvasSize;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      throw new Error('Failed to get 2d context');
-    }
-
-    const drawX = padding * size;
-    const drawY = padding * size;
-    const drawWidth = size * (1 - padding * 2);
-    const drawHeight = size * (1 - padding * 2);
-
-    ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-
-    return canvas.toDataURL(`image/${format}`);
   };
 
-  const clipIcons = async () => {
-    const foreground = foregroundCanvasRef?.current?.toDataURL();
-    const background = backgroundCanvasRef?.current?.toDataURL();
-    if (!foreground || !background) return null;
-    const composited = await getCompositedImage([background, foreground], canvasSize);
-    if (!composited) return null;
+  const generateAllIcons = async () => {
+    if (!foregroundCanvasRef.current || !backgroundCanvasRef.current) return;
 
-    const maskable = await clipImage(composited, clipInset.main, 'square');
-    if (!maskable) return null;
-    const icon = await clipImage(maskable, clipInset.web, iconShape);
-    if (!icon) return null;
+    const compositeCanvas = document.createElement('canvas');
+    compositeCanvas.width = canvasSize;
+    compositeCanvas.height = canvasSize;
+    const ctx = compositeCanvas.getContext('2d')!;
 
-    const icoBlob = await new PngIcoConverter().convertToBlobAsync([
-      { png: await dataURLToBlob(await resizeImage(icon, 256)) },
-    ]);
-    const ico = URL.createObjectURL(new Blob([icoBlob], { type: 'image/x-icon' }));
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(backgroundCanvasRef.current, 0, 0);
+    ctx.drawImage(foregroundCanvasRef.current, 0, 0);
 
-    const androidFullBleed = await getCompositedImage([background, foreground], canvasSize);
-    if (!androidFullBleed) return null;
-    const androidLegacyImage = await clipImage(maskable, clipInset.android.legacy, 'rounded-rectangle');
-    const androidRoundImage = await clipImage(maskable, clipInset.android.round, 'circle');
-    if (!androidLegacyImage || !androidRoundImage) return null;
+    const maskableCanvas = clipToCanvas(compositeCanvas, clipInset.main, 'square');
 
-    const androidLegacy = await resizeImage(androidLegacyImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.legacy);
-    const androidRound = await resizeImage(androidRoundImage, canvasSize * (1 - clipInset.main * 2), clipInset.android.round);
-    if (!androidLegacy || !androidRound) return null;
+    const radius = getRoundedRectangleRadius();
+    if (radius === null) {
+      console.error("无法获取圆角大小！");
+      return;
+    }
 
-    const icons: IIcons = {
-      ico: { name: 'Ico', src: ico },
-      web: { name: 'Web', src: icon },
-      webMaskable: { name: 'Web Maskable', src: maskable },
-      desktop: { name: 'Desktop', src: ico },
-      androidForeground: { name: 'Android Foreground', src: foreground },
-      androidBackground: { name: 'Android Background', src: background },
-      androidFullBleed: { name: 'Android Full Bleed', src: androidFullBleed },
-      androidLegacy: { name: 'Android Legacy', src: androidLegacy },
-      androidRound: { name: 'Android Round', src: androidRound },
+    const webIconCanvas = clipToCanvas(maskableCanvas, clipInset.web, iconShape, radius);
+    const androidLegacyCanvas = clipToCanvas(maskableCanvas, clipInset.android.legacy, 'rounded-rectangle', radius, true);
+    const androidRoundCanvas = clipToCanvas(maskableCanvas, clipInset.android.round, 'circle', radius, true);
+
+    const androidForegroundCanvas = foregroundCanvasRef.current;
+    const androidBackgroundCanvas = backgroundCanvasRef.current;
+
+    const webIconBlob = await resizeCanvasToBlob(webIconCanvas, 256);
+    const webIconArrayBuffer = await webIconBlob.arrayBuffer();
+    const icoResult = await img2ico(webIconArrayBuffer);
+    const icoDataUrl = icoResult.toDataUrl();
+    const icoBlob = icoResult.toBlob();
+
+    const previewIcons: IIcons = {
+      ico: { name: 'Ico', src: icoDataUrl },
+      web: { name: 'Web', src: webIconCanvas.toDataURL() },
+      webMaskable: { name: 'Web Maskable', src: maskableCanvas.toDataURL() },
+      desktop: { name: 'Desktop', src: icoDataUrl },
+      androidForeground: { name: 'Android Foreground', src: androidForegroundCanvas.toDataURL() },
+      androidBackground: { name: 'Android Background', src: androidBackgroundCanvas.toDataURL() },
+      androidFullBleed: { name: 'Android Full Bleed', src: compositeCanvas.toDataURL() },
+      androidLegacy: { name: 'Android Legacy', src: androidLegacyCanvas.toDataURL() },
+      androidRound: { name: 'Android Round', src: androidRoundCanvas.toDataURL() },
+    };
+    setIcons(previewIcons);
+
+    const fileCreationPromises = {
+      // Web
+      'web/favicon.ico': Promise.resolve(icoBlob),
+      'web/apple-touch-icon.png': resizeCanvasToBlob(webIconCanvas, 180),
+      'web/icon-192.png': resizeCanvasToBlob(webIconCanvas, 192),
+      'web/icon-192-maskable.png': resizeCanvasToBlob(maskableCanvas, 192),
+      'web/icon-512.png': resizeCanvasToBlob(webIconCanvas, 512),
+      'web/icon-512-maskable.png': resizeCanvasToBlob(maskableCanvas, 512),
+      // Electron
+      'electron/icon.ico': Promise.resolve(icoBlob),
+      // Android
+      'android/ic_launcher-playstore.png': resizeCanvasToBlob(compositeCanvas, 512),
+      'android/mipmap-xxxhdpi/ic_launcher.webp': resizeCanvasToBlob(androidLegacyCanvas, 192, 'webp'),
+      'android/mipmap-xxxhdpi/ic_launcher_round.webp': resizeCanvasToBlob(androidRoundCanvas, 192, 'webp'),
+      'android/mipmap-xxxhdpi/ic_launcher_foreground.webp': resizeCanvasToBlob(androidForegroundCanvas, 432, 'webp'),
+      'android/mipmap-xxxhdpi/ic_launcher_background.webp': resizeCanvasToBlob(androidBackgroundCanvas, 432, 'webp'),
+      'android/mipmap-xxhdpi/ic_launcher.webp': resizeCanvasToBlob(androidLegacyCanvas, 144, 'webp'),
+      'android/mipmap-xxhdpi/ic_launcher_round.webp': resizeCanvasToBlob(androidRoundCanvas, 144, 'webp'),
+      'android/mipmap-xxhdpi/ic_launcher_foreground.webp': resizeCanvasToBlob(androidForegroundCanvas, 324, 'webp'),
+      'android/mipmap-xxhdpi/ic_launcher_background.webp': resizeCanvasToBlob(androidBackgroundCanvas, 324, 'webp'),
+      'android/mipmap-xhdpi/ic_launcher.webp': resizeCanvasToBlob(androidLegacyCanvas, 96, 'webp'),
+      'android/mipmap-xhdpi/ic_launcher_round.webp': resizeCanvasToBlob(androidRoundCanvas, 96, 'webp'),
+      'android/mipmap-xhdpi/ic_launcher_foreground.webp': resizeCanvasToBlob(androidForegroundCanvas, 216, 'webp'),
+      'android/mipmap-xhdpi/ic_launcher_background.webp': resizeCanvasToBlob(androidBackgroundCanvas, 216, 'webp'),
+      'android/mipmap-hdpi/ic_launcher.webp': resizeCanvasToBlob(androidLegacyCanvas, 72, 'webp'),
+      'android/mipmap-hdpi/ic_launcher_round.webp': resizeCanvasToBlob(androidRoundCanvas, 72, 'webp'),
+      'android/mipmap-hdpi/ic_launcher_foreground.webp': resizeCanvasToBlob(androidForegroundCanvas, 162, 'webp'),
+      'android/mipmap-hdpi/ic_launcher_background.webp': resizeCanvasToBlob(androidBackgroundCanvas, 162, 'webp'),
+      'android/mipmap-mdpi/ic_launcher.webp': resizeCanvasToBlob(androidLegacyCanvas, 48, 'webp'),
+      'android/mipmap-mdpi/ic_launcher_round.webp': resizeCanvasToBlob(androidRoundCanvas, 48, 'webp'),
+      'android/mipmap-mdpi/ic_launcher_foreground.webp': resizeCanvasToBlob(androidForegroundCanvas, 108, 'webp'),
+      'android/mipmap-mdpi/ic_launcher_background.webp': resizeCanvasToBlob(androidBackgroundCanvas, 108, 'webp'),
     };
 
-    setIcons(icons);
+    const fileEntries = await Promise.all(Object.entries(fileCreationPromises).map(async ([path, promise]) => {
+      const blob = await promise;
+      const name = path.substring(path.lastIndexOf('/') + 1);
+      return [path, { blob, name }];
+    }));
+
+    setGeneratedFiles(Object.fromEntries(fileEntries));
   };
 
   const handleSave = async (): Promise<boolean> => {
-    if (!icons) return false;
+    if (!generatedFiles) return false;
 
-    // 上传 Web 图标
+    // 按目标目录对文件进行分组
+    const initialUploadsByDirectory: Record<string, { blob: Blob, name: string }[]> = {};
+    const uploadsByDirectory = Object.entries(generatedFiles).reduce((acc, [path, fileData]) => {
+      const directory = `games/${gameDir}/icons/${path.substring(0, path.lastIndexOf('/'))}`;
+      if (!acc[directory]) {
+        acc[directory] = [];
+      }
+      acc[directory].push(fileData);
+      return acc;
+    }, initialUploadsByDirectory);
+
     try {
-      await api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/web` });
-      const formData = new FormData();
-      formData.append('targetDirectory', `games/${gameDir}/icons/web`);
-      formData.append('files', await dataURLToBlob(icons.ico.src), 'favicon.ico');
-      formData.append('files', await dataURLToBlob(await resizeImage(icons.web.src, 180)), 'apple-touch-icon.png');
-      formData.append('files', await dataURLToBlob(await resizeImage(icons.web.src, 192)), 'icon-192.png');
-      formData.append('files', await dataURLToBlob(await resizeImage(icons.webMaskable.src, 192)), 'icon-192-maskable.png');
-      formData.append('files', await dataURLToBlob(await resizeImage(icons.web.src, 512)), 'icon-512.png');
-      formData.append('files', await dataURLToBlob(await resizeImage(icons.webMaskable.src, 512)), 'icon-512-maskable.png');
-      await axios.post('/api/assets/upload', formData);
-      console.log('上传 web 图标成功');
-    } catch (error) {
-      console.error('上传 web 图标失败:', error);
-      return false;
-    }
+      // 删除旧目录
+      await Promise.all([
+        api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/web` }),
+        api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/electron` }),
+        api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/android` }),
+      ]).catch(err => console.warn("删除失败 (目录可能不存在), 继续上传。", err));
 
-    // 上传 Electron 图标
-    try {
-      await api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/electron` });
-      const formData = new FormData();
-      formData.append('targetDirectory', `games/${gameDir}/icons/electron`);
-      formData.append('files', await dataURLToBlob(icons.desktop.src), 'icon.ico');
-      await axios.post('/api/assets/upload', formData);
-      console.log('上传 Electron 图标成功');
-    } catch (error) {
-      console.error('上传 Electron 图标失败:', error);
-      return false;
-    }
-
-    // 上传 Android 图标
-    try {
-      await api.assetsControllerDeleteFileOrDir({ source: `games/${gameDir}/icons/android` });
-      const icLauncherPlayStoreFormData = new FormData();
-      icLauncherPlayStoreFormData.append('targetDirectory', `games/${gameDir}/icons/android`);
-      icLauncherPlayStoreFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidFullBleed.src, 512)), 'ic_launcher-playstore.png');
-      await axios.post('/api/assets/upload', icLauncherPlayStoreFormData);
-
-      // mipmap-anydpi-v26 文件夹
+      // 创建 Android XML 文件
       const icLauncherXmlContent = `<?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@mipmap/ic_launcher_background"/>
     <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
 </adaptive-icon>`;
       const icLauncherXmlBlob = new Blob([icLauncherXmlContent], { type: 'text/xml' });
-      const AnydpiV26FormData = new FormData();
-      AnydpiV26FormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-anydpi-v26`);
-      AnydpiV26FormData.append('files', icLauncherXmlBlob, 'ic_launcher.xml');
-      AnydpiV26FormData.append('files', icLauncherXmlBlob, 'ic_launcher_round.xml');
-      await axios.post('/api/assets/upload', AnydpiV26FormData);
+      uploadsByDirectory[`games/${gameDir}/icons/android/mipmap-anydpi-v26`] = [
+        { blob: icLauncherXmlBlob, name: 'ic_launcher.xml'},
+        { blob: icLauncherXmlBlob, name: 'ic_launcher_round.xml'}
+      ];
 
-      // mipmap-xxxhdpi 文件夹
-      const xxxhdpiFormData = new FormData();
-      xxxhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xxxhdpi`);
-      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 192, 0, 'webp')), 'ic_launcher.webp');
-      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 192, 0, 'webp')), 'ic_launcher_round.webp');
-      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 432, 0, 'webp')), 'ic_launcher_foreground.webp');
-      xxxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 432, 0, 'webp')), 'ic_launcher_background.webp');
-      await axios.post('/api/assets/upload', xxxhdpiFormData);
+      // 并行上传所有文件
+      const uploadPromises = Object.entries(uploadsByDirectory).map(([directory, files]) => {
+        const formData = new FormData();
+        formData.append('targetDirectory', directory);
+        files.forEach(file => {
+          formData.append('files', file.blob, file.name);
+        });
+        return axios.post('/api/assets/upload', formData);
+      });
 
-      // mipmap-xxhdpi 文件夹
-      const xxhdpiFormData = new FormData();
-      xxhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xxhdpi`);
-      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 144, 0, 'webp')), 'ic_launcher.webp');
-      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 144, 0, 'webp')), 'ic_launcher_round.webp');
-      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 324, 0, 'webp')), 'ic_launcher_foreground.webp');
-      xxhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 324, 0, 'webp')), 'ic_launcher_background.webp');
-      await axios.post('/api/assets/upload', xxhdpiFormData);
+      await Promise.all(uploadPromises);
+      console.log('所有图标已成功上传。');
+      return true;
 
-      // mipmap-xhdpi 文件夹
-      const xhdpiFormData = new FormData();
-      xhdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-xhdpi`);
-      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 96, 0, 'webp')), 'ic_launcher.webp');
-      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 96, 0, 'webp')), 'ic_launcher_round.webp');
-      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 216, 0, 'webp')), 'ic_launcher_foreground.webp');
-      xhdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 216, 0, 'webp')), 'ic_launcher_background.webp');
-      await axios.post('/api/assets/upload', xhdpiFormData);
-
-      // mipmap-hdpi 文件夹
-      const hdpiFormData = new FormData();
-      hdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-hdpi`);
-      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 72, 0, 'webp')), 'ic_launcher.webp');
-      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 72, 0, 'webp')), 'ic_launcher_round.webp');
-      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 162, 0, 'webp')), 'ic_launcher_foreground.webp');
-      hdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 162, 0, 'webp')), 'ic_launcher_background.webp');
-      await axios.post('/api/assets/upload', hdpiFormData);
-
-      // mipmap-mdpi 文件夹
-      const mdpiFormData = new FormData();
-      mdpiFormData.append('targetDirectory', `games/${gameDir}/icons/android/mipmap-mdpi`);
-      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidLegacy.src, 48, 0, 'webp')), 'mipmap-mdpi/ic_launcher.webp');
-      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidRound.src, 48, 0, 'webp')), 'mipmap-mdpi/ic_launcher_round.webp');
-      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidForeground.src, 108, 0, 'webp')), 'mipmap-mdpi/ic_launcher_foreground.webp');
-      mdpiFormData.append('files', await dataURLToBlob(await resizeImage(icons.androidBackground.src, 108, 0, 'webp')), 'ic_launcher_background.webp');
-      await axios.post('/api/assets/upload', mdpiFormData);
-      console.log('上传 Android 图标成功');
     } catch (error) {
-      console.error('上传 Android 图标失败:', error);
+      console.error('图标上传过程中发生错误:', error);
       return false;
     }
-
-    return true;
   };
 
   const handleClose = () => {
@@ -600,7 +604,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     setBackgroundOffset({ x: 0, y: 0 });
     setForegroundScale(1);
     setBackgroundScale(1);
-    setGridLineColor('#000000');
+    setGridLineColor('#000000AA');
     setActiveIndex(0);
     setIcons(null);
   };
@@ -627,6 +631,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
               <Carousel
                 groupSize={1}
                 activeIndex={activeIndex}
+                motion='fade'
               >
                 <CarouselViewport draggable={false}>
                   <CarouselSlider>
@@ -774,7 +779,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
                     <Button appearance='secondary' onClick={() => setActiveIndex(0)}>{t`上一步`}</Button>
                     <Button
                       appearance='primary'
-                      disabled={isSaving || !icons}
+                      disabled={isSaving || !generatedFiles}
                       onClick={async () => {
                         setIsSaving(true);
                         const result = await handleSave();
@@ -803,8 +808,3 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 };
 
 export default IconCreator;
-
-async function dataURLToBlob(dataURL: string): Promise<Blob> {
-  const response = await fetch(dataURL);
-  return await response.blob();
-};
