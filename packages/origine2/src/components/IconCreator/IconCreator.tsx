@@ -483,7 +483,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     const webIconArrayBuffer = await webIconBlob.arrayBuffer();
     const icoResult = await img2ico(webIconArrayBuffer);
     const icoDataUrl = icoResult.toDataUrl();
-    const icoBlob = await fetch(icoDataUrl).then(res => res.blob());
+    const icoBlob = icoResult.toBlob();
 
     const previewIcons: IIcons = {
       ico: { name: 'Ico', src: icoDataUrl },
