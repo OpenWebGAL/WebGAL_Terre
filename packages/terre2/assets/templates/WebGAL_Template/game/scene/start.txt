@@ -2,16 +2,16 @@
 bgm:s_Title.mp3;
 unlockBgm:s_Title.mp3 -name=雲を追いかけて;
 intro:你好|欢迎来到 WebGAL 的世界;
-changeBg:bg.png -next;
-unlockCg:bg.png -name=良夜; // 解锁CG并赋予名称
-changeFigure:stand.png -left -next;
+changeBg:bg.webp -next;
+unlockCg:bg.webp -name=良夜; // 解锁CG并赋予名称
+changeFigure:stand.webp -left -next;
 setAnimation:enter-from-left -target=fig-left -next;
 WebGAL:欢迎使用 WebGAL！这是一款全新的网页端视觉小说引擎。 -v1.wav;
 ; 模版修改演示
 WebGAL:普通对话框 -v1.wav -fontSize=large;
-miniAvatar:stand.png;
+miniAvatar:miniavatar.webp;
 带有小头像的对话框 -fontSize=default;
 setTextbox:hide;
-changeFigure:stand.png;
+changeFigure:stand.webp;
 changeFigure:none -next;
 choose:选项:选择场景文件|选项2:选择场景文件;

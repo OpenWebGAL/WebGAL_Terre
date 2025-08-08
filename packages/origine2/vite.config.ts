@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import { env } from 'process';
 import { lingui } from "@lingui/vite-plugin";
 import Info from 'unplugin-info/vite';
+import viteCompression from 'vite-plugin-compression';
 
 let WEBGAL_PORT = 3000; // default port
 if (env.WEBGAL_PORT) {
@@ -19,7 +20,11 @@ export default defineConfig({
       },
     }),
     lingui(),
-    Info()
+    Info(),
+    viteCompression({
+      filter: /\.(js|css|ttf|wasm)$/,
+      threshold: 10240,
+    }),
   ],
   resolve: {
     alias: {
