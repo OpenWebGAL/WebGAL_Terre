@@ -18,7 +18,7 @@
   "build": {
     "productName": "WebGAL",
     "appId": "com.openwebgal.webgal",
-    "copyright": "Copyright © 2022 OpenWebGAL All rights reserved.",
+    "copyright": "Copyright © 2022 OpenWebGAL. All rights reserved.",
     "directories": {
       "output": "build"
     },
@@ -36,7 +36,7 @@
       ]
     },
     "mac": {
-      "icon": "public/icon-mac.ico"
+      "icon": "public/icon.ico"
     },
     "electronDownload": {
       "mirror": "https://npmmirror.com/mirrors/electron/"
