@@ -20,7 +20,6 @@ object LogStore {
     }
 
     fun resetLogs() {
-        print("reset")
         _logs.value = emptyList()
     }
 }

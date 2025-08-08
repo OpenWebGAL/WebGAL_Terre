@@ -39,7 +39,7 @@ class TerreService : Service() {
         val intent =
             Intent(StoreUpdateReceiver.ACTION_UPDATE_STORE).setClassName(
                 packageName,
-                "com.openwebgal.terre.receiver.StoreUpdateReceiver"
+                StoreUpdateReceiver::class.java.name
             ).apply {
                 putExtra(StoreUpdateReceiver.EXTRA_METHOD, method)
                 block?.invoke(this)
