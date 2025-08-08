@@ -8,8 +8,6 @@ import axios from 'axios';
 import { ColorPickerPopup } from '../ColorPickerPopup/ColorPickerPopup';
 import img2ico from 'img2ico';
 import Transformer from '../Transformer/Transformer';
-import { Buffer } from 'buffer';
-window.Buffer = Buffer;
 
 type IIconShape = 'circle' | 'square' | 'rounded-rectangle';
 type IBackgroundStyle = 'color' | 'image';
@@ -306,7 +304,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     if (activeIndex === 1) {
-      const ANIMATION_DURATION = 1000; 
+      const ANIMATION_DURATION = 750; 
 
       timeoutId = setTimeout(() => {
         generateAllIcons().then(() => {
@@ -483,16 +481,15 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
 
     const webIconBlob = await resizeCanvasToBlob(webIconCanvas, 256);
     const webIconArrayBuffer = await webIconBlob.arrayBuffer();
-    const webIconBuffer = Buffer.from(webIconArrayBuffer);
-    const icoBuffer = await img2ico(webIconBuffer);
-    const icoBlob = new Blob([icoBuffer], { type: 'image/x-icon' });
-    const icoUrl = URL.createObjectURL(icoBlob);
+    const icoResult = await img2ico(webIconArrayBuffer);
+    const icoDataUrl = icoResult.toDataUrl();
+    const icoBlob = await fetch(icoDataUrl).then(res => res.blob());
 
     const previewIcons: IIcons = {
-      ico: { name: 'Ico', src: icoUrl },
+      ico: { name: 'Ico', src: icoDataUrl },
       web: { name: 'Web', src: webIconCanvas.toDataURL() },
       webMaskable: { name: 'Web Maskable', src: maskableCanvas.toDataURL() },
-      desktop: { name: 'Desktop', src: icoUrl },
+      desktop: { name: 'Desktop', src: icoDataUrl },
       androidForeground: { name: 'Android Foreground', src: androidForegroundCanvas.toDataURL() },
       androidBackground: { name: 'Android Background', src: androidBackgroundCanvas.toDataURL() },
       androidFullBleed: { name: 'Android Full Bleed', src: compositeCanvas.toDataURL() },
@@ -634,6 +631,7 @@ const IconCreator = ({ gameDir, triggerButton }: { gameDir: string, triggerButto
               <Carousel
                 groupSize={1}
                 activeIndex={activeIndex}
+                motion='fade'
               >
                 <CarouselViewport draggable={false}>
                   <CarouselSlider>
