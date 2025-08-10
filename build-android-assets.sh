@@ -46,4 +46,6 @@ rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
 cd ../
 
 # 压缩文件
+rm -rf packages/terre-android/app/src/main/assets/
+mkdir packages/terre-android/app/src/main/assets/
 tar -cvf packages/terre-android/app/src/main/assets/terre.tar -C release .
