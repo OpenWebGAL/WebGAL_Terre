@@ -12,11 +12,12 @@
 /captures
 .externalNativeBuild
 .cxx
+.kotlin
 local.properties
 app/libnode/bin
 app/libnode/include
 app/libnode/nodejs-mobile-*
-app/src/main/assets/terre
+app/src/main/assets/*
 
 # key
 key.properties
