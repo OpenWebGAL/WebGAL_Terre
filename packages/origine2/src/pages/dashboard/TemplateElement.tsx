@@ -4,7 +4,7 @@ import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regula
 import { useMemo } from "react";
 import { useValue } from "../../hooks/useValue";
 import { api } from "@/api";
-import { routers } from "@/App";
+import { goTo } from '@/router';
 import { t } from "@lingui/macro";
 import { localStorageRename } from "@/utils/localStorageRename";
 import { TemplateInfoDto } from "@/api/Api";
@@ -78,7 +78,7 @@ export default function TemplateElement(props: ITemplateElementProps){
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
           <div className={styles.templateElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routers.template.url}/${props.templateInfo.dir}`}>
+            <Button appearance='primary' onClick={() => goTo('template', props.templateInfo.dir)}>
               <span style={{textWrap: 'nowrap'}}>{t`编辑模板`}</span>
             </Button>
             <Menu>
