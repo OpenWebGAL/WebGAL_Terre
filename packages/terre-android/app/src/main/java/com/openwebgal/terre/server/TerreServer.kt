@@ -2,7 +2,7 @@ package com.openwebgal.terre.server
 
 import android.content.Context
 import android.util.Log
-import com.openwebgal.terre.utils.Assets.copyAssets
+import com.openwebgal.terre.utils.Assets.extractAssets
 import java.util.concurrent.Executors
 
 class TerreServer(private val applicationContext: Context) {
@@ -24,7 +24,7 @@ class TerreServer(private val applicationContext: Context) {
                 val nodeDir = externalFilesDir.absolutePath
                 val executor = Executors.newSingleThreadExecutor()
                 executor.submit {
-                    copyAssets(applicationContext, nodeDir)
+                    extractAssets(applicationContext, nodeDir)
                     startNodeWithArguments(
                         arrayOf(
                             "node",
