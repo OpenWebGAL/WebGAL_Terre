@@ -85,7 +85,8 @@
     "tsx": "^3.14.0",
     "typescript": "^5.8.3",
     "unplugin-info": "^1.2.1",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vite-plugin-compression": "^0.5.1"
   },
   "resolutions": {
     "@types/react": "^18.0.0",
