@@ -27,20 +27,17 @@ export default function EditorToolbar() {
   const handleSetGraphMode = () => updateIsCodeMode(false);
 
   useEffect(() => {
-    const handleUpdagteScene = (scene:string)=>{
+    const handleUpdagteScene = ({ scene }: { scene: string }) => {
       const wordsAndChars = scene.match(/[\w]+|[^\s\w]/g) || [];
       setTextNum(wordsAndChars.length);
       setLineNum(scene.split('\n').length);
     };
 
-    // @ts-ignore
-    eventBus.on('update-scene',handleUpdagteScene);
-    return ()=>{
-      // @ts-ignore
-      eventBus.off('update-scene',handleUpdagteScene);
+    eventBus.on('editor:update-scene', handleUpdagteScene);
+    return () => {
+      eventBus.off('editor:update-scene', handleUpdagteScene);
     };
   }, []);
-
 
   const switchDebugger = ()=>{
     updateIsShowDebugger(!isShowDebugger);
