@@ -2,89 +2,52 @@ package com.openwebgal.terre.utils
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.AssetManager
 import android.util.Log
 import androidx.core.content.edit
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
+import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 
 object Assets {
-    private const val NODE_DIR_NAME = "terre"
 
-    fun copyAssets(context: Context, nodeDir: String) {
+    fun extractAssets(context: Context, nodeDir: String) {
         if (wasAPKUpdated(context)) {
-            Log.i("ASSETS", "Start copying assets")
-            copyAssetFolder(context.assets, NODE_DIR_NAME, nodeDir)
+            Log.i("ASSETS", "Start extracting assets from TAR")
+//            val destinationDir = File(nodeDir)
+//            if (destinationDir.exists()) {
+//                deleteFolderRecursively(destinationDir)
+//            }
+            unTar(context, "terre.tar", nodeDir)
             saveLastUpdateTime(context)
-            Log.i("ASSETS", "Copying assets successful")
+            Log.i("ASSETS", "Extracting assets successful")
         }
     }
 
-    private fun copyAssetFolder(
-        assetManager: AssetManager,
-        fromAssetPath: String,
-        toPath: String
-    ): Boolean {
-        return try {
-            val files = assetManager.list(fromAssetPath) ?: return copyAsset(
-                assetManager,
-                fromAssetPath,
-                toPath
-            )
-            var res = true
-
-            if (files.isEmpty()) {
-                res = copyAsset(assetManager, fromAssetPath, toPath)
-            } else {
-                File(toPath).mkdirs()
-                for (file in files) {
-                    res = copyAssetFolder(assetManager, "$fromAssetPath/$file", "$toPath/$file")
+    private fun unTar(context: Context, assetName: String, toPath: String) {
+        try {
+            val assetManager = context.assets
+            val tarInputStream =
+                TarArchiveInputStream(BufferedInputStream(assetManager.open(assetName)))
+            tarInputStream.use { tis ->
+                var entry = tis.nextTarEntry
+                while (entry != null) {
+                    val destPath = File(toPath, entry.name)
+                    if (entry.isDirectory) {
+                        destPath.mkdirs()
+                    } else {
+                        destPath.parentFile?.mkdirs()
+                        val fos = FileOutputStream(destPath)
+                        fos.use {
+                            tis.copyTo(it)
+                        }
+                    }
+                    entry = tis.nextTarEntry
                 }
             }
-            res
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             e.printStackTrace()
-            false
-        }
-    }
-
-    private fun copyAsset(
-        assetManager: AssetManager,
-        fromAssetPath: String,
-        toPath: String
-    ): Boolean {
-        var `in`: InputStream? = null
-        var out: OutputStream? = null
-        return try {
-            `in` = assetManager.open(fromAssetPath)
-            File(toPath).createNewFile()
-            out = FileOutputStream(toPath)
-            copyFile(`in`, out)
-            `in`.close()
-            out.flush()
-            out.close()
-            true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            false
-        } finally {
-            try {
-                `in`?.close()
-                out?.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    private fun copyFile(inputStream: InputStream, outputStream: OutputStream) {
-        val buffer = ByteArray(1024)
-        var read: Int
-        while (inputStream.read(buffer).also { read = it } != -1) {
-            outputStream.write(buffer, 0, read)
         }
     }
 

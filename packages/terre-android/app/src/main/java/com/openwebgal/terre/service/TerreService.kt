@@ -7,8 +7,10 @@ import android.util.Log
 import com.openwebgal.terre.notification.Notification.NOTIFICATION_ID
 import com.openwebgal.terre.notification.Notification.createNotification
 import com.openwebgal.terre.notification.Notification.createNotificationChannel
+import com.openwebgal.terre.receiver.StoreUpdateReceiver
 import com.openwebgal.terre.server.TerreServer
-import com.openwebgal.terre.store.LogStore.addLogLine
+import com.openwebgal.terre.store.LogStore
+import com.openwebgal.terre.store.TerreStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -33,6 +35,18 @@ class TerreService : Service() {
 
     private var terreServer: TerreServer? = null
 
+    private fun sendStoreUpdate(method: String, block: (Intent.() -> Unit)? = null) {
+        val intent =
+            Intent(StoreUpdateReceiver.ACTION_UPDATE_STORE).setClassName(
+                packageName,
+                StoreUpdateReceiver::class.java.name
+            ).apply {
+                putExtra(StoreUpdateReceiver.EXTRA_METHOD, method)
+                block?.invoke(this)
+            }
+        sendBroadcast(intent)
+    }
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -51,9 +65,19 @@ class TerreService : Service() {
                 println("TerreServer: Initializing and starting...")
                 terreServer = TerreServer(context)
                 terreServer?.start()
+                TerreStore.updateIsRunning(true)
+                sendStoreUpdate(StoreUpdateReceiver.METHOD_UPDATE_IS_RUNNING) {
+                    putExtra(StoreUpdateReceiver.EXTRA_IS_RUNNING, true)
+                }
                 startLogcat()
                 println("TerreServer: Started and running!")
             } else {
+                sendStoreUpdate(StoreUpdateReceiver.METHOD_UPDATE_IS_RUNNING) {
+                    putExtra(StoreUpdateReceiver.EXTRA_IS_RUNNING, TerreStore.isRunning.value)
+                }
+                sendStoreUpdate(StoreUpdateReceiver.METHOD_SET_LOGS) {
+                    putExtra(StoreUpdateReceiver.EXTRA_LOGS, ArrayList(LogStore.logs.value))
+                }
                 println("TerreServer: Already initialized and running.")
             }
         }
@@ -63,6 +87,12 @@ class TerreService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        TerreStore.updateIsRunning(false)
+        LogStore.resetLogs()
+        sendStoreUpdate(StoreUpdateReceiver.METHOD_UPDATE_IS_RUNNING) {
+            putExtra(StoreUpdateReceiver.EXTRA_IS_RUNNING, false)
+        }
+        sendStoreUpdate(StoreUpdateReceiver.METHOD_RESET_LOGS)
         serviceScope.cancel()
         terreServer?.stop()
         println("TerreServer: Stop")
@@ -79,9 +109,11 @@ class TerreService : Service() {
             while (bufferedReader.readLine().also { line = it } != null) {
                 line?.let { message ->
                     if (message.contains(ADBTAG) || message.contains("ASSETS") || message.contains("E/")) {
-                        addLogLine(
-                            cleanLog(message)
-                        )
+                        val log = cleanLog(message)
+                        LogStore.addLog(log)
+                        sendStoreUpdate(StoreUpdateReceiver.METHOD_ADD_LOG) {
+                            putExtra(StoreUpdateReceiver.EXTRA_LOG_MESSAGE, log)
+                        }
                     }
                 }
             }

@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.openwebgal.terre.MainActivity
 import com.openwebgal.terre.R
+import com.openwebgal.terre.store.TerreStore
 
 object Notification {
 
@@ -57,14 +58,6 @@ object Notification {
 
         createNotificationChannel(context)
 
-        val browserIntent = Intent(Intent.ACTION_VIEW, "http://localhost:3001".toUri())
-        val browserPendingIntent: PendingIntent = PendingIntent.getActivity(
-            context,
-            0,
-            browserIntent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
         val appIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
@@ -78,10 +71,19 @@ object Notification {
         val builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.notification_small_icon)
             .setContentTitle(context.getString(R.string.notification_title))
-            .setContentText(context.getString(R.string.notification_text))
+            .setContentText(context.getString(R.string.local_url))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setOngoing(true)
             .setContentIntent(appPendingIntent)
+
+        val browserIntent =
+            Intent(Intent.ACTION_VIEW, context.getString(R.string.local_url).toUri())
+        val browserPendingIntent: PendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            browserIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         builder.addAction(0, context.getString(R.string.open_browser), browserPendingIntent)
 
@@ -108,6 +110,10 @@ object Notification {
     }
 
     fun checkAndShowNotification(context: Context) {
+        val isRunning = TerreStore.isRunning.value
+        if (!isRunning) {
+            return
+        }
         if (!isNotificationVisible(context)) {
             showNotification(context)
         }
