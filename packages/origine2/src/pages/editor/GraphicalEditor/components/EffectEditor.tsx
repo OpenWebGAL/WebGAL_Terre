@@ -11,6 +11,7 @@ import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useE
 import type { EffectKey, EffectFields } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
+import { useTrigger } from '@/hooks/useTrigger';
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -141,10 +142,9 @@ const EffectCheckboxField = memo(
     effectFields: EffectFields;
     fieldKey: EffectKey;
     updateField: (key: EffectKey, value: number | undefined) => void;
-    setCheckbox: (label: boolean) => void;
-    checkboxEffectLabel: boolean;
+    submit: () => void;
   }) => {
-    const { effectFields, fieldKey, updateField, setCheckbox, checkboxEffectLabel } = props;
+    const { effectFields, fieldKey, updateField, submit } = props;
     const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
     const config = effectConfig[fieldKey];
@@ -152,9 +152,9 @@ const EffectCheckboxField = memo(
       (value: boolean | string) => {
         let newVal = value ? 1 : undefined;
         updateField(fieldKey, newVal);
-        setCheckbox(!checkboxEffectLabel);
+        submit();
       },
-      [fieldKey, updateField, setCheckbox, checkboxEffectLabel],
+      [fieldKey, updateField, submit],
     );
     return (
       <Checkbox
@@ -174,11 +174,10 @@ const EffectDropdownField = memo(
     effectFields: EffectFields;
     fieldKey: EffectKey;
     updateField: (key: EffectKey, value: number | undefined) => void;
-    setDropdown: (label: boolean) => void;
-    dropdownEffectLabel: boolean;
+    submit: () => void;
     options: Map<string, string>;
   }) => {
-    const { effectFields, fieldKey, updateField, setDropdown, dropdownEffectLabel, options } = props;
+    const { effectFields, fieldKey, updateField, submit, options } = props;
     const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
     const config = effectConfig[fieldKey];
@@ -192,9 +191,9 @@ const EffectDropdownField = memo(
           newVal = isNaN(num) ? undefined : num;
         }
         updateField(fieldKey, newVal);
-        setDropdown(!dropdownEffectLabel);
+        submit();
       },
-      [fieldKey, updateField, setDropdown, dropdownEffectLabel],
+      [fieldKey, updateField, submit],
     );
     return (
       <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
@@ -209,7 +208,6 @@ const EffectDropdownField = memo(
 );
 
 export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
-  const isInitialMount = useRef(true);
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
    * 解析初始JSON字符串，生成效果参数的初始状态
@@ -301,7 +299,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
    * 提交更新
    * 将最终结果对象转换为JSON字符串，通过onChange通知父组件
    */
-  const submit = useCallback(
+  const handleSubmit = useCallback(
     debounce(() => {
       const updatedObject = getUpdatedObject();
       const str = JSON.stringify(updatedObject);
@@ -309,26 +307,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     }, 100),
     [getUpdatedObject],
   );
-  const [checkboxEffectLabel, setCheckbox] = useState(true);
-  /** 监听复选框类型参数的变化，自动触发提交 */
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      submit();
-    }
-    // 依赖项：标识checkbox变换的标签（因为修改是异步的，如果在修改时提交，参数来不及更新）
-  }, [checkboxEffectLabel]);
-  const [dropdownEffectLabel, setDropdown] = useState(true);
-  /** 监听下拉框类型参数的变化，自动触发提交 */
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      submit();
-    }
-    // 依赖项：标识dropdown变换的标签（因为修改是异步的，如果在修改时提交，参数来不及更新）
-  }, [dropdownEffectLabel]);
+  const [submit] = useTrigger(handleSubmit);
   return (
     <>
       {fieldGroups.map((group, index) => (
@@ -363,8 +342,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 fieldKey={key}
                 effectFields={effectFields}
                 updateField={updateField}
-                setDropdown={setDropdown}
-                dropdownEffectLabel={dropdownEffectLabel}
+                submit={submit}
                 options={getToggleOptions()}
               />
             ))

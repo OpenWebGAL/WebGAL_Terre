@@ -425,7 +425,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:92
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:91
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
@@ -970,7 +970,7 @@ msgstr "Apply"
 msgid "应用的模板"
 msgstr "Applied template"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:355
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:334
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "Apply color changes"
@@ -979,7 +979,7 @@ msgstr "Apply color changes"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:91
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:90
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
 msgid "开启"
@@ -2447,7 +2447,7 @@ msgid "高斯模糊"
 msgstr "Gaussian Blur"
 
 #: src/hooks/useEaseTypeOptions.ts:6
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:90
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:89
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
 msgid "默认"
 msgstr "Default"
