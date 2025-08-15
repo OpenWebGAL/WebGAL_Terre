@@ -84,7 +84,7 @@ const deepUndefined = <T extends Record<string, any>>(obj: T): T => {
 /**
  * 获取切换选项
  */
-const getToggleOptions = (): Map<string, string> => {
+const useToggleOptions = (): Map<string, string> => {
   return useMemo(() => new Map<string, string>([
     ['', t`默认`],
     ['1', t`开启`],
@@ -383,7 +383,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 </Button>
               </div>
             </>
-          ) : index === 5 ? ( // 复选框
+          ) : index === 5 ? ( // 滤镜的组
             group.keys.map((key) => (
               <EffectField
                 type={effectConfig[key].type}
@@ -392,11 +392,11 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 effectFields={effectFields}
                 updateField={updateField}
                 submit={submit}
-                options={getToggleOptions()}
+                options={useToggleOptions()}
               />
             ))
           ) : (
-            // 普通输入框
+            // 其他的组
             group.keys.map((key) => (
               <EffectField
                 type={effectConfig[key].type}
