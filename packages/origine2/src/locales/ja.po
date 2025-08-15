@@ -973,7 +973,7 @@ msgstr "適用"
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:334
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:382
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "色の変更を適用"

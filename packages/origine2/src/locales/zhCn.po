@@ -976,7 +976,7 @@ msgstr "应用"
 msgid "应用的模板"
 msgstr "应用的模板"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:334
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:382
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "应用颜色变化"

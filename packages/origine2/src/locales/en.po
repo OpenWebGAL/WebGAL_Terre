@@ -970,7 +970,7 @@ msgstr "Apply"
 msgid "应用的模板"
 msgstr "Applied template"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:334
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:382
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "Apply color changes"

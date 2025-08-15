@@ -52,7 +52,7 @@ export interface EffectConfig {
   path: string;
   label?: string;
   placeholder?: string;
-  type?: 'number' | 'checkbox';
+  type?: 'number' | 'checkbox' | 'dropdown';
 }
 
 /** 所有效果参数的键值对类型，值为数值或undefined */
@@ -96,12 +96,12 @@ export const useEffectEditorConfig = () => {
       bevelGreen: { path: 'bevelGreen' },
       bevelBlue: { path: 'bevelBlue' },
       // 滤镜
-      oldFilm: { path: 'oldFilm', label: t`老电影滤镜`, type: 'checkbox' },
-      dotFilm: { path: 'dotFilm', label: t`点状电影滤镜`, type: 'checkbox' },
-      reflectionFilm: { path: 'reflectionFilm', label: t`反射电影滤镜`, type: 'checkbox' },
-      glitchFilm: { path: 'glitchFilm', label: t`故障电影滤镜`, type: 'checkbox' },
-      rgbFilm: { path: 'rgbFilm', label: t`RGB电影滤镜`, type: 'checkbox' },
-      godrayFilm: { path: 'godrayFilm', label: t`光辉电影滤镜`, type: 'checkbox' },
+      oldFilm: { path: 'oldFilm', label: t`老电影滤镜`, type: 'dropdown' },
+      dotFilm: { path: 'dotFilm', label: t`点状电影滤镜`, type: 'dropdown' },
+      reflectionFilm: { path: 'reflectionFilm', label: t`反射电影滤镜`, type: 'dropdown' },
+      glitchFilm: { path: 'glitchFilm', label: t`故障电影滤镜`, type: 'dropdown' },
+      rgbFilm: { path: 'rgbFilm', label: t`RGB电影滤镜`, type: 'dropdown' },
+      godrayFilm: { path: 'godrayFilm', label: t`光辉电影滤镜`, type: 'dropdown' },
     } as const;
     /** 效果参数的分组配置（按功能分类展示） */
     const fieldGroups = [

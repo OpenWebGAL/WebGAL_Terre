@@ -207,6 +207,53 @@ const EffectDropdownField = memo(
   },
 );
 
+/** 通用效果字段 */
+const EffectField = memo(
+  (props: {
+    type?: string;
+    effectFields: EffectFields;
+    fieldKey: EffectKey;
+    updateField: (key: EffectKey, value: number | undefined) => void;
+    submit: () => void;
+    options?: Map<string, string>;
+  }) => {
+    const { type, effectFields, fieldKey, updateField, submit, options } = props;
+    switch (type) {
+    case 'checkbox':
+      return (
+        <EffectCheckboxField
+          key={fieldKey}
+          fieldKey={fieldKey}
+          effectFields={effectFields}
+          updateField={updateField}
+          submit={submit}
+        />
+      );
+    case 'dropdown':
+      return (
+        <EffectDropdownField
+          key={fieldKey}
+          fieldKey={fieldKey}
+          effectFields={effectFields}
+          updateField={updateField}
+          submit={submit}
+          options={options!}
+        />
+      );
+    default:
+      return (
+        <EffectInputField
+          key={fieldKey}
+          fieldKey={fieldKey}
+          effectFields={effectFields}
+          updateField={updateField}
+          submit={submit}
+        />
+      );
+    }
+  },
+);
+
 export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
@@ -321,7 +368,8 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
               />
               <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'stretch' }}>
                 {group.keys.map((key) => (
-                  <EffectInputField
+                  <EffectField
+                    type={effectConfig[key].type}
                     key={key}
                     fieldKey={key}
                     effectFields={effectFields}
@@ -337,7 +385,8 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
             </>
           ) : index === 5 ? ( // 复选框
             group.keys.map((key) => (
-              <EffectDropdownField
+              <EffectField
+                type={effectConfig[key].type}
                 key={key}
                 fieldKey={key}
                 effectFields={effectFields}
@@ -349,7 +398,8 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
           ) : (
             // 普通输入框
             group.keys.map((key) => (
-              <EffectInputField
+              <EffectField
+                type={effectConfig[key].type}
                 key={key}
                 fieldKey={key}
                 effectFields={effectFields}
