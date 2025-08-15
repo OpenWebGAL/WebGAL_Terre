@@ -203,7 +203,7 @@ msgstr "z-index"
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
-#: src/components/IconCreator/IconCreator.tsx:774
+#: src/components/IconCreator/IconCreator.tsx:779
 msgid "上一步"
 msgstr "先の"
 
@@ -217,7 +217,7 @@ msgstr "アップロード"
 msgid "上传资源"
 msgstr "アセットのアップロード"
 
-#: src/components/IconCreator/IconCreator.tsx:771
+#: src/components/IconCreator/IconCreator.tsx:776
 msgid "下一步"
 msgstr "次に"
 
@@ -351,7 +351,7 @@ msgstr "サイドバー"
 msgid "侧边栏游戏预览"
 msgstr "サイドバーゲームプレビュー"
 
-#: src/components/IconCreator/IconCreator.tsx:793
+#: src/components/IconCreator/IconCreator.tsx:798
 msgid "保存"
 msgstr "セーブ"
 
@@ -359,7 +359,7 @@ msgstr "セーブ"
 msgid "修改时间"
 msgstr "最終更新"
 
-#: src/components/IconCreator/IconCreator.tsx:617
+#: src/components/IconCreator/IconCreator.tsx:621
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:204
 msgid "修改游戏图标"
 msgstr "ゲームアイコンの変更"
@@ -428,6 +428,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "関連する立ち絵"
 
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:58
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
@@ -579,7 +580,7 @@ msgstr "更新"
 msgid "刷新游戏"
 msgstr "ゲームをリフレッシュ"
 
-#: src/components/IconCreator/IconCreator.tsx:650
+#: src/components/IconCreator/IconCreator.tsx:655
 msgid "前景"
 msgstr "Foreground"
 
@@ -626,7 +627,7 @@ msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
-#: src/components/IconCreator/IconCreator.tsx:770
+#: src/components/IconCreator/IconCreator.tsx:775
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
@@ -696,12 +697,12 @@ msgstr "画像"
 msgid "图形编辑器"
 msgstr "グラフィックエディタ"
 
-#: src/components/IconCreator/IconCreator.tsx:680
-#: src/components/IconCreator/IconCreator.tsx:686
+#: src/components/IconCreator/IconCreator.tsx:685
+#: src/components/IconCreator/IconCreator.tsx:691
 msgid "图片"
 msgstr "画像"
 
-#: src/components/IconCreator/IconCreator.tsx:610
+#: src/components/IconCreator/IconCreator.tsx:614
 msgid "圆形"
 msgstr "円形"
 
@@ -721,7 +722,7 @@ msgstr "サークアウト"
 msgid "圆角"
 msgstr "角丸"
 
-#: src/components/IconCreator/IconCreator.tsx:611
+#: src/components/IconCreator/IconCreator.tsx:615
 msgid "圆角矩形"
 msgstr "角丸方形"
 
@@ -972,7 +973,7 @@ msgstr "適用"
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:259
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:322
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "色の変更を適用"
@@ -981,6 +982,7 @@ msgstr "色の変更を適用"
 msgid "延迟时间（秒）"
 msgstr "遅延時間（秒）"
 
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:57
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
 msgid "开启"
@@ -1289,7 +1291,7 @@ msgstr "新しいテンプレート"
 msgid "新的游戏"
 msgstr "新しいゲーム"
 
-#: src/components/IconCreator/IconCreator.tsx:609
+#: src/components/IconCreator/IconCreator.tsx:613
 msgid "方形"
 msgstr "方形"
 
@@ -1802,7 +1804,7 @@ msgstr "イーズアウト"
 msgid "缓动类型"
 msgstr "イージングタイプ"
 
-#: src/components/IconCreator/IconCreator.tsx:625
+#: src/components/IconCreator/IconCreator.tsx:629
 msgid "编辑图标"
 msgstr "編集アイコン"
 
@@ -1840,7 +1842,7 @@ msgstr "古い映画"
 msgid "耗时"
 msgstr "時間がかかります"
 
-#: src/components/IconCreator/IconCreator.tsx:678
+#: src/components/IconCreator/IconCreator.tsx:683
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
@@ -1948,7 +1950,7 @@ msgstr " スクリプトの行、"
 msgid "补充默认值"
 msgstr "デフォルト値を補う"
 
-#: src/components/IconCreator/IconCreator.tsx:724
+#: src/components/IconCreator/IconCreator.tsx:729
 msgid "裁剪形状"
 msgstr "クリップ形状"
 
@@ -2070,11 +2072,11 @@ msgstr "ボイス"
 msgid "请输入搜索提示词..."
 msgstr ""
 
-#: src/components/IconCreator/IconCreator.tsx:670
+#: src/components/IconCreator/IconCreator.tsx:675
 msgid "调整前景图片"
 msgstr "前景画像のリサイズ"
 
-#: src/components/IconCreator/IconCreator.tsx:714
+#: src/components/IconCreator/IconCreator.tsx:719
 msgid "调整背景图片"
 msgstr "背景画像のリサイズ"
 
@@ -2177,8 +2179,8 @@ msgstr "アニメーションを選択"
 msgid "选择动画文件"
 msgstr "アニメーションファイルを選択"
 
-#: src/components/IconCreator/IconCreator.tsx:664
-#: src/components/IconCreator/IconCreator.tsx:709
+#: src/components/IconCreator/IconCreator.tsx:669
+#: src/components/IconCreator/IconCreator.tsx:714
 msgid "选择图片"
 msgstr "画像を選択"
 
@@ -2416,12 +2418,12 @@ msgstr "プロジェクトホームページ"
 msgid "预先反向"
 msgstr "アンティシペート"
 
-#: src/components/IconCreator/IconCreator.tsx:625
+#: src/components/IconCreator/IconCreator.tsx:629
 msgid "预览图标"
 msgstr "プレビューアイコン"
 
-#: src/components/IconCreator/IconCreator.tsx:680
 #: src/components/IconCreator/IconCreator.tsx:685
+#: src/components/IconCreator/IconCreator.tsx:690
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:44
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundEditor.tsx:50
 msgid "颜色"
@@ -2444,6 +2446,7 @@ msgid "高斯模糊"
 msgstr "ぼかし"
 
 #: src/hooks/useEaseTypeOptions.ts:6
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:56
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
 msgid "默认"
 msgstr "デフォルト"

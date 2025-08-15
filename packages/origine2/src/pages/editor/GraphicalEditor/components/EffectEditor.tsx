@@ -10,6 +10,7 @@ import styles from './effectEditor.module.scss';
 import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import type { EffectKey, EffectFields } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
+import WheelDropdown from './WheelDropdown';
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -45,6 +46,17 @@ const setValueByPath = (obj: Record<string, any>, path: string, value: any) => {
     p = p[key];
   }
   p[pathArray[pathArray.length - 1]] = value;
+};
+
+/**
+ * 获取切换选项
+ */
+const getToggleOptions = (): Map<string, string> => {
+  return useMemo(() => new Map<string, string>([
+    ['', t`默认`],
+    ['1', t`开启`],
+    ['0', t`关闭`],
+  ]), []);
 };
 
 /**
@@ -119,6 +131,47 @@ const EffectCheckboxField = memo(
         checked={val === 1}
         onChange={(_, data) => handleChange(data.checked)}
       />
+    );
+  },
+);
+/**
+ * 效果下拉菜单字段
+ */
+const EffectDropdownField = memo(
+  (props: {
+    effectFields: EffectFields;
+    fieldKey: EffectKey;
+    updateField: (key: EffectKey, value: number | undefined) => void;
+    setDropdown: (label: boolean) => void;
+    dropdownEffectLabel: boolean;
+    options: Map<string, string>;
+  }) => {
+    const { effectFields, fieldKey, updateField, setDropdown, dropdownEffectLabel, options } = props;
+    const { effectConfig } = useEffectEditorConfig();
+    const val = effectFields[fieldKey];
+    const config = effectConfig[fieldKey];
+    const handleChange = useCallback(
+      (value: string | undefined) => {
+        let newVal: number | undefined;
+        if (value === undefined || value === '') {
+          newVal = undefined;
+        } else {
+          const num = Number(value);
+          newVal = isNaN(num) ? undefined : num;
+        }
+        updateField(fieldKey, newVal);
+        setDropdown(!dropdownEffectLabel);
+      },
+      [fieldKey, updateField, setDropdown, dropdownEffectLabel],
+    );
+    return (
+      <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
+        <WheelDropdown
+          options={options}
+          value={(val ?? '').toString()}
+          onValueChange={handleChange}
+        />
+      </CommonOptions>
     );
   },
 );
@@ -233,6 +286,16 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     }
     // 依赖项：标识checkbox变换的标签（因为修改是异步的，如果在修改时提交，参数来不及更新）
   }, [checkboxEffectLabel]);
+  const [dropdownEffectLabel, setDropdown] = useState(true);
+  /** 监听下拉框类型参数的变化，自动触发提交 */
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      submit();
+    }
+    // 依赖项：标识dropdown变换的标签（因为修改是异步的，如果在修改时提交，参数来不及更新）
+  }, [dropdownEffectLabel]);
   return (
     <>
       {fieldGroups.map((group, index) => (
@@ -262,13 +325,14 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
             </>
           ) : index === 5 ? ( // 复选框
             group.keys.map((key) => (
-              <EffectCheckboxField
+              <EffectDropdownField
                 key={key}
                 fieldKey={key}
                 effectFields={effectFields}
                 updateField={updateField}
-                setCheckbox={setCheckbox}
-                checkboxEffectLabel={checkboxEffectLabel}
+                setDropdown={setDropdown}
+                dropdownEffectLabel={dropdownEffectLabel}
+                options={getToggleOptions()}
               />
             ))
           ) : (
