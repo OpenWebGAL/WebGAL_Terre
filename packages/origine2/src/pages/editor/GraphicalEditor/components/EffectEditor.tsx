@@ -49,6 +49,38 @@ const setValueByPath = (obj: Record<string, any>, path: string, value: any) => {
 };
 
 /**
+ * 递归处理对象，将全undefined子属性的父属性置为undefined
+ */
+const deepUndefined = <T extends Record<string, any>>(obj: T): T => {
+  // 判断对象所有属性值是否为undefined
+  const allUndefined = (o: Record<string, any>) => Object.values(o).every((v) => v === undefined);
+
+  // 递归处理函数（带根节点标记）
+  const process = (target: any, isRoot = false): any => {
+    // 非对象类型直接返回
+    if (typeof target !== 'object' || target === null) return target;
+
+    // 处理数组类型
+    if (Array.isArray(target)) {
+      return target.map((item) => process(item, false));
+    }
+
+    // 处理普通对象
+    const processed: Record<string, any> = {};
+    for (const key in target) {
+      if (target.hasOwnProperty(key)) {
+        processed[key] = process(target[key], false);
+      }
+    }
+
+    // 非根节点且全属性为undefined时返回undefined
+    return !isRoot && allUndefined(processed) ? undefined : processed;
+  };
+
+  return process(obj, true);
+};
+
+/**
  * 获取切换选项
  */
 const getToggleOptions = (): Map<string, string> => {
@@ -263,7 +295,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     for (const key of Object.keys(effectFields) as EffectKey[]) {
       setValueByPath(result, effectConfig[key].path, effectFields[key]);
     }
-    return result;
+    return deepUndefined(result);
   }, [effectFields]);
   /**
    * 提交更新
@@ -272,7 +304,8 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
   const submit = useCallback(
     debounce(() => {
       const updatedObject = getUpdatedObject();
-      props.onChange(JSON.stringify(updatedObject));
+      const str = JSON.stringify(updatedObject);
+      props.onChange(str === '{}' ? '' : str);
     }, 100),
     [getUpdatedObject],
   );
