@@ -48,9 +48,9 @@ export function ViewTab() {
     <TabItem title={t`侧边栏游戏预览`}>
       <IconWithTextItem
         onClick={() => {
-          eventBus.emit('refGame');
+          eventBus.emit('iframe:refresh-game', null);
         }}
-        icon={<ArrowClockwiseIcon className={s.iconColor}/>}
+        icon={<ArrowClockwiseIcon className={s.iconColor} />}
         text={t`刷新游戏`}
       />
       <IconWithTextItem

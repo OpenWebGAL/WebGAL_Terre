@@ -8,7 +8,6 @@ import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
 import {textboxThemes} from "./constants";
-import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
 import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
@@ -372,7 +371,6 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
         onChange={(file) => {
           if (file) {
             addImage(file.name);
-            // eventBus.emit('scrollTopbarToEnd');
           }
         }}
         extNames={props.extNameList}/>

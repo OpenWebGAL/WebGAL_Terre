@@ -46,7 +46,7 @@ export class WsUtil {
           resolve(true);
         };
         socket.onmessage = (e) => {
-          eventBus.emit('get-ws-message', e.data);
+          eventBus.emit('web-socket:on-message', { message: e.data });
         };
         // @ts-ignore
         window['currentWs'] = socket;

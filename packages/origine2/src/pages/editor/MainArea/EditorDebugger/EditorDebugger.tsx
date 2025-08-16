@@ -12,11 +12,11 @@ import {IDebugMessage} from "@/types/debugProtocol";
 export default function EditorDebugger() {
   const mode = useValue<'state' | 'console'>('console');
 
-  const editorValue = useValue<Object>({});
+  const editorValue = useValue<object>({});
 
   useEffect(() => {
 
-    const handleMessage = (message: string) => {
+    const handleMessage = ({ message }: { message: string }) => {
       let obj = {};
       try {
         const result = JSON.parse(message) as IDebugMessage;
@@ -32,12 +32,10 @@ export default function EditorDebugger() {
       }
     };
 
-    // @ts-ignore
-    eventBus.on('get-ws-message', handleMessage);
+    eventBus.on('web-socket:on-message', handleMessage);
 
     return () => {
-      // @ts-ignore
-      eventBus.off('get-ws-message', handleMessage);
+      eventBus.off('web-socket:on-message', handleMessage);
     };
   }, []);
 

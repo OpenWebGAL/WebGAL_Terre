@@ -22,11 +22,11 @@ msgstr ";注释"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:191
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:190
 msgid "<0>应用新的模板</0>"
 msgstr "<0>应用新的模板</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:170
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:169
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>当前应用的模板：{currentTemplateName}</0>"
 
@@ -232,7 +232,7 @@ msgstr "不拼接先前文本框内的语句"
 msgid "不显示角色名"
 msgstr "不显示角色名"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:233
 msgid "不设定"
 msgstr "不设定"
 
@@ -240,7 +240,7 @@ msgstr "不设定"
 msgid "两端对齐"
 msgstr "两端对齐"
 
-#: src/pages/editor/MainArea/EditorToolbar.tsx:56
+#: src/pages/editor/MainArea/EditorToolbar.tsx:53
 msgid "个字"
 msgstr "个字"
 
@@ -359,7 +359,7 @@ msgid "修改时间"
 msgstr "修改时间"
 
 #: src/components/IconCreator/IconCreator.tsx:617
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:204
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:203
 msgid "修改游戏图标"
 msgstr "修改游戏图标"
 
@@ -554,7 +554,7 @@ msgstr "删除"
 msgid "删除属性"
 msgstr "删除属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:251
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:249
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:36
 msgid "删除本句"
 msgstr "删除本句"
@@ -662,13 +662,13 @@ msgstr "右对齐"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "启动、切换或停止背景音乐的播放"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:160
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:159
 msgid "启动图"
 msgstr "启动图"
 
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:227
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:214
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:224
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:213
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:223
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:140
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:155
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
@@ -691,7 +691,7 @@ msgstr "固定弹窗"
 msgid "图像"
 msgstr "图像"
 
-#: src/pages/editor/MainArea/EditorToolbar.tsx:65
+#: src/pages/editor/MainArea/EditorToolbar.tsx:62
 msgid "图形编辑器"
 msgstr "图形编辑器"
 
@@ -967,7 +967,7 @@ msgstr "平铺"
 msgid "应用"
 msgstr "应用"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:168
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:167
 msgid "应用的模板"
 msgstr "应用的模板"
 
@@ -998,7 +998,7 @@ msgstr "强度"
 msgid "当前版本"
 msgstr "当前版本"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:240
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
 msgid "德语"
 msgstr "德语"
 
@@ -1026,7 +1026,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:259
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:257
 msgid "执行到此句"
 msgstr "执行到此句"
 
@@ -1322,7 +1322,7 @@ msgstr "无"
 msgid "无匹配选项"
 msgstr "无匹配选项"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
 msgid "日语"
 msgstr "日语"
 
@@ -1385,7 +1385,7 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:222
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:220
 msgid "本句前插入句子"
 msgstr "本句前插入句子"
 
@@ -1424,11 +1424,11 @@ msgstr "标题按钮列表"
 msgid "标题按钮文字"
 msgstr "标题按钮文字"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:144
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:143
 msgid "标题背景图片"
 msgstr "标题背景图片"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:152
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:151
 msgid "标题背景音乐"
 msgstr "标题背景音乐"
 
@@ -1485,7 +1485,7 @@ msgstr "此指令将结束游戏"
 msgid "永不换行"
 msgstr "永不换行"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
 msgid "法语"
 msgstr "法语"
 
@@ -1543,7 +1543,7 @@ msgstr "添加新行"
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:275
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:273
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:71
 #: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "添加语句"
@@ -1567,17 +1567,17 @@ msgstr "游戏"
 msgid "游戏列表"
 msgstr "游戏列表"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:135
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:134
 msgid "游戏包名"
 msgstr "游戏包名"
 
 #: src/pages/dashboard/Sidebar.tsx:102
 #: src/pages/dashboard/Sidebar.tsx:111
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:123
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:122
 msgid "游戏名称"
 msgstr "游戏名称"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:197
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:196
 msgid "游戏图标"
 msgstr "游戏图标"
 
@@ -1590,11 +1590,11 @@ msgstr "游戏控制"
 msgid "游戏目录"
 msgstr "游戏目录"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:131
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:130
 msgid "游戏简介"
 msgstr "游戏简介"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:127
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:126
 msgid "游戏识别码"
 msgstr "游戏识别码"
 
@@ -1679,8 +1679,8 @@ msgstr "视频选项"
 msgid "禁止跳过视频"
 msgstr "禁止跳过视频"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:215
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:225
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:214
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:224
 msgid "禁用"
 msgstr "禁用"
 
@@ -1712,11 +1712,11 @@ msgstr "立绘插图的ID"
 msgid "立绘文件"
 msgstr "立绘文件"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
 msgid "简体中文"
 msgstr "简体中文"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:209
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:208
 msgid "紧急回避"
 msgstr "紧急回避"
 
@@ -1817,7 +1817,7 @@ msgstr "编辑游戏"
 msgid "编辑组件"
 msgstr "编辑组件"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
 msgid "繁体中文"
 msgstr "繁体中文"
 
@@ -1875,7 +1875,7 @@ msgstr "背景音乐文件"
 msgid "背景颜色"
 msgstr "背景颜色"
 
-#: src/pages/editor/MainArea/EditorToolbar.tsx:61
+#: src/pages/editor/MainArea/EditorToolbar.tsx:58
 msgid "脚本编辑器"
 msgstr "脚本编辑器"
 
@@ -1921,7 +1921,7 @@ msgstr "自定义级联选择器分隔符"
 msgid "舞台对象控制"
 msgstr "舞台对象控制"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
 msgid "英语"
 msgstr "英语"
 
@@ -1938,7 +1938,7 @@ msgstr "获取来自用户的字符输入"
 msgid "获取输入"
 msgstr "获取输入"
 
-#: src/pages/editor/MainArea/EditorToolbar.tsx:56
+#: src/pages/editor/MainArea/EditorToolbar.tsx:53
 msgid "行脚本"
 msgstr "行脚本"
 
@@ -2181,7 +2181,7 @@ msgstr "选择动画文件"
 msgid "选择图片"
 msgstr "选择图片"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:369
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:368
 msgid "选择图片文件"
 msgstr "选择图片文件"
 
@@ -2338,7 +2338,7 @@ msgstr "重命名游戏目录"
 msgid "鉴赏"
 msgstr "鉴赏"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:219
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:218
 msgid "鉴赏功能"
 msgstr "鉴赏功能"
 
@@ -2472,7 +2472,7 @@ msgstr "默认值0"
 msgid "默认值1"
 msgstr "默认值1"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:229
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:228
 msgid "默认语言"
 msgstr "默认语言"
 
