@@ -1,6 +1,7 @@
 package com.openwebgal.terre.ui.screen
 
 import android.content.Intent
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -83,7 +84,11 @@ fun MainScreen(
                         if (isRunning) {
                             context.stopService(serviceIntent)
                         } else {
-                            context.startService(serviceIntent)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                context.startForegroundService(serviceIntent)
+                            } else {
+                                context.startService(serviceIntent)
+                            }
                         }
                     }
                 )
