@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef, memo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { ColorPicker, IColor } from '@fluentui/react';
 import { Button, Checkbox, Input } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
@@ -85,11 +85,15 @@ const deepUndefined = <T extends Record<string, any>>(obj: T): T => {
  * 获取切换选项
  */
 const useToggleOptions = (): Map<string, string> => {
-  return useMemo(() => new Map<string, string>([
-    ['', t`默认`],
-    ['1', t`开启`],
-    ['0', t`关闭`],
-  ]), []);
+  return useMemo(
+    () =>
+      new Map<string, string>([
+        ['', t`默认`],
+        ['1', t`开启`],
+        ['0', t`关闭`],
+      ]),
+    [],
+  );
 };
 
 /**
@@ -343,6 +347,10 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     return deepUndefined(result);
   }, [effectFields]);
   /**
+   * 切换选项
+   */
+  const toggleOptions = useToggleOptions();
+  /**
    * 提交更新
    * 将最终结果对象转换为JSON字符串，通过onChange通知父组件
    */
@@ -392,7 +400,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 effectFields={effectFields}
                 updateField={updateField}
                 submit={submit}
-                options={useToggleOptions()}
+                options={toggleOptions}
               />
             ))
           ) : (
