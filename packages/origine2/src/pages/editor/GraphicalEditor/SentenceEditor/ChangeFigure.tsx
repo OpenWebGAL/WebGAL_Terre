@@ -41,6 +41,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
   const bounds = useValue(getArgByKey(props.sentence, "bounds").toString() ?? "");
   const zIndex = useValue(String(getArgByKey(props.sentence, 'zIndex') ?? ''));
+  const blink = useValue<string>(getArgByKey(props.sentence, "blink").toString() ?? "");
+  const focus = useValue<string>(getArgByKey(props.sentence, "focus").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
@@ -64,6 +66,75 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
+
+  // Blink
+  const blinkParam = (() => {
+    try {
+      if (blink.value === "") {
+        return {};
+      } else {
+        return JSON.parse(blink.value);
+      }
+    } catch (e) {
+      console.error('Error parsing blink value:', e);
+      return {};
+    }
+  })();
+  const blinkInterval = useValue(blinkParam?.blinkInterval ?? "");
+  const blinkIntervalRandom = useValue(blinkParam?.blinkIntervalRandom ?? "");
+  const openingDuration = useValue(blinkParam?.openingDuration ?? "");
+  const closingDuration = useValue(blinkParam?.closingDuration ?? "");
+  const closedDuration = useValue(blinkParam?.closedDuration ?? "");
+  const updateBlinkParam = (): string => {
+    const result:{[key: string]: any;} = {};
+    if(!isNaN(Number(blinkInterval.value))&&blinkInterval.value!==''){result.blinkInterval = Number(blinkInterval.value);};
+    if(!isNaN(Number(blinkIntervalRandom.value))&&blinkIntervalRandom.value!==''){result.blinkIntervalRandom = Number(blinkIntervalRandom.value);};
+    if(!isNaN(Number(openingDuration.value))&&openingDuration.value!==''){result.openingDuration = Number(openingDuration.value);};
+    if(!isNaN(Number(closingDuration.value))&&closingDuration.value!==''){result.closingDuration = Number(closingDuration.value);};
+    if(!isNaN(Number(closedDuration.value))&&closedDuration.value!==''){result.closedDuration = Number(closedDuration.value);};
+    const resultString = JSON.stringify(result);
+    if (resultString === "{}") {
+      return "";
+    } else {
+      return resultString;
+    }
+  }
+
+  // Focus
+  const focusParam = (() => {
+    try {
+      if (focus.value === "") {
+        return {};
+      } else {
+        return JSON.parse(focus.value);
+      }
+    } catch (e) {
+      console.error('Error parsing focus value:', e);
+      return {};
+    }
+  })();
+  const focusX = useValue(focusParam?.x ?? "");
+  const focusY = useValue(focusParam?.y ?? "");
+  const focusInstant = useValue(focusParam?.instant ?? "");
+  const updateFocusParam = (): string => {
+    const result:{[key: string]: any;} = {};
+    if(!isNaN(Number(focusX.value))&&focusX.value!==''){result.x = Number(focusX.value);};
+    if(!isNaN(Number(focusY.value))&&focusY.value!==''){result.y = Number(focusY.value);};
+    if(focusInstant.value !== '') { result.instant = focusInstant.value === 'true'};
+    const resultString = JSON.stringify(result);
+    if (resultString === "{}") {
+      return "";
+    } else {
+      return resultString;
+    }
+  }
+  const useFocusInstantOptions = () => {
+    return useMemo(() => new Map<string, string>([
+      [ "", t`默认` ],
+      [ "true", t`开启` ],
+      [ "false", t`关闭` ],
+    ]), []);
+  };
 
   useEffect(() => {
     if (figureFile.value.includes('json')) {
@@ -168,6 +239,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "motion", value: currentMotion.value},
         {key: "expression", value: currentExpression.value},
         {key: "bounds", value: bounds.value},
+        {key: "blink", value: updateBlinkParam()},
+        {key: "focus", value: updateFocusParam()},
         {key: "ease", value: ease.value},
         {key: "zIndex", value: zIndex.value},
         {key: "next", value: isGoNext.value},
@@ -241,18 +314,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               />
             </CommonOptions>
           )}
-          <CommonOptions title={t`自定义 Live2D 绘制范围`} key="bounds">
-            <input value={bounds.value}
-              onChange={(ev) => {
-                const newValue = ev.target.value;
-                bounds.set(newValue ?? "");
-              }}
-              onBlur={submit}
-              className={styles.sayInput}
-              placeholder={t`例如：-100,-100,100,100`}
-              style={{width: "100%"}}
-            />
-          </CommonOptions>
         </>
       )}
 
@@ -278,16 +339,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           style={{width: "100%"}}
         />
       </CommonOptions>
-      <CommonOptions key="5" title={t`缓动类型`}>
-        <WheelDropdown
-          options={easeTypeOptions}
-          value={ease.value}
-          onValueChange={(newValue) => {
-            ease.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={() => {
           updateExpand(props.index);
@@ -296,89 +347,192 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       <TerrePanel
         title={t`效果编辑器`}
         sentenceIndex={props.index}
-        bottomBarChildren={[
-          <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
-            <div>
-              <Input placeholder={t`过渡时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
-                const newDuration = Number(data.value);
-                if (isNaN(newDuration) || data.value === '')
-                  duration.set("");
-                else
-                  duration.set(newDuration);
-              }} onBlur={submit}/>
-            </div>
-          </CommonOptions>,
-          <CommonOptions title={t`唇形同步与眨眼`} key="5">
-            <WheelDropdown
-              options={animationFlags}
-              value={animationFlag.value}
-              onValueChange={(newValue) => {
-                animationFlag.set(newValue?.toString() ?? "");
-                submit();
-              }}
-            />
-          </CommonOptions>,
-          <div key="mouth-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
-            <CommonOptions key="6" title={t`张开嘴`}>
-              <>
-                {mouthOpen.value + "\u00a0\u00a0"}
-                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
-                  mouthOpen.set(fileDesc?.name ?? "");
+        bottomBarChildren={
+          <>
+            <CommonOptions key="11" title={t`过渡时间（单位为毫秒）`}>
+              <div>
+                <Input placeholder={t`过渡时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
+                  const newDuration = Number(data.value);
+                  if (isNaN(newDuration) || data.value === '')
+                    duration.set("");
+                  else
+                    duration.set(newDuration);
+                }} onBlur={submit}/>
+              </div>
+            </CommonOptions>
+            <CommonOptions key="5" title={t`缓动类型`}>
+              <WheelDropdown
+                options={easeTypeOptions}
+                value={ease.value}
+                onValueChange={(newValue) => {
+                  ease.set(newValue?.toString() ?? "");
                   submit();
                 }}
-                extNames={extNameMap.get('image')}/>
-              </>
+              />
             </CommonOptions>
-          </div>,
-          <div key="mouth-half-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
-            <CommonOptions key="7" title={t`半张嘴`}>
+            {!figureFile.value.includes('.json') ? (
               <>
-                {mouthHalfOpen.value + "\u00a0\u00a0"}
-                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
-                  mouthHalfOpen.set(fileDesc?.name ?? "");
-                  submit();
-                }}
-                extNames={extNameMap.get('image')}/>
+                <CommonOptions title={t`唇形同步与眨眼`} key="5">
+                  <WheelDropdown
+                    options={animationFlags}
+                    value={animationFlag.value}
+                    onValueChange={(newValue) => {
+                      animationFlag.set(newValue?.toString() ?? "");
+                      submit();
+                    }}
+                  />
+                </CommonOptions>
+                {animationFlag.value === "on" && (
+                  <>
+                    <CommonOptions key="6" title={t`张开嘴`}>
+                      <>
+                        {mouthOpen.value + "\u00a0\u00a0"}
+                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
+                          mouthOpen.set(fileDesc?.name ?? "");
+                          submit();
+                        }}
+                        extNames={extNameMap.get('image')}/>
+                      </>
+                    </CommonOptions>
+                    <CommonOptions key="7" title={t`半张嘴`}>
+                      <>
+                        {mouthHalfOpen.value + "\u00a0\u00a0"}
+                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
+                          mouthHalfOpen.set(fileDesc?.name ?? "");
+                          submit();
+                        }}
+                        extNames={extNameMap.get('image')}/>
+                      </>
+                    </CommonOptions>
+                    <CommonOptions key="8" title={t`闭上嘴`}>
+                      <>
+                        {mouthClose.value + "\u00a0\u00a0"}
+                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
+                          mouthClose.set(fileDesc?.name ?? "");
+                          submit();
+                        }}
+                        extNames={extNameMap.get('image')}/>
+                      </>
+                    </CommonOptions>
+                    <CommonOptions key="9" title={t`睁开眼睛`}>
+                      <>
+                        {eyesOpen.value + "\u00a0\u00a0"}
+                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
+                          eyesOpen.set(fileDesc?.name ?? "");
+                          submit();
+                        }}
+                        extNames={extNameMap.get('image')}/>
+                      </>
+                    </CommonOptions>
+                    <CommonOptions key="10" title={t`闭上眼睛`}>
+                      <>
+                        {eyesClose.value + "\u00a0\u00a0"}
+                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
+                          eyesClose.set(fileDesc?.name ?? "");
+                          submit();
+                        }}
+                        extNames={extNameMap.get('image')}/>
+                      </>
+                    </CommonOptions>
+                  </>
+                )}
               </>
-            </CommonOptions>
-          </div>,
-          <div key="mouth-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
-            <CommonOptions key="8" title={t`闭上嘴`}>
+            ) : (
               <>
-                {mouthClose.value + "\u00a0\u00a0"}
-                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
-                  mouthClose.set(fileDesc?.name ?? "");
-                  submit();
-                }}
-                extNames={extNameMap.get('image')}/>
+                <CommonOptions title={t`自定义 Live2D 绘制范围`} key="bounds">
+                  <Input value={bounds.value}
+                    onChange={(ev) => {
+                      const newValue = ev.target.value;
+                      bounds.set(newValue ?? "");
+                    }}
+                    onBlur={submit}
+                    placeholder={t`例如：-100,-100,100,100`}
+                  />
+                </CommonOptions>
+                <CommonOptions key="blinkInterval" title={t`眨眼间隔(毫秒)`}>
+                  <Input
+                    placeholder={t`默认值24小时`}
+                    value={blinkInterval.value.toString()}
+                    onChange={(_, data) => {
+                      blinkInterval.set(data.value);
+                    }}
+                    onBlur={submit}
+                  />
+                </CommonOptions>
+                <CommonOptions key="blinkIntervalRandom" title={t`眨眼间隔随机变化(毫秒)`}>
+                  <Input
+                    placeholder={t`默认值1000`}
+                    value={blinkIntervalRandom.value.toString()}
+                    onChange={(_, data) => {
+                      blinkIntervalRandom.set(data.value);
+                    }}
+                    onBlur={submit}
+                  />
+                </CommonOptions>
+                <CommonOptions key="openingDuration" title={t`睁眼(毫秒)`}>
+                  <Input
+                    placeholder={t`默认值150`}
+                    value={openingDuration.value.toString()}
+                    onChange={(_, data) => {
+                      openingDuration.set(data.value);
+                    }}
+                    onBlur={submit}
+                  />
+                </CommonOptions>
+                <CommonOptions key="closingDuration" title={t`闭眼(毫秒)`}>
+                  <Input
+                    placeholder={t`默认值100`}
+                    value={closingDuration.value.toString()}
+                    onChange={(_, data) => {
+                      closingDuration.set(data.value);
+                    }}
+                    onBlur={submit}
+                  />
+                </CommonOptions>
+                <CommonOptions key="closedDuration" title={t`保持闭眼(毫秒)`}>
+                  <Input
+                    placeholder={t`默认值50`}
+                    value={closedDuration.value.toString()}
+                    onChange={(_, data) => {
+                      closedDuration.set(data.value);
+                    }}
+                    onBlur={submit}
+                  />
+                </CommonOptions>
+                <CommonOptions key="focusX" title={t`注视点X(-1~1)`}>
+                  <Input
+                    placeholder={t`默认值0`}
+                    value={focusX.value.toString()}
+                    onChange={(_, data) => {
+                      focusX.set(data.value);
+                    }}
+                    onBlur={submit}
+                  />
+                </CommonOptions>
+                <CommonOptions key="focusY" title={t`注视点Y(-1~1)`}>
+                  <Input
+                    placeholder={t`默认值0`}
+                    value={focusY.value.toString()}
+                    onChange={(_, data) => {
+                      focusY.set(data.value);
+                    }}
+                    onBlur={submit}
+                  />
+                </CommonOptions>
+                <CommonOptions key="focusInstant" title={t`立即注视`}>
+                  <WheelDropdown
+                    options={useFocusInstantOptions()}
+                    value={focusInstant.value}
+                    onValueChange={(newValue) => {
+                      focusInstant.set(newValue);
+                      submit();
+                    }}
+                  />
+                </CommonOptions>
               </>
-            </CommonOptions>
-          </div>,
-          <div key="eyes-open" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
-            <CommonOptions key="9" title={t`睁开眼睛`}>
-              <>
-                {eyesOpen.value + "\u00a0\u00a0"}
-                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
-                  eyesOpen.set(fileDesc?.name ?? "");
-                  submit();
-                }}
-                extNames={extNameMap.get('image')}/>
-              </>
-            </CommonOptions>
-          </div>,
-          <div key="eyes-close" style={{display: animationFlag.value === "on" ? 'flex' : 'none'}}>
-            <CommonOptions key="10" title={t`闭上眼睛`}>
-              <>
-                {eyesClose.value + "\u00a0\u00a0"}
-                <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
-                  eyesClose.set(fileDesc?.name ?? "");
-                  submit();
-                }}
-                extNames={extNameMap.get('image')}/>
-              </>
-            </CommonOptions>
-          </div>,
-        ]}
+            )}
+          </>
+        }
       >
         <CommonTips
           text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
