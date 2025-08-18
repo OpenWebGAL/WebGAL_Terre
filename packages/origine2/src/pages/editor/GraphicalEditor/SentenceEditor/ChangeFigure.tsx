@@ -68,73 +68,82 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const easeTypeOptions = useEaseTypeOptions();
 
   // Blink
-  const blinkParam = (() => {
+  const blinkParam = useMemo(() => {
+    if (blink.value === "") {
+      return {};
+    }
     try {
-      if (blink.value === "") {
-        return {};
-      } else {
-        return JSON.parse(blink.value);
-      }
+      return JSON.parse(blink.value);
     } catch (e) {
       console.error('Error parsing blink value:', e);
       return {};
     }
-  })();
+  }, [blink.value]);
   const blinkInterval = useValue(blinkParam?.blinkInterval ?? "");
   const blinkIntervalRandom = useValue(blinkParam?.blinkIntervalRandom ?? "");
   const openingDuration = useValue(blinkParam?.openingDuration ?? "");
   const closingDuration = useValue(blinkParam?.closingDuration ?? "");
   const closedDuration = useValue(blinkParam?.closedDuration ?? "");
   const updateBlinkParam = (): string => {
-    const result:{[key: string]: any;} = {};
-    if(!isNaN(Number(blinkInterval.value))&&blinkInterval.value!==''){result.blinkInterval = Number(blinkInterval.value);};
-    if(!isNaN(Number(blinkIntervalRandom.value))&&blinkIntervalRandom.value!==''){result.blinkIntervalRandom = Number(blinkIntervalRandom.value);};
-    if(!isNaN(Number(openingDuration.value))&&openingDuration.value!==''){result.openingDuration = Number(openingDuration.value);};
-    if(!isNaN(Number(closingDuration.value))&&closingDuration.value!==''){result.closingDuration = Number(closingDuration.value);};
-    if(!isNaN(Number(closedDuration.value))&&closedDuration.value!==''){result.closedDuration = Number(closedDuration.value);};
-    const resultString = JSON.stringify(result);
-    if (resultString === "{}") {
-      return "";
-    } else {
-      return resultString;
+    const params: { [key: string]: any } = {
+      blinkInterval: blinkInterval.value,
+      blinkIntervalRandom: blinkIntervalRandom.value,
+      openingDuration: openingDuration.value,
+      closingDuration: closingDuration.value,
+      closedDuration: closedDuration.value,
+    };
+    // 仅保留有效参数
+    const result: { [key: string]: number } = {};
+    for (const key in params) {
+      const value = params[key];
+      if (value !== '' && !isNaN(Number(value))) {
+        result[key] = Number(value);
+      }
     }
+    // 若没有参数, 返回空字符串
+    return Object.keys(result).length > 0 ? JSON.stringify(result) : "";
   }
 
   // Focus
-  const focusParam = (() => {
+  const focusParam = useMemo(() => {
+    if (focus.value === "") {
+      return {};
+    }
     try {
-      if (focus.value === "") {
-        return {};
-      } else {
-        return JSON.parse(focus.value);
-      }
+      return JSON.parse(focus.value);
     } catch (e) {
       console.error('Error parsing focus value:', e);
       return {};
     }
-  })();
+  }, [focus.value]);
   const focusX = useValue(focusParam?.x ?? "");
   const focusY = useValue(focusParam?.y ?? "");
   const focusInstant = useValue(focusParam?.instant ?? "");
   const updateFocusParam = (): string => {
-    const result:{[key: string]: any;} = {};
-    if(!isNaN(Number(focusX.value))&&focusX.value!==''){result.x = Number(focusX.value);};
-    if(!isNaN(Number(focusY.value))&&focusY.value!==''){result.y = Number(focusY.value);};
-    if(focusInstant.value !== '') { result.instant = focusInstant.value === 'true'};
-    const resultString = JSON.stringify(result);
-    if (resultString === "{}") {
-      return "";
-    } else {
-      return resultString;
+    const params: { [key: string]: any } = {
+      x: focusX.value,
+      y: focusY.value,
+      instant: focusInstant.value,
+    };
+    // 仅保留有效参数
+    const result: { [key: string]: any } = {};
+    for (const key in params) {
+      const value = params[key];
+      if (key === 'instant' && (value === 'true' || value === 'false')) {
+        // 特殊处理 instant
+        result[key] = value === 'true';
+      } else if (value !== '' && !isNaN(Number(value))) {
+        result[key] = Number(value);
+      }
     }
+    // 若没有参数, 返回空字符串
+    return Object.keys(result).length > 0 ? JSON.stringify(result) : "";
   }
-  const useFocusInstantOptions = () => {
-    return useMemo(() => new Map<string, string>([
-      [ "", t`默认` ],
-      [ "true", t`开启` ],
-      [ "false", t`关闭` ],
-    ]), []);
-  };
+  const focusInstantOptions = useMemo(() => new Map<string, string>([
+    ["", t`默认`],
+    ["true", t`开启`],
+    ["false", t`关闭`],
+  ]), []);
 
   useEffect(() => {
     if (figureFile.value.includes('json')) {
@@ -521,8 +530,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 </CommonOptions>
                 <CommonOptions key="focusInstant" title={t`立即注视`}>
                   <WheelDropdown
-                    options={useFocusInstantOptions()}
-                    value={focusInstant.value}
+                    options={focusInstantOptions}
+                    value={focusInstant.value.toString()}
                     onValueChange={(newValue) => {
                       focusInstant.set(newValue);
                       submit();
