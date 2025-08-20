@@ -48,7 +48,6 @@ const setValueByPath = (obj: Record<string, any>, path: string, value: any) => {
   }
   p[pathArray[pathArray.length - 1]] = value;
 };
-
 /**
  * 递归处理对象，将全undefined子属性的父属性置为undefined
  */
@@ -80,15 +79,6 @@ const deepUndefined = <T extends Record<string, any>>(obj: T): T => {
 
   return process(obj, true);
 };
-
-/**
- * 获取切换选项
- */
-const toggleOptions = useMemo(() => new Map<string, string>([
-  ['', t`默认`],
-  ['1', t`开启`],
-  ['0', t`关闭`],
-]), []);
 
 /**
  * 效果输入框字段
@@ -204,8 +194,9 @@ const EffectDropdownField = memo(
     );
   },
 );
-
-/** 通用效果字段 */
+/**
+ * 通用效果字段
+ */
 const EffectField = memo(
   (props: {
     type?: string;
@@ -252,6 +243,9 @@ const EffectField = memo(
   },
 );
 
+/**
+ * 效果编辑器
+ */
 export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
@@ -327,6 +321,18 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
         bevelBlue: newColor.b,
       }));
     }, 100),
+    [],
+  );
+  /**
+   * 切换选项
+   */
+  const toggleOptions = useMemo(
+    () =>
+      new Map<string, string>([
+        ['', t`默认`],
+        ['1', t`开启`],
+        ['0', t`关闭`],
+      ]),
     [],
   );
   /**
