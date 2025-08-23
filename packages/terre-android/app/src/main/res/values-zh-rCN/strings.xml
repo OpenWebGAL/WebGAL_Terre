@@ -6,10 +6,10 @@
     <string name="channel_name">WebGAL Terre</string>
     <string name="channel_description">WebGAL Terre 通知</string>
     <string name="notification_title">WebGAL Terre</string>
-    <string name="notification_text">http://localhost:3001</string>
     <string name="notification_permission_denied">通知权限被拒绝。</string>
     <string name="confirm_exit_title">您确定要停止运行吗？</string>
     <string name="confirm_exit_message">未保存的数据将会丢失！！！</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
+    <string name="start">启动</string>
 </resources>

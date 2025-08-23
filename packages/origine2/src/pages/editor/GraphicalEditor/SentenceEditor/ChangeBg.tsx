@@ -80,16 +80,6 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         }} onText={t`本句执行后执行下一句`}
         offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
       </CommonOptions>
-      <CommonOptions key="5" title={t`缓动类型`}>
-        <WheelDropdown
-          options={easeTypeOptions}
-          value={ease.value}
-          onValueChange={(newValue) => {
-            ease.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
       {!isNoFile && <CommonOptions key="3" title={t`解锁名称`}>
         <input value={unlockName.value}
           onChange={(ev) => {
@@ -110,24 +100,36 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       <TerrePanel
         sentenceIndex={props.index}
         title={t`效果编辑器`}
-        bottomBarChildren={[
-          <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
-            <div>
-              <Input
-                placeholder={t`过渡时间（单位为毫秒）`}
-                value={duration.value.toString()}
-                onChange={(_, data) => {
-                  const newDuration = Number(data.value);
-                  if (isNaN(newDuration) || data.value === '')
-                    duration.set("");
+        bottomBarChildren={
+          <>
+            <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
+              <div>
+                <Input
+                  placeholder={t`过渡时间（单位为毫秒）`}
+                  value={duration.value.toString()}
+                  onChange={(_, data) => {
+                    const newDuration = Number(data.value);
+                    if (isNaN(newDuration) || data.value === '')
+                      duration.set("");
 
-                  else
-                    duration.set(newDuration);
-                } }
-                onBlur={submit} />
-            </div>
-          </CommonOptions>,
-        ]}
+                    else
+                      duration.set(newDuration);
+                  } }
+                  onBlur={submit} />
+              </div>
+            </CommonOptions>
+            <CommonOptions key="5" title={t`缓动类型`}>
+              <WheelDropdown
+                options={easeTypeOptions}
+                value={ease.value}
+                onValueChange={(newValue) => {
+                  ease.set(newValue?.toString() ?? "");
+                  submit();
+                }}
+              />
+            </CommonOptions>
+          </>
+        }
       >
         <div>
           <CommonTips

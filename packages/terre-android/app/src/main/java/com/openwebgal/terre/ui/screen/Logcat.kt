@@ -18,10 +18,10 @@ import com.openwebgal.terre.store.LogStore
 @Composable
 fun Logcat() {
     val scrollState = rememberScrollState()
-    val logLines by LogStore.logLines.collectAsState()
+    val logs by LogStore.logs.collectAsState()
 
-    LaunchedEffect(logLines.size) {
-        if (logLines.isNotEmpty()) {
+    LaunchedEffect(logs.size) {
+        if (logs.isNotEmpty()) {
             scrollState.animateScrollTo(scrollState.maxValue)
         }
     }
@@ -30,10 +30,11 @@ fun Logcat() {
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(scrollState)
+            .padding(bottom = 96.dp)
     ) {
-        logLines.forEach { line ->
+        logs.forEach { log ->
             Text(
-                line,
+                log,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
             )
