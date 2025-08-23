@@ -22,6 +22,7 @@ import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
 
+// eslint-disable-next-line complexity
 export default function ChangeFigure(props: ISentenceEditorProps) {
   const gameDir = useEditorStore.use.subPage();
   const updateExpand = useEditorStore.use.updateExpand();
@@ -95,6 +96,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     // 仅保留有效参数
     const result: { [key: string]: number } = {};
     for (const key in params) {
+      if (!Object.prototype.hasOwnProperty(key)) continue;
       const value = params[key];
       if (value !== '' && !isNaN(Number(value))) {
         result[key] = Number(value);
@@ -102,7 +104,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     }
     // 若没有参数, 返回空字符串
     return Object.keys(result).length > 0 ? JSON.stringify(result) : "";
-  }
+  };
 
   // Focus
   const focusParam = useMemo(() => {
@@ -128,6 +130,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     // 仅保留有效参数
     const result: { [key: string]: any } = {};
     for (const key in params) {
+      if (!Object.prototype.hasOwnProperty(key)) continue;
       const value = params[key];
       if (key === 'instant' && (value === 'true' || value === 'false')) {
         // 特殊处理 instant
@@ -138,7 +141,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     }
     // 若没有参数, 返回空字符串
     return Object.keys(result).length > 0 ? JSON.stringify(result) : "";
-  }
+  };
   const focusInstantOptions = useMemo(() => new Map<string, string>([
     ["", t`默认`],
     ["true", t`开启`],
