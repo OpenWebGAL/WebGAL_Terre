@@ -6,7 +6,7 @@ import styles from "./terrePanel.module.scss";
 
 export function TerrePanel(props: {
   children: ReactNode,
-  bottomBarChildren?: ReactNode[]
+  bottomBarChildren?: ReactNode
   width?: number,
   title: string,
   sentenceIndex: number,
