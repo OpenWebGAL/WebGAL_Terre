@@ -3,6 +3,7 @@ import { ColorPicker, IColor } from '@fluentui/react';
 import { Button, Checkbox, Input } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import { debounce } from 'lodash';
+import { useValue } from '@/hooks/useValue';
 import { logger } from '@/utils/logger';
 import { OptionCategory } from '@/pages/editor/GraphicalEditor/components/OptionCategory';
 import CommonOptions from '@/pages/editor/GraphicalEditor/components/CommonOption';
@@ -11,7 +12,6 @@ import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useE
 import type { EffectKey, EffectFields } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
-import { useTrigger } from '@/hooks/useTrigger';
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -273,10 +273,10 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     return effectFields as EffectFields;
   }, []);
   // 状态：存储所有效果参数的当前值（键为EffectKey，值为数值或undefined）
-  const [effectFields, setEffectFields] = useState<EffectFields>(() => getInitialFields(props.json));
+  const effectFields = useValue<EffectFields>(getInitialFields(props.json), true);
   // 当父组件传递的 json 变化时，重新初始化状态
   useEffect(() => {
-    setEffectFields(getInitialFields(props.json));
+    effectFields.value = getInitialFields(props.json);
   }, [props.json]);
   /**
    * 更新单个效果参数的值
@@ -284,12 +284,12 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
    * @param value 新值（数值或undefined）
    */
   const updateField = useCallback((key: EffectKey, value: number | undefined) => {
-    setEffectFields((prev) => ({ ...prev, [key]: value }));
+    effectFields.set({ ...effectFields.value, [key]: value });
   }, []);
   /** 颜色选择器的当前颜色（基于colorRed/colorGreen/colorBlue） */
   const color = useMemo(
-    () => rgbToColor(effectFields.colorRed, effectFields.colorGreen, effectFields.colorBlue),
-    [effectFields.colorRed, effectFields.colorGreen, effectFields.colorBlue],
+    () => rgbToColor(effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue),
+    [effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue],
   );
   /**
    * 颜色选择器变化时的回调
@@ -297,29 +297,29 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
    */
   const handleLocalColorChange = useCallback(
     debounce((_ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-      setEffectFields((prev) => ({
-        ...prev,
+      effectFields.set({
+        ...effectFields.value,
         colorRed: newColor.r,
         colorGreen: newColor.g,
         colorBlue: newColor.b,
-      }));
+      });
     }, 100),
     [],
   );
   /** 倒角颜色选择器的当前颜色（基于bevelRed/bevelGreen/bevelBlue） */
   const bevelColor = useMemo(
-    () => rgbToColor(effectFields.bevelRed, effectFields.bevelGreen, effectFields.bevelBlue),
-    [effectFields.bevelRed, effectFields.bevelGreen, effectFields.bevelBlue],
+    () => rgbToColor(effectFields.value.bevelRed, effectFields.value.bevelGreen, effectFields.value.bevelBlue),
+    [effectFields.value.bevelRed, effectFields.value.bevelGreen, effectFields.value.bevelBlue],
   );
   /** 倒角颜色选择器变化时的回调 */
   const handleLocalBevelColorChange = useCallback(
     debounce((_ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-      setEffectFields((prev) => ({
-        ...prev,
+      effectFields.set({
+        ...effectFields.value,
         bevelRed: newColor.r,
         bevelGreen: newColor.g,
         bevelBlue: newColor.b,
-      }));
+      });
     }, 100),
     [],
   );
@@ -341,16 +341,16 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
    */
   const getUpdatedObject = useCallback(() => {
     const result: any = {};
-    for (const key of Object.keys(effectFields) as EffectKey[]) {
-      setValueByPath(result, effectConfig[key].path, effectFields[key]);
+    for (const key of Object.keys(effectFields.value) as EffectKey[]) {
+      setValueByPath(result, effectConfig[key].path, effectFields.value[key]);
     }
     return deepUndefined(result);
-  }, [effectFields]);
+  }, [effectFields.value]);
   /**
    * 提交更新
    * 将最终结果对象转换为JSON字符串，通过onChange通知父组件
    */
-  const handleSubmit = useCallback(
+  const submit = useCallback(
     debounce(() => {
       const updatedObject = getUpdatedObject();
       const str = JSON.stringify(updatedObject);
@@ -358,7 +358,6 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     }, 100),
     [getUpdatedObject],
   );
-  const [submit] = useTrigger(handleSubmit);
   return (
     <>
       {fieldGroups.map((group, index) => (
@@ -376,7 +375,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                     type={effectConfig[key].type}
                     key={key}
                     fieldKey={key}
-                    effectFields={effectFields}
+                    effectFields={effectFields.value}
                     updateField={updateField}
                     submit={submit}
                   />
@@ -393,7 +392,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 type={effectConfig[key].type}
                 key={key}
                 fieldKey={key}
-                effectFields={effectFields}
+                effectFields={effectFields.value}
                 updateField={updateField}
                 submit={submit}
                 options={toggleOptions}
@@ -406,7 +405,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 type={effectConfig[key].type}
                 key={key}
                 fieldKey={key}
-                effectFields={effectFields}
+                effectFields={effectFields.value}
                 updateField={updateField}
                 submit={submit}
               />
