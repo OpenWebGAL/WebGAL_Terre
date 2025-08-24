@@ -8,7 +8,7 @@ import TemplateEditor from '@/pages/templateEditor/TemplateEditor';
 
 export type IPage = 'dashboard' | 'game' | 'template';
 
-const routes: { [key in IPage]: { url: string; element: ReactNode } } = {
+export const routes: { [key in IPage]: { url: string; element: ReactNode } } = {
   dashboard: {
     url: '#/dashboard',
     element: <DashBoard />,
@@ -51,6 +51,7 @@ export function useHashRouter() {
         try {
           updateSubPage(decodeURIComponent(_subPage));
         } catch (error) {
+          console.warn('Update sub page error!', error);
           updateSubPage(_page);
           goTo('dashboard', _page);
         }
