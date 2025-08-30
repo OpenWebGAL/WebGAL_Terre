@@ -10300,10 +10300,10 @@ pixi-filters@^4.2.0:
     "@pixi/filter-twist" "4.2.0"
     "@pixi/filter-zoom-blur" "4.2.0"
 
-pixi-live2d-display-webgal@^0.5.8:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/pixi-live2d-display-webgal/-/pixi-live2d-display-webgal-0.5.8.tgz#1ff7b5016559ff56a5cfaa96abeac84c878a2bbf"
-  integrity sha512-yekmPckXykqziyFcmmgYlZU4ad42rRGGmUFvrm96YJrdRIi+V9uv/xKOrRBMxD/tr3Sckqp6hOr9Wi3UX6NNLw==
+pixi-live2d-display-webgal@^0.5.12:
+  version "0.5.12"
+  resolved "https://registry.yarnpkg.com/pixi-live2d-display-webgal/-/pixi-live2d-display-webgal-0.5.12.tgz#f920f926e37bacf222c77343782b5b6fc3d209ab"
+  integrity sha512-93UDIM8ducia8zIgVtidqxlDamxlwEK4+ddUnl/8XcEKBinbr2Qlu0bBN9i1f4c5rzX5OPgEKc0DhjlDa7fJVg==
   dependencies:
     gh-pages "^4.0.0"
 
@@ -12626,10 +12626,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-engine@4.5.14:
-  version "4.5.14"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.14.tgz#339986413091fbe80d0217154bb395341b77669f"
-  integrity sha512-+sQ3HHyR4Mfr/5NhRO87ReP29Lbe5gRzqIyfU/hezqaTsKsAEBo36/viVe3mLJ6p5CQnXEDH0qx4OtFSAZb7Gg==
+webgal-engine@4.5.15:
+  version "4.5.15"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.15.tgz#8b9f892b8eca0c9c4ba9172bc84fc2899f0ad142"
+  integrity sha512-HU+Zo7gzipR7KwAvupPtp/CFSCK4S0+pwaw/EZg/RftfZ9Q5TE8w/6UrBkM83YGndxvXPLKbPFK2qJXO0UvFPA==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"
@@ -12643,7 +12643,7 @@ webgal-engine@4.5.14:
     mitt "^3.0.0"
     modern-css-reset "^1.4.0"
     pixi-filters "^4.2.0"
-    pixi-live2d-display-webgal "^0.5.8"
+    pixi-live2d-display-webgal "^0.5.12"
     pixi.js "^6.3.0"
     popmotion "^11.0.5"
     react "^17.0.2"
