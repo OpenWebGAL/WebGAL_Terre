@@ -1,413 +1,418 @@
-import {logger} from "@/utils/logger";
-import { OptionCategory } from "@/pages/editor/GraphicalEditor/components/OptionCategory";
-import CommonOptions from "@/pages/editor/GraphicalEditor/components/CommonOption";
-import {useValue} from "@/hooks/useValue";
-import { Button, Checkbox, Input } from "@fluentui/react-components";
-import { t } from "@lingui/macro";
-import { ColorPicker, IColor } from "@fluentui/react";
-import { useState } from "react";
-import styles from "./effectEditor.module.scss";
-import React from "react";
-import { debounce } from "lodash";
+import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
+import { ColorPicker, IColor } from '@fluentui/react';
+import { Button, Checkbox, Input } from '@fluentui/react-components';
+import { t } from '@lingui/macro';
+import { debounce } from 'lodash';
+import { useValue } from '@/hooks/useValue';
+import { logger } from '@/utils/logger';
+import { OptionCategory } from '@/pages/editor/GraphicalEditor/components/OptionCategory';
+import CommonOptions from '@/pages/editor/GraphicalEditor/components/CommonOption';
+import styles from './effectEditor.module.scss';
+import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import type { EffectKey, EffectFields } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
+import WheelDropdown from './WheelDropdown';
 
-// eslint-disable-next-line complexity
-export function EffectEditor(props:{
-  json:string,onChange:(newJson:string)=>void
-}){
+/**
+ * 根据对象路径获取值（支持嵌套路径，如"position.x"）
+ * @param obj 目标对象
+ * @param path 路径字符串（如"a.b.c"）
+ * @returns 路径对应的 value，若路径不存在则返回undefined
+ */
+const getValueByPath = (obj: Record<string, any>, path: string) => {
+  let value = obj;
+  const pathArray = path.split('.'); // 拆分路径为数组（如["position", "x"]）
+  for (let key of pathArray) {
+    if (value === undefined) return undefined; // 路径不存在时终止
+    value = value[key];
+  }
+  return value;
+};
+/**
+ * 根据对象路径设置值
+ * @param obj 目标对象
+ * @param path 路径字符串
+ * @param value 路径要设置的的 value
+ */
+const setValueByPath = (obj: Record<string, any>, path: string, value: any) => {
+  if (!path.trim()) return;
+  let p = obj;
+  const pathArray = path.split('.').filter(Boolean);
+  if (pathArray.length === 0) return;
+  for (let i = 0; i < pathArray.length - 1; i++) {
+    const key = pathArray[i];
+    if (typeof p[key] !== 'object' || p[key] === null) {
+      p[key] = {};
+    }
+    p = p[key];
+  }
+  p[pathArray[pathArray.length - 1]] = value;
+};
+/**
+ * 递归处理对象，将全undefined子属性的父属性置为undefined
+ */
+const deepUndefined = <T extends Record<string, any>>(obj: T): T => {
+  // 判断对象所有属性值是否为undefined
+  const allUndefined = (o: Record<string, any>) => Object.values(o).every((v) => v === undefined);
 
-  const effectObject = (()=>{
-    try {
-      if(props.json===''){
-        return JSON.parse('{}');
+  // 递归处理函数（带根节点标记）
+  const process = (target: any, isRoot = false): any => {
+    // 非对象类型直接返回
+    if (typeof target !== 'object' || target === null) return target;
+
+    // 处理数组类型
+    if (Array.isArray(target)) {
+      return target.map((item) => process(item, false));
+    }
+
+    // 处理普通对象
+    const processed: Record<string, any> = {};
+    for (const key in target) {
+      if (target.hasOwnProperty(key)) {
+        processed[key] = process(target[key], false);
       }
-      return JSON.parse(props.json);
-    }catch (e){
-      logger.error('JSON 解析错误',e);
-      return {};
-    }
-  })();
-
-  const x = useValue(effectObject?.position?.x ?? '');
-  const y = useValue(effectObject?.position?.y ?? '');
-  const scaleX = useValue(effectObject?.scale?.x ?? '');
-  const scaleY = useValue(effectObject?.scale?.y ?? '');
-  const alpha = useValue(effectObject?.alpha ?? '');
-  const rotation = useValue(effectObject?.rotation ?? '');
-  const blur = useValue(effectObject?.blur ?? '');
-  const brightness = useValue(effectObject?.brightness ?? '');
-  const contrast = useValue(effectObject?.contrast ?? '');
-  const saturation = useValue(effectObject?.saturation ?? '');
-  const gamma = useValue(effectObject?.gamma ?? '');
-  const colorRed = useValue(effectObject?.colorRed ?? '');
-  const colorGreen = useValue(effectObject?.colorGreen ?? '');
-  const colorBlue = useValue(effectObject?.colorBlue ?? '');
-  const bloom = useValue(effectObject?.bloom ?? '');
-  const bloomBrightness = useValue(effectObject?.bloomBrightness ?? '');
-  const bloomBlur = useValue(effectObject?.bloomBlur ?? '');
-  const bloomThreshold = useValue(effectObject?.bloomThreshold ?? '');
-  const bevel = useValue(effectObject?.bevel ?? '');
-  const bevelThickness = useValue(effectObject?.bevelThickness ?? '');
-  const bevelRotation = useValue(effectObject?.bevelRotation ?? '');
-  const bevelSoftness = useValue(effectObject?.bevelSoftness ?? '');
-  const bevelRed = useValue(effectObject?.bevelRed ?? '');
-  const bevelGreen = useValue(effectObject?.bevelGreen ?? '');
-  const bevelBlue = useValue(effectObject?.bevelBlue ?? '');
-  const oldFilm = useValue(effectObject?.oldFilm ?? '');
-  const dotFilm = useValue(effectObject?.dotFilm ?? '');
-  const reflectionFilm = useValue(effectObject?.reflectionFilm ?? '');
-  const glitchFilm = useValue(effectObject?.glitchFilm ?? '');
-  const rgbFilm = useValue(effectObject?.rgbFilm ?? '');
-  const godrayFilm = useValue(effectObject?.godrayFilm ?? '');
-
-  const rgbColor = (red: number, green: number, blue:number): IColor => {
-    const r = red / 255;
-    const g = green / 255;
-    const b = blue / 255;
-    const cmax = Math.max(r, g, b); const cmin = Math.min(r, g, b);
-    let delta = cmax - cmin;
-    
-    let h = 0;
-    if (delta !== 0) {
-      if (cmax === r) h = ((g - b) / delta) * 60;
-      else if (cmax === g) h = ((b - r) / delta) * 60 + 120;
-      else h = ((r - g) / delta) * 60 + 240;
-      if (h < 0) h += 360;
     }
 
-    let s = (cmax === 0) ? 0 : (delta / cmax) * 100.0;
-    let v = cmax * 100.0;
-
-    return {
-      r: red,
-      g: green,
-      b: blue,
-      a: 100,
-      h,
-      s,
-      v,
-      hex: `${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}`,
-      str: `rgba(${red}, ${green}, ${blue}, 100)`,
-    };
+    // 非根节点且全属性为undefined时返回undefined
+    return !isRoot && allUndefined(processed) ? undefined : processed;
   };
 
-  const getColor = (): IColor => {
-    const r = colorRed.value === "" ? 255 : colorRed.value;
-    const g = colorGreen.value === "" ? 255 : colorGreen.value;
-    const b = colorBlue.value === "" ? 255 : colorBlue.value;
-    return rgbColor(r, g, b);
-  };
+  return process(obj, true);
+};
 
-  const getBevelColor = (): IColor => {
-    const r = bevelRed.value === "" ? 255 : bevelRed.value;
-    const g = bevelGreen.value === "" ? 255 : bevelGreen.value;
-    const b = bevelBlue.value === "" ? 255 : bevelBlue.value;
-    return rgbColor(r, g, b);
-  };
-
-  const color = useValue(getColor());
-  const bevelColor = useValue(getBevelColor());
-  const [localColor, setLocalColor] = useState(color.value);
-  const [localBevelColor, setLocalBevelColor] = useState(bevelColor.value);
-
-  const handleLocalColorChange = debounce((ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-    setLocalColor(newColor);
-    colorRed.set(newColor.r);
-    colorGreen.set(newColor.g);
-    colorBlue.set(newColor.b);
-  }, 500);
-
-  const handleLocalBevelColorChange = debounce((ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-    setLocalBevelColor(newColor);
-    bevelRed.set(newColor.r);
-    bevelGreen.set(newColor.g);
-    bevelBlue.set(newColor.b);
-  }, 500);
-
-  // eslint-disable-next-line complexity
-  const updateObject = () => {
-    const result:{[key: string]: any;} = {};
-    console.log(x.value);
-    console.log(!isNaN(Number(x.value))&&x.value!=='');
-    if(!isNaN(Number(x.value))&&x.value!==''){result.position = result.position??{};result.position.x = Number(x.value);};
-    if(!isNaN(Number(y.value))&&y.value!==''){result.position = result.position??{};result.position.y = Number(y.value);};
-    if(!isNaN(Number(scaleX.value))&&scaleX.value!==''){result.scale = result.scale??{};result.scale.x = Number(scaleX.value);};
-    if(!isNaN(Number(scaleY.value))&&scaleY.value!==''){result.scale = result.scale??{};result.scale.y = Number(scaleY.value);};
-    if(!isNaN(Number(alpha.value))&&alpha.value!==''){result.alpha = Number(alpha.value);};
-    if(!isNaN(Number(rotation.value))&&rotation.value!==''){result.rotation = Number(rotation.value);};
-    if(!isNaN(Number(blur.value))&&blur.value!==''){result.blur = Number(blur.value);};
-    if(!isNaN(Number(brightness.value))&&brightness.value!==''){result.brightness = Number(brightness.value);};
-    if(!isNaN(Number(contrast.value))&&contrast.value!==''){result.contrast = Number(contrast.value);};
-    if(!isNaN(Number(saturation.value))&&saturation.value!==''){result.saturation = Number(saturation.value);};
-    if(!isNaN(Number(gamma.value))&&gamma.value!==''){result.gamma = Number(gamma.value);};
-    if(!isNaN(Number(colorRed.value))&&colorRed.value!==''){result.colorRed = Number(colorRed.value);};
-    if(!isNaN(Number(colorGreen.value))&&colorGreen.value!==''){result.colorGreen = Number(colorGreen.value);};
-    if(!isNaN(Number(colorBlue.value))&&colorBlue.value!==''){result.colorBlue = Number(colorBlue.value);};
-    if(!isNaN(Number(bloom.value))&&bloom.value!==''){result.bloom = Number(bloom.value);};
-    if(!isNaN(Number(bloomBrightness.value))&&bloomBrightness.value!==''){result.bloomBrightness = Number(bloomBrightness.value);};
-    if(!isNaN(Number(bloomBlur.value))&&bloomBlur.value!==''){result.bloomBlur = Number(bloomBlur.value);};
-    if(!isNaN(Number(bloomThreshold.value))&&bloomThreshold.value!==''){result.bloomThreshold = Number(bloomThreshold.value);};
-    if(!isNaN(Number(bevel.value))&&bevel.value!==''){result.bevel = Number(bevel.value);};
-    if(!isNaN(Number(bevelThickness.value))&&bevelThickness.value!==''){result.bevelThickness = Number(bevelThickness.value);};
-    if(!isNaN(Number(bevelRotation.value))&&bevelRotation.value!==''){result.bevelRotation = Number(bevelRotation.value);};
-    if(!isNaN(Number(bevelSoftness.value))&&bevelSoftness.value!==''){result.bevelSoftness = Number(bevelSoftness.value);};
-    if(!isNaN(Number(bevelRed.value))&&bevelRed.value!==''){result.bevelRed = Number(bevelRed.value);};
-    if(!isNaN(Number(bevelGreen.value))&&bevelGreen.value!==''){result.bevelGreen = Number(bevelGreen.value);};
-    if(!isNaN(Number(bevelBlue.value))&&bevelBlue.value!==''){result.bevelBlue = Number(bevelBlue.value);};
-    if(oldFilm.value){result.oldFilm = 1;};
-    if(dotFilm.value){result.dotFilm = 1;};
-    if(reflectionFilm.value){result.reflectionFilm = 1;};
-    if(glitchFilm.value){result.glitchFilm = 1;};
-    if(rgbFilm.value){result.rgbFilm = 1;};
-    if(godrayFilm.value){result.godrayFilm = 1;};
-    console.log(result);
-    return result;
-
-    // return {
-    //   alpha: !isNaN(Number(alpha.value)) ? Number(alpha.value) : 1, // Convert alpha to number
-    //   position: {
-    //     x: !isNaN(Number(x.value)) ? Number(x.value) : 0, // Convert x to number
-    //     y: !isNaN(Number(y.value)) ? Number(y.value) : 0  // Convert y to number
-    //   },
-    //   scale: {
-    //     x: !isNaN(Number(scaleX.value)) ? Number(scaleX.value) : 1, // Convert scaleX to number
-    //     y: !isNaN(Number(scaleY.value)) ? Number(scaleY.value) : 1  // Convert scaleY to number
-    //   },
-    //   rotation: !isNaN(Number(rotation.value)) ? Number(rotation.value) : 0, // Convert rotation to number
-    //   blur: !isNaN(Number(blur.value)) ? Number(blur.value) : 0 , // Convert blur to number
-    //   oldFilm: oldFilm.value ? 1 : 0,
-    //   dotFilm: dotFilm.value ? 1 : 0,
-    //   reflectionFilm: reflectionFilm.value ? 1 : 0,
-    //   glitchFilm: glitchFilm.value ? 1 : 0,
-    //   rgbFilm: rgbFilm.value ? 1 : 0,
-    //   godrayFilm: godrayFilm.value ? 1 : 0,
-    // };
-  };
-
-  const submit = ()=>{
-    console.log(updateObject());
-    props.onChange(JSON.stringify(updateObject()));
-  };
-
-
-  return <>
-    <OptionCategory key={1} title={t`变换`}>
-      <CommonOptions title={t`X轴位移`}>
+/**
+ * 效果输入框字段
+ */
+const EffectInputField = memo(
+  (props: {
+    effectFields: EffectFields;
+    fieldKey: EffectKey;
+    updateField: (key: EffectKey, value: number | undefined) => void;
+    submit: () => void;
+  }) => {
+    const { effectFields, fieldKey, submit, updateField } = props;
+    const { effectConfig } = useEffectEditorConfig();
+    const val = effectFields[fieldKey];
+    let [innerVal, setInnerVal] = useState((val ?? '').toString());
+    const config = effectConfig[fieldKey];
+    const handleChange = useCallback(
+      (value: string) => {
+        let newVal: number | undefined;
+        setInnerVal((value ?? '').toString());
+        if (value === '') {
+          newVal = undefined;
+        } else {
+          const num = Number(value);
+          newVal = isNaN(num) ? undefined : num;
+        }
+        updateField(fieldKey, newVal);
+      },
+      [fieldKey, updateField],
+    );
+    return (
+      <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
         <Input
-          value={x.value}
-          placeholder={t`默认值0`}
-          onChange={(_, data) => {
-            x.set(data.value);
-          }}
-          onBlur={submit}/>
+          value={innerVal}
+          placeholder={config.placeholder}
+          onChange={(_, data) => handleChange(data.value)}
+          onBlur={submit}
+          onKeyDown={(e) => e.key === 'Enter' && submit()}
+        />
       </CommonOptions>
-      <CommonOptions title={t`Y轴位移`}>
-        <Input
-          value={y.value}
-          placeholder={t`默认值0`}
-          onChange={(_, data) => {
-            y.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-      <CommonOptions title={t`旋转（弧度）`}>
-        <Input
-          value={rotation.value}
-          placeholder={t`默认值0`}
-          onChange={(_, data) => {
-            rotation.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-      <CommonOptions title={t`X轴缩放`}>
-        <Input
-          value={scaleX.value}
-          placeholder={t`默认值1`}
-          onChange={(_, data) => {
-            scaleX.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-      <CommonOptions title={t`Y轴缩放`}>
-        <Input
-          value={scaleY.value}
-          placeholder={t`默认值1`}
-          onChange={(_, data) => {
-            scaleY.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-    </OptionCategory>
-    <OptionCategory key={2} title={t`效果`}>
-      <CommonOptions title={t`透明度（0-1）`}>
-        <Input
-          value={alpha.value}
-          placeholder={t`默认值1`}
-          onChange={(_, data) => {
-            alpha.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-      <CommonOptions title={t`高斯模糊`}>
-        <Input
-          value={blur.value}
-          placeholder={t`默认值0`}
-          onChange={(_, data) => {
-            blur.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-    </OptionCategory>
-    <OptionCategory key={3} title={t`颜色调整`}>
-      <ColorPicker
-        color={localColor}
-        alphaType="none"
-        onChange={handleLocalColorChange}
+    );
+  },
+);
+/**
+ * 效果复选框字段
+ */
+const EffectCheckboxField = memo(
+  (props: {
+    effectFields: EffectFields;
+    fieldKey: EffectKey;
+    updateField: (key: EffectKey, value: number | undefined) => void;
+    submit: () => void;
+  }) => {
+    const { effectFields, fieldKey, updateField, submit } = props;
+    const { effectConfig } = useEffectEditorConfig();
+    const val = effectFields[fieldKey];
+    const config = effectConfig[fieldKey];
+    const handleChange = useCallback(
+      (value: boolean | string) => {
+        let newVal = value ? 1 : undefined;
+        updateField(fieldKey, newVal);
+        submit();
+      },
+      [fieldKey, updateField, submit],
+    );
+    return (
+      <Checkbox
+        key={fieldKey}
+        label={config.label ?? fieldKey}
+        checked={val === 1}
+        onChange={(_, data) => handleChange(data.checked)}
       />
-      <div style={{display: "flex", flexDirection: "column", alignSelf: "stretch"}}>
-        <CommonOptions title={t`亮度`}>
-          <Input
-            value={brightness.value}
-            placeholder={t`默认值1`}
-            onChange={(_, data) => {
-              brightness.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`对比度`}>
-          <Input
-            value={contrast.value}
-            placeholder={t`默认值1`}
-            onChange={(_, data) => {
-              contrast.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`饱和度`}>
-          <Input
-            value={saturation.value}
-            placeholder={t`默认值1`}
-            onChange={(_, data) => {
-              saturation.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`伽马值`}>
-          <Input
-            value={gamma.value}
-            placeholder={t`默认值1`}
-            onChange={(_, data) => {
-              gamma.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <div style={{flexGrow: 1}}/>
-        <Button
-          style={{ marginBottom: '14px' }}
-          onClick={submit}
-        >
-          {t`应用颜色变化`}
-        </Button>
-      </div>
-    </OptionCategory>
-    <OptionCategory key={4} title={t`泛光`}>
-      <CommonOptions title={t`强度`}>
-        <Input
-          value={bloom.value}
-          placeholder={t`默认值0`}
-          onChange={(_, data) => {
-            bloom.set(data.value);
-          }}
-          onBlur={submit}/>
+    );
+  },
+);
+/**
+ * 效果下拉菜单字段
+ */
+const EffectDropdownField = memo(
+  (props: {
+    effectFields: EffectFields;
+    fieldKey: EffectKey;
+    updateField: (key: EffectKey, value: number | undefined) => void;
+    submit: () => void;
+    options: Map<string, string>;
+  }) => {
+    const { effectFields, fieldKey, updateField, submit, options } = props;
+    const { effectConfig } = useEffectEditorConfig();
+    const val = effectFields[fieldKey];
+    const config = effectConfig[fieldKey];
+    const handleChange = useCallback(
+      (value: string | undefined) => {
+        let newVal: number | undefined;
+        if (value === undefined || value === '') {
+          newVal = undefined;
+        } else {
+          const num = Number(value);
+          newVal = isNaN(num) ? undefined : num;
+        }
+        updateField(fieldKey, newVal);
+        submit();
+      },
+      [fieldKey, updateField, submit],
+    );
+    return (
+      <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
+        <WheelDropdown
+          options={options}
+          value={(val ?? '').toString()}
+          onValueChange={handleChange}
+        />
       </CommonOptions>
-      <CommonOptions title={t`亮度`}>
-        <Input
-          value={bloomBrightness.value}
-          placeholder={t`默认值1`}
-          onChange={(_, data) => {
-            bloomBrightness.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-      <CommonOptions title={t`模糊`}>
-        <Input
-          value={bloomBlur.value}
-          placeholder={t`默认值0`}
-          onChange={(_, data) => {
-            bloomBlur.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-      <CommonOptions title={t`阈值`}>
-        <Input
-          value={bloomThreshold.value}
-          placeholder={t`默认值0`}
-          onChange={(_, data) => {
-            bloomThreshold.set(data.value);
-          }}
-          onBlur={submit}/>
-      </CommonOptions>
-    </OptionCategory>
-    <OptionCategory key={5} title={t`倒角`}>
-      <ColorPicker
-        color={localBevelColor}
-        alphaType="none"
-        onChange={handleLocalBevelColorChange}
-      />
-      <div style={{display: "flex", flexDirection: "column", alignSelf: "stretch"}}>
-        <CommonOptions title={t`透明度（0-1）`}>
-          <Input
-            value={bevel.value}
-            placeholder={t`默认值0`}
-            onChange={(_, data) => {
-              bevel.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`厚度`}>
-          <Input
-            value={bevelThickness.value}
-            placeholder={t`默认值0`}
-            onChange={(_, data) => {
-              bevelThickness.set(data.value);
-            }}
-            onBlur={submit}/>
-        </CommonOptions>
-        <CommonOptions title={t`旋转（角度）`}>
-          <Input
-            value={bevelRotation.value}
-            placeholder={t`默认值0`}
-            onChange={(_, data) => {
-              bevelRotation.set(data.value);
-            }}
-            onBlur={submit}/>
-          <div style={{flexGrow: 1}}/>
-        </CommonOptions>
-        <CommonOptions title={t`软化（0-1）`}>
-          <Input
-            value={bevelSoftness.value}
-            placeholder={t`默认值0`}
-            onChange={(_, data) => {
-              bevelSoftness.set(data.value);
-            }}
-            onBlur={submit}/>
-          <div style={{flexGrow: 1}}/>
-        </CommonOptions>
-        <div style={{flexGrow: 1}}/>
-        <Button
-          style={{ marginBottom: '14px' }}
-          onClick={submit}
-        >
-          {t`应用颜色变化`}
-        </Button>
-      </div>
-    </OptionCategory>
-    <OptionCategory key={6} title={t`滤镜`}>
-      <Checkbox checked={oldFilm.value === 1} onChange={(_, data) => { oldFilm.set(data.checked ? 1 : 0); submit(); }} label={t`老电影滤镜`} />
-      <Checkbox checked={dotFilm.value === 1} onChange={(_, data) => { dotFilm.set(data.checked ? 1 : 0); submit(); }} label={t`点状电影滤镜`}/>
-      <Checkbox checked={reflectionFilm.value === 1} onChange={(_, data) => { reflectionFilm.set(data.checked ? 1 : 0); submit(); }} label={t`反射电影滤镜`}/>
-      <Checkbox checked={glitchFilm.value === 1} onChange={(_, data) => { glitchFilm.set(data.checked ? 1 : 0); submit(); }} label={t`故障电影滤镜`}/>
-      <Checkbox checked={rgbFilm.value === 1} onChange={(_, data) => { rgbFilm.set(data.checked ? 1 : 0); submit(); }} label={t`RGB电影滤镜`}/>
-      <Checkbox checked={godrayFilm.value === 1} onChange={(_, data) => { godrayFilm.set(data.checked ? 1 : 0); submit(); }} label={t`光辉电影滤镜`}/>
-    </OptionCategory>
-  </>;
+    );
+  },
+);
+/**
+ * 通用效果字段
+ */
+const EffectField = memo(
+  (props: {
+    type?: string;
+    effectFields: EffectFields;
+    fieldKey: EffectKey;
+    updateField: (key: EffectKey, value: number | undefined) => void;
+    submit: () => void;
+    options?: Map<string, string>;
+  }) => {
+    const { type, effectFields, fieldKey, updateField, submit, options } = props;
+    switch (type) {
+    case 'checkbox':
+      return (
+        <EffectCheckboxField
+          key={fieldKey}
+          fieldKey={fieldKey}
+          effectFields={effectFields}
+          updateField={updateField}
+          submit={submit}
+        />
+      );
+    case 'dropdown':
+      return (
+        <EffectDropdownField
+          key={fieldKey}
+          fieldKey={fieldKey}
+          effectFields={effectFields}
+          updateField={updateField}
+          submit={submit}
+          options={options!}
+        />
+      );
+    default:
+      return (
+        <EffectInputField
+          key={fieldKey}
+          fieldKey={fieldKey}
+          effectFields={effectFields}
+          updateField={updateField}
+          submit={submit}
+        />
+      );
+    }
+  },
+);
+
+/**
+ * 效果编辑器
+ */
+export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
+  const { effectConfig, fieldGroups } = useEffectEditorConfig();
+  /**
+   * 解析初始JSON字符串，生成效果参数的初始状态
+   * @param json 初始效果配置的JSON字符串
+   * @returns 初始EffectFields对象
+   */
+  const getInitialFields = useCallback((json: string) => {
+    let effectObject = {} as any;
+    try {
+      if (json !== '') {
+        effectObject = JSON.parse(json);
+      }
+    } catch (e) {
+      logger.error('EffectEditor JSON.parse error', e);
+    }
+    let effectFields = {} as any;
+    try {
+      for (const key of Object.keys(effectConfig)) {
+        effectFields[key] = getValueByPath(effectObject, effectConfig[key as EffectKey].path);
+      }
+    } catch (e) {
+      logger.error('EffectEditor getEffectFields error', e);
+    }
+    return effectFields as EffectFields;
+  }, []);
+  // 状态：存储所有效果参数的当前值（键为EffectKey，值为数值或undefined）
+  const effectFields = useValue<EffectFields>(getInitialFields(props.json), true);
+  // 当父组件传递的 json 变化时，重新初始化状态
+  useEffect(() => {
+    effectFields.value = getInitialFields(props.json);
+  }, [props.json]);
+  /**
+   * 更新单个效果参数的值
+   * @param key 参数键（EffectKey）
+   * @param value 新值（数值或undefined）
+   */
+  const updateField = useCallback((key: EffectKey, value: number | undefined) => {
+    effectFields.set({ ...effectFields.value, [key]: value });
+  }, []);
+  /** 颜色选择器的当前颜色（基于colorRed/colorGreen/colorBlue） */
+  const color = useMemo(
+    () => rgbToColor(effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue),
+    [effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue],
+  );
+  /**
+   * 颜色选择器变化时的回调
+   * 更新colorRed/colorGreen/colorBlue参数
+   */
+  const handleLocalColorChange = useCallback(
+    debounce((_ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+      effectFields.set({
+        ...effectFields.value,
+        colorRed: newColor.r,
+        colorGreen: newColor.g,
+        colorBlue: newColor.b,
+      });
+    }, 100),
+    [],
+  );
+  /** 倒角颜色选择器的当前颜色（基于bevelRed/bevelGreen/bevelBlue） */
+  const bevelColor = useMemo(
+    () => rgbToColor(effectFields.value.bevelRed, effectFields.value.bevelGreen, effectFields.value.bevelBlue),
+    [effectFields.value.bevelRed, effectFields.value.bevelGreen, effectFields.value.bevelBlue],
+  );
+  /** 倒角颜色选择器变化时的回调 */
+  const handleLocalBevelColorChange = useCallback(
+    debounce((_ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
+      effectFields.set({
+        ...effectFields.value,
+        bevelRed: newColor.r,
+        bevelGreen: newColor.g,
+        bevelBlue: newColor.b,
+      });
+    }, 100),
+    [],
+  );
+  /**
+   * 切换选项
+   */
+  const toggleOptions = useMemo(
+    () =>
+      new Map<string, string>([
+        ['', t`默认`],
+        ['1', t`开启`],
+        ['0', t`关闭`],
+      ]),
+    [],
+  );
+  /**
+   * 生成包含所有参数的最终结果对象（按path路径嵌套）
+   * @returns 结构化的结果对象
+   */
+  const getUpdatedObject = useCallback(() => {
+    const result: any = {};
+    for (const key of Object.keys(effectFields.value) as EffectKey[]) {
+      setValueByPath(result, effectConfig[key].path, effectFields.value[key]);
+    }
+    return deepUndefined(result);
+  }, [effectFields.value]);
+  /**
+   * 提交更新
+   * 将最终结果对象转换为JSON字符串，通过onChange通知父组件
+   */
+  const submit = useCallback(
+    debounce(() => {
+      const updatedObject = getUpdatedObject();
+      const str = JSON.stringify(updatedObject);
+      props.onChange(str === '{}' ? '' : str);
+    }, 100),
+    [getUpdatedObject],
+  );
+  return (
+    <>
+      {fieldGroups.map((group, index) => (
+        <OptionCategory key={index + 1} title={group.title}>
+          {index === 2 || index === 4 ? ( // 有拾色器的组
+            <>
+              <ColorPicker
+                color={index === 2 ? color : bevelColor}
+                alphaType="none"
+                onChange={index === 2 ? handleLocalColorChange : handleLocalBevelColorChange}
+              />
+              <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'stretch' }}>
+                {group.keys.map((key) => (
+                  <EffectField
+                    type={effectConfig[key].type}
+                    key={key}
+                    fieldKey={key}
+                    effectFields={effectFields.value}
+                    updateField={updateField}
+                    submit={submit}
+                  />
+                ))}
+                <div style={{ flexGrow: 1 }} />
+                <Button style={{ marginBottom: '14px' }} onClick={submit}>
+                  {t`应用颜色变化`}
+                </Button>
+              </div>
+            </>
+          ) : index === 5 ? ( // 滤镜的组
+            group.keys.map((key) => (
+              <EffectField
+                type={effectConfig[key].type}
+                key={key}
+                fieldKey={key}
+                effectFields={effectFields.value}
+                updateField={updateField}
+                submit={submit}
+                options={toggleOptions}
+              />
+            ))
+          ) : (
+            // 其他的组
+            group.keys.map((key) => (
+              <EffectField
+                type={effectConfig[key].type}
+                key={key}
+                fieldKey={key}
+                effectFields={effectFields.value}
+                updateField={updateField}
+                submit={submit}
+              />
+            ))
+          )}
+        </OptionCategory>
+      ))}
+    </>
+  );
 }

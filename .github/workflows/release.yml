@@ -188,10 +188,55 @@ jobs:
         with:
           name: WebGAL_Terre_Windows_Setup
           path: bundle/WebGal_Terre_Setup.exe
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    env:
+      KEYSTORE: ${{ secrets.KEYSTORE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: 'yarn'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 21
+      - name: Decode and save keystore
+        if: ${{ env.KEYSTORE != '' }}
+        run: |
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > packages/terre-android/app/keystore.jks
+      - name: Save key.properties
+        if: ${{ env.KEYSTORE != '' }}
+        run: |
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> packages/terre-android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> packages/terre-android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> packages/terre-android/key.properties
+          echo "storeFile=keystore.jks" >> packages/terre-android/key.properties
+      - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: sh release-android.sh
+      - name: Upload Release Artifact
+        if: ${{ env.KEYSTORE != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: WebGAL_Terre_Android
+          path: release/WebGAL_Terre_Android.apk
+      - name: Upload Debug Artifact
+        if: ${{ env.KEYSTORE == '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: WebGAL_Terre_Android_debug
+          path: release/WebGAL_Terre_Android_debug.apk
   release:
     name: Release
     runs-on: ubuntu-latest
-    needs: ['build-linux','build-arm64','build-mac','build-windows','build-windows-nsis']
+    needs: ['build-linux','build-arm64','build-mac','build-windows','build-windows-nsis','build-android']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -260,3 +305,15 @@ jobs:
           asset_path: WebGAL_Terre_Windows_Setup/WebGal_Terre_Setup.exe
           asset_name: WebGAL_Terre_Windows_Setup_${{ github.ref_name }}.exe
           asset_content_type: application/vnd.microsoft.portable-executable
+
+      - name: Upload Android Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+        if: ${{ env.KEYSTORE != '' }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: WebGAL_Terre_Android/WebGAL_Terre_Android.apk
+          asset_name: WebGAL_Terre_Android_${{ github.ref_name }}.apk
+          asset_content_type: application/vnd.android.package-archive

@@ -46,3 +46,5 @@ public/templates/*
 /assets/templates/WebGAL_Template/assets
 /assets/templates/WebGAL_Template/index.html
 /assets/templates/WebGAL_Template/webgal-serviceworker.js
+
+lib/**/*

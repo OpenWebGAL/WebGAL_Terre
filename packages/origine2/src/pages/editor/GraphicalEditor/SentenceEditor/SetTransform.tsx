@@ -10,6 +10,8 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
+import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -31,10 +33,26 @@ export default function SetTransform(props: ISentenceEditorProps) {
   ]);
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
+  const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const easeTypeOptions = useEaseTypeOptions();
+  const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
+  const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
+
   const submit = () => {
-    const isGoNextStr = isGoNext.value ? " -next" : "";
-    const str = `setTransform:${transform.value} -target=${target.value} -duration=${duration.value}${isGoNextStr};`;
-    props.onSubmit(str);
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      transform.value,
+      props.sentence.args,
+      [
+        {key: "target", value: target.value},
+        {key: "duration", value: duration.value},
+        {key: "ease", value: ease.value},
+        {key: "writeDefault", value: writeDefault.value},
+        {key: "keep", value: keep.value},
+        {key: "next", value: isGoNext.value},
+      ],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
@@ -50,10 +68,10 @@ export default function SetTransform(props: ISentenceEditorProps) {
           }}/>
         </TerrePanel>
       </CommonOptions>
-      <CommonOptions key="10" title={t`持续时间（单位为毫秒）`}>
+      <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
         <div>
           <input
-            placeholder={t`持续时间（单位为毫秒）`}
+            placeholder={t`过渡时间（单位为毫秒）`}
             value={duration.value.toString()}
             className={styles.sayInput}
             style={{ width: "100%" }}
@@ -96,6 +114,28 @@ export default function SetTransform(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeTypeOptions}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
+        />
+      </CommonOptions>
+      <CommonOptions key="6" title={t`补充默认值`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          writeDefault.set(newValue);
+          submit();
+        }} onText={t`继承默认效果`} offText={t`继承现有效果`} isChecked={writeDefault.value} />
+      </CommonOptions>
+      <CommonOptions key="7" title={t`跨语句动画`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          keep.set(newValue);
+          submit();
+        }} onText={t`开启`} offText={t`关闭`} isChecked={keep.value} />
+      </CommonOptions>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);

@@ -11,6 +11,8 @@ import {
   platforms,
 } from './manage-game.dto';
 import { TemplateConfigDto } from '../manage-template/manage-template.dto';
+import { promisify } from 'util';
+import { execFile } from 'child_process';
 
 @Injectable()
 export class ManageGameService {
@@ -34,15 +36,16 @@ export class ManageGameService {
         try {
           const gameDir = item.name;
           const gameConfig = await this.getGameConfig(gameDir);
+          let templateConfig: TemplateConfigDto = null;
           const configFilePath = this.webgalFs.getPathFromRoot(
             `/public/games/${gameDir}/game/template/template.json`,
           );
-          const templateConfigString = await this.webgalFs.readTextFile(
-            configFilePath,
-          );
-          const templateConfig: TemplateConfigDto = JSON.parse(
-            templateConfigString as string,
-          );
+          if (await this.webgalFs.exists(configFilePath)) {
+            const templateConfigString = await this.webgalFs.readTextFile(
+              configFilePath,
+            );
+            templateConfig = JSON.parse(templateConfigString as string);
+          }
           return {
             name: gameConfig.Game_name,
             dir: item.name,
@@ -287,7 +290,7 @@ export class ManageGameService {
             gameDir,
             `${electronExportDir}/resources/app/public/game/`,
           );
-          // 复制图标
+          // 复制并替换可执行文件图标
           const icons = await this.getIcons(gameName);
           if (icons.platforms.includes('electron')) {
             await this.webgalFs.copy(
@@ -296,6 +299,22 @@ export class ManageGameService {
               ),
               `${electronExportDir}/`,
             );
+            try {
+              const rceditPath = this.webgalFs.getPathFromRoot(
+                '/lib/rcedit-x64.exe',
+              );
+              if (await this.webgalFs.exists(rceditPath)) {
+                await promisify(execFile)(rceditPath, [
+                  `${electronExportDir}/WebGAL.exe`,
+                  '--set-icon',
+                  `${electronExportDir}/icon.ico`,
+                ]);
+              } else {
+                this.logger.log(`${rceditPath} 不存在, 跳过修改图标`);
+              }
+            } catch (error) {
+              this.logger.error('无法修改图标', error);
+            }
           }
           // 创建 app.asar
           await asar.createPackage(

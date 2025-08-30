@@ -1,6 +1,17 @@
+import * as process from 'process';
+
+const args = process.argv.slice(2);
+let cwd = process.cwd();
+
+const cwdIndex = args.indexOf('--cwd');
+if (cwdIndex !== -1 && cwdIndex + 1 < args.length) {
+  cwd = args[cwdIndex + 1];
+}
+
+process.chdir(cwd);
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as process from 'process';
 import { _open } from './util/open';
 import { urlencoded, json } from 'express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -11,7 +22,7 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 
 let WEBGAL_PORT = 3000; // 默认端口
-export const version_number = `4.5.14`;
+export const version_number = `4.5.15`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }

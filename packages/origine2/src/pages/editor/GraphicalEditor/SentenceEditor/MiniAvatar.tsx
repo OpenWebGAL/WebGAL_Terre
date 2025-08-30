@@ -5,13 +5,20 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {t} from "@lingui/macro";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function MiniAvatar(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const isNoFile = props.sentence.content === "";
   const submit = () => {
-    props.onSubmit(`miniAvatar:${fileName.value};`);
+    const submitString = combineSubmitString(
+      props.sentence.commandRaw,
+      fileName.value,
+      props.sentence.args,
+      [],
+    );
+    props.onSubmit(submitString);
   };
 
   return <div className={styles.sentenceEditorContent}>
