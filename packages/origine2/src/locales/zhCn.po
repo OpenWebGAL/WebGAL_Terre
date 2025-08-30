@@ -431,6 +431,7 @@ msgstr "关于"
 msgid "关联立绘"
 msgstr "关联立绘"
 
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:334
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
@@ -976,7 +977,7 @@ msgstr "应用"
 msgid "应用的模板"
 msgstr "应用的模板"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:259
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:385
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "应用颜色变化"
@@ -985,6 +986,7 @@ msgstr "应用颜色变化"
 msgid "延迟时间（秒）"
 msgstr "延迟时间（秒）"
 
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:333
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
@@ -2477,6 +2479,7 @@ msgid "高斯模糊"
 msgstr "高斯模糊"
 
 #: src/hooks/useEaseTypeOptions.ts:6
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:332
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:146
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
 msgid "默认"
