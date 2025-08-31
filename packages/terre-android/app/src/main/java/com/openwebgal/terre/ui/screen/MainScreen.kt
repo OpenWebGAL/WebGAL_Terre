@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ExitToApp
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -67,14 +69,14 @@ fun MainScreen(
                 ExtendedFloatingActionButton(
                     icon = {
                         if (isRunning) {
-                            Icon(Icons.Rounded.Stop, contentDescription = null)
+                            Icon(Icons.AutoMirrored.Rounded.ExitToApp, contentDescription = null)
                         } else {
                             Icon(Icons.Rounded.PlayArrow, contentDescription = null)
                         }
                     },
                     text = {
                         if (isRunning) {
-                            Text(stringResource(R.string.stop))
+                            Text(stringResource(R.string.exit))
                         } else {
                             Text(stringResource(R.string.start))
                         }
