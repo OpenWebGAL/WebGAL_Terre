@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="stop">停止</string>
+    <string name="exit">退出</string>
     <string name="open_browser">打开浏览器</string>
     <string name="could_not_open_browser">无法打开浏览器</string>
     <string name="channel_name">WebGAL Terre</string>
