@@ -273,7 +273,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     return effectFields as EffectFields;
   }, []);
   // 状态：存储所有效果参数的当前值（键为EffectKey，值为数值或undefined）
-  const effectFields = useValue<EffectFields>(getInitialFields(props.json), true, "__effect_current");
+  const effectFields = useValue<EffectFields>(getInitialFields(props.json));
   // 当父组件传递的 json 变化时，重新初始化状态
   useEffect(() => {
     effectFields.value = getInitialFields(props.json);
@@ -285,7 +285,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
    */
   const updateField = useCallback((key: EffectKey, value: number | undefined) => {
     effectFields.set({ ...effectFields.value, [key]: value });
-  }, []);
+  }, [effectFields.value]);
   /** 颜色选择器的当前颜色（基于colorRed/colorGreen/colorBlue） */
   const color = useMemo(
     () => rgbToColor(effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue),
