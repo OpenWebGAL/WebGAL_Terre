@@ -1,4 +1,4 @@
-import { redirect } from "@/hooks/useHashRoute";
+import { goTo } from "@/router";
 import { gameListFetcher } from "@/pages/dashboard/DashBoard";
 import useEditorStore from "@/store/useEditorStore";
 import { GameEditorContext, createGameEditorStore } from "@/store/useGameEditorStore";
@@ -11,7 +11,7 @@ const GameEditorProvider = ({ children }: { children: ReactNode }) => {
   const gameDir = useEditorStore.use.subPage();
 
   if (page !== 'game' || !gameDir) {
-    redirect('dashboard', 'game');
+    goTo('dashboard', 'game');
   };
 
   const { data: gameList, isLoading: gameListLoading } = useSWR("game-list", gameListFetcher);
@@ -19,7 +19,7 @@ const GameEditorProvider = ({ children }: { children: ReactNode }) => {
   const inGameList = gameList && gameList.length > 0 && gameList.some((game) => game.dir === gameDir);
 
   if (!fristLoading && !inGameList) {
-    redirect('dashboard', 'game');
+    goTo('dashboard', 'game');
   }
 
   return (

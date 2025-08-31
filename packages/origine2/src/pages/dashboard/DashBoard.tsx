@@ -46,7 +46,7 @@ import classNames from "classnames";
 import useEditorStore from "@/store/useEditorStore";
 import {api} from "@/api";
 import useSWR, {useSWRConfig} from "swr";
-import {redirect} from "@/hooks/useHashRoute";
+import { goTo } from '@/router';
 import {t} from "@lingui/macro";
 import { useRelease } from "@/hooks/useRelease";
 import { __INFO } from "@/config/info";
@@ -89,7 +89,7 @@ export default function DashBoard() {
   const selectedValue = subPage;
 
   const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
-    redirect('dashboard', data.value as string);
+    goTo('dashboard', data.value as string);
   };
 
   // 当前选中的游戏
