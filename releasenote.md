@@ -4,8 +4,6 @@
 
 #### 新功能
 
-新增 Android 平台支持，可构建和导出 APK
-
 为编辑器新增可搜索的级联选择器，优化复杂选项的查找体验
 
 新增立绘眨眼（Blink）和焦点（Focus）参数的可视化配置
@@ -28,16 +26,12 @@
 
 修复了缓动（Ease）类型缺少国际化翻译的问题
 
-修复 Android 平台首次启动时文件目录可能为空的问题
-
 <!-- English Translation -->
 ## Release Notes
 
 ### In this version
 
 #### New Features
-
-Added support for the Android platform, enabling the ability to build and export APKs
 
 Added a searchable cascader to the editor to optimize finding complex options
 
@@ -61,16 +55,12 @@ Fixed an issue where the script did not sync to the first line when the fast pre
 
 Fixed missing internationalization for ease types
 
-Fixed an issue on Android where the file directory could be null on first boot
-
 <!-- Japanese Translation -->
 ## リリースノート
 
 ### このバージョンでは
 
 #### 新機能
-
-Android プラットフォームのサポートを追加し、APK のビルドとエクスポートが可能になりました
 
 エディタに検索可能なカスケードセレクタを追加し、複雑なオプションの検索体験を最適化しました
 
@@ -93,5 +83,3 @@ ARM64 アーキテクチャでのパッケージング問題を修正しまし�
 高速プレビューウィンドウがフォーカスされた際に、スクリプトが先頭行に同期されない問題を修正しました
 
 イージング（Ease）タイプの国際化翻訳が欠落している問題を修正しました
-
-Android プラットフォームでの初回起動時にファイルディレクトリが null になる可能性がある問題を修正しました
