@@ -273,7 +273,7 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     return effectFields as EffectFields;
   }, []);
   // 状态：存储所有效果参数的当前值（键为EffectKey，值为数值或undefined）
-  const effectFields = useValue<EffectFields>(getInitialFields(props.json), true);
+  const effectFields = useValue<EffectFields>(getInitialFields(props.json), true, "__effect_current");
   // 当父组件传递的 json 变化时，重新初始化状态
   useEffect(() => {
     effectFields.value = getInitialFields(props.json);

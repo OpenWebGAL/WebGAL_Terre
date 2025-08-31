@@ -4,7 +4,9 @@ const holdMap = new Map();
 
 export function useValue<T>(initialState: T, isHold?: boolean, key?: string) {
   const holdKey = key ?? '__value_hold_key__';
-  const fromHoldValue = holdMap.get(holdKey);
+  let fromHoldValue;
+  if(isHold)
+    fromHoldValue = holdMap.get(holdKey);
   const [value, setValue] = useState<T>(fromHoldValue ?? initialState);
   return {
     _value: value,
