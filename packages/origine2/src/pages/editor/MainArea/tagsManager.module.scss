@@ -1,3 +1,9 @@
+.tagsManager {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+}
+
 .tagsContainer {
   display: flex;
   overflow: auto;
@@ -82,4 +88,10 @@
 
 .tag_active>.closeIcon {
   visibility: visible;
+}
+
+.tooltip {
+  font-size: 120%;
+  line-height: 150%;
+  color: var(--primary);
 }
