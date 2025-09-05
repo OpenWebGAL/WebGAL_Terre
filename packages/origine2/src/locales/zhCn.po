@@ -763,6 +763,10 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
+#: src/pages/editor/MainArea/TagsManager.tsx:167
+msgid "增量保存"
+msgstr "增量保存"
+
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
 msgstr "外层文本"
@@ -1488,6 +1492,10 @@ msgstr "正常播放 BGM"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/End.tsx:9
 msgid "此指令将结束游戏"
 msgstr "此指令将结束游戏"
+
+#: src/pages/editor/MainArea/TagsManager.tsx:142
+msgid "此选项可将当前文件另存备份，防止因原文件意外损坏而丢失所有数据。"
+msgstr "此选项可将当前文件另存备份，防止因原文件意外损坏而丢失所有数据。"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:130
 msgid "永不换行"
