@@ -1,40 +1,48 @@
-; 依赖
+﻿; 依赖
 !include MUI2.nsh
-
 
 ; 变量
 
 
 ; 常量
 !define NAME "WebGal_Terre"
-!define VERSION "4.5.13" ; 版本号变量
+
+; 从 package.json 自动读取版本号
+!define VERSION "0.0.0"
+!searchparse /file package.json `"version": "` VERSION `"`
+
 !define PRODUCT_VERSION "${VERSION}.0"
-!define COPYRIGHT "Mahiru - https://github.com/MakinoharaShoko" ; 版权信息
+!define COPYRIGHT "Copyright © 2022 OpenWebGAL. All rights reserved." ; 版权信息
 !define ICON_PATH ".\assets\icon.ico"
-!define UNINSTALL_KEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall${NAME}" ; 软件注册
 !define RELEASE_PATH ".\release" ; 构建文件所在位置
+
+; 软件卸载注册表项 (当前用户)
+!define UNINSTALL_KEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
 
 
 ; 安装信息
 Name "${NAME} v${version} Setup" ; 安装程序名称
 OutFile "./bundle/WebGal_Terre_Setup.exe" ; 安装包输出路径
-RequestExecutionLevel admin ; 设置安装包以管理员权限运行
+RequestExecutionLevel user ; 设置为用户权限，无需管理员
+ManifestSupportedOS all
+
 ; 图标
 Icon "${ICON_PATH}"
 !define MUI_ICON "${ICON_PATH}"
 !define MUI_UNICON "${ICON_PATH}"
 !define MUI_ABORTWARNING ; 退出时警告
-; 默认安装路径
+
+; 默认安装路径 (用户个人目录)
 InstallDir "$LOCALAPPDATA\${NAME}"
 
 ; 版本信息
-VIAddVersionKey ProductName "${NAME} Installer" ; product name
-VIAddVersionKey ProductVersion "${VERSION}" ; product version
-VIAddVersionKey Comments "${NAME} is WebGal's web graphics editor." ; description
-VIAddVersionKey LegalCopyright "${COPYRIGHT}" ; copyright
-VIAddVersionKey FileVersion "${VERSION}" ; file version
-VIAddVersionKey FileDescription "${NAME} Installer" ; file description
-VIProductVersion "${PRODUCT_VERSION}" ; product verion(actual replace FileVersion)
+VIAddVersionKey ProductName "${NAME} Installer"
+VIAddVersionKey ProductVersion "${VERSION}"
+VIAddVersionKey Comments "${NAME} is WebGal's web graphics editor."
+VIAddVersionKey LegalCopyright "${COPYRIGHT}"
+VIAddVersionKey FileVersion "${VERSION}"
+VIAddVersionKey FileDescription "${NAME} Installer"
+VIProductVersion "${PRODUCT_VERSION}"
 
 
 ; Welcome page
@@ -75,34 +83,27 @@ Section -Install
     ; 开始菜单
     CreateShortCut "$SMPROGRAMS\${NAME}.lnk" "$INSTDIR\${NAME}.exe"
 
-    ; Register the installed software
-    WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayName" "${Name}"
-    WriteRegStr HKLM "${UNINSTALL_KEY}" "InstallDir" "$INSTDIR"
-    WriteRegStr HKLM "${UNINSTALL_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
-    WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\uninstallerIcon.ico"
-    WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "${VERSION}"
-
-    ; 让程序以管理员身份运行
-    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\WebGal_Terre.exe" "RUNASADMIN"
-SectionEnd
-
-Section run_as_admin
+    ; 写入卸载信息到注册表 (当前用户)
+    WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayName" "${Name}"
+    WriteRegStr HKCU "${UNINSTALL_KEY}" "InstallLocation" "$INSTDIR" ; 使用更标准的 InstallLocation
+    WriteRegStr HKCU "${UNINSTALL_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
+    WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\${NAME}.exe" ; 指向主程序作为图标
+    WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayVersion" "${VERSION}"
+    WriteRegStr HKCU "${UNINSTALL_KEY}" "Publisher" "OpenWebGAL" ; 添加发布者信息
 SectionEnd
 
 
 Section -Uninstall
     RMDir /r "$INSTDIR\"
 
-    ; delete Desktop icon
+    ; 删除桌面快捷方式
     Delete "$DESKTOP\${NAME}.lnk"
 
-    ; delete start menu folder 
+    ; 删除开始菜单快捷方式
     Delete "$SMPROGRAMS\${NAME}.lnk"
 
-    ; delete reg item
-    DeleteRegKey HKLM "${UNINSTALL_KEY}"
-
-    DeleteRegKey HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers\$INSTDIR"
+    ; 删除注册表项 (当前用户)
+    DeleteRegKey HKCU "${UNINSTALL_KEY}"
 SectionEnd
 
 ; languages
