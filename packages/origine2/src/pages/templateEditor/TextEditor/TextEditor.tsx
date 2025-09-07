@@ -3,6 +3,7 @@ import useSWR, { useSWRConfig } from 'swr';
 import axios from 'axios';
 import { api } from '@/api';
 import { WsUtil } from '@/utils/wsUtil';
+import useEditorStore from '@/store/useEditorStore';
 
 export default function TextEditor({ path }: { path: string }) {
   const { mutate } = useSWRConfig();
@@ -14,6 +15,8 @@ export default function TextEditor({ path }: { path: string }) {
   };
 
   const { data } = useSWR(path, fileFetcher);
+
+  const isDarkMode = useEditorStore.use.isDarkMode();
 
   const update = async (text: string) => {
     await api.assetsControllerEditTextFile({ textFile: text, path: path });
@@ -62,7 +65,8 @@ export default function TextEditor({ path }: { path: string }) {
 
     iframe.contentWindow?.postMessage({ type: 'setValue', value: data }, '*');
     iframe.contentWindow?.postMessage({ type: 'setLanguage', language: extName }, '*');
-  }, [data, editorReady, extName]);
+    iframe.contentWindow?.postMessage({ type: 'setTheme', theme: isDarkMode ? 'vs-dark' : 'vs' }, '*');
+  }, [data, editorReady, extName, isDarkMode]);
 
   return memoizedIframe;
 }

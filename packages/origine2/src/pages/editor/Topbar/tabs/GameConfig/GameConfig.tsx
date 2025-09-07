@@ -264,7 +264,7 @@ function GameConfigEditor(props: IGameConfigEditor) {
     {!showEditBox.value && props.value}
     {!showEditBox.value &&
       <span className={styles.editButton} onClick={() => showEditBox.set(true)}>
-        <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
+        <Write theme="outline" size="16" fill="var(--primary)" strokeWidth={3}/>
       </span>}
     {showEditBox.value &&
       <Input
@@ -314,7 +314,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
       basePath={[props.sourceBase]}
       button={
         <span className={styles.editButton}>
-          <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
+          <Write theme="outline" size="16" fill="var(--primary)" strokeWidth={3}/>
         </span>
       }
       selectedFilePath={props.value}

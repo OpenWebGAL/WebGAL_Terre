@@ -199,7 +199,7 @@ msgstr "Y軸スケール"
 msgid "z-index"
 msgstr "z-index"
 
-#: src/pages/editor/Topbar/Topbar.tsx:129
+#: src/pages/editor/Topbar/Topbar.tsx:133
 msgid "一直显示功能区"
 msgstr "常にツールバーを表示"
 
@@ -280,9 +280,16 @@ msgstr "人物や背景画像にエフェクトや変形を設定する。"
 msgid "主要样式"
 msgstr "メインスタイル"
 
-#: src/pages/editor/Topbar/Topbar.tsx:174
+#: src/pages/editor/Topbar/Topbar.tsx:202
 msgid "主页"
 msgstr "WebGALホーム"
+
+#: src/pages/dashboard/DashBoard.tsx:210
+#: src/pages/dashboard/DashBoard.tsx:211
+#: src/pages/editor/Topbar/Topbar.tsx:141
+#: src/pages/editor/Topbar/Topbar.tsx:152
+msgid "主题"
+msgstr "テーマ"
 
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:78
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:87
@@ -489,7 +496,7 @@ msgid "最小高度"
 msgstr "最小高さ"
 
 #: src/pages/dashboard/About.tsx:47
-#: src/pages/dashboard/DashBoard.tsx:157
+#: src/pages/dashboard/DashBoard.tsx:159
 msgid "最新版本"
 msgstr "最新バージョン"
 
@@ -589,7 +596,7 @@ msgstr "ゲームをリフレッシュ"
 msgid "前景"
 msgstr "Foreground"
 
-#: src/pages/editor/Topbar/Topbar.tsx:125
+#: src/pages/editor/Topbar/Topbar.tsx:129
 msgid "功能区显示"
 msgstr "機能区の表示"
 
@@ -627,7 +634,7 @@ msgstr "厚さ"
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
-#: src/pages/dashboard/DashBoard.tsx:152
+#: src/pages/dashboard/DashBoard.tsx:154
 msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
 
@@ -699,6 +706,7 @@ msgid "图像"
 msgstr "画像"
 
 #: src/pages/editor/MainArea/EditorToolbar.tsx:65
+#: src/pages/templateEditor/TemplateEditorMainAria/TemplateEditorToolbar.tsx:35
 msgid "图形编辑器"
 msgstr "グラフィックエディタ"
 
@@ -857,7 +865,7 @@ msgid "对话框标题"
 msgstr "ダイアログタイトル"
 
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:62
-#: src/pages/editor/Topbar/Topbar.tsx:105
+#: src/pages/editor/Topbar/Topbar.tsx:109
 msgid "导出"
 msgstr "エクスポート"
 
@@ -941,7 +949,7 @@ msgstr "左の立ち絵"
 msgid "左对齐"
 msgstr "左揃え"
 
-#: src/pages/dashboard/DashBoard.tsx:108
+#: src/pages/dashboard/DashBoard.tsx:110
 msgid "已创建"
 msgstr "作成済み"
 
@@ -953,11 +961,11 @@ msgstr "ファイルまたはフォルダは既に存在します {0}"
 
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
-#: src/pages/editor/Topbar/Topbar.tsx:104
+#: src/pages/editor/Topbar/Topbar.tsx:108
 msgid "帮助"
 msgstr "ヘルプ"
 
-#: src/pages/editor/Topbar/Topbar.tsx:160
+#: src/pages/editor/Topbar/Topbar.tsx:188
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:114
 msgid "帮助文档"
 msgstr "ヘルプドキュメント"
@@ -1003,7 +1011,7 @@ msgid "强度"
 msgstr "強度"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:156
+#: src/pages/dashboard/DashBoard.tsx:158
 msgid "当前版本"
 msgstr "現在のバージョン"
 
@@ -1011,7 +1019,7 @@ msgstr "現在のバージョン"
 msgid "德语"
 msgstr "ドイツ語"
 
-#: src/pages/dashboard/DashBoard.tsx:166
+#: src/pages/dashboard/DashBoard.tsx:168
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
@@ -1446,7 +1454,7 @@ msgstr "タイトルのBGM"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:214
+#: src/pages/dashboard/DashBoard.tsx:228
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
 msgid "模板"
 msgstr "テンプレート"
@@ -1518,9 +1526,17 @@ msgstr "コメント"
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "コメントは編集時のみ表示され、ゲームプレイ時には非表示"
 
+#: src/pages/editor/Topbar/Topbar.tsx:157
+msgid "浅色"
+msgstr "ライト"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:73
 msgid "淡入淡出"
 msgstr "フェードインとアウト"
+
+#: src/pages/editor/Topbar/Topbar.tsx:158
+msgid "深色"
+msgstr "ダーク"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:51
 msgid "添加"
@@ -1562,7 +1578,7 @@ msgstr "カスタム属性を追加"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:275
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:71
-#: src/pages/editor/Topbar/Topbar.tsx:108
+#: src/pages/editor/Topbar/Topbar.tsx:112
 msgid "添加语句"
 msgstr "ステートメントを追加"
 
@@ -1576,7 +1592,7 @@ msgstr "現在のステージの特殊効果をクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
-#: src/pages/dashboard/DashBoard.tsx:212
+#: src/pages/dashboard/DashBoard.tsx:226
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1619,7 +1635,7 @@ msgstr "ゲームID"
 msgid "游戏配置"
 msgstr "ゲーム構成"
 
-#: src/pages/editor/Topbar/Topbar.tsx:146
+#: src/pages/editor/Topbar/Topbar.tsx:174
 msgid "源代码"
 msgstr "ソースコード"
 
@@ -1684,7 +1700,7 @@ msgstr "テンプレート\"{templateName}\"を削除してもよろしいです
 msgid "确认按钮文本"
 msgstr "確認ボタンのテキスト"
 
-#: src/pages/editor/Topbar/Topbar.tsx:102
+#: src/pages/editor/Topbar/Topbar.tsx:106
 msgid "视图"
 msgstr "ビュー"
 
@@ -1909,6 +1925,7 @@ msgid "背景颜色"
 msgstr "背景色"
 
 #: src/pages/editor/MainArea/EditorToolbar.tsx:61
+#: src/pages/templateEditor/TemplateEditorMainAria/TemplateEditorToolbar.tsx:28
 msgid "脚本编辑器"
 msgstr "スクリプトエディタ"
 
@@ -1920,7 +1937,7 @@ msgstr "自動"
 msgid "自动换行"
 msgstr "自動折り返し"
 
-#: src/pages/editor/Topbar/Topbar.tsx:130
+#: src/pages/editor/Topbar/Topbar.tsx:134
 msgid "自动隐藏功能区"
 msgstr "ツールバーを自動的に隠す"
 
@@ -1959,7 +1976,7 @@ msgid "英语"
 msgstr "英語"
 
 #: src/pages/dashboard/About.tsx:59
-#: src/pages/dashboard/DashBoard.tsx:162
+#: src/pages/dashboard/DashBoard.tsx:164
 msgid "获取最新版本"
 msgstr "最新バージョンをダウンロード"
 
@@ -2046,7 +2063,7 @@ msgstr "CG/BGMの名前"
 msgid "解锁鉴赏类型"
 msgstr "タイプ"
 
-#: src/pages/editor/Topbar/Topbar.tsx:103
+#: src/pages/editor/Topbar/Topbar.tsx:107
 msgid "设置"
 msgstr "設定"
 
@@ -2086,8 +2103,8 @@ msgstr "このコマンドは認識されません、スクリプト編集モー
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
-#: src/pages/dashboard/DashBoard.tsx:195
-#: src/pages/dashboard/DashBoard.tsx:196
+#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:198
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:65
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:71
 msgid "语言"
@@ -2345,7 +2362,7 @@ msgstr "透明度（０－１）"
 msgid "通过选项进入不同的场景"
 msgstr "選択肢からシーンに切り替えることが可能です"
 
-#: src/pages/editor/Topbar/Topbar.tsx:101
+#: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "配置"
 msgstr "設定"
 

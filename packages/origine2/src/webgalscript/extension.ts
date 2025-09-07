@@ -16,6 +16,12 @@ const manifest: IExtensionManifest = {
         path: '/white.json',
         uiTheme: 'vs',
       },
+      // @ts-ignore id type problem
+      {
+        label: 'WebGAL Black',
+        path: '/black.json',
+        uiTheme: 'vs',
+      },
     ],
     grammars: [
       {
@@ -31,4 +37,5 @@ const manifest: IExtensionManifest = {
 const { registerFileUrl } = registerExtension(manifest, ExtensionHostKind.LocalProcess);
 
 registerFileUrl('/white.json', new URL('../config/themes/monokai-light-vs.json', import.meta.url).href);
+registerFileUrl('/black.json', new URL('../config/themes/vscode-dark-modern.json', import.meta.url).href);
 registerFileUrl('/hl.json', new URL('../config/highlighting/hl.json', import.meta.url).href);
