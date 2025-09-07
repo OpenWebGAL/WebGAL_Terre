@@ -24,6 +24,7 @@ import { candidateFontSizes } from './constants';
 import { useEffect, useState } from 'react';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
 import TerreToggle from '@/components/terreToggle/TerreToggle';
+import { PreviewClose, PreviewOpen } from '@icon-park/react';
 
 export function SettingsTab() {
 
@@ -36,9 +37,11 @@ export function SettingsTab() {
   const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 
   const isAutoWarp = useEditorStore.use.isAutoWarp();
+  const updateIsAutoWarp = useEditorStore.use.updateIsAutoWarp();
+  const isShowPreview = useEditorStore.use.isShowPreview();
+  const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
-  const updateIsAutoWarp = useEditorStore.use.updateIsAutoWarp();
   const isUseExpSyncFast = useEditorStore.use.isUseExpFastSync();
   const updateIsUseExpSyncFast = useEditorStore.use.updateIsUseExpFastSync();
 
@@ -81,7 +84,14 @@ export function SettingsTab() {
         </MenuPopover>
       </Menu>
     </TabItem>
-    <TabItem title={t`实时预览`}>
+    <TabItem title={t`预览`}>
+      <IconWithTextItem
+        onClick={() => {
+          updateIsShowPreview(!isShowPreview);
+        }}
+        icon={isShowPreview ? <PreviewOpen className={s.iconColor} /> : <PreviewClose className={s.iconColor} />}
+        text={isShowPreview ? t`显示预览窗口` : t`关闭预览窗口`}
+      />
       <Tooltip
         content={<div
           className={s.previewTips}>{t`实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。`}</div>}
@@ -90,13 +100,13 @@ export function SettingsTab() {
         hideDelay={0}
       >
         <div>
-          <IconWithTextItem
-            onClick={() => {
-              updateIsEnableLivePreview(!isEnableLivePreview);
-            }}
-            icon={isEnableLivePreview ? <LiveIcon className={s.iconColor} /> : <LiveOffIcon className={s.iconColor} />}
-            text={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
-          />
+        <IconWithTextItem
+          onClick={() => {
+            updateIsEnableLivePreview(!isEnableLivePreview);
+          }}
+          icon={isEnableLivePreview ? <LiveIcon className={s.iconColor} /> : <LiveOffIcon className={s.iconColor} />}
+          text={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
+        />
         </div>
       </Tooltip>
     </TabItem>

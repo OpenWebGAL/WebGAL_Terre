@@ -21,7 +21,7 @@
   -webkit-user-select: none;
   user-select: none;
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   flex-shrink: 0;
   position: relative;
   // width: calc(var(--sidebar-width) - 8px);
@@ -44,20 +44,7 @@
 }
 
 .gamePreviewButons {
-  display: none;
-  position: absolute;
-  left: calc(var(--sidebar-width) - 8px);
-  top: 0px;
-  background: var(--bg-card);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  border: var(--border-md);
-  border-left: none;
-  box-shadow: var(--shadow-md);
-  z-index: 999;
-}
-
-.preview_container:hover .gamePreviewButons {
-  display: block;
+  display: flex;
 }
 
 .preview_top_title_container {
