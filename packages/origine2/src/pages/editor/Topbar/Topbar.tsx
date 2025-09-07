@@ -1,6 +1,4 @@
 import styles from "./topbar.module.scss";
-import GithubIcon from './assets/github.svg';
-import TerreIcon from './assets/wgfav-new-blue.png';
 import {useEffect} from "react";
 import TopbarTabButton from "@/pages/editor/Topbar/TopbarTabButton";
 import ConfigTab from "@/pages/editor/Topbar/tabs/GameConfig/ConfigTab";
@@ -36,7 +34,7 @@ import {IGameEditorSidebarTabs, IGameEditorTopbarTabs} from "@/types/gameEditor"
 import {redirect} from "@/hooks/useHashRoute";
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
-import { Platte } from "@icon-park/react";
+import { Github, Platte } from "@icon-park/react";
 
 const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
 const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
@@ -160,7 +158,7 @@ export default function TopBar() {
         </MenuPopover>
       </Menu>
       <ToolbarButton
-        icon={<img src={GithubIcon} height={20} width={20} alt="GitHub Repo" style={isDarkMode ? { filter: 'brightness(0) invert(1)' } : {}} />}
+        icon={<Github />}
         onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}
         style={{
           fontWeight: 'normal',
