@@ -36,6 +36,7 @@ import {IGameEditorSidebarTabs, IGameEditorTopbarTabs} from "@/types/gameEditor"
 import {redirect} from "@/hooks/useHashRoute";
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
+import { Platte } from "@icon-park/react";
 
 const PaddingTopIcon = bundleIcon(PaddingTop24Filled, PaddingTop24Regular);
 const EyeOffIcon = bundleIcon(EyeOff24Filled, EyeOff24Regular);
@@ -45,6 +46,9 @@ export default function TopBar() {
 
   const isAutoHideToolbar = useEditorStore.use.isAutoHideToolbar();
   const updateIsAutoHideToolbar = useEditorStore.use.updateIisAutoHideToolbar();
+
+  const isDarkMode = useEditorStore.use.isDarkMode();
+  const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
 
   const isCodeMode = useGameEditorContext((state) => state.isCodeMode); // false 是脚本模式 true 是图形化模式
   const currentTopbarTab = useGameEditorContext((state) => state.currentTopbarTab);
@@ -131,8 +135,32 @@ export default function TopBar() {
           </MenuList>
         </MenuPopover>
       </Menu>
+      <Menu>
+        <MenuTrigger>
+          <ToolbarButton
+            aria-label={t`主题`}
+            icon={<Platte/>}
+            style={{
+              fontWeight: 'normal',
+              fontSize: '14px',
+              paddingLeft: '4px',
+              paddingRight: '4px',
+              minWidth: 0,
+              textWrap: 'nowrap'
+            }}
+          >
+            {t`主题`}
+          </ToolbarButton>
+        </MenuTrigger>
+        <MenuPopover>
+          <MenuList>
+            <MenuItem onClick={() => updateIsDarkMode(false)}>{t`浅色`}</MenuItem>
+            <MenuItem onClick={() => updateIsDarkMode(true)}>{t`深色`}</MenuItem>
+          </MenuList>
+        </MenuPopover>
+      </Menu>
       <ToolbarButton
-        icon={<img src={GithubIcon} height={20} width={20} alt="GitHub Repo"/>}
+        icon={<img src={GithubIcon} height={20} width={20} alt="GitHub Repo" style={isDarkMode ? { filter: 'brightness(0) invert(1)' } : {}} />}
         onClick={() => window.open("https://github.com/OpenWebGAL/WebGAL_Terre", "_blank")}
         style={{
           fontWeight: 'normal',

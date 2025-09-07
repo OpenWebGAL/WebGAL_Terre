@@ -1,21 +1,20 @@
 .item {
   display: flex;
   flex-flow: column;
-  background-color: rgb(255, 255, 255);
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
 .title {
   text-align: left;
-  color: rgb(99, 99, 99);
+  color: var(--text);
   font-weight: bold;
   font-size: 110%;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
-  background-color: rgb(245, 245, 245);
+  background-color: var(--black-5pct);
 }
 
 .contentRow {
