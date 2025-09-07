@@ -100,13 +100,13 @@ export function SettingsTab() {
         hideDelay={0}
       >
         <div>
-        <IconWithTextItem
-          onClick={() => {
-            updateIsEnableLivePreview(!isEnableLivePreview);
-          }}
-          icon={isEnableLivePreview ? <LiveIcon className={s.iconColor} /> : <LiveOffIcon className={s.iconColor} />}
-          text={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
-        />
+          <IconWithTextItem
+            onClick={() => {
+              updateIsEnableLivePreview(!isEnableLivePreview);
+            }}
+            icon={isEnableLivePreview ? <LiveIcon className={s.iconColor} /> : <LiveOffIcon className={s.iconColor} />}
+            text={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
+          />
         </div>
       </Tooltip>
     </TabItem>
