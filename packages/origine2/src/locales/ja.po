@@ -329,13 +329,13 @@ msgstr "プレハブ効果を使用"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:61
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:92
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:63
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:64
 msgid "使用预设的作用目标，如果设置了id则不生效"
 msgstr "以前に設定されたアクションターゲットを使用。IDを設定した場合は無効"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:58
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:89
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:60
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:61
 msgid "使用预设目标"
 msgstr "事前設定されたターゲットを使用"
 
@@ -1025,7 +1025,7 @@ msgstr "手動で次の行を表示"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:61
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:92
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:63
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:64
 msgid "手动输入 ID"
 msgstr "IDを手動で設定"
 
@@ -1725,7 +1725,7 @@ msgstr "Figure"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:274
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:82
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:113
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:84
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:85
 msgid "立绘 ID"
 msgstr "立ち絵ID"
 
@@ -2157,7 +2157,7 @@ msgstr "柔らかさ (0-1)"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:74
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:105
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:76
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:77
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
 
@@ -2277,19 +2277,19 @@ msgstr "BGMを選択"
 msgid "选择语音文件"
 msgstr "音声ファイルを選択"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:42
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:43
 msgid "选择进入动画"
 msgstr "入るアニメーションを選択"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:45
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:46
 msgid "选择进入动画文件"
 msgstr "入るアニメーションファイルを選択"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:51
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:52
 msgid "选择退出动画"
 msgstr "出るアニメーションを選択"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:54
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:55
 msgid "选择退出动画文件"
 msgstr "出るアニメーションファイルを選択"
 
@@ -2299,7 +2299,7 @@ msgstr "CG/BGMファイルを選択"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:64
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:95
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:66
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:67
 msgid "选择预设目标"
 msgstr "事前設定されたターゲットを選択"
 
@@ -2347,7 +2347,7 @@ msgstr "選択肢からシーンに切り替えることが可能です"
 
 #: src/pages/editor/Topbar/Topbar.tsx:101
 msgid "配置"
-msgstr "設定"
+msgstr "構成"
 
 #: src/components/Assets/FileElement.tsx:142
 #: src/components/Assets/FileElement.tsx:161
