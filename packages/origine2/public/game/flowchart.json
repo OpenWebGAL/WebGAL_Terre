@@ -1,0 +1,119 @@
+{
+  "flowcharts": [
+    {
+      "id": "main",
+      "name": "主线剧情",
+      "nodes": [
+        {
+          "id": "start",
+          "position": { "x": 250, "y": 0 },
+          "data": {
+            "label": "序章",
+            "sceneName": "start.txt"
+          }
+        },
+        {
+          "id": "chapter1",
+          "position": { "x": 250, "y": 100 },
+          "data": {
+            "label": "第一章",
+            "sceneName": "chapter1.txt"
+          }
+        },
+        {
+          "id": "branch",
+          "position": { "x": 250, "y": 200 },
+          "data": {
+            "label": "分支选择",
+            "sceneName": "branch.txt"
+          }
+        },
+        {
+          "id": "route_a",
+          "position": { "x": 100, "y": 300 },
+          "data": {
+            "label": "路线A",
+            "sceneName": "route_a.txt"
+          }
+        },
+        {
+          "id": "route_b",
+          "position": { "x": 400, "y": 300 },
+          "data": {
+            "label": "路线B",
+            "sceneName": "route_b.txt"
+          }
+        },
+        {
+          "id": "ending",
+          "position": { "x": 250, "y": 400 },
+          "data": {
+            "label": "结局",
+            "sceneName": "ending.txt"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "e1",
+          "source": "start",
+          "target": "chapter1"
+        },
+        {
+          "id": "e2",
+          "source": "chapter1",
+          "target": "branch"
+        },
+        {
+          "id": "e3",
+          "source": "branch",
+          "target": "route_a"
+        },
+        {
+          "id": "e4",
+          "source": "branch",
+          "target": "route_b"
+        },
+        {
+          "id": "e5",
+          "source": "route_a",
+          "target": "ending"
+        },
+        {
+          "id": "e6",
+          "source": "route_b",
+          "target": "ending"
+        }
+      ]
+    },
+    {
+      "id": "alice",
+      "name": "Alice线",
+      "nodes": [
+        {
+          "id": "alice_start",
+          "position": { "x": 200, "y": 0 },
+          "data": {
+            "label": "Alice线开始",
+            "sceneName": "alice/start.txt"
+          }
+        },
+        {
+          "id": "alice_end",
+          "position": { "x": 200, "y": 100 },
+          "data": {
+            "label": "Alice结局",
+            "sceneName": "alice/end.txt"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "alice_e1",
+          "source": "alice_start",
+          "target": "alice_end"
+        }
+      ]
+    }
+  ]
+}

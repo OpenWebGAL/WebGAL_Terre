@@ -130,3 +130,8 @@ export class IconsDto {
   @ApiProperty({ description: 'The icons of the game' })
   platforms: Platform[];
 }
+
+export class SetFlowchartDto {
+  @ApiProperty({ description: 'The flowchart content in JSON format' })
+  flowchartContent: string;
+}

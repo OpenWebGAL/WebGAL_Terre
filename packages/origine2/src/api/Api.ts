@@ -175,6 +175,11 @@ export interface IconsDto {
   platforms: string[];
 }
 
+export interface SetFlowchartDto {
+  /** The flowchart content in JSON format */
+  flowchartContent: string;
+}
+
 export interface TemplateInfoDto {
   /** The name of the template */
   name: string;
@@ -1009,6 +1014,45 @@ export class Api<
         path: `/api/manageGame/getIcons/${gameDir}`,
         method: "GET",
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerGetFlowchart
+     * @summary Get Game Flowchart
+     * @request GET:/api/manageGame/getFlowchart/{gameName}
+     */
+    manageGameControllerGetFlowchart: (
+      gameName: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/getFlowchart/${gameName}`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerSetFlowchart
+     * @summary Set Game Flowchart
+     * @request POST:/api/manageGame/setFlowchart/{gameName}
+     */
+    manageGameControllerSetFlowchart: (
+      gameName: string,
+      data: SetFlowchartDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/setFlowchart/${gameName}`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
 

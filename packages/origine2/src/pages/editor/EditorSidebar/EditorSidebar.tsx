@@ -109,6 +109,24 @@ export default function EditorSideBar() {
     };
   }, []);
 
+  const openFlowchartEditor = () => {
+    const flowchartTag: ITag = {
+      name: t`流程图编辑器`,
+      path: 'flowchart',
+      type: 'flowchart',
+    };
+    const result = tags.findIndex((e) => e.path === flowchartTag.path);
+    if (result < 0) addTag(flowchartTag);
+    updateCurrentTag(flowchartTag);
+  };
+
+  useEffect(() => {
+    eventBus.on('openFlowchartEditor', openFlowchartEditor);
+    return () => {
+      eventBus.off('openFlowchartEditor', openFlowchartEditor);
+    };
+  }, [tags]);
+
   const fileConfig: IFileConfig = new Map([
     [`animation`, { desc: t`动画`, extNameTypes: ['json'], isProtected: true }],
     [`animation/animationTable.json`, { isProtected: true }],

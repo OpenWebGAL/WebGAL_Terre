@@ -184,6 +184,9 @@ msgstr "No concat with previous text"
 msgid "不显示角色名"
 msgstr "Hide the role name"
 
+msgid "不能创建循环连接"
+msgstr ""
+
 msgid "不设定"
 msgstr "Not set"
 
@@ -210,6 +213,9 @@ msgstr "Set the animation effect for the figure or background"
 
 msgid "为立绘或背景图片设置效果或变换"
 msgstr "Setting effects or transformations for a figure or background image."
+
+msgid "主线流程图不可删除"
+msgstr ""
 
 msgid "主要样式"
 msgstr "Main Style"
@@ -270,6 +276,9 @@ msgstr "Saving..."
 
 msgid "保存模板配置失败，请稍后重试"
 msgstr "Failed to save template configuration, please try again later"
+
+msgid "保存流程图"
+msgstr ""
 
 msgid "保持闭眼(毫秒)"
 msgstr "Closed duration (ms)"
@@ -453,6 +462,9 @@ msgstr "Thickness"
 
 msgid "参数值"
 msgstr "Parameter Value"
+
+msgid "双击节点名称可编辑"
+msgstr ""
 
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
@@ -727,6 +739,9 @@ msgstr "Delay time (seconds)"
 msgid "开启"
 msgstr "On"
 
+msgid "开始"
+msgstr ""
+
 msgid "张开嘴"
 msgstr "Open mouth"
 
@@ -789,6 +804,9 @@ msgstr "Submit changes"
 
 msgid "提示"
 msgstr "Tip"
+
+msgid "提示："
+msgstr ""
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "Tip: Set the figure/background first, then apply the animation, otherwise the target cannot be found."
@@ -918,6 +936,9 @@ msgstr "Create new folder"
 
 msgid "新建模板"
 msgstr "Create new template"
+
+msgid "新建流程图"
+msgstr ""
 
 msgid "新建游戏"
 msgstr "Create new game"
@@ -1081,6 +1102,9 @@ msgstr "Multiply"
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
 
+msgid "每个流程图只能有一个根节点"
+msgstr ""
+
 msgid "永不换行"
 msgstr "Never wrap"
 
@@ -1101,6 +1125,15 @@ msgstr "Comment"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "Comments are only visible when editing and will not be executed in the game"
+
+msgid "流程图列表"
+msgstr ""
+
+msgid "流程图功能"
+msgstr ""
+
+msgid "流程图编辑器"
+msgstr ""
 
 msgid "浅色"
 msgstr "Light"
@@ -1138,8 +1171,14 @@ msgstr "Add or switch the figure at the specified position"
 msgid "添加新行"
 msgstr "Add new line"
 
+msgid "添加根节点"
+msgstr ""
+
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
+
+msgid "添加节点"
+msgstr ""
 
 msgid "添加语句"
 msgstr "Add statement"
@@ -1194,6 +1233,9 @@ msgstr "Click or drag file to this area to upload"
 
 msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
 msgstr "Click or press Backspace to delete the old separator. Enter a new separator and press Enter to confirm."
+
+msgid "点击节点选择场景文件"
+msgstr ""
 
 msgid "点状电影滤镜"
 msgstr "Dot film filter"
@@ -1342,6 +1384,9 @@ msgstr "Edit icon"
 msgid "编辑模板"
 msgstr "Edit template"
 
+msgid "编辑流程图"
+msgstr ""
+
 msgid "编辑游戏"
 msgstr "Edit game"
 
@@ -1422,6 +1467,9 @@ msgstr "Stage object control"
 
 msgid "舞台画面"
 msgstr "Stage"
+
+msgid "节点操作"
+msgstr ""
 
 msgid "英语"
 msgstr "English"

@@ -36,6 +36,7 @@
     "@monaco-editor/react": "^4.4.5",
     "@types/parse-path": "^7.1.0",
     "@uiw/react-json-view": "^2.0.0-alpha.12",
+    "@xyflow/react": "^12.8.5",
     "axios": "^1.12.0",
     "classnames": "^2.5.1",
     "cloudlogjs": "^1.0.11",

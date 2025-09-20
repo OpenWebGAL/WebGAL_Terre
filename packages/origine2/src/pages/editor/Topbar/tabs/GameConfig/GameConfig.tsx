@@ -229,6 +229,23 @@ export default function GameConfig() {
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>
       </TabItem>
+      <TabItem title={t`流程图功能`}>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+          <GameConfigEditorWithSelector
+            key="enableFlowchart"
+            value={getConfigContentAsString('Enable_flowchart') ? getConfigContentAsString('Enable_flowchart') : 'false'}
+            selectItems={[
+              {key: 'true', text: t`启用`},
+              {key: 'false', text: t`禁用`}
+            ]}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Enable_flowchart', e)}/>
+          {getConfigContentAsString('Enable_flowchart') === 'true' && (
+            <Button onClick={() => eventBus.emit('openFlowchartEditor')}>
+              {t`编辑流程图`}
+            </Button>
+          )}
+        </div>
+      </TabItem>
       <TabItem title={t`默认语言`}>
         <GameConfigEditorWithSelector
           key="language_select"

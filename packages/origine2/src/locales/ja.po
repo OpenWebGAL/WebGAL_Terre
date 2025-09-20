@@ -184,6 +184,9 @@ msgstr "前のテキストボックス内の文を結合しない"
 msgid "不显示角色名"
 msgstr "キャラクター名は設定不可"
 
+msgid "不能创建循环连接"
+msgstr ""
+
 msgid "不设定"
 msgstr "未設定"
 
@@ -210,6 +213,9 @@ msgstr "立ち絵や背景画像にアニメーションを指定する"
 
 msgid "为立绘或背景图片设置效果或变换"
 msgstr "人物や背景画像にエフェクトや変形を設定する。"
+
+msgid "主线流程图不可删除"
+msgstr ""
 
 msgid "主要样式"
 msgstr "メインスタイル"
@@ -270,6 +276,9 @@ msgstr "保存中..."
 
 msgid "保存模板配置失败，请稍后重试"
 msgstr "テンプレート設定の保存に失敗しました。しばらくしてからお試しください。"
+
+msgid "保存流程图"
+msgstr ""
 
 msgid "保持闭眼(毫秒)"
 msgstr "目を閉じたままにする時間(ミリ秒)"
@@ -453,6 +462,9 @@ msgstr "厚さ"
 
 msgid "参数值"
 msgstr "パラメータ値"
+
+msgid "双击节点名称可编辑"
+msgstr ""
 
 msgid "反射电影滤镜"
 msgstr "反射映画"
@@ -727,6 +739,9 @@ msgstr "遅延時間（秒）"
 msgid "开启"
 msgstr "有効化"
 
+msgid "开始"
+msgstr ""
+
 msgid "张开嘴"
 msgstr "開いた口"
 
@@ -789,6 +804,9 @@ msgstr "変更を送信"
 
 msgid "提示"
 msgstr "ヒント"
+
+msgid "提示："
+msgstr ""
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "ヒント: 最初に立ち絵の描画/背景を設定してから、アニメーションを適用します。そうしないと、ターゲットが見つかりません。"
@@ -918,6 +936,9 @@ msgstr "新しいフォルダーを作成"
 
 msgid "新建模板"
 msgstr "新しいテンプレートを作成"
+
+msgid "新建流程图"
+msgstr ""
 
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
@@ -1081,6 +1102,9 @@ msgstr "乗算"
 msgid "此指令将结束游戏"
 msgstr "このコマンドはすべてのゲームが終わるときに使用"
 
+msgid "每个流程图只能有一个根节点"
+msgstr ""
+
 msgid "永不换行"
 msgstr "折り返しなし"
 
@@ -1101,6 +1125,15 @@ msgstr "コメント"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "コメントは編集時のみ表示され、ゲームプレイ時には非表示"
+
+msgid "流程图列表"
+msgstr ""
+
+msgid "流程图功能"
+msgstr ""
+
+msgid "流程图编辑器"
+msgstr ""
 
 msgid "浅色"
 msgstr "ライト"
@@ -1138,8 +1171,14 @@ msgstr "指定位置の立ち絵を追加または切り替える"
 msgid "添加新行"
 msgstr "新しい行を追加"
 
+msgid "添加根节点"
+msgstr ""
+
 msgid "添加自定义属性"
 msgstr "カスタム属性を追加"
+
+msgid "添加节点"
+msgstr ""
 
 msgid "添加语句"
 msgstr "ステートメントを追加"
@@ -1194,6 +1233,9 @@ msgstr "ここまでクリックかドラッグでアップロードします"
 
 msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
 msgstr "クリックまたはBackspaceキーで古い区切り文字を削除し、新しい区切り文字を入力してEnterキーで確定してください。"
+
+msgid "点击节点选择场景文件"
+msgstr ""
 
 msgid "点状电影滤镜"
 msgstr "ドット映画"
@@ -1342,6 +1384,9 @@ msgstr "編集アイコン"
 msgid "编辑模板"
 msgstr "テンプレートを編集"
 
+msgid "编辑流程图"
+msgstr ""
+
 msgid "编辑游戏"
 msgstr "ゲームの編集"
 
@@ -1422,6 +1467,9 @@ msgstr "ステージオブジェクトコントロール"
 
 msgid "舞台画面"
 msgstr "ステージ画面"
+
+msgid "节点操作"
+msgstr ""
 
 msgid "英语"
 msgstr "英語"

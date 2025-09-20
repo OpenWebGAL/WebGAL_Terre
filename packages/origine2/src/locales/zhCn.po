@@ -184,6 +184,9 @@ msgstr "不拼接先前文本框内的语句"
 msgid "不显示角色名"
 msgstr "不显示角色名"
 
+msgid "不能创建循环连接"
+msgstr "不能创建循环连接"
+
 msgid "不设定"
 msgstr "不设定"
 
@@ -210,6 +213,9 @@ msgstr "为立绘或背景图片设置动画效果"
 
 msgid "为立绘或背景图片设置效果或变换"
 msgstr "为立绘或背景图片设置效果或变换"
+
+msgid "主线流程图不可删除"
+msgstr "主线流程图不可删除"
 
 msgid "主要样式"
 msgstr "主要样式"
@@ -270,6 +276,9 @@ msgstr "保存中..."
 
 msgid "保存模板配置失败，请稍后重试"
 msgstr "保存模板配置失败，请稍后重试"
+
+msgid "保存流程图"
+msgstr "保存流程图"
 
 msgid "保持闭眼(毫秒)"
 msgstr "保持闭眼(毫秒)"
@@ -453,6 +462,9 @@ msgstr "厚度"
 
 msgid "参数值"
 msgstr "参数值"
+
+msgid "双击节点名称可编辑"
+msgstr "双击节点名称可编辑"
 
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
@@ -727,6 +739,9 @@ msgstr "延迟时间（秒）"
 msgid "开启"
 msgstr "开启"
 
+msgid "开始"
+msgstr "开始"
+
 msgid "张开嘴"
 msgstr "张开嘴"
 
@@ -789,6 +804,9 @@ msgstr "提交修改"
 
 msgid "提示"
 msgstr "提示"
+
+msgid "提示："
+msgstr "提示："
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -918,6 +936,9 @@ msgstr "新建文件夹"
 
 msgid "新建模板"
 msgstr "新建模板"
+
+msgid "新建流程图"
+msgstr "新建流程图"
 
 msgid "新建游戏"
 msgstr "新建游戏"
@@ -1081,6 +1102,9 @@ msgstr "正片叠底"
 msgid "此指令将结束游戏"
 msgstr "此指令将结束游戏"
 
+msgid "每个流程图只能有一个根节点"
+msgstr "每个流程图只能有一个根节点"
+
 msgid "永不换行"
 msgstr "永不换行"
 
@@ -1101,6 +1125,15 @@ msgstr "注释"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "注释仅在编辑时可见，游戏中不会执行"
+
+msgid "流程图列表"
+msgstr "流程图列表"
+
+msgid "流程图功能"
+msgstr "流程图功能"
+
+msgid "流程图编辑器"
+msgstr "流程图编辑器"
 
 msgid "浅色"
 msgstr "浅色"
@@ -1138,8 +1171,14 @@ msgstr "添加或切换指定位置的立绘"
 msgid "添加新行"
 msgstr "添加新行"
 
+msgid "添加根节点"
+msgstr "添加根节点"
+
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
+
+msgid "添加节点"
+msgstr "添加节点"
 
 msgid "添加语句"
 msgstr "添加语句"
@@ -1194,6 +1233,9 @@ msgstr "点击或拖拽文件至此上传"
 
 msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
 msgstr "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
+
+msgid "点击节点选择场景文件"
+msgstr "点击节点选择场景文件"
 
 msgid "点状电影滤镜"
 msgstr "点状电影滤镜"
@@ -1342,6 +1384,9 @@ msgstr "编辑图标"
 msgid "编辑模板"
 msgstr "编辑模板"
 
+msgid "编辑流程图"
+msgstr "编辑流程图"
+
 msgid "编辑游戏"
 msgstr "编辑游戏"
 
@@ -1422,6 +1467,9 @@ msgstr "舞台对象控制"
 
 msgid "舞台画面"
 msgstr "舞台画面"
+
+msgid "节点操作"
+msgstr "节点操作"
 
 msgid "英语"
 msgstr "英语"
