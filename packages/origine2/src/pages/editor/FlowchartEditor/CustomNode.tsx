@@ -6,6 +6,7 @@ import { Input } from '@fluentui/react-components';
 import { DocumentTextFilled, DocumentTextRegular, bundleIcon } from '@fluentui/react-icons';
 import { IFlowchartNodeData } from '@/types/flowchart';
 import { extNameMap } from '@/pages/editor/ChooseFile/chooseFileConfig';
+import { t } from '@lingui/macro';
 
 const DocumentTextIcon = bundleIcon(DocumentTextFilled, DocumentTextRegular);
 
@@ -45,12 +46,20 @@ const CustomNode = memo(({ data, selected, id }: CustomNodeProps) => {
   };
 
   return (
-    <div className={`${styles.customNode} ${selected ? styles.selected : ''}`}>
-      <Handle
-        type="target"
-        position={Position.Top}
-        className={styles.handle}
-      />
+    <div className={`${styles.customNode} ${selected ? styles.selected : ''} ${data.isRoot ? styles.rootNode : ''}`}>
+      {data.isRoot && (
+        <div className={styles.rootBadge}>
+          {t`根节点`}
+        </div>
+      )}
+
+      {!data.isRoot && (
+        <Handle
+          type="target"
+          position={Position.Top}
+          className={styles.handle}
+        />
+      )}
 
       <div className={styles.nodeContent}>
         <div className={styles.nodeHeader}>
@@ -76,11 +85,11 @@ const CustomNode = memo(({ data, selected, id }: CustomNodeProps) => {
           ) : (
             <div
               className={styles.nodeLabel}
-              onDoubleClick={() => {
+              onClick={() => {
                 setIsEditingLabel(true);
                 setTempLabel(data.label);
               }}
-              title="双击编辑节点名称"
+              title="点击编辑节点名称"
             >
               {data.label}
             </div>

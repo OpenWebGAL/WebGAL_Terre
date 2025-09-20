@@ -126,10 +126,24 @@ function FlowchartEditorContent() {
 
   // 保存流程图
   const saveFlowchart = async () => {
+    // 清理节点和边的数据，只保留必要字段
+    const cleanNodes = nodes.map(node => ({
+      id: node.id,
+      type: node.type,
+      position: node.position,
+      data: node.data
+    })) as IFlowchartNode[];
+
+    const cleanEdges = edges.map(edge => ({
+      id: edge.id,
+      source: edge.source,
+      target: edge.target
+    })) as IFlowchartEdge[];
+
     // 更新当前流程图
     const updatedFlowcharts = flowcharts.map(f =>
       f.id === currentFlowchartId
-        ? { ...f, nodes: nodes as IFlowchartNode[], edges: edges as IFlowchartEdge[] }
+        ? { ...f, nodes: cleanNodes, edges: cleanEdges }
         : f
     );
 
@@ -149,10 +163,23 @@ function FlowchartEditorContent() {
 
   // 切换流程图
   const switchFlowchart = (flowchartId: string) => {
-    // 先保存当前流程图
+    // 先保存当前流程图，清理不必要的字段
+    const cleanNodes = nodes.map(node => ({
+      id: node.id,
+      type: node.type,
+      position: node.position,
+      data: node.data
+    })) as IFlowchartNode[];
+
+    const cleanEdges = edges.map(edge => ({
+      id: edge.id,
+      source: edge.source,
+      target: edge.target
+    })) as IFlowchartEdge[];
+
     const updatedFlowcharts = flowcharts.map(f =>
       f.id === currentFlowchartId
-        ? { ...f, nodes: nodes as IFlowchartNode[], edges: edges as IFlowchartEdge[] }
+        ? { ...f, nodes: cleanNodes, edges: cleanEdges }
         : f
     );
     setFlowcharts(updatedFlowcharts);
@@ -175,10 +202,23 @@ function FlowchartEditorContent() {
 
   // 创建新流程图
   const createFlowchart = (name: string, type: FlowchartType) => {
-    // 先保存当前流程图
+    // 先保存当前流程图，清理不必要的字段
+    const cleanNodes = nodes.map(node => ({
+      id: node.id,
+      type: node.type,
+      position: node.position,
+      data: node.data
+    })) as IFlowchartNode[];
+
+    const cleanEdges = edges.map(edge => ({
+      id: edge.id,
+      source: edge.source,
+      target: edge.target
+    })) as IFlowchartEdge[];
+
     const updatedFlowcharts = flowcharts.map(f =>
       f.id === currentFlowchartId
-        ? { ...f, nodes: nodes as IFlowchartNode[], edges: edges as IFlowchartEdge[] }
+        ? { ...f, nodes: cleanNodes, edges: cleanEdges }
         : f
     );
 
@@ -460,6 +500,8 @@ function FlowchartEditorContent() {
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           fitView
+          fitViewOptions={{ padding: 0.2, maxZoom: 1, minZoom: 0.1 }}
+          defaultViewport={{ x: 100, y: 100, zoom: 0.8 }}
         >
           <Background />
           <Controls />

@@ -6,6 +6,7 @@
   min-width: 200px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
+  position: relative;
 
   &.selected {
     border-color: #0078d4;
@@ -14,6 +15,16 @@
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &.rootNode {
+    border-color: #10b981;
+    background: linear-gradient(to bottom, #f0fdf4, white);
+
+    &.selected {
+      border-color: #10b981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
   }
 }
 
@@ -80,4 +91,18 @@
   padding: 4px;
   color: #888;
   font-style: italic;
+}
+
+.rootBadge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10b981;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
 }
