@@ -1063,6 +1063,9 @@ msgstr "标题背景音乐"
 msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
+msgid "根节点"
+msgstr "根节点"
+
 msgid "模板"
 msgstr "模板"
 
