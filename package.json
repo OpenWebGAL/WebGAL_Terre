@@ -1,11 +1,11 @@
 {
   "name": "webgal-terre",
-  "version": "4.5.14",
+  "version": "4.5.15",
   "private": true,
   "scripts": {
     "dev": "concurrently \"yarn dev:terre\" \"yarn dev:origine\" \"yarn dev:start-dev-server\"",
     "lint": "concurrently \"yarn lint:terre\" \"yarn lint:origine\"",
-    "nsis-bundle": "node ./nsis-version-sync.js && makensis ./installer.nsi",
+    "nsis-bundle": "makensis ./installer.nsi",
     "dev:terre": "cd packages/terre2 && yarn start:debug",
     "dev:origine": "cd packages/origine2 && yarn dev",
     "dev:start-dev-server": "cd packages/dev-server && node index.js",

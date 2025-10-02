@@ -96,7 +96,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     // 仅保留有效参数
     const result: { [key: string]: number } = {};
     for (const key in params) {
-      if (!Object.prototype.hasOwnProperty(key)) continue;
+      if (!params.hasOwnProperty(key)) continue;
       const value = params[key];
       if (value !== '' && !isNaN(Number(value))) {
         result[key] = Number(value);
@@ -130,7 +130,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     // 仅保留有效参数
     const result: { [key: string]: any } = {};
     for (const key in params) {
-      if (!Object.prototype.hasOwnProperty(key)) continue;
+      if (!params.hasOwnProperty(key)) continue;
       const value = params[key];
       if (key === 'instant' && (value === 'true' || value === 'false')) {
         // 特殊处理 instant

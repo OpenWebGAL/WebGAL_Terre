@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre-2",
-  "version": "4.5.14",
+  "version": "4.5.15",
   "description": "",
   "author": "",
   "private": true,
@@ -55,7 +55,7 @@
     "vscode-languageserver": "^8.1.0",
     "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-ws-jsonrpc-webgal": "0.2.1",
-    "webgal-engine": "4.5.14",
+    "webgal-engine": "4.5.15-1",
     "webgal-parser": "latest",
     "webpack": "5.76.0",
     "ws": "8.17.1"

@@ -4,31 +4,27 @@
 
 #### 新功能
 
-资源管理优化：改进资源管理和文件选择器组件，增强文件浏览体验。
+为编辑器新增可搜索的级联选择器，优化复杂选项的查找体验
 
-动画支持：新增 JSON 格式的 Spine 动画支持，自动检测并加载 Spine 动画数据。
+新增立绘眨眼（Blink）和焦点（Focus）参数的可视化配置
 
-编辑器增强：改进文本编辑器体验，优化行号匹配逻辑，提升编辑流畅度。
+优化了图标生成器，提升性能并改善了 Windows 平台下的图标质量
 
-视觉效果：新增斜面滤镜（Bevel Filter）的柔和度选项，支持更细腻的视觉效果调节。
+新增 Gzip 压缩支持，减小导出游戏体积
 
-特效组件：在 PixiPerform 组件中新增 `heavySnow` 效果，丰富雪花特效选项。
+重构了特效编辑器，提升了组件的易用性和可维护性
 
-用户体验：添加导出提示功能，改善用户操作引导。
-
-性能优化：修复拖动斜面和调整滤镜颜色选择器时的卡顿问题。
+为动画缓动（Ease）效果新增了默认值和保持选项
 
 #### 修复
 
-修复资源文件扩展名映射错误，将音频文件正确归类。
+修复了 ARM64 架构下的打包问题
 
-修复半角分号在提交值中的转义问题，确保格式正确。
+修复了在特定情况下文件选择器返回错误文件路径的问题
 
-修复卸载程序缺少确认页面的问题。
+修复了快速预览窗口在获取焦点时，脚本未同步到首行的问题
 
-修复图标背景使用图片时的显示问题，支持透明背景创建图标。
-
-修复文件不存在时创建文件的异常处理。
+修复了缓动（Ease）类型缺少国际化翻译的问题
 
 <!-- English Translation -->
 ## Release Notes
@@ -37,31 +33,27 @@
 
 #### New Features
 
-Asset management optimization: improved assets management and file chooser components for enhanced file browsing experience.
+Added a searchable cascader to the editor to optimize finding complex options
 
-Animation support: added JSON format Spine animation support with automatic detection and loading of Spine animation data.
+Added visual configuration for figure Blink and Focus parameters
 
-Editor enhancement: improved text editor experience with optimized line number matching logic for smoother editing.
+Optimized the icon generator, improving performance and icon quality on Windows
 
-Visual effects: added softness option for Bevel Filter, enabling more refined visual effect adjustments.
+Added Gzip compression support to reduce the size of exported games
 
-Effect components: added `heavySnow` effect to PixiPerform component, enriching snow effect options.
+Refactored the effect editor, improving component usability and maintainability
 
-User experience: added export tips feature to improve user guidance.
-
-Performance optimization: fixed lag issues when dragging bevel and adjustment filter color pickers.
+Added default value and keep options for animation easing (Ease) effects
 
 #### Fixes
 
-Fixed asset file extension mapping errors, correctly categorizing audio files.
+Fixed packaging issues on the ARM64 architecture
 
-Fixed semicolon escaping issues in commit values to ensure proper formatting.
+Fixed an issue where the file chooser returned an incorrect file path in certain situations
 
-Fixed missing confirmation page in uninstaller.
+Fixed an issue where the script did not sync to the first line when the fast preview window gained focus
 
-Fixed icon background display issues when using images, supporting transparent background icon creation.
-
-Fixed exception handling when creating files that don't exist.
+Fixed missing internationalization for ease types
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -70,56 +62,24 @@ Fixed exception handling when creating files that don't exist.
 
 #### 新機能
 
-アセット管理の最適化：アセット管理とファイル選択コンポーネントを改善し、ファイルブラウジング体験を向上させました。
+エディタに検索可能なカスケードセレクタを追加し、複雑なオプションの検索体験を最適化しました
 
-アニメーションサポート：JSON形式のSpineアニメーションをサポートし、Spineアニメーションデータの自動検出と読み込みを実装しました。
+立ち絵のまばたき（Blink）と焦点（Focus）パラメータの視覚的な設定を追加しました
 
-エディターの強化：テキストエディターの体験を改善し、行番号マッチングロジックを最適化してよりスムーズな編集を実現しました。
+アイコンジェネレータを最適化し、パフォーマンスを向上させ、Windows プラットフォームでのアイコン品質を改善しました
 
-ビジュアルエフェクト：ベベルフィルターにソフトネスオプションを追加し、より細かいビジュアル効果の調整を可能にしました。
+Gzip 圧縮のサポートを追加し、エクスポートされたゲームのサイズを削減しました
 
-エフェクトコンポーネント：PixiPerformコンポーネントに`heavySnow`エフェクトを追加し、雪のエフェクトオプションを充実させました。
+エフェクトエディタをリファクタリングし、コンポーネントの使いやすさと保守性を向上させました
 
-ユーザー体験：エクスポートのヒント機能を追加し、ユーザーガイダンスを改善しました。
-
-パフォーマンス最適化：ベベルおよび調整フィルターのカラーピッカーをドラッグする際のラグを修正しました。
+アニメーションのイージング（Ease）効果にデフォルト値と保持オプションを追加しました
 
 #### 修正
 
-アセットファイルの拡張子マッピングエラーを修正し、オーディオファイルを正しく分類するようにしました。
+ARM64 アーキテクチャでのパッケージング問題を修正しました
 
-コミット値でのセミコロンのエスケープ問題を修正し、適切なフォーマットを保証しました。
+特定の状況下でファイルチューザーが誤ったファイルパスを返す問題を修正しました
 
-アンインストーラーに確認ページがない問題を修正しました。
+高速プレビューウィンドウがフォーカスされた際に、スクリプトが先頭行に同期されない問題を修正しました
 
-画像を使用した際のアイコン背景の表示問題を修正し、透明背景でのアイコン作成をサポートしました。
-
-存在しないファイルを作成する際の例外処理を修正しました。
-
-[//]: # (<!-- French Translation -->)
-
-[//]: # (## Notes de version)
-
-[//]: # ()
-[//]: # (### Dans cette version)
-
-[//]: # ()
-[//]: # (#### Nouveaux Fonctionnalités)
-
-[//]: # ()
-[//]: # (Utilisation d'un nouveau sélecteur de fichiers)
-
-[//]: # ()
-[//]: # (Ajout de la prise en charge de la personnalisation de l'interface utilisateur de la branche de sélection du moteur)
-
-[//]: # ()
-[//]: # (#### Corrections)
-
-[//]: # ()
-[//]: # (Style de l'éditeur optimisé)
-
-[//]: # ()
-[//]: # (Correction d'un problème où l'ouverture d'un fichier sans suffixe renvoyait une erreur)
-
-[//]: # ()
-[//]: # (Correction d'un certain nombre d'erreurs dans le moteur)
+イージング（Ease）タイプの国際化翻訳が欠落している問題を修正しました

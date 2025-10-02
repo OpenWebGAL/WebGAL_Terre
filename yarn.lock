@@ -5635,13 +5635,13 @@ axios@^0.28.0:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
-axios@^1.6.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.10.0.tgz#af320aee8632eaf2a400b6a1979fa75856f38d54"
-  integrity sha512-/1xYAC4MP/HEG+3duIhFr4ZQXR4sQXOIe+o6sdqzeykGLx6Upp/1p8MHqhINOvGeP7xyNHe7tsiJByc4SSVUxw==
+axios@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.12.0.tgz#11248459be05a5ee493485628fa0e4323d0abfc3"
+  integrity sha512-oXTDccv8PcfjZmPGlWsPSwtOJCZ/b6W5jAMCNcfwJbCzDckwG0jrYJFaWH1yvivfCXjVzV/SPDEhMB3Q+DSurg==
   dependencies:
     follow-redirects "^1.15.6"
-    form-data "^4.0.0"
+    form-data "^4.0.4"
     proxy-from-env "^1.1.0"
 
 babel-jest@^28.1.3:
@@ -7648,10 +7648,10 @@ fork-ts-checker-webpack-plugin@^7.2.1:
     semver "^7.3.5"
     tapable "^2.2.1"
 
-form-data@^4.0.0:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.3.tgz#608b1b3f3e28be0fccf5901fc85fb3641e5cf0ae"
-  integrity sha512-qsITQPfmvMOSAdeyZ+12I1c+CKSstAFAwu+97zrnWAbIr5u8wfsExUzCesVLC8NgHuRUqNN4Zy6UPWUTRGslcA==
+form-data@^4.0.0, form-data@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.4.tgz#784cdcce0669a9d68e94d11ac4eea98088edd2c4"
+  integrity sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
@@ -10300,10 +10300,10 @@ pixi-filters@^4.2.0:
     "@pixi/filter-twist" "4.2.0"
     "@pixi/filter-zoom-blur" "4.2.0"
 
-pixi-live2d-display-webgal@^0.5.8:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/pixi-live2d-display-webgal/-/pixi-live2d-display-webgal-0.5.8.tgz#1ff7b5016559ff56a5cfaa96abeac84c878a2bbf"
-  integrity sha512-yekmPckXykqziyFcmmgYlZU4ad42rRGGmUFvrm96YJrdRIi+V9uv/xKOrRBMxD/tr3Sckqp6hOr9Wi3UX6NNLw==
+pixi-live2d-display-webgal@^0.5.12:
+  version "0.5.12"
+  resolved "https://registry.yarnpkg.com/pixi-live2d-display-webgal/-/pixi-live2d-display-webgal-0.5.12.tgz#f920f926e37bacf222c77343782b5b6fc3d209ab"
+  integrity sha512-93UDIM8ducia8zIgVtidqxlDamxlwEK4+ddUnl/8XcEKBinbr2Qlu0bBN9i1f4c5rzX5OPgEKc0DhjlDa7fJVg==
   dependencies:
     gh-pages "^4.0.0"
 
@@ -11890,9 +11890,9 @@ tapable@^2.1.1, tapable@^2.2.0, tapable@^2.2.1:
   integrity sha512-Re10+NauLTMCudc7T5WLFLAwDhQ0JWdrMK+9B2M8zR5hRExKmsRDCBA7/aV/pNJFltmBFO5BAMlQFi/vq3nKOg==
 
 tar-fs@^2.0.0, tar-fs@^2.1.1:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-2.1.3.tgz#fb3b8843a26b6f13a08e606f7922875eb1fbbf92"
-  integrity sha512-090nwYJDmlhwFwEW3QQl+vaNnxsO2yVsd45eTKRBzSzu+hlb1w2K9inVq5b0ngXuLVqQ4ApvsUHHnu/zQNkWAg==
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-2.1.4.tgz#800824dbf4ef06ded9afea4acafe71c67c76b930"
+  integrity sha512-mDAjwmZdh7LTT6pNleZ05Yt65HC3E+NiQzl672vQG38jIrehtJk/J3mNwIg+vShQPcLF/LV7CMnDW6vjj6sfYQ==
   dependencies:
     chownr "^1.1.1"
     mkdirp-classic "^0.5.2"
@@ -12626,10 +12626,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-engine@4.5.14:
-  version "4.5.14"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.14.tgz#339986413091fbe80d0217154bb395341b77669f"
-  integrity sha512-+sQ3HHyR4Mfr/5NhRO87ReP29Lbe5gRzqIyfU/hezqaTsKsAEBo36/viVe3mLJ6p5CQnXEDH0qx4OtFSAZb7Gg==
+webgal-engine@4.5.15-1:
+  version "4.5.15-1"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.15-1.tgz#15d6e5d482b11a7348aead4c7ce1eb7b56964dcc"
+  integrity sha512-U8yPGrmeAKAjBNQKBf9z9NAhv4e7OjgPiVAA9WdC52NP8LxF99kpGwjWQrrz6mrTTxFetuilqRPgHzrfOZhvwg==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"
@@ -12643,7 +12643,7 @@ webgal-engine@4.5.14:
     mitt "^3.0.0"
     modern-css-reset "^1.4.0"
     pixi-filters "^4.2.0"
-    pixi-live2d-display-webgal "^0.5.8"
+    pixi-live2d-display-webgal "^0.5.12"
     pixi.js "^6.3.0"
     popmotion "^11.0.5"
     react "^17.0.2"
