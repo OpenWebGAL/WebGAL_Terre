@@ -33,6 +33,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
       [
         {key: "enter", value: enterFileName.value},
         {key: "exit", value: exitFileName.value},
+        {key: "target", value: target.value},
       ],
     );
     props.onSubmit(submitString);
