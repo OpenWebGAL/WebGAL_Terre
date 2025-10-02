@@ -55,6 +55,11 @@ export interface EditTextFileDto {
   textFile: string;
 }
 
+export interface CopyFileWithIncrementDto {
+  /** The source path of the file to be copied */
+  source: string;
+}
+
 export interface TemplateConfigDto {
   /** The name of the template */
   name: string;
@@ -546,6 +551,26 @@ export class Api<
     ) =>
       this.request<void, void>({
         path: `/api/assets/editTextFile`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerCopyFileWithIncrement
+     * @summary Copy File With Increment
+     * @request POST:/api/assets/copyFileWithIncrement
+     */
+    assetsControllerCopyFileWithIncrement: (
+      data: CopyFileWithIncrementDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/assets/copyFileWithIncrement`,
         method: "POST",
         body: data,
         type: ContentType.Json,

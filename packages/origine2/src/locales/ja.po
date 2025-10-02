@@ -764,6 +764,10 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
+#: src/pages/editor/MainArea/TagsManager.tsx:167
+msgid "增量保存"
+msgstr "インクリメンタルセーブ"
+
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
 msgstr "外側テキスト"
@@ -1489,6 +1493,10 @@ msgstr "BGMを再生"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/End.tsx:9
 msgid "此指令将结束游戏"
 msgstr "このコマンドはすべてのゲームが終わるときに使用"
+
+#: src/pages/editor/MainArea/TagsManager.tsx:142
+msgid "此选项可将当前文件另存备份，防止因原文件意外损坏而丢失所有数据。"
+msgstr "このオプションは現在のファイルをバックアップとして別名保存し、元のファイルが予期せず破損した場合でもすべてのデータが失われるのを防ぎます。"
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:130
 msgid "永不换行"

@@ -761,6 +761,10 @@ msgstr "Scenes and branches"
 msgid "场景文件"
 msgstr "Scene file"
 
+#: src/pages/editor/MainArea/TagsManager.tsx:167
+msgid "增量保存"
+msgstr "Incremental Save"
+
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
 msgstr "Outer Text"
@@ -1490,6 +1494,10 @@ msgstr "Play BGM normally"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/End.tsx:9
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
+
+#: src/pages/editor/MainArea/TagsManager.tsx:142
+msgid "此选项可将当前文件另存备份，防止因原文件意外损坏而丢失所有数据。"
+msgstr "This option allows you to save the current file as a backup to prevent data loss if the original file is accidentally damaged."
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:130
 msgid "永不换行"
