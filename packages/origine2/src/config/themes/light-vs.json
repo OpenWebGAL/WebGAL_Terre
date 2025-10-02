@@ -37,69 +37,6 @@
   "tokenColors": [
     {
       "scope": [
-        "keyword.operator.webgal"
-      ],
-      "settings": {
-        "foreground": "#f9005a",
-        "fontStyle": "bold"
-      }
-    },
-    {
-      "scope": [
-        "keyword.operator.webgal"
-      ],
-      "settings": {
-        "foreground": "#f9005a",
-        "fontStyle": "bold"
-      }
-    },
-    {
-      "scope": [
-        "string.unquoted.utterance.webgal"
-      ],
-      "settings": {
-        "foreground": "#998f2f",
-        "fontStyle": "bold"
-      }
-    },
-    {
-      "scope": [
-        "meta.command.webgal",
-        "support.function.command.webgal"
-      ],
-      "settings": {
-        "foreground": "#f9005a",
-        "fontStyle": "bold"
-      }
-    },
-    {
-      "scope": [
-        "meta.character.webgal",
-        "entity.name.type.character.webgal"
-      ],
-      "settings": {
-        "foreground": "#684d99",
-        "fontStyle": "bold"
-      }
-    },
-    {
-      "scope": [
-        "variable.parameter.webgal",
-      ],
-      "settings": {
-        "foreground": "#cf7000",
-      }
-    },
-    {
-      "scope": [
-        "variable.other.webgal",
-      ],
-      "settings": {
-        "foreground": "#000000",
-      }
-    },
-    {
-      "scope": [
         "meta.embedded",
         "source.groovy.embedded",
         "string meta.image.inline.markdown",
@@ -125,15 +62,6 @@
       "scope": "meta.diff.header",
       "settings": {
         "foreground": "#000080"
-      }
-    },
-    {
-      "scope": [
-        "comment",
-        "comment.line.webgal"
-      ],
-      "settings": {
-        "foreground": "#999999"
       }
     },
     {

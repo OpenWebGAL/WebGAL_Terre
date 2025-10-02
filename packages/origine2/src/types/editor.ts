@@ -21,6 +21,7 @@ export interface IEditorState {
   ignoreVersion: string, // 忽略版本
   isCascaderDelimitersCustomizable: boolean,
   cascaderDelimiters: string[],
+  isDarkMode: boolean,
 }
 
 export interface IEditorAction {
@@ -42,4 +43,5 @@ export interface IEditorAction {
   updateIgnoreVersion: (ignoreVersion: IEditorState['ignoreVersion']) => void,
   updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable: IEditorState['isCascaderDelimitersCustomizable']) => void,
   updateCascaderDelimiters: (cascadeDelimiters: IEditorState['cascaderDelimiters']) => void,
+  updateIsDarkMode: (isDarkMode: IEditorState['isDarkMode']) => void,
 }

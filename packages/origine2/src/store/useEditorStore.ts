@@ -31,6 +31,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       ignoreVersion: '',
       isCascaderDelimitersCustomizable: false,
       cascaderDelimiters: ['/'],
+      isDarkMode: false,
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
         set({ subPage });
@@ -41,7 +42,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontFamily: (editorFontFamily) => {
         set({editorFontFamily});
         updateUserConfiguration(`{
-          "workbench.colorTheme": "WebGAL White",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},
@@ -50,7 +51,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontSize: (editorFontSize) => {
         set({editorFontSize});
         updateUserConfiguration(`{
-          "workbench.colorTheme": "WebGAL White",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},
@@ -67,7 +68,8 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateIsUseFontOptimization: (isUseFontOptimization) => set({ isUseFontOptimization }),
       updateIgnoreVersion: (ignoreVersion) => set({ignoreVersion}),
       updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable) => set({isCascaderDelimitersCustomizable}) ,
-      updateCascaderDelimiters: (cascaderDelimiters) => set({cascaderDelimiters})
+      updateCascaderDelimiters: (cascaderDelimiters) => set({cascaderDelimiters}),
+      updateIsDarkMode: (isDarkMode) => set({ isDarkMode }),
     }),
     {
       name: 'editor-storage',

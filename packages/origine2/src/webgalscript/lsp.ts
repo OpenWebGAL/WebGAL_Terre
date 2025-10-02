@@ -46,12 +46,23 @@ export const runClient = async () => {
     },
   });
 
-  updateUserConfiguration(`{
-    "workbench.colorTheme": "WebGAL White",
-    "editor.semanticHighlighting.enabled": "configuredByTheme",
-    "editor.fontFamily": "${useEditorStore.getState().editorFontFamily}",
-    "editor.fontSize": ${useEditorStore.getState().editorFontSize},
-  }`);
+  const applyEditorConfig = () => {
+    const isDarkMode = useEditorStore.getState().isDarkMode;
+    updateUserConfiguration(`{
+      "workbench.colorTheme": "${isDarkMode ? "WebGAL Black" : "WebGAL White"}",
+      "editor.semanticHighlighting.enabled": "configuredByTheme",
+      "editor.fontFamily": "${useEditorStore.getState().editorFontFamily}",
+      "editor.fontSize": ${useEditorStore.getState().editorFontSize}
+    }`);
+  };
+
+  // 初始调用
+  applyEditorConfig();
+
+  // 监听 isDarkMode 变化
+  useEditorStore.subscribe((state) => {
+    applyEditorConfig();
+  });
 
   monaco.languages.register({
     id: 'webgal',
