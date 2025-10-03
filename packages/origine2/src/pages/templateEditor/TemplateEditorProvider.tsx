@@ -1,4 +1,4 @@
-import { redirect } from "@/hooks/useHashRoute";
+import { goTo } from "@/router";
 import { templateListFetcher } from "@/pages/dashboard/DashBoard";
 import useEditorStore from "@/store/useEditorStore";
 import { TemplateEditorContext, createTemplateEditorStore } from "@/store/useTemplateEditorStore";
@@ -11,7 +11,7 @@ const TemplateEditorProvider = ({ children }: { children: ReactNode }) => {
   const templateDir = useEditorStore.use.subPage();
 
   if (page !== 'template' || !templateDir) {
-    redirect('dashboard', 'template');
+    goTo('dashboard', 'template');
   }
 
   const {data: templateList, isLoading: templateListLoading} = useSWR("template-list", templateListFetcher);
@@ -19,7 +19,7 @@ const TemplateEditorProvider = ({ children }: { children: ReactNode }) => {
   const inTemplateList = templateList && templateList.length > 0 && templateList.some((template) => template.dir === templateDir);
 
   if (!fristLoading && !inTemplateList) {
-    redirect('dashboard', 'template');
+    goTo('dashboard', 'template');
   }
 
   return (
@@ -38,7 +38,7 @@ const TemplateEditorProvider = ({ children }: { children: ReactNode }) => {
 const TemplateEditorContextProvider = ({ children }: { children: ReactNode}) => {
   const page = useEditorStore.use.page();
   const subPage = useEditorStore.use.subPage();
-  if (page !== 'template' || !subPage) redirect('dashboard');
+  if (page !== 'template' || !subPage) goTo('dashboard');
   const templateEditorStore = useRef(createTemplateEditorStore(subPage)).current;
   return(
     <TemplateEditorContext.Provider value={templateEditorStore}>
