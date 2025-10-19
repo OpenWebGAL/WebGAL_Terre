@@ -198,7 +198,7 @@ msgstr "Y轴缩放"
 msgid "z-index"
 msgstr "z-index"
 
-#: src/pages/editor/Topbar/Topbar.tsx:129
+#: src/pages/editor/Topbar/Topbar.tsx:131
 msgid "一直显示功能区"
 msgstr "一直显示功能区"
 
@@ -279,9 +279,16 @@ msgstr "为立绘或背景图片设置效果或变换"
 msgid "主要样式"
 msgstr "主要样式"
 
-#: src/pages/editor/Topbar/Topbar.tsx:174
+#: src/pages/editor/Topbar/Topbar.tsx:200
 msgid "主页"
 msgstr "主页"
+
+#: src/pages/dashboard/DashBoard.tsx:210
+#: src/pages/dashboard/DashBoard.tsx:211
+#: src/pages/editor/Topbar/Topbar.tsx:139
+#: src/pages/editor/Topbar/Topbar.tsx:150
+msgid "主题"
+msgstr "主题"
 
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:78
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:87
@@ -492,7 +499,7 @@ msgid "最小高度"
 msgstr "最小高度"
 
 #: src/pages/dashboard/About.tsx:47
-#: src/pages/dashboard/DashBoard.tsx:157
+#: src/pages/dashboard/DashBoard.tsx:159
 msgid "最新版本"
 msgstr "最新版本"
 
@@ -592,7 +599,7 @@ msgstr "刷新游戏"
 msgid "前景"
 msgstr "前景"
 
-#: src/pages/editor/Topbar/Topbar.tsx:125
+#: src/pages/editor/Topbar/Topbar.tsx:127
 msgid "功能区显示"
 msgstr "功能区显示"
 
@@ -630,7 +637,7 @@ msgstr "厚度"
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
 
-#: src/pages/dashboard/DashBoard.tsx:152
+#: src/pages/dashboard/DashBoard.tsx:154
 msgid "发现新版本"
 msgstr "发现新版本"
 
@@ -702,6 +709,7 @@ msgid "图像"
 msgstr "图像"
 
 #: src/pages/editor/MainArea/EditorToolbar.tsx:65
+#: src/pages/templateEditor/TemplateEditorMainAria/TemplateEditorToolbar.tsx:35
 msgid "图形编辑器"
 msgstr "图形编辑器"
 
@@ -860,7 +868,7 @@ msgid "对话框标题"
 msgstr "对话框标题"
 
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:62
-#: src/pages/editor/Topbar/Topbar.tsx:105
+#: src/pages/editor/Topbar/Topbar.tsx:107
 msgid "导出"
 msgstr "导出"
 
@@ -944,7 +952,7 @@ msgstr "左侧立绘"
 msgid "左对齐"
 msgstr "左对齐"
 
-#: src/pages/dashboard/DashBoard.tsx:108
+#: src/pages/dashboard/DashBoard.tsx:110
 msgid "已创建"
 msgstr "已创建"
 
@@ -956,11 +964,11 @@ msgstr "已存在文件或文件夹 {0}，请输入其他名称"
 
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:12
 #: src/pages/editor/Topbar/tabs/Help/HelpTab.tsx:15
-#: src/pages/editor/Topbar/Topbar.tsx:104
+#: src/pages/editor/Topbar/Topbar.tsx:106
 msgid "帮助"
 msgstr "帮助"
 
-#: src/pages/editor/Topbar/Topbar.tsx:160
+#: src/pages/editor/Topbar/Topbar.tsx:186
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:114
 msgid "帮助文档"
 msgstr "帮助文档"
@@ -1006,7 +1014,7 @@ msgid "强度"
 msgstr "强度"
 
 #: src/pages/dashboard/About.tsx:41
-#: src/pages/dashboard/DashBoard.tsx:156
+#: src/pages/dashboard/DashBoard.tsx:158
 msgid "当前版本"
 msgstr "当前版本"
 
@@ -1014,7 +1022,7 @@ msgstr "当前版本"
 msgid "德语"
 msgstr "德语"
 
-#: src/pages/dashboard/DashBoard.tsx:166
+#: src/pages/dashboard/DashBoard.tsx:168
 msgid "忽略此版本"
 msgstr "忽略此版本"
 
@@ -1453,7 +1461,7 @@ msgstr "标题背景音乐"
 msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
-#: src/pages/dashboard/DashBoard.tsx:214
+#: src/pages/dashboard/DashBoard.tsx:228
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
 msgid "模板"
 msgstr "模板"
@@ -1525,9 +1533,19 @@ msgstr "注释"
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "注释仅在编辑时可见，游戏中不会执行"
 
+#: src/pages/dashboard/DashBoard.tsx:215
+#: src/pages/editor/Topbar/Topbar.tsx:155
+msgid "浅色"
+msgstr "浅色"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:73
 msgid "淡入淡出"
 msgstr "淡入淡出"
+
+#: src/pages/dashboard/DashBoard.tsx:216
+#: src/pages/editor/Topbar/Topbar.tsx:156
+msgid "深色"
+msgstr "深色"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:51
 msgid "添加"
@@ -1569,7 +1587,7 @@ msgstr "添加自定义属性"
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:275
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:71
-#: src/pages/editor/Topbar/Topbar.tsx:108
+#: src/pages/editor/Topbar/Topbar.tsx:110
 msgid "添加语句"
 msgstr "添加语句"
 
@@ -1583,7 +1601,7 @@ msgstr "清除当前舞台的特殊效果"
 msgid "清除特效"
 msgstr "清除特效"
 
-#: src/pages/dashboard/DashBoard.tsx:212
+#: src/pages/dashboard/DashBoard.tsx:226
 msgid "游戏"
 msgstr "游戏"
 
@@ -1626,7 +1644,7 @@ msgstr "游戏识别码"
 msgid "游戏配置"
 msgstr "游戏配置"
 
-#: src/pages/editor/Topbar/Topbar.tsx:146
+#: src/pages/editor/Topbar/Topbar.tsx:172
 msgid "源代码"
 msgstr "源代码"
 
@@ -1691,7 +1709,7 @@ msgstr "确定要删除 \"{templateName}\" 模板吗？"
 msgid "确认按钮文本"
 msgstr "确认按钮文本"
 
-#: src/pages/editor/Topbar/Topbar.tsx:102
+#: src/pages/editor/Topbar/Topbar.tsx:104
 msgid "视图"
 msgstr "视图"
 
@@ -1916,6 +1934,7 @@ msgid "背景颜色"
 msgstr "背景颜色"
 
 #: src/pages/editor/MainArea/EditorToolbar.tsx:61
+#: src/pages/templateEditor/TemplateEditorMainAria/TemplateEditorToolbar.tsx:28
 msgid "脚本编辑器"
 msgstr "脚本编辑器"
 
@@ -1927,7 +1946,7 @@ msgstr "自动"
 msgid "自动换行"
 msgstr "自动换行"
 
-#: src/pages/editor/Topbar/Topbar.tsx:130
+#: src/pages/editor/Topbar/Topbar.tsx:132
 msgid "自动隐藏功能区"
 msgstr "自动隐藏功能区"
 
@@ -1966,7 +1985,7 @@ msgid "英语"
 msgstr "英语"
 
 #: src/pages/dashboard/About.tsx:59
-#: src/pages/dashboard/DashBoard.tsx:162
+#: src/pages/dashboard/DashBoard.tsx:164
 msgid "获取最新版本"
 msgstr "获取最新版本"
 
@@ -2053,7 +2072,7 @@ msgstr "解锁的 CG 或 BGM 名称"
 msgid "解锁鉴赏类型"
 msgstr "解锁鉴赏类型"
 
-#: src/pages/editor/Topbar/Topbar.tsx:103
+#: src/pages/editor/Topbar/Topbar.tsx:105
 msgid "设置"
 msgstr "设置"
 
@@ -2093,8 +2112,8 @@ msgstr "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgid "该文件类型不支持预览"
 msgstr "该文件类型不支持预览"
 
-#: src/pages/dashboard/DashBoard.tsx:195
-#: src/pages/dashboard/DashBoard.tsx:196
+#: src/pages/dashboard/DashBoard.tsx:197
+#: src/pages/dashboard/DashBoard.tsx:198
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:68
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:74
 msgid "语言"
@@ -2352,7 +2371,7 @@ msgstr "透明度（0-1）"
 msgid "通过选项进入不同的场景"
 msgstr "通过选项进入不同的场景"
 
-#: src/pages/editor/Topbar/Topbar.tsx:101
+#: src/pages/editor/Topbar/Topbar.tsx:103
 msgid "配置"
 msgstr "配置"
 
