@@ -9,15 +9,14 @@ const manifest: IExtensionManifest = {
   },
   contributes: {
     themes: [
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore id type problem
       {
+        id: 'webgal-white',
         label: 'WebGAL White',
         path: '/white.json',
         uiTheme: 'vs',
       },
-      // @ts-ignore id type problem
       {
+        id: 'webgal-black',
         label: 'WebGAL Black',
         path: '/black.json',
         uiTheme: 'vs',
