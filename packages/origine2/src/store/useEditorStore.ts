@@ -32,6 +32,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isCascaderDelimitersCustomizable: false,
       cascaderDelimiters: ['/'],
       isDarkMode: false,
+      isUseRealtimeEffect: true,
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
         set({ subPage });
@@ -70,6 +71,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable) => set({isCascaderDelimitersCustomizable}) ,
       updateCascaderDelimiters: (cascaderDelimiters) => set({cascaderDelimiters}),
       updateIsDarkMode: (isDarkMode) => set({ isDarkMode }),
+      updateIsUseRealtimeEffect: (isUseRealtimeEffect) => set({ isUseRealtimeEffect }),
     }),
     {
       name: 'editor-storage',

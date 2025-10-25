@@ -25,14 +25,14 @@ export default function TemplateEditorToolbar() {
             onClick={() => updateIsCodeMode(true)}
           >
             <FileCodeOne theme="outline" size="20" fill={isCodeMode ? 'var(--primary)' : 'var(--text)'} strokeWidth={3} />
-          {t`脚本编辑器`}
+            {t`脚本编辑器`}
           </div>
           <div
             className={`${styles.toolbarButton} ${!isCodeMode ? styles.toolbarButtonActive : ''}`}
             onClick={() => updateIsCodeMode(false)}
           >
             <ListView theme="outline" size="20" fill={isCodeMode ? 'var(--text)' : 'var(--primary)'} strokeWidth={3} />
-          {t`图形编辑器`}
+            {t`图形编辑器`}
           </div>
         </>
         }

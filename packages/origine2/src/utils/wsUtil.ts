@@ -170,6 +170,18 @@ export class WsUtil {
     });
   };
 
+  public static sendSetEffectCommand(newEffect: string) {
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.SET_EFFECT,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: newEffect,
+    });
+  };
+
   private static getIsCurrentLineJump(currentLineValue: string | null): boolean {
     const command = currentLineValue?.split(":")[0] ?? "";
     if (command === "unlockCg" || command === "unlockBgm") {

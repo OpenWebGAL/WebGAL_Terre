@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { ColorPicker, IColor } from '@fluentui/react';
-import { Button, Checkbox, Input } from '@fluentui/react-components';
+import { Button, Checkbox, Input, Slider } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import { debounce } from 'lodash';
 import { useValue } from '@/hooks/useValue';
@@ -9,9 +9,10 @@ import { OptionCategory } from '@/pages/editor/GraphicalEditor/components/Option
 import CommonOptions from '@/pages/editor/GraphicalEditor/components/CommonOption';
 import styles from './effectEditor.module.scss';
 import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
-import type { EffectKey, EffectFields } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import type { EffectKey, EffectFields, EffectSliderConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
+import useEditorStore from '@/store/useEditorStore';
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -89,8 +90,10 @@ const EffectInputField = memo(
     fieldKey: EffectKey;
     updateField: (key: EffectKey, value: number | undefined) => void;
     submit: () => void;
+    slider?: EffectSliderConfig;
+    update?: () => void;
   }) => {
-    const { effectFields, fieldKey, submit, updateField } = props;
+    const { effectFields, fieldKey, submit, updateField, slider, update } = props;
     const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
     let [innerVal, setInnerVal] = useState((val ?? '').toString());
@@ -109,15 +112,45 @@ const EffectInputField = memo(
       },
       [fieldKey, updateField],
     );
+    const toFixedNumber = useCallback((value: number | undefined) => {
+      if (typeof value !== 'number') {
+        return 0;
+      } else {
+        if (!slider?.toFixed) {
+          return value;
+        } else {
+          return Number(value.toFixed(slider.toFixed));
+        }
+      }
+    }, [slider]);
     return (
       <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
         <Input
+          style={{ width: '140px' }}
           value={innerVal}
           placeholder={config.placeholder}
           onChange={(_, data) => handleChange(data.value)}
           onBlur={submit}
           onKeyDown={(e) => e.key === 'Enter' && submit()}
         />
+        {slider && (
+          <Slider
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            style={{ '--fui-Slider--steps-percent': '100.00%', width: '180px' } as React.CSSProperties}
+            min={slider.min}
+            max={slider.max}
+            step={slider.toFixed ? Math.pow(10, -slider.toFixed) : 1}
+            value={toFixedNumber(innerVal ? Number(innerVal) : slider.defaultValue)}
+            onChange={(_, data) => {
+              const num = typeof data.value === 'number' ? data.value : Number(data.value);
+              handleChange(toFixedNumber(num).toString());
+              update?.();
+            }}
+            onMouseUp={() => {
+              submit();
+            }}
+          />
+        )}
       </CommonOptions>
     );
   },
@@ -205,8 +238,10 @@ const EffectField = memo(
     updateField: (key: EffectKey, value: number | undefined) => void;
     submit: () => void;
     options?: Map<string, string>;
+    slider?: EffectSliderConfig;
+    update?: () => void;
   }) => {
-    const { type, effectFields, fieldKey, updateField, submit, options } = props;
+    const { type, effectFields, fieldKey, updateField, submit, options, slider } = props;
     switch (type) {
     case 'checkbox':
       return (
@@ -237,6 +272,8 @@ const EffectField = memo(
           effectFields={effectFields}
           updateField={updateField}
           submit={submit}
+          slider={slider}
+          update={props.update}
         />
       );
     }
@@ -246,7 +283,7 @@ const EffectField = memo(
 /**
  * 效果编辑器
  */
-export function EffectEditor(props: { json: string; onChange: (newJson: string) => void }) {
+export function EffectEditor(props: { json: string; onChange: (newJson: string) => void; onUpdate?: (transform: any) => void }) {
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
    * 解析初始JSON字符串，生成效果参数的初始状态
@@ -303,8 +340,9 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
         colorGreen: newColor.g,
         colorBlue: newColor.b,
       });
-    }, 100),
-    [],
+      update();
+    }, 10),
+    [effectFields.value],
   );
   /** 倒角颜色选择器的当前颜色（基于bevelRed/bevelGreen/bevelBlue） */
   const bevelColor = useMemo(
@@ -320,8 +358,9 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
         bevelGreen: newColor.g,
         bevelBlue: newColor.b,
       });
-    }, 100),
-    [],
+      update();
+    }, 10),
+    [effectFields.value],
   );
   /**
    * 切换选项
@@ -358,6 +397,18 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     }, 100),
     [getUpdatedObject],
   );
+  /**
+   * 实时更新, 将最终结果对象通过onUpdate通知父组件
+   */
+  const isUseRealtimeEffect = useEditorStore.use.isUseRealtimeEffect();
+  const update = useCallback(
+    debounce(() => {
+      if (!isUseRealtimeEffect) return;
+      const updatedObject = getUpdatedObject();
+      props.onUpdate?.(updatedObject);
+    }, 10),
+    [getUpdatedObject],
+  );
   return (
     <>
       {fieldGroups.map((group, index) => (
@@ -378,9 +429,12 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                     effectFields={effectFields.value}
                     updateField={updateField}
                     submit={submit}
+                    slider={effectConfig[key].slider}
+                    update={update}
                   />
                 ))}
                 <div style={{ flexGrow: 1 }} />
+                <div style={{ color: 'var(--text-weak)' }}>{t`*设置拾色器后，点击此按钮以保存更改`}</div>
                 <Button style={{ marginBottom: '14px' }} onClick={submit}>
                   {t`应用颜色变化`}
                 </Button>
@@ -396,6 +450,8 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 updateField={updateField}
                 submit={submit}
                 options={toggleOptions}
+                slider={effectConfig[key].slider}
+                update={update}
               />
             ))
           ) : (
@@ -408,6 +464,8 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
                 effectFields={effectFields.value}
                 updateField={updateField}
                 submit={submit}
+                slider={effectConfig[key].slider}
+                update={update}
               />
             ))
           )}
