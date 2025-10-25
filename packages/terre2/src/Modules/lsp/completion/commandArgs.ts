@@ -39,7 +39,7 @@ export enum commandType {
   setTransition = 30,
   getUserInput = 31,
   applyStyle = 32,
-  wait = 33
+  wait = 33,
 }
 
 export function markdown(content: string): MarkupContent {

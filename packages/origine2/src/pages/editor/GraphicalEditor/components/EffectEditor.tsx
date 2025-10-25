@@ -135,6 +135,7 @@ const EffectInputField = memo(
         />
         {slider && (
           <Slider
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             style={{ '--fui-Slider--steps-percent': '100.00%', width: '180px' } as React.CSSProperties}
             min={slider.min}
             max={slider.max}
@@ -456,18 +457,16 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
           ) : (
             // 其他的组
             group.keys.map((key) => (
-              <>
-                <EffectField
-                  type={effectConfig[key].type}
-                  key={key}
-                  fieldKey={key}
-                  effectFields={effectFields.value}
-                  updateField={updateField}
-                  submit={submit}
-                  slider={effectConfig[key].slider}
-                  update={update}
-                />
-              </>
+              <EffectField
+                type={effectConfig[key].type}
+                key={key}
+                fieldKey={key}
+                effectFields={effectFields.value}
+                updateField={updateField}
+                submit={submit}
+                slider={effectConfig[key].slider}
+                update={update}
+              />
             ))
           )}
         </OptionCategory>
