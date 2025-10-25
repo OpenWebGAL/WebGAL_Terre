@@ -22,6 +22,7 @@ export interface IEditorState {
   isCascaderDelimitersCustomizable: boolean,
   cascaderDelimiters: string[],
   isDarkMode: boolean,
+  isUseRealtimeEffect: boolean, // 是否使用实时效果
 }
 
 export interface IEditorAction {
@@ -44,4 +45,5 @@ export interface IEditorAction {
   updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable: IEditorState['isCascaderDelimitersCustomizable']) => void,
   updateCascaderDelimiters: (cascadeDelimiters: IEditorState['cascaderDelimiters']) => void,
   updateIsDarkMode: (isDarkMode: IEditorState['isDarkMode']) => void,
+  updateIsUseRealtimeEffect: (isUseRealtimeEffect: IEditorState['isUseRealtimeEffect']) => void,
 }
