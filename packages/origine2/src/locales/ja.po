@@ -17,7 +17,7 @@ msgstr ""
 msgid ";注释"
 msgstr ";コメント"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:436
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:437
 msgid "*设置拾色器后，点击此按钮以保存更改"
 msgstr "*カラーピッカー設定後、このボタンで保存"
 
@@ -85,6 +85,10 @@ msgstr "CSS プロパティ名："
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:213
 msgid "end;"
 msgstr "end;"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:215
+msgid "font-family"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:245
 msgid "getUserInput:;"
@@ -216,6 +220,10 @@ msgstr "先の"
 msgid "上传"
 msgstr "アップロード"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:262
+msgid "上传字体文件"
+msgstr ""
+
 #: src/components/Assets/Assets.tsx:445
 #: src/components/Assets/Assets.tsx:451
 msgid "上传资源"
@@ -312,7 +320,7 @@ msgstr "ガンマ"
 #~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 #~ msgstr "実験的な高速プレビューを有効にすると、リアルタイムプレビューの効率が大幅に向上しますが、異常が発生する可能性があります。特別なヒント：前回のリアルタイムプレビューのジャンプが完全に終了していない（特にアニメーションが終了していない）ときに、再度ジャンプしないでください。"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:159
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:184
 msgid "使用中的模板："
 msgstr "使用中のテンプレート："
 
@@ -363,8 +371,17 @@ msgid "侧边栏游戏预览"
 msgstr "サイドバーゲームプレビュー"
 
 #: src/components/IconCreator/IconCreator.tsx:798
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:287
 msgid "保存"
 msgstr "セーブ"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:287
+msgid "保存中..."
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:179
+msgid "保存模板配置失败，请稍后重试"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:505
 msgid "保持闭眼(毫秒)"
@@ -443,7 +460,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "関連する立ち絵"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:373
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:149
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
@@ -565,6 +582,7 @@ msgstr "新しいゲームを作成"
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:206
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:181
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:269
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
 msgid "删除"
 msgstr "削除"
@@ -648,7 +666,8 @@ msgstr "新しいバージョンが検出されました"
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:775
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:67
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:284
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:196
 msgid "取消"
 msgstr "キャンセル"
 
@@ -816,6 +835,22 @@ msgstr "フォント最適化は、ゲームプレビューウィンドウが特
 msgid "字体大小"
 msgstr "フォントサイズ"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:224
+msgid "字体文件 URL"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:124
+msgid "字体文件上传失败，请重试"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:231
+msgid "字体类型"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:199
+msgid "字体配置"
+msgstr ""
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
 msgid "字母间距"
 msgstr "文字間隔"
@@ -899,8 +934,8 @@ msgstr "失敗を導き出します!"
 msgid "导出成功！"
 msgstr "導出成功です!"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:123
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:140
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:156
 msgid "将当前模板应用到选定的游戏"
 msgstr "選択したゲームに現在のテンプレートを適用する"
 
@@ -919,6 +954,10 @@ msgstr "アバターコンテナ"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:35
 msgid "小头像文件"
 msgstr "アバターファイル"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:209
+msgid "尚未配置任何字体"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
 msgid "层级顺序"
@@ -984,7 +1023,7 @@ msgstr "通常演出"
 msgid "平铺"
 msgstr "タイリング"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:173
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:198
 msgid "应用"
 msgstr "適用"
 
@@ -992,7 +1031,7 @@ msgstr "適用"
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:438
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:439
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "色の変更を適用"
@@ -1001,7 +1040,7 @@ msgstr "色の変更を適用"
 msgid "延迟时间（秒）"
 msgstr "遅延時間（秒）"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:371
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:145
@@ -1135,7 +1174,7 @@ msgstr "ヒント：この効果は、異なる立ち絵に切り替えるか、
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "ヒント：エフェクトは、異なる背景に切り替えるか、一度背景を削除してから再度追加した場合にのみ有効になります。既存の背景にエフェクトを設定する場合は、専用の「エフェクト設定」コマンドを使用してください。"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:76
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:80
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "ヒント：スタイルで使用されるリソースは assets ディレクトリにあります"
 
@@ -1272,6 +1311,10 @@ msgstr "テキストシャドウ"
 #: src/pages/dashboard/About.tsx:77
 msgid "文档"
 msgstr "ドキュメント"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:205
+msgid "新增字体"
+msgstr ""
 
 #: src/components/Assets/Assets.tsx:337
 #: src/components/Assets/Assets.tsx:352
@@ -1483,8 +1526,13 @@ msgstr "テンプレートリスト"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:58
 #: src/pages/dashboard/TemplateSidebar.tsx:67
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:195
 msgid "模板名称"
 msgstr "テンプレート名"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:140
+msgid "模板名称不能为空"
+msgstr ""
 
 #: src/pages/dashboard/TemplateSidebar.tsx:69
 #: src/pages/dashboard/TemplateSidebar.tsx:75
@@ -1503,6 +1551,14 @@ msgstr "ぼやける"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:17
 msgid "櫻花"
 msgstr "桜"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:262
+msgid "正在上传"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:192
+msgid "正在加载模板配置"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:15
 msgid "正常"
@@ -2154,6 +2210,10 @@ msgstr "言語"
 msgid "语音"
 msgstr "ボイス"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:157
+msgid "请完整填写每个字体的信息"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:211
 msgid "请输入搜索提示词..."
 msgstr "検索ヒントを入力してください..."
@@ -2388,7 +2448,7 @@ msgstr "選択肢ボタン（無効状態）"
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:112
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:122
 msgid "选项菜单"
 msgstr "オプションメニュー"
 
@@ -2404,6 +2464,11 @@ msgstr "選択肢からシーンに切り替えることが可能です"
 #: src/pages/editor/Topbar/Topbar.tsx:103
 msgid "配置"
 msgstr "構成"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:189
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
+msgid "配置模板"
+msgstr ""
 
 #: src/components/Assets/FileElement.tsx:142
 #: src/components/Assets/FileElement.tsx:161
@@ -2544,7 +2609,7 @@ msgid "高斯模糊"
 msgstr "ぼかし"
 
 #: src/hooks/useEaseTypeOptions.ts:6
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:370
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:371
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
 msgid "默认"

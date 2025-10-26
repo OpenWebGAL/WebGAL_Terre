@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Assets, {IFileFunction} from '@/components/Assets/Assets';
 import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
@@ -12,9 +12,10 @@ import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardB
 import {redirect} from "@/hooks/useHashRoute";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import { api } from '@/api';
-import { GameInfoDto } from '@/api/Api';
+import { GameInfoDto, TemplateConfigDto } from '@/api/Api';
 import { List, ListItem } from "@fluentui/react-list-preview";
 import useSWR, { mutate } from 'swr';
+import TemplateConfigDialog from './TemplateConfigDialog';
 
 const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
 const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
@@ -28,7 +29,7 @@ export default function TemplateEditorSidebar() {
   const updateTabs = useTemplateEditorContext((state) => state.updateTabs);
   const updateCurrentTab = useTemplateEditorContext((state) => state.updateCurrentTab);
 
-  const {data: templateConfig} = useSWR(
+  const {data: templateConfig, mutate: mutateTemplateConfig} = useSWR(
     `/templateConfig/${templateDir}`,
     async () => (await api.manageTemplateControllerGetTemplateConfig(templateDir)).data
   );
@@ -66,7 +67,12 @@ export default function TemplateEditorSidebar() {
         <span className={styles.title}>
           {templateConfig ? templateConfig.name : templateDir}
         </span>
-        <OptionMenu/>
+        <OptionMenu
+          templateConfig={templateConfig}
+          onTemplateConfigUpdated={async () => {
+            await mutateTemplateConfig();
+          }}
+        />
       </div>
       <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
         <ComponentTree/>
@@ -84,10 +90,16 @@ export default function TemplateEditorSidebar() {
   );
 }
 
-const OptionMenu = () => {
+interface OptionMenuProps {
+  templateConfig?: TemplateConfigDto;
+  onTemplateConfigUpdated?: () => void | Promise<void>;
+}
+
+const OptionMenu = ({ templateConfig, onTemplateConfigUpdated }: OptionMenuProps) => {
   const templateDir = useEditorStore.use.subPage();
 
   const [applyTemplateDialogIsOpen, setApplyTemplateDialogIsOpen] = useState(false);
+  const [configDialogIsOpen, setConfigDialogIsOpen] = useState(false);
 
   const [gameList, setGameList] = useState<GameInfoDto[]>([]);
   const [selectedGameDirs, setSelectedGameDirs] = useState<string[]>([]);
@@ -114,6 +126,13 @@ const OptionMenu = () => {
         <MenuPopover>
           <MenuList>
             <MenuItem
+              onClick={() => {
+                setConfigDialogIsOpen(true);
+              }}
+            >
+              {t`配置模板`}
+            </MenuItem>
+            <MenuItem
               onClick={
                 () => {
                   setApplyTemplateDialogIsOpen(true);
@@ -124,6 +143,14 @@ const OptionMenu = () => {
           </MenuList>
         </MenuPopover>
       </Menu>
+
+      <TemplateConfigDialog
+        open={configDialogIsOpen}
+        templateConfig={templateConfig}
+        templateDir={templateDir}
+        onOpenChange={setConfigDialogIsOpen}
+        onTemplateConfigUpdated={onTemplateConfigUpdated}
+      />
 
       <Dialog open={applyTemplateDialogIsOpen} onOpenChange={(event, data) => setApplyTemplateDialogIsOpen(data.open)}>
         <DialogSurface>
