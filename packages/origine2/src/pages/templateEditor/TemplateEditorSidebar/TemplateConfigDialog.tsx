@@ -113,20 +113,20 @@ export default function TemplateConfigDialog({
     setUploadingIndex(index);
     setErrorMessage(null);
     try {
+      const targetDirectory = ['templates', templateDir, 'assets'].join('/');
       try {
         await api.assetsControllerCreateNewFolder({
-          source: `templates/${templateDir}`,
-          name: 'assets',
+          source: targetDirectory,
+          name: '',
         });
       } catch {
-        // folder already exists or failed quietly; ignore
+        // ignore if creation fails (likely already exists)
       }
 
-      const targetDirectory = ['templates', templateDir, 'assets'].join('/');
-
+      const fileName = encodeURIComponent(file.name);
       const formData = new FormData();
       formData.append('targetDirectory', targetDirectory);
-      formData.append('files', file, file.name);
+      formData.append('files', file, fileName);
       await axios.post('/api/assets/upload', formData);
       updateFont(index, { url: `assets/${file.name}` });
     } catch (error) {
