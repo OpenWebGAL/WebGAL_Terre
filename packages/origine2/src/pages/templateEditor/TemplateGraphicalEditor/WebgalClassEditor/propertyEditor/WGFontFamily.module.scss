@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fontList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fontRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.fontInput {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.rowActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.emptyHint {
+  color: var(--text-sub);
+  font-size: 14px;
+}
+
+.footerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
