@@ -13,7 +13,7 @@ import { eventBus } from '@/utils/eventBus';
 import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
-import {useValue} from "@/hooks/useValue";
+import { useValue } from "@/hooks/useValue";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -44,20 +44,26 @@ export default function TextEditor(props: ITextEditorProps) {
 
     configureMonaco(editor, monaco);
 
-    editor.onDidChangeCursorPosition(debounce((event:monaco.editor.ICursorPositionChangedEvent) => {
+    editor.onDidChangeCursorPosition(debounce((event: monaco.editor.ICursorPositionChangedEvent) => {
       const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
-          WsUtil.sendSyncCommand(target?.path??'', event.position.lineNumber, targetValue);
+          eventBus.emit('pixi-sync-command', {
+            path: target?.path ?? '',
+            targetPath: props.targetPath,
+            lineNumber: event.position.lineNumber,
+            lineContent: targetValue
+          });
+          WsUtil.sendSyncCommand(target?.path ?? '', event.position.lineNumber, targetValue);
         }
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
     }));
     editor.updateOptions({
       unicodeHighlight: { ambiguousCharacters: false },
-      wordWrap: isAutoWarp ? 'on' : 'off' ,
+      wordWrap: isAutoWarp ? 'on' : 'off',
       smoothScrolling: true,
     });
     updateEditData();
@@ -87,7 +93,7 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} ev
    */
   const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
-    if(!isEditorReady.value) return;
+    if (!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
     // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
@@ -95,9 +101,9 @@ export default function TextEditor(props: ITextEditorProps) {
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value) currentText.value = value;
     eventBus.emit('update-scene', currentText.value);
-    api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
+    api.assetsControllerEditTextFile({ textFile: currentText.value, path: props.targetPath }).then((res) => {
       const targetValue = currentText.value.split('\n')[lineNumber - 1];
-      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
+      WsUtil.sendSyncCommand(target?.path ?? '', lineNumber, targetValue);
     });
   }, 500);
 
@@ -124,6 +130,13 @@ export default function TextEditor(props: ITextEditorProps) {
         editorRef?.current?.revealPositionInCenterIfOutsideViewport(targetPosition, monaco.editor.ScrollType.Immediate);
       });
   }
+
+  useEffect(() => {
+    eventBus.on('drag-update-scene', updateEditData);
+    return () => {
+      eventBus.off('drag-update-scene', updateEditData);
+    };
+  }, []);
 
   useEffect(() => {
     const handleVisibilityChange = () => {

@@ -27,12 +27,14 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isEnableLivePreview: false,
       isAutoWarp: false,
       isUseExpFastSync:false,
+      isWindowAdjustment: false, // 自定义的状态变量，表示预览窗口调整功能是否开启
       isUseFontOptimization: false,
       ignoreVersion: '',
       isCascaderDelimitersCustomizable: false,
       cascaderDelimiters: ['/'],
       isDarkMode: false,
       isUseRealtimeEffect: true,
+      updateIsWindowAdjustment: (isWindowAdjustment) => set({ isWindowAdjustment }),
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
         set({ subPage });
