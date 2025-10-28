@@ -17,7 +17,7 @@ msgstr ""
 msgid ";注释"
 msgstr "Comment"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:436
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:437
 msgid "*设置拾色器后，点击此按钮以保存更改"
 msgstr "*Click this button to save changes after setting color picker"
 
@@ -297,7 +297,7 @@ msgstr "Theme"
 msgid "亮度"
 msgstr "Brightness"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:149
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:158
 msgid "代码编辑器"
 msgstr "Code Editor"
 
@@ -440,13 +440,13 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:373
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:149
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:145
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:189
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:198
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "关闭"
 msgstr "Disabled"
@@ -471,7 +471,7 @@ msgstr "Hide the figure"
 msgid "关闭背景"
 msgstr "Hide the background"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:95
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:104
 msgid "关闭预览窗口"
 msgstr "Close the preview window"
 
@@ -591,7 +591,7 @@ msgstr "Delete game"
 msgid "刷新"
 msgstr "Refresh"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:169
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:54
 msgid "刷新游戏"
 msgstr "Refresh game"
@@ -608,7 +608,7 @@ msgstr "Functional Area"
 msgid "加粗"
 msgstr "Bold"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:251
 msgid "动画"
 msgstr "Animation"
@@ -687,7 +687,7 @@ msgstr "Startup image"
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:227
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:214
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:224
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:188
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:197
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "启用"
 msgstr "Enabled"
@@ -754,7 +754,7 @@ msgstr "Open in File Explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -762,8 +762,8 @@ msgstr "Preview in new tab"
 msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:152
 msgid "场景"
 msgstr "Scene"
 
@@ -795,7 +795,7 @@ msgstr "Heavy snow"
 msgid "如果使用了自定义模板导致预览效果异常，请关闭此选项。"
 msgstr "If the use of a custom template causes abnormal display issues, please disable this option."
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:152
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:161
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:58
 msgid "字体"
 msgstr "Font"
@@ -808,7 +808,7 @@ msgstr "Font optimization"
 msgid "字体优化将在游戏预览窗口低于特定尺寸时，关闭对话文本字体描边，以提升可读性。"
 msgstr "Font optimization will disable the outline of dialogue text when the game preview window is below a certain size to enhance readability."
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:158
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:167
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:41
 msgid "字体大小"
 msgstr "Font size"
@@ -829,21 +829,21 @@ msgstr "Positioning"
 #~ msgid "实时预览"
 #~ msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:110
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:119
 msgid "实时预览关闭"
 msgstr "Live preview off"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:99
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:108
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:110
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:119
 msgid "实时预览打开"
 msgstr "Live preview on"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:115
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:124
 msgid "实验性快速预览"
 msgstr "Experimental fast preview"
 
@@ -989,7 +989,7 @@ msgstr "Apply"
 msgid "应用的模板"
 msgstr "Applied template"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:438
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:439
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "Apply color changes"
@@ -998,7 +998,7 @@ msgstr "Apply color changes"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:371
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:145
@@ -1022,11 +1022,11 @@ msgstr "Current version"
 msgid "德语"
 msgstr "German"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:142
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:151
 msgid "快速预览效果"
 msgstr "Fast preview effects"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:135
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:144
 msgid "快速预览语句"
 msgstr "Fast preview sentences"
 
@@ -1364,7 +1364,7 @@ msgid "是否固定弹窗"
 msgstr "Pin popup"
 
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:218
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:182
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:191
 msgid "是否自定义分隔符"
 msgstr "Use custom separator"
 
@@ -1401,7 +1401,7 @@ msgstr "Show background"
 msgid "显示角色名"
 msgstr "Show role name"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:95
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:104
 msgid "显示预览窗口"
 msgstr "Show preview window"
 
@@ -1474,7 +1474,7 @@ msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:228
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
 msgid "模板"
 msgstr "Template"
 
@@ -1517,7 +1517,7 @@ msgstr "Play BGM normally"
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:175
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:184
 msgid "永不换行"
 msgstr "Never wrap"
 
@@ -1652,7 +1652,7 @@ msgstr "Game description"
 msgid "游戏识别码"
 msgstr "Game ID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:124
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:126
 msgid "游戏配置"
 msgstr "Game configuration"
 
@@ -1668,7 +1668,7 @@ msgstr "Filter"
 msgid "点击或拖拽文件至此上传"
 msgstr "Click or drag file to this area to upload"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:200
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:209
 msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
 msgstr "Click or press Backspace to delete the old separator. Enter a new separator and press Enter to confirm."
 
@@ -1729,7 +1729,7 @@ msgstr "View"
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:124
 msgid "视频"
 msgstr "Video"
 
@@ -1754,7 +1754,7 @@ msgstr "Disabled"
 msgid "立即注视"
 msgstr "Focus instantly"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:117
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "立绘"
 msgstr "Figure"
 
@@ -1795,7 +1795,7 @@ msgstr "Red channel"
 msgid "紧急回避"
 msgstr "Emergency Evasion"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:123
 msgid "纹理"
 msgstr "Texture"
 
@@ -1920,7 +1920,7 @@ msgid "耗时"
 msgstr "Time taken"
 
 #: src/components/IconCreator/IconCreator.tsx:683
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:117
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
@@ -1964,7 +1964,7 @@ msgstr "Script editor"
 msgid "自动"
 msgstr "Auto"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:175
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:184
 msgid "自动换行"
 msgstr "Auto wrap"
 
@@ -1994,7 +1994,7 @@ msgstr "Custom separator"
 msgid "自定义特效名称"
 msgstr "Custom effect name"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:179
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:188
 msgid "自定义级联选择器分隔符"
 msgstr "Custom cascade selector separator"
 
@@ -2131,7 +2131,7 @@ msgstr "Set custom cascade selector separator (press Enter to confirm after inpu
 #~ msgid "设置转场效果"
 #~ msgstr "Set transition effect"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:129
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:138
 msgid "该功能将大幅提升实时预览效率，但可能出现异常。"
 msgstr "This feature will greatly improve real-time preview efficiency, but may cause exceptions."
 
@@ -2145,12 +2145,12 @@ msgstr "This file type does not support preview"
 
 #: src/pages/dashboard/DashBoard.tsx:197
 #: src/pages/dashboard/DashBoard.tsx:198
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:70
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:76
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:79
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:85
 msgid "语言"
 msgstr "Language"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:123
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:125
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:232
 msgid "语音"
 msgstr "Voice"
@@ -2183,7 +2183,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:149
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "资源"
 msgstr "Assets"
 
@@ -2497,7 +2497,7 @@ msgstr "Right"
 msgid "靠左"
 msgstr "Left"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
 msgid "音乐"
 msgstr "Music"
 
@@ -2509,7 +2509,7 @@ msgstr "Project Homepage"
 msgid "预先反向"
 msgstr "Anticipate"
 
-#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:89
+#: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:98
 msgid "预览"
 msgstr "Preview"
 
@@ -2517,7 +2517,7 @@ msgstr "Preview"
 msgid "预览图标"
 msgstr "Preview icon"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:160
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:166
 msgid "预览窗口"
 msgstr "Preview window"
 
@@ -2545,7 +2545,7 @@ msgid "高斯模糊"
 msgstr "Gaussian Blur"
 
 #: src/hooks/useEaseTypeOptions.ts:6
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:370
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:371
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
 msgid "默认"

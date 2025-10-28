@@ -34,7 +34,7 @@ export function usePixiApp(canvasRef: React.RefObject<HTMLCanvasElement>) {
         app = new Application();
         await app.init({
           backgroundAlpha: 0,
-          view: canvasRef.current,
+          canvas: canvasRef.current,
           resizeTo: canvasRef.current.parentElement || window,
         });
         appRef.current = app;

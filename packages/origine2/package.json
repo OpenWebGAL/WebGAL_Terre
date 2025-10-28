@@ -50,6 +50,7 @@
     "monaco-textmate": "^3.0.1",
     "natural-compare-lite": "^1.4.0",
     "onigasm": "^2.2.5",
+    "pixi.js": "8.14.0",
     "primereact": "^9.5.0",
     "react": "^18.0.0",
     "react-beautiful-dnd": "^13.1.0",

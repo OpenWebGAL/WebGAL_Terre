@@ -17,7 +17,7 @@ import {
   NavigationFilled,
   NavigationRegular,
 } from '@fluentui/react-icons';
-import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Tooltip, Input, Combobox, Option } from '@fluentui/react-components';
+import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Tooltip, Input, Combobox, Option, Switch } from '@fluentui/react-components';
 import useEditorStore from '@/store/useEditorStore';
 import { t } from '@lingui/macro';
 import { candidateFontSizes } from './constants';
