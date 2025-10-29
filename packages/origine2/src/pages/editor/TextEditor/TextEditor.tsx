@@ -51,7 +51,6 @@ export default function TextEditor(props: ITextEditorProps) {
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
           eventBus.emit('pixi-sync-command', {
-            path: target?.path ?? '',
             targetPath: props.targetPath,
             lineNumber: event.position.lineNumber,
             lineContent: targetValue

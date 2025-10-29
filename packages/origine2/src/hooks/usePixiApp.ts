@@ -1,7 +1,6 @@
 import { Container, Graphics } from 'pixi.js';
 import { useEffect, useRef } from "react";
 import { Application } from "pixi.js";
-import { WsUtil } from '@/utils/wsUtil';
 import { eventBus } from '@/utils/eventBus';
 import { api } from '@/api';
 import axios from 'axios';
@@ -16,19 +15,16 @@ let currentFrame: Container | null = null;
 // 用于保存 PIXI App 实例
 let appInstance: Application | null = null;
 // 用于保存原始指令
-let originalCommand: string | null = null;
+let originalCommand: string = '';
 // 用于保存当前编辑的上下文
-let commandContext: { path: string, targetPath: string, lineNumber: number } | null = null;
+let commandContext: { targetPath: string, lineNumber: number } | null = null;
 // 拖拽框的大小（直径）
 const dragBoxSize = 100;
 
 
 export function usePixiApp(canvasRef: React.RefObject<HTMLCanvasElement>) {
-  const appRef = useRef<Application | null>(null);
-
   useEffect(() => {
     let app: Application | null = null;
-
     (async () => {
       if (canvasRef.current) {
         app = new Application();
@@ -37,41 +33,34 @@ export function usePixiApp(canvasRef: React.RefObject<HTMLCanvasElement>) {
           canvas: canvasRef.current,
           resizeTo: canvasRef.current.parentElement || window,
         });
-        appRef.current = app;
-        appInstance = app; // 保存实例
+        appInstance = app; // 用 appInstance 保存实例
       }
     })();
 
+    // 下面是响应器
     const handleSyncCommand = (params: any) => {
-      if (!appRef.current) return;
-      removeCurrentFrame(appRef.current);
-      if (!params?.lineContent?.includes('changeFigure')) {
-        originalCommand = null;
-        commandContext = null;
-        return;
-      }
-      const line = params?.lineContent || '';
-      originalCommand = line; // 保存原始指令
+      if (!params?.lineContent?.includes('changeFigure') || !appInstance) return;
+      removeCurrentFrame(appInstance);
+      originalCommand = params?.lineContent || ''; // 保存原始指令
       commandContext = {
-        path: params?.path,           // 短路径,用于 WebSocket 同步
         targetPath: params?.targetPath, // 完整路径,用于文件读写
         lineNumber: params?.lineNumber
       };
-      const { direction, transformObj } = parseFigureCommand(line);
+      const { direction, transformObj } = parseFigureCommand(originalCommand);
       const mergedTransform = getFigureTransform(direction, transformObj, previewWindow);
-      currentFrame = createFigureContainer(appRef.current, mergedTransform);
+      currentFrame = createFigureContainer(appInstance, mergedTransform);
     };
     eventBus.on('pixi-sync-command', handleSyncCommand);
 
     return () => {
       app?.destroy(true, { children: true });
-      appRef.current = null;
+      // appRef.current = null;
       appInstance = null; // 清理实例
       eventBus.off('pixi-sync-command', handleSyncCommand);
     };
   }, [canvasRef]);
 
-  return appRef;
+  return appInstance;
 }
 
 // 删除当前图形容器
@@ -106,19 +95,17 @@ function getFigureTransform(direction: 'left' | 'center' | 'right', transformObj
   let rotation = 0;
   let scale = { x: 1, y: 1 };
   // 如果 transformObj 里有 position/rotation/scale
-  if (transformObj) {
-    if (transformObj.position && typeof transformObj.position.x === 'number') {
-      percentX += transformObj.position.x / previewWindow.width;
-    }
-    if (transformObj.position && typeof transformObj.position.y === 'number') {
-      percentY += transformObj.position.y / previewWindow.height;
-    }
-    if (typeof transformObj.rotation === 'number') {
-      rotation = transformObj.rotation;
-    }
-    if (transformObj.scale && typeof transformObj.scale.x === 'number' && typeof transformObj.scale.y === 'number') {
-      scale = { x: transformObj.scale.x, y: transformObj.scale.y };
-    }
+  if (transformObj.position && typeof transformObj.position.x === 'number') {
+    percentX += transformObj.position.x / previewWindow.width;
+  }
+  if (transformObj.position && typeof transformObj.position.y === 'number') {
+    percentY += transformObj.position.y / previewWindow.height;
+  }
+  if (typeof transformObj.rotation === 'number') {
+    rotation = transformObj.rotation;
+  }
+  if (transformObj.scale && typeof transformObj.scale.x === 'number' && typeof transformObj.scale.y === 'number') {
+    scale = { x: transformObj.scale.x, y: transformObj.scale.y };
   }
   return { percentX, percentY, rotation, scale };
 }
@@ -136,6 +123,7 @@ function createFigureContainer(app: Application, transformObj: { percentX: numbe
   container.x = x;
   container.y = y;
   container.rotation = transformObj.rotation;
+  container.scale.set(transformObj.scale.x, transformObj.scale.y);
 
   const circle = createZoomListener(dragBoxSize);
   container.addChild(circle);
@@ -204,7 +192,6 @@ function createZoomListener(size = 100, color = 0x0099ff, alpha = 0.5, strokeCol
       const dx = newPosition.x - circle.parent.x;
       const dy = newPosition.y - circle.parent.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
-      console.log('distance:', distance, size / 2);
       const newScale = distance / (size / 2);
       circle.parent.scale.set(newScale);
     }
