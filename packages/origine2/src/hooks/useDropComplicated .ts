@@ -22,7 +22,7 @@ let commandContext: { targetPath: string, lineNumber: number } | null = null;
 const dragBoxSize = 100;
 
 
-export function usePixiApp(canvasRef: React.RefObject<HTMLCanvasElement>) {
+export function useDropComplicated(canvasRef: React.RefObject<HTMLCanvasElement>) {
   useEffect(() => {
     let app: Application | null = null;
     (async () => {

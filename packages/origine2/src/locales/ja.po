@@ -594,7 +594,7 @@ msgstr "ゲームを削除"
 msgid "刷新"
 msgstr "更新"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:172
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:54
 msgid "刷新游戏"
 msgstr "ゲームをリフレッシュ"
@@ -611,7 +611,7 @@ msgstr "機能区の表示"
 msgid "加粗"
 msgstr "太字"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:251
 msgid "动画"
 msgstr "アニメーション"
@@ -757,7 +757,7 @@ msgstr "ファイルエクスプローラーで開く"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
 
@@ -765,8 +765,8 @@ msgstr "新しいタブでプレビュー"
 msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:152
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:153
 msgid "场景"
 msgstr "シーン"
 
@@ -832,7 +832,7 @@ msgstr "位置決め方法"
 #~ msgid "实时预览"
 #~ msgstr "リアルタイムプレビュー"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:184
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:119
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
@@ -841,7 +841,7 @@ msgstr "リアルタイムプレビューオフ"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "リアルタイムプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:187
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:184
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:119
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
@@ -1473,7 +1473,7 @@ msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:228
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:123
 msgid "模板"
 msgstr "テンプレート"
 
@@ -1651,7 +1651,7 @@ msgstr "ゲーム概要"
 msgid "游戏识别码"
 msgstr "ゲームID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:126
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:127
 msgid "游戏配置"
 msgstr "ゲーム構成"
 
@@ -1728,7 +1728,7 @@ msgstr "ビュー"
 msgid "视觉小说编辑，再进化"
 msgstr "Galgame Editing. Redefined"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:124
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:125
 msgid "视频"
 msgstr "Video"
 
@@ -1753,7 +1753,7 @@ msgstr "無効化"
 msgid "立即注视"
 msgstr "即座に注視"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
 msgid "立绘"
 msgstr "Figure"
 
@@ -1794,7 +1794,7 @@ msgstr "赤いチャネル"
 msgid "紧急回避"
 msgstr "緊急回避"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:123
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:124
 msgid "纹理"
 msgstr "Tex"
 
@@ -1919,7 +1919,7 @@ msgid "耗时"
 msgstr "時間がかかります"
 
 #: src/components/IconCreator/IconCreator.tsx:683
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:117
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
@@ -2149,7 +2149,7 @@ msgstr "このファイルタイプはプレビューをサポートしていま
 msgid "语言"
 msgstr "言語"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:125
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:126
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:232
 msgid "语音"
 msgstr "ボイス"
@@ -2182,7 +2182,7 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:152
 msgid "资源"
 msgstr "アセット"
 
@@ -2496,7 +2496,7 @@ msgstr "右寄せ"
 msgid "靠左"
 msgstr "左寄せ"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
 msgid "音乐"
 msgstr "BGM"
 
@@ -2516,7 +2516,7 @@ msgstr "プレビュー"
 msgid "预览图标"
 msgstr "プレビューアイコン"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:166
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:163
 msgid "预览窗口"
 msgstr "プレビューウィンドウ"
 

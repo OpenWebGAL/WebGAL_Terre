@@ -9,7 +9,8 @@ import { IGameEditorSidebarTabs, ITag } from "@/types/gameEditor";
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { WsUtil } from "@/utils/wsUtil";
-import { usePixiApp } from "@/hooks/usePixiApp";
+import { useDropComplicated } from "@/hooks/useDropComplicated ";
+import TransformableBox from '@/components/TransformableBox/TransformableBox';
 
 let startX = 0;
 let prevXvalue = 0;
@@ -153,10 +154,6 @@ export default function EditorSideBar() {
     </TabList>
   );
 
-  // 处理窗口操控的逻辑
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  usePixiApp(canvasRef);
-
   return <>
     {isShowSidebar &&
       <div className={styles.editor_sidebar}>
@@ -189,16 +186,20 @@ export default function EditorSideBar() {
             />
           </div>
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          <canvas
-            ref={canvasRef}
+          <div
             className={styles.previewWindow}
             style={{
               position: 'absolute',
               left: 0,
               bottom: 0,
+              overflow: 'hidden',
               display: isShowPreview && isWindowAdjustment ? 'block' : 'none',
             }}
-          ></canvas>
+          >
+            {isShowPreview && isWindowAdjustment && (
+              <TransformableBox />
+            )}
+          </div>
           {isShowPreview && <iframe
             ref={ifRef}
             id="gamePreviewIframe"
