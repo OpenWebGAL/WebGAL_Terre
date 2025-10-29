@@ -131,13 +131,6 @@ export default function TextEditor(props: ITextEditorProps) {
   }
 
   useEffect(() => {
-    eventBus.on('drag-update-scene', updateEditData);
-    return () => {
-      eventBus.off('drag-update-scene', updateEditData);
-    };
-  }, []);
-
-  useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         updateEditData();

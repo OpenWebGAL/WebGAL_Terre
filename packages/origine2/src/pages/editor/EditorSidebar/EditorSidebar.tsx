@@ -10,7 +10,7 @@ import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { WsUtil } from "@/utils/wsUtil";
 import { useDropComplicated } from "@/hooks/useDropComplicated ";
-import TransformableBox from '@/components/TransformableBox/TransformableBox';
+import TransformableBox from '@/pages/editor/TransformableBox/TransformableBox';
 
 let startX = 0;
 let prevXvalue = 0;
@@ -196,9 +196,9 @@ export default function EditorSideBar() {
               display: isShowPreview && isWindowAdjustment ? 'block' : 'none',
             }}
           >
-            {isShowPreview && isWindowAdjustment && (
+            {
               <TransformableBox />
-            )}
+            }
           </div>
           {isShowPreview && <iframe
             ref={ifRef}
