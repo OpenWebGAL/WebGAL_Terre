@@ -146,6 +146,16 @@ export default function TextEditor(props: ITextEditorProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const handleDragUpdate = () => {
+      updateEditData();
+    };
+    eventBus.on('drag-update-scene', handleDragUpdate);
+    return () => {
+      eventBus.off('drag-update-scene', handleDragUpdate);
+    };
+  }, []);
+
   return (
     <div
       style={{ display: props.isHide ? 'none' : 'block', zIndex: 999, overflow: 'auto' }}

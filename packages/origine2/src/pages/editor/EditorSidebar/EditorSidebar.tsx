@@ -9,7 +9,6 @@ import { IGameEditorSidebarTabs, ITag } from "@/types/gameEditor";
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { WsUtil } from "@/utils/wsUtil";
-import { useDropComplicated } from "@/hooks/useDropComplicated ";
 import TransformableBox from '@/pages/editor/TransformableBox/TransformableBox';
 
 let startX = 0;
@@ -36,6 +35,7 @@ export default function EditorSideBar() {
   const tags = useGameEditorContext((state) => state.tags);
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
+  const PreviewControlRef = useRef(null);
 
   const ifRef = useRef<HTMLIFrameElement | null>(null);
   useEffect(() => {
@@ -187,6 +187,7 @@ export default function EditorSideBar() {
           </div>
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
           <div
+            ref={PreviewControlRef}
             className={styles.previewWindow}
             style={{
               position: 'absolute',
@@ -197,7 +198,9 @@ export default function EditorSideBar() {
             }}
           >
             {
-              <TransformableBox />
+              <TransformableBox
+              parents = {PreviewControlRef}
+              />
             }
           </div>
           {isShowPreview && <iframe
