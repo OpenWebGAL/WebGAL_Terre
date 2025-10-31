@@ -27,29 +27,34 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     height: 200,
   });
   const targetRef = useRef<HTMLDivElement | null>(null);
-  const [keepRatio, setKeepRatio] = useState(true);
-  const [isDisplay, setIsDisplay] = useState(false);
-  const [remountKey, setRemountKey] = useState(0);
+  const [keepRatio, setKeepRatio] = useState(true); // 是否保持宽高比
+  const [isDisplay, setIsDisplay] = useState(false); // 控制框是否显示
+  const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
   const [originalCommand, setOriginalCommand] = useState(''); // 存储原始指令字符串
-  const [commandContext, setCommandContext] = useState<{ targetPath: string, lineNumber: number } | null>(null);
+  const [currentDirection, setCurrentDirection] = useState<'left' | 'center' | 'right'>('center'); // 存储当前 direction
   const commandContextRef = useRef<{ targetPath: string, lineNumber: number } | null>(null);
 
-  // 监听 pixi-sync-command 事件 { targetPath: string; lineNumber: number; lineContent: any }
+  // 监听 pixi-sync-command 事件
   useEffect(() => {
     function handlePixiSyncCommand(event: unknown) {
       if (!(event as { lineContent: string }).lineContent.includes('changeFigure')) {
         setIsDisplay(false);
         return;
-      };
-      debugger
+      }
       const { targetPath, lineNumber } = event as { targetPath: string; lineNumber: number; lineContent: string };
-      setCommandContext({ targetPath, lineNumber });
       commandContextRef.current = { targetPath, lineNumber };
-      setOriginalCommand((event as { lineContent: string }).lineContent); // 存储原始指令字符串
-      const { direction, transformObj } = parseFigureCommand((event as { lineContent: string }).lineContent);
-      setIsDisplay(true);
-      updateFrame(direction, transformObj);
-      setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
+      setOriginalCommand((event as { lineContent: string }).lineContent);
+      const filePath = convertCommandPathToFilePath((event as { lineContent: string }).lineContent, targetPath) || '';
+      api.assetsControllerGetImageDimensions(filePath).then(res => {
+        debugger
+        const scaledSize = calculateScaledImageSize(res.data.width, res.data.height);
+        const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height });
+        const { direction, transformObj } = parseFigureCommand((event as { lineContent: string }).lineContent);
+        setCurrentDirection(direction); // 保存 direction 供 FrameToString 使用
+        setIsDisplay(true);
+        updateFrame(direction, transformObj, size.x, size.y);
+        setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
+      });
     }
 
     eventBus.on('pixi-sync-command', handlePixiSyncCommand);
@@ -59,15 +64,25 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   }, []);
 
   // 将字符串解析出来的数据应用到拖拽框上
-  function updateFrame(direction: string, transformObj: any) {
+  function updateFrame(direction: string, transformObj: any, width?: number, height?: number) {
     if (!transformObj) return;
     const position = transformObj?.position
       ? convertPreviewToControl(transformObj.position)
       : { x: 0, y: 0 };
+    // 根据 direction 添加 x 轴偏移
+    const parentWindow = getParentWindowSize();
+    let xOffset = 0;
+    if (direction === 'center') {
+      xOffset = parentWindow.width / 2.97;
+    } else if (direction === 'right') {
+      xOffset = parentWindow.width / 1.47;
+    }
+    // left 不加偏移，保持 0
+
     setFrame(prev => ({
       ...prev,
       translate: [
-        position.x,
+        position.x + xOffset,
         position.y
       ],
       scale: [
@@ -75,18 +90,32 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         transformObj?.scale?.y ?? 1
       ],
       rotate: radiansToDegrees(transformObj?.rotation ?? 0),
+      width: width || prev.width,
+      height: height || prev.height,
     }));
   }
 
   // 将当前控制框的数据转换回字符串
   function FrameToString() {
-    // 1. 将当前控制框的 translate（控制窗口像素）转换回预览窗口的绝对坐标
-    const previewPixel = convertControlToPreview({ x: frame.translate[0], y: frame.translate[1] });
+    // 1. 减去 direction 带来的偏移量
+    const parentWindow = getParentWindowSize();
+    let xOffset = 0;
+    if (currentDirection === 'center') {
+      xOffset = parentWindow.width / 2.97;
+    } else if (currentDirection === 'right') {
+      xOffset = parentWindow.width / 1.47;
+    }
 
-    // 2. 构建 transform 对象
+    // 2. 将当前控制框的 translate（控制窗口像素）减去偏移后，转换回预览窗口的绝对坐标
+    const previewPixel = convertControlToPreview({
+      x: frame.translate[0] - xOffset,
+      y: frame.translate[1]
+    });
+
+    // 3. 构建 transform 对象
     const transformObj: any = {};
 
-    // 3. 计算相对于预览窗口中心的偏移量
+    // 4. 计算相对于预览窗口中心的偏移量
     const positionX = previewPixel.x;
     const positionY = previewPixel.y
     if (positionX !== 0 || positionY !== 0) {
@@ -167,9 +196,6 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   // 将预览窗口像素值转换为操控窗口像素值（保持视觉位置一致）
   const convertPreviewToControl = (previewPixel: { x: number; y: number }) => {
     const parentWindow = getParentWindowSize();
-    const a = (previewPixel.x / previewWindow.width)
-    const b = parentWindow.width
-    const c = a * b
     return {
       x: (previewPixel.x / previewWindow.width) * parentWindow.width,
       y: (previewPixel.y / previewWindow.height) * parentWindow.height,
@@ -195,6 +221,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     return degrees * (Math.PI / 180);
   }
 
+  // 同步指令到文件
   async function syncCommandToFile(commandContext: any, newCommand: string) {
     if (!commandContext) {
       console.warn('No command context available for sync');
@@ -229,6 +256,24 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     } catch (error) {
       console.error('Failed to sync command to file:', error);
     }
+  }
+
+  // 将编辑器语句中的图片路径转换为实际的文件路径
+  function convertCommandPathToFilePath(command: string, targetPath: string): string | null {
+    const fileName = command.match(/changeFigure:([^\s-]+)/)?.[1]; // 提取文件名
+    const gamePath = targetPath.match(/(games\/[^/]+)/)?.[1]; // 提取游戏目录路径
+    return fileName && gamePath ? `${gamePath}/game/figure/${fileName}` : null;
+  }
+
+  // 计算图片在舞台上的缩放后尺寸
+  function calculateScaledImageSize(originalWidth: number, originalHeight: number): { width: number; height: number } {
+    const scaleX = previewWindow.width / originalWidth;
+    const scaleY = previewWindow.height / originalHeight;
+    const targetScale = Math.min(scaleX, scaleY);
+    return {
+      width: originalWidth * targetScale,
+      height: originalHeight * targetScale
+    };
   }
 
   return (
@@ -284,9 +329,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
           onChange?.({ x: translate[0], y: translate[1], width: frame.width, height: frame.height, rotation: beforeRotate });
         }}
         onRenderEnd={() => {
-          const a = FrameToString()
-          debugger
-          syncCommandToFile(commandContextRef.current, a)
+          syncCommandToFile(commandContextRef.current, FrameToString())
         }}
       />}
     </>

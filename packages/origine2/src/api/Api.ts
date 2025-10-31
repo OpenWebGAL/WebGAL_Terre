@@ -386,6 +386,22 @@ export class Api<
         method: "GET",
         ...params,
       }),
+    /**
+     * 获取图片尺寸
+     * @tags Assets
+     * @name AssetsControllerGetImageDimensions
+     * @request GET:/api/assets/getImageDimensions/{imagePath}
+     */
+    assetsControllerGetImageDimensions: (
+      imagePath: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<{ width: number; height: number; type: string }, any>({
+        path: `/api/assets/getImageDimensions/${imagePath}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
 
     /**
      * No description

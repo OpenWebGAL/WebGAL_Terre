@@ -21,6 +21,7 @@ import {
   RenameFileDto,
   UploadFilesDto,
   EditTextFileDto,
+  ImageDimensionsResponseDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { _open } from '../../util/open';
@@ -158,5 +159,26 @@ export class AssetsController {
     const path = editTextFileData.path;
     const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
     return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
+  }
+
+  @Get('getImageDimensions/:imagePath(*)')
+  @ApiOperation({ summary: 'Get Image Dimensions' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns the width, height, and type of the image.',
+    type: ImageDimensionsResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to get image dimensions.',
+  })
+  @ApiParam({
+    name: 'imagePath',
+    type: String,
+    description: 'Path to the image file relative to public/',
+  })
+  async getImageDimensions(@Param('imagePath') imagePath: string) {
+    const decodedPath = decodeURI(imagePath);
+    return this.assets.getImageDimensions(decodedPath);
   }
 }
