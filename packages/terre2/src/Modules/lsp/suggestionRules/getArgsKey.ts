@@ -17,12 +17,16 @@ export function getArgsKey(
         speakerKey,
         vocalKey,
         clearKey,
+        leftSayKey,
+        rightSayKey,
+        centerSayKey,
       ];
     }
     case commandType.changeBg: {
       return [
         whenKey,
         nextKey,
+        continueKey,
         durationKey,
         transformKey,
         unlocknameKey,
@@ -32,19 +36,11 @@ export function getArgsKey(
         easeKey,
       ];
     }
-    case commandType.choose: {
-      return [whenKey];
-    }
-    case commandType.getUserInput: {
-      return [whenKey, nextKey, titleKey, buttonTextKey, defaultValueKey];
-    }
-    case commandType.bgm: {
-      return [whenKey, volumeKey, enterBgmKey, unlocknameKey, seriesKey];
-    }
     case commandType.changeFigure: {
       return [
         whenKey,
         nextKey,
+        continueKey,
         durationKey,
         idFigureKey,
         leftKey,
@@ -63,12 +59,27 @@ export function getArgsKey(
         enterAnimationKey,
         exitAnimationKey,
         easeKey,
+        blinkKey,
+        focusKey,
       ];
+    }
+    case commandType.bgm: {
+      return [whenKey, volumeKey, enterBgmKey, unlocknameKey, seriesKey];
+    }
+    case commandType.video: {
+      return [whenKey, skipOffKey];
+    }
+    case commandType.pixi: {
+      return [whenKey];
+    }
+    case commandType.pixiInit: {
+      return [whenKey];
     }
     case commandType.intro: {
       return [
         whenKey,
         backgroundColorKey,
+        backgroundImageKey,
         fontColorKey,
         fontSizeKey,
         animationKey,
@@ -77,22 +88,62 @@ export function getArgsKey(
         userForwardKey,
       ];
     }
+    case commandType.miniAvatar: {
+      return [whenKey];
+    }
+    case commandType.changeScene: {
+      return [whenKey];
+    }
+    case commandType.choose: {
+      return [whenKey];
+    }
+    case commandType.end: {
+      return [whenKey];
+    }
+    case commandType.setComplexAnimation: {
+      return [whenKey, nextKey, continueKey, targetKey, durationKey];
+    }
+    case commandType.label: {
+      return [whenKey];
+    }
+    case commandType.jumpLabel: {
+      return [whenKey];
+    }
+    case commandType.setVar: {
+      return [whenKey, globalKey];
+    }
+    case commandType.callScene: {
+      return [whenKey];
+    }
+    case commandType.showVars: {
+      return [whenKey];
+    }
+    case commandType.unlockCg: {
+      return [whenKey, nameKey, seriesKey];
+    }
+    case commandType.unlockBgm: {
+      return [whenKey, nameKey, seriesKey];
+    }
+    case commandType.filmMode: {
+      return [whenKey];
+    }
+    case commandType.setTextbox: {
+      return [whenKey];
+    }
+    case commandType.setAnimation: {
+      return [whenKey, nextKey, continueKey, targetKey, writeDefaultKey, keepKey];
+    }
     case commandType.playEffect: {
       return [whenKey, volumeKey, idSoundKey];
     }
-    case commandType.video: {
-      return [whenKey, skipOffKey];
-    }
-    case commandType.setAnimation: {
-      return [whenKey, nextKey, targetKey, writeDefaultKey, keepKey];
-    }
     case commandType.setTempAnimation: {
-      return [whenKey, nextKey, targetKey, writeDefaultKey, keepKey];
+      return [whenKey, nextKey, continueKey, targetKey, writeDefaultKey, keepKey];
     }
     case commandType.setTransform: {
       return [
         whenKey,
         nextKey,
+        continueKey,
         targetKey,
         easeKey,
         writeDefaultKey,
@@ -103,17 +154,17 @@ export function getArgsKey(
     case commandType.setTransition: {
       return [whenKey, targetKey, enterAnimationKey, exitAnimationKey];
     }
-    case commandType.setVar: {
-      return [whenKey, globalKey];
+    case commandType.getUserInput: {
+      return [whenKey, titleKey, buttonTextKey, defaultValueKey];
     }
-    case commandType.unlockCg: {
-      return [whenKey, nameKey, seriesKey];
+    case commandType.applyStyle: {
+      return [whenKey];
     }
-    case commandType.unlockBgm: {
-      return [whenKey, nameKey, seriesKey];
+    case commandType.wait: {
+      return [whenKey];
     }
     default: {
-      return [whenKey];
+      return [whenKey, nextKey, continueKey];
     }
   }
 }
@@ -158,6 +209,23 @@ const nextKey: CompletionItem = {
 
 \`\`\`
 changeBg:testBG03.jpg -next; // 会立刻执行下一条语句
+\`\`\`
+  `),
+};
+
+const continueKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'continue',
+  insertText: 'continue',
+  detail: '继续执行',
+  documentation: markdown(`
+在某些情况下，你可能希望在执行完当前语句后继续执行下一条语句。这时可以使用 \`-continue\` 参数。
+此参数即使在用户未开启自动播放的情况下也会生效。
+
+示例：
+
+\`\`\`
+changeBg:testBG03.jpg -continue; // 会在当前语句执行完后继续执行下一条语句
 \`\`\`
   `),
 };
@@ -252,6 +320,48 @@ changeFigure:k2.png -next;
 \`\`\`
 这是第一句......;
 用户点击鼠标后才会转到第二句 -concat;
+\`\`\`
+  `),
+};
+
+const leftSayKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'left',
+  insertText: 'left',
+  detail: '对话属于左侧立绘',
+  documentation: markdown(`
+指定该对话所属的立绘为左侧立绘
+
+\`\`\`
+WebGAL:这是左侧立绘的对话 -left;
+\`\`\`
+  `),
+};
+
+const rightSayKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'right',
+  insertText: 'right',
+  detail: '对话属于右侧立绘',
+  documentation: markdown(`
+指定该对话所属的立绘为右侧立绘
+
+\`\`\`
+WebGAL:这是右侧立绘的对话 -right;
+\`\`\`
+  `),
+};
+
+const centerSayKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'center',
+  insertText: 'center',
+  detail: '对话属于中间立绘',
+  documentation: markdown(`
+指定该对话所属的立绘为中间立绘
+
+\`\`\`
+WebGAL:这是中间立绘的对话 -center;
 \`\`\`
   `),
 };
@@ -501,6 +611,42 @@ changeFigure:xxx.json -bounds=0,50,0,50;
   `),
 };
 
+const blinkKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'blink',
+  insertText: 'blink=',
+  detail: 'Live2D 立绘眨眼',
+  documentation: markdown(`
+设置 Live2D 立绘眨眼的参数, 参数有
+- blinkInterval: 眨眼间隔时间, 单位毫秒, 默认24小时
+- blinkIntervalRandom: 眨眼间隔时间随机范围, 单位毫秒, 默认1000
+- closingDuration: 眨眼闭合时间, 单位毫秒, 默认100
+- closedDuration: 眨眼闭合保持时间, 单位毫秒, 默认50
+- openingDuration: 眨眼睁开时间, 单位毫秒, 默认150
+
+\`\`\`
+changeFigure:xxx.json -blink={"blinkInterval":5000,"blinkIntervalRandom":2000,"closingDuration":100,"closedDuration":50,"openingDuration":150};
+\`\`\`
+  `),
+};
+
+const focusKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'focus',
+  insertText: 'focus=',
+  detail: 'Live2D 立绘注视',
+  documentation: markdown(`
+设置 Live2D 立绘的注视方向, 参数有
+- x: 注视点 X 坐标, 范围 -1.0 ~ 1.0, 默认 0.0
+- y: 注视点 Y 坐标, 范围 -1.0 ~ 1.0, 默认 0.0
+- instant: 是否立即生效, 布尔值, 默认 false
+
+\`\`\`
+changeFigure:xxx.json -focus={"x":0.5,"y":0.0,"instant":false};
+\`\`\`
+  `),
+};
+
 const unlocknameKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'unlockname',
@@ -559,7 +705,7 @@ const easeKey: CompletionItem = {
 const writeDefaultKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'writeDefault',
-  insertText: 'writeDefault=',
+  insertText: 'writeDefault',
   detail: '补充默认值',
   documentation: markdown(`
 若变换与效果中有未填写的属性时, 补充默认值, 否则继承现有的值
@@ -569,7 +715,7 @@ const writeDefaultKey: CompletionItem = {
 const keepKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'keep',
-  insertText: 'keep=',
+  insertText: 'keep',
   detail: '跨语句动画',
   documentation: markdown(`
 开启后, 动画可以跨对话播放, 直至被下一个同目标的
@@ -626,6 +772,16 @@ const backgroundColorKey: CompletionItem = {
   detail: '背景颜色',
   documentation: markdown(`
 指定背景颜色
+  `),
+};
+
+const backgroundImageKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'backgroundImage',
+  insertText: 'backgroundImage=',
+  detail: '背景图片',
+  documentation: markdown(`
+指定背景图片
   `),
 };
 
