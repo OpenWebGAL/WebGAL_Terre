@@ -5626,13 +5626,13 @@ axios@^0.24.0:
   dependencies:
     follow-redirects "^1.14.4"
 
-axios@^0.28.0:
-  version "0.28.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.28.1.tgz#2a7bcd34a3837b71ee1a5ca3762214b86b703e70"
-  integrity sha512-iUcGA5a7p0mVb4Gm/sy+FSECNkPFT4y7wt6OM/CDpO/OnNCvSs3PoMG8ibrC9jRoGYU0gUK5pXVC4NPXq6lHRQ==
+axios@^0.30.2:
+  version "0.30.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.30.2.tgz#256d3a8ee765cc27188d08b8b545a5f5a0c77dad"
+  integrity sha512-0pE4RQ4UQi1jKY6p7u6i1Tkzqmu+d+/tHS7Q7rKunWLB9WyilBTpHHpXzPNMDj5hTbK0B0PTLSz07yqMBiF6xg==
   dependencies:
-    follow-redirects "^1.15.0"
-    form-data "^4.0.0"
+    follow-redirects "^1.15.4"
+    form-data "^4.0.4"
     proxy-from-env "^1.1.0"
 
 axios@^1.12.0:
@@ -7593,10 +7593,15 @@ flatted@^3.2.9:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.3.3.tgz#67c8fad95454a7c7abebf74bb78ee74a44023358"
   integrity sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.4, follow-redirects@^1.15.0, follow-redirects@^1.15.6:
+follow-redirects@^1.0.0, follow-redirects@^1.14.4, follow-redirects@^1.15.6:
   version "1.15.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.9.tgz#a604fa10e443bf98ca94228d9eebcc2e8a2c8ee1"
   integrity sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==
+
+follow-redirects@^1.15.4:
+  version "1.15.11"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.11.tgz#777d73d72a92f8ec4d2e410eb47352a56b8e8340"
+  integrity sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==
 
 for-each@^0.3.3, for-each@^0.3.5:
   version "0.3.5"
@@ -12626,16 +12631,16 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-engine@4.5.15-1:
-  version "4.5.15-1"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.15-1.tgz#15d6e5d482b11a7348aead4c7ce1eb7b56964dcc"
-  integrity sha512-U8yPGrmeAKAjBNQKBf9z9NAhv4e7OjgPiVAA9WdC52NP8LxF99kpGwjWQrrz6mrTTxFetuilqRPgHzrfOZhvwg==
+webgal-engine@4.5.16:
+  version "4.5.16"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.5.16.tgz#15394bf801e1f41eaa5e60a114584966e467d039"
+  integrity sha512-rWH9ZEiHWdJ32YNw8hDZnkHHomZar2QraTizPlFMyLk/C4VWYQA0hFNEso5ABWJIM5SQg7T4HwoMGL3bxF5zkw==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"
     "@reduxjs/toolkit" "^1.8.1"
     angular-expressions "^1.4.3"
-    axios "^0.28.0"
+    axios "^0.30.2"
     cloudlogjs "^1.0.9"
     i18next "^22.4.15"
     localforage "^1.10.0"

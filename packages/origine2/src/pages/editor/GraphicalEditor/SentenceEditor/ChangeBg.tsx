@@ -15,6 +15,7 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "../components/WheelDropdown";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
+import { WsUtil } from "@/utils/wsUtil";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -134,10 +135,17 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         <div>
           <CommonTips
             text={t`提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令`}/>
-          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
-            json.set(newJson);
-            submit();
-          }}/>
+          <EffectEditor
+            json={json.value.toString()}
+            onChange={(newJson) => {
+              json.set(newJson);
+              submit();
+            }}
+            onUpdate={(transform) => {
+              const newEffect = { target: 'bg-main', transform: transform };
+              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+            }}
+          />
         </div>
       </TerrePanel>
     </div>

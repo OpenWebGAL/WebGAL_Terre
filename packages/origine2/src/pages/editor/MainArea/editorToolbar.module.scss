@@ -1,11 +1,11 @@
 .toolbar {
-  border-top: 1px solid var(--divide, #D1D1D1);
+  border-top: var(--border-sm);
   display: flex;
   align-items: center;
   height: 28px;
   padding: 0 8px;
   gap: 8px;
-  background: rgba(245, 245, 245, 1);
+  background: var(--bg-card);
 }
 
 .toolbar_button {
@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #333;
+  color: var(--text);
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -26,14 +26,14 @@
 }
 
 .toolbar_button:hover {
-  background: #E1E1E1;
+  background: var(--bg-button-hover);
 }
 
 .toolbar_button_active {
-  background: rgba(233, 238, 242, 1);
+  background: var(--bg-button-hover);
   color: var(--primary);
 }
 
 .active {
-  background: #c8c8c8;
+  background: var(--bg-button-hover);
 }

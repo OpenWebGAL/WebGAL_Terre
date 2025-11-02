@@ -83,11 +83,11 @@
 
 .cascadeOptionActive {
   transition: all 0.2s ease-in-out;
-  background-color: skyblue;
+  background-color: var(--primary-10pct);
 }
 
 .cascadeOptionActive.cascadeOption:hover {
-  background-color: skyblue;
+  background-color: var(--primary-10pct);
 }
 
 .cascadeOption:not(:last-child) {
@@ -124,7 +124,7 @@
 }
 
 .highlight {
-  background: skyblue;
+  background: var(--primary);
   color: inherit;
   font-weight: bold;
   padding: 0 2px;

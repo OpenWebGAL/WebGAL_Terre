@@ -22,7 +22,9 @@
   require(['vs/editor/editor.main'], function () {
     var editor = monaco.editor.create(document.getElementById('container'), {
       value: '',
-      language: 'js' // 初始化语言为 javascript，可以根据需要修改
+      language: 'js',  // 初始化语言为 javascript，可以根据需要修改
+      automaticLayout: true,
+      wordWrap: 'on',
     });
 
     // 通知父窗口 editor 已经准备好
@@ -48,6 +50,9 @@
               {range: editor.getModel().getFullModelRange(), text: message.value}
             ]);
           }
+          break;
+        case 'setTheme':
+          monaco.editor.setTheme(message.theme);
           break;
       }
     });

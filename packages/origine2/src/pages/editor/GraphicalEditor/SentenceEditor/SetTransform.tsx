@@ -12,6 +12,7 @@ import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
+import { WsUtil } from "@/utils/wsUtil";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -61,11 +62,18 @@ export default function SetTransform(props: ISentenceEditorProps) {
         <Button onClick={() => updateExpand(props.index)}>
           {t`打开效果编辑器`}
         </Button>
-        <TerrePanel sentenceIndex={props.index} title={t`效果编辑器`}>
-          <EffectEditor json={transform.value} onChange={(newJson)=>{
-            transform.set(newJson);
-            submit();
-          }}/>
+        <TerrePanel key={`effect-editor-${props.index}`} sentenceIndex={props.index} title={t`效果编辑器`}>
+          <EffectEditor
+            json={transform.value}
+            onChange={(newJson)=>{
+              transform.set(newJson);
+              submit();
+            }}
+            onUpdate={(transform)=>{
+              const newEffect = { target: target.value, transform: transform };
+              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+            }}
+          />
         </TerrePanel>
       </CommonOptions>
       <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
