@@ -7,7 +7,7 @@
     "editor.selectionBackground": "#ccc9ad8e",
     "editor.wordHighlightBackground": "#00000011",
     "editorCursor.foreground": "#666663",
-    "editorIndentGuide.background": "#D3D4D5",
+    "editorIndentGuide.background1": "#D3D4D5",
     "editorLineNumber.foreground": "#a2a19c",
     "editorWhitespace.foreground": "#bbbbb7"
   },
@@ -35,7 +35,7 @@
         "string.unquoted.utterance.webgal"
       ],
       "settings": {
-        "foreground": "#aca21a",
+        "foreground": "#9b9107",
         "fontStyle": "bold"
       }
     },
@@ -64,7 +64,7 @@
         "variable.parameter.webgal",
       ],
       "settings": {
-        "foreground": "#d88a14",
+        "foreground": "#bb7306",
       }
     },
     {
@@ -72,7 +72,7 @@
         "variable.other.webgal",
       ],
       "settings": {
-        "foreground": "#16c441",
+        "foreground": "#09ad32",
       }
     },
     {

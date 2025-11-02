@@ -17,7 +17,7 @@ msgstr ""
 msgid ";注释"
 msgstr "Comment"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:436
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:437
 msgid "*设置拾色器后，点击此按钮以保存更改"
 msgstr "*Click this button to save changes after setting color picker"
 
@@ -440,7 +440,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:373
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:149
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
@@ -989,7 +989,7 @@ msgstr "Apply"
 msgid "应用的模板"
 msgstr "Applied template"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:438
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:439
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
 msgid "应用颜色变化"
 msgstr "Apply color changes"
@@ -998,7 +998,7 @@ msgstr "Apply color changes"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:371
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:145
@@ -2545,7 +2545,7 @@ msgid "高斯模糊"
 msgstr "Gaussian Blur"
 
 #: src/hooks/useEaseTypeOptions.ts:6
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:370
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:371
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
 msgid "默认"
