@@ -1,5 +1,5 @@
 import { IViewType, ISortBy, ISortOrder } from "@/components/Assets/Assets";
-import { IPage } from "@/hooks/useHashRoute";
+import { type IPage } from '@/router';
 import {IGameEditorState} from "@/types/gameEditor";
 
 export interface IEditorState {
