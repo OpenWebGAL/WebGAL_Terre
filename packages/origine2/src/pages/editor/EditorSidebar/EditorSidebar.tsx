@@ -2,7 +2,7 @@ import styles from "./editorSidebar.module.scss";
 import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
 import { eventBus } from "@/utils/eventBus";
-import {Button, Tab, TabList} from "@fluentui/react-components";
+import {Button, Switch, Tab, TabList} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import {IGameEditorSidebarTabs, ITag} from "@/types/gameEditor";
@@ -24,6 +24,8 @@ export default function EditorSideBar() {
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
   const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
+  const isShowPreview = useEditorStore.use.isShowPreview();
+  const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -153,19 +155,18 @@ export default function EditorSideBar() {
     {isShowSidebar &&
       <div className={styles.editor_sidebar}>
         <div className={styles.preview_container} id="gamePreview">
-          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          <iframe
-            ref={ifRef}
-            id="gamePreviewIframe"
-            frameBorder="0"
-            className={styles.previewWindow}
-            src={`/games/${gameDir}`}
-          />
           <div className={styles.gamePreviewButons}>
+            <Switch
+              label={t`预览窗口`}
+              labelPosition="before"
+              checked={isShowPreview}
+              onChange={() => updateIsShowPreview(!isShowPreview)}
+            />
+            <div style={{ flexGrow: 1 }} />
             <Button
-              appearance="subtle"
+              appearance="transparent"
               icon={<ArrowClockwiseIcon />}
-              title={t`刷新`}
+              title={t`刷新游戏`}
               onClick={refreshGame}
             />
             <Button
@@ -181,6 +182,14 @@ export default function EditorSideBar() {
               onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
             />
           </div>
+          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
+          { isShowPreview && <iframe
+            ref={ifRef}
+            id="gamePreviewIframe"
+            frameBorder="0"
+            className={styles.previewWindow}
+            src={`/games/${gameDir}`}
+          /> }
         </div>
 
         <div className={styles.sidebarContent}>

@@ -4,6 +4,7 @@
   "description": "WebGAL Terre Electron",
   "main": "main.js",
   "author": "OpenWebGAL <contact@openwebgal.com>",
+  "repository": "https://github.com/OpenWebGAL/WebGAL_Terre.git",
   "license": "MPL-2.0",
   "scripts": {
     "start": "electron .",

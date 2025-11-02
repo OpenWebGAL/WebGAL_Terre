@@ -8,7 +8,8 @@ import com.openwebgal.terre.notification.Notification.NOTIFICATION_ID
 import com.openwebgal.terre.notification.Notification.createNotification
 import com.openwebgal.terre.notification.Notification.createNotificationChannel
 import com.openwebgal.terre.server.TerreServer
-import com.openwebgal.terre.store.LogStore.addLogLine
+import com.openwebgal.terre.store.LogStore
+import com.openwebgal.terre.store.TerreStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -51,6 +52,7 @@ class TerreService : Service() {
                 println("TerreServer: Initializing and starting...")
                 terreServer = TerreServer(context)
                 terreServer?.start()
+                TerreStore.updateIsRunning(true)
                 startLogcat()
                 println("TerreServer: Started and running!")
             } else {
@@ -63,6 +65,8 @@ class TerreService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        TerreStore.updateIsRunning(false)
+        LogStore.resetLogs()
         serviceScope.cancel()
         terreServer?.stop()
         println("TerreServer: Stop")
@@ -79,9 +83,8 @@ class TerreService : Service() {
             while (bufferedReader.readLine().also { line = it } != null) {
                 line?.let { message ->
                     if (message.contains(ADBTAG) || message.contains("ASSETS") || message.contains("E/")) {
-                        addLogLine(
-                            cleanLog(message)
-                        )
+                        val log = cleanLog(message)
+                        LogStore.addLog(log)
                     }
                 }
             }

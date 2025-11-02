@@ -17,13 +17,14 @@ import {
   NavigationFilled,
   NavigationRegular,
 } from '@fluentui/react-icons';
-import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Tooltip, Input, Combobox, Option } from '@fluentui/react-components';
+import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Tooltip, Input, Combobox, Option, Switch } from '@fluentui/react-components';
 import useEditorStore from '@/store/useEditorStore';
 import { t } from '@lingui/macro';
 import { candidateFontSizes } from './constants';
 import { useEffect, useState } from 'react';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
 import TerreToggle from '@/components/terreToggle/TerreToggle';
+import { PreviewClose, PreviewOpen } from '@icon-park/react';
 
 export function SettingsTab() {
 
@@ -36,11 +37,15 @@ export function SettingsTab() {
   const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 
   const isAutoWarp = useEditorStore.use.isAutoWarp();
+  const updateIsAutoWarp = useEditorStore.use.updateIsAutoWarp();
+  const isShowPreview = useEditorStore.use.isShowPreview();
+  const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
-  const updateIsAutoWarp = useEditorStore.use.updateIsAutoWarp();
   const isUseExpSyncFast = useEditorStore.use.isUseExpFastSync();
   const updateIsUseExpSyncFast = useEditorStore.use.updateIsUseExpFastSync();
+  const isUseRealtimeEffect = useEditorStore.use.isUseRealtimeEffect();
+  const updateIsUseRealtimeEffect = useEditorStore.use.updateIsUseRealtimeEffect();
 
   const editorFontFamily = useEditorStore.use.editorFontFamily();
   const editorFontSize = useEditorStore.use.editorFontSize();
@@ -81,7 +86,14 @@ export function SettingsTab() {
         </MenuPopover>
       </Menu>
     </TabItem>
-    <TabItem title={t`实时预览`}>
+    <TabItem title={t`预览`}>
+      <IconWithTextItem
+        onClick={() => {
+          updateIsShowPreview(!isShowPreview);
+        }}
+        icon={isShowPreview ? <PreviewOpen className={s.iconColor} /> : <PreviewClose className={s.iconColor} />}
+        text={isShowPreview ? t`显示预览窗口` : t`关闭预览窗口`}
+      />
       <Tooltip
         content={<div
           className={s.previewTips}>{t`实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。`}</div>}
@@ -100,8 +112,41 @@ export function SettingsTab() {
         </div>
       </Tooltip>
     </TabItem>
+    <TabItem title={t`实验性快速预览`}>
+      {/* <IconWithTextItem
+        onClick={() => {
+          updateIsUseExpSyncFast(!isUseExpSyncFast);
+        }}
+        icon={isUseExpSyncFast ? <ArrowRepeatAllFilled className={s.iconColor} /> : <ArrowRepeatAllOffRegular className={s.iconColor} />}
+        text={isUseExpSyncFast ? t`启用` : t`关闭`}
+      />
+      {isUseExpSyncFast && <div className={s.tips}>
+        {t`你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。`}
+      </div>} */}
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        <Tooltip
+          content={<div
+            className={s.previewTips}>{t`该功能将大幅提升实时预览效率，但可能出现异常。`}</div>}
+          relationship="description"
+          showDelay={0}
+          hideDelay={0}
+        >
+          <Switch
+            label={t`快速预览语句`}
+            labelPosition="after"
+            checked={isUseExpSyncFast}
+            onChange={() => updateIsUseExpSyncFast(!isUseExpSyncFast)}
+          />
+        </Tooltip>
+        <Switch
+          label={t`快速预览效果`}
+          labelPosition="after"
+          checked={isUseRealtimeEffect}
+          onChange={() => updateIsUseRealtimeEffect(!isUseRealtimeEffect)}
+        />
+      </div>
+    </TabItem>
     <TabItem title={t`代码编辑器`}>
-
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ marginLeft: 10 }}>
           <div className={s.prompt}>{t`字体`}</div>
@@ -130,18 +175,6 @@ export function SettingsTab() {
           text={isAutoWarp ? t`自动换行` : t`永不换行`}
         />
       </div>
-    </TabItem>
-    <TabItem title={t`实验性快速预览`}>
-      <IconWithTextItem
-        onClick={() => {
-          updateIsUseExpSyncFast(!isUseExpSyncFast);
-        }}
-        icon={isUseExpSyncFast ? <ArrowRepeatAllFilled className={s.iconColor} /> : <ArrowRepeatAllOffRegular className={s.iconColor} />}
-        text={isUseExpSyncFast ? t`启用` : t`关闭`}
-      />
-      {isUseExpSyncFast && <div className={s.tips}>
-        {t`你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。`}
-      </div>}
     </TabItem>
     <TabItem title={t`自定义级联选择器分隔符`}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>

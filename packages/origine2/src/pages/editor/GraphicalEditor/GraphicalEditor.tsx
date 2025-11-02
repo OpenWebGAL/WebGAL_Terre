@@ -244,7 +244,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               <div className={styles.optionButton}
                                 onClick={() => deleteOneSentence(i)}>
                                 <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
-                                  fill="#333"/>
+                                  fill="var(--text)"/>
                                 <div>
                                   {t`删除本句`}
                                 </div>
@@ -252,7 +252,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               <div className={styles.optionButton}
                                 onClick={() => syncToIndex(i)}>
                                 <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
-                                  fill="#333"/>
+                                  fill="var(--text)"/>
                                 <div>
                                   {t`执行到此句`}
                                 </div>

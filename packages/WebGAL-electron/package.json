@@ -44,5 +44,9 @@
   },
   "dependencies": {
     "electron-log": "^5.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OpenWebGAL/WebGAL_Terre.git"
   }
 }

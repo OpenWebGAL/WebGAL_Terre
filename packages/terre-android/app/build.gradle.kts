@@ -1,9 +1,9 @@
 import groovy.json.JsonSlurper
 import java.io.FileInputStream
 import java.io.FileNotFoundException
-import java.security.MessageDigest
-import java.nio.file.Files
 import java.net.URI
+import java.nio.file.Files
+import java.security.MessageDigest
 import java.util.Properties
 import java.util.zip.ZipInputStream
 
@@ -119,6 +119,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.commons.compress)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

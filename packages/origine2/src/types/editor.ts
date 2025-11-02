@@ -13,6 +13,7 @@ export interface IEditorState {
   sortBy: ISortBy,
   sortOrder: ISortOrder,
   isAutoHideToolbar: boolean, // 是否自动隐藏工具栏
+  isShowPreview: boolean, // 是否显示预览窗口
   isEnableLivePreview: boolean, // 是否开启实时预览
   isAutoWarp: boolean, // 是否开启自动换行
   isUseExpFastSync: boolean,
@@ -20,6 +21,8 @@ export interface IEditorState {
   ignoreVersion: string, // 忽略版本
   isCascaderDelimitersCustomizable: boolean,
   cascaderDelimiters: string[],
+  isDarkMode: boolean,
+  isUseRealtimeEffect: boolean, // 是否使用实时效果
 }
 
 export interface IEditorAction {
@@ -33,6 +36,7 @@ export interface IEditorAction {
   updateSortBy: (sortBy: IEditorState['sortBy']) => void,
   updateSortOrder: (sortOrder: IEditorState['sortOrder']) => void,
   updateIisAutoHideToolbar: (isAutoHideToolbar: IEditorState['isAutoHideToolbar']) => void,
+  updateIsShowPreview: (isShowPreview: IEditorState['isShowPreview']) => void,
   updateIsEnableLivePreview: (isEnableLivePreview: IEditorState['isEnableLivePreview']) => void,
   updateIsAutoWarp: (isAutoWarp: IEditorState['isAutoWarp']) => void,
   updateIsUseExpFastSync: (isUseExpFastSync: IGameEditorState['isShowDebugger']) => void,
@@ -40,4 +44,6 @@ export interface IEditorAction {
   updateIgnoreVersion: (ignoreVersion: IEditorState['ignoreVersion']) => void,
   updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable: IEditorState['isCascaderDelimitersCustomizable']) => void,
   updateCascaderDelimiters: (cascadeDelimiters: IEditorState['cascaderDelimiters']) => void,
+  updateIsDarkMode: (isDarkMode: IEditorState['isDarkMode']) => void,
+  updateIsUseRealtimeEffect: (isUseRealtimeEffect: IEditorState['isUseRealtimeEffect']) => void,
 }

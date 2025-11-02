@@ -15,6 +15,7 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "../components/WheelDropdown";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
+import { WsUtil } from "@/utils/wsUtil";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -80,16 +81,6 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         }} onText={t`本句执行后执行下一句`}
         offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
       </CommonOptions>
-      <CommonOptions key="5" title={t`缓动类型`}>
-        <WheelDropdown
-          options={easeTypeOptions}
-          value={ease.value}
-          onValueChange={(newValue) => {
-            ease.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
       {!isNoFile && <CommonOptions key="3" title={t`解锁名称`}>
         <input value={unlockName.value}
           onChange={(ev) => {
@@ -110,32 +101,51 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       <TerrePanel
         sentenceIndex={props.index}
         title={t`效果编辑器`}
-        bottomBarChildren={[
-          <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
-            <div>
-              <Input
-                placeholder={t`过渡时间（单位为毫秒）`}
-                value={duration.value.toString()}
-                onChange={(_, data) => {
-                  const newDuration = Number(data.value);
-                  if (isNaN(newDuration) || data.value === '')
-                    duration.set("");
+        bottomBarChildren={
+          <>
+            <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
+              <div>
+                <Input
+                  placeholder={t`过渡时间（单位为毫秒）`}
+                  value={duration.value.toString()}
+                  onChange={(_, data) => {
+                    const newDuration = Number(data.value);
+                    if (isNaN(newDuration) || data.value === '')
+                      duration.set("");
 
-                  else
-                    duration.set(newDuration);
-                } }
-                onBlur={submit} />
-            </div>
-          </CommonOptions>,
-        ]}
+                    else
+                      duration.set(newDuration);
+                  } }
+                  onBlur={submit} />
+              </div>
+            </CommonOptions>
+            <CommonOptions key="5" title={t`缓动类型`}>
+              <WheelDropdown
+                options={easeTypeOptions}
+                value={ease.value}
+                onValueChange={(newValue) => {
+                  ease.set(newValue?.toString() ?? "");
+                  submit();
+                }}
+              />
+            </CommonOptions>
+          </>
+        }
       >
         <div>
           <CommonTips
             text={t`提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令`}/>
-          <EffectEditor json={json.value.toString()} onChange={(newJson) => {
-            json.set(newJson);
-            submit();
-          }}/>
+          <EffectEditor
+            json={json.value.toString()}
+            onChange={(newJson) => {
+              json.set(newJson);
+              submit();
+            }}
+            onUpdate={(transform) => {
+              const newEffect = { target: 'bg-main', transform: transform };
+              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+            }}
+          />
         </div>
       </TerrePanel>
     </div>

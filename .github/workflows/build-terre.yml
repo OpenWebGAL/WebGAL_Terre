@@ -21,7 +21,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version: 22
           cache: 'yarn'
       - name: Build
         env:
@@ -43,7 +43,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version: 22
           cache: 'yarn'
       - name: Build
         env:
@@ -65,7 +65,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version: 22
           cache: 'yarn'
       - name: Build
         env:
@@ -80,14 +80,14 @@ jobs:
           path: release/WebGAL_Terre_Mac.zip
   build-windows:
     name: Build Windows Binary
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version: 22
           cache: 'yarn'
       - name: Build
         shell: bash
@@ -101,14 +101,14 @@ jobs:
           path: release/WebGAL_Terre_Windows.zip
   build-windows-nsis:
     name: Build Windows Setup
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version: 22
           cache: 'yarn'
       - name: Build
         shell: bash
@@ -132,7 +132,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version: 22
           cache: 'yarn'
       - name: Set up Java
         uses: actions/setup-java@v4

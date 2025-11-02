@@ -23,6 +23,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       sortBy: 'name',
       sortOrder: 'asc',
       isAutoHideToolbar: false,
+      isShowPreview: true,
       isEnableLivePreview: false,
       isAutoWarp: false,
       isUseExpFastSync:false,
@@ -30,6 +31,8 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       ignoreVersion: '',
       isCascaderDelimitersCustomizable: false,
       cascaderDelimiters: ['/'],
+      isDarkMode: false,
+      isUseRealtimeEffect: true,
       updatePage: (page) => set({page}),
       updateSubPage: (subPage) => {
         set({ subPage });
@@ -40,7 +43,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontFamily: (editorFontFamily) => {
         set({editorFontFamily});
         updateUserConfiguration(`{
-          "workbench.colorTheme": "WebGAL White",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},
@@ -49,7 +52,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontSize: (editorFontSize) => {
         set({editorFontSize});
         updateUserConfiguration(`{
-          "workbench.colorTheme": "WebGAL White",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},
@@ -59,13 +62,16 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateSortBy: (sortBy) => set({ sortBy }),
       updateSortOrder: (sortOrder) => set({ sortOrder }),
       updateIisAutoHideToolbar: (isAutoHideToolbar) => set({isAutoHideToolbar}),
+      updateIsShowPreview: (isShowPreview) => set({isShowPreview}),
       updateIsEnableLivePreview: (isEnableLivePreview) => set({isEnableLivePreview}),
       updateIsAutoWarp: (isAutoWarp) => set({isAutoWarp}),
       updateIsUseExpFastSync:(isUseExpFastSync)=> set({isUseExpFastSync}),
       updateIsUseFontOptimization: (isUseFontOptimization) => set({ isUseFontOptimization }),
       updateIgnoreVersion: (ignoreVersion) => set({ignoreVersion}),
       updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable) => set({isCascaderDelimitersCustomizable}) ,
-      updateCascaderDelimiters: (cascaderDelimiters) => set({cascaderDelimiters})
+      updateCascaderDelimiters: (cascaderDelimiters) => set({cascaderDelimiters}),
+      updateIsDarkMode: (isDarkMode) => set({ isDarkMode }),
+      updateIsUseRealtimeEffect: (isUseRealtimeEffect) => set({ isUseRealtimeEffect }),
     }),
     {
       name: 'editor-storage',

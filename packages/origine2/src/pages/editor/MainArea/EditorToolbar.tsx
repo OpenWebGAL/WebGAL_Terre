@@ -45,20 +45,20 @@ export default function EditorToolbar() {
 
   return <div className={s.toolbar}>
     <div className={s.toolbar_button+ ' ' + (isShowDebugger  ? s.toolbar_button_active : '')} onClick={()=>switchDebugger()}>
-      <Terminal theme="outline" size="20" fill={isShowDebugger ? '#005CAF' : "#333"} strokeWidth={3}/>
+      <Terminal theme="outline" size="20" fill={isShowDebugger ? 'var(--primary)' : "var(--text)"} strokeWidth={3}/>
       DEBUGGER
     </div>
     <div className={s.toolbar_button}>
-      <DataSheet theme="outline" size="20" fill="#333" strokeWidth={3}/>
+      <DataSheet theme="outline" size="20" fill="var(--text)" strokeWidth={3}/>
       {lineNumString} {t`行脚本`}, {textNumString} {t`个字`}
     </div>
     <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode ? s.toolbar_button_active : '')}
       style={{marginLeft: 'auto'}}>
-      <FileCodeOne theme="outline" size="20" fill={isCodeMode ? '#005CAF' : "#333"} strokeWidth={3}/>
+      <FileCodeOne theme="outline" size="20" fill={isCodeMode ? 'var(--primary)' : "var(--text)"} strokeWidth={3}/>
       {t`脚本编辑器`}
     </div>
     <div onClick={handleSetGraphMode} className={s.toolbar_button + ' ' + (!isCodeMode ? s.toolbar_button_active : '')}>
-      <ListView theme="outline" size="20" fill={isCodeMode ? "#333" : '#005CAF'} strokeWidth={3}/>
+      <ListView theme="outline" size="20" fill={isCodeMode ? "var(--text)" : 'var(--primary)'} strokeWidth={3}/>
       {t`图形编辑器`}
     </div>
   </div>;
