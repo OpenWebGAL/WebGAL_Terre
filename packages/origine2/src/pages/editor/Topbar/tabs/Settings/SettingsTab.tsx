@@ -212,10 +212,10 @@ export function SettingsTab() {
         ) : null}
       </div>
     </TabItem>
-    <TabItem title={`预览窗口调整`}>
+    <TabItem title={`拖动编辑贴图`}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <TerreToggle
-          title="预览窗口调整"
+          title="拖动编辑贴图"
           isChecked={isWindowAdjustment}
           onChange={handleWindowAdjustmentChange}
           onText="已开启"

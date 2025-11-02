@@ -28,6 +28,14 @@ export default function EditorSideBar() {
   const isShowPreview = useEditorStore.use.isShowPreview();
   const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
+  const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
+  const handleWindowAdjustmentChange = (checked: boolean) => {
+    updateIsWindowAdjustment(checked);
+    if (checked) {
+      updateIsShowPreview(true);
+      updateIsEnableLivePreview(true);
+    }
+  };
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -165,6 +173,13 @@ export default function EditorSideBar() {
               checked={isShowPreview}
               onChange={() => updateIsShowPreview(!isShowPreview)}
             />
+            <Switch
+              label={t`拖动编辑贴图`}
+              title="当您启用这个选项的时候，在文本编辑器处用鼠标点击贴图的那一行"
+              labelPosition="before"
+              checked={isWindowAdjustment}
+              onChange={() => handleWindowAdjustmentChange(!isWindowAdjustment)}
+            />
             <div style={{ flexGrow: 1 }} />
             <Button
               appearance="transparent"
@@ -199,7 +214,7 @@ export default function EditorSideBar() {
           >
             {
               <TransformableBox
-              parents = {PreviewControlRef}
+                parents={PreviewControlRef}
               />
             }
           </div>

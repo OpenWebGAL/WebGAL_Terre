@@ -30,9 +30,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   const [keepRatio, setKeepRatio] = useState(true); // 是否保持宽高比
   const [isDisplay, setIsDisplay] = useState(false); // 控制框是否显示
   const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
-  const [originalCommand, setOriginalCommand] = useState(''); // 存储原始指令字符串
-  const [currentDirection, setCurrentDirection] = useState<'left' | 'center' | 'right'>('center'); // 存储当前 direction
-  const commandContextRef = useRef<{ targetPath: string, lineNumber: number } | null>(null);
+  const commandContextRef = useRef<{ targetPath: string, lineNumber: number, lineContent: string } | null>(null);
 
   // 监听 pixi-sync-command 事件
   useEffect(() => {
@@ -41,18 +39,17 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         setIsDisplay(false);
         return;
       }
-      const { targetPath, lineNumber } = event as { targetPath: string; lineNumber: number; lineContent: string };
-      commandContextRef.current = { targetPath, lineNumber };
-      setOriginalCommand((event as { lineContent: string }).lineContent);
-      const filePath = convertCommandPathToFilePath((event as { lineContent: string }).lineContent, targetPath) || '';
+      const filePath = convertCommandPathToFilePath(// 提取图片路径
+        (event as { lineContent: string; targetPath: string }).lineContent,
+        (event as { lineContent: string; targetPath: string }).targetPath
+      ) || '';
       api.assetsControllerGetImageDimensions(filePath).then(res => {
-        debugger
-        const scaledSize = calculateScaledImageSize(res.data.width, res.data.height);
+        const scaledSize = calculateScaledImageSize(res.data.width, res.data.height);// 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
         const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height });
         const { direction, transformObj } = parseFigureCommand((event as { lineContent: string }).lineContent);
-        setCurrentDirection(direction); // 保存 direction 供 FrameToString 使用
+        commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent };
         setIsDisplay(true);
-        updateFrame(direction, transformObj, size.x, size.y);
+        updateFrame(direction, transformObj, size.x, size.y);// !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
         setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
       });
     }
@@ -63,26 +60,23 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     };
   }, []);
 
+  // 监听父元素宽度变化，自动刷新
+  useEffect(() => {
+    if (!parents?.current || !isDisplay) return;
+    return () => {
+    };
+  }, [parents, isDisplay]);
+
   // 将字符串解析出来的数据应用到拖拽框上
   function updateFrame(direction: string, transformObj: any, width?: number, height?: number) {
-    if (!transformObj) return;
     const position = transformObj?.position
       ? convertPreviewToControl(transformObj.position)
       : { x: 0, y: 0 };
-    // 根据 direction 添加 x 轴偏移
-    const parentWindow = getParentWindowSize();
-    let xOffset = 0;
-    if (direction === 'center') {
-      xOffset = parentWindow.width / 2.97;
-    } else if (direction === 'right') {
-      xOffset = parentWindow.width / 1.47;
-    }
-    // left 不加偏移，保持 0
 
     setFrame(prev => ({
       ...prev,
       translate: [
-        position.x + xOffset,
+        position.x + ToXOffset(direction),
         position.y
       ],
       scale: [
@@ -96,86 +90,62 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   }
 
   // 将当前控制框的数据转换回字符串
-  function FrameToString() {
-    // 1. 减去 direction 带来的偏移量
-    const parentWindow = getParentWindowSize();
-    let xOffset = 0;
-    if (currentDirection === 'center') {
-      xOffset = parentWindow.width / 2.97;
-    } else if (currentDirection === 'right') {
-      xOffset = parentWindow.width / 1.47;
-    }
+  function FrameToString(LineContent: string | undefined): string {
+    debugger
+    const { direction, transformObj } = parseFigureCommand(LineContent || '');
+    const baseCommand = LineContent?.replace(/\s*-transform=\{[\s\S]*\};?/, '').trim() || '';// 移除原有的 -transform 部分
+    // 1. 构建 transform 对象
+    const newTransformObj: any = {};
 
     // 2. 将当前控制框的 translate（控制窗口像素）减去偏移后，转换回预览窗口的绝对坐标
-    const previewPixel = convertControlToPreview({
-      x: frame.translate[0] - xOffset,
+    const temPosition = convertControlToPreview({
+      x: frame.translate[0] - ToXOffset(direction),
       y: frame.translate[1]
     });
-
-    // 3. 构建 transform 对象
-    const transformObj: any = {};
-
-    // 4. 计算相对于预览窗口中心的偏移量
-    const positionX = previewPixel.x;
-    const positionY = previewPixel.y
-    if (positionX !== 0 || positionY !== 0) {
-      transformObj.position = { x: positionX, y: positionY };
-    }
-
-    // 4. 转换旋转和缩放（保持不变）
-    const rotationInRadians = degreesToRadians(frame.rotate);
-    if (rotationInRadians !== 0) {
-      transformObj.rotation = parseFloat(rotationInRadians.toFixed(4));
-    }
-
-    if (frame.scale[0] !== 1 || frame.scale[1] !== 1) {
-      transformObj.scale = {
-        x: parseFloat(frame.scale[0].toFixed(4)),
-        y: parseFloat(frame.scale[1].toFixed(4))
+    if (temPosition.x !== 0 || temPosition.y !== 0) {
+      newTransformObj.position = {
+        x: Math.round(temPosition.x),
+        y: Math.round(temPosition.y)
       };
     }
 
-    // 5. 组合成最终的指令字符串
-    const commandWithoutTransform = originalCommand.replace(/\s*-transform=\{.*\}/, '').replace(/[\s\r\n;\}]+$/, '');
-
-    if (Object.keys(transformObj).length === 0) {
-      return commandWithoutTransform;
+    // 3. 转换旋转和缩放（保持不变）
+    const rotationInRadians = Number(degreesToRadians(frame.rotate).toFixed(2));
+    if (rotationInRadians !== 0) {
+      newTransformObj.rotation = rotationInRadians;
+    }
+    if (frame.scale[0] !== 1 || frame.scale[1] !== 1) {
+      newTransformObj.scale = {
+        x: Number(frame.scale[0].toFixed(1)),
+        y: Number(frame.scale[1].toFixed(1))
+      };
     }
 
-    const transformString = `-transform=${JSON.stringify(transformObj)}`;
-    return `${commandWithoutTransform} ${transformString}`;
+    // 4. 合并 transform 对象并生成最终字符串
+    const mergedObj = Object.assign({}, transformObj || {}, newTransformObj);
+    if (Object.keys(mergedObj).length === 0) {
+      return baseCommand;
+    }
+    const transformString = `-transform=${JSON.stringify(mergedObj)}`;
+    return `${baseCommand} ${transformString}`;
   }
 
   // 解析字符串
   function parseFigureCommand(line: string) {
     let direction: 'right' | 'left' | 'center' = 'center';
-    if (/-right(\s|$)/.test(line)) direction = 'right';
-    else if (/-left(\s|$)/.test(line)) direction = 'left';
-    let transformObj = undefined;
-    // 更健壮地提取 -transform= 后的 JSON
-    const transformIndex = line.indexOf('-transform=');
-    if (transformIndex !== -1) {
-      // 从 -transform= 后面开始找第一个 {，再找匹配的 }
-      const jsonStart = line.indexOf('{', transformIndex);
-      if (jsonStart !== -1) {
-        let braceCount = 0;
-        let jsonEnd = -1;
-        for (let i = jsonStart; i < line.length; i++) {
-          if (line[i] === '{') braceCount++;
-          if (line[i] === '}') braceCount--;
-          if (braceCount === 0) {
-            jsonEnd = i;
-            break;
-          }
-        }
-        if (jsonEnd !== -1) {
-          const jsonStr = line.slice(jsonStart, jsonEnd + 1);
-          try {
-            transformObj = JSON.parse(jsonStr);
-          } catch (e) {
-            transformObj = undefined;
-          }
-        }
+    let transformObj: any = undefined;
+    const parts = line.split(/\s+/);
+
+    for (const part of parts) {
+      if (part.includes('-right')) direction = 'right';
+      else if (part.includes('-left')) direction = 'left';
+      else if (part.includes('-center')) direction = 'center';
+      else if (part.startsWith('-transform=')) {
+        const jsonStr = part.replace('-transform=', '');
+        try {
+          transformObj = JSON.parse(jsonStr);
+        } catch { /* 忽略错误 */ }
+      } else {
       }
     }
     return { direction, transformObj };
@@ -267,13 +237,25 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
 
   // 计算图片在舞台上的缩放后尺寸
   function calculateScaledImageSize(originalWidth: number, originalHeight: number): { width: number; height: number } {
-    const scaleX = previewWindow.width / originalWidth;
-    const scaleY = previewWindow.height / originalHeight;
-    const targetScale = Math.min(scaleX, scaleY);
+    const scaleW = previewWindow.width / originalWidth;
+    const scaleH = previewWindow.height / originalHeight;
+    const targetScale = Math.min(scaleW, scaleH);
     return {
       width: originalWidth * targetScale,
       height: originalHeight * targetScale
     };
+  }
+
+  // 根据 direction 计算 x 轴偏移量
+  function ToXOffset(direction: string): number {
+    const parentWindow = getParentWindowSize();
+    let xOffset = 0;
+    if (direction === 'center') {
+      xOffset = parentWindow.width / 2.97;
+    } else if (direction === 'right') {
+      xOffset = parentWindow.width / 1.47;
+    }
+    return xOffset;
   }
 
   return (
@@ -329,7 +311,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
           onChange?.({ x: translate[0], y: translate[1], width: frame.width, height: frame.height, rotation: beforeRotate });
         }}
         onRenderEnd={() => {
-          syncCommandToFile(commandContextRef.current, FrameToString())
+          syncCommandToFile(commandContextRef.current, FrameToString(commandContextRef.current?.lineContent))
         }}
       />}
     </>
