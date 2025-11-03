@@ -1,6 +1,80 @@
-const { app, BrowserWindow, globalShortcut, Menu } = require('electron');
+const { app, BrowserWindow, globalShortcut, Menu, ipcMain } = require('electron');
 const log = require('electron-log');
 const path = require('path');
+const Steamworks = require('steamworks.js');
+
+let steamClient;
+let steamCallbackInterval;
+
+const parseAppId = (appId) => {
+    if (typeof appId === 'number') {
+        return appId;
+    }
+    const numeric = Number(appId);
+    return Number.isNaN(numeric) ? appId : numeric;
+};
+
+const stopSteamCallbacks = () => {
+    if (steamCallbackInterval) {
+        clearInterval(steamCallbackInterval);
+        steamCallbackInterval = undefined;
+    }
+};
+
+ipcMain.handle('steam-initialize', async (_event, appId) => {
+    if (steamClient) {
+        return true;
+    }
+
+    try {
+        const parsedAppId = parseAppId(appId);
+        steamClient = Steamworks.init(parsedAppId);
+
+        if (typeof steamClient?.runCallbacks === 'function' && !steamCallbackInterval) {
+            steamCallbackInterval = setInterval(() => {
+                try {
+                    steamClient.runCallbacks();
+                } catch (error) {
+                    log.error('Steamworks runCallbacks failed', error);
+                }
+            }, 1000 / 60);
+
+            if (typeof steamCallbackInterval?.unref === 'function') {
+                steamCallbackInterval.unref();
+            }
+        }
+
+        log.info('Steamworks initialized');
+        return true;
+    } catch (error) {
+        log.error('Failed to initialize Steamworks', error);
+        steamClient = undefined;
+        stopSteamCallbacks();
+        return false;
+    }
+});
+
+ipcMain.handle('steam-unlock-achievement', async (_event, achievementId) => {
+    if (!steamClient) {
+        log.warn(`Cannot unlock achievement ${achievementId}: Steamworks not initialized`);
+        return false;
+    }
+
+    try {
+        const result = steamClient.achievement?.activate
+            ? steamClient.achievement.activate(achievementId)
+            : false;
+
+        if (!result) {
+            log.warn(`Steamworks failed to activate achievement ${achievementId}`);
+        }
+
+        return Boolean(result);
+    } catch (error) {
+        log.error(`Error unlocking Steam achievement ${achievementId}`, error);
+        return false;
+    }
+});
 
 /**
  * 关闭默认菜单栏
@@ -12,6 +86,13 @@ Menu.setApplicationMenu(null);
  */
 app.whenReady().then(() => {
     createWindow()
+
+    try {
+        Steamworks.electronEnableSteamOverlay();
+    } catch (error) {
+        log.warn('Steam overlay could not be enabled', error);
+    }
+
     // 适配 Mac OS
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
@@ -27,6 +108,11 @@ const createWindow = () => {
         height: 900,
         icon: path.join(__dirname, '../../icon.ico'),
         useContentSize: true,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: true,
+            nodeIntegration: false,
+        },
     })
 
     win.loadFile('./public/index.html').then(r => {
@@ -65,6 +151,21 @@ const createWindow = () => {
 		app.quit();
 	});
 }
+
+app.on('before-quit', () => {
+    globalShortcut.unregisterAll();
+    stopSteamCallbacks();
+
+    if (steamClient && typeof steamClient.shutdown === 'function') {
+        try {
+            steamClient.shutdown();
+        } catch (error) {
+            log.error('Steamworks shutdown failed', error);
+        }
+    }
+
+    steamClient = undefined;
+});
 
 /**
  * 在关闭所有窗口时退出应用
