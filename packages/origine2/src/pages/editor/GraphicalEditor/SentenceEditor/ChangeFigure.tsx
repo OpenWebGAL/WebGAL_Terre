@@ -390,7 +390,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           updateExpand(props.index);
         }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
-      {isWindowAdjustment && <CommonOptions key="new-button" title={t`拖拽调整位置`}>
+      {isWindowAdjustment && !isNoFile && <CommonOptions key="new-button" title={t`拖拽调整位置`}>
         <Button onClick={() => {
           Adjustment();
         }}>{t`开始`}</Button>

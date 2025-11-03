@@ -36,7 +36,10 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   // 监听 点击 事件
   useEffect(() => {
     function handlePixiSyncCommand(event: unknown) {
-      if (!(event as { lineContent: string }).lineContent.includes('changeFigure')) {
+      if (
+        !(event as any).lineContent.includes('changeFigure') ||
+        /changeFigure:\s*none\b/.test((event as any).lineContent)
+      ) {
         setIsDisplay(false);
         return;
       }
