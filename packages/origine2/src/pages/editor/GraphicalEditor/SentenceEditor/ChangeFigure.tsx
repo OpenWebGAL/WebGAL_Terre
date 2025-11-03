@@ -1,24 +1,25 @@
 import CommonOptions from "../components/CommonOption";
-import {ISentenceEditorProps} from "./index";
+import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
 import ChooseFile from "../../ChooseFile/ChooseFile";
-import {useValue} from "../../../../hooks/useValue";
-import {getArgByKey} from "../utils/getArgByKey";
+import { useValue } from "../../../../hooks/useValue";
+import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
-import {useEffect, useMemo, useState} from "react";
-import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
+import { useEffect, useMemo, useState } from "react";
+import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
-import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
-import {Button, Input} from "@fluentui/react-components";
+import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
+import { Button, Input } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
-import {t} from "@lingui/macro";
+import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { WsUtil } from "@/utils/wsUtil";
+import { eventBus } from "@/utils/eventBus";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -49,6 +50,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
   const [isSpineJsonFormat, setIsSpineJsonFormat] = useState(false);
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
 
   const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
   const currentExpression = useValue(
@@ -229,38 +231,69 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       figureFile.value,
       props.sentence.args,
       [
-        {key: "left", value: figurePosition.value === "left"},
-        {key: "right", value: figurePosition.value === "right"},
-        {key: "id", value: id.value},
-        {key: "transform", value: json.value},
-        {key: "duration", value: duration.value},
+        { key: "left", value: figurePosition.value === "left" },
+        { key: "right", value: figurePosition.value === "right" },
+        { key: "id", value: id.value },
+        { key: "transform", value: json.value },
+        { key: "duration", value: duration.value },
         ...(animationFlag.value !== "" ? [
-          {key: "animationFlag", value: animationFlag.value},
-          {key: "eyesOpen", value: eyesOpen.value},
-          {key: "eyesClose", value: eyesClose.value},
-          {key: "mouthOpen", value: mouthOpen.value},
-          {key: "mouthHalfOpen", value: mouthHalfOpen.value},
-          {key: "mouthClose", value: mouthClose.value},
+          { key: "animationFlag", value: animationFlag.value },
+          { key: "eyesOpen", value: eyesOpen.value },
+          { key: "eyesClose", value: eyesClose.value },
+          { key: "mouthOpen", value: mouthOpen.value },
+          { key: "mouthHalfOpen", value: mouthHalfOpen.value },
+          { key: "mouthClose", value: mouthClose.value },
         ] : [
-          {key: "animationFlag", value: ""},
-          {key: "eyesOpen", value: ""},
-          {key: "eyesClose", value: ""},
-          {key: "mouthOpen", value: ""},
-          {key: "mouthHalfOpen", value: ""},
-          {key: "mouthClose", value: ""},
+          { key: "animationFlag", value: "" },
+          { key: "eyesOpen", value: "" },
+          { key: "eyesClose", value: "" },
+          { key: "mouthOpen", value: "" },
+          { key: "mouthHalfOpen", value: "" },
+          { key: "mouthClose", value: "" },
         ]),
-        {key: "motion", value: currentMotion.value},
-        {key: "expression", value: currentExpression.value},
-        {key: "bounds", value: bounds.value},
-        {key: "blink", value: updateBlinkParam()},
-        {key: "focus", value: updateFocusParam()},
-        {key: "ease", value: ease.value},
-        {key: "zIndex", value: zIndex.value},
-        {key: "next", value: isGoNext.value},
+        { key: "motion", value: currentMotion.value },
+        { key: "expression", value: currentExpression.value },
+        { key: "bounds", value: bounds.value },
+        { key: "blink", value: updateBlinkParam() },
+        { key: "focus", value: updateFocusParam() },
+        { key: "ease", value: ease.value },
+        { key: "zIndex", value: zIndex.value },
+        { key: "next", value: isGoNext.value },
       ],
     );
     props.onSubmit(submitString);
   };
+
+  function Adjustment() {
+    const lineContent = sentenceToRawLine(props.sentence)
+    const lineNumber = props.index; // 如果 index 从 0 开始
+    const targetPath = props.targetPath;
+    WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
+    eventBus.emit('pixi-sync-command', {
+      targetPath,
+      lineNumber,
+      lineContent
+    });
+  }
+
+  // 将 sentence 对象转换回原始命令行字符串
+  function sentenceToRawLine(sentence: any): string {
+    let base = sentence.commandRaw;
+    if (sentence.content) {
+      base += ':' + sentence.content;
+    }
+    if (sentence.args && sentence.args.length > 0) {
+      for (const arg of sentence.args) {
+        let value = arg.value;
+        // 如果是对象，转成 JSON 字符串
+        if (typeof value === 'object') {
+          value = JSON.stringify(value);
+        }
+        base += ` -${arg.key}=${value}`;
+      }
+    }
+    return base;
+  }
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
@@ -271,7 +304,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           } else
             figureFile.set("none");
           submit();
-        }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile}/>
+        }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
       </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t`立绘文件`}>
@@ -281,7 +314,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               figureFile.set(fileDesc?.name ?? "");
               submit();
             }}
-            extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? [] ]}/>
+              extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? []]} />
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
@@ -289,7 +322,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           isGoNext.set(newValue);
           submit();
         }} onText={t`本句执行后执行下一句`}
-        offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
+          offText={t`本句执行后等待`} isChecked={isGoNext.value} />
       </CommonOptions>
       <CommonOptions title={t`z-index`} key="z-index">
         <input value={zIndex.value}
@@ -300,7 +333,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           placeholder={t`1, 2, 3, ...`}
-          style={{width: "100%"}}
+          style={{ width: "100%" }}
         />
       </CommonOptions>
       {figureFile.value.includes('.json') && (
@@ -309,7 +342,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             <SearchableCascader
               optionList={l2dMotionsList}
               value={currentMotion.value}
-              onValueChange={(newValue) =>{
+              onValueChange={(newValue) => {
                 newValue && currentMotion.set(newValue);
                 submit();
               }}
@@ -320,7 +353,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               <SearchableCascader
                 optionList={l2dExpressionsList}
                 value={currentExpression.value}
-                onValueChange={(newValue) =>{
+                onValueChange={(newValue) => {
                   newValue && currentExpression.set(newValue);
                   submit();
                 }}
@@ -349,7 +382,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           onBlur={submit}
           className={styles.sayInput}
           placeholder={t`立绘 ID`}
-          style={{width: "100%"}}
+          style={{ width: "100%" }}
         />
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
@@ -357,6 +390,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           updateExpand(props.index);
         }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
+      {isWindowAdjustment && <CommonOptions key="new-button" title={t`拖拽调整位置`}>
+        <Button onClick={() => {
+          Adjustment();
+        }}>{t`开始`}</Button>
+      </CommonOptions>}
       <TerrePanel
         title={t`效果编辑器`}
         sentenceIndex={props.index}
@@ -370,7 +408,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                     duration.set("");
                   else
                     duration.set(newDuration);
-                }} onBlur={submit}/>
+                }} onBlur={submit} />
               </div>
             </CommonOptions>
             <CommonOptions key="5" title={t`缓动类型`}>
@@ -404,7 +442,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                           mouthOpen.set(fileDesc?.name ?? "");
                           submit();
                         }}
-                        extNames={extNameMap.get('image')}/>
+                          extNames={extNameMap.get('image')} />
                       </>
                     </CommonOptions>
                     <CommonOptions key="7" title={t`半张嘴`}>
@@ -414,7 +452,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                           mouthHalfOpen.set(fileDesc?.name ?? "");
                           submit();
                         }}
-                        extNames={extNameMap.get('image')}/>
+                          extNames={extNameMap.get('image')} />
                       </>
                     </CommonOptions>
                     <CommonOptions key="8" title={t`闭上嘴`}>
@@ -424,7 +462,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                           mouthClose.set(fileDesc?.name ?? "");
                           submit();
                         }}
-                        extNames={extNameMap.get('image')}/>
+                          extNames={extNameMap.get('image')} />
                       </>
                     </CommonOptions>
                     <CommonOptions key="9" title={t`睁开眼睛`}>
@@ -434,7 +472,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                           eyesOpen.set(fileDesc?.name ?? "");
                           submit();
                         }}
-                        extNames={extNameMap.get('image')}/>
+                          extNames={extNameMap.get('image')} />
                       </>
                     </CommonOptions>
                     <CommonOptions key="10" title={t`闭上眼睛`}>
@@ -444,7 +482,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                           eyesClose.set(fileDesc?.name ?? "");
                           submit();
                         }}
-                        extNames={extNameMap.get('image')}/>
+                          extNames={extNameMap.get('image')} />
                       </>
                     </CommonOptions>
                   </>
@@ -548,7 +586,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         }
       >
         <CommonTips
-          text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
+          text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`} />
         <EffectEditor
           json={json.value.toString()}
           onChange={(newJson) => {

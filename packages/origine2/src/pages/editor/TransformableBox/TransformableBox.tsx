@@ -31,8 +31,9 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   const [isDisplay, setIsDisplay] = useState(false); // 控制框是否显示
   const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
   const commandContextRef = useRef<{ targetPath: string, lineNumber: number, lineContent: string } | null>(null);
+  const lastParentSize = useRef<{ width: number; height: number } | null>(null);
 
-  // 监听 pixi-sync-command 事件
+  // 监听 点击 事件
   useEffect(() => {
     function handlePixiSyncCommand(event: unknown) {
       if (!(event as { lineContent: string }).lineContent.includes('changeFigure')) {
@@ -60,12 +61,37 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     };
   }, []);
 
-  // 监听父元素宽度变化，自动刷新
+  // 监听父元素宽度变化，按比例自动刷新
   useEffect(() => {
     if (!parents?.current || !isDisplay) return;
-    return () => {
-    };
+
+    const parentEl = parents.current;
+    const resizeObserver = new ResizeObserver(() => {
+      const prev = lastParentSize.current;
+      const newSize = { width: parentEl.clientWidth, height: parentEl.clientHeight };
+
+      if (prev && prev.width > 0 && prev.height > 0) {
+        const scaleX = newSize.width / prev.width;
+        const scaleY = newSize.height / prev.height;
+        // 按比例更新 frame 状态，包括位置和尺寸
+        setFrame(f => ({
+          ...f,
+          translate: [f.translate[0] * scaleX, f.translate[1] * scaleY],
+          width: f.width * scaleX,
+          height: f.height * scaleY,
+        }));
+        setRemountKey(k => k + 1); // 强制刷新 Moveable
+      }
+      lastParentSize.current = newSize;
+    });
+
+    // 初始记录
+    lastParentSize.current = { width: parentEl.clientWidth, height: parentEl.clientHeight };
+    resizeObserver.observe(parentEl);
+
+    return () => resizeObserver.disconnect();
   }, [parents, isDisplay]);
+
 
   // 将字符串解析出来的数据应用到拖拽框上
   function updateFrame(direction: string, transformObj: any, width?: number, height?: number) {
@@ -91,7 +117,6 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
 
   // 将当前控制框的数据转换回字符串
   function FrameToString(LineContent: string | undefined): string {
-    debugger
     const { direction, transformObj } = parseFigureCommand(LineContent || '');
     const baseCommand = LineContent?.replace(/\s*-transform=\{[\s\S]*\};?/, '').trim() || '';// 移除原有的 -transform 部分
     // 1. 构建 transform 对象
@@ -141,11 +166,14 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       else if (part.includes('-left')) direction = 'left';
       else if (part.includes('-center')) direction = 'center';
       else if (part.startsWith('-transform=')) {
-        const jsonStr = part.replace('-transform=', '');
+        // 提取 JSON 字符串，并用正则表达式安全地移除末尾可能存在的分号
+        const jsonStr = part.replace('-transform=', '').replace(/;$/, '');
         try {
           transformObj = JSON.parse(jsonStr);
-        } catch { /* 忽略错误 */ }
-      } else {
+        } catch (e) {
+          // 添加日志，方便调试
+          console.error("Failed to parse transform JSON:", jsonStr, e);
+        }
       }
     }
     return { direction, transformObj };
@@ -217,7 +245,11 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         });
 
         // 通知其他组件文件已更新
-        eventBus.emit('drag-update-scene');
+        eventBus.emit('drag-update-scene', {
+          targetPath: commandContext.targetPath,
+          lineNumber: commandContext.lineNumber,
+          newCommand: newCommand
+        });
 
         console.log('Command synced successfully:', newCommand);
       } else {

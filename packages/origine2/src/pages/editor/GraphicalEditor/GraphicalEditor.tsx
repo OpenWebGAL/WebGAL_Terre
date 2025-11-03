@@ -1,16 +1,16 @@
-import {useValue} from "../../../hooks/useValue";
-import {parseScene} from "./parser";
+import { useValue } from "../../../hooks/useValue";
+import { parseScene } from "./parser";
 import axios from "axios";
-import {useEffect, useMemo} from "react";
-import {WsUtil} from "../../../utils/wsUtil";
-import {mergeToString, splitToArray} from "./utils/sceneTextProcessor";
+import { useEffect, useMemo } from "react";
+import { WsUtil } from "../../../utils/wsUtil";
+import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {sentenceEditorConfig, sentenceEditorDefault} from "./SentenceEditor";
-import {DeleteFive, Sort, DownOne, RightOne, Play} from "@icon-park/react";
-import AddSentence, {addSentenceType} from "./components/AddSentence";
-import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
-import {eventBus} from "@/utils/eventBus";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
+import { DeleteFive, Sort, DownOne, RightOne, Play } from "@icon-park/react";
+import AddSentence, { addSentenceType } from "./components/AddSentence";
+import { editorLineHolder } from "@/runtime/WG_ORIGINE_RUNTIME";
+import { eventBus } from "@/utils/eventBus";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 
@@ -147,7 +147,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   function syncToIndex(index: number) {
     const targetValue = sentenceData.value[index]?.content || "";
-    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue,true);
+    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue, true);
     editorLineHolder.recordSceneEditingLine(props.targetPath, index + 1);
   }
 
@@ -156,7 +156,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const scrollToFunc = () => {
       const targetBlock = document.querySelector(`.sentence-block-${targetLine}`);
       if (targetBlock) {
-        targetBlock?.scrollIntoView?.({behavior: 'auto'});
+        targetBlock?.scrollIntoView?.({ behavior: 'auto' });
       } else {
         console.log('Retry scroll to in 50ms');
         setTimeout(() => scrollToFunc(), 50);
@@ -186,18 +186,28 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   const mergedSceneText = useMemo(() =>
     mergeToString(sentenceData.value.map(item => item.content)),
-  [sentenceData.value]
+    [sentenceData.value]
   );
 
-  const parsedScene = mergedSceneText === "" ? {sentenceList: []} : parseScene(mergedSceneText);
+  const parsedScene = mergedSceneText === "" ? { sentenceList: [] } : parseScene(mergedSceneText);
 
+  useEffect(() => {
+    const handleDragUpdate = (data: any) => {
+      fetchScene();
+      WsUtil.sendSyncCommand(data.targetPath, data.lineNumber, data.newCommand);
+    };
+    eventBus.on('drag-update-scene', handleDragUpdate);
+    return () => {
+      eventBus.off('drag-update-scene', handleDragUpdate);
+    };
+  }, []);
   return <div className={styles.main} id="graphical-editor-main">
-    <div style={{flex: 1, padding: '14px 4px 0 4px'}}>
+    <div style={{ flex: 1, padding: '14px 4px 0 4px' }}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided) => (
             // 下面开始书写容器
-            <div style={{height: "100%"}}
+            <div style={{ height: "100%" }}
               // provided.droppableProps应用的相同元素.
               {...provided.droppableProps}
               // 为了使 droppable 能够正常工作必须 绑定到最高可能的DOM节点中provided.innerRef.
@@ -220,14 +230,14 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                         <div className={styles.addForwardAreaButtonGroup}>
                           <div className={styles.addForwardAreaButton}>
                             <AddSentence titleText={t`本句前插入句子`} type={addSentenceType.forward}
-                              onChoose={(newSentence) => addOneSentence(newSentence, i)}/>
+                              onChoose={(newSentence) => addOneSentence(newSentence, i)} />
                           </div>
                         </div>
                       </div>
                       <div className={styles.sentenceEditorContent}>
-                        <div className={styles.lineNumber}><span style={{padding: "0 6px 0 0"}}>{index}</span>
-                          <Sort {...provided.dragHandleProps} style={{padding: "5px 0 0 0"}} theme="outline" size="22"
-                            strokeWidth={3}/>
+                        <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
+                          <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
+                            strokeWidth={3} />
                         </div>
                         <div className={styles.seArea}>
                           <div className={styles.head}>
@@ -238,23 +248,23 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               onClick={() => changeShowSentence(i)}>
                               {sentenceItem.show ?
                                 <DownOne strokeWidth={3} theme="outline" size="18"
-                                  fill="#005CAF"/> :
+                                  fill="#005CAF" /> :
                                 <RightOne strokeWidth={3} theme="outline" size="18"
-                                  fill="#005CAF"/>}
+                                  fill="#005CAF" />}
                             </div>
                             <div className={styles.optionButtonContainer}>
                               <div className={styles.optionButton}
                                 onClick={() => deleteOneSentence(i)}>
-                                <DeleteFive strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
-                                  fill="var(--text)"/>
+                                <DeleteFive strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="14"
+                                  fill="var(--text)" />
                                 <div>
                                   {t`删除本句`}
                                 </div>
                               </div>
                               <div className={styles.optionButton}
                                 onClick={() => syncToIndex(i)}>
-                                <Play strokeWidth={3} style={{padding: "2px 4px 0 0"}} theme="outline" size="14"
-                                  fill="var(--text)"/>
+                                <Play strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="14"
+                                  fill="var(--text)" />
                                 <div>
                                   {t`执行到此句`}
                                 </div>
@@ -263,7 +273,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                           </div>
                           {sentenceItem.show && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
                             updateSentenceByIndex(newSentence, i);
-                          }}/>}
+                          }} targetPath={props.targetPath} />}
                         </div>
                       </div>
                     </div>
@@ -273,7 +283,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               {provided.placeholder}
               <div className={styles.addWrapper}>
                 <AddSentence titleText={t`添加语句`} type={addSentenceType.backward}
-                  onChoose={(newSentence) => addOneSentence(newSentence, sentenceData.value.length)}/>
+                  onChoose={(newSentence) => addOneSentence(newSentence, sentenceData.value.length)} />
               </div>
             </div>
           )}

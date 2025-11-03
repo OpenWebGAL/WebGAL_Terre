@@ -175,7 +175,7 @@ export default function EditorSideBar() {
             />
             <Switch
               label={t`拖动编辑贴图`}
-              title="当您启用这个选项的时候，在文本编辑器处用鼠标点击贴图的那一行"
+              title="当您启用这个选项的时候，在文本编辑器处用鼠标点击贴图的那一行，或者点击图形界面的‘拖拽调整位置’"
               labelPosition="before"
               checked={isWindowAdjustment}
               onChange={() => handleWindowAdjustmentChange(!isWindowAdjustment)}
