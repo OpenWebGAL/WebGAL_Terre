@@ -1,11 +1,11 @@
 import CommonOptions from "../components/CommonOption";
-import {ISentenceEditorProps} from "./index";
+import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
-import {getArgByKey} from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
-import {useValue} from "@/hooks/useValue";
-import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
+import { getArgByKey } from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
+import { useValue } from "@/hooks/useValue";
+import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
-import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
+import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
@@ -13,12 +13,13 @@ import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { WsUtil } from "@/utils/wsUtil";
+import { eventBus } from "@/utils/eventBus";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
-  const {sentence} = props;
+  const { sentence } = props;
   const json = sentence.content;
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
@@ -26,11 +27,12 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
   const presetTargets = new Map<PresetTarget, string>([
-    [ "fig-left", t`左侧立绘` ],
-    [ "fig-center", t`中间立绘` ],
-    [ "fig-right", t`右侧立绘` ],
-    [ "bg-main", t`背景图片` ],
+    ["fig-left", t`左侧立绘`],
+    ["fig-center", t`中间立绘`],
+    ["fig-right", t`右侧立绘`],
+    ["bg-main", t`背景图片`],
   ]);
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
@@ -45,16 +47,47 @@ export default function SetTransform(props: ISentenceEditorProps) {
       transform.value,
       props.sentence.args,
       [
-        {key: "target", value: target.value},
-        {key: "duration", value: duration.value},
-        {key: "ease", value: ease.value},
-        {key: "writeDefault", value: writeDefault.value},
-        {key: "keep", value: keep.value},
-        {key: "next", value: isGoNext.value},
+        { key: "target", value: target.value },
+        { key: "duration", value: duration.value },
+        { key: "ease", value: ease.value },
+        { key: "writeDefault", value: writeDefault.value },
+        { key: "keep", value: keep.value },
+        { key: "next", value: isGoNext.value },
       ],
     );
     props.onSubmit(submitString);
   };
+
+  function Adjustment() {
+    const lineContent = sentenceToRawLine(props.sentence)
+    const lineNumber = props.index; // 如果 index 从 0 开始
+    const targetPath = props.targetPath;
+    WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
+    eventBus.emit('pixi-sync-command', {
+      targetPath,
+      lineNumber,
+      lineContent
+    });
+  }
+
+  // 将 sentence 对象转换回原始命令行字符串
+  function sentenceToRawLine(sentence: any): string {
+    let base = sentence.commandRaw;
+    if (sentence.content) {
+      base += ':' + sentence.content;
+    }
+    if (sentence.args && sentence.args.length > 0) {
+      for (const arg of sentence.args) {
+        let value = arg.value;
+        // 如果是对象，转成 JSON 字符串
+        if (typeof value === 'object') {
+          value = JSON.stringify(value);
+        }
+        base += ` -${arg.key}=${value}`;
+      }
+    }
+    return base;
+  }
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
@@ -65,11 +98,11 @@ export default function SetTransform(props: ISentenceEditorProps) {
         <TerrePanel key={`effect-editor-${props.index}`} sentenceIndex={props.index} title={t`效果编辑器`}>
           <EffectEditor
             json={transform.value}
-            onChange={(newJson)=>{
+            onChange={(newJson) => {
               transform.set(newJson);
               submit();
             }}
-            onUpdate={(transform)=>{
+            onUpdate={(transform) => {
               const newEffect = { target: target.value, transform: transform };
               WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
             }}
@@ -98,7 +131,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
         <TerreToggle title="" onChange={(newValue) => {
           isUsePreset.set(newValue);
         }} onText={t`使用预设的作用目标，如果设置了id则不生效`} offText={t`手动输入 ID`}
-        isChecked={isUsePreset.value} />
+          isChecked={isUsePreset.value} />
       </CommonOptions>
       {isUsePreset.value && <CommonOptions key="3" title={t`选择预设目标`}>
         <WheelDropdown
@@ -150,6 +183,11 @@ export default function SetTransform(props: ISentenceEditorProps) {
           submit();
         }} onText={t`本句执行后执行下一句`} offText={t`本句执行后等待`} isChecked={isGoNext.value} />
       </CommonOptions>
+      {isWindowAdjustment && <CommonOptions key="new-button" title={t`拖拽调整位置`}>
+        <Button onClick={() => {
+          Adjustment();
+        }}>{t`开始`}</Button>
+      </CommonOptions>}
     </div>
   </div>;
 }

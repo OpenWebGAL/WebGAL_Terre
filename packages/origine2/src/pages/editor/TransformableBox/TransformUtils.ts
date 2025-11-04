@@ -172,18 +172,19 @@ export function convertCommandPathToFilePath(command: string, targetPath: string
 }
 
 /**
- * 生成 transform 字符串（基于当前 frame 和原命令）
- * @param LineContent - 原始命令字符串
- * @param frame - 当前的 frame 状态
- * @param parents - 父元素的 ref
- * @returns transform 字符串，如 "-transform={...}"
+ *
+ * @param TransformObj - 原变换对象
+ * @param direction - 初始位置
+ * @param frame - 组件状态
+ * @param parents - 父亲
+ * @returns
  */
-export function generateTransformString(
-  LineContent: string,
+export function generateMergeTransform(
+  TransformObj: any,
+  direction: string,
   frame: { translate: [number, number]; rotate: number; scale: [number, number]; width: number; height: number },
   parents?: MutableRefObject<HTMLElement | null> | null
-): string {
-  const { direction, transformObj } = parseFigureCommand(LineContent);
+): any {
 
   // 1. 构建新的 transform 对象
   const newTransformObj: any = {};
@@ -212,12 +213,12 @@ export function generateTransformString(
     };
   }
 
-  // 4. 合并 transform 对象
-  const mergedObj = Object.assign({}, transformObj || {}, newTransformObj);
+  // 4. 合并新的 transform 对象到原有的 TransformObj
+  const mergedObj = Object.assign({}, TransformObj || {}, newTransformObj);
   if (Object.keys(mergedObj).length === 0) {
-    return '';
+    return null;
   }
-  return `-transform=${JSON.stringify(mergedObj)}`;
+  return mergedObj;
 }
 
 /**
@@ -311,4 +312,34 @@ export async function syncCommandToFile(commandContext: any, newCommand: string)
 export async function GetSceneTXT(path: string): Promise<string> {
   const res = await axios.get(path);
   return res.data.toString();
+}
+
+
+/**
+ * 将 setTransform 语句转换为 changeFigure 语句
+ * @param target - 目标值
+ * @param targetPath - 目标文件路径
+ * @returns changeFigure 语句
+*/
+export async function SetFtoChangeF(target: string, targetPath: string): Promise<string> {
+  const sceneTXT = await GetSceneTXT(targetPath);
+  const lines = sceneTXT.split('\n');
+  for (const line of lines) {
+    const match = line.match(/-id=([^\s;]+)/);
+    if (match && match[1] === target) {
+      return line.trim();
+    }
+  }
+  throw new Error('未找到对应的 changeFigure 语句');
+}
+
+/**
+ * 根据 setTransform 语句获取图片路径
+ * @param target - 目标值
+ * @param targetPath - 目标文件路径
+ * @returns 图片路径
+*/
+export async function GetImgPath(target: string, targetPath: string): Promise<string> {
+  const ChangeF = await SetFtoChangeF(target, targetPath)
+  return convertCommandPathToFilePath(ChangeF, targetPath)
 }

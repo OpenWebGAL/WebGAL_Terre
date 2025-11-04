@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect, MutableRefObject } from 'react';
 import Moveable from 'react-moveable';
 import { eventBus } from "@/utils/eventBus";
-import axios from 'axios';
 import { api } from '@/api';
 import {
   calculateScaledImageSize,
@@ -12,12 +11,11 @@ import {
   degreesToRadians,
   convertCommandPathToFilePath,
   syncCommandToFile,
-  generateTransformString,
+  generateMergeTransform,
   updateFrameState,
   parseSetTransformCommand,
-  GetSceneTXT
+  GetImgPath
 } from './TransformUtils';
-import { error } from 'console';
 
 interface TransformableBoxProps {
   parents?: MutableRefObject<HTMLElement | null> | null;
@@ -82,9 +80,14 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     }
     static setTransform(event: any) {
       const { transformObj, target } = parseSetTransformCommand((event as { lineContent: string }).lineContent);
-      SetTransformPatch.GetImgPath(target as string, (event as { targetPath: string }).targetPath).then(res => {
+      GetImgPath(target as string, (event as { targetPath: string }).targetPath).then(res => {
         api.assetsControllerGetImageDimensions(res).then(imgRes => {
-          console.log('imgRes', imgRes);
+          const scaledSize = calculateScaledImageSize(imgRes.data.width, imgRes.data.height);
+          const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
+          commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent };
+          setIsDisplay(true);
+          updateFrame(transformObj.direction, transformObj, size.x, size.y);
+          setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
         });
       });
     }
@@ -128,44 +131,22 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
 
   // 将当前控制框的数据转换回字符串
   function FrameToChangeFigure(LineContent: string | undefined): string {
-    const baseCommand = LineContent?.replace(/\s*-transform=\{[\s\S]*\};?/, '').trim() || '';// 移除原有的 -transform 部分
-    const transformString = generateTransformString(LineContent || '', frame, parents);
+    const baseCommand = LineContent?.replace(/\s*-transform=\{[\s\S]*\};?/, '').trim() || '';
+    const { direction, transformObj } = parseFigureCommand(LineContent || '');
+    const transformString = JSON.stringify(generateMergeTransform(transformObj, direction, frame, parents));
     if (transformString) {
-      return `${baseCommand} ${transformString}`;
+      return `${baseCommand} -transform=${transformString}`;
     }
     return baseCommand;
   }
 
-  // 用于处理 setTransform 语句
-  class SetTransformPatch {
-    /**
-     * 将 setTransform 语句转换为 changeFigure 语句
-     * @param target - 目标值
-     * @param targetPath - 目标文件路径
-     * @returns changeFigure 语句
-    */
-    static async SetFtoChangeF(target: string, targetPath: string): Promise<string> {
-      const sceneTXT = await GetSceneTXT(targetPath);
-      const lines = sceneTXT.split('\n');
-      for (const line of lines) {
-        const match = line.match(/-id=([^\s;]+)/);
-        if (match && match[1] === target) {
-          return line.trim();
-        }
-      }
-      throw new Error('未找到对应的 changeFigure 语句');
-    }
-
-    /**
-     * 根据 setTransform 语句获取图片路径
-     * @param target - 目标值
-     * @param targetPath - 目标文件路径
-     * @returns 图片路径
-    */
-    static async GetImgPath(target: string, targetPath: string): Promise<string> {
-      const ChangeF = await SetTransformPatch.SetFtoChangeF(target, targetPath)
-      return convertCommandPathToFilePath(ChangeF, targetPath)
-    }
+  function FrameToSetTransform(LineContent: string | undefined): string {
+    // 提取第一个空格后面的所有内容（即 -target=... 及其后缀）
+    debugger
+    const tailCommand = LineContent?.replace(/^setTransform:[^\s]+(\s*)/, '') || '';
+    const { transformObj, target } = parseSetTransformCommand(LineContent || '');
+    const mergedTransformObj = generateMergeTransform(transformObj, 'left', frame, parents);
+    return 'setTransform:' + JSON.stringify(mergedTransformObj) + (tailCommand ? ` ${tailCommand}` : '');
   }
 
   return (
@@ -223,6 +204,8 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         onRenderEnd={() => {
           if (commandContextRef.current?.lineContent.includes('changeFigure')) {
             syncCommandToFile(commandContextRef.current, FrameToChangeFigure(commandContextRef.current?.lineContent))
+          } else if (commandContextRef.current?.lineContent.includes('setTransform')) {
+            syncCommandToFile(commandContextRef.current, FrameToSetTransform(commandContextRef.current?.lineContent))
           }
         }}
       />}
