@@ -25,7 +25,7 @@ export function generateMergeTransform(
 
   // 2. 将当前控制框的 translate（控制窗口像素）减去偏移后，转换回预览窗口的绝对坐标
   const temPosition = convertControlToPreview({
-    x: frame.translate[0] - ToXOffset(direction, parents),
+    x: frame.translate[0] - ToXOffset(direction, parents, frame.width),
     y: frame.translate[1]
   }, parents);
   if (temPosition.x !== 0 || temPosition.y !== 0) {

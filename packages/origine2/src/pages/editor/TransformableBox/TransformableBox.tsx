@@ -50,10 +50,10 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     function handlePixiSyncCommand(event: unknown) {
       if ((event as any).lineContent.includes('changeFigure') &&
         !/changeFigure:\s*none\b/.test((event as any).lineContent)) {
-        Main.ChangeFigure(event);
+        ChangeFigure(event);
       }
       else if ((event as any).lineContent.includes('setTransform')) {
-        Main.setTransform(event);
+        SetTransform(event);
       }
       else {
         setIsDisplay(false);
@@ -66,41 +66,39 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     };
   }, []);
   // 主要逻辑
-  class Main {
-    static ChangeFigure(event: any) {
-      const filePath = convertCommandPathToFilePath(// 提取图片路径
-        (event as { lineContent: string }).lineContent,
-        (event as { targetPath: string }).targetPath
-      ) || '';
-      api.assetsControllerGetImageDimensions(filePath).then(res => {
-        const scaledSize = calculateScaledImageSize(res.data.width, res.data.height);// 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
+  const ChangeFigure = (event: any) => {
+    const filePath = convertCommandPathToFilePath(// 提取图片路径
+      (event as { lineContent: string }).lineContent,
+      (event as { targetPath: string }).targetPath
+    ) || '';
+    api.assetsControllerGetImageDimensions(filePath).then(res => {
+      const scaledSize = calculateScaledImageSize(res.data.width, res.data.height);// 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
+      const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
+      const { direction, transformObj } = parseFigureCommand((event as { lineContent: string }).lineContent);
+      commandContextRef.current = { ...event, direction };
+      setIsDisplay(true);
+      updateFrame(direction, transformObj, size.x, size.y);// !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
+      setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
+    });
+  };
+
+  const SetTransform = (event: any) => {
+    const { transformObj, target } = parseSetTransformCommand((event as { lineContent: string }).lineContent);
+    GetImgPathAndDirection(target as string, (event as { targetPath: string }).targetPath).then(({ imgPath, direction }) => {
+      api.assetsControllerGetImageDimensions(imgPath).then(imgRes => {
+        const scaledSize = calculateScaledImageSize(imgRes.data.width, imgRes.data.height);
         const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-        const { direction, transformObj } = parseFigureCommand((event as { lineContent: string }).lineContent);
-        commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent, direction };
+        commandContextRef.current = { ...event, direction };
         setIsDisplay(true);
-        updateFrame(direction, transformObj, size.x, size.y);// !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
+        updateFrame(direction, transformObj, size.x, size.y);
         setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
       });
-    }
-    static setTransform(event: any) {
-      const { transformObj, target } = parseSetTransformCommand((event as { lineContent: string }).lineContent);
-      GetImgPathAndDirection(target as string, (event as { targetPath: string }).targetPath).then(({ imgPath, direction }) => {
-        api.assetsControllerGetImageDimensions(imgPath).then(imgRes => {
-          const scaledSize = calculateScaledImageSize(imgRes.data.width, imgRes.data.height);
-          const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-          commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent, direction };
-          setIsDisplay(true);
-          updateFrame(direction, transformObj, size.x, size.y);
-          setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
-        });
-      });
-    }
-  }
+    });
+  };
 
   // 监听父元素宽度变化，按比例自动刷新
   useEffect(() => {
     if (!parents?.current || !isDisplay) return;
-
     const parentEl = parents.current;
     const resizeObserver = new ResizeObserver(() => {
       const prev = lastParentSize.current;
@@ -126,7 +124,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     resizeObserver.observe(parentEl);
 
     return () => resizeObserver.disconnect();
-  }, [parents, isDisplay]);
+  }, [isDisplay]);
 
   // 将字符串解析出来的数据应用到拖拽框上
   function updateFrame(direction: string, transformObj: any, width?: number, height?: number) {
@@ -193,7 +191,6 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
           const translate = drag.beforeTranslate as [number, number];
           const scaleArray = [scale[0], scale[1]] as [number, number];
           setFrame(f => ({ ...f, scale: scaleArray, translate }));
-          // 计算缩放后的实际尺寸
           const actualWidth = frame.width * scale[0];
           const actualHeight = frame.height * scale[1];
           onChange?.({ x: translate[0], y: translate[1], width: actualWidth, height: actualHeight, rotation: frame.rotate });

@@ -114,7 +114,7 @@ export function updateFrameState(
   setFrame(prev => ({
     ...prev,
     translate: [
-      position.x + ToXOffset(direction, parents),
+      position.x + ToXOffset(direction, parents, width || prev.width),
       position.y
     ],
     scale: [

@@ -110,15 +110,16 @@ export async function GetSceneTXT(path: string): Promise<string> {
  * 根据方向计算 X 轴偏移量（用于定位图形）
  * @param direction - 方向 ('center', 'right', 'left')
  * @param parents - 父元素的 ref
+ * @param imageWidth - 图片宽度
  * @returns X 轴偏移量
  */
-export function ToXOffset(direction: string, parents?: MutableRefObject<HTMLElement | null> | null): number {
+export function ToXOffset(direction: string, parents?: MutableRefObject<HTMLElement | null> | null, imageWidth: number = 0): number {
   const parentWindow = getParentWindowSize(parents);
   let xOffset = 0;
   if (direction === 'center') {
-    xOffset = parentWindow.width / 2.97;
+    xOffset = parentWindow.width / 2 - imageWidth / 2;
   } else if (direction === 'right') {
-    xOffset = parentWindow.width / 1.47;
+    xOffset = parentWindow.width - imageWidth;
   }
   return xOffset;
 }
