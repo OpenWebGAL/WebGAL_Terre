@@ -258,7 +258,7 @@ msgstr "中间"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:31
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:21
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:31
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:33
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:22
 msgid "中间立绘"
 msgstr "中间立绘"
@@ -338,13 +338,13 @@ msgid "使用预制特效"
 msgstr "使用预制特效"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:61
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:100
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:64
 msgid "使用预设的作用目标，如果设置了id则不生效"
 msgstr "使用预设的作用目标，如果设置了id则不生效"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:58
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:97
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:130
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:61
 msgid "使用预设目标"
 msgstr "使用预设目标"
@@ -446,7 +446,7 @@ msgstr "关联立绘"
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:151
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:145
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:178
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:198
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
@@ -669,7 +669,7 @@ msgstr "右侧"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:32
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:22
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:32
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:34
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:23
 msgid "右侧立绘"
 msgstr "右侧立绘"
@@ -945,7 +945,7 @@ msgstr "左侧"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:30
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:20
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:30
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:32
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:21
 msgid "左侧立绘"
 msgstr "左侧立绘"
@@ -1003,11 +1003,12 @@ msgstr "延迟时间（秒）"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:150
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:145
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:178
 msgid "开启"
 msgstr "开启"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:396
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:189
 msgid "开始"
 msgstr "开始"
 
@@ -1049,14 +1050,14 @@ msgid "手动触发下一句"
 msgstr "手动触发下一句"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:61
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:100
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:64
 msgid "手动输入 ID"
 msgstr "手动输入 ID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:99
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:391
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:63
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:96
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
@@ -1073,6 +1074,7 @@ msgid "拖动编辑贴图"
 msgstr "拖动编辑贴图"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:393
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:186
 msgid "拖拽调整位置"
 msgstr "拖拽调整位置"
 
@@ -1186,13 +1188,13 @@ msgstr "效果与变换"
 msgid "效果声音"
 msgstr "效果声音"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:61
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:94
 msgid "效果编辑"
 msgstr "效果编辑"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:103
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:399
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:65
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:98
 msgid "效果编辑器"
 msgstr "效果编辑器"
 
@@ -1446,14 +1448,14 @@ msgstr "本句前插入句子"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:81
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:324
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:102
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:151
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:184
 msgid "本句执行后执行下一句"
 msgstr "本句执行后执行下一句"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:82
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:325
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:102
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:151
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:184
 msgid "本句执行后等待"
 msgstr "本句执行后等待"
 
@@ -1783,7 +1785,7 @@ msgstr "立绘"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:384
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:274
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:82
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:121
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:154
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:85
 msgid "立绘 ID"
 msgstr "立绘 ID"
@@ -1867,12 +1869,12 @@ msgstr "绝对"
 #~ msgstr "继承模式"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:90
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:139
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:172
 msgid "继承现有效果"
 msgstr "继承现有效果"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:90
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:139
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:172
 msgid "继承默认效果"
 msgstr "继承默认效果"
 
@@ -1899,7 +1901,7 @@ msgstr "缓出"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:122
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:414
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:125
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:158
 msgid "缓动类型"
 msgstr "缓动类型"
 
@@ -1956,7 +1958,7 @@ msgid "背景图像大小"
 msgstr "背景图像大小"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:23
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:33
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:35
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:24
 msgid "背景图片"
 msgstr "背景图片"
@@ -2051,7 +2053,7 @@ msgid "行脚本"
 msgstr "行脚本"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:86
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:135
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:168
 msgid "补充默认值"
 msgstr "补充默认值"
 
@@ -2226,7 +2228,7 @@ msgid "起点弹跳"
 msgstr "起点弹跳"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:92
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:141
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:174
 msgid "跨语句动画"
 msgstr "跨语句动画"
 
@@ -2235,7 +2237,7 @@ msgid "软化（0-1）"
 msgstr "软化（0-1）"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:74
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:113
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:146
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:77
 msgid "输入目标 ID"
 msgstr "输入目标 ID"
@@ -2244,8 +2246,8 @@ msgstr "输入目标 ID"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:109
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:403
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:405
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:79
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:82
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:112
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:115
 msgid "过渡时间（单位为毫秒）"
 msgstr "过渡时间（单位为毫秒）"
 
@@ -2272,7 +2274,7 @@ msgstr "进出场动画"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeBg.tsx:77
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:320
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:98
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:147
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:180
 msgid "连续执行"
 msgstr "连续执行"
 
@@ -2377,7 +2379,7 @@ msgid "选择鉴赏资源文件"
 msgstr "选择鉴赏资源文件"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:64
-#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:103
+#: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:136
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:67
 msgid "选择预设目标"
 msgstr "选择预设目标"

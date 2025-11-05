@@ -4,18 +4,22 @@ import { eventBus } from "@/utils/eventBus";
 import { api } from '@/api';
 import {
   calculateScaledImageSize,
-  parseFigureCommand,
   convertPreviewToControl,
   convertControlToPreview,
   radiansToDegrees,
   degreesToRadians,
-  convertCommandPathToFilePath,
-  syncCommandToFile,
-  generateMergeTransform,
+  convertCommandPathToFilePath
+} from './baseUtils';
+import {
+  parseFigureCommand,
   updateFrameState,
   parseSetTransformCommand,
-  GetImgPath
-} from './TransformUtils';
+  GetImgPathAndDirection
+} from './dragStartUtils';
+import {
+  syncCommandToFile,
+  generateMergeTransform
+} from './dragEndUtils';
 
 interface TransformableBoxProps {
   parents?: MutableRefObject<HTMLElement | null> | null;
@@ -38,7 +42,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   const [keepRatio, setKeepRatio] = useState(true); // 是否保持宽高比
   const [isDisplay, setIsDisplay] = useState(false); // 控制框是否显示
   const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
-  const commandContextRef = useRef<{ targetPath: string, lineNumber: number, lineContent: string } | null>(null);
+  const commandContextRef = useRef<{ targetPath: string, lineNumber: number, lineContent: string , direction: string} | null>(null);
   const lastParentSize = useRef<{ width: number; height: number } | null>(null);
 
   // 监听 点击事件
@@ -72,7 +76,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         const scaledSize = calculateScaledImageSize(res.data.width, res.data.height);// 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
         const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
         const { direction, transformObj } = parseFigureCommand((event as { lineContent: string }).lineContent);
-        commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent };
+        commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent, direction };
         setIsDisplay(true);
         updateFrame(direction, transformObj, size.x, size.y);// !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
         setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
@@ -80,13 +84,13 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     }
     static setTransform(event: any) {
       const { transformObj, target } = parseSetTransformCommand((event as { lineContent: string }).lineContent);
-      GetImgPath(target as string, (event as { targetPath: string }).targetPath).then(res => {
-        api.assetsControllerGetImageDimensions(res).then(imgRes => {
+      GetImgPathAndDirection(target as string, (event as { targetPath: string }).targetPath).then(({ imgPath, direction }) => {
+        api.assetsControllerGetImageDimensions(imgPath).then(imgRes => {
           const scaledSize = calculateScaledImageSize(imgRes.data.width, imgRes.data.height);
           const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-          commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent };
+          commandContextRef.current = { targetPath: (event as any).targetPath, lineNumber: (event as any).lineNumber, lineContent: (event as any).lineContent, direction };
           setIsDisplay(true);
-          updateFrame(transformObj.direction, transformObj, size.x, size.y);
+          updateFrame(direction, transformObj, size.x, size.y);
           setRemountKey(prevKey => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
         });
       });
@@ -129,7 +133,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     updateFrameState(direction, transformObj, width, height, parents, setFrame);
   }
 
-  // 将当前控制框的数据转换回字符串
+  // 将当前控制框的数据转换回ChangeFigure
   function FrameToChangeFigure(LineContent: string | undefined): string {
     const baseCommand = LineContent?.replace(/\s*-transform=\{[\s\S]*\};?/, '').trim() || '';
     const { direction, transformObj } = parseFigureCommand(LineContent || '');
@@ -140,12 +144,11 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     return baseCommand;
   }
 
-  function FrameToSetTransform(LineContent: string | undefined): string {
-    // 提取第一个空格后面的所有内容（即 -target=... 及其后缀）
-    debugger
+  // 将当前控制框的数据转换回setTransform
+  function FrameToSetTransform(LineContent: string | undefined, direction: string): string {
     const tailCommand = LineContent?.replace(/^setTransform:[^\s]+(\s*)/, '') || '';
     const { transformObj, target } = parseSetTransformCommand(LineContent || '');
-    const mergedTransformObj = generateMergeTransform(transformObj, 'left', frame, parents);
+    const mergedTransformObj = generateMergeTransform(transformObj, direction, frame, parents);
     return 'setTransform:' + JSON.stringify(mergedTransformObj) + (tailCommand ? ` ${tailCommand}` : '');
   }
 
@@ -205,7 +208,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
           if (commandContextRef.current?.lineContent.includes('changeFigure')) {
             syncCommandToFile(commandContextRef.current, FrameToChangeFigure(commandContextRef.current?.lineContent))
           } else if (commandContextRef.current?.lineContent.includes('setTransform')) {
-            syncCommandToFile(commandContextRef.current, FrameToSetTransform(commandContextRef.current?.lineContent))
+            syncCommandToFile(commandContextRef.current, FrameToSetTransform(commandContextRef.current?.lineContent, commandContextRef.current.direction))
           }
         }}
       />}
