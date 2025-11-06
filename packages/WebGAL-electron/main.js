@@ -76,6 +76,9 @@ ipcMain.handle('steam-unlock-achievement', async (_event, achievementId) => {
     }
 });
 
+app.commandLine.appendSwitch("--in-process-gpu"); // 修复 steam overlay
+app.commandLine.appendSwitch("--autoplay-policy", "no-user-gesture-required"); // 允许自动播放
+
 /**
  * 关闭默认菜单栏
  */
@@ -143,13 +146,13 @@ const createWindow = () => {
 
         logMessage(message);
     });
-    
+
     /**
-	 * 侦听BrowserWindow关闭事件
-	 */
-	win.on("close", () => {
-		app.quit();
-	});
+     * 侦听BrowserWindow关闭事件
+     */
+    win.on("close", () => {
+        app.quit();
+    });
 }
 
 app.on('before-quit', () => {
