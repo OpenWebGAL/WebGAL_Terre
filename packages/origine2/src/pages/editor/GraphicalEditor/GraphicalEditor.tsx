@@ -94,7 +94,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
         newSentences.splice(index + 1, 0, generateSentenceItem(raw.content));
       }
       sentenceData.set(newSentences);
-      submitScene(newSentences, index);
+      submitScene(newSentences, direction === 'down' ? index + 1 : index);
       if (EditorOpState.isCutting) {
         setEditorOpState((v) => ({ ...v, selectRaw: null, clipHistory: v.clipHistory.slice(1), isCutting: false }));
       }
@@ -108,7 +108,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const newSentences = [...sentenceData.value];
     newSentences.splice(index, 1);
     sentenceData.set(newSentences);
-    submitScene(newSentences, index);
+    submitScene(newSentences, Math.min(index, newSentences.length - 1));
   };
 
   const selectStateBtns = useMemo(
