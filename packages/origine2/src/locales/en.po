@@ -572,7 +572,7 @@ msgstr "Delete"
 msgid "删除属性"
 msgstr "Delete Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:249
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:379
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:36
 msgid "删除本句"
 msgstr "Delete this sentence"
@@ -599,6 +599,10 @@ msgstr "Refresh game"
 #: src/components/IconCreator/IconCreator.tsx:655
 msgid "前景"
 msgstr "Foreground"
+
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:129
+msgid "剪切"
+msgstr "Cut"
 
 #: src/pages/editor/Topbar/Topbar.tsx:127
 msgid "功能区显示"
@@ -653,6 +657,10 @@ msgstr "Cancel"
 msgid "取消固定"
 msgstr "Unpin"
 
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:119
+msgid "取消选择"
+msgstr "Unselect"
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:116
 msgid "变换"
 msgstr "Transform"
@@ -675,6 +683,16 @@ msgstr "Right side figure"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:21
 msgid "右对齐"
 msgstr "Right Align"
+
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:136
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:409
+msgid "向上粘贴"
+msgstr "Paste up"
+
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:141
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:425
+msgid "向下粘贴"
+msgstr "Paste down"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:112
 msgid "启动、切换或停止背景音乐的播放"
@@ -774,6 +792,10 @@ msgstr "Scenes and branches"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:27
 msgid "场景文件"
 msgstr "Scene file"
+
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:124
+msgid "复制"
+msgstr "Copy"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
@@ -1054,7 +1076,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:257
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:389
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
@@ -1421,7 +1443,7 @@ msgstr "Unrecognized"
 msgid "未识别的指令"
 msgstr "Unrecognized command"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:220
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:337
 msgid "本句前插入句子"
 msgstr "Insert sentence before this"
 
@@ -1597,7 +1619,7 @@ msgstr "Add new line"
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:273
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:450
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:71
 #: src/pages/editor/Topbar/Topbar.tsx:110
 msgid "添加语句"
@@ -1786,14 +1808,23 @@ msgstr "Figure file"
 msgid "简体中文"
 msgstr "Simplified Chinese"
 
-#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:90
-#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:103
-msgid "红色通道"
-msgstr "Red channel"
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:94
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:372
+#~ msgid "粘贴"
+#~ msgstr "Paste"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:208
 msgid "紧急回避"
 msgstr "Emergency Evasion"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
+msgid "繁体中文"
+msgstr "Traditional Chinese"
+
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:90
+#: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:103
+msgid "红色通道"
+msgstr "Red channel"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
 msgid "纹理"
@@ -1896,10 +1927,6 @@ msgstr "Edit game"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Template.tsx:11
 msgid "编辑组件"
 msgstr "Edit component"
-
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
-msgid "繁体中文"
-msgstr "Traditional Chinese"
 
 #: src/components/Transformer/Transformer.tsx:183
 #: src/components/Transformer/Transformer.tsx:194
