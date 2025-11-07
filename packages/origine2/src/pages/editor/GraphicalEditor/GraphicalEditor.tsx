@@ -44,8 +44,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     clipHistory: [],
   });
 
-  const contextValueMemo = useMemo(() => ({ ...EditorOpState }), [EditorOpState]);
-
   function submitScene(newSentences: SentenceItem[], index: number) {
     const newScene = mergeToString(newSentences.map((item) => item.content));
     const updateIndex = index + 1;
@@ -148,22 +146,6 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     [EditorOpState.clipHistory],
   );
 
-  // eslint-disable-next-line react/no-unstable-nested-components
-  const SelectStateElement = ({ index: parentIndex }: { index: number }) =>
-    selectStateBtns.map((v, index) => (
-      <div
-        key={index + parentIndex + v.name}
-        className={styles.optionButton}
-        onClick={(e) => {
-          e.stopPropagation();
-          v.click(e, parentIndex);
-        }}
-      >
-        <v.icon strokeWidth={3} style={{ padding: '2px 4px 0 0' }} theme="outline" size="14" fill="var(--text)" />
-        <div>{v.name}</div>
-      </div>
-    ));
-
   function fetchScene() {
     const processFetchedData = (data: object) => {
       const text = data.toString();
@@ -177,7 +159,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
           : {
             id: crypto.randomUUID(),
             content,
-            show: existing?.show ?? true
+            show: existing?.show ?? true,
           };
       });
 
@@ -185,8 +167,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       eventBus.emit('editor:update-scene', { scene: text });
     };
 
-    axios.get(props.targetPath)
-      .then(res => res.data)
+    axios
+      .get(props.targetPath)
+      .then((res) => res.data)
       .then(processFetchedData);
   }
 
@@ -252,15 +235,12 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       return;
     }
     editorLineHolder.recordSceneEditingLine(props.targetPath, result.destination.index);
-    reorder(
-      result.source.index,
-      result.destination.index
-    );
+    reorder(result.source.index, result.destination.index);
   }
 
   function syncToIndex(index: number) {
-    const targetValue = sentenceData.value[index]?.content || "";
-    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue,true);
+    const targetValue = sentenceData.value[index]?.content || '';
+    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue, true);
     editorLineHolder.recordSceneEditingLine(props.targetPath, index + 1);
   }
 
@@ -269,7 +249,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const scrollToFunc = () => {
       const targetBlock = document.querySelector(`.sentence-block-${targetLine}`);
       if (targetBlock) {
-        targetBlock?.scrollIntoView?.({behavior: 'auto'});
+        targetBlock?.scrollIntoView?.({ behavior: 'auto' });
       } else {
         console.log('Retry scroll to in 50ms');
         setTimeout(() => scrollToFunc(), 50);
@@ -390,7 +370,26 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                                     />
                                     <div>{t`执行到此句`}</div>
                                   </div>
-                                  {EditorOpState.selectRaw?.id === sentenceItem.id && <SelectStateElement index={i} />}
+                                  {EditorOpState.selectRaw?.id === sentenceItem.id &&
+                                    selectStateBtns.map((v, btnInd) => (
+                                      <div
+                                        key={btnInd + i + v.name}
+                                        className={styles.optionButton}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          v.click(e, i);
+                                        }}
+                                      >
+                                        <v.icon
+                                          strokeWidth={3}
+                                          style={{ padding: '2px 4px 0 0' }}
+                                          theme="outline"
+                                          size="14"
+                                          fill="var(--text)"
+                                        />
+                                        <div>{v.name}</div>
+                                      </div>
+                                    ))}
                                   {EditorOpState.selectRaw?.id !== sentenceItem.id &&
                                     !!EditorOpState.clipHistory.length && (
                                     <>
