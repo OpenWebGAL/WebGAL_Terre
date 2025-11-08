@@ -19,9 +19,9 @@ import type { DropResult } from 'react-beautiful-dnd';
 interface EditorStateProps {
   selectRaw: null | SentenceItem;
   isCutting: boolean; // 剪切状态
-  // 剪贴板历史
+  // 剪贴板栈
   // 最新加入的元素总是在第一个
-  clipHistory: SentenceItem[];
+  clipStack: SentenceItem[];
 }
 
 interface IGraphicalEditorProps {
@@ -41,7 +41,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const [EditorOpState, setEditorOpState] = useState<EditorStateProps>({
     selectRaw: null,
     isCutting: false,
-    clipHistory: [],
+    clipStack: [],
   });
 
   function submitScene(newSentences: SentenceItem[], index: number) {
@@ -74,18 +74,18 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   const resetSelect = (e: MouseEvent) => {
     e.stopPropagation();
-    setEditorOpState((v) => ({ ...v, select: null, selectRaw: null, clipHistory: [] }));
+    setEditorOpState((v) => ({ ...v, select: null, selectRaw: null, clipStack: [] }));
   };
 
   // 复制
   const copyEvent = (e: MouseEvent, index: number) => {
     const raw = sentenceData.value[index];
-    setEditorOpState((v) => ({ ...v, clipHistory: [raw, ...v.clipHistory] }));
+    setEditorOpState((v) => ({ ...v, clipStack: [raw, ...v.clipStack] }));
   };
 
   // 粘贴
   const pasteEvent = (e: MouseEvent, index: number, direction: 'up' | 'down' = 'up') => {
-    const raw = EditorOpState.clipHistory[0];
+    const raw = EditorOpState.clipStack[0];
     if (raw) {
       const newSentences = [...sentenceData.value];
       if (direction === 'up') {
@@ -96,7 +96,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       sentenceData.set(newSentences);
       submitScene(newSentences, direction === 'down' ? index + 1 : index);
       if (EditorOpState.isCutting) {
-        setEditorOpState((v) => ({ ...v, selectRaw: null, clipHistory: v.clipHistory.slice(1), isCutting: false }));
+        setEditorOpState((v) => ({ ...v, selectRaw: null, clipStack: v.clipStack.slice(1), isCutting: false }));
       }
     }
   };
@@ -104,7 +104,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   // 剪切
   const cutEvent = (e: MouseEvent, index: number) => {
     const raw = sentenceData.value[index];
-    setEditorOpState((v) => ({ ...v, clipHistory: [raw, ...v.clipHistory], isCutting: true }));
+    setEditorOpState((v) => ({ ...v, clipStack: [raw, ...v.clipStack], isCutting: true }));
     const newSentences = [...sentenceData.value];
     newSentences.splice(index, 1);
     sentenceData.set(newSentences);
@@ -128,7 +128,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
         icon: CuttingOne,
         click: cutEvent,
       },
-      ...(EditorOpState.clipHistory.length
+      ...(EditorOpState.clipStack.length
         ? [
           {
             name: t`向上粘贴`,
@@ -143,7 +143,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
         ]
         : []),
     ],
-    [EditorOpState.clipHistory],
+    [EditorOpState.clipStack],
   );
 
   function fetchScene() {
@@ -391,7 +391,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                                       </div>
                                     ))}
                                   {EditorOpState.selectRaw?.id !== sentenceItem.id &&
-                                    !!EditorOpState.clipHistory.length && (
+                                    !!EditorOpState.clipStack.length && (
                                     <>
                                       <div
                                         className={styles.optionButton}
