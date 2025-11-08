@@ -574,7 +574,7 @@ msgstr "删除"
 msgid "删除属性"
 msgstr "删除属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:379
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:365
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:36
 msgid "删除本句"
 msgstr "删除本句"
@@ -602,7 +602,7 @@ msgstr "刷新游戏"
 msgid "前景"
 msgstr "前景"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:129
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:131
 msgid "剪切"
 msgstr "剪切"
 
@@ -659,7 +659,7 @@ msgstr "取消"
 msgid "取消固定"
 msgstr "取消固定"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:119
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:121
 msgid "取消选择"
 msgstr "取消选择"
 
@@ -686,13 +686,13 @@ msgstr "右侧立绘"
 msgid "右对齐"
 msgstr "右对齐"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:136
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:409
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:138
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:414
 msgid "向上粘贴"
 msgstr "向上粘贴"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:141
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:425
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:143
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:430
 msgid "向下粘贴"
 msgstr "向下粘贴"
 
@@ -795,7 +795,7 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:124
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:126
 msgid "复制"
 msgstr "复制"
 
@@ -1078,7 +1078,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:389
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:375
 msgid "执行到此句"
 msgstr "执行到此句"
 
@@ -1441,7 +1441,7 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:337
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:323
 msgid "本句前插入句子"
 msgstr "本句前插入句子"
 
@@ -1617,7 +1617,7 @@ msgstr "添加新行"
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:450
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:455
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:71
 #: src/pages/editor/Topbar/Topbar.tsx:110
 msgid "添加语句"

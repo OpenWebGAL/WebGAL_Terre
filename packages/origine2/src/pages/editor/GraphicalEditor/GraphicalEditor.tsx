@@ -1,7 +1,7 @@
 import { useValue } from '../../../hooks/useValue';
 import { parseScene } from './parser';
 import axios from 'axios';
-import { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { MouseEvent, useEffect, useMemo, useState, useRef } from 'react';
 import { WsUtil } from '../../../utils/wsUtil';
 import { mergeToString, splitToArray } from './utils/sceneTextProcessor';
 import styles from './graphicalEditor.module.scss';
@@ -37,6 +37,9 @@ interface SentenceItem {
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const sentenceData = useValue<SentenceItem[]>([]);
+
+  const sentenceDataRef = useRef(sentenceData);
+  sentenceDataRef.current = sentenceData;
 
   const [EditorOpState, setEditorOpState] = useState<EditorStateProps>({
     selectRaw: null,
@@ -79,7 +82,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   // 复制
   const copyEvent = (e: MouseEvent, index: number) => {
-    const raw = sentenceData.value[index];
+    const raw = sentenceDataRef.current.value[index];
     setEditorOpState((v) => ({ ...v, clipStack: [raw, ...v.clipStack] }));
   };
 
