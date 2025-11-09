@@ -228,11 +228,11 @@ msgstr "下一步"
 msgid "不可选项"
 msgstr "不可选项"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:216
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:225
 msgid "不拼接先前文本框内的语句"
 msgstr "不拼接先前文本框内的语句"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:203
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:212
 msgid "不显示角色名"
 msgstr "不显示角色名"
 
@@ -438,7 +438,7 @@ msgstr "全屏显示一段文字，用于独白或引出场景"
 msgid "关于"
 msgstr "关于"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:248
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:257
 msgid "关联立绘"
 msgstr "关联立绘"
 
@@ -563,7 +563,7 @@ msgstr "创建新游戏"
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:206
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:181
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:190
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
 msgid "删除"
 msgstr "删除"
@@ -857,7 +857,7 @@ msgstr "宽度"
 msgid "对比度"
 msgstr "对比度"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:172
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:181
 msgid "对话"
 msgstr "对话"
 
@@ -1064,11 +1064,11 @@ msgstr "执行到此句"
 msgid "扩展名"
 msgstr "扩展名"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:215
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:224
 msgid "拼接先前文本框内的语句"
 msgstr "拼接先前文本框内的语句"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:208
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:217
 msgid "拼接模式"
 msgstr "拼接模式"
 
@@ -1122,7 +1122,7 @@ msgstr "提示：先设置立绘/背景，再应用动画，否则找不到目�
 msgid "提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。"
 msgstr "提示：在编辑结束后，如果发现有失效的鉴赏 CG/BGM ，在 WebGAL 游戏界面的选项中选择清除全部数据以清空。"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:134
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:143
 msgid "提示：换行符最多可达三行"
 msgstr "提示：换行符最多可达三行"
 
@@ -1214,15 +1214,15 @@ msgid "文件大小"
 msgstr "文件大小"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:240
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:279
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:288
 msgid "文字大小"
 msgstr "文字大小"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:227
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:236
 msgid "文字展示完执行下一句"
 msgstr "文字展示完执行下一句"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:228
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:237
 msgid "文字展示完等待"
 msgstr "文字展示完等待"
 
@@ -1234,7 +1234,7 @@ msgstr "文字颜色"
 msgid "文本对齐"
 msgstr "文本对齐"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:220
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:229
 msgid "文本展示后连续执行"
 msgstr "文本展示后连续执行"
 
@@ -1322,11 +1322,11 @@ msgstr "新的游戏"
 msgid "方形"
 msgstr "方形"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:196
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:205
 msgid "旁白模式"
 msgstr "旁白模式"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:150
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:159
 msgid "旁白模式，无角色名"
 msgstr "旁白模式，无角色名"
 
@@ -1395,7 +1395,7 @@ msgstr "显示立绘"
 msgid "显示背景"
 msgstr "显示背景"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:204
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:213
 msgid "显示角色名"
 msgstr "显示角色名"
 
@@ -1587,7 +1587,7 @@ msgid "添加或切换指定位置的立绘"
 msgstr "添加或切换指定位置的立绘"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:233
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:193
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:202
 msgid "添加新行"
 msgstr "添加新行"
 
@@ -1757,7 +1757,7 @@ msgid "立绘"
 msgstr "立绘"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:351
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:274
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:283
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:82
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:121
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:85
@@ -1772,7 +1772,7 @@ msgstr "立绘ID（可选）"
 msgid "立绘位置"
 msgstr "立绘位置"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:259
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:268
 msgid "立绘插图的ID"
 msgstr "立绘插图的ID"
 
@@ -2043,7 +2043,7 @@ msgstr "要删除属性{0}吗？"
 msgid "覆盖"
 msgstr "覆盖"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:150
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:159
 msgid "角色名，留空以继承上句"
 msgstr "角色名，留空以继承上句"
 
@@ -2149,7 +2149,7 @@ msgid "语言"
 msgstr "语言"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:123
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:232
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:241
 msgid "语音"
 msgstr "语音"
 
@@ -2328,7 +2328,7 @@ msgstr "选择背景文件"
 msgid "选择背景音乐"
 msgstr "选择背景音乐"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:236
+#: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:245
 msgid "选择语音文件"
 msgstr "选择语音文件"
 
