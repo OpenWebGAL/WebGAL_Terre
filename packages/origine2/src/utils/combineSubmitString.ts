@@ -15,27 +15,27 @@ export function combineSubmitString (
   newArgs: Array<{key: string, value: string | boolean | number, fullMode?: boolean}>
 ): string {
   const argStrings: Array<string> = [];
-  const combinedArg = new Map<string, string | boolean | number>();
+  const unsupportedArg = new Map<string, string | boolean | number>();
 
-  originalArgs.forEach(oArg => combinedArg.set(oArg.key, oArg.value));
+  originalArgs.forEach(oArg => unsupportedArg.set(oArg.key, oArg.value));
   newArgs.forEach((nArg) => {
     if (!nArg.fullMode && (nArg.value === true || nArg.value === false || nArg.value === "")) {
-      combinedArg.delete(nArg.key);
       if (nArg.value === "") {
         nArg.value = false;
       }
       argStrings.push(argToSimplifiedString(nArg.key, nArg.value));
     } else {
-      combinedArg.set(nArg.key, nArg.value);
+      argStrings.push(argToString(nArg.key, nArg.value));
     }
+    unsupportedArg.delete(nArg.key);
   });
 
-  combinedArg.forEach((v, k, m) => {
+  unsupportedArg.forEach((v, k, m) => {
     argStrings.push(argToString(k, v));
   });
     
   let combinedString = "";
-  if (commandStr === "" || commandStr) {
+  if (commandStr !== undefined) {
     combinedString += `${commandStr}:`;
   }
   combinedString += `${content}${argStrings.join("")};`;
