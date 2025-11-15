@@ -31,7 +31,7 @@ import {
 import useEditorStore from "@/store/useEditorStore";
 import {useGameEditorContext} from "@/store/useGameEditorStore";
 import {IGameEditorSidebarTabs, IGameEditorTopbarTabs} from "@/types/gameEditor";
-import {redirect} from "@/hooks/useHashRoute";
+import { goTo } from '@/router';
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
 import { Github, Platte } from "@icon-park/react";
@@ -92,7 +92,7 @@ export default function TopBar() {
     }
   }, [isShowAddSceneTab]);
 
-  const backToDashboard = () => redirect('dashboard', 'game');
+  const backToDashboard = () => goTo('dashboard', 'game');
 
   return <div className={styles.editor_topbar}>
     <Toolbar>

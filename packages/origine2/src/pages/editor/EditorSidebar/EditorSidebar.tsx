@@ -111,12 +111,12 @@ export default function EditorSideBar() {
     };
   }, []);
 
-  const refreshGame = () => (ifRef?.current as unknown as HTMLIFrameElement).contentWindow?.location.reload();
+  const refreshGame = () => ifRef.current?.contentWindow?.location.reload();
 
   useEffect(() => {
-    eventBus.on('refGame', refreshGame);
+    eventBus.on('iframe:refresh-game', refreshGame);
     return () => {
-      eventBus.off('refGame', refreshGame);
+      eventBus.off('iframe:refresh-game', refreshGame);
     };
   }, []);
 

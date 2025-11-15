@@ -37,7 +37,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   });
 
   function fetchScene() {
-    const processFetchedData = (data: any) => {
+    const processFetchedData = (data: object) => {
       const text = data.toString();
       const newContents = splitToArray(text);
       const currentSentences = sentenceData.value;
@@ -54,7 +54,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       });
 
       sentenceData.set(newSentences);
-      eventBus.emit('update-scene', text);
+      eventBus.emit('editor:update-scene', { scene: text });
     };
 
     axios.get(props.targetPath)
@@ -177,16 +177,14 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     addOneSentence(sentence, sentenceData.value.length);
   }
 
-  function handleAdd(sentence: string) {
+  function handleAdd({ sentence } : { sentence: string }) {
     addNewSentenceAttach(sentence);
   }
 
   useEffect(() => {
-    // @ts-ignore
-    eventBus.on('topbar-add-sentence', handleAdd);
+    eventBus.on('editor:topbar-add-sentence', handleAdd);
     return () => {
-      // @ts-ignore
-      eventBus.off('topbar-add-sentence', handleAdd);
+      eventBus.off('editor:topbar-add-sentence', handleAdd);
     };
   }, [sentenceData.value]);
 
