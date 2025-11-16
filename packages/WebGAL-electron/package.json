@@ -36,7 +36,8 @@
       ]
     },
     "mac": {
-      "icon": "public/icon.ico"
+      "icon": "public/icon.ico",
+      "x64ArchFiles": "*"
     },
     "electronDownload": {
       "mirror": "https://npmmirror.com/mirrors/electron/"
