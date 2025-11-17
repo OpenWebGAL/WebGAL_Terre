@@ -265,11 +265,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   };
 
   function Adjustment() {
-    const lineContent = sentenceToRawLine(props.sentence)
+    const lineContent = sentenceToRawLine(props.sentence);
     const lineNumber = props.index; // 如果 index 从 0 开始
     const targetPath = props.targetPath;
     WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
-    eventBus.emit('pixi-sync-command', {
+    eventBus.emit('editor:pixi-sync-command', {
       targetPath,
       lineNumber,
       lineContent
@@ -310,19 +310,28 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         <CommonOptions key="1" title={t`立绘文件`}>
           <>
             {figureFile.value + "\u00a0\u00a0"}
-            <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={figureFile.value} onChange={(fileDesc) => {
-              figureFile.set(fileDesc?.name ?? "");
-              submit();
-            }}
-              extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? []]} />
+            <ChooseFile
+              title={t`选择立绘文件`}
+              basePath={['figure']}
+              selectedFilePath={figureFile.value}
+              onChange={(fileDesc) => {
+                figureFile.set(fileDesc?.name ?? "");
+                submit();
+              }}
+              extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? []]}
+            />
           </>
         </CommonOptions>}
       <CommonOptions key="2" title={t`连续执行`}>
-        <TerreToggle title="" onChange={(newValue) => {
-          isGoNext.set(newValue);
-          submit();
-        }} onText={t`本句执行后执行下一句`}
-          offText={t`本句执行后等待`} isChecked={isGoNext.value} />
+        <TerreToggle
+          title=""
+          onChange={(newValue) => {
+            isGoNext.set(newValue);
+            submit();
+          }}
+          onText={t`本句执行后执行下一句`}
+          offText={t`本句执行后等待`} isChecked={isGoNext.value}
+        />
       </CommonOptions>
       <CommonOptions title={t`z-index`} key="z-index">
         <input value={zIndex.value}
@@ -438,51 +447,75 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                     <CommonOptions key="6" title={t`张开嘴`}>
                       <>
                         {mouthOpen.value + "\u00a0\u00a0"}
-                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
-                          mouthOpen.set(fileDesc?.name ?? "");
-                          submit();
-                        }}
-                          extNames={extNameMap.get('image')} />
+                        <ChooseFile
+                          title={t`选择立绘文件`}
+                          basePath={['figure']}
+                          selectedFilePath={mouthOpen.value}
+                          onChange={(fileDesc) => {
+                            mouthOpen.set(fileDesc?.name ?? "");
+                            submit();
+                          }}
+                          extNames={extNameMap.get('image')}
+                        />
                       </>
                     </CommonOptions>
                     <CommonOptions key="7" title={t`半张嘴`}>
                       <>
                         {mouthHalfOpen.value + "\u00a0\u00a0"}
-                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
-                          mouthHalfOpen.set(fileDesc?.name ?? "");
-                          submit();
-                        }}
-                          extNames={extNameMap.get('image')} />
+                        <ChooseFile
+                          title={t`选择立绘文件`} basePath={['figure']}
+                          selectedFilePath={mouthHalfOpen.value}
+                          onChange={(fileDesc) => {
+                            mouthHalfOpen.set(fileDesc?.name ?? "");
+                            submit();
+                          }}
+                          extNames={extNameMap.get('image')}
+                        />
                       </>
                     </CommonOptions>
                     <CommonOptions key="8" title={t`闭上嘴`}>
                       <>
                         {mouthClose.value + "\u00a0\u00a0"}
-                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
-                          mouthClose.set(fileDesc?.name ?? "");
-                          submit();
-                        }}
-                          extNames={extNameMap.get('image')} />
+                        <ChooseFile
+                          title={t`选择立绘文件`}
+                          basePath={['figure']}
+                          selectedFilePath={mouthClose.value}
+                          onChange={(fileDesc) => {
+                            mouthClose.set(fileDesc?.name ?? "");
+                            submit();
+                          }}
+                          extNames={extNameMap.get('image')}
+                        />
                       </>
                     </CommonOptions>
                     <CommonOptions key="9" title={t`睁开眼睛`}>
                       <>
                         {eyesOpen.value + "\u00a0\u00a0"}
-                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
-                          eyesOpen.set(fileDesc?.name ?? "");
-                          submit();
-                        }}
-                          extNames={extNameMap.get('image')} />
+                        <ChooseFile
+                          title={t`选择立绘文件`}
+                          basePath={['figure']}
+                          selectedFilePath={eyesOpen.value}
+                          onChange={(fileDesc) => {
+                            eyesOpen.set(fileDesc?.name ?? "");
+                            submit();
+                          }}
+                          extNames={extNameMap.get('image')}
+                        />
                       </>
                     </CommonOptions>
                     <CommonOptions key="10" title={t`闭上眼睛`}>
                       <>
                         {eyesClose.value + "\u00a0\u00a0"}
-                        <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
-                          eyesClose.set(fileDesc?.name ?? "");
-                          submit();
-                        }}
-                          extNames={extNameMap.get('image')} />
+                        <ChooseFile
+                          title={t`选择立绘文件`}
+                          basePath={['figure']}
+                          selectedFilePath={eyesClose.value}
+                          onChange={(fileDesc) => {
+                            eyesClose.set(fileDesc?.name ?? "");
+                            submit();
+                          }}
+                          extNames={extNameMap.get('image')}
+                        />
                       </>
                     </CommonOptions>
                   </>

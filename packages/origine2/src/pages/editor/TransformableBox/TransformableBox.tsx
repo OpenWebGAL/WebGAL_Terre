@@ -60,9 +60,9 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         return;
       }
     }
-    eventBus.on('pixi-sync-command', handlePixiSyncCommand);
+    eventBus.on('editor:pixi-sync-command', handlePixiSyncCommand);
     return () => {
-      eventBus.off('pixi-sync-command', handlePixiSyncCommand);
+      eventBus.off('editor:pixi-sync-command', handlePixiSyncCommand);
     };
   }, []);
   // 主要逻辑
@@ -127,6 +127,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   }, [isDisplay]);
 
   // 将字符串解析出来的数据应用到拖拽框上
+  // eslint-disable-next-line max-params
   function updateFrame(direction: string, transformObj: any, width?: number, height?: number) {
     updateFrameState(direction, transformObj, width, height, parents, setFrame);
   }
@@ -203,9 +204,9 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         }}
         onRenderEnd={() => {
           if (commandContextRef.current?.lineContent.includes('changeFigure')) {
-            syncCommandToFile(commandContextRef.current, FrameToChangeFigure(commandContextRef.current?.lineContent))
+            syncCommandToFile(commandContextRef.current, FrameToChangeFigure(commandContextRef.current?.lineContent));
           } else if (commandContextRef.current?.lineContent.includes('setTransform')) {
-            syncCommandToFile(commandContextRef.current, FrameToSetTransform(commandContextRef.current?.lineContent, commandContextRef.current.direction))
+            syncCommandToFile(commandContextRef.current, FrameToSetTransform(commandContextRef.current?.lineContent, commandContextRef.current.direction));
           }
         }}
       />}

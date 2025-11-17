@@ -59,11 +59,11 @@ export default function SetTransform(props: ISentenceEditorProps) {
   };
 
   function Adjustment() {
-    const lineContent = sentenceToRawLine(props.sentence)
+    const lineContent = sentenceToRawLine(props.sentence);
     const lineNumber = props.index; // 如果 index 从 0 开始
     const targetPath = props.targetPath;
     WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
-    eventBus.emit('pixi-sync-command', {
+    eventBus.emit('editor:pixi-sync-command', {
       targetPath,
       lineNumber,
       lineContent
@@ -128,10 +128,15 @@ export default function SetTransform(props: ISentenceEditorProps) {
         </div>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>
-        <TerreToggle title="" onChange={(newValue) => {
-          isUsePreset.set(newValue);
-        }} onText={t`使用预设的作用目标，如果设置了id则不生效`} offText={t`手动输入 ID`}
-          isChecked={isUsePreset.value} />
+        <TerreToggle
+          title=""
+          onChange={(newValue) => {
+            isUsePreset.set(newValue);
+          }}
+          onText={t`使用预设的作用目标，如果设置了id则不生效`}
+          offText={t`手动输入 ID`}
+          isChecked={isUsePreset.value}
+        />
       </CommonOptions>
       {isUsePreset.value && <CommonOptions key="3" title={t`选择预设目标`}>
         <WheelDropdown

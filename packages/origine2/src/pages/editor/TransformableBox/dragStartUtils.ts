@@ -10,7 +10,7 @@ import { convertControlToPreview, ToXOffset, degreesToRadians, convertPreviewToC
  */
 export function parseFigureCommand(line: string) {
   let direction: 'right' | 'left' | 'center' = 'center';
-  let transformObj: any = undefined;
+  let transformObj: any;
   const parts = line.split(/\s+/);
 
   for (const part of parts) {
@@ -36,8 +36,8 @@ export function parseFigureCommand(line: string) {
  * @returns { transformObj, target }
  */
 export function parseSetTransformCommand(line: string) {
-  let transformObj: any = undefined;
-  let target: number | string | undefined = undefined;
+  let transformObj: any;
+  let target: number | string | undefined;
   const parts = line.split(/\s+/);
 
   for (const part of parts) {
@@ -97,6 +97,7 @@ export async function GetImgPathAndDirection(target: string, targetPath: string)
  * @param parents - 父元素的 ref
  * @param setFrame - setFrame 函数
  */
+// eslint-disable-next-line max-params
 export function updateFrameState(
   direction: string,
   transformObj: any,

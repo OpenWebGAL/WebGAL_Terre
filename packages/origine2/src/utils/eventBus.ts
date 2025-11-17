@@ -14,6 +14,8 @@ type IframeEvents = {
 type EditorEvents = {
   'editor:update-scene': { scene: string };
   'editor:topbar-add-sentence': { sentence: string };
+  'editor:pixi-sync-command': { targetPath: string; lineNumber: number; lineContent: string };
+  'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
 };
 
 type Events = WebSocketEvents & IframeEvents & EditorEvents;

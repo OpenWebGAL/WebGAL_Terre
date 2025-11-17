@@ -50,7 +50,7 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
-          eventBus.emit('pixi-sync-command', {
+          eventBus.emit('editor:pixi-sync-command', {
             targetPath: props.targetPath,
             lineNumber: event.position.lineNumber,
             lineContent: targetValue
@@ -150,9 +150,9 @@ export default function TextEditor(props: ITextEditorProps) {
     const handleDragUpdate = () => {
       updateEditData();
     };
-    eventBus.on('drag-update-scene', handleDragUpdate);
+    eventBus.on('editor:drag-update-scene', handleDragUpdate);
     return () => {
-      eventBus.off('drag-update-scene', handleDragUpdate);
+      eventBus.off('editor:drag-update-scene', handleDragUpdate);
     };
   }, []);
 

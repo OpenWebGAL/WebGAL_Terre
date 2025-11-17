@@ -150,8 +150,8 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue, true);
     editorLineHolder.recordSceneEditingLine(props.targetPath, index + 1);
     // 传递假消息，为了在不使用此功能的时候清除框框
-    eventBus.emit('pixi-sync-command', {
-      path: '',
+    eventBus.emit('editor:pixi-sync-command', {
+      targetPath: '',
       lineNumber: 1,
       lineContent: ""
     });
@@ -188,10 +188,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     };
   }, [sentenceData.value]);
 
-  const mergedSceneText = useMemo(() =>
-    mergeToString(sentenceData.value.map(item => item.content)),
-    [sentenceData.value]
-  );
+  const mergedSceneText = useMemo(() => mergeToString(sentenceData.value.map(item => item.content)), [sentenceData.value]);
 
   const parsedScene = mergedSceneText === "" ? { sentenceList: [] } : parseScene(mergedSceneText);
 
@@ -200,9 +197,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       fetchScene();
       WsUtil.sendSyncCommand(data.targetPath, data.lineNumber, data.newCommand);
     };
-    eventBus.on('drag-update-scene', handleDragUpdate);
+    eventBus.on('editor:drag-update-scene', handleDragUpdate);
     return () => {
-      eventBus.off('drag-update-scene', handleDragUpdate);
+      eventBus.off('editor:drag-update-scene', handleDragUpdate);
     };
   }, []);
   return <div className={styles.main} id="graphical-editor-main">

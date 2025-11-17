@@ -13,6 +13,7 @@ import { convertControlToPreview, ToXOffset, degreesToRadians } from './baseUtil
  * @param parents - 父亲
  * @returns
  */
+// eslint-disable-next-line max-params
 export function generateMergeTransform(
   TransformObj: any,
   direction: string,
@@ -48,7 +49,7 @@ export function generateMergeTransform(
   }
 
   // 4. 合并新的 transform 对象到原有的 TransformObj
-  const mergedObj = Object.assign({}, TransformObj || {}, newTransformObj);
+  const mergedObj = { ...TransformObj || {}, ...newTransformObj};
   if (Object.keys(mergedObj).length === 0) {
     return null;
   }
@@ -86,7 +87,7 @@ export async function syncCommandToFile(commandContext: any, newCommand: string)
       });
 
       // 通知其他组件文件已更新
-      eventBus.emit('drag-update-scene', {
+      eventBus.emit('editor:drag-update-scene', {
         targetPath: commandContext.targetPath,
         lineNumber: commandContext.lineNumber,
         newCommand: newCommand
