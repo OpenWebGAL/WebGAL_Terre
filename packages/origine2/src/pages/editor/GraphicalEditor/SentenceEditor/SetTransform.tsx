@@ -14,7 +14,7 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { WsUtil } from "@/utils/wsUtil";
 
-type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
+type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
@@ -31,6 +31,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
     [ "fig-center", t`中间立绘` ],
     [ "fig-right", t`右侧立绘` ],
     [ "bg-main", t`背景图片` ],
+    [ "stage-main", t`舞台画面` ],
   ]);
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);

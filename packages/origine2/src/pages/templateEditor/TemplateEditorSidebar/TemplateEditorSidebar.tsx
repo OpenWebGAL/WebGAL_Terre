@@ -9,7 +9,7 @@ import {ArrowLeftFilled, ArrowLeftRegular, bundleIcon, NavigationFilled, Navigat
 import {ITab} from '@/types/templateEditor';
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
-import {redirect} from "@/hooks/useHashRoute";
+import { goTo } from '@/router';
 import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import { api } from '@/api';
 import { GameInfoDto, TemplateConfigDto } from '@/api/Api';
@@ -45,7 +45,7 @@ export default function TemplateEditorSidebar() {
     updateCurrentTab(newTab);
   };
 
-  const backToDashboard = () => redirect('dashboard', 'template');
+  const backToDashboard = () => goTo('dashboard', 'template');
 
   // 当前模板没有id时自动添加
   useEffect(() => {
