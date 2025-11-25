@@ -3,9 +3,8 @@ import Assets, {IFileFunction} from '@/components/Assets/Assets';
 import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
 import useEditorStore from '@/store/useEditorStore';
-import {Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger} from '@fluentui/react-components';
+import {Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger} from '@fluentui/react-components';
 import {useTemplateEditorContext} from '@/store/useTemplateEditorStore';
-import {ArrowLeftFilled, ArrowLeftRegular, bundleIcon, NavigationFilled, NavigationRegular} from "@fluentui/react-icons";
 import {ITab} from '@/types/templateEditor';
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
@@ -16,9 +15,7 @@ import { GameInfoDto, TemplateConfigDto } from '@/api/Api';
 import { List, ListItem } from "@fluentui/react-list-preview";
 import useSWR, { mutate } from 'swr';
 import TemplateConfigDialog from './TemplateConfigDialog';
-
-const ArrowLeftIcon = bundleIcon(ArrowLeftFilled, ArrowLeftRegular);
-const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
+import {PlugConnected20Regular, Settings20Regular} from "@fluentui/react-icons";
 
 export default function TemplateEditorSidebar() {
   const templateDir = useEditorStore.use.subPage();
@@ -67,13 +64,13 @@ export default function TemplateEditorSidebar() {
         <span className={styles.title}>
           {templateConfig ? templateConfig.name : templateDir}
         </span>
-        <OptionMenu
-          templateConfig={templateConfig}
-          onTemplateConfigUpdated={async () => {
-            await mutateTemplateConfig();
-          }}
-        />
       </div>
+      <TemplateActions
+        templateConfig={templateConfig}
+        onTemplateConfigUpdated={async () => {
+          await mutateTemplateConfig();
+        }}
+      />
       <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
         <ComponentTree/>
       </div>
@@ -90,12 +87,12 @@ export default function TemplateEditorSidebar() {
   );
 }
 
-interface OptionMenuProps {
+interface TemplateActionsProps {
   templateConfig?: TemplateConfigDto;
   onTemplateConfigUpdated?: () => void | Promise<void>;
 }
 
-const OptionMenu = ({ templateConfig, onTemplateConfigUpdated }: OptionMenuProps) => {
+const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateActionsProps) => {
   const templateDir = useEditorStore.use.subPage();
 
   const [applyTemplateDialogIsOpen, setApplyTemplateDialogIsOpen] = useState(false);
@@ -119,30 +116,31 @@ const OptionMenu = ({ templateConfig, onTemplateConfigUpdated }: OptionMenuProps
 
   return (
     <>
-      <Menu>
-        <MenuTrigger>
-          <MenuButton appearance='subtle' icon={<NavigationIcon />} title={t`选项菜单`} style={{ minWidth: 0, textWrap: 'nowrap' }} />
-        </MenuTrigger>
-        <MenuPopover>
-          <MenuList>
-            <MenuItem
-              onClick={() => {
-                setConfigDialogIsOpen(true);
-              }}
-            >
-              {t`配置模板`}
-            </MenuItem>
-            <MenuItem
-              onClick={
-                () => {
-                  setApplyTemplateDialogIsOpen(true);
-                  getGameList();
-                }
-              }
-            >{t`将当前模板应用到选定的游戏`}</MenuItem>
-          </MenuList>
-        </MenuPopover>
-      </Menu>
+      <div className={styles.actions}>
+        <Button
+          appearance='transparent'
+          size='small'
+          icon={<Settings20Regular />}
+          aria-label={t`配置模板`}
+          title={t`配置模板`}
+          onClick={() => setConfigDialogIsOpen(true)}
+        >
+          {t`配置模板`}
+        </Button>
+        <Button
+          appearance='transparent'
+          size='small'
+          icon={<PlugConnected20Regular />}
+          aria-label={t`将当前模板应用到选定的游戏`}
+          title={t`将当前模板应用到选定的游戏`}
+          onClick={() => {
+            setApplyTemplateDialogIsOpen(true);
+            getGameList();
+          }}
+        >
+          {t`将当前模板应用到选定的游戏`}
+        </Button>
+      </div>
 
       <TemplateConfigDialog
         open={configDialogIsOpen}
