@@ -88,7 +88,7 @@ msgstr "end;"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:225
 msgid "font-family"
-msgstr ""
+msgstr "font-family"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:245
 msgid "getUserInput:;"
@@ -219,7 +219,7 @@ msgstr "Upload"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:272
 msgid "上传字体文件"
-msgstr ""
+msgstr "Upload font file"
 
 #: src/components/Assets/Assets.tsx:445
 #: src/components/Assets/Assets.tsx:451
@@ -228,7 +228,7 @@ msgstr "Upload asset"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:178
 msgid "上移"
-msgstr ""
+msgstr "Move up"
 
 #: src/components/IconCreator/IconCreator.tsx:776
 msgid "下一步"
@@ -236,7 +236,7 @@ msgstr "Next"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:186
 msgid "下移"
-msgstr ""
+msgstr "Move down"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
@@ -382,11 +382,11 @@ msgstr "Save"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:297
 msgid "保存中..."
-msgstr ""
+msgstr "Saving..."
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:189
 msgid "保存模板配置失败，请稍后重试"
-msgstr ""
+msgstr "Failed to save template configuration, please try again later"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:505
 msgid "保持闭眼(毫秒)"
@@ -843,19 +843,19 @@ msgstr "Font size"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:234
 msgid "字体文件 URL"
-msgstr ""
+msgstr "Font file URL"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:134
 msgid "字体文件上传失败，请重试"
-msgstr ""
+msgstr "Font file upload failed, please retry"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:241
 msgid "字体类型"
-msgstr ""
+msgstr "Font type"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:209
 msgid "字体配置"
-msgstr ""
+msgstr "Font configuration"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
 msgid "字母间距"
@@ -965,11 +965,11 @@ msgstr "Avatar file"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:146
 msgid "尚未添加任何字体"
-msgstr ""
+msgstr "No fonts added yet"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:219
 msgid "尚未配置任何字体"
-msgstr ""
+msgstr "No fonts configured yet"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
 msgid "层级顺序"
@@ -1331,7 +1331,7 @@ msgstr "Document"
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:215
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:211
 msgid "新增字体"
-msgstr ""
+msgstr "Add font"
 
 #: src/components/Assets/Assets.tsx:337
 #: src/components/Assets/Assets.tsx:352
@@ -1549,7 +1549,7 @@ msgstr "Template name"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:150
 msgid "模板名称不能为空"
-msgstr ""
+msgstr "Template name cannot be empty"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:69
 #: src/pages/dashboard/TemplateSidebar.tsx:75
@@ -1571,11 +1571,11 @@ msgstr "Cherry blossoms"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:272
 msgid "正在上传"
-msgstr ""
+msgstr "Uploading"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:202
 msgid "正在加载模板配置"
-msgstr ""
+msgstr "Loading template configuration"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:15
 msgid "正常"
@@ -2234,11 +2234,11 @@ msgstr "Voice"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:167
 msgid "请完整填写每个字体的信息"
-msgstr ""
+msgstr "Please complete all font information"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:154
 msgid "请输入或选择字体名称"
-msgstr ""
+msgstr "Please enter or select a font name"
 
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:211
 msgid "请输入搜索提示词..."
@@ -2496,7 +2496,7 @@ msgstr "Configuration"
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:125
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:128
 msgid "配置模板"
-msgstr ""
+msgstr "Configure template"
 
 #: src/components/Assets/FileElement.tsx:142
 #: src/components/Assets/FileElement.tsx:161
