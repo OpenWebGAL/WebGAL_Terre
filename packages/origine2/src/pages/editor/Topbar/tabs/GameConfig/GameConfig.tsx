@@ -8,7 +8,6 @@ import {WebgalConfig} from "webgal-parser/build/es/configParser/configParser";
 import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
 import {textboxThemes} from "./constants";
-import {eventBus} from "@/utils/eventBus";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
 import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
@@ -264,7 +263,7 @@ function GameConfigEditor(props: IGameConfigEditor) {
     {!showEditBox.value && props.value}
     {!showEditBox.value &&
       <span className={styles.editButton} onClick={() => showEditBox.set(true)}>
-        <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
+        <Write theme="outline" size="16" fill="var(--primary)" strokeWidth={3}/>
       </span>}
     {showEditBox.value &&
       <Input
@@ -314,7 +313,7 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
       basePath={[props.sourceBase]}
       button={
         <span className={styles.editButton}>
-          <Write theme="outline" size="16" fill="#005CAF" strokeWidth={3}/>
+          <Write theme="outline" size="16" fill="var(--primary)" strokeWidth={3}/>
         </span>
       }
       selectedFilePath={props.value}
@@ -372,7 +371,6 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
         onChange={(file) => {
           if (file) {
             addImage(file.name);
-            // eventBus.emit('scrollTopbarToEnd');
           }
         }}
         extNames={props.extNameList}/>

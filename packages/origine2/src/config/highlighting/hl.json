@@ -99,7 +99,7 @@
               ]
             },
             "3": {
-              "name": "markup.quote"
+              "name": "variable.other.webgal"
             }
           }
         }
@@ -136,7 +136,7 @@
     },
     "character-colon": {
       "comment": "[char]:[utt[ -args]][;cmt]",
-      "match": "^(?!(?:intro|changeBg|changeFigure|miniAvatar|playEffect|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)\\:)(.*?)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
+      "match": "^(?!(?:say|changeBg|changeFigure|bgm|playVideo|pixiPerform|pixiInit|intro|miniAvatar|changeScene|choose|end|setComplexAnimation|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|filmMode|setTextbox|setAnimation|playEffect|setTempAnimation|setTransform|setTransition|getUserInput|applyStyle|wait)\\:)(.*?)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
       "captures": {
         "1": {
           "name": "meta.character.webgal",
@@ -171,7 +171,7 @@
     },
     "command-colon": {
       "comment": "cmd:[arg0[ -args]][;cmt]",
-      "match": "^(intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
+      "match": "^(say|changeBg|changeFigure|bgm|playVideo|pixiPerform|pixiInit|intro|miniAvatar|changeScene|choose|end|setComplexAnimation|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|filmMode|setTextbox|setAnimation|playEffect|setTempAnimation|setTransform|setTransition|getUserInput|applyStyle|wait)(\\:)([^\\;\\n]*?)($|\\;.*?$)",
       "captures": {
         "1": {
           "name": "meta.command.webgal",
@@ -206,7 +206,7 @@
     },
     "command-semicolon": {
       "comment": "cmd;[cmt]",
-      "match": "^(intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)($|\\;.*?$)",
+      "match": "^(say|changeBg|changeFigure|bgm|playVideo|pixiPerform|pixiInit|intro|miniAvatar|changeScene|choose|end|setComplexAnimation|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|filmMode|setTextbox|setAnimation|playEffect|setTempAnimation|setTransform|setTransition|getUserInput|applyStyle|wait)($|\\;.*?$)",
       "captures": {
         "1": {
           "name": "meta.command.webgal",
@@ -227,7 +227,7 @@
     },
     "utterance-semicolon": {
       "comment": "utt[ -args];[cmt]",
-      "match": "^(?!(?:intro|changeBg|changeFigure|playEffect|miniAvatar|changeScene|choose|end|bgm|playVideo|setComplexAnimation|setFilter|pixiInit|pixiPerform|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|say|filmMode|callScene|setTextbox|setAnimation|setTransition|setTransform|say|getUserInput|applyStyle|wait)\\;)([^\\:\\;\\n]+?)(\\;.*?$)",
+      "match": "^(?!(?:say|changeBg|changeFigure|bgm|playVideo|pixiPerform|pixiInit|intro|miniAvatar|changeScene|choose|end|setComplexAnimation|label|jumpLabel|setVar|callScene|showVars|unlockCg|unlockBgm|filmMode|setTextbox|setAnimation|playEffect|setTempAnimation|setTransform|setTransition|getUserInput|applyStyle|wait)\\;)([^\\:\\;\\n]+?)($|\\;.*?$)",
       "captures": {
         "1": {
           "patterns": [
