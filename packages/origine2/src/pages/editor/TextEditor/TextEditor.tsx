@@ -57,7 +57,8 @@ export default function TextEditor(props: ITextEditorProps) {
     }));
     // 由于 monaco 接收拖拽进来的文字时, 会在末尾添加 $0
     // 这里手动实现接收拖拽进来的文字, 以避开这个问题
-    editor.getContainerDomNode().addEventListener("drop", e => {
+    const domNode = editor.getContainerDomNode();
+    const dropHandler = (e: DragEvent) => {
       e.preventDefault();
       const data = e.dataTransfer?.getData("text/plain");
       const position = editor.getTargetAtClientPoint(e.clientX, e.clientY);
@@ -70,6 +71,10 @@ export default function TextEditor(props: ITextEditorProps) {
           },
         ]);
       }
+    };
+    domNode.addEventListener("drop", dropHandler);
+    editor.onDidDispose(() => {
+      domNode.removeEventListener("drop", dropHandler);
     });
     editor.updateOptions({
       unicodeHighlight: { ambiguousCharacters: false },
