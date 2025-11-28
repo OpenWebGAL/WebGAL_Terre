@@ -71,10 +71,6 @@
     --shadow-primary-lg: 0 2px 4px var(--primary-10pct);
 }
 
-.monaco-list-row:hover:not(.focused) {
-    background-color: var(--black-10pct) !important;
-}
-
 :root.dark {
     --black: rgb(255, 255, 255);
     --black-0pct: rgba(255, 255, 255, 0);
