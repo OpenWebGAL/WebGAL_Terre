@@ -56,7 +56,7 @@ msgstr "callScene: Choose a scene file;"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:261
 msgid "callSteam: -achievementId=;"
-msgstr ""
+msgstr "callSteam: -achievementId=;"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:17
 msgid "CG"
@@ -156,15 +156,15 @@ msgstr "Spine animation"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:138
 msgid "Steam AppID"
-msgstr ""
+msgstr "Steam AppID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:260
-msgid "Steam 成就"
-msgstr ""
+#~ msgid "Steam 成就"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:30
-msgid "Steam 成就 ID"
-msgstr ""
+#~ msgid "Steam 成就 ID"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "unlockBgm:;"
@@ -650,6 +650,10 @@ msgstr "Thickness"
 #~ msgid "厚度："
 #~ msgstr "Thickness: "
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:48
+msgid "参数值"
+msgstr "Parameter Value"
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:109
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
@@ -792,8 +796,12 @@ msgid "场景文件"
 msgstr "Scene file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:39
-msgid "填写 Steam 成就 ID"
-msgstr ""
+#~ msgid "填写 Steam 成就 ID"
+#~ msgstr ""
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
+msgid "填写参数值"
+msgstr "Fill in parameter value"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
@@ -2108,6 +2116,10 @@ msgstr "Corner avatar"
 msgid "解锁名称"
 msgstr "Unlock name"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:12
+msgid "解锁成就"
+msgstr "Unlock Achievement"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:94
 msgid "解锁的 BGM 名称"
 msgstr "Name of unlocked BGM"
@@ -2192,9 +2204,17 @@ msgstr "Resize foreground image"
 msgid "调整背景图片"
 msgstr "Resize background image"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:260
+msgid "调用 Steam"
+msgstr "Call Steam"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:264
-msgid "调用 Steam 接口解锁成就"
-msgstr ""
+msgid "调用 Steam 接口，支持多参数"
+msgstr "Call Steam Interface, supports multiple parameters"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:264
+#~ msgid "调用 Steam 接口解锁成就"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:36
 msgid "调用/切换场景"
@@ -2362,6 +2382,10 @@ msgstr "Choose Background Music"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:245
 msgid "选择语音文件"
 msgstr "Choose voice file"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:41
+msgid "选择调用参数"
+msgstr "Select call parameter"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:43
 msgid "选择进入动画"

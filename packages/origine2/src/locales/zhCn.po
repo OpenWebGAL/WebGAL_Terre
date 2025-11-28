@@ -159,12 +159,12 @@ msgid "Steam AppID"
 msgstr "Steam AppID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:260
-msgid "Steam 成就"
-msgstr "Steam 成就"
+#~ msgid "Steam 成就"
+#~ msgstr "Steam 成就"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:30
-msgid "Steam 成就 ID"
-msgstr "Steam 成就 ID"
+#~ msgid "Steam 成就 ID"
+#~ msgstr "Steam 成就 ID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "unlockBgm:;"
@@ -652,6 +652,10 @@ msgstr "厚度"
 #~ msgid "厚度："
 #~ msgstr "厚度："
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:48
+msgid "参数值"
+msgstr "参数值"
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:109
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
@@ -794,8 +798,12 @@ msgid "场景文件"
 msgstr "场景文件"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:39
-msgid "填写 Steam 成就 ID"
-msgstr "填写 Steam 成就 ID"
+#~ msgid "填写 Steam 成就 ID"
+#~ msgstr "填写 Steam 成就 ID"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
+msgid "填写参数值"
+msgstr "填写参数值"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
@@ -2106,6 +2114,10 @@ msgstr "角落头像"
 msgid "解锁名称"
 msgstr "解锁名称"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:12
+msgid "解锁成就"
+msgstr "解锁成就"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:94
 msgid "解锁的 BGM 名称"
 msgstr "解锁的 BGM 名称"
@@ -2190,9 +2202,17 @@ msgstr "调整前景图片"
 msgid "调整背景图片"
 msgstr "调整背景图片"
 
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:260
+msgid "调用 Steam"
+msgstr "调用 Steam"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:264
-msgid "调用 Steam 接口解锁成就"
-msgstr "调用 Steam 接口解锁成就"
+msgid "调用 Steam 接口，支持多参数"
+msgstr "调用 Steam 接口，支持多参数"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:264
+#~ msgid "调用 Steam 接口解锁成就"
+#~ msgstr "调用 Steam 接口解锁成就"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:36
 msgid "调用/切换场景"
@@ -2360,6 +2380,10 @@ msgstr "选择背景音乐"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:245
 msgid "选择语音文件"
 msgstr "选择语音文件"
+
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:41
+msgid "选择调用参数"
+msgstr "选择调用参数"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransition.tsx:43
 msgid "选择进入动画"
