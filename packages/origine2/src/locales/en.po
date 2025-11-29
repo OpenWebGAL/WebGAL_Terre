@@ -86,6 +86,10 @@ msgstr "CSS Property Name"
 msgid "end;"
 msgstr "end;"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:225
+msgid "font-family"
+msgstr "font-family"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:245
 msgid "getUserInput:;"
 msgstr "getUserInput:;"
@@ -213,14 +217,26 @@ msgstr "Previous"
 msgid "上传"
 msgstr "Upload"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:272
+msgid "上传字体文件"
+msgstr "Upload font file"
+
 #: src/components/Assets/Assets.tsx:445
 #: src/components/Assets/Assets.tsx:451
 msgid "上传资源"
 msgstr "Upload asset"
 
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:178
+msgid "上移"
+msgstr "Move up"
+
 #: src/components/IconCreator/IconCreator.tsx:776
 msgid "下一步"
 msgstr "Next"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:186
+msgid "下移"
+msgstr "Move down"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
 msgid "不可选项"
@@ -309,7 +325,7 @@ msgstr "Gamma"
 #~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 #~ msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:159
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:184
 msgid "使用中的模板："
 msgstr "Template in use: "
 
@@ -360,8 +376,17 @@ msgid "侧边栏游戏预览"
 msgstr "Sidebar Game Preview"
 
 #: src/components/IconCreator/IconCreator.tsx:798
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:297
 msgid "保存"
 msgstr "Save"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:297
+msgid "保存中..."
+msgstr "Saving..."
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:189
+msgid "保存模板配置失败，请稍后重试"
+msgstr "Failed to save template configuration, please try again later"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:505
 msgid "保持闭眼(毫秒)"
@@ -562,7 +587,9 @@ msgstr "Create new game"
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:206
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:190
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:279
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:194
 msgid "删除"
 msgstr "Delete"
 
@@ -645,7 +672,8 @@ msgstr "New version detected"
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:775
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:67
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:294
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:196
 msgid "取消"
 msgstr "Cancel"
 
@@ -813,6 +841,22 @@ msgstr "Font optimization will disable the outline of dialogue text when the gam
 msgid "字体大小"
 msgstr "Font size"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:234
+msgid "字体文件 URL"
+msgstr "Font file URL"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:134
+msgid "字体文件上传失败，请重试"
+msgstr "Font file upload failed, please retry"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:241
+msgid "字体类型"
+msgstr "Font type"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:209
+msgid "字体配置"
+msgstr "Font configuration"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:43
 msgid "字母间距"
 msgstr "Letter spacing"
@@ -896,8 +940,10 @@ msgstr "Export Failed!"
 msgid "导出成功！"
 msgstr "Export Success!"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:123
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:131
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:134
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:135
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:141
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:156
 msgid "将当前模板应用到选定的游戏"
 msgstr "Apply the current template to selected games"
 
@@ -916,6 +962,14 @@ msgstr "Mini avatar container"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:35
 msgid "小头像文件"
 msgstr "Avatar file"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:146
+msgid "尚未添加任何字体"
+msgstr "No fonts added yet"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:219
+msgid "尚未配置任何字体"
+msgstr "No fonts configured yet"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
 msgid "层级顺序"
@@ -981,7 +1035,7 @@ msgstr "Regular performance"
 msgid "平铺"
 msgstr "Tiling"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:173
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:198
 msgid "应用"
 msgstr "Apply"
 
@@ -1132,7 +1186,7 @@ msgstr "Tip: The effect will only take place when switching to a different chara
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "Tip: The effect will only take place when switching to a different background or removing the current background and adding it again. If you want to set an effect for an existing background, please use a separate command for setting effects."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:76
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:79
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "Tips: Resources used in styles are placed in the assets directory"
 
@@ -1273,6 +1327,11 @@ msgstr "Text Shadow"
 #: src/pages/dashboard/About.tsx:77
 msgid "文档"
 msgstr "Document"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:215
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:211
+msgid "新增字体"
+msgstr "Add font"
 
 #: src/components/Assets/Assets.tsx:337
 #: src/components/Assets/Assets.tsx:352
@@ -1484,8 +1543,13 @@ msgstr "Template list"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:58
 #: src/pages/dashboard/TemplateSidebar.tsx:67
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:205
 msgid "模板名称"
 msgstr "Template name"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:150
+msgid "模板名称不能为空"
+msgstr "Template name cannot be empty"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:69
 #: src/pages/dashboard/TemplateSidebar.tsx:75
@@ -1504,6 +1568,14 @@ msgstr "Blur"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PixiPerform.tsx:17
 msgid "櫻花"
 msgstr "Cherry blossoms"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:272
+msgid "正在上传"
+msgstr "Uploading"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:202
+msgid "正在加载模板配置"
+msgstr "Loading template configuration"
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:15
 msgid "正常"
@@ -2160,6 +2232,14 @@ msgstr "Language"
 msgid "语音"
 msgstr "Voice"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:167
+msgid "请完整填写每个字体的信息"
+msgstr "Please complete all font information"
+
+#: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:154
+msgid "请输入或选择字体名称"
+msgstr "Please enter or select a font name"
+
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:211
 msgid "请输入搜索提示词..."
 msgstr "Please enter a search hint..."
@@ -2394,9 +2474,9 @@ msgstr "Selection Button (disabled)"
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:112
-msgid "选项菜单"
-msgstr "Option Menu"
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:124
+#~ msgid "选项菜单"
+#~ msgstr "Option Menu"
 
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:83
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:99
@@ -2410,6 +2490,13 @@ msgstr "Enter different scenes through options"
 #: src/pages/editor/Topbar/Topbar.tsx:103
 msgid "配置"
 msgstr "Configuration"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:199
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:124
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:125
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:128
+msgid "配置模板"
+msgstr "Configure template"
 
 #: src/components/Assets/FileElement.tsx:142
 #: src/components/Assets/FileElement.tsx:161

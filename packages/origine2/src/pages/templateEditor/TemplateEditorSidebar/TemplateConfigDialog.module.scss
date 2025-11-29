@@ -1,0 +1,51 @@
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fontHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fontList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fontItem {
+  border: var(--border-md);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  background: var(--bg-layer);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fontFields {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.fontActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.emptyHint {
+  color: var(--text-sub);
+  font-size: 14px;
+}
+
+.errorMessage {
+  color: var(--status-danger-text);
+  font-size: 14px;
+}
