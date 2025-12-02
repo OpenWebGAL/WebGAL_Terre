@@ -5,17 +5,23 @@ import { useValue } from "@/hooks/useValue";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
+import { useLingui } from "@lingui/react";
+import { useMemo } from "react";
 
 const CALL_STEAM_COMMAND = "callSteam";
 
-const PARAM_OPTIONS = new Map<string, string>([
-  ["achievementId", t`解锁成就`],
-]);
-
 export default function CallSteam(props: ISentenceEditorProps) {
+  const { i18n } = useLingui();
   const existingArg = props.sentence.args.find((arg) => arg.key !== "speaker");
   const selectedKey = useValue(existingArg?.key ?? "achievementId");
   const paramValue = useValue((existingArg?.value ?? "").toString());
+  const paramOptions = useMemo(
+    () =>
+      new Map<string, string>([
+        ["achievementId", t`解锁成就`],
+      ]),
+    [i18n.locale]
+  );
 
   const submit = () => {
     const normalizedKey = selectedKey.value.trim();
@@ -40,7 +46,7 @@ export default function CallSteam(props: ISentenceEditorProps) {
     <div className={styles.editItem}>
       <CommonOptions title={t`选择调用参数`}>
         <WheelDropdown
-          options={PARAM_OPTIONS}
+          options={paramOptions}
           value={selectedKey.value}
           onValueChange={(newValue) => onKeyChange(newValue)}
         />
