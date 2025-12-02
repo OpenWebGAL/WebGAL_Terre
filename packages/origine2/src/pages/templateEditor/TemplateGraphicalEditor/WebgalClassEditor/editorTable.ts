@@ -9,7 +9,6 @@ import WGCommonLengthEditor
 import WGCursor from "./propertyEditor/WGCursor";
 import WGCommonNumberEditor
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonNumberEditor";
-import WGCommonEditor from "./propertyEditor/WGCommonEditor";
 import WGCommonLengthEditor4Values
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values";
 import WGTextAlignEditor from "./propertyEditor/WGText";
@@ -20,6 +19,7 @@ import WGBackgroundSize
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize";
 import WGBackgroundPosition
   from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundPosition";
+import WGFontFamily from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily";
 
 export interface IPropertyEditorProps {
   prop: IWebgalCssProp,
@@ -55,7 +55,7 @@ export function getEditorTable(): IWebGALStylePropertyEditItem[] {
     {propName: 'bottom', propLable: t`偏移底部距离（定位用）`, editor: WGCommonLengthEditor, initialValue: '5px'},
     {propName: 'cursor', propLable: t`鼠标指针`, editor: WGCursor, initialValue: 'pointer'},
     {propName: 'z-index', propLable: t`层级顺序`, editor: WGCommonNumberEditor, initialValue: '1'},
-    {propName: 'font-family', propLable: t`字体`, editor: WGCommonEditor, initialValue: `"思源宋体", serif`},
+    {propName: 'font-family', propLable: t`字体`, editor: WGFontFamily, initialValue: `"思源宋体", "LXGW", WebgalUI`},
     {propName: 'border-radius', propLable: t`圆角`, editor: WGCommonLengthEditor4Values, initialValue: `10px 10px 10px 10px`},
     {propName: 'text-align', propLable: t`文本对齐`, editor: WGTextAlignEditor, initialValue: `left`},
     {propName: 'text-shadow', propLable: t`文本阴影`, editor: WGTextShadowEditor, initialValue: `10px 10px 10px white`},
