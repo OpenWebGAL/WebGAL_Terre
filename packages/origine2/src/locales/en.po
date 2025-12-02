@@ -677,7 +677,7 @@ msgstr "Thickness"
 #~ msgid "厚度："
 #~ msgstr "Thickness: "
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
 msgid "参数值"
 msgstr "Parameter Value"
 
@@ -827,7 +827,7 @@ msgstr "Scene file"
 #~ msgid "填写 Steam 成就 ID"
 #~ msgstr ""
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:60
 msgid "填写参数值"
 msgstr "Fill in parameter value"
 
@@ -2188,7 +2188,7 @@ msgstr "Corner avatar"
 msgid "解锁名称"
 msgstr "Unlock name"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:12
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:21
 msgid "解锁成就"
 msgstr "Unlock Achievement"
 
@@ -2463,7 +2463,7 @@ msgstr "Choose Background Music"
 msgid "选择语音文件"
 msgstr "Choose voice file"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:41
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:47
 msgid "选择调用参数"
 msgstr "Select call parameter"
 

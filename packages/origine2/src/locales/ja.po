@@ -680,7 +680,7 @@ msgstr "厚さ"
 #~ msgid "厚度："
 #~ msgstr "厚さ"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
 msgid "参数值"
 msgstr "パラメータ値"
 
@@ -830,7 +830,7 @@ msgstr "シーンファイル"
 #~ msgid "填写 Steam 成就 ID"
 #~ msgstr ""
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:60
 msgid "填写参数值"
 msgstr "パラメータ値を入力"
 
@@ -2187,7 +2187,7 @@ msgstr "コーナーアバター"
 msgid "解锁名称"
 msgstr "CG/BGMの名前"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:12
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:21
 msgid "解锁成就"
 msgstr "実績を解除"
 
@@ -2462,7 +2462,7 @@ msgstr "BGMを選択"
 msgid "选择语音文件"
 msgstr "音声ファイルを選択"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:41
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:47
 msgid "选择调用参数"
 msgstr "呼び出しパラメータを選択"
 

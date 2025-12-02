@@ -679,7 +679,7 @@ msgstr "厚度"
 #~ msgid "厚度："
 #~ msgstr "厚度："
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:48
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
 msgid "参数值"
 msgstr "参数值"
 
@@ -829,7 +829,7 @@ msgstr "场景文件"
 #~ msgid "填写 Steam 成就 ID"
 #~ msgstr "填写 Steam 成就 ID"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:54
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:60
 msgid "填写参数值"
 msgstr "填写参数值"
 
@@ -2186,7 +2186,7 @@ msgstr "角落头像"
 msgid "解锁名称"
 msgstr "解锁名称"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:12
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:21
 msgid "解锁成就"
 msgstr "解锁成就"
 
@@ -2461,7 +2461,7 @@ msgstr "选择背景音乐"
 msgid "选择语音文件"
 msgstr "选择语音文件"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:41
+#: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:47
 msgid "选择调用参数"
 msgstr "选择调用参数"
 
