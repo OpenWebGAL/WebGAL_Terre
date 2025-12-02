@@ -94,10 +94,6 @@ msgstr "end;"
 msgid "font-family"
 msgstr "font-family"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:245
-msgid "font-family"
-msgstr "font-family"
-
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:252
 msgid "getUserInput:;"
 msgstr "getUserInput:;"

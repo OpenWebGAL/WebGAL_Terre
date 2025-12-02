@@ -317,12 +317,9 @@ export class ManageGameService {
             }
           }
           // 创建 app.asar
-          await asar.createPackage(
+          await this.packElectronAppAsar(
             `${electronExportDir}/resources/app/`,
             `${electronExportDir}/resources/app.asar`,
-          );
-          await this.webgalFs.deleteFileOrDirectory(
-            `${electronExportDir}/resources/app/`,
           );
           await _open(electronExportDir);
         }
@@ -378,12 +375,9 @@ export class ManageGameService {
             );
           }
           // 创建 app.asar
-          await asar.createPackage(
+          await this.packElectronAppAsar(
             `${electronExportDir}/resources/app/`,
             `${electronExportDir}/resources/app.asar`,
-          );
-          await this.webgalFs.deleteFileOrDirectory(
-            `${electronExportDir}/resources/app/`,
           );
           await _open(electronExportDir);
         }
@@ -439,12 +433,9 @@ export class ManageGameService {
             );
           }
           // 创建 app.asar
-          await asar.createPackage(
+          await this.packElectronAppAsar(
             `${electronExportDir}/Contents/Resources/app/`,
             `${electronExportDir}/Contents/Resources/app.asar`,
-          );
-          await this.webgalFs.deleteFileOrDirectory(
-            `${electronExportDir}/Contents/Resources/app/`,
           );
           await _open(exportDir);
         }
@@ -585,5 +576,12 @@ export class ManageGameService {
       this.logger.error('Error exporting game:', error);
       return false;
     }
+  }
+
+  private async packElectronAppAsar(appDir: string, asarPath: string) {
+    await asar.createPackageWithOptions(appDir, asarPath, {
+      unpack: '**/node_modules/steamworks.js/dist/**',
+    });
+    await this.webgalFs.deleteFileOrDirectory(appDir);
   }
 }
