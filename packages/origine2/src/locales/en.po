@@ -34,6 +34,10 @@ msgstr "<0>Apply a new template</0>"
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>Current template: {currentTemplateName}</0>"
 
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:47
+#~ msgid "<0>查看展示到 WebGAL 主页的指引</0>"
+#~ msgstr "<0>See how to feature your game on the WebGAL homepage</0>"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:302
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
@@ -470,7 +474,7 @@ msgstr "Associated figure"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:149
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:97
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:146
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:68
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:189
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "关闭"
@@ -664,6 +668,18 @@ msgstr "Thickness"
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:109
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:36
+#~ msgid "发布的游戏可以在"
+#~ msgstr "You can showcase your published game at"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:36
+msgid "发布的游戏可以在 <0>https://www.openwebgal.com/games/</0> 展示，欢迎分享你的作品！"
+msgstr "You can showcase your published game at <0>https://www.openwebgal.com/games/</0>. Share your work!"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:33
+#~ msgid "发布的游戏可以在 <0>https://www.openwebgal.com/games/</0> 展示，欢迎把你的作品分享给大家！"
+#~ msgstr "You can showcase your published game at <0>https://www.openwebgal.com/games/</0>. Share it with everyone!"
 
 #: src/pages/dashboard/DashBoard.tsx:154
 msgid "发现新版本"
@@ -911,32 +927,32 @@ msgstr "Text in Textbox"
 msgid "对话框标题"
 msgstr "Dialog title"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:62
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:80
 #: src/pages/editor/Topbar/Topbar.tsx:107
 msgid "导出"
 msgstr "Export"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:38
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:55
 msgid "导出中..."
 msgstr "Exporting..."
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:84
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:102
 msgid "导出为可执行文件"
 msgstr "Export as executable file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:96
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:114
 msgid "导出为安卓项目文件"
 msgstr "Export as Android project file"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:72
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:90
 msgid "导出为网页"
 msgstr "Export as webpage"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:70
 msgid "导出失败！"
 msgstr "Export Failed!"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:53
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:70
 msgid "导出成功！"
 msgstr "Export Success!"
 
@@ -982,6 +998,10 @@ msgstr "Center"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGText.tsx:20
 msgid "居中对齐"
 msgstr "Center Align"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:40
+#~ msgid "展示，欢迎分享你的作品！"
+#~ msgstr "Showcase it and share your work!"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/MiniAvatar.tsx:33
 msgid "展示小头像"
@@ -1162,7 +1182,7 @@ msgstr "Submit"
 msgid "提交修改"
 msgstr "Submit changes"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:68
 msgid "提示"
 msgstr "Tip"
 
@@ -1497,6 +1517,10 @@ msgstr "Execute next sentence after this"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:152
 msgid "本句执行后等待"
 msgstr "Wait after this sentence"
+
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:44
+msgid "查看展示到 WebGAL 主页的指引"
+msgstr "See how to feature your game on the WebGAL homepage"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:20
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:23
@@ -1987,7 +2011,7 @@ msgstr "Grid view"
 msgid "老电影滤镜"
 msgstr "Old film filter"
 
-#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:52
+#: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:69
 msgid "耗时"
 msgstr "Time taken"
 
