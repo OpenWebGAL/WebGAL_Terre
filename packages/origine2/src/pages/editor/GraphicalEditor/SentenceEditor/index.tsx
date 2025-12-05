@@ -17,6 +17,7 @@ import {
   Erase,
   ListCheckbox,
   Logout,
+  GameHandle,
   Music,
   NewPicture,
   People,
@@ -43,7 +44,12 @@ import SetTransition from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTran
 import SetTransform from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransform";
 import styles from "./sentenceEditor.module.scss";
 import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput";
+import CallSteam from "@/pages/editor/GraphicalEditor/SentenceEditor/CallSteam";
 import { t } from "@lingui/macro";
+
+type SentenceEditorType = commandType | string;
+const CALL_STEAM_COMMAND_RAW = "callSteam";
+const callSteamType: SentenceEditorType = (commandType as unknown as Record<string, SentenceEditorType>)[CALL_STEAM_COMMAND_RAW] ?? CALL_STEAM_COMMAND_RAW;
 
 export interface ISentenceEditorProps {
   sentence: ISentence;
@@ -52,7 +58,8 @@ export interface ISentenceEditorProps {
 }
 
 export interface ISentenceEditorConfig {
-  type: commandType,
+  type: SentenceEditorType,
+  commandRaw?: string,
   title: () => string,
   initialText: () => string,
   component: FC<ISentenceEditorProps>,
@@ -246,6 +253,14 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component:GetUserInput,
     icon: <EnterTheKeyboard theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`获取来自用户的字符输入`
+  },
+  {
+    type: callSteamType,
+    commandRaw: CALL_STEAM_COMMAND_RAW,
+    title: () => t`调用 Steam`,
+    initialText: () => t`callSteam: -achievementId=;`,
+    component: CallSteam,
+    icon: <GameHandle theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`调用 Steam 接口，支持多参数`
   }
 ];
-

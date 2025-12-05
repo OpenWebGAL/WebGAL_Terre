@@ -205,7 +205,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 // 实际显示的行数
                 const index = i + 1;
                 // console.log(sentence.command);
-                const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
+                const sentenceConfig =
+                  sentenceEditorConfig.find((e) => e.commandRaw && e.commandRaw === sentence.commandRaw)
+                  ?? sentenceEditorConfig.find((e) => e.type === sentence.command)
+                  ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
                 const sentenceItem = sentenceData.value[i];
                 return <Draggable key={sentenceItem.id} draggableId={sentenceItem.id} index={i}>
