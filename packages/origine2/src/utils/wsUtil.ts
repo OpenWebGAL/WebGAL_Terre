@@ -46,7 +46,7 @@ export class WsUtil {
           resolve(true);
         };
         socket.onmessage = (e) => {
-          eventBus.emit('get-ws-message', e.data);
+          eventBus.emit('web-socket:on-message', { message: e.data });
         };
         // @ts-ignore
         window['currentWs'] = socket;
@@ -167,6 +167,18 @@ export class WsUtil {
       },// @ts-ignore
       stageSyncMsg: {},
       message: command.toString(),
+    });
+  };
+
+  public static sendSetEffectCommand(newEffect: string) {
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.SET_EFFECT,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: newEffect,
     });
   };
 

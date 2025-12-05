@@ -70,3 +70,60 @@
     --shadow-primary-md: 0 1px 2px var(--primary-10pct);
     --shadow-primary-lg: 0 2px 4px var(--primary-10pct);
 }
+
+:root.dark {
+    --black: rgb(255, 255, 255);
+    --black-0pct: rgba(255, 255, 255, 0);
+    --black-5pct: rgba(255, 255, 255, 0.05);
+    --black-7pct: rgba(255, 255, 255, 0.07);
+    --black-10pct: rgba(255, 255, 255, 0.1);
+    --black-15pct: rgba(255, 255, 255, 0.15);
+    --black-35pct: rgba(255, 255, 255, 0.35);
+    --black-50pct: rgba(255, 255, 255, 0.5);
+    --black-75pct: rgba(255, 255, 255, 0.75);
+    --gray-dark: rgba(205, 208, 213, 1);
+    --gray-51: rgba(204, 204, 204, 1);
+    --gray-102: rgba(153, 153, 153, 1);
+    --gray-153: rgba(102, 102, 102, 1);
+    --gray-204: rgba(51, 51, 51, 1);
+    --gray-242: rgba(13, 13, 13, 1);
+    --gray-245: rgba(10, 10, 10, 1);
+    --gray-248: rgba(8, 8, 8, 1);
+    --blue-deep: rgba(122, 190, 255, 1);
+    --blue-deep-20pct: rgba(122, 190, 255, 0.2);
+    --blue-light: rgba(0, 128, 163, 1);
+    --blue-ultra-light: rgba(0, 3, 10, 1);
+    --blue-medium: rgba(133, 196, 255, 1);
+    --blue-medium-10pct: rgba(133, 196, 255, 0.1);
+    --blue-sky-50pct: rgba(128, 184, 255, 0.5);
+    --blue-navy: rgba(199, 223, 255, 1);
+    --white: rgb(0, 0, 0);
+
+    --primary: rgb(89, 178, 255);
+    --primary-5pct: rgba(89, 178, 255, 0.05);
+    --primary-10pct: rgba(89, 178, 255, 0.1);
+    --primary-90pct: rgba(89, 178, 255, 0.9);
+    --text: rgb(223, 223, 223);
+    --text-sub: rgb(150, 150, 150);
+    --text-weak: rgb(123, 123, 123);
+    --bg-base: rgb(0, 0, 0);
+    --bg-root: rgb(24, 24, 24);
+    --bg-card: rgb(30, 30, 30);
+    --bg-button: rgb(40, 40, 40);
+    --bg-input: rgb(40, 40, 40);
+}
+
+:root.dark ::-webkit-scrollbar {
+    width: 8px;
+    background: var(--bg-scrollbar);
+}
+:root.dark ::-webkit-scrollbar-thumb {
+    background: var(--bg-scrollbar-thumb);
+    border-radius: 4px;
+}
+:root.dark ::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-scrollbar-thumb-hover);
+}
+:root.dark ::-webkit-scrollbar-corner {
+    background: var(--bg-scrollbar);
+}

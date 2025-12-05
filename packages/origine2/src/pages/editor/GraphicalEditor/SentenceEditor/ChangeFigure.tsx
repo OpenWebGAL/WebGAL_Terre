@@ -18,6 +18,7 @@ import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
+import { WsUtil } from "@/utils/wsUtil";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -548,10 +549,28 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         <CommonTips
           text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}/>
-        <EffectEditor json={json.value.toString()} onChange={(newJson) => {
-          json.set(newJson);
-          submit();
-        }}/>
+        <EffectEditor
+          json={json.value.toString()}
+          onChange={(newJson) => {
+            json.set(newJson);
+            submit();
+          }}
+          onUpdate={(transform) => {
+            let target = id.value;
+            if (target === "") {
+              // 根据位置确定目标
+              if (figurePosition.value === "left") {
+                target = "fig-left";
+              } else if (figurePosition.value === "right") {
+                target = "fig-right";
+              } else {
+                target = "fig-center";
+              }
+              const newEffect = { target: target, transform: transform };
+              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+            }
+          }}
+        />
       </TerrePanel>
 
     </div>

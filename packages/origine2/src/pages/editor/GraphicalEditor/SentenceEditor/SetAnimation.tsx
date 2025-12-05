@@ -11,7 +11,7 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
-type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
+type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
 export default function SetAnimation(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
@@ -21,6 +21,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
     [ "fig-center", t`中间立绘` ],
     [ "fig-right", t`右侧立绘` ],
     [ "bg-main", t`背景图片` ],
+    [ "stage-main", t`舞台画面` ],
   ]);
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);

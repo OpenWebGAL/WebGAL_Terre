@@ -7,8 +7,7 @@ import {eventBus} from "@/utils/eventBus";
 import {t} from "@lingui/macro";
 
 function addSentenceText(text: string) {
-  console.log(text);
-  eventBus.emit('topbar-add-sentence', text);
+  eventBus.emit('editor:topbar-add-sentence', { sentence: text });
 }
 
 function pickSentenceType(indexes: Array<number>) {
@@ -30,7 +29,7 @@ export function AddSentenceTab() {
   const btsSpecial2 = pickSentenceType([6, 7, 21]);
   const btsBranch = pickSentenceType([9, 10, 11]);
   const btsExtra = pickSentenceType([14, 15]);
-  const btsSystem = pickSentenceType([16, 17]);
+  const btsSystem = pickSentenceType([16, 17, 22]);
   const btsControl = pickSentenceType([3, 19, 20]);
 
   return <TopbarTab>

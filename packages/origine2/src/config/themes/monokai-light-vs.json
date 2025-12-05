@@ -4,13 +4,77 @@
   "colors": {
     "editor.background": "#fafafa",
     "editor.lineHighlightBackground": "#e6e3c3",
-    "editor.selectionBackground": "#ccc9ad",
+    "editor.selectionBackground": "#ccc9ad8e",
+    "editor.wordHighlightBackground": "#00000011",
     "editorCursor.foreground": "#666663",
-    "editorIndentGuide.background": "#D3D4D5",
+    "editorIndentGuide.background1": "#D3D4D5",
     "editorLineNumber.foreground": "#a2a19c",
     "editorWhitespace.foreground": "#bbbbb7"
   },
   "tokenColors": [
+    {
+      "scope": [
+        "comment",
+        "comment.line.webgal"
+      ],
+      "settings": {
+        "foreground": "#999999"
+      }
+    },
+		{
+      "scope": [
+        "keyword.operator.webgal"
+      ],
+      "settings": {
+        "foreground": "#ff2c80",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": [
+        "string.unquoted.utterance.webgal"
+      ],
+      "settings": {
+        "foreground": "#9b9107",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": [
+        "meta.command.webgal",
+        "support.function.command.webgal"
+      ],
+      "settings": {
+        "foreground": "#0075d4",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": [
+        "meta.character.webgal",
+        "entity.name.type.character.webgal"
+      ],
+      "settings": {
+        "foreground": "#8db118",
+				"fontStyle": "bold underline"
+      }
+    },
+    {
+      "scope": [
+        "variable.parameter.webgal",
+      ],
+      "settings": {
+        "foreground": "#bb7306",
+      }
+    },
+    {
+      "scope": [
+        "variable.other.webgal",
+      ],
+      "settings": {
+        "foreground": "#09ad32",
+      }
+    },
     {
       "settings": {
         "background": "#fafafa",

@@ -34,6 +34,13 @@ cd ../../
 cd packages/WebGAL-electron
 yarn install --frozen-lockfile
 yarn run build
+# 拷贝 Steam API 动态库
+STEAM_API_LIB="node_modules/steamworks.js/dist/linux64/libsteam_api.so"
+if [ -f "$STEAM_API_LIB" ]; then
+    cp "$STEAM_API_LIB" build/linux-unpacked/
+else
+    echo "warning: Steamworks redistributable not found at $STEAM_API_LIB" >&2
+fi
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/linux-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../

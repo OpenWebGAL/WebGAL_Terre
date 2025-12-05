@@ -46,11 +46,12 @@ import classNames from "classnames";
 import useEditorStore from "@/store/useEditorStore";
 import {api} from "@/api";
 import useSWR, {useSWRConfig} from "swr";
-import {redirect} from "@/hooks/useHashRoute";
+import { goTo } from '@/router';
 import {t} from "@lingui/macro";
 import { useRelease } from "@/hooks/useRelease";
 import { __INFO } from "@/config/info";
 import {CreateGameDto, CreateTemplateDto} from "@/api/Api";
+import { Platte } from "@icon-park/react";
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -82,6 +83,7 @@ export default function DashBoard() {
 
   const subPage = useEditorStore.use.subPage();
   const updateLanguage = useEditorStore.use.updateLanguage();
+  const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
 
   const messageRef = useRef<TestRefRef>(null);
 
@@ -89,7 +91,7 @@ export default function DashBoard() {
   const selectedValue = subPage;
 
   const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
-    redirect('dashboard', data.value as string);
+    goTo('dashboard', data.value as string);
   };
 
   // 当前选中的游戏
@@ -200,6 +202,18 @@ export default function DashBoard() {
                 <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
                 <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
                 <MenuItem onClick={() => updateLanguage('ja')}>日本語</MenuItem>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
+          <Menu>
+            <MenuTrigger>
+              <ToolbarButton aria-label={t`主题`}
+                icon={<Platte/>}>{t`主题`}</ToolbarButton>
+            </MenuTrigger>
+            <MenuPopover>
+              <MenuList>
+                <MenuItem onClick={() => updateIsDarkMode(false)}>{t`浅色`}</MenuItem>
+                <MenuItem onClick={() => updateIsDarkMode(true)}>{t`深色`}</MenuItem>
               </MenuList>
             </MenuPopover>
           </Menu>

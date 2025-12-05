@@ -6,7 +6,7 @@ import AndroidIcon from 'material-icon-theme/icons/android.svg';
 import { api } from '@/api';
 import { Desktop24Filled, Desktop24Regular, Globe24Filled, Globe24Regular, bundleIcon } from '@fluentui/react-icons';
 import useEditorStore from '@/store/useEditorStore';
-import { t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import {
   Link,
   Spinner,
@@ -18,7 +18,7 @@ import {
   useId,
   useToastController,
 } from '@fluentui/react-components';
-import { useRef } from 'react';
+import { useRef, type ReactNode } from 'react';
 import useOsInfo from '@/hooks/useOsInfo';
 
 export function ExportTab() {
@@ -29,6 +29,23 @@ export function ExportTab() {
   const { dispatchToast, dismissAllToasts } = useToastController(toasterId);
   const timeCurrent = useRef(0);
   const { data: osInfo } = useOsInfo();
+
+  const exeShowcaseHint = (
+    <div>
+      <div>
+        <Trans>
+          发布的游戏可以在 <Link href="https://www.openwebgal.com/games/" target="_blank" rel="noreferrer">
+          https://www.openwebgal.com/games/
+          </Link> 展示，欢迎分享你的作品！
+        </Trans>
+      </div>
+      <div>
+        <Link href="https://docs.openwebgal.com/showcase-your-game" target="_blank" rel="noreferrer">
+          {t`查看展示到 WebGAL 主页的指引`}
+        </Link>
+      </div>
+    </div>
+  );
 
   const startExport = () => {
     timeCurrent.current = Date.now();
@@ -44,13 +61,14 @@ export function ExportTab() {
     );
   };
 
-  const notify = (intent: ToastIntent = 'success') => {
+  const notify = (intent: ToastIntent = 'success', extra?: ReactNode) => {
     dismissAllToasts();
     dispatchToast(
       <Toast>
         <ToastTitle action={<Link onClick={() => dismissAllToasts()}>{t`关闭`}</Link>}>{t`提示`}</ToastTitle>
         <ToastBody subtitle={`${t`耗时`}：${Date.now() - timeCurrent.current} ms`}>
-          {intent === 'success' ? t`导出成功！` : t`导出失败！`}
+          <div>{intent === 'success' ? t`导出成功！` : t`导出失败！`}</div>
+          {intent === 'success' && extra}
         </ToastBody>
       </Toast>,
       { intent },
@@ -77,7 +95,7 @@ export function ExportTab() {
                 startExport();
                 api
                   .manageGameControllerEjectGameAsExe(gameDir)
-                  .then(() => notify())
+                  .then(() => notify('success', exeShowcaseHint))
                   .catch(() => notify('error'));
               }}
               icon={<DesktopIcon aria-label="Export Exe" className={s.iconColor} />}

@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import { api } from '@/api';
+import useEditorStore from '@/store/useEditorStore';
 
 export function JsonResourceDisplay(props: { url: string }) {
   const { url } = props;
@@ -9,6 +10,8 @@ export function JsonResourceDisplay(props: { url: string }) {
     const resp = await axios.get(url, { responseType: 'text', transformResponse: [(data) => data] });
     return resp.data as string;
   });
+
+  const isDarkMode = useEditorStore.use.isDarkMode();
 
   async function update(text: string) {
     await api.manageGameControllerEditTextFile({ textFile: text, path: url });
@@ -56,7 +59,8 @@ export function JsonResourceDisplay(props: { url: string }) {
 
     iframe.contentWindow?.postMessage({ type: 'setValue', value: fileResp.data }, '*');
     iframe.contentWindow?.postMessage({ type: 'setLanguage', language: 'json' }, '*');
-  }, [fileResp.data, editorReady]);
+    iframe.contentWindow?.postMessage({ type: 'setTheme', theme: isDarkMode ? 'vs-dark' : 'vs' }, '*');
+  }, [fileResp.data, editorReady, isDarkMode]);
 
   // 返回缓存的 iframe 元素
   return memoizedIframe;

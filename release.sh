@@ -34,6 +34,13 @@ cd ../../
 cd packages/WebGAL-electron
 yarn install --frozen-lockfile
 yarn run build
+# 拷贝 Windows Steam API 动态库
+STEAM_API_DLL="node_modules/steamworks.js/dist/win64/steam_api64.dll"
+if [ -f "$STEAM_API_DLL" ]; then
+    cp "$STEAM_API_DLL" build/win-unpacked/
+else
+    echo "warning: Steamworks redistributable not found at $STEAM_API_DLL" >&2
+fi
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/win-unpacked/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../

@@ -31,6 +31,15 @@ cd ../../
 cd packages/WebGAL-electron
 yarn install --frozen-lockfile
 yarn run build-universal
+# 拷贝 mac Steam API 动态库
+STEAM_API_DYLIB="node_modules/steamworks.js/dist/osx/libsteam_api.dylib"
+if [ -f "$STEAM_API_DYLIB" ]; then
+    TARGET_DIR="build/mac-universal/WebGAL.app/Contents/Resources/app/node_modules/steamworks.js/dist/osx"
+    mkdir -p "$TARGET_DIR"
+    cp "$STEAM_API_DYLIB" "$TARGET_DIR/"
+else
+    echo "warning: Steamworks redistributable not found at $STEAM_API_DYLIB" >&2
+fi
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
 cp -rf build/mac-universal/WebGAL.app/* ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
