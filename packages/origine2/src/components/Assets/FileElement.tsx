@@ -46,8 +46,6 @@ export default function FileElement(
 
   const isAccessible = checkFileName(newFileName.value);
 
-  console.log(isAccessible);
-
   return (
     <Tooltip
       content={
