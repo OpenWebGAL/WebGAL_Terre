@@ -155,7 +155,7 @@ export default function FileElement(
                     onClick={(e) => e.stopPropagation()}
                     onKeyDown={(e) => {
                       e.stopPropagation();
-                      if ((e.key === 'Enter') && !checkHasFile(newFileName.value)) {
+                      if ((e.key === 'Enter') && !(newFileName.value.trim() === '' || !isAccessible || checkHasFile(newFileName.value) && newFileName.value !== file.name)) {
                         handleRenameFile(filePath, newFileName.value.trim());
                       };
                     }}
