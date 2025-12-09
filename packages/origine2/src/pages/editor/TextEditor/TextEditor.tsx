@@ -86,14 +86,42 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {string} value
    * @param {any} ev
    */
-  const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+  const handleChange = (value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+    triggerSuggest();
+
+    if (value !== undefined) {
+      submitText(value);
+    }
+  };
+
+  // 手动触发代码提示
+  const triggerSuggest = () => {
+    if(!isEditorReady.value) return;
+
+    const cursorPosition = editorRef.current?.getPosition();
+    const model = editorRef.current?.getModel();
+    if (model && cursorPosition) {
+      const textBeforeCursor = model.getValueInRange({
+        startLineNumber: cursorPosition.lineNumber,
+        startColumn: 1,
+        endLineNumber: cursorPosition.lineNumber,
+        endColumn: cursorPosition.column,
+      });
+      if (/^[A-Za-z]+$/.test(textBeforeCursor)) {
+        editorRef.current?.trigger('keyboard', 'editor.action.triggerSuggest', {});
+      }
+    }
+  }
+
+  // 保存文本并同步到游戏
+  const submitText = debounce((text) => {
     if(!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
     // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
     // const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    if (value) currentText.value = value;
+    if (text) currentText.value = text;
     eventBus.emit('editor:update-scene', { scene: currentText.value });
     api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
       const targetValue = currentText.value.split('\n')[lineNumber - 1];
