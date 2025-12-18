@@ -59,6 +59,7 @@ export default function TextEditor(props: ITextEditorProps) {
       unicodeHighlight: { ambiguousCharacters: false },
       wordWrap: isAutoWarp ? 'on' : 'off' ,
       smoothScrolling: true,
+      quickSuggestions: { other: true, comments: true, strings: true },
     });
     updateEditData();
   }
