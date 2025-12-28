@@ -566,9 +566,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               } else {
                 target = "fig-center";
               }
-              const newEffect = { target: target, transform: transform };
-              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
             }
+            const newEffect = { target: target, transform: transform };
+            WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
           }}
         />
       </TerrePanel>
