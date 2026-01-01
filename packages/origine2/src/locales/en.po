@@ -26,11 +26,11 @@ msgstr "*Click this button to save changes after setting color picker"
 msgid "%"
 msgstr "%"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:194
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:193
 msgid "<0>应用新的模板</0>"
 msgstr "<0>Apply a new template</0>"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:173
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:172
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>Current template: {currentTemplateName}</0>"
 
@@ -162,17 +162,17 @@ msgstr "setTransition:;"
 msgid "Spine 动画"
 msgstr "Spine animation"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:138
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:121
 msgid "Steam AppID"
 msgstr "Steam AppID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:260
 #~ msgid "Steam 成就"
-#~ msgstr ""
+#~ msgstr "Steam achievement"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:30
 #~ msgid "Steam 成就 ID"
-#~ msgstr ""
+#~ msgstr "Steam achievement ID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:204
 msgid "unlockBgm:;"
@@ -270,7 +270,7 @@ msgstr "No concat with previous text"
 msgid "不显示角色名"
 msgstr "Hide the role name"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:244
 msgid "不设定"
 msgstr "Not set"
 
@@ -417,7 +417,7 @@ msgid "修改时间"
 msgstr "Last modified"
 
 #: src/components/IconCreator/IconCreator.tsx:621
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:207
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:206
 msgid "修改游戏图标"
 msgstr "Change game icon"
 
@@ -638,7 +638,7 @@ msgstr "Delete game"
 msgid "刷新"
 msgstr "Refresh"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:169
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:170
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:54
 msgid "刷新游戏"
 msgstr "Refresh game"
@@ -744,13 +744,13 @@ msgstr "Right Align"
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:163
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:158
 msgid "启动图"
 msgstr "Startup image"
 
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:227
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:217
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:227
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:216
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:230
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:188
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
 msgid "启用"
@@ -818,7 +818,7 @@ msgstr "Open in File Explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:176
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -827,7 +827,7 @@ msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:151
 msgid "场景"
 msgstr "Scene"
 
@@ -841,7 +841,7 @@ msgstr "Scene file"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:39
 #~ msgid "填写 Steam 成就 ID"
-#~ msgstr ""
+#~ msgstr "Fill in Steam achievement ID"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/CallSteam.tsx:60
 msgid "填写参数值"
@@ -917,7 +917,7 @@ msgstr "Positioning"
 #~ msgid "实时预览"
 #~ msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:110
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -926,7 +926,7 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:182
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:110
 msgid "实时预览打开"
 msgstr "Live preview on"
@@ -1087,7 +1087,7 @@ msgstr "Tiling"
 msgid "应用"
 msgstr "Apply"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:171
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:170
 msgid "应用的模板"
 msgstr "Applied template"
 
@@ -1120,7 +1120,7 @@ msgstr "Intensity"
 msgid "当前版本"
 msgstr "Current version"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:243
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:250
 msgid "德语"
 msgstr "German"
 
@@ -1461,7 +1461,7 @@ msgstr "None"
 msgid "无匹配选项"
 msgstr "No matching options"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:241
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:248
 msgid "日语"
 msgstr "Japanese"
 
@@ -1571,11 +1571,11 @@ msgstr "Title Button List"
 msgid "标题按钮文字"
 msgstr "Title Button Text"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:147
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:134
 msgid "标题背景图片"
 msgstr "Title background image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:155
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:146
 msgid "标题背景音乐"
 msgstr "Title background music"
 
@@ -1645,7 +1645,7 @@ msgstr "This command will end the game"
 msgid "永不换行"
 msgstr "Never wrap"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:242
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:249
 msgid "法语"
 msgstr "French"
 
@@ -1745,17 +1745,17 @@ msgstr "Games"
 msgid "游戏列表"
 msgstr "Game list"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:134
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:113
 msgid "游戏包名"
 msgstr "Game package name"
 
 #: src/pages/dashboard/Sidebar.tsx:102
 #: src/pages/dashboard/Sidebar.tsx:111
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:122
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:89
 msgid "游戏名称"
 msgstr "Game name"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:200
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:199
 msgid "游戏图标"
 msgstr "Game icon"
 
@@ -1768,15 +1768,16 @@ msgstr "Game control"
 msgid "游戏目录"
 msgstr "Game directory"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:130
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:105
 msgid "游戏简介"
 msgstr "Game description"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:126
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:97
 msgid "游戏识别码"
 msgstr "Game ID"
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:124
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:125
 msgid "游戏配置"
 msgstr "Game configuration"
 
@@ -1869,8 +1870,8 @@ msgstr "Video options"
 msgid "禁止跳过视频"
 msgstr "Disable skipping video"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:218
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:228
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:217
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:231
 msgid "禁用"
 msgstr "Disabled"
 
@@ -1906,7 +1907,7 @@ msgstr "ID of figure illustration"
 msgid "立绘文件"
 msgstr "Figure file"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:245
 msgid "简体中文"
 msgstr "Simplified Chinese"
 
@@ -1915,7 +1916,7 @@ msgstr "Simplified Chinese"
 msgid "红色通道"
 msgstr "Red channel"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:211
 msgid "紧急回避"
 msgstr "Emergency Evasion"
 
@@ -2021,7 +2022,7 @@ msgstr "Edit game"
 msgid "编辑组件"
 msgstr "Edit component"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:246
 msgid "繁体中文"
 msgstr "Traditional Chinese"
 
@@ -2131,7 +2132,7 @@ msgstr "Stage object control"
 msgid "舞台画面"
 msgstr "Stage"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:240
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:247
 msgid "英语"
 msgstr "English"
 
@@ -2318,7 +2319,7 @@ msgstr "Call Steam Interface, supports multiple parameters"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:264
 #~ msgid "调用 Steam 接口解锁成就"
-#~ msgstr ""
+#~ msgstr "Call Steam interface to unlock achievement"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:36
 msgid "调用/切换场景"
@@ -2336,7 +2337,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:149
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:150
 msgid "资源"
 msgstr "Assets"
 
@@ -2424,7 +2425,7 @@ msgstr "Choose animation file"
 msgid "选择图片"
 msgstr "Choose image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:372
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:383
 msgid "选择图片文件"
 msgstr "Choose image file"
 
@@ -2592,7 +2593,7 @@ msgstr "Rename game directory"
 msgid "鉴赏"
 msgstr "Appreciation"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:222
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:225
 msgid "鉴赏功能"
 msgstr "Gallery Feature"
 
@@ -2681,7 +2682,7 @@ msgstr "Preview"
 msgid "预览图标"
 msgstr "Preview icon"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:160
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:161
 msgid "预览窗口"
 msgstr "Preview window"
 
@@ -2768,7 +2769,7 @@ msgstr "Default 24 hours"
 msgid "默认值50"
 msgstr "Default 50"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:232
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
 msgid "默认语言"
 msgstr "Default Language"
 
