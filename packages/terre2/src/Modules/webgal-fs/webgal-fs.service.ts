@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { dirname, extname, join } from 'path';
+import { basename, dirname, extname, join } from 'path';
 
 export interface IFileInfo {
   name: string;
@@ -349,5 +349,33 @@ export class WebgalFsService {
       console.error(error);
       return false;
     }
+  }
+
+  /**
+   * 复制文件并以“原文件名_编号.扩展名”方式增量保存
+   */
+  async copyFileWithIncrement(filePath: string): Promise<string> {
+    const dir = dirname(filePath);
+    const ext = extname(filePath);
+    const base = basename(filePath, ext);
+
+    // 读取目录下所有文件
+    const files = await fs.readdir(dir);
+    // 匹配类似 xxx_序号.txt 的文件
+    const regex = new RegExp(`^${base}_(\\d+)${ext.replace('.', '\\.')}$`);
+    let maxNum = 0;
+    for (const file of files) {
+      const match = file.match(regex);
+      if (match) {
+        const num = parseInt(match[1], 10);
+        if (num > maxNum) maxNum = num;
+      }
+    }
+    const nextNum = (maxNum + 1).toString().padStart(3, '0');
+    const newName = `${base}_${nextNum}${ext}`;
+    const newPath = join(dir, newName);
+
+    await fs.copyFile(filePath, newPath);
+    return newPath;
   }
 }

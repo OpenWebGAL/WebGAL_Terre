@@ -1,7 +1,7 @@
 import { checkFileName } from "@/utils/checkFileName";
 import { extractExtension, getDirIcon, getFileIcon } from "@/utils/getFileIcon";
 import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Subtitle2, Text, Tooltip } from '@fluentui/react-components';
-import { bundleIcon, DeleteFilled, DeleteRegular, RenameFilled, RenameRegular } from "@fluentui/react-icons";
+import { bundleIcon, DeleteFilled, DeleteRegular, RenameFilled, RenameRegular, SaveCopyFilled, SaveCopyRegular } from "@fluentui/react-icons";
 import { t } from "@lingui/macro";
 import { useRef } from "react";
 import { useValue } from '../../hooks/useValue';
@@ -9,6 +9,7 @@ import IconWrapper from "../iconWrapper/IconWrapper";
 import { IFile, IViewType } from "./Assets";
 import styles from "./FileElement.module.scss";
 
+const SaveCopyIcon = bundleIcon(SaveCopyFilled, SaveCopyRegular);
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
 const DeleteIcon = bundleIcon(DeleteFilled, DeleteRegular);
 
@@ -21,6 +22,7 @@ export default function FileElement(
     desc,
     isProtected,
     handleOpenFile,
+    handleBackupFile,
     handleRenameFile,
     handleDeleteFile,
     checkHasFile,
@@ -32,6 +34,7 @@ export default function FileElement(
     desc?: string,
     isProtected?: boolean,
     handleOpenFile: (file: IFile) => Promise<void>,
+    handleBackupFile: (source: string) => Promise<void>,
     handleRenameFile: (source: string, newName: string) => Promise<void>,
     handleDeleteFile: (source: string) => Promise<void>,
     checkHasFile: (fileNmae: string) => boolean,
@@ -137,6 +140,22 @@ export default function FileElement(
           {desc && <span style={{ color: 'var(--text-weak)', fontSize: '12px', fontStyle: 'italic', paddingRight: '2px' }}>{desc}</span>}
 
           <div className={styles.fileAction}>
+            {
+              !file.isDir &&
+              <Tooltip content={t`创建副本`} relationship="label" positioning="below">
+                <Button
+                  icon={<SaveCopyIcon style={{ width: '16px' }} />}
+                  size='small'
+                  appearance='subtle'
+                  onClick={
+                    (e) => {
+                      e.stopPropagation();
+                      handleBackupFile(filePath);
+                    }
+                  }
+                />
+              </Tooltip>
+            }
             {
               !isProtected &&
               <>
