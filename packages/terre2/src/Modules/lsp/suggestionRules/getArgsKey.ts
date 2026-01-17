@@ -131,13 +131,27 @@ export function getArgsKey(
       return [whenKey];
     }
     case commandType.setAnimation: {
-      return [whenKey, nextKey, continueKey, targetKey, writeDefaultKey, keepKey];
+      return [
+        whenKey,
+        nextKey,
+        continueKey,
+        targetKey,
+        writeDefaultKey,
+        keepKey,
+      ];
     }
     case commandType.playEffect: {
       return [whenKey, volumeKey, idSoundKey];
     }
     case commandType.setTempAnimation: {
-      return [whenKey, nextKey, continueKey, targetKey, writeDefaultKey, keepKey];
+      return [
+        whenKey,
+        nextKey,
+        continueKey,
+        targetKey,
+        writeDefaultKey,
+        keepKey,
+      ];
     }
     case commandType.setTransform: {
       return [

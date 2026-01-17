@@ -27,6 +27,10 @@ interface FileList {
 export class WebgalFsService {
   constructor(private readonly logger: ConsoleLogger) {}
 
+  static checkFileName(name: string): boolean {
+    return name.search(/[\/\\\:\*\?"\<\>\|]/) === -1;
+  }
+
   greet() {
     this.logger.log('Welcome to WebGAl Files System Service!');
   }
@@ -86,6 +90,8 @@ export class WebgalFsService {
    * @param dirName 文件夹名称
    */
   async mkdir(src, dirName) {
+    if (!WebgalFsService.checkFileName(dirName)) return false;
+
     return await fs
       .mkdir(join(decodeURI(src), decodeURI(dirName)))
       .catch(() => {
@@ -111,6 +117,7 @@ export class WebgalFsService {
    * @param newName 新文件名
    */
   async renameFile(path: string, newName: string) {
+    if (!WebgalFsService.checkFileName(newName)) return false;
     // 取出旧文件的路径
     const rawOldPath = decodeURI(path);
     let oldPath = join(...rawOldPath.split(/[\/\\]/g));
@@ -179,6 +186,7 @@ export class WebgalFsService {
     _path: string,
     newName: string,
   ): Promise<boolean> {
+    if (!WebgalFsService.checkFileName(newName)) return false;
     try {
       const path = decodeURI(_path);
 
@@ -224,6 +232,13 @@ export class WebgalFsService {
   async createEmptyFile(path: string) {
     try {
       const decodedPath = decodeURI(path);
+      if (
+        decodedPath
+          .replace(/\\/g, '/')
+          .split('/')
+          .every((name) => WebgalFsService.checkFileName(name))
+      )
+        throw new Error('There are unexpect marks in path');
       const directory = dirname(decodedPath);
 
       if (!(await this.existsDir(directory))) {
