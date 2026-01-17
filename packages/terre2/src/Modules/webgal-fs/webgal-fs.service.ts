@@ -25,7 +25,7 @@ interface FileList {
 
 @Injectable()
 export class WebgalFsService {
-  constructor(private readonly logger: ConsoleLogger) { }
+  constructor(private readonly logger: ConsoleLogger) {}
 
   static checkFileName(name: string): boolean {
     return name.search(/[\/\\\:\*\?"\<\>\|]/) === -1;
@@ -232,7 +232,13 @@ export class WebgalFsService {
   async createEmptyFile(path: string) {
     try {
       const decodedPath = decodeURI(path);
-      if (decodedPath.replace(/\\/g, '/').split('/').every(name => WebgalFsService.checkFileName((name)))) throw new Error('There are unexpect marks in path');
+      if (
+        decodedPath
+          .replace(/\\/g, '/')
+          .split('/')
+          .every((name) => WebgalFsService.checkFileName(name))
+      )
+        throw new Error('There are unexpect marks in path');
       const directory = dirname(decodedPath);
 
       if (!(await this.existsDir(directory))) {

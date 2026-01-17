@@ -164,75 +164,75 @@ export default function FileElement(
                       <Subtitle2>{t`重命名`}</Subtitle2>
                       <Tooltip
                         content={{ children: t`文件名不可包含特殊符号: '/\\:*?"<>|'`, style: { color: 'var(--danger)' } }}
-                      relationship="inaccessible"
-                      visible={!isAccessible}
-                      positioning="below"
-                      >
-                      <Tooltip
-                        content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
-                        relationship="description"
-                        visible={checkHasFile(newFileName.value) && newFileName.value !== file.name}
+                        relationship="inaccessible"
+                        visible={!isAccessible}
                         positioning="below"
                       >
-                        <Input
-                          value={newFileName.value}
-                          className={checkHasFile(newFileName.value) && newFileName.value !== file.name ? styles.inputDanger : ''}
-                          onFocus={ev => {
-                            const el = ev.target;
-                            const dotPosition = el.value.indexOf('.');
-                            el?.setSelectionRange(0, dotPosition === -1 ? el.value.length : dotPosition);
-                          }}
-                          onChange={(_, data) => {
-                            newFileName.set(data.value ?? "");
-                          }}
-                        />
+                        <Tooltip
+                          content={{ children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`, style: { color: 'var(--danger)' } }}
+                          relationship="description"
+                          visible={checkHasFile(newFileName.value) && newFileName.value !== file.name}
+                          positioning="below"
+                        >
+                          <Input
+                            value={newFileName.value}
+                            className={checkHasFile(newFileName.value) && newFileName.value !== file.name ? styles.inputDanger : ''}
+                            onFocus={ev => {
+                              const el = ev.target;
+                              const dotPosition = el.value.indexOf('.');
+                              el?.setSelectionRange(0, dotPosition === -1 ? el.value.length : dotPosition);
+                            }}
+                            onChange={(_, data) => {
+                              newFileName.set(data.value ?? "");
+                            }}
+                          />
+                        </Tooltip>
                       </Tooltip>
-                    </Tooltip>
-                    <Button
-                      appearance="primary"
-                      disabled={newFileName.value.trim() === '' || !isAccessible || checkHasFile(newFileName.value) && newFileName.value !== file.name}
-                      onClick={() => handleRenameFile(filePath, newFileName.value.trim())}
-                    >{t`重命名`}</Button>
-                  </div>
-                </PopoverSurface>
-              </Popover>
+                      <Button
+                        appearance="primary"
+                        disabled={newFileName.value.trim() === '' || !isAccessible || checkHasFile(newFileName.value) && newFileName.value !== file.name}
+                        onClick={() => handleRenameFile(filePath, newFileName.value.trim())}
+                      >{t`重命名`}</Button>
+                    </div>
+                  </PopoverSurface>
+                </Popover>
 
-            <Popover withArrow>
-              <PopoverTrigger>
-                <Tooltip content={t`删除`} relationship="label" positioning="below">
-                  <Button
-                    icon={<DeleteIcon style={{ width: '16px' }} />}
-                    size='small'
-                    appearance='subtle'
+                <Popover withArrow>
+                  <PopoverTrigger>
+                    <Tooltip content={t`删除`} relationship="label" positioning="below">
+                      <Button
+                        icon={<DeleteIcon style={{ width: '16px' }} />}
+                        size='small'
+                        appearance='subtle'
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </Tooltip>
+                  </PopoverTrigger>
+                  <PopoverSurface
                     onClick={(e) => e.stopPropagation()}
-                  />
-                </Tooltip>
-              </PopoverTrigger>
-              <PopoverSurface
-                onClick={(e) => e.stopPropagation()}
-                onKeyDown={(e) => {
-                  e.stopPropagation();
-                  (e.key === 'Enter') && handleDeleteFile(filePath);
-                }}
-              >
-                <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
-                  <Subtitle2>{t`删除`}</Subtitle2>
-                  <Text>{t`是否要删除 "${file.name}" ？`}</Text>
-                  <Button
-                    appearance="primary"
-                    onClick={(e) => {
+                    onKeyDown={(e) => {
                       e.stopPropagation();
-                      handleDeleteFile(filePath);
+                      (e.key === 'Enter') && handleDeleteFile(filePath);
                     }}
-                  >{t`删除`}</Button>
-                </div>
-              </PopoverSurface>
-            </Popover>
-          </>
+                  >
+                    <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
+                      <Subtitle2>{t`删除`}</Subtitle2>
+                      <Text>{t`是否要删除 "${file.name}" ？`}</Text>
+                      <Button
+                        appearance="primary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteFile(filePath);
+                        }}
+                      >{t`删除`}</Button>
+                    </div>
+                  </PopoverSurface>
+                </Popover>
+              </>
             }
+          </div>
         </div>
       </div>
-    </div>
     </Tooltip >
   );
 }
