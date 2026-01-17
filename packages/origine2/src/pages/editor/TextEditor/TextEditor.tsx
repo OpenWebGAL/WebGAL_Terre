@@ -55,10 +55,32 @@ export default function TextEditor(props: ITextEditorProps) {
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
     }));
+    // 由于 monaco 接收拖拽进来的文字时, 会在末尾添加 $0
+    // 这里手动实现接收拖拽进来的文字, 以避开这个问题
+    const domNode = editor.getContainerDomNode();
+    const dropHandler = (e: DragEvent) => {
+      e.preventDefault();
+      const data = e.dataTransfer?.getData("text/plain");
+      const position = editor.getTargetAtClientPoint(e.clientX, e.clientY);
+      if (position?.range && data) {
+        editor.executeEdits("drop", [
+          {
+            range: position.range,
+            text: data,
+            forceMoveMarkers: true,
+          },
+        ]);
+      }
+    };
+    domNode.addEventListener("drop", dropHandler);
+    editor.onDidDispose(() => {
+      domNode.removeEventListener("drop", dropHandler);
+    });
     editor.updateOptions({
       unicodeHighlight: { ambiguousCharacters: false },
       wordWrap: isAutoWarp ? 'on' : 'off' ,
       smoothScrolling: true,
+      quickSuggestions: { other: true, comments: true, strings: true },
     });
     updateEditData();
   }
