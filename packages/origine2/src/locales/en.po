@@ -600,9 +600,9 @@ msgstr "Create new template"
 msgid "创建新游戏"
 msgstr "Create new game"
 
-#: src/components/Assets/FileElement.tsx:192
-#: src/components/Assets/FileElement.tsx:209
-#: src/components/Assets/FileElement.tsx:217
+#: src/components/Assets/FileElement.tsx:202
+#: src/components/Assets/FileElement.tsx:219
+#: src/components/Assets/FileElement.tsx:227
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:206
@@ -1060,7 +1060,7 @@ msgstr "Created"
 
 #: src/components/Assets/Assets.tsx:354
 #: src/components/Assets/Assets.tsx:413
-#: src/components/Assets/FileElement.tsx:163
+#: src/components/Assets/FileElement.tsx:172
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
 
@@ -1313,6 +1313,10 @@ msgstr "Sound effect file"
 msgid "文件名"
 msgstr "File name"
 
+#: src/components/Assets/FileElement.tsx:166
+msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
+msgstr ""
+
 #: src/components/Assets/Assets.tsx:492
 msgid "文件大小"
 msgstr "File size"
@@ -1475,7 +1479,7 @@ msgstr "Pin popup"
 msgid "是否自定义分隔符"
 msgstr "Use custom separator"
 
-#: src/components/Assets/FileElement.tsx:210
+#: src/components/Assets/FileElement.tsx:220
 msgid "是否要删除 \"{0}\" ？"
 msgstr "Are you sure you want to delete \"{0}\"?"
 
@@ -2570,9 +2574,9 @@ msgstr "Configuration"
 msgid "配置模板"
 msgstr "Configure template"
 
-#: src/components/Assets/FileElement.tsx:142
-#: src/components/Assets/FileElement.tsx:161
-#: src/components/Assets/FileElement.tsx:185
+#: src/components/Assets/FileElement.tsx:145
+#: src/components/Assets/FileElement.tsx:164
+#: src/components/Assets/FileElement.tsx:195
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
