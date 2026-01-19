@@ -46,6 +46,34 @@ msgstr "1, 2, 3, ..."
 msgid "BGM"
 msgstr "BGM"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:157
+msgid "BGM 列表容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:160
+msgid "BGM 名称"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:156
+msgid "BGM 容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:159
+msgid "BGM 控制按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:158
+msgid "BGM 播放器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:161
+msgid "BGM 条目"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:162
+msgid "BGM 条目（激活）"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:61
 msgid "BGM 音量"
 msgstr "BGM 音量"
@@ -65,6 +93,34 @@ msgstr "callSteam: -achievementId=;"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/UnlockExtra.tsx:17
 msgid "CG"
 msgstr "CG"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:163
+msgid "CG 主区"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:164
+msgid "CG 容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:168
+msgid "CG 导航"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:169
+msgid "CG 导航（激活）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:166
+msgid "CG 展示区"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:167
+msgid "CG 展示区外层"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:165
+msgid "CG 条目"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:92
 msgid "changeBg: 选择背景图片;"
@@ -94,6 +150,30 @@ msgstr "CSS プロパティ名："
 msgid "end;"
 msgstr "end;"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:148
+msgid "Extra"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:155
+msgid "Extra 主容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:151
+msgid "Extra 主界面"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:154
+msgid "Extra 标题"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:152
+msgid "Extra 顶部区域"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:153
+msgid "Extra 顶部图标"
+msgstr ""
+
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:225
 msgid "font-family"
 msgstr "font-family"
@@ -117,6 +197,22 @@ msgstr "Live2D モーション"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:319
 msgid "Live2D 表情"
 msgstr "Live2D 表情"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:193
+msgid "Logo"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:196
+msgid "Logo 主体"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:198
+msgid "Logo 动画激活"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:197
+msgid "Logo 背景"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:180
 msgid "miniAvatar:选择小头像;"
@@ -261,7 +357,7 @@ msgstr "次に"
 msgid "下移"
 msgstr "下へ移動"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:61
 msgid "不可选项"
 msgstr "選択できない選択肢"
 
@@ -471,6 +567,18 @@ msgstr "ピクセル"
 msgid "光辉电影滤镜"
 msgstr "ゴッドレイ映画"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:178
+msgid "全局对话框"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:171
+msgid "全屏 CG 主体"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:170
+msgid "全屏展示容器"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:147
 msgid "全屏文字"
 msgstr "全画面テキスト"
@@ -481,8 +589,21 @@ msgstr "全画面画面でテキストを表示する。独白やシーンの導
 
 #: src/pages/dashboard/About.tsx:29
 #: src/pages/dashboard/About.tsx:30
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:324
 msgid "关于"
 msgstr "About"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:266
+msgid "关于入口文字"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:265
+msgid "关于入口标题"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:328
+msgid "关于内容"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:257
 msgid "关联立绘"
@@ -523,7 +644,7 @@ msgstr "背景画像を非表示"
 msgid "关闭预览窗口"
 msgstr "プレビューウィンドウを閉じる"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
 msgid "内层文本"
 msgstr "内側テキスト"
 
@@ -603,9 +724,9 @@ msgstr "新しいテンプレートを作成"
 msgid "创建新游戏"
 msgstr "新しいゲームを作成"
 
-#: src/components/Assets/FileElement.tsx:192
-#: src/components/Assets/FileElement.tsx:209
-#: src/components/Assets/FileElement.tsx:217
+#: src/components/Assets/FileElement.tsx:202
+#: src/components/Assets/FileElement.tsx:219
+#: src/components/Assets/FileElement.tsx:227
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:206
@@ -667,6 +788,14 @@ msgstr "アニメーション"
 msgid "半张嘴"
 msgstr "半分開いた口"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:112
+msgid "单个按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:113
+msgid "单个按钮（激活）"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:81
 msgid "单位毫秒。 0~ 有效"
 msgstr "ミリ秒単位。 0~ 有効"
@@ -724,7 +853,7 @@ msgstr "ピン留めを解除"
 msgid "变换"
 msgstr "トランスフォーム"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:58
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:61
 msgid "可选项"
 msgstr "選択可能な選択肢"
 
@@ -767,6 +896,74 @@ msgstr "動画のスキップを有効にする"
 msgid "唇形同步与眨眼"
 msgstr "口パクとまばたき"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:80
+msgid "回想"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:83
+msgid "回想主界面"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:86
+msgid "回想主界面（禁用滚动）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:84
+msgid "回想主界面（退出）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:85
+msgid "回想主界面（隐藏层级）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:90
+msgid "回想内容区"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:91
+msgid "回想条目"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:92
+msgid "回想条目（退出）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:95
+msgid "回想条目内容容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:93
+msgid "回想条目功能区"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:97
+msgid "回想条目按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:96
+msgid "回想条目按钮列表"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:98
+msgid "回想条目文本"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:94
+msgid "回想条目角色名"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:89
+msgid "回想标题"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:87
+msgid "回想顶部区域"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:88
+msgid "回想顶部图标"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:236
 msgid "固定弹窗"
 msgstr "ポップアップをピン留め"
@@ -779,6 +976,10 @@ msgstr "画像"
 #: src/pages/templateEditor/TemplateEditorMainAria/TemplateEditorToolbar.tsx:35
 msgid "图形编辑器"
 msgstr "グラフィックエディタ"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:329
+msgid "图标"
+msgstr ""
 
 #: src/components/IconCreator/IconCreator.tsx:685
 #: src/components/IconCreator/IconCreator.tsx:691
@@ -850,7 +1051,7 @@ msgstr "シーンファイル"
 msgid "填写参数值"
 msgstr "パラメータ値を入力"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:42
 msgid "外层文本"
 msgstr "外側テキスト"
 
@@ -912,6 +1113,94 @@ msgstr "文字間隔"
 msgid "字重"
 msgstr "フォントの太さ"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:283
+msgid "存档标题文字"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:280
+msgid "存读主界面"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:290
+msgid "存读内容区"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:302
+msgid "存读小立绘"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:306
+msgid "存读小立绘（右）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:305
+msgid "存读小立绘（左）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:303
+msgid "存读小立绘背景"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:304
+msgid "存读小立绘角色"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:291
+msgid "存读条目"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:293
+msgid "存读条目序号"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:297
+msgid "存读条目文本"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:298
+msgid "存读条目文本内边距"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:295
+msgid "存读条目日期"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:299
+msgid "存读条目角色名"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:292
+msgid "存读条目顶部"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:282
+msgid "存读标题背景"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:277
+msgid "存读档"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:281
+msgid "存读顶部"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:286
+msgid "存读顶部按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:288
+msgid "存读顶部按钮（选中）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:285
+msgid "存读顶部按钮列表"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:287
+msgid "存读顶部按钮文字"
+msgstr ""
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:51
 msgid "定位方式"
 msgstr "位置決め方法"
@@ -950,11 +1239,32 @@ msgstr "コントラスト"
 msgid "对话"
 msgstr "ダイアログ"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:57
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:181
+msgid "对话框主体"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:182
+msgid "对话框内层容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:183
+msgid "对话框容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:186
+msgid "对话框按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:185
+msgid "对话框按钮列表"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:60
 msgid "对话框文字"
 msgstr "ダイアログテキスト"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:42
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:184
 msgid "对话框标题"
 msgstr "ダイアログタイトル"
 
@@ -998,11 +1308,11 @@ msgstr "選択したゲームに現在のテンプレートを適用する"
 msgid "小"
 msgstr "小さい"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
 msgid "小头像图像"
 msgstr "アバター画像"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
 msgid "小头像容器"
 msgstr "アバターコンテナ"
 
@@ -1063,7 +1373,7 @@ msgstr "作成済み"
 
 #: src/components/Assets/Assets.tsx:354
 #: src/components/Assets/Assets.tsx:413
-#: src/components/Assets/FileElement.tsx:163
+#: src/components/Assets/FileElement.tsx:172
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "ファイルまたはフォルダは既に存在します {0}"
 
@@ -1099,9 +1409,21 @@ msgstr "すでに適用されているテンプレート"
 msgid "应用颜色变化"
 msgstr "色の変更を適用"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:105
+msgid "底部控制栏"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:124
+msgid "底部控制栏（电影模式）"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:262
 msgid "延迟时间（秒）"
 msgstr "遅延時間（秒）"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:137
+msgid "开发者面板"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:372
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
@@ -1126,6 +1448,10 @@ msgstr "現在のバージョン"
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:243
 msgid "德语"
 msgstr "ドイツ語"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:114
+msgid "快存读预览"
+msgstr ""
 
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:142
 msgid "快速预览效果"
@@ -1188,6 +1514,14 @@ msgstr "連結モード"
 msgid "指针"
 msgstr "ポインター"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:111
+msgid "按钮（开启）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:110
+msgid "按钮文字"
+msgstr ""
+
 #: src/components/Assets/Assets.tsx:480
 msgid "排序方式"
 msgstr "並べ替え"
@@ -1195,6 +1529,14 @@ msgstr "並べ替え"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:215
 msgid "控制是否要显示文本框"
 msgstr "テキストボックスの表示を制御する"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:108
+msgid "控制栏主体"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:109
+msgid "控制栏按钮"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGColor.tsx:36
 msgid "提交"
@@ -1312,6 +1654,10 @@ msgstr "効果音ファイル"
 msgid "文件名"
 msgstr "ファイル名"
 
+#: src/components/Assets/FileElement.tsx:166
+msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
+msgstr ""
+
 #: src/components/Assets/Assets.tsx:492
 msgid "文件大小"
 msgstr "ファイルサイズ"
@@ -1332,6 +1678,22 @@ msgstr "テキスト表示完了待ち"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:300
 msgid "文字颜色"
 msgstr "文字色"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:331
+msgid "文本"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:45
+msgid "文本元素（完成）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
+msgid "文本元素（开始）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+msgid "文本占位"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:60
 msgid "文本对齐"
@@ -1354,7 +1716,7 @@ msgstr "テキストボックス"
 msgid "文本框（小头像关闭时）"
 msgstr "テキストボックス（アバターが閉じている場合）"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:53
 msgid "文本框文本"
 msgstr "テキストボックスのテキスト"
 
@@ -1370,6 +1732,14 @@ msgstr "テキストの長さ (em)"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:61
 msgid "文本阴影"
 msgstr "テキストシャドウ"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:339
+msgid "文本预览"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:342
+msgid "文本预览主体"
+msgstr ""
 
 #: src/pages/dashboard/About.tsx:77
 msgid "文档"
@@ -1474,7 +1844,7 @@ msgstr "ポップアップをピン留め"
 msgid "是否自定义分隔符"
 msgstr "カスタム区切り文字を使用"
 
-#: src/components/Assets/FileElement.tsx:210
+#: src/components/Assets/FileElement.tsx:220
 msgid "是否要删除 \"{0}\" ？"
 msgstr "\"{0}\"を削除してもよろしいですか？"
 
@@ -1515,6 +1885,39 @@ msgstr "プレビューウィンドウを表示"
 msgid "普通对话"
 msgstr "ダイアログ"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:229
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:232
+msgid "普通按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:233
+msgid "普通按钮（选中）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:240
+msgid "普通选项"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:243
+msgid "普通选项容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:247
+msgid "普通选项按钮列表"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:244
+msgid "普通选项标题"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:245
+msgid "普通选项标题描边"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:246
+msgid "普通选项标题阴影"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:29
 msgid "未指定"
 msgstr "指定なし"
@@ -1549,8 +1952,13 @@ msgstr "この文が実行されるのを待つ"
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "WebGAL ホームページに作品を掲載する手順を見る"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:127
+msgid "标签"
+msgstr ""
+
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:20
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:23
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:330
 msgid "标题"
 msgstr "タイトル"
 
@@ -1783,6 +2191,14 @@ msgstr "ゲーム構成"
 msgid "源代码"
 msgstr "ソースコード"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:313
+msgid "滑块"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:317
+msgid "滑块气泡"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:121
 msgid "滤镜"
 msgstr "フィルター"
@@ -1917,6 +2333,14 @@ msgstr "赤いチャネル"
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:212
 msgid "紧急回避"
 msgstr "緊急回避"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:350
+msgid "紧急遮罩"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:353
+msgid "紧急遮罩主体"
+msgstr ""
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
 msgid "纹理"
@@ -2147,6 +2571,38 @@ msgstr "ユーザーからの文字入力を取得"
 msgid "获取输入"
 msgstr "入力を取得"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:205
+msgid "菜单"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:208
+msgid "菜单主界面"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:209
+msgid "菜单标签内容"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:216
+msgid "菜单面板"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:219
+msgid "菜单面板主体"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:220
+msgid "菜单面板按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:221
+msgid "菜单面板按钮图标"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:222
+msgid "菜单面板按钮高亮"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:92
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:105
 msgid "蓝色通道"
@@ -2181,23 +2637,23 @@ msgstr "キャラクター名を空白のままにすると前の文から継承
 msgid "角色名，留空以继承上句:对话;"
 msgstr "キャラクター名を空白のままにすると前の文から継承;ダイアログ;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:49
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:52
 msgid "角色名内层文本"
 msgstr "キャラクター名内側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:48
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:51
 msgid "角色名外层文本"
 msgstr "キャラクター名外側テキスト"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:50
 msgid "角色名容器"
 msgstr "キャラクター名コンテナ"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:43
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:46
 msgid "角色名文本框"
 msgstr "キャラクター名テキストボックス"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:44
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:47
 msgid "角色名文本框背景"
 msgstr "キャラクター名テキストボックスの背景"
 
@@ -2299,6 +2755,30 @@ msgstr "フォント名を入力または選択してください"
 msgid "请输入搜索提示词..."
 msgstr "検索ヒントを入力してください..."
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:294
+msgid "读档条目序号"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:301
+msgid "读档条目文本"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:296
+msgid "读档条目日期"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:300
+msgid "读档条目角色名"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:284
+msgid "读档标题文字"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:289
+msgid "读档顶部按钮（选中）"
+msgstr ""
+
 #: src/components/IconCreator/IconCreator.tsx:675
 msgid "调整前景图片"
 msgstr "前景画像のリサイズ"
@@ -2334,6 +2814,10 @@ msgstr "シーンを呼び出す"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:40
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:332
+msgid "贡献者"
+msgstr ""
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:149
 msgid "资源"
@@ -2394,6 +2878,10 @@ msgstr "プラットフォーム"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:106
 msgid "返回"
 msgstr "戻る"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:327
+msgid "返回按钮"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:235
 msgid "进出场动画"
@@ -2521,11 +3009,39 @@ msgid "选择颜色"
 msgstr "色を選ぶ"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:67
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:64
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:67
 msgid "选项"
 msgstr "選択肢を設定"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:67
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:257
+msgid "选项主界面"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:264
+msgid "选项内容列"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:263
+msgid "选项内容区"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:267
+msgid "选项分页容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:269
+msgid "选项分页按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:270
+msgid "选项分页按钮（激活）"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:268
+msgid "选项分页按钮列表"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:70
 msgid "选项列表"
 msgstr "選択肢リスト"
 
@@ -2533,21 +3049,49 @@ msgstr "選択肢リスト"
 msgid "选项名称"
 msgstr "選択肢を設定"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:68
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:71
 msgid "选项按钮"
 msgstr "選択肢ボタン"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:69
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:72
 msgid "选项按钮（禁用）"
 msgstr "選択肢ボタン（無効状態）"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:70
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:73
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:259
+msgid "选项标题"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:262
+msgid "选项标题投影"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:261
+msgid "选项标题描边"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:260
+msgid "选项标题文字"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:316
+msgid "选项滑块"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:124
 #~ msgid "选项菜单"
 #~ msgstr "オプションメニュー"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:254
+msgid "选项设置"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:258
+msgid "选项顶部"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:83
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:99
@@ -2569,9 +3113,9 @@ msgstr "構成"
 msgid "配置模板"
 msgstr "テンプレートを設定"
 
-#: src/components/Assets/FileElement.tsx:142
-#: src/components/Assets/FileElement.tsx:161
-#: src/components/Assets/FileElement.tsx:185
+#: src/components/Assets/FileElement.tsx:145
+#: src/components/Assets/FileElement.tsx:164
+#: src/components/Assets/FileElement.tsx:195
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
@@ -2660,6 +3204,26 @@ msgstr "右寄せ"
 msgid "靠左"
 msgstr "左寄せ"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:140
+msgid "面板主体"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:129
+msgid "面板单个按钮"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:128
+msgid "面板容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:141
+msgid "面板开关"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:130
+msgid "面板按钮文字"
+msgstr ""
+
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
 msgid "音乐"
 msgstr "BGM"
@@ -2676,9 +3240,25 @@ msgstr "アンティシペート"
 msgid "预览"
 msgstr "プレビュー"
 
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:115
+msgid "预览主体"
+msgstr ""
+
 #: src/components/IconCreator/IconCreator.tsx:629
 msgid "预览图标"
 msgstr "プレビューアイコン"
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:116
+msgid "预览图片容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:117
+msgid "预览文本容器"
+msgstr ""
+
+#: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:343
+msgid "预览文本框"
+msgstr ""
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:160
 msgid "预览窗口"
