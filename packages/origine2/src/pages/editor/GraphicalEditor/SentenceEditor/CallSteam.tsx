@@ -8,13 +8,8 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { useLingui } from "@lingui/react";
 import { useMemo } from "react";
 
-const CALL_STEAM_COMMAND = "callSteam";
-
 export default function CallSteam(props: ISentenceEditorProps) {
   const { i18n } = useLingui();
-  const existingArg = props.sentence.args.find((arg) => arg.key !== "speaker");
-  const selectedKey = useValue(existingArg?.key ?? "achievementId");
-  const paramValue = useValue((existingArg?.value ?? "").toString());
   const paramOptions = useMemo(
     () =>
       new Map<string, string>([
@@ -23,13 +18,21 @@ export default function CallSteam(props: ISentenceEditorProps) {
     [i18n.locale]
   );
 
+  const existingArg = props.sentence.args.find((arg) => paramOptions.has(arg.key));
+  const selectedKey = useValue(existingArg?.key ?? "achievementId");
+  const paramValue = useValue((existingArg?.value ?? "").toString());
+
   const submit = () => {
     const normalizedKey = selectedKey.value.trim();
     const submitString = combineSubmitString(
-      props.sentence.commandRaw || CALL_STEAM_COMMAND,
+      props.sentence.commandRaw,
       "",
-      props.sentence.args.filter((arg) => arg.key !== "speaker"),
-      normalizedKey ? [{ key: normalizedKey, value: paramValue.value, fullMode: true }] : [],
+      props.sentence.args,
+      [
+        ...(normalizedKey ? [
+          { key: normalizedKey, value: paramValue.value, fullMode: true }
+        ] : []),
+      ],
     );
     props.onSubmit(submitString);
   };

@@ -47,10 +47,6 @@ import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserI
 import CallSteam from "@/pages/editor/GraphicalEditor/SentenceEditor/CallSteam";
 import { t } from "@lingui/macro";
 
-type SentenceEditorType = commandType | string;
-const CALL_STEAM_COMMAND_RAW = "callSteam";
-const callSteamType: SentenceEditorType = (commandType as unknown as Record<string, SentenceEditorType>)[CALL_STEAM_COMMAND_RAW] ?? CALL_STEAM_COMMAND_RAW;
-
 export interface ISentenceEditorProps {
   sentence: ISentence;
   onSubmit: (newSentence: string) => void;
@@ -58,8 +54,7 @@ export interface ISentenceEditorProps {
 }
 
 export interface ISentenceEditorConfig {
-  type: SentenceEditorType,
-  commandRaw?: string,
+  type: commandType,
   title: () => string,
   initialText: () => string,
   component: FC<ISentenceEditorProps>,
@@ -255,8 +250,7 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     descText: () => t`获取来自用户的字符输入`
   },
   {
-    type: callSteamType,
-    commandRaw: CALL_STEAM_COMMAND_RAW,
+    type: commandType.callSteam,
     title: () => t`调用 Steam`,
     initialText: () => t`callSteam: -achievementId=;`,
     component: CallSteam,

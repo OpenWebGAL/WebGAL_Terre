@@ -177,6 +177,9 @@ export function getArgsKey(
     case commandType.wait: {
       return [whenKey];
     }
+    case commandType.callSteam: {
+      return [whenKey, achievementIdKey];
+    }
     default: {
       return [whenKey, nextKey, continueKey];
     }
@@ -957,5 +960,15 @@ const clearKey: CompletionItem = {
   detail: '清除说话者',
   documentation: markdown(`
 清除说话者
+  `),
+};
+
+const achievementIdKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'achievementId',
+  insertText: 'achievementId=',
+  detail: '成就ID',
+  documentation: markdown(`
+成就ID
   `),
 };
