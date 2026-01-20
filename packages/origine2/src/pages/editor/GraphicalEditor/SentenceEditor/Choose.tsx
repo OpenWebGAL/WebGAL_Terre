@@ -19,6 +19,7 @@ export default function Choose(props: ISentenceEditorProps) {
       contentStr,
       props.sentence.args,
       [],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };

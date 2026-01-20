@@ -6,7 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {getArgByKey} from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
-import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function Bgm(props: ISentenceEditorProps) {
@@ -33,6 +33,7 @@ export default function Bgm(props: ISentenceEditorProps) {
           {key: "series", value: ""},
         ]),
       ],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };

@@ -1,4 +1,4 @@
-import { arg } from "webgal-parser/src/interface/sceneInterface";
+import { arg } from 'webgal-parser/src/interface/sceneInterface';
 
 /**
  * 合成要提交的字符串
@@ -9,19 +9,20 @@ import { arg } from "webgal-parser/src/interface/sceneInterface";
  * @returns 合并后的用于提交的字符串
  */
 // eslint-disable-next-line max-params
-export function combineSubmitString (
+export function combineSubmitString(
   commandStr: string | undefined,
   content: string,
   originalArgs: Array<arg>,
-  newArgs: Array<{key: string, value: string | boolean | number, fullMode?: boolean}>
+  newArgs: Array<{ key: string; value: string | boolean | number; fullMode?: boolean }>,
+  comment: string,
 ): string {
   const argStrings: Array<string> = [];
   const unsupportedArg = new Map<string, string | boolean | number>();
 
-  originalArgs.forEach(oArg => unsupportedArg.set(oArg.key, oArg.value));
+  originalArgs.forEach((oArg) => unsupportedArg.set(oArg.key, oArg.value));
   newArgs.forEach((nArg) => {
-    if (!nArg.fullMode && (nArg.value === true || nArg.value === false || nArg.value === "")) {
-      if (nArg.value === "") {
+    if (!nArg.fullMode && (nArg.value === true || nArg.value === false || nArg.value === '')) {
+      if (nArg.value === '') {
         nArg.value = false;
       }
       argStrings.push(argToSimplifiedString(nArg.key, nArg.value));
@@ -35,11 +36,11 @@ export function combineSubmitString (
     argStrings.push(argToString(k, v));
   });
 
-  let combinedString = "";
+  let combinedString = '';
   if (commandStr !== undefined) {
     combinedString += `${commandStr}:`;
   }
-  combinedString += `${content}${argStrings.join("")};`;
+  combinedString += `${content}${argStrings.join('')};${comment || ''}`;
 
   return combinedString;
 }
@@ -50,10 +51,7 @@ export function combineSubmitString (
  * @param value 参数的值
  * @returns 转换后的字符串
  */
-export function argToString(
-  key: string,
-  value: string | boolean | number,
-): string {
+export function argToString(key: string, value: string | boolean | number): string {
   return ` -${key}=${value}`;
 }
 
@@ -63,10 +61,7 @@ export function argToString(
  * @param value 参数的值
  * @returns 转换后的字符串
  */
-export function argToSimplifiedString(
-  key: string,
-  value: boolean,
-): string {
+export function argToSimplifiedString(key: string, value: boolean): string {
   if (value) {
     return ` -${key}`;
   } else {

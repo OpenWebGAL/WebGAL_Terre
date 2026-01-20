@@ -27,7 +27,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
-  
+
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
     const submitString = combineSubmitString(
@@ -49,6 +49,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         {key: "duration", value: duration.value},
         {key: "next", value: isGoNext.value},
       ],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };

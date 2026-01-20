@@ -33,6 +33,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           {key: "series", value: unlockSeries.value},
         ] : []),
       ],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };
@@ -64,8 +65,8 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
               fileName.set(newFile?.name ?? "");
               submit();
             }}
-            extNames={unlockType.value === "unlockCg" 
-              ? extNameMap.get('image') 
+            extNames={unlockType.value === "unlockCg"
+              ? extNameMap.get('image')
               : extNameMap.get('audio')}
           />
         </>

@@ -30,6 +30,7 @@ export default function CallSteam(props: ISentenceEditorProps) {
       "",
       props.sentence.args.filter((arg) => arg.key !== "speaker"),
       normalizedKey ? [{ key: normalizedKey, value: paramValue.value, fullMode: true }] : [],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };

@@ -27,6 +27,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
       isSetEffectsOff.value ? "" : effectName.value,
       props.sentence.args,
       [],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };

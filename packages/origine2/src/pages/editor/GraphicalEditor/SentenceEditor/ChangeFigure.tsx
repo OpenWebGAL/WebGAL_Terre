@@ -258,6 +258,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "zIndex", value: zIndex.value},
         {key: "next", value: isGoNext.value},
       ],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };

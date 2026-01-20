@@ -28,7 +28,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
-  
+
   const submit = () => {
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
@@ -40,6 +40,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
         {key: "keep", value: keep.value},
         {key: "next", value: isGoNext.value},
       ],
+      props.sentence.comment
     );
     props.onSubmit(submitString);
   };
