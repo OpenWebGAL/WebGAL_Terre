@@ -49,6 +49,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         {key: "duration", value: duration.value},
         {key: "next", value: isGoNext.value},
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };
