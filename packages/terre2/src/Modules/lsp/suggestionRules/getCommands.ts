@@ -411,4 +411,17 @@ wait: 5000; 等待5秒钟
 \`\`\``,
     ),
   },
+  {
+    kind: CompletionItemKind.Function,
+    label: 'callSteam',
+    insertText: makeInsertText('callSteam'),
+    detail: `调用 Steam`,
+    documentation: markdown(
+      `调用 Steam
+\`\`\`
+callSteam: -achievementId=ACH_WIN_ONE_GAME;
+callSteam: -achievementId=achievementId;
+\`\`\``,
+    ),
+  }
 ];
