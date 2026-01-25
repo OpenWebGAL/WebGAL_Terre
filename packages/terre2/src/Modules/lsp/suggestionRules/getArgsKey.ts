@@ -510,7 +510,7 @@ const blendModeKey: CompletionItem = {
 - screen (滤色)
 
 \`\`\`
-changeFigure:xxx.png -blendMode=additive;
+changeFigure:xxx.png -blendMode=add;
 \`\`\`
   `),
 };
