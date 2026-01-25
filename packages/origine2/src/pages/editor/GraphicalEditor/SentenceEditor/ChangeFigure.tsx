@@ -45,6 +45,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const zIndex = useValue(String(getArgByKey(props.sentence, 'zIndex') ?? ''));
   const blink = useValue<string>(getArgByKey(props.sentence, "blink").toString() ?? "");
   const focus = useValue<string>(getArgByKey(props.sentence, "focus").toString() ?? "");
+  const blendMode = useValue<string>(getArgByKey(props.sentence, "blendMode").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
@@ -65,6 +66,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["", "OFF"],
     ["on", "ON"],
   ]);
+
+  const blendModeOptions = useMemo(() => new Map<string, string>([
+    ["", t`默认`],
+    ["normal", t`正常`],
+    ["add", t`线性减淡`],
+    ["multiply", t`正片叠底`],
+    ["screen", t`滤色`],
+  ]), []);
 
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
@@ -256,6 +265,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "focus", value: updateFocusParam()},
         {key: "ease", value: ease.value},
         {key: "zIndex", value: zIndex.value},
+        {key: "blendMode", value: blendMode.value},
         {key: "next", value: isGoNext.value},
       ],
     );
@@ -379,6 +389,16 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 value={ease.value}
                 onValueChange={(newValue) => {
                   ease.set(newValue?.toString() ?? "");
+                  submit();
+                }}
+              />
+            </CommonOptions>
+            <CommonOptions title={t`混合模式`} key="blendMode">
+              <WheelDropdown
+                options={blendModeOptions}
+                value={blendMode.value}
+                onValueChange={(newValue) => {
+                  blendMode.set(newValue?.toString() ?? "");
                   submit();
                 }}
               />
