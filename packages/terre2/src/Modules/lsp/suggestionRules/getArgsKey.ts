@@ -61,6 +61,7 @@ export function getArgsKey(
         easeKey,
         blinkKey,
         focusKey,
+        blendModeKey,
       ];
     }
     case commandType.bgm: {
@@ -492,6 +493,24 @@ const zIndexKey: CompletionItem = {
 \`\`\`
 changeFigure:xxx.png -id=xxx -zIndex=0;
 changeFigure:yyy.png -id=yyy -zIndex=1;
+\`\`\`
+  `),
+};
+
+const blendModeKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'blendMode',
+  insertText: 'blendMode=',
+  detail: '混合模式',
+  documentation: markdown(`
+设置立绘的混合模式，可用的混合模式有
+- normal (默认值, 透明度混合)
+- add (线性减淡)
+- multiply (正片叠底)
+- screen (滤色)
+
+\`\`\`
+changeFigure:xxx.png -blendMode=add;
 \`\`\`
   `),
 };
