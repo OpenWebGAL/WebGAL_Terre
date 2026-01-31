@@ -233,9 +233,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     }
   }, [animationFlag.value]);
   const submit = () => {
+    const contentWithType = isSpineJsonFormat && !isHaveSpineArg
+      ? `${figureFile.value}?type=spine`
+      : figureFile.value;
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
-      figureFile.value,
+      contentWithType,
       props.sentence.args,
       [
         {key: "left", value: figurePosition.value === "left"},
