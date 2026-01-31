@@ -13,8 +13,29 @@ export function JsonResourceDisplay(props: { url: string }) {
 
   const isDarkMode = useEditorStore.use.isDarkMode();
 
+  const shouldUpdateAnimationTable = (path: string) => {
+    const normalized = path.replace(/\\/g, '/').toLowerCase();
+    if (!normalized.startsWith('games/')) return false;
+    if (!normalized.includes('/game/animation/')) return false;
+    if (!normalized.endsWith('.json')) return false;
+    return !normalized.endsWith('/animationtable.json');
+  };
+
+  const updateAnimationTable = async (path: string) => {
+    if (!shouldUpdateAnimationTable(path)) return;
+    const parts = path.replace(/\\/g, '/').split('/');
+    const gameName = parts[1];
+    if (!gameName) return;
+    try {
+      await api.manageGameControllerUpdateAnimationTable({ gameName });
+    } catch (_) {
+      return;
+    }
+  };
+
   async function update(text: string) {
     await api.manageGameControllerEditTextFile({ textFile: text, path: url });
+    await updateAnimationTable(url);
     fileResp.mutate();
   }
 

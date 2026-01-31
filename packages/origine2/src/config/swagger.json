@@ -254,6 +254,34 @@
         ]
       }
     },
+    "/api/assets/copyFileWithIncrement": {
+      "post": {
+        "operationId": "AssetsController_copyFileWithIncrement",
+        "summary": "Copy File With Increment",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CopyFileWithIncrementDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File copied successfully."
+          },
+          "400": {
+            "description": "Failed to copy the file."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
     "/api/manageGame/gameList": {
       "get": {
         "operationId": "ManageGameController_getGameList",
@@ -614,6 +642,35 @@
           },
           "400": {
             "description": "Failed to edit the file."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/updateAnimationTable": {
+      "post": {
+        "operationId": "ManageGameController_updateAnimationTable",
+        "summary": "Update Animation Table",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Animation table update data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAnimationTableDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Animation table updated."
+          },
+          "400": {
+            "description": "Failed to update the animation table."
           }
         },
         "tags": [
@@ -1206,6 +1263,48 @@
           "textFile"
         ]
       },
+      "CopyFileWithIncrementDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file to be copied"
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "TemplateFontConfigDto": {
+        "type": "object",
+        "properties": {
+          "font-family": {
+            "type": "string",
+            "description": "The font-family name"
+          },
+          "url": {
+            "type": "string",
+            "description": "The url of the font file"
+          },
+          "type": {
+            "type": "string",
+            "description": "The font type used for @font-face format",
+            "enum": [
+              "truetype",
+              "opentype",
+              "woff",
+              "woff2",
+              "embedded-opentype",
+              "svg"
+            ]
+          }
+        },
+        "required": [
+          "font-family",
+          "url",
+          "type"
+        ]
+      },
       "TemplateConfigDto": {
         "type": "object",
         "properties": {
@@ -1220,6 +1319,13 @@
           "webgal-version": {
             "type": "string",
             "description": "The webgal version of the template"
+          },
+          "fonts": {
+            "description": "The font registrations of the template",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplateFontConfigDto"
+            }
           }
         },
         "required": [
@@ -1353,6 +1459,18 @@
           "sceneData"
         ]
       },
+      "UpdateAnimationTableDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game directory"
+          }
+        },
+        "required": [
+          "gameName"
+        ]
+      },
       "GameConfigDto": {
         "type": "object",
         "properties": {
@@ -1445,6 +1563,13 @@
           "webgal-version": {
             "type": "string",
             "description": "The webgal version of the template"
+          },
+          "fonts": {
+            "description": "The font registrations of the template",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplateFontConfigDto"
+            }
           },
           "dir": {
             "type": "string",

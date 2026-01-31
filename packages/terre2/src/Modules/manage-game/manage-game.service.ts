@@ -180,6 +180,30 @@ export class ManageGameService {
     };
   }
 
+  async updateAnimationTable(gameName: string): Promise<boolean> {
+    const animationDir = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameName}/game/animation`,
+    );
+    if (!(await this.webgalFs.existsDir(animationDir))) {
+      return false;
+    }
+    const dirInfo = await this.webgalFs.getDirInfo(animationDir);
+    const animationList = dirInfo
+      .filter((item) => !item.isDir)
+      .filter((item) => item.name.toLowerCase() !== 'animationtable.json')
+      .filter((item) => item.extName.toLowerCase() === '.json')
+      .map((item) => item.name.replace(/\.json$/i, ''))
+      .sort((a, b) => a.localeCompare(b));
+    const animationTablePath = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameName}/game/animation/animationTable.json`,
+    );
+    await this.webgalFs.updateTextFile(
+      animationTablePath,
+      `${JSON.stringify(animationList, null, 2)}\n`,
+    );
+    return true;
+  }
+
   async getIcons(gameDir: string): Promise<IconsDto> {
     const iconsDir = this.webgalFs.getPathFromRoot(
       `/public/games/${gameDir}/icons`,
