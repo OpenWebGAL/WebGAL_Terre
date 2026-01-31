@@ -33,6 +33,7 @@ export default function Bgm(props: ISentenceEditorProps) {
           {key: "series", value: ""},
         ]),
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };

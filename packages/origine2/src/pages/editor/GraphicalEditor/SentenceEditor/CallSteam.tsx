@@ -33,6 +33,7 @@ export default function CallSteam(props: ISentenceEditorProps) {
           { key: normalizedKey, value: paramValue.value, fullMode: true }
         ] : []),
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };

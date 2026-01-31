@@ -53,6 +53,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
         {key: "keep", value: keep.value},
         {key: "next", value: isGoNext.value},
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };

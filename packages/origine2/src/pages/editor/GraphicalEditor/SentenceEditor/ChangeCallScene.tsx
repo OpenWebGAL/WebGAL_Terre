@@ -18,6 +18,7 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
       fileName.value,
       props.sentence.args,
       [],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };
