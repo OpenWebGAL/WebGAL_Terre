@@ -362,7 +362,7 @@ export class WebgalFsService {
     // 读取目录下所有文件
     const files = await fs.readdir(dir);
     // 匹配类似 xxx_序号.txt 的文件
-    const regex = new RegExp(`^${base}_(\\d+)${ext.replace('.', '\\.')}$`);
+    const regex = new RegExp(`^${base}_(\\d{3})${ext.replace('.', '\\.')}$`);
     let maxNum = 0;
     for (const file of files) {
       const match = file.match(regex);
