@@ -268,6 +268,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "blendMode", value: blendMode.value},
         {key: "next", value: isGoNext.value},
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };
