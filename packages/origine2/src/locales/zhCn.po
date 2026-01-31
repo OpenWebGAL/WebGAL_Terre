@@ -230,8 +230,8 @@ msgstr "一直显示功能区"
 msgid "上一步"
 msgstr "上一步"
 
-#: src/components/Assets/Assets.tsx:625
-#: src/components/Assets/Assets.tsx:626
+#: src/components/Assets/Assets.tsx:633
+#: src/components/Assets/Assets.tsx:634
 msgid "上传"
 msgstr "上传"
 
@@ -239,8 +239,8 @@ msgstr "上传"
 msgid "上传字体文件"
 msgstr "上传字体文件"
 
-#: src/components/Assets/Assets.tsx:445
-#: src/components/Assets/Assets.tsx:451
+#: src/components/Assets/Assets.tsx:452
+#: src/components/Assets/Assets.tsx:458
 msgid "上传资源"
 msgstr "上传资源"
 
@@ -410,7 +410,7 @@ msgstr "保存模板配置失败，请稍后重试"
 msgid "保持闭眼(毫秒)"
 msgstr "保持闭眼(毫秒)"
 
-#: src/components/Assets/Assets.tsx:498
+#: src/components/Assets/Assets.tsx:505
 msgid "修改时间"
 msgstr "修改时间"
 
@@ -579,16 +579,20 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
-#: src/components/Assets/Assets.tsx:461
+#: src/components/Assets/Assets.tsx:468
 msgid "列表视图"
 msgstr "列表视图"
 
-#: src/components/Assets/Assets.tsx:383
-#: src/components/Assets/Assets.tsx:435
+#: src/components/Assets/Assets.tsx:390
+#: src/components/Assets/Assets.tsx:442
 #: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
 msgstr "创建"
+
+#: src/components/Assets/FileElement.tsx:145
+msgid "创建副本"
+msgstr "创建副本"
 
 #: src/pages/dashboard/TemplateSidebar.tsx:57
 msgid "创建新模板"
@@ -598,9 +602,9 @@ msgstr "创建新模板"
 msgid "创建新游戏"
 msgstr "创建新游戏"
 
-#: src/components/Assets/FileElement.tsx:202
-#: src/components/Assets/FileElement.tsx:219
-#: src/components/Assets/FileElement.tsx:227
+#: src/components/Assets/FileElement.tsx:221
+#: src/components/Assets/FileElement.tsx:238
+#: src/components/Assets/FileElement.tsx:246
 #: src/pages/dashboard/GameElement.tsx:154
 #: src/pages/dashboard/TemplateElement.tsx:133
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:206
@@ -632,7 +636,7 @@ msgstr "删除模板"
 msgid "删除游戏"
 msgstr "删除游戏"
 
-#: src/components/Assets/Assets.tsx:476
+#: src/components/Assets/Assets.tsx:483
 msgid "刷新"
 msgstr "刷新"
 
@@ -804,7 +808,7 @@ msgstr "圆角矩形"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "在对话框的左下角显示一个小头像"
 
-#: src/components/Assets/Assets.tsx:477
+#: src/components/Assets/Assets.tsx:484
 #: src/pages/dashboard/GameElement.tsx:96
 #: src/pages/dashboard/TemplateElement.tsx:90
 msgid "在文件管理器中打开"
@@ -1052,9 +1056,9 @@ msgstr "左对齐"
 msgid "已创建"
 msgstr "已创建"
 
-#: src/components/Assets/Assets.tsx:354
-#: src/components/Assets/Assets.tsx:413
-#: src/components/Assets/FileElement.tsx:172
+#: src/components/Assets/Assets.tsx:361
+#: src/components/Assets/Assets.tsx:420
+#: src/components/Assets/FileElement.tsx:191
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
 
@@ -1154,7 +1158,7 @@ msgstr "打开效果编辑器"
 msgid "执行到此句"
 msgstr "执行到此句"
 
-#: src/components/Assets/Assets.tsx:368
+#: src/components/Assets/Assets.tsx:375
 msgid "扩展名"
 msgstr "扩展名"
 
@@ -1179,7 +1183,7 @@ msgstr "拼接模式"
 msgid "指针"
 msgstr "指针"
 
-#: src/components/Assets/Assets.tsx:480
+#: src/components/Assets/Assets.tsx:487
 msgid "排序方式"
 msgstr "排序方式"
 
@@ -1299,15 +1303,15 @@ msgstr "效果音 音量"
 msgid "效果音文件"
 msgstr "效果音文件"
 
-#: src/components/Assets/Assets.tsx:486
+#: src/components/Assets/Assets.tsx:493
 msgid "文件名"
 msgstr "文件名"
 
-#: src/components/Assets/FileElement.tsx:166
+#: src/components/Assets/FileElement.tsx:185
 msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
 msgstr "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
 
-#: src/components/Assets/Assets.tsx:492
+#: src/components/Assets/Assets.tsx:499
 msgid "文件大小"
 msgstr "文件大小"
 
@@ -1375,13 +1379,13 @@ msgstr "文档"
 msgid "新增字体"
 msgstr "新增字体"
 
-#: src/components/Assets/Assets.tsx:337
-#: src/components/Assets/Assets.tsx:352
+#: src/components/Assets/Assets.tsx:344
+#: src/components/Assets/Assets.tsx:359
 msgid "新建文件"
 msgstr "新建文件"
 
-#: src/components/Assets/Assets.tsx:396
-#: src/components/Assets/Assets.tsx:411
+#: src/components/Assets/Assets.tsx:403
+#: src/components/Assets/Assets.tsx:418
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
@@ -1393,11 +1397,11 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/components/Assets/Assets.tsx:361
+#: src/components/Assets/Assets.tsx:368
 msgid "新文件名"
 msgstr "新文件名"
 
-#: src/components/Assets/Assets.tsx:420
+#: src/components/Assets/Assets.tsx:427
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
@@ -1446,7 +1450,7 @@ msgstr "旋转（弧度）"
 msgid "旋转（角度）"
 msgstr "旋转（角度）"
 
-#: src/components/Assets/Assets.tsx:370
+#: src/components/Assets/Assets.tsx:377
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
@@ -1469,7 +1473,7 @@ msgstr "是否固定弹窗"
 msgid "是否自定义分隔符"
 msgstr "是否自定义分隔符"
 
-#: src/components/Assets/FileElement.tsx:220
+#: src/components/Assets/FileElement.tsx:239
 msgid "是否要删除 \"{0}\" ？"
 msgstr "是否要删除 \"{0}\" ？"
 
@@ -2042,7 +2046,7 @@ msgstr "繁体中文"
 msgid "缩放"
 msgstr "缩放"
 
-#: src/components/Assets/Assets.tsx:461
+#: src/components/Assets/Assets.tsx:468
 msgid "网格视图"
 msgstr "网格视图"
 
@@ -2391,7 +2395,7 @@ msgstr "输入目标 ID"
 msgid "过渡时间（单位为毫秒）"
 msgstr "过渡时间（单位为毫秒）"
 
-#: src/components/Assets/Assets.tsx:306
+#: src/components/Assets/Assets.tsx:313
 msgid "过滤文件"
 msgstr "过滤文件"
 
@@ -2581,9 +2585,9 @@ msgstr "配置"
 msgid "配置模板"
 msgstr "配置模板"
 
-#: src/components/Assets/FileElement.tsx:145
 #: src/components/Assets/FileElement.tsx:164
-#: src/components/Assets/FileElement.tsx:195
+#: src/components/Assets/FileElement.tsx:183
+#: src/components/Assets/FileElement.tsx:214
 #: src/pages/dashboard/GameElement.tsx:124
 #: src/pages/dashboard/TemplateElement.tsx:118
 msgid "重命名"
