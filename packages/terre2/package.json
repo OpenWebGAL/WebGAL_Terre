@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre-2",
-  "version": "4.5.16",
+  "version": "4.5.17",
   "description": "",
   "author": "",
   "private": true,
@@ -22,8 +22,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "pkg": "cd dist && pkg src/main.js -o WebGAL_Terre",
-    "pkg:linux-arm64": "cd dist && pkg src/main.js -o WebGAL_Terre -t node20-linux-arm64",
+    "pkg": "tsx pkg-build.ts",
+    "pkg:linux-arm64": "cross-env PKG_TARGET=node22-linux-arm64 tsx pkg-build.ts",
     "update-exe-resources": "tsx update-exe-resources.ts"
   },
   "dependencies": {
@@ -57,7 +57,7 @@
     "vscode-languageserver": "^8.1.0",
     "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-ws-jsonrpc-webgal": "0.2.1",
-    "webgal-engine": "4.5.16",
+    "webgal-engine": "4.5.17",
     "webgal-parser": "latest",
     "webpack": "5.76.0",
     "ws": "8.17.1"

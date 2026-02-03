@@ -17,6 +17,7 @@ import {
   Erase,
   ListCheckbox,
   Logout,
+  GameHandle,
   Music,
   NewPicture,
   People,
@@ -43,6 +44,7 @@ import SetTransition from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTran
 import SetTransform from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTransform";
 import styles from "./sentenceEditor.module.scss";
 import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput";
+import CallSteam from "@/pages/editor/GraphicalEditor/SentenceEditor/CallSteam";
 import { t } from "@lingui/macro";
 
 export interface ISentenceEditorProps {
@@ -247,6 +249,13 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component:GetUserInput,
     icon: <EnterTheKeyboard theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`获取来自用户的字符输入`
+  },
+  {
+    type: commandType.callSteam,
+    title: () => t`调用 Steam`,
+    initialText: () => t`callSteam: -achievementId=;`,
+    component: CallSteam,
+    icon: <GameHandle theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`调用 Steam 接口，支持多参数`
   }
 ];
-

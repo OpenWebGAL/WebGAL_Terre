@@ -1,5 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export class TemplateFontConfigDto {
+  @ApiProperty({ description: 'The font-family name' })
+  ['font-family']: string;
+
+  @ApiProperty({ description: 'The url of the font file' })
+  url: string;
+
+  @ApiProperty({
+    description: 'The font type used for @font-face format',
+    enum: ['truetype', 'opentype', 'woff', 'woff2', 'embedded-opentype', 'svg'],
+  })
+  type: string;
+}
+
 export class TemplateConfigDto {
   @ApiProperty({ description: 'The name of the template' })
   name: string;
@@ -7,6 +21,13 @@ export class TemplateConfigDto {
   id?: string;
   @ApiProperty({ description: 'The webgal version of the template' })
   'webgal-version': string;
+  @ApiProperty({
+    description: 'The font registrations of the template',
+    required: false,
+    type: TemplateFontConfigDto,
+    isArray: true,
+  })
+  fonts?: TemplateFontConfigDto[];
 }
 
 export class TemplateInfoDto extends TemplateConfigDto {

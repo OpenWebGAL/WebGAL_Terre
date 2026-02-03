@@ -46,6 +46,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const zIndex = useValue(String(getArgByKey(props.sentence, 'zIndex') ?? ''));
   const blink = useValue<string>(getArgByKey(props.sentence, "blink").toString() ?? "");
   const focus = useValue<string>(getArgByKey(props.sentence, "focus").toString() ?? "");
+  const blendMode = useValue<string>(getArgByKey(props.sentence, "blendMode").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
@@ -67,6 +68,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["", "OFF"],
     ["on", "ON"],
   ]);
+
+  const blendModeOptions = useMemo(() => new Map<string, string>([
+    ["", t`默认`],
+    ["normal", t`正常`],
+    ["add", t`线性减淡`],
+    ["multiply", t`正片叠底`],
+    ["screen", t`滤色`],
+  ]), []);
 
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
@@ -226,9 +235,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     }
   }, [animationFlag.value]);
   const submit = () => {
+    const contentWithType = isSpineJsonFormat && !isHaveSpineArg
+      ? `${figureFile.value}?type=spine`
+      : figureFile.value;
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
-      figureFile.value,
+      contentWithType,
       props.sentence.args,
       [
         { key: "left", value: figurePosition.value === "left" },
@@ -251,15 +263,17 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           { key: "mouthHalfOpen", value: "" },
           { key: "mouthClose", value: "" },
         ]),
-        { key: "motion", value: currentMotion.value },
-        { key: "expression", value: currentExpression.value },
-        { key: "bounds", value: bounds.value },
-        { key: "blink", value: updateBlinkParam() },
-        { key: "focus", value: updateFocusParam() },
-        { key: "ease", value: ease.value },
-        { key: "zIndex", value: zIndex.value },
-        { key: "next", value: isGoNext.value },
+        {key: "motion", value: currentMotion.value},
+        {key: "expression", value: currentExpression.value},
+        {key: "bounds", value: bounds.value},
+        {key: "blink", value: updateBlinkParam()},
+        {key: "focus", value: updateFocusParam()},
+        {key: "ease", value: ease.value},
+        {key: "zIndex", value: zIndex.value},
+        {key: "blendMode", value: blendMode.value},
+        {key: "next", value: isGoNext.value},
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };
@@ -426,6 +440,16 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 value={ease.value}
                 onValueChange={(newValue) => {
                   ease.set(newValue?.toString() ?? "");
+                  submit();
+                }}
+              />
+            </CommonOptions>
+            <CommonOptions title={t`混合模式`} key="blendMode">
+              <WheelDropdown
+                options={blendModeOptions}
+                value={blendMode.value}
+                onValueChange={(newValue) => {
+                  blendMode.set(newValue?.toString() ?? "");
                   submit();
                 }}
               />
@@ -637,9 +661,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               } else {
                 target = "fig-center";
               }
-              const newEffect = { target: target, transform: transform };
-              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
             }
+            const newEffect = { target: target, transform: transform };
+            WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
           }}
         />
       </TerrePanel>

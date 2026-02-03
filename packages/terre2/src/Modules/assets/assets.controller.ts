@@ -22,6 +22,7 @@ import {
   UploadFilesDto,
   EditTextFileDto,
   ImageDimensionsResponseDto,
+  CopyFileWithIncrementDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { _open } from '../../util/open';
@@ -180,5 +181,13 @@ export class AssetsController {
   async getImageDimensions(@Param('imagePath') imagePath: string) {
     const decodedPath = decodeURI(imagePath);
     return this.assets.getImageDimensions(decodedPath);
+  @Post('copyFileWithIncrement')
+  @ApiOperation({ summary: 'Copy File With Increment' })
+  @ApiResponse({ status: 200, description: 'File copied successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to copy the file.' })
+  async copyFileWithIncrement(@Body() copyFileDto: CopyFileWithIncrementDto) {
+    const { source } = copyFileDto;
+    const sourcePath = this.webgalFs.getPathFromRoot(`public/${source}`);
+    return this.webgalFs.copyFileWithIncrement(sourcePath);
   }
 }

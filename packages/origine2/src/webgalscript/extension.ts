@@ -20,7 +20,7 @@ const manifest: IExtensionManifest = {
       {
         label: 'WebGAL Black',
         path: '/black.json',
-        uiTheme: 'vs',
+        uiTheme: 'vs-dark',
       },
     ],
     grammars: [

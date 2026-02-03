@@ -135,6 +135,10 @@ export default function GameConfig() {
         <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
       </TabItem>
+      <TabItem title={t`Steam AppID`}>
+        <GameConfigEditor key="steamAppId" value={getConfigContentAsString('Steam_AppID')}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Steam_AppID', e)}/>
+      </TabItem>
       {/* <TabItem title={t`文本框主题`}> */}
       {/*  <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')} */}
       {/*    onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} */}

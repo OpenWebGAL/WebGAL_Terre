@@ -71,9 +71,11 @@ export default function Say(props: ISentenceEditorProps) {
 
   const submit = () => {
     const commitValue = currentValue.value.map(e => e.replaceAll('\n', '|').replaceAll(';', '\\;'));
+    const sayContent = commitValue.join("|");
+    const inheritSpeaker = !isNoSpeaker.value && currentSpeaker.value === "";
     const submitString = combineSubmitString(
-      (isNoSpeaker.value || currentSpeaker.value !== "") ? (isNoSpeaker.value ? "" : currentSpeaker.value) : undefined,
-      commitValue.join("|"),
+      inheritSpeaker ? undefined : (isNoSpeaker.value ? "" : currentSpeaker.value),
+      sayContent,
       props.sentence.args,
       [
         // 移除 -speaker=somebody
@@ -84,6 +86,13 @@ export default function Say(props: ISentenceEditorProps) {
         ...(vocal.value !== "" ? [
           {key: vocal.value, value: true},
         ] : []),
+        // 如果继承说话者, 并且对话内容为空
+        // 添加一个 -sayPlaceHolder 参数，防止变成注释
+        ...(inheritSpeaker && sayContent === "" ? [
+          {key: "sayPlaceHolder", value: true},
+        ] : [
+          {key: "sayPlaceHolder", value: false},
+        ]),
 
         {key: "concat", value: isConcat.value},
         {key: "notend", value: isNotend.value},
@@ -94,6 +103,7 @@ export default function Say(props: ISentenceEditorProps) {
         {key: "id", value: figurePosition.value === "id"},
         {key: "figureId", value: (figurePosition.value === "id" ? figureId.value : "")},
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };

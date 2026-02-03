@@ -15,7 +15,7 @@ import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { WsUtil } from "@/utils/wsUtil";
 import { eventBus } from "@/utils/eventBus";
 
-type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
+type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
@@ -29,10 +29,11 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
   const presetTargets = new Map<PresetTarget, string>([
-    ["fig-left", t`左侧立绘`],
-    ["fig-center", t`中间立绘`],
-    ["fig-right", t`右侧立绘`],
-    ["bg-main", t`背景图片`],
+    [ "fig-left", t`左侧立绘` ],
+    [ "fig-center", t`中间立绘` ],
+    [ "fig-right", t`右侧立绘` ],
+    [ "bg-main", t`背景图片` ],
+    [ "stage-main", t`舞台画面` ],
   ]);
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
   const isUsePreset = useValue(isPresetTarget);
@@ -54,6 +55,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
         { key: "keep", value: keep.value },
         { key: "next", value: isGoNext.value },
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };

@@ -29,7 +29,7 @@ export function AddSentenceTab() {
   const btsSpecial2 = pickSentenceType([6, 7, 21]);
   const btsBranch = pickSentenceType([9, 10, 11]);
   const btsExtra = pickSentenceType([14, 15]);
-  const btsSystem = pickSentenceType([16, 17]);
+  const btsSystem = pickSentenceType([16, 17, 22]);
   const btsControl = pickSentenceType([3, 19, 20]);
 
   return <TopbarTab>

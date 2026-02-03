@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { dirname, extname, join } from 'path';
+import { basename, dirname, extname, join } from 'path';
 
 export interface IFileInfo {
   name: string;
@@ -26,6 +26,10 @@ interface FileList {
 @Injectable()
 export class WebgalFsService {
   constructor(private readonly logger: ConsoleLogger) {}
+
+  static checkFileName(name: string): boolean {
+    return name.search(/[\/\\\:\*\?"\<\>\|]/) === -1;
+  }
 
   greet() {
     this.logger.log('Welcome to WebGAl Files System Service!');
@@ -86,6 +90,8 @@ export class WebgalFsService {
    * @param dirName 文件夹名称
    */
   async mkdir(src, dirName) {
+    if (!WebgalFsService.checkFileName(dirName)) return false;
+
     return await fs
       .mkdir(join(decodeURI(src), decodeURI(dirName)))
       .catch(() => {
@@ -111,6 +117,7 @@ export class WebgalFsService {
    * @param newName 新文件名
    */
   async renameFile(path: string, newName: string) {
+    if (!WebgalFsService.checkFileName(newName)) return false;
     // 取出旧文件的路径
     const rawOldPath = decodeURI(path);
     let oldPath = join(...rawOldPath.split(/[\/\\]/g));
@@ -179,6 +186,7 @@ export class WebgalFsService {
     _path: string,
     newName: string,
   ): Promise<boolean> {
+    if (!WebgalFsService.checkFileName(newName)) return false;
     try {
       const path = decodeURI(_path);
 
@@ -224,6 +232,13 @@ export class WebgalFsService {
   async createEmptyFile(path: string) {
     try {
       const decodedPath = decodeURI(path);
+      if (
+        decodedPath
+          .replace(/\\/g, '/')
+          .split('/')
+          .every((name) => WebgalFsService.checkFileName(name))
+      )
+        throw new Error('There are unexpect marks in path');
       const directory = dirname(decodedPath);
 
       if (!(await this.existsDir(directory))) {
@@ -334,5 +349,33 @@ export class WebgalFsService {
       console.error(error);
       return false;
     }
+  }
+
+  /**
+   * 复制文件并以“原文件名_编号.扩展名”方式增量保存
+   */
+  async copyFileWithIncrement(filePath: string): Promise<string> {
+    const dir = dirname(filePath);
+    const ext = extname(filePath);
+    const base = basename(filePath, ext);
+
+    // 读取目录下所有文件
+    const files = await fs.readdir(dir);
+    // 匹配类似 xxx_序号.txt 的文件
+    const regex = new RegExp(`^${base}_(\\d{3})${ext.replace('.', '\\.')}$`);
+    let maxNum = 0;
+    for (const file of files) {
+      const match = file.match(regex);
+      if (match) {
+        const num = parseInt(match[1], 10);
+        if (num > maxNum) maxNum = num;
+      }
+    }
+    const nextNum = (maxNum + 1).toString().padStart(3, '0');
+    const newName = `${base}_${nextNum}${ext}`;
+    const newPath = join(dir, newName);
+
+    await fs.copyFile(filePath, newPath);
+    return newPath;
   }
 }

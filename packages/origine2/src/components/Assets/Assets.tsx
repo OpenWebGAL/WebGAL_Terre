@@ -37,6 +37,7 @@ export type IFileConfig = Map<
 export interface IFileFunction {
   open?: (file: IFile, type: 'scene' | 'asset') => Promise<void>,
   create?: (source: string, name: string, type: 'file' | 'dir') => Promise<void>,
+  backup?: (source: string) => Promise<void>,
   rename?: (source: string, newName: string) => Promise<void>,
   delete?: (source: string) => Promise<void>,
 };
@@ -216,6 +217,12 @@ export default function Assets(
   const handleCreateNewFolder = async (source: string, name: string) => {
     await api.assetsControllerCreateNewFolder({ source, name });
     fileFunction?.create && await fileFunction.create(source, name, 'dir');
+    handleRefresh();
+  };
+
+  const handleBackupFile = async (source: string) => {
+    await api.assetsControllerCopyFileWithIncrement({ source });
+    fileFunction?.backup && await fileFunction.backup(source);
     handleRefresh();
   };
 
@@ -561,6 +568,7 @@ export default function Assets(
                               desc={fileConfig?.get(sortedFiles[fileIndex].path)?.desc ?? undefined}
                               isProtected={fileConfig?.get(sortedFiles[fileIndex].path)?.isProtected ?? isProtected}
                               handleOpenFile={handleOpenFile}
+                              handleBackupFile={handleBackupFile}
                               handleRenameFile={handleRenameFile}
                               handleDeleteFile={handleDeleteFile}
                               checkHasFile={checkHasFile}
