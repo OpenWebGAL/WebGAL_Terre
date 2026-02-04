@@ -1006,7 +1006,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/manageTemplate/manageTemplateControllerOutputTemplate
      */
     manageTemplateControllerOutputTemplate: (data: OutputTemplateDto, params: RequestParams = {}) =>
-      this.request<void, void>({
+      this.request<boolean, void>({
         path: `/api/manageTemplate/outputTemplate`,
         method: 'POST',
         body: data,
@@ -1022,7 +1022,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/manageTemplate/manageTemplateControllerImportTemplate
      */
     manageTemplateControllerImportTemplate: (data: FormData, params: RequestParams = {}) =>
-      this.request<{ data: boolean }, void>({
+      this.request<boolean, void>({
         path: `/api/manageTemplate/importTemplate`,
         method: 'POST',
         body: data,

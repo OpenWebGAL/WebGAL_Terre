@@ -82,13 +82,15 @@ export default function TemplateSidebar(props: ITemplateSidebarProps) {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
-        const res = await api.manageTemplateControllerImportTemplate(formData);
-        props.refreash?.();
-        event.target.value = '';
-        notify(
-          res.data ? 'success' : 'error',
-          res.data ? t`模板导入成功` : t`模板导入失败，请检查是否存在重名或模板是否完整`,
-        );
+        api
+          .manageTemplateControllerImportTemplate(formData)
+          .then((res) => {
+            if (!res.data) throw new Error();
+            props.refreash?.();
+            event.target.value = '';
+            notify('success', t`模板导入成功`);
+          })
+          .catch(() => notify('error', t`模板导入失败，请检查是否存在重名或模板是否完整`));
       }
     },
     [props],

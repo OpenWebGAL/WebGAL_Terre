@@ -251,7 +251,13 @@ export class ManageTemplateService {
     );
     if (!metaRaw) return false;
 
-    const meta = JSON.parse(metaRaw.toString()) as TemplateConfigDto;
+    let meta: TemplateConfigDto;
+    try {
+      meta = JSON.parse(metaRaw.toString()) as TemplateConfigDto;
+    } catch (error) {
+      this.logger.error('Failed to parse template.json from zip', error);
+      return false;
+    }
 
     // 检查是否存在这个模板
     const checkDir = await this.webgalFs.getDirInfo(
@@ -274,7 +280,7 @@ export class ManageTemplateService {
 
     const res = await this.webgalFs.decompressedDirectory(
       source,
-      this.webgalFs.getPathFromRoot(`/public/templates/${meta.name}/`),
+      this.webgalFs.getPathFromRoot(`/public/templates/${meta.name}`),
     );
 
     return res;
