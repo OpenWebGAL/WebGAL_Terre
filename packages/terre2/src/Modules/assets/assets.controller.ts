@@ -181,6 +181,8 @@ export class AssetsController {
   async getImageDimensions(@Param('imagePath') imagePath: string) {
     const decodedPath = decodeURI(imagePath);
     return this.assets.getImageDimensions(decodedPath);
+  }
+
   @Post('copyFileWithIncrement')
   @ApiOperation({ summary: 'Copy File With Increment' })
   @ApiResponse({ status: 200, description: 'File copied successfully.' })
