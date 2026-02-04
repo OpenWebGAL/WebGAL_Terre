@@ -14,7 +14,15 @@ import {
   useId,
   useToastController,
 } from '@fluentui/react-components';
-import { AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon } from '@fluentui/react-icons';
+import {
+  AddFilled,
+  AddRegular,
+  ArrowImport24Filled,
+  ArrowImport24Regular,
+  ArrowSyncFilled,
+  ArrowSyncRegular,
+  bundleIcon,
+} from '@fluentui/react-icons';
 import TemplateElement from './TemplateElement';
 import { t } from '@lingui/macro';
 import { CreateTemplateDto, TemplateInfoDto } from '@/api/Api';
@@ -31,6 +39,7 @@ interface ITemplateSidebarProps {
 
 const AddIcon = bundleIcon(AddFilled, AddRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
+const ArrowImportIcon = bundleIcon(ArrowImport24Filled, ArrowImport24Regular);
 
 export default function TemplateSidebar(props: ITemplateSidebarProps) {
   const fileInputRefs = useRef<HTMLInputElement>(null);
@@ -145,7 +154,7 @@ export default function TemplateSidebar(props: ITemplateSidebarProps) {
             />
             <Button
               appearance="subtle"
-              icon={<AddIcon />}
+              icon={<ArrowImportIcon />}
               onClick={() => fileInputRefs.current?.click()}
             >{t`导入模板`}</Button>
           </div>

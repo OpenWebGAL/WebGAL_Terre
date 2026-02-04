@@ -586,7 +586,7 @@ msgstr "列表视图"
 #: src/components/Assets/Assets.tsx:390
 #: src/components/Assets/Assets.tsx:442
 #: src/pages/dashboard/Sidebar.tsx:134
-#: src/pages/dashboard/TemplateSidebar.tsx:132
+#: src/pages/dashboard/TemplateSidebar.tsx:131
 msgid "创建"
 msgstr "创建"
 
@@ -594,7 +594,7 @@ msgstr "创建"
 msgid "创建副本"
 msgstr "创建副本"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:106
+#: src/pages/dashboard/TemplateSidebar.tsx:105
 msgid "创建新模板"
 msgstr "创建新模板"
 
@@ -953,7 +953,7 @@ msgstr "对话框文字"
 msgid "对话框标题"
 msgstr "对话框标题"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:151
+#: src/pages/dashboard/TemplateSidebar.tsx:150
 msgid "导入模板"
 msgstr "导入模板"
 
@@ -1397,7 +1397,7 @@ msgstr "新建文件"
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:102
+#: src/pages/dashboard/TemplateSidebar.tsx:101
 msgid "新建模板"
 msgstr "新建模板"
 
@@ -1417,12 +1417,12 @@ msgstr "新文件夹名"
 msgid "新标签页预览"
 msgstr "新标签页预览"
 
+#: src/pages/dashboard/TemplateSidebar.tsx:38
 #: src/pages/dashboard/TemplateSidebar.tsx:39
-#: src/pages/dashboard/TemplateSidebar.tsx:40
+#: src/pages/dashboard/TemplateSidebar.tsx:55
 #: src/pages/dashboard/TemplateSidebar.tsx:56
-#: src/pages/dashboard/TemplateSidebar.tsx:57
-#: src/pages/dashboard/TemplateSidebar.tsx:116
-#: src/pages/dashboard/TemplateSidebar.tsx:124
+#: src/pages/dashboard/TemplateSidebar.tsx:115
+#: src/pages/dashboard/TemplateSidebar.tsx:123
 msgid "新的模板"
 msgstr "新的模板"
 
@@ -1595,12 +1595,12 @@ msgstr "根文本长度 (rem)"
 msgid "模板"
 msgstr "模板"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:92
+#: src/pages/dashboard/TemplateSidebar.tsx:91
 msgid "模板列表"
 msgstr "模板列表"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:107
-#: src/pages/dashboard/TemplateSidebar.tsx:117
+#: src/pages/dashboard/TemplateSidebar.tsx:106
+#: src/pages/dashboard/TemplateSidebar.tsx:116
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:205
 msgid "模板名称"
 msgstr "模板名称"
@@ -1609,16 +1609,16 @@ msgstr "模板名称"
 msgid "模板名称不能为空"
 msgstr "模板名称不能为空"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:82
+#: src/pages/dashboard/TemplateSidebar.tsx:81
 msgid "模板导入失败，请检查是否存在重名或模板是否完整"
 msgstr "模板导入失败，请检查是否存在重名或模板是否完整"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:82
+#: src/pages/dashboard/TemplateSidebar.tsx:81
 msgid "模板导入成功"
 msgstr "模板导入成功"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:119
-#: src/pages/dashboard/TemplateSidebar.tsx:125
+#: src/pages/dashboard/TemplateSidebar.tsx:118
+#: src/pages/dashboard/TemplateSidebar.tsx:124
 msgid "模板目录"
 msgstr "模板目录"
 

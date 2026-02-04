@@ -16,6 +16,10 @@ import {
   MenuTrigger,
 } from '@fluentui/react-components';
 import {
+  ArrowExportUp24Filled,
+  ArrowExportUp24Regular,
+  ArrowImport24Filled,
+  ArrowImport24Regular,
   Delete24Filled,
   Delete24Regular,
   FolderOpen24Filled,
@@ -48,6 +52,7 @@ const FolderOpenIcon = bundleIcon(FolderOpen24Filled, FolderOpen24Regular);
 const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
 const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
 const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
+const ArrowExportUpIcon = bundleIcon(ArrowExportUp24Filled, ArrowExportUp24Regular);
 
 export default function TemplateElement(props: ITemplateElementProps) {
   let className = styles.templateElement_main;
@@ -120,7 +125,7 @@ export default function TemplateElement(props: ITemplateElementProps) {
                     onClick={() => isShowRenameDialog.set(true)}
                   >{t`重命名模板目录`}</MenuItem>
                   <MenuItem
-                    icon={<OpenIcon />}
+                    icon={<ArrowExportUpIcon />}
                     onClick={() => {
                       api.manageTemplateControllerOutputTemplate({
                         sourceDir: props.templateInfo.dir,
