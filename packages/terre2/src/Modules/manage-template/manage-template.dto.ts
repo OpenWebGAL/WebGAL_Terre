@@ -55,3 +55,11 @@ export class GetStyleByClassNameDto {
   @ApiProperty({ description: 'The path of stylesheet file to be fetched' })
   filePath: string;
 }
+
+export class OutputTemplateDto {
+  @ApiProperty({ description: 'The path of the source directory' })
+  sourceDir: string;
+
+  @ApiProperty({ description: 'The path of the out directory' })
+  outPath: string;
+}
