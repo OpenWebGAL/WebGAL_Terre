@@ -6,7 +6,7 @@ import { version_number } from '../../main';
 import { TemplateConfigDto, TemplateInfoDto } from './manage-template.dto';
 import { randomUUID } from 'crypto';
 import { _open } from '../../util/open';
-import { dirname } from 'path';
+import { dirname, normalize } from 'path';
 
 @Injectable()
 export class ManageTemplateService {
@@ -278,9 +278,11 @@ export class ManageTemplateService {
       return false;
     }
 
+    const fileName = normalize(meta.name);
+
     const res = await this.webgalFs.decompressedDirectory(
       source,
-      this.webgalFs.getPathFromRoot(`/public/templates/${meta.name}`),
+      this.webgalFs.getPathFromRoot(`/public/templates/${fileName}`),
     );
 
     return res;
