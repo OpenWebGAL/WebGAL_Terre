@@ -15,3 +15,29 @@
   flex:1;
   overflow: auto;
 }
+
+.chooseFileFooterWarning{
+  display: flex;
+  flex-direction: column;
+  color: var(--text-sub);
+  padding: 2px 8px;
+  gap: 4px;
+}
+
+.chooseFileFooterWarningPath{
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  white-space: pre;
+  gap: 4px;
+}
+
+.chooseFileFooterWarningCode{
+  display: flex;
+  padding: 2px 8px;
+  color: var(--text);
+  border-radius: var(--radius-lg);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--warning);
+}
