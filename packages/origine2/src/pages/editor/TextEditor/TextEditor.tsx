@@ -129,9 +129,12 @@ export default function TextEditor(props: ITextEditorProps) {
       .get(path)
       .then((res) => res.data)
       .then((data) => {
-        // currentText.set(data);
-        currentText.value = data.toString();
-        eventBus.emit('editor:update-scene', { scene: data.toString() });
+        const dataStr = data.toString();
+        if (dataStr === currentText.value) {
+          return;
+        }
+        currentText.value = dataStr;
+        eventBus.emit('editor:update-scene', { scene: dataStr });
         const model = editorRef.current?.getModel();
         model?.applyEdits([
           {
