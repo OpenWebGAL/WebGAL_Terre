@@ -2,9 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import * as archiver from 'archiver';
 import { basename, dirname, extname, join } from 'path';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const AdmZip: typeof import('adm-zip') = require('adm-zip'); // 其类型文件有问题，暂时使用require
+import AdmZip = require('adm-zip');
 
 export interface IFileInfo {
   name: string;
