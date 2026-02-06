@@ -17,12 +17,19 @@ import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import {
   CreateTemplateDto,
   GetStyleByClassNameDto,
+  ImportTemplateDto,
   OutputTemplateDto,
   TemplateConfigDto,
   TemplateInfoDto,
   UpdateTemplateConfigDto,
 } from './manage-template.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiConsumes,
+} from '@nestjs/swagger';
 import { ApplyTemplateToGameDto } from '../assets/assets.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('api/manageTemplate')
@@ -303,6 +310,10 @@ export class ManageTemplateController {
     description: 'Import Template Successfully.',
   })
   @ApiResponse({ status: 400, description: 'Import Template Failed.' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    type: ImportTemplateDto,
+  })
   async importTemplate(@UploadedFile() file) {
     return await this.manageTemplate.importTemplate(file.buffer);
   }

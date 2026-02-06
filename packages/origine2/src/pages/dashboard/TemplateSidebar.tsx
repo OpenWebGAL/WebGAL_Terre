@@ -80,17 +80,19 @@ export default function TemplateSidebar(props: ITemplateSidebarProps) {
     async (event: ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files.length > 0) {
         const file = event.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
+        const fromdata = new FormData();
+        fromdata.append('file', file);
         api
-          .manageTemplateControllerImportTemplate(formData)
-          .then((res) => {
+          .manageTemplateControllerImportTemplate({ file: file })
+          .then((res: any) => {
             if (!res.data) throw new Error();
             props.refreash?.();
-            event.target.value = '';
             notify('success', t`模板导入成功`);
           })
-          .catch(() => notify('error', t`模板导入失败，请检查是否存在重名或模板是否完整`));
+          .catch(() => notify('error', t`模板导入失败，请检查是否存在重名或模板是否完整`))
+          .finally(() => {
+            event.target.value = '';
+          });
       }
     },
     [props],

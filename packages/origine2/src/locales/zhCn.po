@@ -90,7 +90,7 @@ msgstr "CSS 属性名："
 msgid "end;"
 msgstr "end;"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:225
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:217
 msgid "font-family"
 msgstr "font-family"
 
@@ -235,7 +235,7 @@ msgstr "上一步"
 msgid "上传"
 msgstr "上传"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:272
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:260
 msgid "上传字体文件"
 msgstr "上传字体文件"
 
@@ -394,15 +394,15 @@ msgid "侧边栏游戏预览"
 msgstr "侧边栏游戏预览"
 
 #: src/components/IconCreator/IconCreator.tsx:798
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:297
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:279
 msgid "保存"
 msgstr "保存"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:297
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:279
 msgid "保存中..."
 msgstr "保存中..."
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:189
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:185
 msgid "保存模板配置失败，请稍后重试"
 msgstr "保存模板配置失败，请稍后重试"
 
@@ -586,7 +586,7 @@ msgstr "列表视图"
 #: src/components/Assets/Assets.tsx:390
 #: src/components/Assets/Assets.tsx:442
 #: src/pages/dashboard/Sidebar.tsx:134
-#: src/pages/dashboard/TemplateSidebar.tsx:131
+#: src/pages/dashboard/TemplateSidebar.tsx:144
 msgid "创建"
 msgstr "创建"
 
@@ -594,7 +594,7 @@ msgstr "创建"
 msgid "创建副本"
 msgstr "创建副本"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:105
+#: src/pages/dashboard/TemplateSidebar.tsx:118
 msgid "创建新模板"
 msgstr "创建新模板"
 
@@ -606,10 +606,10 @@ msgstr "创建新游戏"
 #: src/components/Assets/FileElement.tsx:238
 #: src/components/Assets/FileElement.tsx:246
 #: src/pages/dashboard/GameElement.tsx:154
-#: src/pages/dashboard/TemplateElement.tsx:175
+#: src/pages/dashboard/TemplateElement.tsx:180
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:207
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:191
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:279
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:263
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:103
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:194
 msgid "删除"
@@ -626,8 +626,8 @@ msgstr "删除属性"
 msgid "删除本句"
 msgstr "删除本句"
 
-#: src/pages/dashboard/TemplateElement.tsx:131
-#: src/pages/dashboard/TemplateElement.tsx:169
+#: src/pages/dashboard/TemplateElement.tsx:136
+#: src/pages/dashboard/TemplateElement.tsx:174
 msgid "删除模板"
 msgstr "删除模板"
 
@@ -706,7 +706,7 @@ msgstr "发现新版本"
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:775
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:67
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:294
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:276
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:196
 msgid "取消"
 msgstr "取消"
@@ -810,12 +810,12 @@ msgstr "在对话框的左下角显示一个小头像"
 
 #: src/components/Assets/Assets.tsx:484
 #: src/pages/dashboard/GameElement.tsx:96
-#: src/pages/dashboard/TemplateElement.tsx:116
+#: src/pages/dashboard/TemplateElement.tsx:121
 msgid "在文件管理器中打开"
 msgstr "在文件管理器中打开"
 
 #: src/pages/dashboard/GameElement.tsx:97
-#: src/pages/dashboard/TemplateElement.tsx:117
+#: src/pages/dashboard/TemplateElement.tsx:122
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
 msgid "在新标签页中预览"
 msgstr "在新标签页中预览"
@@ -883,19 +883,19 @@ msgstr "字体优化将在游戏预览窗口低于特定尺寸时，关闭对话
 msgid "字体大小"
 msgstr "字体大小"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:234
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:224
 msgid "字体文件 URL"
 msgstr "字体文件 URL"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:134
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:132
 msgid "字体文件上传失败，请重试"
 msgstr "字体文件上传失败，请重试"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:241
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:231
 msgid "字体类型"
 msgstr "字体类型"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:209
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:205
 msgid "字体配置"
 msgstr "字体配置"
 
@@ -953,7 +953,7 @@ msgstr "对话框文字"
 msgid "对话框标题"
 msgstr "对话框标题"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:150
+#: src/pages/dashboard/TemplateSidebar.tsx:163
 msgid "导入模板"
 msgstr "导入模板"
 
@@ -986,7 +986,7 @@ msgstr "导出失败！"
 msgid "导出成功！"
 msgstr "导出成功！"
 
-#: src/pages/dashboard/TemplateElement.tsx:130
+#: src/pages/dashboard/TemplateElement.tsx:135
 msgid "导出模板"
 msgstr "导出模板"
 
@@ -1017,7 +1017,7 @@ msgstr "小头像文件"
 msgid "尚未添加任何字体"
 msgstr "尚未添加任何字体"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:219
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:211
 msgid "尚未配置任何字体"
 msgstr "尚未配置任何字体"
 
@@ -1382,7 +1382,7 @@ msgstr "文本阴影"
 msgid "文档"
 msgstr "文档"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:215
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:207
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontFamily.tsx:211
 msgid "新增字体"
 msgstr "新增字体"
@@ -1397,7 +1397,7 @@ msgstr "新建文件"
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:101
+#: src/pages/dashboard/TemplateSidebar.tsx:114
 msgid "新建模板"
 msgstr "新建模板"
 
@@ -1417,12 +1417,12 @@ msgstr "新文件夹名"
 msgid "新标签页预览"
 msgstr "新标签页预览"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:38
-#: src/pages/dashboard/TemplateSidebar.tsx:39
-#: src/pages/dashboard/TemplateSidebar.tsx:55
-#: src/pages/dashboard/TemplateSidebar.tsx:56
-#: src/pages/dashboard/TemplateSidebar.tsx:115
-#: src/pages/dashboard/TemplateSidebar.tsx:123
+#: src/pages/dashboard/TemplateSidebar.tsx:47
+#: src/pages/dashboard/TemplateSidebar.tsx:48
+#: src/pages/dashboard/TemplateSidebar.tsx:64
+#: src/pages/dashboard/TemplateSidebar.tsx:65
+#: src/pages/dashboard/TemplateSidebar.tsx:128
+#: src/pages/dashboard/TemplateSidebar.tsx:136
 msgid "新的模板"
 msgstr "新的模板"
 
@@ -1595,30 +1595,30 @@ msgstr "根文本长度 (rem)"
 msgid "模板"
 msgstr "模板"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:91
+#: src/pages/dashboard/TemplateSidebar.tsx:104
 msgid "模板列表"
 msgstr "模板列表"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:106
-#: src/pages/dashboard/TemplateSidebar.tsx:116
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:205
+#: src/pages/dashboard/TemplateSidebar.tsx:119
+#: src/pages/dashboard/TemplateSidebar.tsx:129
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:201
 msgid "模板名称"
 msgstr "模板名称"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:150
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:148
 msgid "模板名称不能为空"
 msgstr "模板名称不能为空"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:81
+#: src/pages/dashboard/TemplateSidebar.tsx:92
 msgid "模板导入失败，请检查是否存在重名或模板是否完整"
 msgstr "模板导入失败，请检查是否存在重名或模板是否完整"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:81
+#: src/pages/dashboard/TemplateSidebar.tsx:90
 msgid "模板导入成功"
 msgstr "模板导入成功"
 
-#: src/pages/dashboard/TemplateSidebar.tsx:118
-#: src/pages/dashboard/TemplateSidebar.tsx:124
+#: src/pages/dashboard/TemplateSidebar.tsx:131
+#: src/pages/dashboard/TemplateSidebar.tsx:137
 msgid "模板目录"
 msgstr "模板目录"
 
@@ -1635,11 +1635,11 @@ msgstr "模糊"
 msgid "櫻花"
 msgstr "櫻花"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:272
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:260
 msgid "正在上传"
 msgstr "正在上传"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:202
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:198
 msgid "正在加载模板配置"
 msgstr "正在加载模板配置"
 
@@ -1864,7 +1864,7 @@ msgstr "睁眼(毫秒)"
 msgid "确定"
 msgstr "确定"
 
-#: src/pages/dashboard/TemplateElement.tsx:170
+#: src/pages/dashboard/TemplateElement.tsx:175
 msgid "确定要删除 \"{templateName}\" 模板吗？"
 msgstr "确定要删除 \"{templateName}\" 模板吗？"
 
@@ -2040,7 +2040,7 @@ msgstr "缓动类型"
 msgid "编辑图标"
 msgstr "编辑图标"
 
-#: src/pages/dashboard/TemplateElement.tsx:105
+#: src/pages/dashboard/TemplateElement.tsx:110
 msgid "编辑模板"
 msgstr "编辑模板"
 
@@ -2319,7 +2319,7 @@ msgstr "语言"
 msgid "语音"
 msgstr "语音"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:167
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:163
 msgid "请完整填写每个字体的信息"
 msgstr "请完整填写每个字体的信息"
 
@@ -2421,8 +2421,8 @@ msgstr "运行平台"
 
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
-#: src/pages/dashboard/TemplateElement.tsx:156
-#: src/pages/dashboard/TemplateElement.tsx:176
+#: src/pages/dashboard/TemplateElement.tsx:161
+#: src/pages/dashboard/TemplateElement.tsx:181
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/index.tsx:106
 msgid "返回"
 msgstr "返回"
@@ -2594,7 +2594,7 @@ msgstr "通过选项进入不同的场景"
 msgid "配置"
 msgstr "配置"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:199
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:195
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:124
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:125
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:128
@@ -2605,12 +2605,12 @@ msgstr "配置模板"
 #: src/components/Assets/FileElement.tsx:183
 #: src/components/Assets/FileElement.tsx:214
 #: src/pages/dashboard/GameElement.tsx:124
-#: src/pages/dashboard/TemplateElement.tsx:160
+#: src/pages/dashboard/TemplateElement.tsx:165
 msgid "重命名"
 msgstr "重命名"
 
-#: src/pages/dashboard/TemplateElement.tsx:121
-#: src/pages/dashboard/TemplateElement.tsx:142
+#: src/pages/dashboard/TemplateElement.tsx:126
+#: src/pages/dashboard/TemplateElement.tsx:147
 msgid "重命名模板目录"
 msgstr "重命名模板目录"
 

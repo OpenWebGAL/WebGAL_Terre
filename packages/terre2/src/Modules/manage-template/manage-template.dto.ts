@@ -63,3 +63,13 @@ export class OutputTemplateDto {
   @ApiProperty({ description: 'The path of the out directory' })
   outPath: string;
 }
+
+export class ImportTemplateDto {
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: true,
+    description: "The template's zip file",
+  })
+  file: any;
+}
