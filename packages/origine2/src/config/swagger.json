@@ -254,6 +254,34 @@
         ]
       }
     },
+    "/api/assets/copyFileWithIncrement": {
+      "post": {
+        "operationId": "AssetsController_copyFileWithIncrement",
+        "summary": "Copy File With Increment",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CopyFileWithIncrementDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File copied successfully."
+          },
+          "400": {
+            "description": "Failed to copy the file."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
     "/api/manageGame/gameList": {
       "get": {
         "operationId": "ManageGameController_getGameList",
@@ -1058,6 +1086,62 @@
         ]
       }
     },
+    "/api/manageTemplate/outputTemplate": {
+      "post": {
+        "operationId": "ManageTemplateController_outputTemplate",
+        "summary": "Output Template",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OutputTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Output Template Successfully."
+          },
+          "400": {
+            "description": "Output Template Failed."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/importTemplate": {
+      "post": {
+        "operationId": "ManageTemplateController_importTemplate",
+        "summary": "Import Template",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import Template Successfully."
+          },
+          "400": {
+            "description": "Import Template Failed."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
     "/template-preview/{templateName}/game/template/{path}": {
       "get": {
         "operationId": "TemplatePreviewController_getTemplateAsset",
@@ -1206,6 +1290,48 @@
           "textFile"
         ]
       },
+      "CopyFileWithIncrementDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file to be copied"
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "TemplateFontConfigDto": {
+        "type": "object",
+        "properties": {
+          "font-family": {
+            "type": "string",
+            "description": "The font-family name"
+          },
+          "url": {
+            "type": "string",
+            "description": "The url of the font file"
+          },
+          "type": {
+            "type": "string",
+            "description": "The font type used for @font-face format",
+            "enum": [
+              "truetype",
+              "opentype",
+              "woff",
+              "woff2",
+              "embedded-opentype",
+              "svg"
+            ]
+          }
+        },
+        "required": [
+          "font-family",
+          "url",
+          "type"
+        ]
+      },
       "TemplateConfigDto": {
         "type": "object",
         "properties": {
@@ -1220,6 +1346,13 @@
           "webgal-version": {
             "type": "string",
             "description": "The webgal version of the template"
+          },
+          "fonts": {
+            "description": "The font registrations of the template",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplateFontConfigDto"
+            }
           }
         },
         "required": [
@@ -1446,6 +1579,13 @@
             "type": "string",
             "description": "The webgal version of the template"
           },
+          "fonts": {
+            "description": "The font registrations of the template",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplateFontConfigDto"
+            }
+          },
           "dir": {
             "type": "string",
             "description": "The dir of the template"
@@ -1528,6 +1668,36 @@
         "required": [
           "className",
           "filePath"
+        ]
+      },
+      "OutputTemplateDto": {
+        "type": "object",
+        "properties": {
+          "sourceDir": {
+            "type": "string",
+            "description": "The path of the source directory"
+          },
+          "outPath": {
+            "type": "string",
+            "description": "The path of the out directory"
+          }
+        },
+        "required": [
+          "sourceDir",
+          "outPath"
+        ]
+      },
+      "ImportTemplateDto": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "The template's zip file"
+          }
+        },
+        "required": [
+          "file"
         ]
       }
     }

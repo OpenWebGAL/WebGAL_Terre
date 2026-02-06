@@ -78,15 +78,13 @@ export default function TemplateConfigDialog({
         'font-family': font['font-family'] ?? '',
         url: font.url ?? '',
         type: font.type ?? defaultFontType,
-      }))
+      })),
     );
     setErrorMessage(null);
   }, [open, templateConfig, defaultFontType]);
 
   const updateFont = (index: number, partial: Partial<FontFormState>) => {
-    setFonts((prev) =>
-      prev.map((font, idx) => (idx === index ? { ...font, ...partial } : font))
-    );
+    setFonts((prev) => prev.map((font, idx) => (idx === index ? { ...font, ...partial } : font)));
   };
 
   const handleAddFont = () => {
@@ -157,11 +155,9 @@ export default function TemplateConfigDialog({
         url: font.url.trim(),
         type: font.type.trim(),
       }))
-      .filter((font) => font['font-family'] || font.url || font.type);
+      .filter((font) => font['font-family'] || font.url || font.type) as TemplateFontConfigDto[];
 
-    const hasPartialFont = sanitizedFonts.some(
-      (font) => !font['font-family'] || !font.url || !font.type
-    );
+    const hasPartialFont = sanitizedFonts.some((font) => !font['font-family'] || !font.url || !font.type);
 
     if (hasPartialFont) {
       setErrorMessage(t`请完整填写每个字体的信息`);
@@ -207,11 +203,7 @@ export default function TemplateConfigDialog({
                 </Field>
                 <div className={styles.fontHeader}>
                   <span>{t`字体配置`}</span>
-                  <Button
-                    appearance="subtle"
-                    icon={<AddCircleIcon />}
-                    onClick={handleAddFont}
-                  >
+                  <Button appearance="subtle" icon={<AddCircleIcon />} onClick={handleAddFont}>
                     {t`新增字体`}
                   </Button>
                 </div>
@@ -225,9 +217,7 @@ export default function TemplateConfigDialog({
                           <Field label={t`font-family`} required>
                             <Input
                               value={font['font-family']}
-                              onChange={(_, data) =>
-                                updateFont(index, { 'font-family': data.value })
-                              }
+                              onChange={(_, data) => updateFont(index, { 'font-family': data.value })}
                               placeholder="ExampleFont"
                             />
                           </Field>
@@ -241,9 +231,7 @@ export default function TemplateConfigDialog({
                           <Field label={t`字体类型`} required>
                             <Select
                               value={font.type}
-                              onChange={(_, data) =>
-                                updateFont(index, { type: data.value as FontTypeOption })
-                              }
+                              onChange={(_, data) => updateFont(index, { type: data.value as FontTypeOption })}
                             >
                               {FONT_TYPE_OPTIONS.map((option) => (
                                 <option key={option} value={option}>
@@ -271,11 +259,7 @@ export default function TemplateConfigDialog({
                           >
                             {uploadingIndex === index ? t`正在上传` : t`上传字体文件`}
                           </Button>
-                          <Button
-                            appearance="secondary"
-                            icon={<DeleteIcon />}
-                            onClick={() => handleRemoveFont(index)}
-                          >
+                          <Button appearance="secondary" icon={<DeleteIcon />} onClick={() => handleRemoveFont(index)}>
                             {t`删除`}
                           </Button>
                         </div>
@@ -283,9 +267,7 @@ export default function TemplateConfigDialog({
                     ))}
                   </div>
                 )}
-                {errorMessage && (
-                  <span className={styles.errorMessage}>{errorMessage}</span>
-                )}
+                {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
               </>
             )}
           </DialogContent>

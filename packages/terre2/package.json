@@ -58,7 +58,9 @@
     "webgal-engine": "4.5.17",
     "webgal-parser": "latest",
     "webpack": "5.76.0",
-    "ws": "8.17.1"
+    "ws": "8.17.1",
+    "archiver": "^7.0.1",
+    "adm-zip": "^0.5.16"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -70,6 +72,8 @@
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
     "@types/ws": "^8.5.10",
+    "@types/archiver": "^7.0.0",
+    "@types/adm-zip": "^0.5.7",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "cross-env": "^7.0.3",

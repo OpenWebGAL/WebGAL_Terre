@@ -55,18 +55,24 @@ export interface EditTextFileDto {
   textFile: string;
 }
 
+export interface CopyFileWithIncrementDto {
+  /** The source path of the file to be copied */
+  source: string;
+}
+
 export interface TemplateFontConfigDto {
   /** The font-family name */
   "font-family": string;
   /** The url of the font file */
   url: string;
-  /** The font format type */
-  type: string;
-}
-
-export interface CopyFileWithIncrementDto {
-  /** The source path of the file to be copied */
-  source: string;
+  /** The font type used for @font-face format */
+  type:
+    | "truetype"
+    | "opentype"
+    | "woff"
+    | "woff2"
+    | "embedded-opentype"
+    | "svg";
 }
 
 export interface TemplateConfigDto {
@@ -171,6 +177,8 @@ export interface TemplateInfoDto {
   id: string;
   /** The webgal version of the template */
   "webgal-version": string;
+  /** The font registrations of the template */
+  fonts?: TemplateFontConfigDto[];
   /** The dir of the template */
   dir: string;
 }
@@ -201,6 +209,21 @@ export interface GetStyleByClassNameDto {
   className: string;
   /** The path of stylesheet file to be fetched */
   filePath: string;
+}
+
+export interface OutputTemplateDto {
+  /** The path of the source directory */
+  sourceDir: string;
+  /** The path of the out directory */
+  outPath: string;
+}
+
+export interface ImportTemplateDto {
+  /**
+   * The template's zip file
+   * @format binary
+   */
+  file: File;
 }
 
 import type {
@@ -1110,6 +1133,46 @@ export class Api<
         body: data,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerOutputTemplate
+     * @summary Output Template
+     * @request POST:/api/manageTemplate/outputTemplate
+     */
+    manageTemplateControllerOutputTemplate: (
+      data: OutputTemplateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/outputTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerImportTemplate
+     * @summary Import Template
+     * @request POST:/api/manageTemplate/importTemplate
+     */
+    manageTemplateControllerImportTemplate: (
+      data: ImportTemplateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/importTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.FormData,
         ...params,
       }),
   };
