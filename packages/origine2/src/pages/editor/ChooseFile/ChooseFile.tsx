@@ -1,13 +1,17 @@
-import {useValue} from "../../../hooks/useValue";
+import { useValue } from "../../../hooks/useValue";
 import styles from "./chooseFile.module.scss";
-import {FolderOpen, FolderWithdrawal, Notes} from "@icon-park/react";
-import {Button, Input, Popover, PopoverSurface, PopoverTrigger} from "@fluentui/react-components";
+import { FolderOpen, FolderWithdrawal, Notes } from "@icon-park/react";
+import { Button, Input, Popover, PopoverSurface, PopoverTrigger } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
-import {api} from "@/api";
-import {t} from "@lingui/macro";
-import Assets, {IFile, IFileConfig, IFileFunction} from "@/components/Assets/Assets";
-import {join} from 'path';
-import { ReactNode, useCallback } from "react";
+import { api } from "@/api";
+import { t } from "@lingui/macro";
+import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
+import { join } from 'path';
+import { ReactNode, useCallback, useEffect } from "react";
+import { bundleIcon, DismissFilled, DismissRegular, WarningFilled, WarningRegular } from "@fluentui/react-icons";
+
+const DismissIcon = bundleIcon(DismissFilled, DismissRegular);
+const WarningIcon = bundleIcon(WarningFilled, WarningRegular);
 
 export interface IChooseFile {
   title?: string;
@@ -29,45 +33,89 @@ export default function ChooseFile(props: IChooseFile) {
   const isShowChooseFileCallout = useValue(false);
 
   const invalidPath = useValue('');
-  const invalidRange = useValue<{start: number; width: number} | null>(null);
+  const invalidRanges = useValue<{ start: number; width: number }[]>([]);
 
   function checkFilePathValidity(filePath: string): boolean {
-    // 检查是否包含非法字符
-    const argSymbolIndex = filePath.indexOf(' -');
+    const ranges: { start: number; width: number }[] = [];
+    const regex = /[\s*#%&?@"<>|:]/g;
+    let match;
 
-    let isValid = true;
-    if (argSymbolIndex !== -1) {
-      isValid = false;
-      invalidPath.value = filePath;
-      invalidRange.value = {start: argSymbolIndex, width: 2};
-    } else {
-      invalidPath.value = '';
-      invalidRange.value = null;
+    while ((match = regex.exec(filePath)) !== null) {
+      const start = match.index;
+      const width = match[0].length;
+
+      if (ranges.length > 0) {
+        const lastIssue = ranges[ranges.length - 1];
+        const lastEnd = lastIssue.start + lastIssue.width;
+
+        if (start <= lastEnd) {
+          lastIssue.width = Math.max(lastIssue.width, start + width - lastIssue.start);
+          continue;
+        }
+      }
+
+      ranges.push({ start, width });
     }
-    return isValid;
+
+    if (ranges.length > 0) {
+      invalidPath.value = filePath;
+      invalidRanges.value = ranges;
+      return false;
+    }
+
+    invalidPath.value = '';
+    invalidRanges.value = [];
+    return true;
   }
 
   function invalidPathElement() {
-    if (!invalidRange.value) {
+    if (!invalidRanges.value || invalidRanges.value.length === 0 || !invalidPath.value) {
       return null;
     }
-    const strBeforeInvalid = invalidPath.value.substring(0, invalidRange.value.start);
-    const strInvalid = invalidPath.value.substring(invalidRange.value.start, invalidRange.value.start + invalidRange.value.width);
-    const strAfterInvalid = invalidPath.value.substring(invalidRange.value.start + invalidRange.value.width);
+
+    const fullPath = invalidPath.value;
+    const elements = [];
+    let lastIndex = 0;
+
+    const ranges = [...invalidRanges.value].sort((a, b) => a.start - b.start);
+
+    ranges.forEach((range, index) => {
+      if (range.start > lastIndex) {
+        elements.push(
+          <span key={`text-${index}`}>
+            {fullPath.substring(lastIndex, range.start)}
+          </span>
+        );
+      }
+
+      const invalidText = fullPath.substring(range.start, range.start + range.width);
+      elements.push(
+        <span key={`invalid-${index}`} className={styles.chooseFileFooterWarningCode}>
+          {invalidText}
+        </span>
+      );
+
+      lastIndex = range.start + range.width;
+    });
+
+    if (lastIndex < fullPath.length) {
+      elements.push(
+        <span key="text-end">
+          {fullPath.substring(lastIndex)}
+        </span>
+      );
+    }
+
     return (
       <div className={styles.chooseFileFooterWarningPath}>
-        {strBeforeInvalid}
-        <div className={styles.chooseFileFooterWarningCode}>
-          {strInvalid}
-        </div>
-        {strAfterInvalid}
+        {elements}
       </div>
     );
   }
 
   function toggleIsCalloutVisible() {
     invalidPath.value = '';
-    invalidRange.value = null;
+    invalidRanges.value = [];
     isShowChooseFileCallout.set(!isShowChooseFileCallout.value);
   }
 
@@ -80,10 +128,10 @@ export default function ChooseFile(props: IChooseFile) {
     // 转义;
     fileName = fileName.replace(';', '\\;');
 
-    if (!checkFilePathValidity(fileName)) {
+    if (!checkFilePathValidity(file.path)) {
       return;
     }
-  
+
     toggleIsCalloutVisible();
     props.onChange({
       ...file,
@@ -97,7 +145,7 @@ export default function ChooseFile(props: IChooseFile) {
 
   const fileConfig: IFileConfig = new Map(
     props.hiddenFiles
-      ? props.hiddenFiles.map(item => [[...basePath, item].join('/'), {isHidden: true}])
+      ? props.hiddenFiles.map(item => [[...basePath, item].join('/'), { isHidden: true }])
       : []
   );
 
@@ -109,11 +157,11 @@ export default function ChooseFile(props: IChooseFile) {
       onOpenChange={toggleIsCalloutVisible}
     >
       <PopoverTrigger>
-        <div style={{display: 'inline-block'}}>
-          { props.button ?? <Button style={{minWidth: 0}}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>}      
+        <div style={{ display: 'inline-block' }}>
+          {props.button ?? <Button style={{ minWidth: 0 }}>{isShowChooseFileCallout.value ? t`取消` : t`选择`}</Button>}
         </div>
       </PopoverTrigger>
-      <PopoverSurface style={{padding: 0}}>
+      <PopoverSurface style={{ padding: 0 }}>
         <div className={styles.chooseFileContentWarpper}>
           <div className={styles.chooseFileTitle}>
             {props.title ?? t`选择文件`}
@@ -127,10 +175,30 @@ export default function ChooseFile(props: IChooseFile) {
             fileConfig={fileConfig}
             allowedExtNames={props.extNames}
           />
-          { invalidRange.value &&
+          {invalidRanges.value.length > 0 &&
             <div className={styles.chooseFileFooterWarning}>
-              {t`文件路径含有非法字符`}
-              {invalidPathElement()}
+              <div className={styles.chooseFileFooterWarningIcon}>
+                <WarningIcon />
+              </div>
+              <div className={styles.chooseFileFooterWarningText}>
+                {t`文件路径含有非法字符`}
+                {invalidPathElement()}
+              </div>
+              <div>
+                <Button
+                  appearance="subtle"
+                  icon={<DismissIcon />}
+                  size="small"
+                  title={t`清除提示`}
+                  onClick={
+                    () => {
+                      invalidPath.value = '';
+                      invalidRanges.value = [];
+                    }
+                  }
+                />
+              </div>
+
             </div>
           }
         </div>

@@ -1,9 +1,9 @@
-.chooseFileTitle{
+.chooseFileTitle {
   font-weight: bold;
   padding: 8px 0 0px 8px;
 }
 
-.chooseFileContentWarpper{
+.chooseFileContentWarpper {
   display: flex;
   flex-flow: column;
   height: 45vh;
@@ -11,33 +11,41 @@
   gap: 4px;
 }
 
-.chooseFileFileListWarpper{
-  flex:1;
+.chooseFileFileListWarpper {
+  flex: 1;
   overflow: auto;
 }
 
-.chooseFileFooterWarning{
+.chooseFileFooterWarning {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   color: var(--text-sub);
-  padding: 2px 8px;
+  padding: 2px 3px 2px 5px;
   gap: 4px;
+  border-top: var(--border-sm);
 }
 
-.chooseFileFooterWarningPath{
+.chooseFileFooterWarningIcon {
+  color: var(--warning);
+  padding-top: 3px;
+}
+
+.chooseFileFooterWarningText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chooseFileFooterWarningPath {
   display: flex;
   align-items: center;
   color: var(--text);
   white-space: pre;
-  gap: 4px;
 }
 
-.chooseFileFooterWarningCode{
-  display: flex;
-  padding: 2px 8px;
+.chooseFileFooterWarningCode {
   color: var(--text);
-  border-radius: var(--radius-lg);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--warning);
+  border-radius: var(--radius-sm);
+  background-color: var(--warning-75pct);
 }
