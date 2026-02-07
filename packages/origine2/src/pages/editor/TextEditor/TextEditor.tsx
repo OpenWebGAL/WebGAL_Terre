@@ -23,7 +23,7 @@ interface ITextEditorProps {
 export default function TextEditor(props: ITextEditorProps) {
   const target = useGameEditorContext((state) => state.currentTag);
   const tags = useGameEditorContext((state) => state.tags);
-  const currentText = { value: 'Loading Scene Data......' };
+  const currentText = useRef('Loading Scene Data......');
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
   const isEditorReady = useValue(false); // 读取完脚本才能算准备就绪
@@ -115,10 +115,10 @@ export default function TextEditor(props: ITextEditorProps) {
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
     // const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    if (value) currentText.value = value;
-    eventBus.emit('editor:update-scene', { scene: currentText.value });
-    api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
-      const targetValue = currentText.value.split('\n')[lineNumber - 1];
+    if (value) currentText.current = value;
+    eventBus.emit('editor:update-scene', { scene: currentText.current });
+    api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
+      const targetValue = currentText.current.split('\n')[lineNumber - 1];
       WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
     });
   }, 500);
@@ -130,16 +130,16 @@ export default function TextEditor(props: ITextEditorProps) {
       .then((res) => res.data)
       .then((data) => {
         const dataStr = data.toString();
-        if (dataStr === currentText.value) {
+        if (dataStr === currentText.current) {
           return;
         }
-        currentText.value = dataStr;
+        currentText.current = dataStr;
         eventBus.emit('editor:update-scene', { scene: dataStr });
         const model = editorRef.current?.getModel();
         model?.applyEdits([
           {
             range: model.getFullModelRange(),
-            text: currentText.value,
+            text: currentText.current,
             forceMoveMarkers: true
           }
         ]);
@@ -178,7 +178,7 @@ export default function TextEditor(props: ITextEditorProps) {
         onChange={handleChange}
         defaultLanguage="webgal"
         language="webgal"
-        defaultValue={currentText.value}
+        defaultValue={currentText.current}
       />
     </div>
   );
