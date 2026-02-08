@@ -13,6 +13,7 @@ import {
 import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 import { promisify } from 'util';
 import { execFile } from 'child_process';
+import { join } from 'path';
 
 @Injectable()
 export class ManageGameService {
@@ -187,13 +188,81 @@ export class ManageGameService {
     if (!(await this.webgalFs.existsDir(animationDir))) {
       return false;
     }
-    const dirInfo = await this.webgalFs.getDirInfo(animationDir);
-    const animationList = dirInfo
-      .filter((item) => !item.isDir)
-      .filter((item) => item.name.toLowerCase() !== 'animationtable.json')
-      .filter((item) => item.extName.toLowerCase() === '.json')
-      .map((item) => item.name.replace(/\.json$/i, ''))
-      .sort((a, b) => a.localeCompare(b));
+    const animationList = await this.collectAnimationList(animationDir);
+    await this.writeAnimationTable(gameName, animationList);
+    return true;
+  }
+
+  private async collectAnimationList(
+    animationRootDir: string,
+  ): Promise<string[]> {
+    // Collect first, then sort once to keep output stable.
+    const animationList = await this.collectAnimationListFromDir(
+      animationRootDir,
+      '',
+    );
+    return animationList.sort((a, b) => a.localeCompare(b));
+  }
+
+  /**
+   * Depth-first traversal of the animation directory tree.
+   * Returns paths relative to `game/animation` without `.json` suffix.
+   */
+  private async collectAnimationListFromDir(
+    currentDir: string,
+    currentRelativeDir: string,
+  ): Promise<string[]> {
+    const entries = await this.webgalFs.getDirInfo(currentDir);
+    const result: string[] = [];
+
+    for (const entry of entries) {
+      if (this.shouldIgnoreAnimationEntry(entry.name)) {
+        continue;
+      }
+
+      const relativeEntryPath = this.joinRelativePath(
+        currentRelativeDir,
+        entry.name,
+      );
+
+      if (entry.isDir) {
+        const childResult = await this.collectAnimationListFromDir(
+          join(currentDir, entry.name),
+          relativeEntryPath,
+        );
+        result.push(...childResult);
+        continue;
+      }
+
+      if (!this.isAnimationJsonFile(entry)) {
+        continue;
+      }
+
+      result.push(this.stripJsonExtension(relativeEntryPath));
+    }
+
+    return result;
+  }
+
+  private shouldIgnoreAnimationEntry(name: string): boolean {
+    return name.startsWith('.');
+  }
+
+  private isAnimationJsonFile(file: IFileInfo): boolean {
+    if (file.isDir) return false;
+    if (file.name.toLowerCase() === 'animationtable.json') return false;
+    return file.extName.toLowerCase() === '.json';
+  }
+
+  private joinRelativePath(parent: string, child: string): string {
+    return parent ? `${parent}/${child}` : child;
+  }
+
+  private stripJsonExtension(path: string): string {
+    return path.replace(/\.json$/i, '');
+  }
+
+  private async writeAnimationTable(gameName: string, animationList: string[]) {
     const animationTablePath = this.webgalFs.getPathFromRoot(
       `/public/games/${gameName}/game/animation/animationTable.json`,
     );
@@ -201,7 +270,6 @@ export class ManageGameService {
       animationTablePath,
       `${JSON.stringify(animationList, null, 2)}\n`,
     );
-    return true;
   }
 
   async getIcons(gameDir: string): Promise<IconsDto> {

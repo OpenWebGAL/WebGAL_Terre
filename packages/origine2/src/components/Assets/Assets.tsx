@@ -128,6 +128,12 @@ export default function Assets(
     }
   };
 
+  const isInAnimationDirectory = () => {
+    if (!animationGameDir) return false;
+    const normalized = normalizePath(currentFullPath.join('/'));
+    return normalized === animationRootPath || normalized.startsWith(`${animationRootPath}/`);
+  };
+
   const scrollToIndex = (goToIndex: number) => {
     if (scrollRef?.current) {
       scrollRef.current.scrollToItem(goToIndex, 'smart');
@@ -214,7 +220,14 @@ export default function Assets(
     [lastPath.value]
   );
 
-  const handleRefresh = () => mutate(currentFullPath.join('/'));
+  const handleRefresh = () => {
+    const swrKey = currentFullPath.join('/');
+    if (isInAnimationDirectory()) {
+      updateAnimationTable().finally(() => mutate(swrKey));
+      return;
+    }
+    mutate(swrKey);
+  };
   const handleOpenFolder = () => api.assetsControllerOpenDict(currentFullPath.join('/'));
   const handleBack = () => {
     if(!isBasePath) {
