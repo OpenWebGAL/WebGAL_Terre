@@ -1,7 +1,7 @@
 // 鼠标松开触发相关函数
 import axios from 'axios';
 import { api } from '@/api';
-import { eventBus } from "@/utils/eventBus";
+import { eventBus } from '@/utils/eventBus';
 import { MutableRefObject } from 'react';
 import { convertControlToPreview, ToXOffset, degreesToRadians } from './baseUtils';
 
@@ -18,21 +18,23 @@ export function generateMergeTransform(
   TransformObj: any,
   direction: string,
   frame: { translate: [number, number]; rotate: number; scale: [number, number]; width: number; height: number },
-  parents?: MutableRefObject<HTMLElement | null> | null
+  parents?: MutableRefObject<HTMLElement | null> | null,
 ): any {
-
   // 1. 构建新的 transform 对象
   const newTransformObj: any = {};
 
   // 2. 将当前控制框的 translate（控制窗口像素）减去偏移后，转换回预览窗口的绝对坐标
-  const temPosition = convertControlToPreview({
-    x: frame.translate[0] - ToXOffset(direction, parents, frame.width),
-    y: frame.translate[1]
-  }, parents);
+  const temPosition = convertControlToPreview(
+    {
+      x: frame.translate[0] - ToXOffset(direction, parents, frame.width),
+      y: frame.translate[1],
+    },
+    parents,
+  );
   if (temPosition.x !== 0 || temPosition.y !== 0) {
     newTransformObj.position = {
       x: Math.round(temPosition.x),
-      y: Math.round(temPosition.y)
+      y: Math.round(temPosition.y),
     };
   }
 
@@ -44,12 +46,12 @@ export function generateMergeTransform(
   if (frame.scale[0] !== 1 || frame.scale[1] !== 1) {
     newTransformObj.scale = {
       x: Number(frame.scale[0].toFixed(1)),
-      y: Number(frame.scale[1].toFixed(1))
+      y: Number(frame.scale[1].toFixed(1)),
     };
   }
 
   // 4. 合并新的 transform 对象到原有的 TransformObj
-  const mergedObj = { ...TransformObj || {}, ...newTransformObj};
+  const mergedObj = { ...(TransformObj || {}), ...newTransformObj };
   if (Object.keys(mergedObj).length === 0) {
     return null;
   }
@@ -82,15 +84,15 @@ export async function syncCommandToFile(commandContext: any, newCommand: string)
 
       // 3. 保存文件 - 使用 targetPath (完整路径) 传给后端 API
       await api.assetsControllerEditTextFile({
-        path: commandContext.targetPath,  // ✅ 使用完整路径
-        textFile: newFileContent
+        path: commandContext.targetPath, // ✅ 使用完整路径
+        textFile: newFileContent,
       });
 
       // 通知其他组件文件已更新
       eventBus.emit('editor:drag-update-scene', {
         targetPath: commandContext.targetPath,
         lineNumber: commandContext.lineNumber,
-        newCommand: newCommand
+        newCommand: newCommand,
       });
 
       console.log('Command synced successfully:', newCommand);

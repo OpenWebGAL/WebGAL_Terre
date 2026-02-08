@@ -58,15 +58,6 @@ export function SettingsTab() {
   const updateCascaderDelimiters = useEditorStore.use.updateCascaderDelimiters();
 
   const [tempFontSize, setTempFontSize] = useState(editorFontSize.toString());
-  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
-  const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
-  const handleWindowAdjustmentChange = (checked: boolean) => {
-    updateIsWindowAdjustment(checked);
-    if (checked) {
-      updateIsShowPreview(true);
-      updateIsEnableLivePreview(true);
-    }
-  };
 
   useEffect(() => {
     const testValue = Number.parseFloat(tempFontSize);
@@ -210,21 +201,6 @@ export function SettingsTab() {
             </div>
           </>
         ) : null}
-      </div>
-    </TabItem>
-    <TabItem title={`拖动编辑贴图`}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <TerreToggle
-          title="拖动编辑贴图"
-          isChecked={isWindowAdjustment}
-          onChange={handleWindowAdjustmentChange}
-          onText="已开启"
-          offText="已关闭"
-        />{isWindowAdjustment && (
-          <div className={s.tips}>
-            注：必须开启预览窗口和实时预览
-          </div>
-        )}
       </div>
     </TabItem>
   </TopbarTab>;

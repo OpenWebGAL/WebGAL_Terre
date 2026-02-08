@@ -30,7 +30,10 @@ export const getParentWindowSize = (parents?: MutableRefObject<HTMLElement | nul
  * @param parents - 父元素的 ref
  * @returns 操控窗口中的坐标 { x, y }
  */
-export const convertPreviewToControl = (previewPixel: { x: number; y: number }, parents?: MutableRefObject<HTMLElement | null> | null) => {
+export const convertPreviewToControl = (
+  previewPixel: { x: number; y: number },
+  parents?: MutableRefObject<HTMLElement | null> | null,
+) => {
   const parentWindow = getParentWindowSize(parents);
   return {
     x: (previewPixel.x / previewWindow.width) * parentWindow.width,
@@ -44,7 +47,10 @@ export const convertPreviewToControl = (previewPixel: { x: number; y: number }, 
  * @param parents - 父元素的 ref
  * @returns 预览窗口中的坐标 { x, y }
  */
-export const convertControlToPreview = (parentPixel: { x: number; y: number }, parents?: MutableRefObject<HTMLElement | null> | null) => {
+export const convertControlToPreview = (
+  parentPixel: { x: number; y: number },
+  parents?: MutableRefObject<HTMLElement | null> | null,
+) => {
   const parentWindow = getParentWindowSize(parents);
   return {
     x: (parentPixel.x / parentWindow.width) * previewWindow.width,
@@ -76,13 +82,16 @@ export function degreesToRadians(degrees: number): number {
  * @param originalHeight - 原始图片高度
  * @returns 缩放后的尺寸 { width, height }
  */
-export function calculateScaledImageSize(originalWidth: number, originalHeight: number): { width: number; height: number } {
+export function calculateScaledImageSize(
+  originalWidth: number,
+  originalHeight: number,
+): { width: number; height: number } {
   const scaleW = previewWindow.width / originalWidth;
   const scaleH = previewWindow.height / originalHeight;
   const targetScale = Math.min(scaleW, scaleH);
   return {
     width: originalWidth * targetScale,
-    height: originalHeight * targetScale
+    height: originalHeight * targetScale,
   };
 }
 
@@ -100,7 +109,7 @@ export function convertCommandPathToFilePath(command: string, targetPath: string
 
 /**
  *  根据路径获取场景文本内容
-*/
+ */
 export async function GetSceneTXT(path: string): Promise<string> {
   const res = await axios.get(path);
   return res.data.toString();
@@ -113,7 +122,11 @@ export async function GetSceneTXT(path: string): Promise<string> {
  * @param imageWidth - 图片宽度
  * @returns X 轴偏移量
  */
-export function ToXOffset(direction: string, parents?: MutableRefObject<HTMLElement | null> | null, imageWidth: number = 0): number {
+export function ToXOffset(
+  direction: string,
+  parents?: MutableRefObject<HTMLElement | null> | null,
+  imageWidth = 0,
+): number {
   const parentWindow = getParentWindowSize(parents);
   let xOffset = 0;
   if (direction === 'center') {

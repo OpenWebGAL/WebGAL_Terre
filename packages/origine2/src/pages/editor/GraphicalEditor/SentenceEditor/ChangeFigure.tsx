@@ -19,7 +19,6 @@ import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { WsUtil } from "@/utils/wsUtil";
-import { eventBus } from "@/utils/eventBus";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -278,37 +277,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     props.onSubmit(submitString);
   };
 
-  function Adjustment() {
-    const lineContent = sentenceToRawLine(props.sentence);
-    const lineNumber = props.index; // 如果 index 从 0 开始
-    const targetPath = props.targetPath;
-    WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
-    eventBus.emit('editor:pixi-sync-command', {
-      targetPath,
-      lineNumber,
-      lineContent
-    });
-  }
-
-  // 将 sentence 对象转换回原始命令行字符串
-  function sentenceToRawLine(sentence: any): string {
-    let base = sentence.commandRaw;
-    if (sentence.content) {
-      base += ':' + sentence.content;
-    }
-    if (sentence.args && sentence.args.length > 0) {
-      for (const arg of sentence.args) {
-        let value = arg.value;
-        // 如果是对象，转成 JSON 字符串
-        if (typeof value === 'object') {
-          value = JSON.stringify(value);
-        }
-        base += ` -${arg.key}=${value}`;
-      }
-    }
-    return base;
-  }
-
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
       <CommonOptions key="isNoDialog" title={t`关闭立绘`}>
@@ -413,11 +381,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           updateExpand(props.index);
         }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
-      {isWindowAdjustment && !isNoFile && <CommonOptions key="new-button" title={t`拖拽调整位置`}>
-        <Button onClick={() => {
-          Adjustment();
-        }}>{t`开始`}</Button>
-      </CommonOptions>}
       <TerrePanel
         title={t`效果编辑器`}
         sentenceIndex={props.index}
@@ -665,6 +628,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             const newEffect = { target: target, transform: transform };
             WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
           }}
+          sentence={props.sentence}
+          index={props.index}
+          targetPath={props.targetPath}
         />
       </TerrePanel>
 

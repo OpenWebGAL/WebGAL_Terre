@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { ColorPicker, IColor } from '@fluentui/react';
-import { Button, Checkbox, Input, Slider } from '@fluentui/react-components';
+import { Button, Checkbox, Input, Slider, Switch } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import { debounce } from 'lodash';
 import { useValue } from '@/hooks/useValue';
@@ -9,10 +9,17 @@ import { OptionCategory } from '@/pages/editor/GraphicalEditor/components/Option
 import CommonOptions from '@/pages/editor/GraphicalEditor/components/CommonOption';
 import styles from './effectEditor.module.scss';
 import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
-import type { EffectKey, EffectFields, EffectSliderConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import type {
+  EffectKey,
+  EffectFields,
+  EffectSliderConfig,
+} from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
 import useEditorStore from '@/store/useEditorStore';
+import { WsUtil } from "@/utils/wsUtil";
+import { eventBus } from "@/utils/eventBus";
+import { ISentence } from "webgal-parser/src/interface/sceneInterface";
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -112,17 +119,20 @@ const EffectInputField = memo(
       },
       [fieldKey, updateField],
     );
-    const toFixedNumber = useCallback((value: number | undefined) => {
-      if (typeof value !== 'number') {
-        return 0;
-      } else {
-        if (!slider?.toFixed) {
-          return value;
+    const toFixedNumber = useCallback(
+      (value: number | undefined) => {
+        if (typeof value !== 'number') {
+          return 0;
         } else {
-          return Number(value.toFixed(slider.toFixed));
+          if (!slider?.toFixed) {
+            return value;
+          } else {
+            return Number(value.toFixed(slider.toFixed));
+          }
         }
-      }
-    }, [slider]);
+      },
+      [slider],
+    );
     return (
       <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
         <Input
@@ -218,11 +228,7 @@ const EffectDropdownField = memo(
     );
     return (
       <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
-        <WheelDropdown
-          options={options}
-          value={(val ?? '').toString()}
-          onValueChange={handleChange}
-        />
+        <WheelDropdown options={options} value={(val ?? '').toString()} onValueChange={handleChange} />
       </CommonOptions>
     );
   },
@@ -283,7 +289,25 @@ const EffectField = memo(
 /**
  * 效果编辑器
  */
-export function EffectEditor(props: { json: string; onChange: (newJson: string) => void; onUpdate?: (transform: any) => void }) {
+export function EffectEditor(props: {
+  json: string;
+  onChange: (newJson: string) => void;
+  onUpdate?: (transform: any) => void;
+   sentence: ISentence;
+     index:number;
+  targetPath: string;
+}) {
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
+  const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
+  const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
+  const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
+  const handleWindowAdjustmentChange = (checked: boolean) => {
+    updateIsWindowAdjustment(checked);
+    if (checked) {
+      updateIsShowPreview(true);
+      updateIsEnableLivePreview(true);
+    }
+  };
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
    * 解析初始JSON字符串，生成效果参数的初始状态
@@ -320,9 +344,12 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
    * @param key 参数键（EffectKey）
    * @param value 新值（数值或undefined）
    */
-  const updateField = useCallback((key: EffectKey, value: number | undefined) => {
-    effectFields.set({ ...effectFields.value, [key]: value });
-  }, [effectFields.value]);
+  const updateField = useCallback(
+    (key: EffectKey, value: number | undefined) => {
+      effectFields.set({ ...effectFields.value, [key]: value });
+    },
+    [effectFields.value],
+  );
   /** 颜色选择器的当前颜色（基于colorRed/colorGreen/colorBlue） */
   const color = useMemo(
     () => rgbToColor(effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue),
@@ -409,8 +436,56 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     }, 10),
     [getUpdatedObject],
   );
+
+  // 将 sentence 对象转换回原始命令行字符串
+  function sentenceToRawLine(sentence: any): string {
+    let base = sentence.commandRaw;
+    if (sentence.content) {
+      base += ':' + sentence.content;
+    }
+    if (sentence.args && sentence.args.length > 0) {
+      for (const arg of sentence.args) {
+        let value = arg.value;
+        // 如果是对象，转成 JSON 字符串
+        if (typeof value === 'object') {
+          value = JSON.stringify(value);
+        }
+        base += ` -${arg.key}=${value}`;
+      }
+    }
+    return base;
+  }
+
+  function Adjustment() {
+    const lineContent = sentenceToRawLine(props.sentence);
+    const lineNumber = props.index; // 如果 index 从 0 开始
+    const targetPath = props.targetPath;
+    WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
+    eventBus.emit('editor:pixi-sync-command', {
+      targetPath,
+      lineNumber,
+      lineContent,
+    });
+  }
   return (
     <>
+      <Switch
+        label={t`拖动编辑贴图`}
+        title="当您启用这个选项的时候，在文本编辑器处用鼠标点击贴图的那一行，或者点击图形界面的‘拖拽调整位置’"
+        labelPosition="before"
+        checked={isWindowAdjustment}
+        onChange={() => handleWindowAdjustmentChange(!isWindowAdjustment)}
+      />
+
+      {isWindowAdjustment && (
+        <CommonOptions key="new-button" title={t`拖拽调整位置`}>
+          <Button
+            onClick={() => {
+              Adjustment();
+            }}
+          >{t`开始`}</Button>
+        </CommonOptions>
+      )}
       {fieldGroups.map((group, index) => (
         <OptionCategory key={index + 1} title={group.title}>
           {index === 2 || index === 4 ? ( // 有拾色器的组
