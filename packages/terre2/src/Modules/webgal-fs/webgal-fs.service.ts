@@ -236,7 +236,7 @@ export class WebgalFsService {
         decodedPath
           .replace(/\\/g, '/')
           .split('/')
-          .every((name) => WebgalFsService.checkFileName(name))
+          .some((name) => !WebgalFsService.checkFileName(name))
       )
         throw new Error('There are unexpect marks in path');
       const directory = dirname(decodedPath);
