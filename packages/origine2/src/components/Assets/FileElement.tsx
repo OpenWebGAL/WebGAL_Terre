@@ -182,7 +182,7 @@ export default function FileElement(
                     <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                       <Subtitle2>{t`重命名`}</Subtitle2>
                       <Tooltip
-                        content={{ children: t`文件名不可包含特殊符号: '/\\:*?"<>|'`, style: { color: 'var(--danger)' } }}
+                        content={{ children: `${t`文件名不可包含特殊符号`}: '/\\:*#%&?@"<>|'`, style: { color: 'var(--danger)' } }}
                         relationship="inaccessible"
                         visible={!isAccessible}
                         positioning="below"
