@@ -37,7 +37,7 @@ export default function ChooseFile(props: IChooseFile) {
 
   function checkFilePathValidity(filePath: string): boolean {
     const ranges: { start: number; width: number }[] = [];
-    const regex = /[\s*#%&?@"<>|:]/g;
+    const regex = / -|[*#%&?@"<>|:]/g;
     let match;
 
     while ((match = regex.exec(filePath)) !== null) {
