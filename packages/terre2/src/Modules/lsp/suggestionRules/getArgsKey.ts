@@ -28,6 +28,8 @@ export function getArgsKey(
         nextKey,
         continueKey,
         durationKey,
+        enterDurationKey,
+        exitDurationKey,
         transformKey,
         unlocknameKey,
         seriesKey,
@@ -42,6 +44,8 @@ export function getArgsKey(
         nextKey,
         continueKey,
         durationKey,
+        enterDurationKey,
+        exitDurationKey,
         idFigureKey,
         leftKey,
         rightKey,
@@ -255,6 +259,27 @@ const durationKey: CompletionItem = {
   detail: '持续时间',
   documentation: markdown(`
 这个时间片的持续时间，单位为毫秒(ms)
+  `),
+};
+
+const enterDurationKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'enterDuration',
+  insertText: 'enterDuration=',
+  detail: '入场时长',
+  documentation: markdown(`
+入场动画的持续时间，单位为毫秒(ms)。
+若同时设置 \`duration\`，则此项优先生效。
+  `),
+};
+
+const exitDurationKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'exitDuration',
+  insertText: 'exitDuration=',
+  detail: '退场时长',
+  documentation: markdown(`
+退场动画的持续时间，单位为毫秒(ms)。
   `),
 };
 
@@ -898,7 +923,7 @@ const enterAnimationKey: CompletionItem = {
   insertText: 'enter=',
   detail: '入场动画',
   documentation: markdown(`
-设置入场动画
+设置入场动画（来自 \`game/animation\` 目录，通常不带 \`.json\` 后缀）
   `),
 };
 
@@ -908,7 +933,7 @@ const exitAnimationKey: CompletionItem = {
   insertText: 'exit=',
   detail: '退场动画',
   documentation: markdown(`
-设置退场动画
+设置退场动画（来自 \`game/animation\` 目录，通常不带 \`.json\` 后缀）
   `),
 };
 

@@ -25,9 +25,19 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
+  const enterDuration = useValue<number | string>(getArgByKey(props.sentence, 'enterDuration') as number);
+  const exitDuration = useValue<number | string>(getArgByKey(props.sentence, 'exitDuration') as number);
+  const enterAnimation = useValue(getArgByKey(props.sentence, 'enter').toString() ?? "");
+  const exitAnimation = useValue(getArgByKey(props.sentence, 'exit').toString() ?? "");
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
 
+  const normalizeAnimationName = (name: string) => name.replace(/\.json$/i, "");
+  const toAnimationFilePath = (name: string) => {
+    const normalized = normalizeAnimationName(name);
+    return normalized ? `${normalized}.json` : "";
+  };
+  
   const updateExpand = useEditorStore.use.updateExpand();
   const submit = () => {
     const submitString = combineSubmitString(
@@ -47,6 +57,10 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           {key: "series", value: ""},
         ]),
         {key: "duration", value: duration.value},
+        {key: "enterDuration", value: enterDuration.value},
+        {key: "exitDuration", value: exitDuration.value},
+        {key: "enter", value: enterAnimation.value},
+        {key: "exit", value: exitAnimation.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -104,6 +118,38 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         title={t`效果编辑器`}
         bottomBarChildren={
           <>
+            <CommonOptions key="enterAnimation" title={t`选择进入动画`}>
+              <>
+                {enterAnimation.value}{"\u00a0"}
+                <ChooseFile
+                  title={t`选择进入动画文件`}
+                  basePath={['animation']}
+                  selectedFilePath={toAnimationFilePath(enterAnimation.value)}
+                  onChange={(file) => {
+                    enterAnimation.set(normalizeAnimationName(file?.name ?? ""));
+                    submit();
+                  }}
+                  extNames={extNameMap.get('json')}
+                  hiddenFiles={['animationTable.json']}
+                />
+              </>
+            </CommonOptions>
+            <CommonOptions key="exitAnimation" title={t`选择退出动画`}>
+              <>
+                {exitAnimation.value}{"\u00a0"}
+                <ChooseFile
+                  title={t`选择退出动画文件`}
+                  basePath={['animation']}
+                  selectedFilePath={toAnimationFilePath(exitAnimation.value)}
+                  onChange={(file) => {
+                    exitAnimation.set(normalizeAnimationName(file?.name ?? ""));
+                    submit();
+                  }}
+                  extNames={extNameMap.get('json')}
+                  hiddenFiles={['animationTable.json']}
+                />
+              </>
+            </CommonOptions>
             <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
               <div>
                 <Input
@@ -118,6 +164,40 @@ export default function ChangeBg(props: ISentenceEditorProps) {
                       duration.set(newDuration);
                   } }
                   onBlur={submit} />
+              </div>
+            </CommonOptions>
+            <CommonOptions key="enterDuration" title={t`入场时长（单位为毫秒）`}>
+              <div>
+                <Input
+                  placeholder={t`入场时长（单位为毫秒）`}
+                  value={enterDuration.value.toString()}
+                  onChange={(_, data) => {
+                    const newDuration = Number(data.value);
+                    if (isNaN(newDuration) || data.value === '') {
+                      enterDuration.set("");
+                    } else {
+                      enterDuration.set(newDuration);
+                    }
+                  }}
+                  onBlur={submit}
+                />
+              </div>
+            </CommonOptions>
+            <CommonOptions key="exitDuration" title={t`退场时长（单位为毫秒）`}>
+              <div>
+                <Input
+                  placeholder={t`退场时长（单位为毫秒）`}
+                  value={exitDuration.value.toString()}
+                  onChange={(_, data) => {
+                    const newDuration = Number(data.value);
+                    if (isNaN(newDuration) || data.value === '') {
+                      exitDuration.set("");
+                    } else {
+                      exitDuration.set(newDuration);
+                    }
+                  }}
+                  onBlur={submit}
+                />
               </div>
             </CommonOptions>
             <CommonOptions key="5" title={t`缓动类型`}>
