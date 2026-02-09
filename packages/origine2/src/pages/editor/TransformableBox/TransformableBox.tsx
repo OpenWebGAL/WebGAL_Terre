@@ -9,6 +9,7 @@ import {
   radiansToDegrees,
   degreesToRadians,
   convertCommandPathToFilePath,
+  getLive2dSize,
 } from './baseUtils';
 import {
   parseFigureCommand,
@@ -76,16 +77,13 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
     lineSentence: ISentence | null;
   }) => {
     let fileName = event.lineSentence?.content || '';
-    if (fileName === 'none') {
-      fileName = '';
+    if (fileName === 'none' || fileName === '') {
+      console.log('当前命令包含 changeFigure: none，或 changeFigure 的参数为空，暂不支持编辑器预览');
+      return;
     }
-    if (fileName !== '' && !fileName.endsWith('.json')) {
-      const filePath =
-        convertCommandPathToFilePath(
-          // 提取图片路径
-          event.lineSentence!.content,
-          event.targetPath,
-        ) || '';
+
+    if (!fileName.endsWith('.json')) {
+      const filePath = convertCommandPathToFilePath(event.lineSentence!.content, event.targetPath) || ''; // 提取图片路径
       api.assetsControllerGetImageDimensions(filePath).then((res) => {
         const scaledSize = calculateScaledImageSize(res.data.width, res.data.height); // 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
         const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
@@ -95,8 +93,16 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
         updateFrame(direction, transformObj, size.x, size.y); // !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
         setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
       });
-    } else if (fileName !== '' && fileName.endsWith('.json')) {
-      console.log('当前命令包含 changeFigure: none，或 changeFigure 的参数是一个 json 文件，暂不支持编辑器预览');
+    } else {
+      getLive2dSize().then(({ width, height }) => {
+        const scaledSize = { width, height }; // 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
+        const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
+        const { direction, transformObj } = parseFigureCommand(event.lineContent);
+        commandContextRef.current = { ...event, direction };
+        setIsDisplay(true);
+        updateFrame(direction, transformObj, size.x, size.y); // !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
+        setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
+      });
     }
   };
 
@@ -123,9 +129,14 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
           setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
         });
       } else if (imgPath !== '' && imgPath.endsWith('.json')) {
-        console.log(
-          '当前 setTransform 语句的目标包含 changeFigure: none，或 changeFigure 的参数是一个 json 文件，暂不支持编辑器预览',
-        );
+        getLive2dSize().then(({ width, height }) => {
+          const scaledSize = { width, height };
+          const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
+          commandContextRef.current = { ...event, direction };
+          setIsDisplay(true);
+          updateFrame(direction, transformObj, size.x, size.y);
+          setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
+        });
       }
     });
   };

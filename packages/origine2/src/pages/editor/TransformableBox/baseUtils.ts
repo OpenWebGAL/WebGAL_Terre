@@ -135,3 +135,10 @@ export function ToXOffset(
   }
   return xOffset;
 }
+
+export function getLive2dSize(): Promise<{ width: number; height: number }> {
+  // 模拟获取 Live2D 模型尺寸的异步函数
+  return new Promise((resolve) => {
+    resolve({ width: 800, height: 1600 }); // 返回一个模拟尺寸
+  });
+}
