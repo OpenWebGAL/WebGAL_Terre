@@ -78,7 +78,6 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
   }) => {
     let fileName = event.lineSentence?.content || '';
     if (fileName === 'none' || fileName === '') {
-      console.log('当前命令包含 changeFigure: none，或 changeFigure 的参数为空，暂不支持编辑器预览');
       return;
     }
 
@@ -113,10 +112,9 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
     lineSentence: ISentence | null;
   }) => {
     if (!event.lineSentence) {
-      console.warn('setTransform 语句缺少 lineSentence 信息，无法解析变换数据');
       return;
     }
-    const transformObj = JSON.parse(event.lineSentence.content);
+    const transformObj = JSON.parse(event.lineSentence.content === '' ? '{}' : event.lineSentence.content);
     const target = event.lineSentence.args.find((arg) => arg.key === 'target')?.value;
     GetImgPathAndDirection(target as string, event.targetPath).then(({ imgPath, direction }) => {
       if (imgPath !== '' && !imgPath.endsWith('.json')) {
@@ -194,8 +192,8 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
     direction: string,
     lineSentence: ISentence | null | undefined,
   ): string {
-    const tailCommand = LineContent?.replace(/^setTransform:[^\s]+(\s*)/, '') || '';
-    const transformObj = JSON.parse(lineSentence?.content || '{}');
+    const tailCommand = lineSentence?.args.map(({ key, value }) => ` -${key}=${value}`).join('') || '';
+    const transformObj = JSON.parse(!lineSentence || lineSentence?.content === '' ? '{}' : lineSentence.content);
     const mergedTransformObj = generateMergeTransform(transformObj, direction, frame, parents);
     return 'setTransform:' + JSON.stringify(mergedTransformObj) + (tailCommand ? ` ${tailCommand}` : '');
   }
