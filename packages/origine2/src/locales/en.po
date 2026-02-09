@@ -17,7 +17,7 @@ msgstr ""
 msgid ";注释"
 msgstr "Comment"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:512
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:505
 msgid "*设置拾色器后，点击此按钮以保存更改"
 msgstr "*Click this button to save changes after setting color picker"
 
@@ -478,7 +478,7 @@ msgstr "About"
 msgid "关联立绘"
 msgstr "Associated figure"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:400
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:389
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:228
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:159
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:98
@@ -616,7 +616,7 @@ msgstr "Delete"
 msgid "删除属性"
 msgstr "Delete Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:262
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:263
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:37
 msgid "删除本句"
 msgstr "Delete this sentence"
@@ -1088,7 +1088,7 @@ msgstr "Apply"
 msgid "应用的模板"
 msgstr "Applied template"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:514
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:507
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:312
 msgid "应用颜色变化"
 msgstr "Apply color changes"
@@ -1097,7 +1097,7 @@ msgstr "Apply color changes"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:399
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:388
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:158
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:98
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:156
@@ -1105,8 +1105,8 @@ msgid "开启"
 msgstr "On"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:486
-msgid "开始"
-msgstr ""
+#~ msgid "开始"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:434
 msgid "张开嘴"
@@ -1157,7 +1157,7 @@ msgstr "Manually enter ID"
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:270
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:271
 msgid "执行到此句"
 msgstr "Execute to this sentence"
 
@@ -1166,12 +1166,12 @@ msgid "扩展名"
 msgstr "Extension name"
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:473
-msgid "拖动编辑贴图"
-msgstr ""
+#~ msgid "拖动编辑贴图"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:481
-msgid "拖拽调整位置"
-msgstr ""
+#~ msgid "拖拽调整位置"
+#~ msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:225
 msgid "拼接先前文本框内的语句"
@@ -1541,7 +1541,7 @@ msgstr "Unrecognized"
 msgid "未识别的指令"
 msgstr "Unrecognized command"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:233
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:234
 msgid "本句前插入句子"
 msgstr "Insert sentence before this"
 
@@ -1743,7 +1743,7 @@ msgstr "Add new line"
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:286
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:287
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:72
 #: src/pages/editor/Topbar/Topbar.tsx:110
 msgid "添加语句"
@@ -2743,7 +2743,7 @@ msgid "高斯模糊"
 msgstr "Gaussian Blur"
 
 #: src/hooks/useEaseTypeOptions.ts:6
-#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:398
+#: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:387
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:72
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:157
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58

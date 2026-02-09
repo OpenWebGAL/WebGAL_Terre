@@ -14,7 +14,12 @@ type IframeEvents = {
 type EditorEvents = {
   'editor:update-scene': { scene: string };
   'editor:topbar-add-sentence': { sentence: string };
-  'editor:pixi-sync-command': { targetPath: string; lineNumber: number; lineContent: string };
+  'editor:pixi-sync-command': {
+    targetPath: string;
+    lineNumber: number;
+    lineContent: string;
+    lineSentence: import('webgal-parser/src/interface/sceneInterface').ISentence | null;
+  };
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
 };
 

@@ -10,6 +10,7 @@ import {
   GetSceneTXT,
   convertCommandPathToFilePath,
 } from './baseUtils';
+import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 
 /**
  * 解析 changeFigure 命令字符串，提取方向和变换对象
@@ -40,30 +41,27 @@ export function parseFigureCommand(line: string) {
 
 /**
  * 解析 setTransform 命令字符串，提取变换对象和目标
- * @param line - 命令字符串
+ * @param sentence - 命令字符串
  * @returns { transformObj, target }
  */
-export function parseSetTransformCommand(line: string) {
-  let transformObj: any;
-  let target: number | string | undefined;
-  const parts = line.split(/\s+/);
+// export function parseSetTransformCommand(sentence: ISentence) {
+//   let transformObj: any;
+//   let target: number | string | undefined;
+//   console.log('$$$', JSON.stringify(sentence));
 
-  for (const part of parts) {
-    if (part.startsWith('setTransform:')) {
-      // 提取 JSON 字符串，并安全移除末尾分号
-      const jsonStr = part.replace('setTransform:', '').replace(/;$/, '');
-      try {
-        transformObj = JSON.parse(jsonStr);
-      } catch (e) {
-        console.error('Failed to parse transform JSON:', jsonStr, e);
-      }
-    } else if (part.startsWith('-target=')) {
-      // 提取目标值，并移除末尾分号
-      target = part.replace('-target=', '').replace(/;$/, '');
-    }
-  }
-  return { transformObj, target };
-}
+//   // if (part.startsWith('setTransform:')) {
+//   //   try {
+//   //     transformObj = JSON.parse(jsonStr);
+//   //   } catch (e) {
+//   //     console.error('Failed to parse transform JSON:', jsonStr, e);
+//   //   }
+//   // } else if (part.startsWith('-target=')) {
+//   //   // 提取目标值，并移除末尾分号
+//   //   target = part.replace('-target=', '').replace(/;$/, '');
+//   // }
+
+//   return { transformObj, target };
+// }
 
 /**
  * 根据 setTransform 寻找到对应的 changeFigure 语句
@@ -84,10 +82,10 @@ export async function SetFtoChangeF(target: string, targetPath: string): Promise
 }
 
 /**
- * 根据 setTransform 语句获取图片路径和方向
+ * 根据 setTransform 语句获取图片路径和方位
  * @param target - 目标值
  * @param targetPath - 目标文件路径
- * @returns 图片路径和方向
+ * @returns 图片路径和方位
  */
 export async function GetImgPathAndDirection(
   target: string,
@@ -95,7 +93,11 @@ export async function GetImgPathAndDirection(
 ): Promise<{ imgPath: string; direction: string }> {
   const ChangeF = await SetFtoChangeF(target, targetPath);
   const { direction } = parseFigureCommand(ChangeF);
-  const imgPath = convertCommandPathToFilePath(ChangeF, targetPath);
+  const fileName = ChangeF.replace(/changeFigure:/, '')
+    .split(' -')[0]
+    .split(';')[0]
+    .trim(); // 提取文件名部分
+  const imgPath = convertCommandPathToFilePath(fileName, targetPath);
   return { imgPath, direction };
 }
 

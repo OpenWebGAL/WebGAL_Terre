@@ -153,7 +153,8 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     eventBus.emit('editor:pixi-sync-command', {
       targetPath: '',
       lineNumber: 1,
-      lineContent: ""
+      lineContent: "",
+      lineSentence: null,
     });
   }
 

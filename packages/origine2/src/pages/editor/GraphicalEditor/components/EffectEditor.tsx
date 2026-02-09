@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { ColorPicker, IColor } from '@fluentui/react';
-import { Button, Checkbox, Input, Slider, Switch } from '@fluentui/react-components';
+import { Button, Checkbox, Input, Slider } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import { debounce } from 'lodash';
 import { useValue } from '@/hooks/useValue';
@@ -466,6 +466,7 @@ export function EffectEditor(props: {
         targetPath,
         lineNumber,
         lineContent,
+        lineSentence: props.sentence,
       });
     };
     if (lineContent.startsWith("changeFigure") || lineContent.startsWith("setTransform")) {

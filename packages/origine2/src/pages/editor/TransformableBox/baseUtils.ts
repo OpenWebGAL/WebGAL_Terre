@@ -101,8 +101,7 @@ export function calculateScaledImageSize(
  * @param targetPath - 目标路径
  * @returns 文件路径或 null
  */
-export function convertCommandPathToFilePath(command: string, targetPath: string): string {
-  const fileName = command.match(/changeFigure:([^\s-]+)/)?.[1]; // 提取文件名
+export function convertCommandPathToFilePath(fileName: string, targetPath: string): string {
   const gamePath = targetPath.match(/(games\/[^/]+)/)?.[1]; // 提取游戏目录路径
   return fileName && gamePath ? `${gamePath}/game/figure/${fileName}` : '';
 }

@@ -13,10 +13,11 @@ import {
 import {
   parseFigureCommand,
   updateFrameState,
-  parseSetTransformCommand,
+  // parseSetTransformCommand,
   GetImgPathAndDirection,
 } from './dragStartUtils';
 import { syncCommandToFile, generateMergeTransform } from './dragEndUtils';
+import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 
 interface TransformableBoxProps {
   parents?: MutableRefObject<HTMLElement | null> | null;
@@ -40,16 +41,22 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
     targetPath: string;
     lineNumber: number;
     lineContent: string;
+    lineSentence: ISentence | null;
     direction: string;
   } | null>(null);
   const lastParentSize = useRef<{ width: number; height: number } | null>(null);
 
   // 监听 点击事件
   useEffect(() => {
-    function handlePixiSyncCommand(event: { targetPath: string; lineNumber: number; lineContent: string }) {
-      if (event.lineContent.includes('changeFigure') && !/changeFigure:\s*none\b/.test(event.lineContent)) {
+    function handlePixiSyncCommand(event: {
+      targetPath: string;
+      lineNumber: number;
+      lineContent: string;
+      lineSentence: ISentence | null;
+    }) {
+      if (event.lineContent.startsWith('changeFigure') && !/changeFigure:\s*none\b/.test(event.lineContent)) {
         ChangeFigure(event);
-      } else if (event.lineContent.includes('setTransform')) {
+      } else if (event.lineContent.startsWith('setTransform')) {
         SetTransform(event);
       } else {
         setIsDisplay(false);
@@ -62,28 +69,51 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
     };
   }, []);
   // 主要逻辑
-  const ChangeFigure = (event: any) => {
-    const filePath =
-      convertCommandPathToFilePath(
-        // 提取图片路径
-        (event as { lineContent: string }).lineContent,
-        (event as { targetPath: string }).targetPath,
-      ) || '';
-    api.assetsControllerGetImageDimensions(filePath).then((res) => {
-      const scaledSize = calculateScaledImageSize(res.data.width, res.data.height); // 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
-      const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-      const { direction, transformObj } = parseFigureCommand((event as { lineContent: string }).lineContent);
-      commandContextRef.current = { ...event, direction };
-      setIsDisplay(true);
-      updateFrame(direction, transformObj, size.x, size.y); // !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
-      setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
-    });
+  const ChangeFigure = (event: {
+    targetPath: string;
+    lineNumber: number;
+    lineContent: string;
+    lineSentence: ISentence | null;
+  }) => {
+    let fileName = event.lineSentence?.content || '';
+    if (fileName === 'none') {
+      fileName = '';
+    }
+    if (fileName !== '' && !fileName.endsWith('.json')) {
+      const filePath =
+        convertCommandPathToFilePath(
+          // 提取图片路径
+          event.lineSentence!.content,
+          event.targetPath,
+        ) || '';
+      api.assetsControllerGetImageDimensions(filePath).then((res) => {
+        const scaledSize = calculateScaledImageSize(res.data.width, res.data.height); // 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
+        const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
+        const { direction, transformObj } = parseFigureCommand(event.lineContent);
+        commandContextRef.current = { ...event, direction };
+        setIsDisplay(true);
+        updateFrame(direction, transformObj, size.x, size.y); // !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
+        setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
+      });
+    } else if (fileName !== '' && fileName.endsWith('.json')) {
+      console.log('当前命令包含 changeFigure: none，或 changeFigure 的参数是一个 json 文件，暂不支持编辑器预览');
+    }
   };
 
-  const SetTransform = (event: any) => {
-    const { transformObj, target } = parseSetTransformCommand((event as { lineContent: string }).lineContent);
-    GetImgPathAndDirection(target as string, (event as { targetPath: string }).targetPath).then(
-      ({ imgPath, direction }) => {
+  const SetTransform = (event: {
+    targetPath: string;
+    lineNumber: number;
+    lineContent: string;
+    lineSentence: ISentence | null;
+  }) => {
+    if (!event.lineSentence) {
+      console.warn('setTransform 语句缺少 lineSentence 信息，无法解析变换数据');
+      return;
+    }
+    const transformObj = JSON.parse(event.lineSentence.content);
+    const target = event.lineSentence.args.find((arg) => arg.key === 'target')?.value;
+    GetImgPathAndDirection(target as string, event.targetPath).then(({ imgPath, direction }) => {
+      if (imgPath !== '' && !imgPath.endsWith('.json')) {
         api.assetsControllerGetImageDimensions(imgPath).then((imgRes) => {
           const scaledSize = calculateScaledImageSize(imgRes.data.width, imgRes.data.height);
           const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
@@ -92,8 +122,12 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
           updateFrame(direction, transformObj, size.x, size.y);
           setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
         });
-      },
-    );
+      } else if (imgPath !== '' && imgPath.endsWith('.json')) {
+        console.log(
+          '当前 setTransform 语句的目标包含 changeFigure: none，或 changeFigure 的参数是一个 json 文件，暂不支持编辑器预览',
+        );
+      }
+    });
   };
 
   // 监听父元素宽度变化，按比例自动刷新
@@ -144,9 +178,13 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
   }
 
   // 将当前控制框的数据转换回setTransform
-  function FrameToSetTransform(LineContent: string | undefined, direction: string): string {
+  function FrameToSetTransform(
+    LineContent: string | undefined,
+    direction: string,
+    lineSentence: ISentence | null | undefined,
+  ): string {
     const tailCommand = LineContent?.replace(/^setTransform:[^\s]+(\s*)/, '') || '';
-    const { transformObj, target } = parseSetTransformCommand(LineContent || '');
+    const transformObj = JSON.parse(lineSentence?.content || '{}');
     const mergedTransformObj = generateMergeTransform(transformObj, direction, frame, parents);
     return 'setTransform:' + JSON.stringify(mergedTransformObj) + (tailCommand ? ` ${tailCommand}` : '');
   }
@@ -222,12 +260,16 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
             });
           }}
           onRenderEnd={() => {
-            if (commandContextRef.current?.lineContent.includes('changeFigure')) {
+            if (commandContextRef.current?.lineContent.startsWith('changeFigure')) {
               syncCommandToFile(commandContextRef.current, FrameToChangeFigure(commandContextRef.current?.lineContent));
-            } else if (commandContextRef.current?.lineContent.includes('setTransform')) {
+            } else if (commandContextRef.current?.lineContent.startsWith('setTransform')) {
               syncCommandToFile(
                 commandContextRef.current,
-                FrameToSetTransform(commandContextRef.current?.lineContent, commandContextRef.current.direction),
+                FrameToSetTransform(
+                  commandContextRef.current?.lineContent,
+                  commandContextRef.current.direction,
+                  commandContextRef.current.lineSentence,
+                ),
               );
             }
           }}
