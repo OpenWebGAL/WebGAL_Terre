@@ -1,11 +1,11 @@
 import CommonOptions from "../components/CommonOption";
-import {ISentenceEditorProps} from "./index";
+import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
-import {getArgByKey} from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
-import {useValue} from "@/hooks/useValue";
-import {EffectEditor} from "@/pages/editor/GraphicalEditor/components/EffectEditor";
+import { getArgByKey } from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
+import { useValue } from "@/hooks/useValue";
+import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
-import {TerrePanel} from "@/pages/editor/GraphicalEditor/components/TerrePanel";
+import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { Button } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
@@ -18,7 +18,7 @@ type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
-  const {sentence} = props;
+  const { sentence } = props;
   const json = sentence.content;
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
@@ -26,6 +26,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
   const presetTargets = new Map<PresetTarget, string>([
     [ "fig-left", t`左侧立绘` ],
     [ "fig-center", t`中间立绘` ],
@@ -46,12 +47,12 @@ export default function SetTransform(props: ISentenceEditorProps) {
       transform.value,
       props.sentence.args,
       [
-        {key: "target", value: target.value},
-        {key: "duration", value: duration.value},
-        {key: "ease", value: ease.value},
-        {key: "writeDefault", value: writeDefault.value},
-        {key: "keep", value: keep.value},
-        {key: "next", value: isGoNext.value},
+        { key: "target", value: target.value },
+        { key: "duration", value: duration.value },
+        { key: "ease", value: ease.value },
+        { key: "writeDefault", value: writeDefault.value },
+        { key: "keep", value: keep.value },
+        { key: "next", value: isGoNext.value },
       ],
       props.sentence.inlineComment,
     );
@@ -67,14 +68,17 @@ export default function SetTransform(props: ISentenceEditorProps) {
         <TerrePanel key={`effect-editor-${props.index}`} sentenceIndex={props.index} title={t`效果编辑器`}>
           <EffectEditor
             json={transform.value}
-            onChange={(newJson)=>{
+            onChange={(newJson) => {
               transform.set(newJson);
               submit();
             }}
-            onUpdate={(transform)=>{
+            onUpdate={(transform) => {
               const newEffect = { target: target.value, transform: transform };
               WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
             }}
+            sentence={props.sentence}
+            index={props.index}
+            targetPath={props.targetPath}
           />
         </TerrePanel>
       </CommonOptions>
@@ -97,10 +101,15 @@ export default function SetTransform(props: ISentenceEditorProps) {
         </div>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>
-        <TerreToggle title="" onChange={(newValue) => {
-          isUsePreset.set(newValue);
-        }} onText={t`使用预设的作用目标，如果设置了id则不生效`} offText={t`手动输入 ID`}
-        isChecked={isUsePreset.value} />
+        <TerreToggle
+          title=""
+          onChange={(newValue) => {
+            isUsePreset.set(newValue);
+          }}
+          onText={t`使用预设的作用目标，如果设置了id则不生效`}
+          offText={t`手动输入 ID`}
+          isChecked={isUsePreset.value}
+        />
       </CommonOptions>
       {isUsePreset.value && <CommonOptions key="3" title={t`选择预设目标`}>
         <WheelDropdown

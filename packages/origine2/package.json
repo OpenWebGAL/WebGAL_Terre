@@ -56,6 +56,7 @@
     "react-dom": "^18.0.0",
     "react-virtualized-auto-sizer": "^1.0.26",
     "react-window": "^1.8.11",
+    "react-moveable": "^0.56.0",
     "sass": "^1.51.0",
     "swr": "^2.2.4",
     "webgal-parser": "latest",

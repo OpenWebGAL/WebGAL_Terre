@@ -1,0 +1,4 @@
+### 获取图片尺寸
+# 测试获取图片的宽度、高度和类型
+# 请将 imagePath 替换为实际的图片路径(相对于 public/ 目录)
+GET http://localhost:3001/api/assets/getImageDimensions/games/新的游戏/game/background/bg-main.webp
