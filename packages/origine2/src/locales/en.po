@@ -649,7 +649,7 @@ msgstr "Delete game"
 msgid "刷新"
 msgstr "Refresh"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:169
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:178
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:54
 msgid "刷新游戏"
 msgstr "Refresh game"
@@ -829,7 +829,7 @@ msgstr "Open in File Explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:175
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:184
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -928,7 +928,7 @@ msgstr "Positioning"
 #~ msgid "实时预览"
 #~ msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:190
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:110
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -937,7 +937,7 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:181
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:190
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:110
 msgid "实时预览打开"
 msgstr "Live preview on"
@@ -2728,7 +2728,7 @@ msgstr "Preview"
 msgid "预览图标"
 msgstr "Preview icon"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:160
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:169
 msgid "预览窗口"
 msgstr "Preview window"
 

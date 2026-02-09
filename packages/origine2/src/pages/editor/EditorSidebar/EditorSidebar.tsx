@@ -151,6 +151,15 @@ export default function EditorSideBar() {
     </TabList>
   );
 
+  useEffect(() => {
+    const fn = () => {
+      const iframeDoc = ifRef.current?.contentDocument || ifRef.current?.contentWindow?.document;
+      if (!iframeDoc) return;
+      (iframeDoc.querySelector('.html-body__title-enter') as HTMLDivElement)?.click();
+    };
+    ifRef.current?.addEventListener('load', fn, { once: true });
+  }, [isShowPreview]);
+
   return <>
     {isShowSidebar &&
       <div className={styles.editor_sidebar}>
