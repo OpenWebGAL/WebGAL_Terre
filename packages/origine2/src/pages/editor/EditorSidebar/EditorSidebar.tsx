@@ -158,6 +158,9 @@ export default function EditorSideBar() {
       (iframeDoc.querySelector('.html-body__title-enter') as HTMLDivElement)?.click();
     };
     ifRef.current?.addEventListener('load', fn, { once: true });
+    return () => {
+      ifRef.current?.removeEventListener('load', fn);
+    };
   }, [isShowPreview]);
 
   return <>
