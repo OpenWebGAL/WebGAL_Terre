@@ -17,7 +17,6 @@ export class AssetsService {
       const fullPath = this.webgalFs.getPathFromRoot(`public/${imagePath}`);
       const buffer = readFileSync(fullPath);
       const dimensions = sizeOf(buffer);
-      
       return {
         width: dimensions.width,
         height: dimensions.height,

@@ -149,7 +149,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     const targetValue = sentenceData.value[index]?.content || "";
     WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue, true);
     editorLineHolder.recordSceneEditingLine(props.targetPath, index + 1);
-    // 传递假消息，为了在不使用此功能的时候清除框框
+    // 传递假消息，为了在不使用此功能的时候清除拖拽框
     eventBus.emit('editor:pixi-sync-command', {
       targetPath: '',
       lineNumber: 1,

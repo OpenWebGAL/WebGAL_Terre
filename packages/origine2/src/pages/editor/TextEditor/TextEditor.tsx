@@ -50,11 +50,6 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
-          eventBus.emit('editor:pixi-sync-command', {
-            targetPath: props.targetPath,
-            lineNumber: event.position.lineNumber,
-            lineContent: targetValue
-          });
           WsUtil.sendSyncCommand(target?.path ?? '', event.position.lineNumber, targetValue);
         }
       }
@@ -165,16 +160,6 @@ export default function TextEditor(props: ITextEditorProps) {
     return () => {
       window.removeEventListener('focus', handleVisibilityChange);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleDragUpdate = () => {
-      updateEditData();
-    };
-    eventBus.on('editor:drag-update-scene', handleDragUpdate);
-    return () => {
-      eventBus.off('editor:drag-update-scene', handleDragUpdate);
     };
   }, []);
 

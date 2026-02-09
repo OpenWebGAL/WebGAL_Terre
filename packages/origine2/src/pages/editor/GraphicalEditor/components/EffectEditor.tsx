@@ -17,9 +17,9 @@ import type {
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
 import useEditorStore from '@/store/useEditorStore';
-import { WsUtil } from "@/utils/wsUtil";
-import { eventBus } from "@/utils/eventBus";
-import { ISentence } from "webgal-parser/src/interface/sceneInterface";
+import { WsUtil } from '@/utils/wsUtil';
+import { eventBus } from '@/utils/eventBus';
+import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -293,21 +293,10 @@ export function EffectEditor(props: {
   json: string;
   onChange: (newJson: string) => void;
   onUpdate?: (transform: any) => void;
-   sentence: ISentence;
-     index:number;
+  sentence: ISentence;
+  index: number;
   targetPath: string;
 }) {
-  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
-  const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
-  const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
-  const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
-  const handleWindowAdjustmentChange = (checked: boolean) => {
-    updateIsWindowAdjustment(checked);
-    if (checked) {
-      updateIsShowPreview(true);
-      updateIsEnableLivePreview(true);
-    }
-  };
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
    * 解析初始JSON字符串，生成效果参数的初始状态
@@ -437,55 +426,58 @@ export function EffectEditor(props: {
     [getUpdatedObject],
   );
 
-  // 将 sentence 对象转换回原始命令行字符串
-  function sentenceToRawLine(sentence: any): string {
-    let base = sentence.commandRaw;
-    if (sentence.content) {
-      base += ':' + sentence.content;
-    }
-    if (sentence.args && sentence.args.length > 0) {
-      for (const arg of sentence.args) {
-        let value = arg.value;
-        // 如果是对象，转成 JSON 字符串
-        if (typeof value === 'object') {
-          value = JSON.stringify(value);
-        }
-        base += ` -${arg.key}=${value}`;
-      }
-    }
-    return base;
-  }
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
+  const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
+  const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
+  const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
 
-  function Adjustment() {
+  useEffect(() => {
+    // 将 sentence 对象转换回原始命令行字符串
+    const sentenceToRawLine = (sentence: ISentence): string => {
+      let base = sentence.commandRaw;
+      if (sentence.content) {
+        base += ':' + sentence.content;
+      }
+      if (sentence.args && sentence.args.length > 0) {
+        for (const arg of sentence.args) {
+          let value = arg.value;
+          // 如果是对象，转成 JSON 字符串
+          if (typeof value === 'object') {
+            value = JSON.stringify(value);
+          }
+          base += ` -${arg.key}=${value}`;
+        }
+      }
+      return base;
+    };
+    const handleWindowAdjustmentChange = (checked: boolean) => {
+      updateIsWindowAdjustment(checked);
+      if (checked) {
+        updateIsShowPreview(true);
+        updateIsEnableLivePreview(true);
+      }
+    };
     const lineContent = sentenceToRawLine(props.sentence);
-    const lineNumber = props.index; // 如果 index 从 0 开始
-    const targetPath = props.targetPath;
-    WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
-    eventBus.emit('editor:pixi-sync-command', {
-      targetPath,
-      lineNumber,
-      lineContent,
-    });
-  }
+    const Adjustment = () => {
+      const lineNumber = props.index; // 如果 index 从 0 开始
+      const targetPath = props.targetPath;
+      WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
+      eventBus.emit('editor:pixi-sync-command', {
+        targetPath,
+        lineNumber,
+        lineContent,
+      });
+    };
+    if (lineContent.startsWith("changeFigure") || lineContent.startsWith("setTransform")) {
+      handleWindowAdjustmentChange(true);
+      Adjustment();
+    }
+    return () => {
+      updateIsWindowAdjustment(false);
+    };
+  }, []);
   return (
     <>
-      <Switch
-        label={t`拖动编辑贴图`}
-        title="当您启用这个选项的时候，在文本编辑器处用鼠标点击贴图的那一行，或者点击图形界面的‘拖拽调整位置’"
-        labelPosition="before"
-        checked={isWindowAdjustment}
-        onChange={() => handleWindowAdjustmentChange(!isWindowAdjustment)}
-      />
-
-      {isWindowAdjustment && (
-        <CommonOptions key="new-button" title={t`拖拽调整位置`}>
-          <Button
-            onClick={() => {
-              Adjustment();
-            }}
-          >{t`开始`}</Button>
-        </CommonOptions>
-      )}
       {fieldGroups.map((group, index) => (
         <OptionCategory key={index + 1} title={group.title}>
           {index === 2 || index === 4 ? ( // 有拾色器的组

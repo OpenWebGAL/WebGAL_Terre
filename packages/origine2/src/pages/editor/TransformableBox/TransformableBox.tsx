@@ -46,13 +46,10 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
 
   // 监听 点击事件
   useEffect(() => {
-    function handlePixiSyncCommand(event: unknown) {
-      if (
-        (event as any).lineContent.includes('changeFigure') &&
-        !/changeFigure:\s*none\b/.test((event as any).lineContent)
-      ) {
+    function handlePixiSyncCommand(event: { targetPath: string; lineNumber: number; lineContent: string }) {
+      if (event.lineContent.includes('changeFigure') && !/changeFigure:\s*none\b/.test(event.lineContent)) {
         ChangeFigure(event);
-      } else if ((event as any).lineContent.includes('setTransform')) {
+      } else if (event.lineContent.includes('setTransform')) {
         SetTransform(event);
       } else {
         setIsDisplay(false);
