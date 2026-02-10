@@ -1,6 +1,14 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { basename, dirname, extname, join } from 'path';
+import {
+  basename,
+  dirname,
+  extname,
+  isAbsolute,
+  join,
+  relative,
+  resolve,
+} from 'path';
 
 export interface IFileInfo {
   name: string;
@@ -29,6 +37,31 @@ export class WebgalFsService {
 
   static checkFileName(name: string): boolean {
     return name.search(/[\/\\\:\*\?"\<\>\|]/) === -1;
+  }
+
+  static hasInvalidPathSegments(
+    rawPath: string,
+    platform: NodeJS.Platform = process.platform,
+  ): boolean {
+    const segments = rawPath.replace(/\\/g, '/').split('/');
+    return segments.some((segment, index) => {
+      if (segment === '' || segment === '.') return false;
+      if (segment === '..') return true;
+      if (platform === 'win32' && index === 0 && /^[a-zA-Z]:$/.test(segment)) {
+        return false;
+      }
+      return !WebgalFsService.checkFileName(segment);
+    });
+  }
+
+  private isPathInsideWorkingDirectory(pathToCheck: string): boolean {
+    const rootPath = resolve(process.cwd());
+    const resolvedPath = resolve(pathToCheck);
+    const relativePath = relative(rootPath, resolvedPath);
+    return (
+      relativePath === '' ||
+      (!relativePath.startsWith('..') && !isAbsolute(relativePath))
+    );
   }
 
   greet() {
@@ -232,13 +265,12 @@ export class WebgalFsService {
   async createEmptyFile(path: string) {
     try {
       const decodedPath = decodeURI(path);
-      if (
-        decodedPath
-          .replace(/\\/g, '/')
-          .split('/')
-          .some((name) => !WebgalFsService.checkFileName(name))
-      )
-        throw new Error('There are unexpect marks in path');
+      if (!this.isPathInsideWorkingDirectory(decodedPath)) {
+        throw new Error('Path is out of workspace');
+      }
+      if (WebgalFsService.hasInvalidPathSegments(decodedPath)) {
+        throw new Error('There are unexpected marks in path');
+      }
       const directory = dirname(decodedPath);
 
       if (!(await this.existsDir(directory))) {
