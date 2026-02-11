@@ -105,26 +105,12 @@ export default function Assets(
   const animationRootPath = useMemo(() => normalizePath([...rootPath, 'animation'].join('/')), [rootPath]);
   const animationGameDir = useMemo(() => (rootPath[0] === 'games' ? rootPath[1] : ''), [rootPath]);
 
-  const isAnimationDescriptionFile = (path: string) => {
-    if (!animationGameDir) return false;
-    const normalized = normalizePath(path);
-    if (!normalized.startsWith(`${animationRootPath}/`)) return false;
-    if (normalized.toLowerCase().endsWith('/animationtable.json')) return false;
-    return normalized.toLowerCase().endsWith('.json');
-  };
-
   const updateAnimationTable = async () => {
     if (!animationGameDir) return;
     try {
       await api.manageGameControllerUpdateAnimationTable({ gameName: animationGameDir });
     } catch (_) {
       return;
-    }
-  };
-
-  const refreshAnimationTableIfNeeded = async (paths: string[]) => {
-    if (paths.some((path) => isAnimationDescriptionFile(path))) {
-      await updateAnimationTable();
     }
   };
 
@@ -251,7 +237,6 @@ export default function Assets(
   const handleCreateNewFile = async (source: string, name: string) => {
     await api.assetsControllerCreateNewFile({ source, name });
     fileFunction?.create && await fileFunction.create(source, name, 'file');
-    await refreshAnimationTableIfNeeded([`${source}/${name}`]);
     handleRefresh();
   };
 
@@ -264,24 +249,18 @@ export default function Assets(
   const handleBackupFile = async (source: string) => {
     await api.assetsControllerCopyFileWithIncrement({ source });
     fileFunction?.backup && await fileFunction.backup(source);
-    await refreshAnimationTableIfNeeded([source]);
     handleRefresh();
   };
 
   const handleRenameFile = async (source: string, newName: string) => {
     await api.assetsControllerRename({ source, newName });
     fileFunction?.rename && await fileFunction.rename(source, newName);
-    const normalizedSource = normalizePath(source);
-    const pathParts = normalizedSource.split('/');
-    const newPath = [...pathParts.slice(0, -1), newName].join('/');
-    await refreshAnimationTableIfNeeded([normalizedSource, newPath]);
     handleRefresh();
   };
 
   const handleDeleteFile = async (source: string) => {
     await api.assetsControllerDeleteFileOrDir({ source });
     fileFunction?.delete && await fileFunction.delete(source);
-    await refreshAnimationTableIfNeeded([source]);
     handleRefresh();
   };
 
@@ -338,9 +317,6 @@ export default function Assets(
         });
         axios.post("/api/assets/upload", formData).then((response) => {
           if (response.data) {
-            const targetDir = currentFullPath.join('/');
-            const uploadedPaths = [...files].map((file) => `${targetDir}/${file.name}`);
-            refreshAnimationTableIfNeeded(uploadedPaths);
             handleRefresh();
           }
         });
@@ -508,11 +484,6 @@ export default function Assets(
                   <Subtitle1>{t`上传资源`}</Subtitle1>
                   <FileUploader
                     onUpload={handleRefresh}
-                    onUploadedFiles={(files) => {
-                      const targetDir = currentFullPath.join('/');
-                      const uploadedPaths = files.map((file) => `${targetDir}/${file.name}`);
-                      refreshAnimationTableIfNeeded(uploadedPaths);
-                    }}
                     targetDirectory={currentFullPath.join('/')}
                     uploadUrl="/api/assets/upload"
                   />
@@ -595,9 +566,6 @@ export default function Assets(
 
           axios.post("/api/assets/upload", formData).then((response) => {
             if (response.data) {
-              const targetDir = currentFullPath.join('/');
-              const uploadedPaths = [...files].map((file) => `${targetDir}/${file.name}`);
-              refreshAnimationTableIfNeeded(uploadedPaths);
               handleRefresh();
             }
           });
@@ -666,10 +634,9 @@ interface IFileUploaderProps {
   targetDirectory: string;
   uploadUrl: string;
   onUpload: () => void;
-  onUploadedFiles?: (files: File[]) => void;
 }
 
-function FileUploader({ targetDirectory, uploadUrl, onUpload, onUploadedFiles }: IFileUploaderProps) {
+function FileUploader({ targetDirectory, uploadUrl, onUpload }: IFileUploaderProps) {
 
   const [files, setFiles] = useState<File[]>([]);
 
@@ -686,7 +653,6 @@ function FileUploader({ targetDirectory, uploadUrl, onUpload, onUploadedFiles }:
 
     axios.post(uploadUrl, formData).then((response) => {
       if (response.data) {
-        onUploadedFiles?.(files);
         onUpload();
       }
     });
