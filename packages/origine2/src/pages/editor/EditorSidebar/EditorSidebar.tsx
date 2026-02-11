@@ -121,7 +121,8 @@ export default function EditorSideBar() {
     [`tex`, { desc: t`纹理`, extNameTypes: ['tex'], isProtected: true }],
     [`video`, { desc: t`视频`, extNameTypes: ['video'], isProtected: true }],
     [`vocal`, { desc: t`语音`, extNameTypes: ['audio'], isProtected: true }],
-    [`config.txt`, { desc: t`游戏配置`, isProtected: true }],
+    [`config.txt`, { desc: t`游戏配置`, isProtected: true }], // 旧版游戏配置文件
+    [`config.json`, { desc: t`游戏配置`, isProtected: true }],
     [`userStyleSheet.css`, { isProtected: true }],
   ]);
 

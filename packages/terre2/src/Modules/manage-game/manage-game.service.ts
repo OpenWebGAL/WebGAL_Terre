@@ -13,6 +13,9 @@ import {
 import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 import { promisify } from 'util';
 import { execFile } from 'child_process';
+import { IWebgalConfig } from '../../types/game-config';
+import { cloneDeep } from "lodash";
+import { convertTextConfigToWebgalConfig } from '../../util/convert-game-config';
 
 @Injectable()
 export class ManageGameService {
@@ -47,9 +50,9 @@ export class ManageGameService {
             templateConfig = JSON.parse(templateConfigString as string);
           }
           return {
-            name: gameConfig.Game_name,
+            name: gameConfig.gameName,
             dir: item.name,
-            cover: gameConfig.Title_img,
+            cover: gameConfig.titleImage,
             template: templateConfig,
           };
         } catch (_) {
@@ -118,11 +121,42 @@ export class ManageGameService {
       );
     }
 
-    await this.webgalFs.replaceTextFile(
-      this.webgalFs.getPathFromRoot(`/public/games/${gameDir}/game/config.txt`),
-      /Game_name:.*?;/,
-      `Game_name:${gameName};`,
+    const isLegacyConfig = await this.webgalFs.exists(
+      this.webgalFs.getPathFromRoot(
+        `/public/games/${gameDir}/game/config.txt`,
+      ),
     );
+    if (isLegacyConfig) {
+      await this.webgalFs.replaceTextFile(
+        this.webgalFs.getPathFromRoot(`/public/games/${gameDir}/game/config.txt`),
+        /Game_name:.*?;/,
+        `Game_name:${gameName};`,
+      );
+      await this.webgalFs.replaceTextFile(
+        this.webgalFs.getPathFromRoot(`/public/games/${gameDir}/game/config.txt`),
+        /Game_key:.*?;/,
+        `Game_key:${(Math.random() * 100000).toString(16).replace(".", "d")};`,
+      );
+    } else {
+      const configContent = await this.webgalFs.readTextFile(
+        this.webgalFs.getPathFromRoot(
+          `/public/games/${gameDir}/game/config.json`,
+        ),
+      );
+      try {
+        const configJson = JSON.parse(configContent as string) as IWebgalConfig;
+        configJson.gameName = gameName;
+        configJson.gameKey = (Math.random() * 100000).toString(16).replace(".", "d");
+        await this.webgalFs.updateTextFile(
+          this.webgalFs.getPathFromRoot(
+            `/public/games/${gameDir}/game/config.json`,
+          ),
+          JSON.stringify(configJson, null, 2),
+        );
+      } catch (e) {
+        this.logger.error('解析 config.json 失败，可能格式不正确', e);
+      }
+    }
 
     if (templateDir) {
       await this.webgalFs.copy(
@@ -137,47 +171,39 @@ export class ManageGameService {
   }
 
   // 获取游戏配置
-  async getGameConfig(gameName: string) {
-    interface Config {
-      Game_name: string;
-      Description: string;
-      Game_key: string;
-      Package_name: string;
-      Title_img: string;
-    }
-    const config: Config = {
-      Game_name: '',
-      Description: '',
-      Game_key: '',
-      Package_name: '',
-      Title_img: '',
-    };
+  async getGameConfig(gameName: string): Promise<IWebgalConfig> {
+    let config: IWebgalConfig = {};
     // 根据 GameName 找到游戏所在目录
     const gameDir = this.webgalFs.getPathFromRoot(
       `/public/games/${gameName}/game/`,
     );
-    // 读取配置文件
-    const configFile: string | unknown = await this.webgalFs.readTextFile(
+    // 兼容 config.txt 旧版配置文件
+    const isLegacyConfig = await this.webgalFs.exists(
       `${gameDir}/config.txt`,
     );
-    if (typeof configFile === 'string') {
-      configFile
-        .replace(/[\r\n]/g, '')
-        .split(';')
-        .filter((commandText) => commandText !== '')
-        .map((commandText) => {
-          const i = commandText.indexOf(':');
-          const arr = [commandText.slice(0, i), commandText.slice(i + 1)];
-          config[arr[0]] = arr[1];
-        });
+    if (isLegacyConfig) {
+      // 读取配置文件
+      const configFile: string | unknown = await this.webgalFs.readTextFile(
+        `${gameDir}/config.txt`,
+      );
+      if (typeof configFile === 'string') {
+        config = convertTextConfigToWebgalConfig(configFile);
+      }
+    } else {
+      // 读取配置文件
+      const configFile: string | unknown = await this.webgalFs.readTextFile(
+        `${gameDir}/config.json`,
+      );
+      if (typeof configFile === 'string') {
+        try {
+          const gameConfigJson: IWebgalConfig = JSON.parse(configFile);
+          config = { ...config, ...gameConfigJson };
+        } catch (e) {
+          this.logger.error('解析 config.json 失败，可能格式不正确', e);
+        }
+      }
     }
-    return {
-      ...config,
-      Package_name:
-        config.Package_name === ''
-          ? 'com.openwebgal.demo'
-          : config.Package_name,
-    };
+    return config;
   }
 
   async getIcons(gameDir: string): Promise<IconsDto> {
@@ -276,7 +302,7 @@ export class ManageGameService {
           await this.webgalFs.replaceTextFile(
             `${electronExportDir}/resources/app/public/manifest.json`,
             ['WebGAL DEMO', 'WebGAL'],
-            [gameConfig.Description, gameConfig.Game_name],
+            [gameConfig.description, gameConfig.gameName],
           );
           // 删掉 Service Worker
           await this.webgalFs.deleteFileOrDirectory(
@@ -350,7 +376,7 @@ export class ManageGameService {
           await this.webgalFs.replaceTextFile(
             `${electronExportDir}/resources/app/public/manifest.json`,
             ['WebGAL DEMO', 'WebGAL'],
-            [gameConfig.Description, gameConfig.Game_name],
+            [gameConfig.description, gameConfig.gameName],
           );
           // 删掉 Service Worker
           await this.webgalFs.deleteFileOrDirectory(
@@ -408,7 +434,7 @@ export class ManageGameService {
           await this.webgalFs.replaceTextFile(
             `${electronExportDir}/Contents/Resources/app/public/manifest.json`,
             ['WebGAL DEMO', 'WebGAL'],
-            [gameConfig.Description, gameConfig.Game_name],
+            [gameConfig.description, gameConfig.gameName],
           );
           // 删掉 Service Worker
           await this.webgalFs.deleteFileOrDirectory(
@@ -468,7 +494,7 @@ export class ManageGameService {
         await this.webgalFs.replaceTextFile(
           `${androidExportDir}/app/src/main/assets/webgal/manifest.json`,
           ['WebGAL DEMO', 'WebGAL'],
-          [gameConfig.Description, gameConfig.Game_name],
+          [gameConfig.description, gameConfig.gameName],
         );
         // 删掉 Service Worker
         await this.webgalFs.deleteFileOrDirectory(
@@ -491,27 +517,27 @@ export class ManageGameService {
         await this.webgalFs.replaceTextFile(
           `${androidExportDir}/app/src/main/res/values/strings.xml`,
           'WebGAL',
-          gameConfig.Game_name,
+          gameConfig.gameName,
         );
         await this.webgalFs.replaceTextFile(
           `${androidExportDir}/app/build.gradle`,
           'com.openwebgal.demo',
-          gameConfig.Package_name,
+          gameConfig.packageName,
         );
         await this.webgalFs.replaceTextFile(
           `${androidExportDir}/app/src/main/java/MainActivity.kt`,
           'com.openwebgal.demo',
-          gameConfig.Package_name,
+          gameConfig.packageName,
         );
         await this.webgalFs.mkdir(
           // eslint-disable-next-line prettier/prettier
-          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}`,
+          `${androidExportDir}/app/src/main/java/${gameConfig.packageName.replace(/\./g, '/')}`,
           '',
         );
         await this.webgalFs.copy(
           `${androidExportDir}/app/src/main/java/MainActivity.kt`,
           // eslint-disable-next-line prettier/prettier
-          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}/MainActivity.kt`
+          `${androidExportDir}/app/src/main/java/${gameConfig.packageName.replace(/\./g, '/')}/MainActivity.kt`
         );
         await this.webgalFs.deleteFileOrDirectory(
           `${androidExportDir}/app/src/main/java/MainActivity.kt`,
@@ -553,7 +579,7 @@ export class ManageGameService {
         await this.webgalFs.replaceTextFile(
           `${webExportDir}/manifest.json`,
           ['WebGAL DEMO', 'WebGAL'],
-          [gameConfig.Description, gameConfig.Game_name],
+          [gameConfig.description, gameConfig.gameName],
         );
         // 复制图标
         const icons = await this.getIcons(gameName);

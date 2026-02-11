@@ -22,6 +22,7 @@ import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
 import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
+import { IWebgalConfig } from "@/types/gameConfig";
 
 const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
 const AddIcon = bundleIcon(AddFilled, AddRegular);
@@ -30,7 +31,7 @@ export default function GameConfig() {
   const gameDir = useEditorStore.use.subPage();
 
   // 拿到游戏配置
-  const gameConfig = useValue<WebgalConfig>([]);
+  const gameConfig = useValue<IWebgalConfig>({});
   console.log(gameConfig);
   const getGameConfig = () => {
     api.manageGameControllerGetGameConfig(gameDir)
@@ -69,75 +70,61 @@ export default function GameConfig() {
   }
 
   function updateGameConfig() {
-    const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
+    const newConfig = JSON.stringify(gameConfig.value, null, 2);
     api.manageGameControllerSetGameConfig({gameName: gameDir, newConfig}).then(getGameConfig);
   }
 
-  function getConfigContentAsString(key: string) {
-    return gameConfig.value.find(e => e.command === key)?.args?.join('') ?? '';
-  }
-
-  function getConfigContentAsStringArray(key: string) {
-    return gameConfig.value.find(e => e.command === key)?.args ?? [];
-  }
-
-  function updateGameConfigSimpleByKey(key: string, value: string) {
-    const newConfig = cloneDeep(gameConfig.value);
-    const index = newConfig.findIndex(e => e.command === key);
-    if (index >= 0) {
-      newConfig[index].args = [value];
-    } else {
-      newConfig.push({command: key, args: [value], options: []});
-    }
-    gameConfig.set(newConfig);
-    updateGameConfig();
-  }
-
-  function updateGameConfigArrayByKey(key: string, value: string[]) {
-    const newConfig = cloneDeep(gameConfig.value);
-    const index = newConfig.findIndex(e => e.command === key);
-
-    if (index >= 0) {
-      newConfig[index].args = value;
-    } else {
-      newConfig.push({command: key, args: value, options: []});
-    }
-
-    gameConfig.set(newConfig);
-    updateGameConfig();
-  }
-
-  function parseAndSetGameConfigState(data: string) {
+  function parseAndSetGameConfigState(data: IWebgalConfig) {
     console.log(data);
-    gameConfig.set(WebgalParser.parseConfig(data));
-    if (getConfigContentAsString('Game_key') === '') {
+    gameConfig.set(data);
+    if (gameConfig.value.gameKey === undefined || gameConfig.value.gameKey === '') {
       // 设置默认识别码
       const randomCode = (Math.random() * 100000).toString(16).replace(".", "d");
-      updateGameConfigSimpleByKey("Game_key", randomCode);
+      gameConfig.value.gameKey = randomCode;
     }
   }
 
   return (
     <>
       <TabItem title={t`游戏名称`}>
-        <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
-          onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>
+        <GameConfigEditor key="gameName" value={gameConfig.value.gameName ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.gameName = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`游戏识别码`}>
-        <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>
+        <GameConfigEditor key="gameKey" value={gameConfig.value.gameKey ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.gameKey = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`游戏简介`}>
-        <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
-          onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>
+        <GameConfigEditor key="gameDescription" value={gameConfig.value.description ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.description = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`游戏包名`}>
-        <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
+        <GameConfigEditor key="packageName" value={gameConfig.value.packageName ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.packageName = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`Steam AppID`}>
-        <GameConfigEditor key="steamAppId" value={getConfigContentAsString('Steam_AppID')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Steam_AppID', e)}/>
+        <GameConfigEditor key="steamAppId" value={gameConfig.value.steamAppId ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.steamAppId = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       {/* <TabItem title={t`文本框主题`}> */}
       {/*  <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')} */}
@@ -149,24 +136,36 @@ export default function GameConfig() {
           sourceBase="background"
           extNameList={extNameMap.get('image') ?? []}
           key="titleBackground"
-          value={getConfigContentAsString('Title_img')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
+          value={gameConfig.value.titleImage ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.titleImage = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`标题背景音乐`}>
         <div className={styles.sidebar_gameconfig_title}>{}</div>
         <GameConfigEditorWithFileChoose
           extNameList={extNameMap.get('audio') ?? []}
           sourceBase="bgm" key="titleBgm"
-          value={getConfigContentAsString('Title_bgm')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
+          value={gameConfig.value.titleBgm ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.titleBgm = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`启动图`}>
         <GameConfigEditorWithImageFileChoose
           sourceBase="background"
           extNameList={extNameMap.get('image') ?? []}
           key="logoImage"
-          value={getConfigContentAsStringArray('Game_Logo')}
-          onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
+          value={gameConfig.value.gameLogo ?? ""}
+          onChange={(e: string) => {
+            gameConfig.value.gameLogo = e === "" ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`应用的模板`}>
         <div className={styles.applyTemplateWrapper}>
@@ -212,27 +211,35 @@ export default function GameConfig() {
       <TabItem title={t`紧急回避`}>
         <GameConfigEditorWithSelector
           key="isUserForward"
-          value={getConfigContentAsString('Show_panic') ? getConfigContentAsString('Show_panic') : 'true'}
+          value={gameConfig.value.enablePanic === true ? 'true' : 'false'}
           selectItems={[
             {key: 'true', text: t`启用`},
             {key: 'false', text: t`禁用`}
           ]}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Show_panic', e)}/>
+          onChange={(e: string) => {
+            gameConfig.value.enablePanic = e === 'true';
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`鉴赏功能`}>
         <GameConfigEditorWithSelector
           key="isUserForward"
-          value={getConfigContentAsString('Enable_Appreciation') ? getConfigContentAsString('Enable_Appreciation') : 'false'}
+          value={gameConfig.value.enableExtra === true ? 'true' : 'false'}
           selectItems={[
             {key: 'true', text: t`启用`},
             {key: 'false', text: t`禁用`}
           ]}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>
+          onChange={(e: string) => {
+            gameConfig.value.enableExtra = e === 'true';
+            updateGameConfig();
+          }}
+        />
       </TabItem>
       <TabItem title={t`默认语言`}>
         <GameConfigEditorWithSelector
           key="language_select"
-          value={getConfigContentAsString('Default_Language') ? getConfigContentAsString('Default_Language') : ''}
+          value={gameConfig.value.defaultLanguage ?? ''}
           selectItems={[
             {key: '', text: t`不设定`},
             {key: 'zh_CN', text: t`简体中文`},
@@ -242,7 +249,11 @@ export default function GameConfig() {
             {key: 'fr', text: t`法语`},
             {key: 'de', text: t`德语`},
           ]}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Default_Language', e)}/>
+          onChange={(e: string) => {
+            gameConfig.value.defaultLanguage = e === '' ? undefined : e;
+            updateGameConfig();
+          }}
+        />
       </TabItem>
     </>
   );
@@ -256,7 +267,7 @@ interface IGameConfigEditor {
 
 interface IGameConfigEditorMulti {
   key: string;
-  value: string[];
+  value: string;
   onChange: Function;
 }
 
@@ -336,20 +347,20 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
 }) {
   const gameDir = useEditorStore.use.subPage();
   const inputBoxRef = useRef<HTMLInputElement>(null);
-  const images = props.value;
+  const images = String(props.value ?? '').split('|').map(img => img.trim()).filter(img => img !== '');
 
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
 
   const addImage = (imageName: string) => {
     const newImages = [...images, imageName];
     // setImages(newImages);
-    props.onChange(newImages);
+    props.onChange(newImages.join('|'));
   };
 
   const removeImage = (imageName: string) => {
     const newImages = images.filter((image) => image !== imageName);
     // setImages(newImages);
-    props.onChange(newImages);
+    props.onChange(newImages.join('|'));
   };
 
   return (

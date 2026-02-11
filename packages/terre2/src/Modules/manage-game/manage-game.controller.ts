@@ -38,6 +38,8 @@ import {
   RenameDto,
   UploadFilesDto,
 } from './manage-game.dto';
+import { convertTextConfigToWebgalConfig, convertWebgalConfigToTextConfig } from '../../util/convert-game-config';
+import { IWebgalConfig } from '../../types/game-config';
 
 @Controller('api/manageGame')
 @ApiTags('Manage Game')
@@ -279,10 +281,28 @@ export class ManageGameController {
     description: 'Failed to get the game configuration.',
   })
   async getGameConfig(@Param('gameName') gameName: string) {
-    const configFilePath = this.webgalFs.getPathFromRoot(
-      `/public/games/${decodeURI(gameName)}/game/config.txt`,
+    const isLegacyConfig = await this.webgalFs.exists(
+      this.webgalFs.getPathFromRoot(
+        `/public/games/${decodeURI(gameName)}/game/config.txt`,
+      ),
     );
-    return this.webgalFs.readTextFile(configFilePath);
+    if (isLegacyConfig) {
+      const configFilePath = this.webgalFs.getPathFromRoot(
+        `/public/games/${decodeURI(gameName)}/game/config.txt`,
+      );
+      const textConfig = await this.webgalFs.readTextFile(configFilePath);
+      if (typeof textConfig === 'string') {
+        const webgalConfig = convertTextConfigToWebgalConfig(textConfig);
+        return JSON.stringify(webgalConfig);
+      } else {
+        return JSON.stringify({});
+      }
+    } else {
+      const jsonConfigFilePath = this.webgalFs.getPathFromRoot(
+        `/public/games/${decodeURI(gameName)}/game/config.json`,
+      );
+      return await this.webgalFs.readTextFile(jsonConfigFilePath);
+    }
   }
 
   @Post('setGameConfig')
@@ -296,13 +316,32 @@ export class ManageGameController {
     description: 'Failed to set the game configuration.',
   })
   async setGameConfig(@Body() gameConfigData: GameConfigDto) {
-    const configFilePath = this.webgalFs.getPathFromRoot(
-      `/public/games/${gameConfigData.gameName}/game/config.txt`,
+    const isLegacyConfig = await this.webgalFs.exists(
+      this.webgalFs.getPathFromRoot(
+        `/public/games/${gameConfigData.gameName}/game/config.txt`,
+      ),
     );
-    return this.webgalFs.updateTextFile(
-      configFilePath,
-      gameConfigData.newConfig,
-    );
+    if (isLegacyConfig) {
+      const configFilePath = this.webgalFs.getPathFromRoot(
+        `/public/games/${gameConfigData.gameName}/game/config.txt`,
+      );
+      const webgalConfig = JSON.parse(gameConfigData.newConfig) as IWebgalConfig;
+      const textConfig = convertWebgalConfigToTextConfig(
+        webgalConfig,
+      );
+      return await this.webgalFs.updateTextFile(
+        configFilePath,
+        textConfig,
+      );
+    } else {
+      const jsonConfigFilePath = this.webgalFs.getPathFromRoot(
+        `/public/games/${gameConfigData.gameName}/game/config.json`,
+      );
+      return await this.webgalFs.updateTextFile(
+        jsonConfigFilePath,
+        gameConfigData.newConfig,
+      );
+    }
   }
 
   @Post('uploadFiles')
