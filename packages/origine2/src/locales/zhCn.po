@@ -230,8 +230,8 @@ msgstr "一直显示功能区"
 msgid "上一步"
 msgstr "上一步"
 
-#: src/components/Assets/Assets.tsx:633
-#: src/components/Assets/Assets.tsx:634
+#: src/components/Assets/Assets.tsx:663
+#: src/components/Assets/Assets.tsx:664
 msgid "上传"
 msgstr "上传"
 
@@ -239,8 +239,8 @@ msgstr "上传"
 msgid "上传字体文件"
 msgstr "上传字体文件"
 
-#: src/components/Assets/Assets.tsx:452
-#: src/components/Assets/Assets.tsx:458
+#: src/components/Assets/Assets.tsx:478
+#: src/components/Assets/Assets.tsx:484
 msgid "上传资源"
 msgstr "上传资源"
 
@@ -343,7 +343,7 @@ msgstr "伽马值"
 #~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 #~ msgstr "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:184
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:185
 msgid "使用中的模板："
 msgstr "使用中的模板："
 
@@ -410,7 +410,7 @@ msgstr "保存模板配置失败，请稍后重试"
 msgid "保持闭眼(毫秒)"
 msgstr "保持闭眼(毫秒)"
 
-#: src/components/Assets/Assets.tsx:505
+#: src/components/Assets/Assets.tsx:535
 msgid "修改时间"
 msgstr "修改时间"
 
@@ -586,12 +586,12 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
-#: src/components/Assets/Assets.tsx:468
+#: src/components/Assets/Assets.tsx:498
 msgid "列表视图"
 msgstr "列表视图"
 
-#: src/components/Assets/Assets.tsx:390
-#: src/components/Assets/Assets.tsx:442
+#: src/components/Assets/Assets.tsx:416
+#: src/components/Assets/Assets.tsx:468
 #: src/pages/dashboard/Sidebar.tsx:134
 #: src/pages/dashboard/TemplateSidebar.tsx:78
 msgid "创建"
@@ -628,7 +628,7 @@ msgstr "删除"
 msgid "删除属性"
 msgstr "删除属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:249
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:250
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:37
 msgid "删除本句"
 msgstr "删除本句"
@@ -643,7 +643,7 @@ msgstr "删除模板"
 msgid "删除游戏"
 msgstr "删除游戏"
 
-#: src/components/Assets/Assets.tsx:483
+#: src/components/Assets/Assets.tsx:513
 msgid "刷新"
 msgstr "刷新"
 
@@ -714,7 +714,7 @@ msgstr "发现新版本"
 #: src/components/IconCreator/IconCreator.tsx:775
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:294
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:196
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:197
 msgid "取消"
 msgstr "取消"
 
@@ -815,7 +815,7 @@ msgstr "圆角矩形"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "在对话框的左下角显示一个小头像"
 
-#: src/components/Assets/Assets.tsx:484
+#: src/components/Assets/Assets.tsx:514
 #: src/pages/dashboard/GameElement.tsx:96
 #: src/pages/dashboard/TemplateElement.tsx:90
 msgid "在文件管理器中打开"
@@ -989,10 +989,10 @@ msgstr "导出失败！"
 msgid "导出成功！"
 msgstr "导出成功！"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:134
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:135
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:141
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:156
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:136
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:142
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:157
 msgid "将当前模板应用到选定的游戏"
 msgstr "将当前模板应用到选定的游戏"
 
@@ -1063,8 +1063,8 @@ msgstr "左对齐"
 msgid "已创建"
 msgstr "已创建"
 
-#: src/components/Assets/Assets.tsx:361
-#: src/components/Assets/Assets.tsx:420
+#: src/components/Assets/Assets.tsx:387
+#: src/components/Assets/Assets.tsx:446
 #: src/components/Assets/FileElement.tsx:191
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
@@ -1088,7 +1088,7 @@ msgstr "常规演出"
 msgid "平铺"
 msgstr "平铺"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:198
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:199
 msgid "应用"
 msgstr "应用"
 
@@ -1161,11 +1161,11 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:257
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:258
 msgid "执行到此句"
 msgstr "执行到此句"
 
-#: src/components/Assets/Assets.tsx:375
+#: src/components/Assets/Assets.tsx:401
 msgid "扩展名"
 msgstr "扩展名"
 
@@ -1190,7 +1190,7 @@ msgstr "拼接模式"
 msgid "指针"
 msgstr "指针"
 
-#: src/components/Assets/Assets.tsx:487
+#: src/components/Assets/Assets.tsx:517
 msgid "排序方式"
 msgstr "排序方式"
 
@@ -1239,7 +1239,7 @@ msgstr "提示：效果只有在切换到不同立绘或关闭之前的立绘再
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:79
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:80
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "提示：样式中用到的资源放在 assets 目录下"
 
@@ -1310,7 +1310,7 @@ msgstr "效果音 音量"
 msgid "效果音文件"
 msgstr "效果音文件"
 
-#: src/components/Assets/Assets.tsx:493
+#: src/components/Assets/Assets.tsx:523
 msgid "文件名"
 msgstr "文件名"
 
@@ -1318,7 +1318,7 @@ msgstr "文件名"
 msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
 msgstr "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
 
-#: src/components/Assets/Assets.tsx:499
+#: src/components/Assets/Assets.tsx:529
 msgid "文件大小"
 msgstr "文件大小"
 
@@ -1386,13 +1386,13 @@ msgstr "文档"
 msgid "新增字体"
 msgstr "新增字体"
 
-#: src/components/Assets/Assets.tsx:344
-#: src/components/Assets/Assets.tsx:359
+#: src/components/Assets/Assets.tsx:370
+#: src/components/Assets/Assets.tsx:385
 msgid "新建文件"
 msgstr "新建文件"
 
-#: src/components/Assets/Assets.tsx:403
-#: src/components/Assets/Assets.tsx:418
+#: src/components/Assets/Assets.tsx:429
+#: src/components/Assets/Assets.tsx:444
 msgid "新建文件夹"
 msgstr "新建文件夹"
 
@@ -1404,11 +1404,11 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/components/Assets/Assets.tsx:368
+#: src/components/Assets/Assets.tsx:394
 msgid "新文件名"
 msgstr "新文件名"
 
-#: src/components/Assets/Assets.tsx:427
+#: src/components/Assets/Assets.tsx:453
 msgid "新文件夹名"
 msgstr "新文件夹名"
 
@@ -1457,7 +1457,7 @@ msgstr "旋转（弧度）"
 msgid "旋转（角度）"
 msgstr "旋转（角度）"
 
-#: src/components/Assets/Assets.tsx:377
+#: src/components/Assets/Assets.tsx:403
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCursor.tsx:16
 msgid "无"
 msgstr "无"
@@ -1533,7 +1533,7 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:220
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:221
 msgid "本句前插入句子"
 msgstr "本句前插入句子"
 
@@ -1735,7 +1735,7 @@ msgstr "添加新行"
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
 
-#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:273
+#: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:274
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:72
 #: src/pages/editor/Topbar/Topbar.tsx:110
 msgid "添加语句"
@@ -2053,7 +2053,7 @@ msgstr "繁体中文"
 msgid "缩放"
 msgstr "缩放"
 
-#: src/components/Assets/Assets.tsx:468
+#: src/components/Assets/Assets.tsx:498
 msgid "网格视图"
 msgstr "网格视图"
 
@@ -2402,7 +2402,7 @@ msgstr "输入目标 ID"
 msgid "过渡时间（单位为毫秒）"
 msgstr "过渡时间（单位为毫秒）"
 
-#: src/components/Assets/Assets.tsx:313
+#: src/components/Assets/Assets.tsx:339
 msgid "过滤文件"
 msgstr "过滤文件"
 
@@ -2601,9 +2601,9 @@ msgid "配置"
 msgstr "配置"
 
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateConfigDialog.tsx:199
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:124
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:125
-#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:128
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:126
+#: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:129
 msgid "配置模板"
 msgstr "配置模板"
 

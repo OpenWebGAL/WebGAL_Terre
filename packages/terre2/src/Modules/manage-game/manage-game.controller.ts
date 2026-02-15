@@ -37,6 +37,7 @@ import {
   MkDirDto,
   RenameDto,
   UploadFilesDto,
+  UpdateAnimationTableDto,
 } from './manage-game.dto';
 
 @Controller('api/manageGame')
@@ -269,6 +270,25 @@ export class ManageGameController {
     const path = editTextFileData.path;
     const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
     return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
+  }
+
+  @Post('updateAnimationTable')
+  @ApiOperation({ summary: 'Update Animation Table' })
+  @ApiResponse({ status: 200, description: 'Animation table updated.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to update the animation table.',
+  })
+  @ApiBody({
+    type: UpdateAnimationTableDto,
+    description: 'Animation table update data',
+  })
+  async updateAnimationTable(
+    @Body() updateAnimationTableData: UpdateAnimationTableDto,
+  ) {
+    return this.manageGame.updateAnimationTable(
+      updateAnimationTableData.gameName,
+    );
   }
 
   @Get('getGameConfig/:gameName')
