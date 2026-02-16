@@ -14,7 +14,7 @@ import {Button, Input} from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
-import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
@@ -35,6 +35,10 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
+  const enterDuration = useValue<number | string>(getArgByKey(props.sentence, 'enterDuration') as number);
+  const exitDuration = useValue<number | string>(getArgByKey(props.sentence, 'exitDuration') as number);
+  const enterAnimation = useValue(getArgByKey(props.sentence, "enter").toString() ?? "");
+  const exitAnimation = useValue(getArgByKey(props.sentence, "exit").toString() ?? "");
   const mouthOpen = useValue(getArgByKey(props.sentence, "mouthOpen").toString() ?? "");
   const mouthHalfOpen = useValue(getArgByKey(props.sentence, "mouthHalfOpen").toString() ?? "");
   const mouthClose = useValue(getArgByKey(props.sentence, "mouthClose").toString() ?? "");
@@ -45,6 +49,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const zIndex = useValue(String(getArgByKey(props.sentence, 'zIndex') ?? ''));
   const blink = useValue<string>(getArgByKey(props.sentence, "blink").toString() ?? "");
   const focus = useValue<string>(getArgByKey(props.sentence, "focus").toString() ?? "");
+  const blendMode = useValue<string>(getArgByKey(props.sentence, "blendMode").toString() ?? "");
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
@@ -66,8 +71,21 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["on", "ON"],
   ]);
 
+  const blendModeOptions = useMemo(() => new Map<string, string>([
+    ["", t`默认`],
+    ["normal", t`正常`],
+    ["add", t`线性减淡`],
+    ["multiply", t`正片叠底`],
+    ["screen", t`滤色`],
+  ]), []);
+
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
+  const normalizeAnimationName = (name: string) => name.replace(/\.json$/i, "");
+  const toAnimationFilePath = (name: string) => {
+    const normalized = normalizeAnimationName(name);
+    return normalized ? `${normalized}.json` : "";
+  };
 
   // Blink
   const blinkParam = useMemo(() => {
@@ -224,9 +242,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     }
   }, [animationFlag.value]);
   const submit = () => {
+    const contentWithType = isSpineJsonFormat && !isHaveSpineArg
+      ? `${figureFile.value}?type=spine`
+      : figureFile.value;
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
-      figureFile.value,
+      contentWithType,
       props.sentence.args,
       [
         {key: "left", value: figurePosition.value === "left"},
@@ -234,6 +255,10 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "id", value: id.value},
         {key: "transform", value: json.value},
         {key: "duration", value: duration.value},
+        {key: "enterDuration", value: enterDuration.value},
+        {key: "exitDuration", value: exitDuration.value},
+        {key: "enter", value: enterAnimation.value},
+        {key: "exit", value: exitAnimation.value},
         ...(animationFlag.value !== "" ? [
           {key: "animationFlag", value: animationFlag.value},
           {key: "eyesOpen", value: eyesOpen.value},
@@ -256,8 +281,10 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "focus", value: updateFocusParam()},
         {key: "ease", value: ease.value},
         {key: "zIndex", value: zIndex.value},
+        {key: "blendMode", value: blendMode.value},
         {key: "next", value: isGoNext.value},
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };
@@ -362,6 +389,38 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         sentenceIndex={props.index}
         bottomBarChildren={
           <>
+            <CommonOptions key="enterAnimation" title={t`选择进入动画`}>
+              <>
+                {enterAnimation.value}{"\u00a0"}
+                <ChooseFile
+                  title={t`选择进入动画文件`}
+                  basePath={['animation']}
+                  selectedFilePath={toAnimationFilePath(enterAnimation.value)}
+                  onChange={(file) => {
+                    enterAnimation.set(normalizeAnimationName(file?.name ?? ""));
+                    submit();
+                  }}
+                  extNames={extNameMap.get('json')}
+                  hiddenFiles={['animationTable.json']}
+                />
+              </>
+            </CommonOptions>
+            <CommonOptions key="exitAnimation" title={t`选择退出动画`}>
+              <>
+                {exitAnimation.value}{"\u00a0"}
+                <ChooseFile
+                  title={t`选择退出动画文件`}
+                  basePath={['animation']}
+                  selectedFilePath={toAnimationFilePath(exitAnimation.value)}
+                  onChange={(file) => {
+                    exitAnimation.set(normalizeAnimationName(file?.name ?? ""));
+                    submit();
+                  }}
+                  extNames={extNameMap.get('json')}
+                  hiddenFiles={['animationTable.json']}
+                />
+              </>
+            </CommonOptions>
             <CommonOptions key="11" title={t`过渡时间（单位为毫秒）`}>
               <div>
                 <Input placeholder={t`过渡时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
@@ -373,12 +432,54 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 }} onBlur={submit}/>
               </div>
             </CommonOptions>
+            <CommonOptions key="enterDuration" title={t`入场时长（单位为毫秒）`}>
+              <div>
+                <Input
+                  placeholder={t`入场时长（单位为毫秒）`}
+                  value={enterDuration.value.toString()}
+                  onChange={(_, data) => {
+                    const newDuration = Number(data.value);
+                    if (isNaN(newDuration) || data.value === '')
+                      enterDuration.set("");
+                    else
+                      enterDuration.set(newDuration);
+                  }}
+                  onBlur={submit}
+                />
+              </div>
+            </CommonOptions>
+            <CommonOptions key="exitDuration" title={t`退场时长（单位为毫秒）`}>
+              <div>
+                <Input
+                  placeholder={t`退场时长（单位为毫秒）`}
+                  value={exitDuration.value.toString()}
+                  onChange={(_, data) => {
+                    const newDuration = Number(data.value);
+                    if (isNaN(newDuration) || data.value === '')
+                      exitDuration.set("");
+                    else
+                      exitDuration.set(newDuration);
+                  }}
+                  onBlur={submit}
+                />
+              </div>
+            </CommonOptions>
             <CommonOptions key="5" title={t`缓动类型`}>
               <WheelDropdown
                 options={easeTypeOptions}
                 value={ease.value}
                 onValueChange={(newValue) => {
                   ease.set(newValue?.toString() ?? "");
+                  submit();
+                }}
+              />
+            </CommonOptions>
+            <CommonOptions title={t`混合模式`} key="blendMode">
+              <WheelDropdown
+                options={blendModeOptions}
+                value={blendMode.value}
+                onValueChange={(newValue) => {
+                  blendMode.set(newValue?.toString() ?? "");
                   submit();
                 }}
               />
@@ -566,9 +667,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               } else {
                 target = "fig-center";
               }
-              const newEffect = { target: target, transform: transform };
-              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
             }
+            const newEffect = { target: target, transform: transform };
+            WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
           }}
         />
       </TerrePanel>

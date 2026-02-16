@@ -31,7 +31,8 @@ say:<text>;
     documentation: markdown(
       `\`\`\`
 changeBg:testBG03.jpg -next;
-changeBg:<fileName> [-next];
+changeBg:testBG03.jpg -enter=fadeIn -exit=fadeOut;
+changeBg:<fileName> [-next] [-enter=animationName] [-exit=animationName];
 \`\`\``,
     ),
   },
@@ -43,7 +44,8 @@ changeBg:<fileName> [-next];
     documentation: markdown(
       `\`\`\`
 changeFigure:testFigure03.png -left -next;
-changeFigure:<fileName> [-left] [-right] [id=figureId] [-next];
+changeFigure:testFigure03.png -left -enter=fadeIn -exit=fadeOut;
+changeFigure:<fileName> [-left] [-right] [id=figureId] [-next] [-enter=animationName] [-exit=animationName];
 \`\`\``,
     ),
   },
@@ -408,6 +410,19 @@ applyStyle:<origStyleName>-><newStyleName>(,<origStyleName2>-><newStyleName2>,..
       `等待一段时间，单位为毫秒
 \`\`\`
 wait: 5000; 等待5秒钟
+\`\`\``,
+    ),
+  },
+  {
+    kind: CompletionItemKind.Function,
+    label: 'callSteam',
+    insertText: makeInsertText('callSteam'),
+    detail: `调用 Steam`,
+    documentation: markdown(
+      `调用 Steam
+\`\`\`
+callSteam: -achievementId=ACH_WIN_ONE_GAME;
+callSteam: -achievementId=achievementId;
 \`\`\``,
     ),
   },

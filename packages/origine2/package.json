@@ -1,16 +1,16 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.5.17",
+  "version": "4.5.18",
   "license": "MPL-2.0",
   "scripts": {
-    "dev": "lingui extract && lingui compile --typescript && vite --host",
-    "build": "lingui extract && lingui compile --typescript && tsc && vite build --base=./",
-    "build-lowram": "lingui extract && lingui compile --typescript && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
+    "dev": "lingui extract --clean && lingui compile --typescript && vite --host",
+    "build": "lingui extract --clean && lingui compile --typescript && tsc && vite build --base=./",
+    "build-lowram": "lingui extract --clean && lingui compile --typescript && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
     "lint": "eslint src/** --fix",
     "openapi": "tsx openapi.ts",
-    "exact-i18n": "lingui extract",
+    "exact-i18n": "lingui extract --clean",
     "compile-i18n": "lingui compile --typescript"
   },
   "dependencies": {
@@ -58,7 +58,8 @@
     "react-window": "^1.8.11",
     "sass": "^1.51.0",
     "swr": "^2.2.4",
-    "webgal-parser": "latest",
+    "uuid": "^13.0.0",
+    "webgal-parser": "4.5.18",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

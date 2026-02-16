@@ -21,6 +21,7 @@ import {
   RenameFileDto,
   UploadFilesDto,
   EditTextFileDto,
+  CopyFileWithIncrementDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { _open } from '../../util/open';
@@ -158,5 +159,15 @@ export class AssetsController {
     const path = editTextFileData.path;
     const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
     return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
+  }
+
+  @Post('copyFileWithIncrement')
+  @ApiOperation({ summary: 'Copy File With Increment' })
+  @ApiResponse({ status: 200, description: 'File copied successfully.' })
+  @ApiResponse({ status: 400, description: 'Failed to copy the file.' })
+  async copyFileWithIncrement(@Body() copyFileDto: CopyFileWithIncrementDto) {
+    const { source } = copyFileDto;
+    const sourcePath = this.webgalFs.getPathFromRoot(`public/${source}`);
+    return this.webgalFs.copyFileWithIncrement(sourcePath);
   }
 }

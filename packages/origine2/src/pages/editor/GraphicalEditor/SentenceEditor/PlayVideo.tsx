@@ -20,6 +20,7 @@ export default function PlayVideo(props: ISentenceEditorProps) {
       [
         {key: "skipOff", value: isSkipOff.value},
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };

@@ -65,6 +65,11 @@ export class EditTextFileDto {
   textFile: string;
 }
 
+export class UpdateAnimationTableDto {
+  @ApiProperty({ description: 'The name of the game directory' })
+  gameName: string;
+}
+
 // game-config.dto.ts
 export class GameConfigDto {
   @ApiProperty({ description: 'The name of the game' })

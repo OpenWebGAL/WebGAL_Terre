@@ -11,6 +11,7 @@ import {DeleteFive, Sort, DownOne, RightOne, Play} from "@icon-park/react";
 import AddSentence, {addSentenceType} from "./components/AddSentence";
 import {editorLineHolder} from "@/runtime/WG_ORIGINE_RUNTIME";
 import {eventBus} from "@/utils/eventBus";
+import { createId } from "@/utils/createId";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 
@@ -31,7 +32,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const sentenceData = useValue<SentenceItem[]>([]);
 
   const generateSentenceItem = (content: string): SentenceItem => ({
-    id: crypto.randomUUID(),
+    id: createId(),
     content,
     show: true,
   });
@@ -47,7 +48,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
         return existing && existing.content === content
           ? existing
           : {
-            id: crypto.randomUUID(),
+            id: createId(),
             content,
             show: existing?.show ?? true
           };
@@ -205,10 +206,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                 // 实际显示的行数
                 const index = i + 1;
                 // console.log(sentence.command);
-                const sentenceConfig =
-                  sentenceEditorConfig.find((e) => e.commandRaw && e.commandRaw === sentence.commandRaw)
-                  ?? sentenceEditorConfig.find((e) => e.type === sentence.command)
-                  ?? sentenceEditorDefault;
+                const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
                 const SentenceEditor = sentenceConfig.component;
                 const sentenceItem = sentenceData.value[i];
                 return <Draggable key={sentenceItem.id} draggableId={sentenceItem.id} index={i}>

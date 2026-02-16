@@ -33,6 +33,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           {key: "series", value: unlockSeries.value},
         ] : []),
       ],
+      props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };

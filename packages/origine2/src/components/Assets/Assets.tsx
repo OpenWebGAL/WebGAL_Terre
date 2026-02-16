@@ -37,6 +37,7 @@ export type IFileConfig = Map<
 export interface IFileFunction {
   open?: (file: IFile, type: 'scene' | 'asset') => Promise<void>,
   create?: (source: string, name: string, type: 'file' | 'dir') => Promise<void>,
+  backup?: (source: string) => Promise<void>,
   rename?: (source: string, newName: string) => Promise<void>,
   delete?: (source: string) => Promise<void>,
 };
@@ -99,6 +100,25 @@ export default function Assets(
   const cols = useValue(1);
 
   const scrollRef = useRef<FixedSizeList | null>(null);
+
+  const normalizePath = (path: string) => path.replace(/\\/g, '/');
+  const animationRootPath = useMemo(() => normalizePath([...rootPath, 'animation'].join('/')), [rootPath]);
+  const animationGameDir = useMemo(() => (rootPath[0] === 'games' ? rootPath[1] : ''), [rootPath]);
+
+  const updateAnimationTable = async () => {
+    if (!animationGameDir) return;
+    try {
+      await api.manageGameControllerUpdateAnimationTable({ gameName: animationGameDir });
+    } catch (_) {
+      return;
+    }
+  };
+
+  const isInAnimationDirectory = () => {
+    if (!animationGameDir) return false;
+    const normalized = normalizePath(currentFullPath.join('/'));
+    return normalized === animationRootPath || normalized.startsWith(`${animationRootPath}/`);
+  };
 
   const scrollToIndex = (goToIndex: number) => {
     if (scrollRef?.current) {
@@ -186,7 +206,14 @@ export default function Assets(
     [lastPath.value]
   );
 
-  const handleRefresh = () => mutate(currentFullPath.join('/'));
+  const handleRefresh = () => {
+    const swrKey = currentFullPath.join('/');
+    if (isInAnimationDirectory()) {
+      updateAnimationTable().finally(() => mutate(swrKey));
+      return;
+    }
+    mutate(swrKey);
+  };
   const handleOpenFolder = () => api.assetsControllerOpenDict(currentFullPath.join('/'));
   const handleBack = () => {
     if(!isBasePath) {
@@ -216,6 +243,12 @@ export default function Assets(
   const handleCreateNewFolder = async (source: string, name: string) => {
     await api.assetsControllerCreateNewFolder({ source, name });
     fileFunction?.create && await fileFunction.create(source, name, 'dir');
+    handleRefresh();
+  };
+
+  const handleBackupFile = async (source: string) => {
+    await api.assetsControllerCopyFileWithIncrement({ source });
+    fileFunction?.backup && await fileFunction.backup(source);
     handleRefresh();
   };
 
@@ -449,7 +482,11 @@ export default function Assets(
               <PopoverSurface>
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                   <Subtitle1>{t`上传资源`}</Subtitle1>
-                  <FileUploader onUpload={handleRefresh} targetDirectory={currentFullPath.join('/')} uploadUrl="/api/assets/upload" />
+                  <FileUploader
+                    onUpload={handleRefresh}
+                    targetDirectory={currentFullPath.join('/')}
+                    uploadUrl="/api/assets/upload"
+                  />
                 </div>
               </PopoverSurface>
             </Popover>
@@ -561,6 +598,7 @@ export default function Assets(
                               desc={fileConfig?.get(sortedFiles[fileIndex].path)?.desc ?? undefined}
                               isProtected={fileConfig?.get(sortedFiles[fileIndex].path)?.isProtected ?? isProtected}
                               handleOpenFile={handleOpenFile}
+                              handleBackupFile={handleBackupFile}
                               handleRenameFile={handleRenameFile}
                               handleDeleteFile={handleDeleteFile}
                               checkHasFile={checkHasFile}
