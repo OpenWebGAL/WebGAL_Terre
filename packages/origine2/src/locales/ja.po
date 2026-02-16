@@ -28,9 +28,6 @@ msgstr "<0>新しいテンプレートを適用する</0>"
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 
-#~ msgid "<0>查看展示到 WebGAL 主页的指引</0>"
-#~ msgstr "<0>WebGAL ホームページに掲載する手順を見る</0>"
-
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
@@ -127,12 +124,6 @@ msgstr "Spine アニメーション"
 msgid "Steam AppID"
 msgstr "Steam AppID"
 
-#~ msgid "Steam 成就"
-#~ msgstr ""
-
-#~ msgid "Steam 成就 ID"
-#~ msgstr ""
-
 msgid "unlockBgm:;"
 msgstr "unlockBgm:;"
 
@@ -148,20 +139,11 @@ msgstr "WebGAL Standard"
 msgid "X轴位移"
 msgstr "X軸位移"
 
-#~ msgid "X轴位移："
-#~ msgstr "X軸位移："
-
 msgid "X轴缩放"
 msgstr "X軸スケール"
 
-#~ msgid "X轴缩放："
-#~ msgstr "X軸スケール："
-
 msgid "Y轴位移"
 msgstr "Y軸位移"
-
-#~ msgid "Y轴位移："
-#~ msgstr "Y軸位移："
 
 msgid "Y轴缩放"
 msgstr "Y軸スケール"
@@ -226,9 +208,6 @@ msgstr "現在のステージに特殊効果を追加する"
 msgid "为立绘或背景图片设置动画效果"
 msgstr "立ち絵や背景画像にアニメーションを指定する"
 
-#~ msgid "为立绘或背景图片设置效果"
-#~ msgstr "立ち絵や背景画像のエフェクトを使う"
-
 msgid "为立绘或背景图片设置效果或变换"
 msgstr "人物や背景画像にエフェクトや変形を設定する。"
 
@@ -249,9 +228,6 @@ msgstr "コードエディタ"
 
 msgid "伽马值"
 msgstr "ガンマ"
-
-#~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
-#~ msgstr "実験的な高速プレビューを有効にすると、リアルタイムプレビューの効率が大幅に向上しますが、異常が発生する可能性があります。特別なヒント：前回のリアルタイムプレビューのジャンプが完全に終了していない（特にアニメーションが終了していない）ときに、再度ジャンプしないでください。"
 
 msgid "使用中的模板："
 msgstr "使用中のテンプレート："
@@ -475,23 +451,14 @@ msgstr "一行コメント"
 msgid "厚度"
 msgstr "厚さ"
 
-#~ msgid "厚度："
-#~ msgstr "厚さ"
-
 msgid "参数值"
 msgstr "パラメータ値"
 
 msgid "反射电影滤镜"
 msgstr "反射映画"
 
-#~ msgid "发布的游戏可以在"
-#~ msgstr "公開したゲームは"
-
 msgid "发布的游戏可以在 <0>https://www.openwebgal.com/games/</0> 展示，欢迎分享你的作品！"
 msgstr "公開したゲームは <0>https://www.openwebgal.com/games/</0> で展示できます。ぜひ作品を共有してください！"
-
-#~ msgid "发布的游戏可以在 <0>https://www.openwebgal.com/games/</0> 展示，欢迎把你的作品分享给大家！"
-#~ msgstr "公開したゲームは <0>https://www.openwebgal.com/games/</0> で展示できます。ぜひみんなにシェアしてください！"
 
 msgid "发现新版本"
 msgstr "新しいバージョンが検出されました"
@@ -583,9 +550,6 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
-#~ msgid "填写 Steam 成就 ID"
-#~ msgstr ""
-
 msgid "填写参数值"
 msgstr "パラメータ値を入力"
 
@@ -636,9 +600,6 @@ msgstr "フォントの太さ"
 
 msgid "定位方式"
 msgstr "位置決め方法"
-
-#~ msgid "实时预览"
-#~ msgstr "リアルタイムプレビュー"
 
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
@@ -717,9 +678,6 @@ msgstr "中央揃え"
 
 msgid "居中对齐"
 msgstr "中央揃え"
-
-#~ msgid "展示，欢迎分享你的作品！"
-#~ msgstr "展示して、作品をみんなと共有しましょう！"
 
 msgid "展示小头像"
 msgstr "アバターを表示"
@@ -814,9 +772,6 @@ msgstr "前のテキストボックスの内容をつなげる"
 msgid "拼接模式"
 msgstr "連結モード"
 
-#~ msgid "持续时间（单位为毫秒）"
-#~ msgstr "持続時間（ミリ秒）"
-
 msgid "指针"
 msgstr "ポインター"
 
@@ -905,7 +860,7 @@ msgid "文件名"
 msgstr "ファイル名"
 
 msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
-msgstr ""
+msgstr "ファイル名に特殊記号は使用できません: '/\\\\:*?\"<>|'"
 
 msgid "文件大小"
 msgstr "ファイルサイズ"
@@ -990,9 +945,6 @@ msgstr "ナレーションモード"
 
 msgid "旁白模式，无角色名"
 msgstr "キャラクター名は設定不可"
-
-#~ msgid "旋转："
-#~ msgstr "回転"
 
 msgid "旋转（弧度）"
 msgstr "回転(ラジアン)"
@@ -1107,9 +1059,6 @@ msgstr "テンプレートディレクトリ"
 
 msgid "模糊"
 msgstr "ぼやける"
-
-#~ msgid "模糊："
-#~ msgstr "ぼやける"
 
 msgid "櫻花"
 msgstr "桜"
@@ -1366,20 +1315,11 @@ msgstr "ゲーム終了"
 msgid "绝对"
 msgstr "絶対"
 
-#~ msgid "继承上一句"
-#~ msgstr "前の文を継承する"
-
-#~ msgid "继承模式"
-#~ msgstr "継承モード"
-
 msgid "继承现有效果"
 msgstr "現在の効果を継承する"
 
 msgid "继承默认效果"
 msgstr "デフォルトの効果を継承する"
-
-#~ msgid "绿色（0-255）："
-#~ msgstr "緑(0-255):"
 
 msgid "绿色通道"
 msgstr "緑のチャネル"
@@ -1561,23 +1501,11 @@ msgstr "設定"
 msgid "设置动画"
 msgstr "アニメーション"
 
-#~ msgid "设置效果"
-#~ msgstr "エフェクトを使う"
-
 msgid "设置立绘或背景的进出场动画"
 msgstr "人物や背景のアニメーションを設定する。"
 
-#~ msgid "设置立绘或背景的进出场效果"
-#~ msgstr "人物や背景の出入りの効果を設定する。"
-
 msgid "设置自定义级联选择器分隔符（输入后按回车键确认）"
 msgstr "カスタムカスケードセレクター区切り文字を設定（入力後Enterキーで確定）"
-
-#~ msgid "设置转场"
-#~ msgstr "トランジションを使う"
-
-#~ msgid "设置转场效果"
-#~ msgstr "トランジション効果を使う"
 
 msgid "该功能将大幅提升实时预览效率，但可能出现异常。"
 msgstr "この機能はリアルタイムプレビューの効率を大幅に向上させますが、異常が発生する可能性があります。"
@@ -1614,9 +1542,6 @@ msgstr "Steamを呼び出す"
 
 msgid "调用 Steam 接口，支持多参数"
 msgstr "Steamインターフェースを呼び出し、複数のパラメータをサポート"
-
-#~ msgid "调用 Steam 接口解锁成就"
-#~ msgstr ""
 
 msgid "调用/切换场景"
 msgstr "シーンの呼び出し/切り替え"
@@ -1767,9 +1692,6 @@ msgstr "選択肢ボタン（無効状態）"
 
 msgid "选项按钮外层"
 msgstr "選択肢ボタン外層"
-
-#~ msgid "选项菜单"
-#~ msgstr "オプションメニュー"
 
 msgid "透明度（0-1）"
 msgstr "透明度（０－１）"

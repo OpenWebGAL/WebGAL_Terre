@@ -28,9 +28,6 @@ msgstr "<0>Apply a new template</0>"
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>Current template: {currentTemplateName}</0>"
 
-#~ msgid "<0>查看展示到 WebGAL 主页的指引</0>"
-#~ msgstr "<0>See how to feature your game on the WebGAL homepage</0>"
-
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
@@ -127,12 +124,6 @@ msgstr "Spine animation"
 msgid "Steam AppID"
 msgstr "Steam AppID"
 
-#~ msgid "Steam 成就"
-#~ msgstr ""
-
-#~ msgid "Steam 成就 ID"
-#~ msgstr ""
-
 msgid "unlockBgm:;"
 msgstr "unlockBgm:;"
 
@@ -148,20 +139,11 @@ msgstr "WebGAL Standard"
 msgid "X轴位移"
 msgstr "X"
 
-#~ msgid "X轴位移："
-#~ msgstr " X："
-
 msgid "X轴缩放"
 msgstr "Scale x"
 
-#~ msgid "X轴缩放："
-#~ msgstr " Scale x："
-
 msgid "Y轴位移"
 msgstr "Y"
-
-#~ msgid "Y轴位移："
-#~ msgstr " Y："
 
 msgid "Y轴缩放"
 msgstr "Scale y"
@@ -226,9 +208,6 @@ msgstr "Apply the special effect for stage"
 msgid "为立绘或背景图片设置动画效果"
 msgstr "Set the animation effect for the figure or background"
 
-#~ msgid "为立绘或背景图片设置效果"
-#~ msgstr "Set effect for figure or background"
-
 msgid "为立绘或背景图片设置效果或变换"
 msgstr "Setting effects or transformations for a figure or background image."
 
@@ -249,9 +228,6 @@ msgstr "Code Editor"
 
 msgid "伽马值"
 msgstr "Gamma"
-
-#~ msgid "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
-#~ msgstr "You have enabled the experimental fast preview, which will greatly improve the efficiency of real-time preview, but there may be exceptions. Special tips: Do not jump again when the last real-time preview jump is not completely finished (especially when the animation is not finished)."
 
 msgid "使用中的模板："
 msgstr "Template in use: "
@@ -475,23 +451,14 @@ msgstr "Single line comment"
 msgid "厚度"
 msgstr "Thickness"
 
-#~ msgid "厚度："
-#~ msgstr "Thickness: "
-
 msgid "参数值"
 msgstr "Parameter Value"
 
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
-#~ msgid "发布的游戏可以在"
-#~ msgstr "You can showcase your published game at"
-
 msgid "发布的游戏可以在 <0>https://www.openwebgal.com/games/</0> 展示，欢迎分享你的作品！"
 msgstr "You can showcase your published game at <0>https://www.openwebgal.com/games/</0>. Share your work!"
-
-#~ msgid "发布的游戏可以在 <0>https://www.openwebgal.com/games/</0> 展示，欢迎把你的作品分享给大家！"
-#~ msgstr "You can showcase your published game at <0>https://www.openwebgal.com/games/</0>. Share it with everyone!"
 
 msgid "发现新版本"
 msgstr "New version detected"
@@ -583,9 +550,6 @@ msgstr "Scenes and branches"
 msgid "场景文件"
 msgstr "Scene file"
 
-#~ msgid "填写 Steam 成就 ID"
-#~ msgstr ""
-
 msgid "填写参数值"
 msgstr "Fill in parameter value"
 
@@ -636,9 +600,6 @@ msgstr "Font Weight"
 
 msgid "定位方式"
 msgstr "Positioning"
-
-#~ msgid "实时预览"
-#~ msgstr "Live preview"
 
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -717,9 +678,6 @@ msgstr "Center"
 
 msgid "居中对齐"
 msgstr "Center Align"
-
-#~ msgid "展示，欢迎分享你的作品！"
-#~ msgstr "Showcase it and share your work!"
 
 msgid "展示小头像"
 msgstr "Show avatar"
@@ -814,9 +772,6 @@ msgstr "Concat the sentences with previous text"
 msgid "拼接模式"
 msgstr "Concat mode"
 
-#~ msgid "持续时间（单位为毫秒）"
-#~ msgstr "Duration (unit milliseconds)"
-
 msgid "指针"
 msgstr "Pointer"
 
@@ -901,14 +856,11 @@ msgstr "Sound effect volume"
 msgid "效果音文件"
 msgstr "Sound effect file"
 
-#~ msgid "文件"
-#~ msgstr "File"
-
 msgid "文件名"
 msgstr "File name"
 
 msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
-msgstr ""
+msgstr "File name cannot contain special characters: '/\\\\:*?\"<>|'"
 
 msgid "文件大小"
 msgstr "File size"
@@ -993,9 +945,6 @@ msgstr "Voiceover mode"
 
 msgid "旁白模式，无角色名"
 msgstr "Voiceover mode, no role name"
-
-#~ msgid "旋转："
-#~ msgstr "Rotation"
 
 msgid "旋转（弧度）"
 msgstr "Rotation(radian)"
@@ -1110,9 +1059,6 @@ msgstr "Template directory"
 
 msgid "模糊"
 msgstr "Blur"
-
-#~ msgid "模糊："
-#~ msgstr "Blur"
 
 msgid "櫻花"
 msgstr "Cherry blossoms"
@@ -1369,20 +1315,11 @@ msgstr "End game"
 msgid "绝对"
 msgstr "Absolutely"
 
-#~ msgid "继承上一句"
-#~ msgstr "Inherit the previous sentence"
-
-#~ msgid "继承模式"
-#~ msgstr "Inheritance mode"
-
 msgid "继承现有效果"
 msgstr "Inherit current effect"
 
 msgid "继承默认效果"
 msgstr "Inherit default effect"
-
-#~ msgid "绿色（0-255）："
-#~ msgstr "Green (0-255)"
 
 msgid "绿色通道"
 msgstr "Green channel"
@@ -1564,23 +1501,11 @@ msgstr "Settings"
 msgid "设置动画"
 msgstr "Set animation"
 
-#~ msgid "设置效果"
-#~ msgstr "Set effect"
-
 msgid "设置立绘或背景的进出场动画"
 msgstr "Setting the animation of the figure or background."
 
-#~ msgid "设置立绘或背景的进出场效果"
-#~ msgstr "Setting the entry and exit effects of the figure or background."
-
 msgid "设置自定义级联选择器分隔符（输入后按回车键确认）"
 msgstr "Set custom cascade selector separator (press Enter to confirm after input)"
-
-#~ msgid "设置转场"
-#~ msgstr "Set transition"
-
-#~ msgid "设置转场效果"
-#~ msgstr "Set transition effect"
 
 msgid "该功能将大幅提升实时预览效率，但可能出现异常。"
 msgstr "This feature will greatly improve real-time preview efficiency, but may cause exceptions."
@@ -1617,9 +1542,6 @@ msgstr "Call Steam"
 
 msgid "调用 Steam 接口，支持多参数"
 msgstr "Call Steam Interface, supports multiple parameters"
-
-#~ msgid "调用 Steam 接口解锁成就"
-#~ msgstr ""
 
 msgid "调用/切换场景"
 msgstr "Call/Change Scene"
@@ -1770,9 +1692,6 @@ msgstr "Selection Button (disabled)"
 
 msgid "选项按钮外层"
 msgstr "Selection Button Wrapper"
-
-#~ msgid "选项菜单"
-#~ msgstr "Option Menu"
 
 msgid "透明度（0-1）"
 msgstr "Opacity (0-1)"
