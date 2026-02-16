@@ -57,7 +57,7 @@
     "vscode-ws-jsonrpc-webgal": "0.2.1",
     "webgal-engine": "4.5.18",
     "webgal-parser": "4.5.18",
-    "webpack": "5.76.0",
+    "webpack": "5.104.1",
     "ws": "8.17.1"
   },
   "devDependencies": {
