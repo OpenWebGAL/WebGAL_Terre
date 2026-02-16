@@ -4,27 +4,29 @@
 
 #### 新功能
 
-新增全局暗色主题，并优化各编辑器和资源视图的暗色样式
+新增 `callSteam` 命令，并提供图形化参数编辑支持
 
-新增模板和字体配置
+`changeFigure` 和 `changeBg` 新增动画选择，并支持自动构建 animationTable
 
-新增快速同步特效
+新增角色混合模式（blend mode）参数支持
 
-动画编辑器支持舞台等更多目标，扩展动画能力
+文本编辑器支持保留行内注释
 
-集成 Steamworks.js，提供 Steam 功能的图形化编辑器
-
-导出游戏增加展示到 WebGAL 主页的示例提示和指引链接
+资源管理新增创建文件复制按钮，提升素材整理效率
 
 #### 修复
 
-修复资源路径编码问题，提升多平台打包稳定性
+修复 Windows 下路径与文件名校验逻辑，创建空文件更稳定
 
-优化模板编辑器侧边栏样式
+修复安全上下文下 UUID 生成问题
 
-修复提交参数顺序问题
+修复文本编辑器拖拽处理与文本更新逻辑，避免异常后缀与重复更新
 
-修复误改 say 命令的问题
+修复文本编辑器快速建议缺失问题
+
+修复 `changeFigure` 的 `setEffect` 与 spine 类型处理问题
+
+修复发布脚本并更新打包图标
 
 <!-- English Translation -->
 ## Release Notes
@@ -33,27 +35,33 @@
 
 #### New Features
 
-Added a global dark theme and polished dark-mode styles across editors and resource views
+Added the `callSteam` command with graphical argument editing support
 
-Added template and font configuration
+Added animation selection to `changeFigure` and `changeBg`, with automatic animationTable generation
 
-Added a fast sync effect
+Added blend mode argument support for figures
 
-Animation editor now supports stage and other targets to expand animation capabilities
+Text editor now preserves inline comments
 
-Integrated Steamworks.js with a graphical editor for Steam functions
-
-Added showcase hints and a guide link on the export tab to feature games on the WebGAL homepage
+Added a file-copy button in assets management to speed up resource organization
 
 #### Fixes
 
-Fixed resource path encoding to stabilize multi-platform packaging
+Fixed path and filename validation on Windows for more reliable empty-file creation
 
-Improved template editor sidebar styling
+Fixed UUID generation issues in secure contexts
 
-Fixed submit argument order
+Fixed text editor drag/drop handling and text update logic to avoid suffix pollution and redundant updates
 
-Fixed accidental change from `say` to comment
+Fixed missing quick suggestions in the text editor
+
+Fixed `setEffect` handling and spine type processing in `changeFigure`
+
+Updated incremental copy naming to a 3-digit suffix format (for example `_001`)
+
+Optimized animationTable auto-update triggers to reduce unnecessary refreshes
+
+Fixed release scripts and updated packaging icon
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -62,24 +70,30 @@ Fixed accidental change from `say` to comment
 
 #### 新機能
 
-グローバルなダークテーマを追加し、各エディターやリソース表示のダークモードスタイルを整えました
+`callSteam` コマンドを追加し、引数のグラフィカル編集に対応しました
 
-テンプレートとフォントの設定を追加しました
+`changeFigure` と `changeBg` にアニメーション選択を追加し、animationTable の自動構築に対応しました
 
-高速同期エフェクトを追加しました
+キャラクターのブレンドモード（blend mode）引数に対応しました
 
-アニメーションエディターでステージなどのターゲットを選べるようにし、表現を拡張しました
+テキストエディターでインラインコメントを保持できるようにしました
 
-Steamworks.js を統合し、Steam 機能のグラフィカルエディターを追加しました
-
-エクスポートタブに WebGAL ホームページ掲載用のショーケースヒントとガイドリンクを追加しました
+アセット管理にファイル複製ボタンを追加し、素材整理の効率を向上しました
 
 #### 修正
 
-リソースパスのエンコードを修正し、マルチプラットフォームのパッケージングを安定させました
+Windows 環境でのパス／ファイル名バリデーションを修正し、空ファイル作成の安定性を向上しました
 
-テンプレートエディターのサイドバー表示を修正しました
+セキュアコンテキストでの UUID 生成問題を修正しました
 
-送信引数の順序を修正しました
+テキストエディターのドラッグ＆ドロップ処理とテキスト更新ロジックを修正し、不要な接尾辞や重複更新を防止しました
 
-誤って `say` を comment に置き換えた問題を修正しました
+テキストエディターのクイックサジェストが表示されない問題を修正しました
+
+`changeFigure` の `setEffect` と spine タイプ処理の問題を修正しました
+
+ファイル複製時の連番ルールを 3 桁（例 `_001`）に統一しました
+
+animationTable の自動更新トリガーを最適化し、不要なリフレッシュを削減しました
+
+リリーススクリプトを修正し、パッケージアイコンを更新しました
