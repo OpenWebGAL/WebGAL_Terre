@@ -31,7 +31,8 @@ say:<text>;
     documentation: markdown(
       `\`\`\`
 changeBg:testBG03.jpg -next;
-changeBg:<fileName> [-next];
+changeBg:testBG03.jpg -enter=fadeIn -exit=fadeOut;
+changeBg:<fileName> [-next] [-enter=animationName] [-exit=animationName];
 \`\`\``,
     ),
   },
@@ -43,7 +44,8 @@ changeBg:<fileName> [-next];
     documentation: markdown(
       `\`\`\`
 changeFigure:testFigure03.png -left -next;
-changeFigure:<fileName> [-left] [-right] [id=figureId] [-next];
+changeFigure:testFigure03.png -left -enter=fadeIn -exit=fadeOut;
+changeFigure:<fileName> [-left] [-right] [id=figureId] [-next] [-enter=animationName] [-exit=animationName];
 \`\`\``,
     ),
   },
@@ -423,5 +425,5 @@ callSteam: -achievementId=ACH_WIN_ONE_GAME;
 callSteam: -achievementId=achievementId;
 \`\`\``,
     ),
-  }
+  },
 ];

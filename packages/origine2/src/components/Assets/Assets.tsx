@@ -101,6 +101,25 @@ export default function Assets(
 
   const scrollRef = useRef<FixedSizeList | null>(null);
 
+  const normalizePath = (path: string) => path.replace(/\\/g, '/');
+  const animationRootPath = useMemo(() => normalizePath([...rootPath, 'animation'].join('/')), [rootPath]);
+  const animationGameDir = useMemo(() => (rootPath[0] === 'games' ? rootPath[1] : ''), [rootPath]);
+
+  const updateAnimationTable = async () => {
+    if (!animationGameDir) return;
+    try {
+      await api.manageGameControllerUpdateAnimationTable({ gameName: animationGameDir });
+    } catch (_) {
+      return;
+    }
+  };
+
+  const isInAnimationDirectory = () => {
+    if (!animationGameDir) return false;
+    const normalized = normalizePath(currentFullPath.join('/'));
+    return normalized === animationRootPath || normalized.startsWith(`${animationRootPath}/`);
+  };
+
   const scrollToIndex = (goToIndex: number) => {
     if (scrollRef?.current) {
       scrollRef.current.scrollToItem(goToIndex, 'smart');
@@ -187,7 +206,14 @@ export default function Assets(
     [lastPath.value]
   );
 
-  const handleRefresh = () => mutate(currentFullPath.join('/'));
+  const handleRefresh = () => {
+    const swrKey = currentFullPath.join('/');
+    if (isInAnimationDirectory()) {
+      updateAnimationTable().finally(() => mutate(swrKey));
+      return;
+    }
+    mutate(swrKey);
+  };
   const handleOpenFolder = () => api.assetsControllerOpenDict(currentFullPath.join('/'));
   const handleBack = () => {
     if(!isBasePath) {
@@ -456,7 +482,11 @@ export default function Assets(
               <PopoverSurface>
                 <div style={{ display: "flex", flexFlow: "column", gap: "16px" }}>
                   <Subtitle1>{t`上传资源`}</Subtitle1>
-                  <FileUploader onUpload={handleRefresh} targetDirectory={currentFullPath.join('/')} uploadUrl="/api/assets/upload" />
+                  <FileUploader
+                    onUpload={handleRefresh}
+                    targetDirectory={currentFullPath.join('/')}
+                    uploadUrl="/api/assets/upload"
+                  />
                 </div>
               </PopoverSurface>
             </Popover>
