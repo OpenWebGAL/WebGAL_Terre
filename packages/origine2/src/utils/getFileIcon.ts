@@ -65,9 +65,14 @@ fileMappings.set("tex", "image");
 fileMappings.set("video", "video");
 fileMappings.set("vocal", "audio");
 
+function hasSpecialAncestor(path: string[]): boolean {
+  return path.slice(0, -1).some(name => fileMappings.has(name));
+}
+
 // The function
 function getFileType(path: string): FileType {
   const splitPath = path.split(/[/\\]/); // handle both '/' and '\'
+  if (hasSpecialAncestor(splitPath)) return "unknown";
   const fileName = splitPath[splitPath.length - 1]; // get the last segment
   const fileType = fileMappings.get(fileName);
   return fileType ? fileType : "unknown";
