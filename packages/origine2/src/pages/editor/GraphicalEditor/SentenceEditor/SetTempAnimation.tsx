@@ -285,32 +285,28 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
 
 function initTransformArray(transformArrayStr: string): IAnimationFrame[] {
   const trimStr = transformArrayStr.trim();
-  if (trimStr.length < 3 || trimStr[0] !== "[" || trimStr[trimStr.length - 1] !== "]") {
+  if (trimStr.length === 0) {
     return [];
   }
-  const strInArray = trimStr.substring(1, trimStr.length - 1);
-  const frames = strInArray.split(/}\s*,\s*{/).map((str, index, arr) => {
-    if (index !== 0) {
-      str = "{" + str;
+
+  try {
+    const frames = JSON.parse(trimStr);
+    if (!Array.isArray(frames)) {
+      return [];
     }
-    if (index !== arr.length - 1) {
-      str = str + "}";
-    }
-    try {
-      const obj = JSON.parse(str);
-      const {duration, ease, ...transform} = obj;
+
+    return frames.map((obj: any) => {
+      if (typeof obj !== 'object' || obj === null) {
+        return { transform: '{}', duration: 0, ease: undefined };
+      }
+      const { duration, ease, ...transform } = obj;
       return {
         transform: JSON.stringify(transform),
         duration: duration ?? 0,
         ease: ease,
       };
-    } catch (e) {
-      return {
-        transform: "{}",
-        duration: 0,
-        ease: undefined,
-      };
-    }
-  });
-  return frames;
+    });
+  } catch (e) {
+    return [];
+  }
 }
