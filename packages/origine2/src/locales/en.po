@@ -109,6 +109,9 @@ msgstr "RGB film"
 msgid "setAnimation:选择动画文件;"
 msgstr "setAnimation: Choose a file of animation;"
 
+msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -205,11 +208,14 @@ msgstr "Figure at center"
 msgid "为当前的舞台添加特殊效果"
 msgstr "Apply the special effect for stage"
 
-msgid "为立绘或背景图片设置动画效果"
-msgstr "Set the animation effect for the figure or background"
+msgid "为立绘或背景图片设置单段动画效果"
+msgstr "Set single animation for figure or background"
 
-msgid "为立绘或背景图片设置效果或变换"
-msgstr "Setting effects or transformations for a figure or background image."
+msgid "为立绘或背景图片设置多段动画效果"
+msgstr "Set multiple animations for figure or background"
+
+msgid "为立绘或背景图片调用动画效果"
+msgstr "Call animation for figure or background"
 
 msgid "主要样式"
 msgstr "Main Style"
@@ -439,11 +445,17 @@ msgstr "Bold"
 msgid "动画"
 msgstr "Animation"
 
+msgid "动画帧控制"
+msgstr "Frame control"
+
 msgid "半张嘴"
 msgstr "Half open mouth"
 
 msgid "单位毫秒。 0~ 有效"
 msgstr "Unit milliseconds. 0~ valid"
+
+msgid "单段动画"
+msgstr "Single animation"
 
 msgid "单行注释"
 msgstr "Single line comment"
@@ -483,6 +495,9 @@ msgstr "Right side figure"
 
 msgid "右对齐"
 msgstr "Right Align"
+
+msgid "向上添加"
+msgstr "Add above"
 
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
@@ -558,6 +573,9 @@ msgstr "Outer Text"
 
 msgid "外边距"
 msgstr "Margin"
+
+msgid "多段动画"
+msgstr "Multiple animations"
 
 msgid "大"
 msgstr "Large"
@@ -823,14 +841,14 @@ msgstr "Play sound effect"
 msgid "播放视频"
 msgstr "Play video"
 
+msgid "操作"
+msgstr "Operation"
+
 msgid "故障电影滤镜"
 msgstr "Glitch film filter"
 
 msgid "效果"
 msgstr "Effect"
-
-msgid "效果与变换"
-msgstr "Effects and Transformations"
 
 msgid "效果声音"
 msgstr "Sound effect"
@@ -1128,6 +1146,9 @@ msgstr "Add a line comment"
 
 msgid "添加一首音乐到音乐鉴赏界面"
 msgstr "Add a music to music appreciation gallery"
+
+msgid "添加动画帧"
+msgstr "Add animation frame"
 
 msgid "添加属性"
 msgstr "Add Property"
@@ -1498,9 +1519,6 @@ msgstr "Unlock appreciation type"
 msgid "设置"
 msgstr "Settings"
 
-msgid "设置动画"
-msgstr "Set animation"
-
 msgid "设置立绘或背景的进出场动画"
 msgstr "Setting the animation of the figure or background."
 
@@ -1548,6 +1566,9 @@ msgstr "Call/Change Scene"
 
 msgid "调用一段场景文件，在结束后返回父场景"
 msgstr "Call a scene file, return to parent scene after it ends"
+
+msgid "调用动画"
+msgstr "Call animation"
 
 msgid "调用场景"
 msgstr "Call Scene"

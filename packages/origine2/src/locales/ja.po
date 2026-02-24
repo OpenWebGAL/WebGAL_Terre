@@ -109,6 +109,9 @@ msgstr "RGB映画"
 msgid "setAnimation:选择动画文件;"
 msgstr "setAnimation: アニメーションを選択;"
 
+msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -205,11 +208,14 @@ msgstr "中央の立ち絵"
 msgid "为当前的舞台添加特殊效果"
 msgstr "現在のステージに特殊効果を追加する"
 
-msgid "为立绘或背景图片设置动画效果"
-msgstr "立ち絵や背景画像にアニメーションを指定する"
+msgid "为立绘或背景图片设置单段动画效果"
+msgstr "立ち絵や背景画像に単一のアニメーション効果を設定する"
 
-msgid "为立绘或背景图片设置效果或变换"
-msgstr "人物や背景画像にエフェクトや変形を設定する。"
+msgid "为立绘或背景图片设置多段动画效果"
+msgstr "立ち絵や背景画像に複数のアニメーション効果を設定する"
+
+msgid "为立绘或背景图片调用动画效果"
+msgstr "立ち絵や背景画像にアニメーション効果を適用する"
 
 msgid "主要样式"
 msgstr "メインスタイル"
@@ -439,11 +445,17 @@ msgstr "太字"
 msgid "动画"
 msgstr "アニメーション"
 
+msgid "动画帧控制"
+msgstr "フレームコントロール"
+
 msgid "半张嘴"
 msgstr "半分開いた口"
 
 msgid "单位毫秒。 0~ 有效"
 msgstr "ミリ秒単位。 0~ 有効"
+
+msgid "单段动画"
+msgstr "単一のアニメーション"
 
 msgid "单行注释"
 msgstr "一行コメント"
@@ -483,6 +495,9 @@ msgstr "右の立ち絵"
 
 msgid "右对齐"
 msgstr "右揃え"
+
+msgid "向上添加"
+msgstr "上に追加"
 
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "BGMの再生を開始、切り替え、または停止する"
@@ -558,6 +573,9 @@ msgstr "外側テキスト"
 
 msgid "外边距"
 msgstr "マージン"
+
+msgid "多段动画"
+msgstr "複数のアニメーション"
 
 msgid "大"
 msgstr "大きい"
@@ -823,14 +841,14 @@ msgstr "効果音を再生"
 msgid "播放视频"
 msgstr "動画の再生"
 
+msgid "操作"
+msgstr "操作"
+
 msgid "故障电影滤镜"
 msgstr "グリッチ映画"
 
 msgid "效果"
 msgstr "エフェクト"
-
-msgid "效果与变换"
-msgstr "効果と変身"
 
 msgid "效果声音"
 msgstr "効果音"
@@ -1128,6 +1146,9 @@ msgstr "コメントを追加します"
 
 msgid "添加一首音乐到音乐鉴赏界面"
 msgstr "BGM鑑賞に任意のBGMを追加する"
+
+msgid "添加动画帧"
+msgstr "アニメーションフレームを追加"
 
 msgid "添加属性"
 msgstr "属性を追加"
@@ -1498,9 +1519,6 @@ msgstr "タイプ"
 msgid "设置"
 msgstr "設定"
 
-msgid "设置动画"
-msgstr "アニメーション"
-
 msgid "设置立绘或背景的进出场动画"
 msgstr "人物や背景のアニメーションを設定する。"
 
@@ -1548,6 +1566,9 @@ msgstr "シーンの呼び出し/切り替え"
 
 msgid "调用一段场景文件，在结束后返回父场景"
 msgstr "シーンファイルを呼び出し、終了後に親シーンに戻る"
+
+msgid "调用动画"
+msgstr "アニメーションを呼び出す"
 
 msgid "调用场景"
 msgstr "シーンを呼び出す"

@@ -109,6 +109,9 @@ msgstr "RGB电影滤镜"
 msgid "setAnimation:选择动画文件;"
 msgstr "setAnimation:选择动画文件;"
 
+msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -205,11 +208,14 @@ msgstr "中间立绘"
 msgid "为当前的舞台添加特殊效果"
 msgstr "为当前的舞台添加特殊效果"
 
-msgid "为立绘或背景图片设置动画效果"
-msgstr "为立绘或背景图片设置动画效果"
+msgid "为立绘或背景图片设置单段动画效果"
+msgstr "为立绘或背景图片设置单段动画效果"
 
-msgid "为立绘或背景图片设置效果或变换"
-msgstr "为立绘或背景图片设置效果或变换"
+msgid "为立绘或背景图片设置多段动画效果"
+msgstr "为立绘或背景图片设置多段动画效果"
+
+msgid "为立绘或背景图片调用动画效果"
+msgstr "为立绘或背景图片调用动画效果"
 
 msgid "主要样式"
 msgstr "主要样式"
@@ -439,11 +445,17 @@ msgstr "加粗"
 msgid "动画"
 msgstr "动画"
 
+msgid "动画帧控制"
+msgstr "动画帧控制"
+
 msgid "半张嘴"
 msgstr "半张嘴"
 
 msgid "单位毫秒。 0~ 有效"
 msgstr "单位毫秒。 0~ 有效"
+
+msgid "单段动画"
+msgstr "单段动画"
 
 msgid "单行注释"
 msgstr "单行注释"
@@ -483,6 +495,9 @@ msgstr "右侧立绘"
 
 msgid "右对齐"
 msgstr "右对齐"
+
+msgid "向上添加"
+msgstr "向上添加"
 
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "启动、切换或停止背景音乐的播放"
@@ -558,6 +573,9 @@ msgstr "外层文本"
 
 msgid "外边距"
 msgstr "外边距"
+
+msgid "多段动画"
+msgstr "多段动画"
 
 msgid "大"
 msgstr "大"
@@ -823,14 +841,14 @@ msgstr "播放效果音"
 msgid "播放视频"
 msgstr "播放视频"
 
+msgid "操作"
+msgstr "操作"
+
 msgid "故障电影滤镜"
 msgstr "故障电影滤镜"
 
 msgid "效果"
 msgstr "效果"
-
-msgid "效果与变换"
-msgstr "效果与变换"
 
 msgid "效果声音"
 msgstr "效果声音"
@@ -1128,6 +1146,9 @@ msgstr "添加一行注释"
 
 msgid "添加一首音乐到音乐鉴赏界面"
 msgstr "添加一首音乐到音乐鉴赏界面"
+
+msgid "添加动画帧"
+msgstr "添加动画帧"
 
 msgid "添加属性"
 msgstr "添加属性"
@@ -1498,9 +1519,6 @@ msgstr "解锁鉴赏类型"
 msgid "设置"
 msgstr "设置"
 
-msgid "设置动画"
-msgstr "设置动画"
-
 msgid "设置立绘或背景的进出场动画"
 msgstr "设置立绘或背景的进出场动画"
 
@@ -1548,6 +1566,9 @@ msgstr "调用/切换场景"
 
 msgid "调用一段场景文件，在结束后返回父场景"
 msgstr "调用一段场景文件，在结束后返回父场景"
+
+msgid "调用动画"
+msgstr "调用动画"
 
 msgid "调用场景"
 msgstr "调用场景"
