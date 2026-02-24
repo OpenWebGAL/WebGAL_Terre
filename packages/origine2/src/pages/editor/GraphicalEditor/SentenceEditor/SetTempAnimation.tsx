@@ -13,7 +13,7 @@ import { WsUtil } from "@/utils/wsUtil";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Text } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { CloseSmall, Down, Plus, Up } from "@icon-park/react";
+import { CloseSmall, Down, More, Plus, Up } from "@icon-park/react";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -118,27 +118,37 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
     }
     const frame = animationFrameArray.value[index];
     return <div key={`animation-frame-${index}`}>
-      <Text style={{ color: "var(--text-weak)" }}>{`${index} ${frame.transform}`}</Text>
+      <Text style={{ color: "var(--text-weak)", wordBreak: "break-word" }}>{`${index} ${frame.transform}`}</Text>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", width: "100%" }}>
         <CommonOptions key={`frame-control-${index}`} title={t`动画帧控制`}>
+          <Button
+            icon={<Up />}
+            appearance="subtle"
+            aria-label={t`上移`}
+            title={t`上移`}
+            disabled={index === 0}
+            onClick={() => {
+              moveFrame(index, index - 1);
+              submit();
+            }}
+          />
+          <Button
+            icon={<Down />}
+            appearance="subtle"
+            aria-label={t`下移`}
+            title={t`下移`}
+            disabled={index === animationFrameArray.value.length - 1}
+            onClick={() => {
+              moveFrame(index, index + 1);
+              submit();
+            }}
+          />
           <Menu>
             <MenuTrigger>
-              <Button>{t`操作`}</Button>
+              <Button icon={<More/>} appearance="subtle" aria-label={t`操作`} title={t`操作`} />
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
-                <MenuItem icon={<Up/>} onClick={() => {
-                  moveFrame(index, index - 1);
-                  submit();
-                }} disabled={index === 0}>
-                  {t`上移`}
-                </MenuItem>
-                <MenuItem icon={<Down/>} onClick={() => {
-                  moveFrame(index, index + 1);
-                  submit();
-                }} disabled={index === animationFrameArray.value.length - 1}>
-                  {t`下移`}
-                </MenuItem>
                 <MenuItem icon={<Plus/>} onClick={() => {
                   addFrame(index, { transform: "{}", duration: 0 });
                   submit();
