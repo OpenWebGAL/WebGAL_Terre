@@ -43,7 +43,7 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
 
   const updateExpand = useEditorStore.use.updateExpand();
   const easeTypeOptions = useEaseTypeOptions();
-  
+
   const submit = () => {
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
@@ -203,7 +203,7 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
           />
         </CommonOptions>
       </div>
-    </div>
+    </div>;
   };
 
 
