@@ -115,7 +115,7 @@ export default function TextEditor(props: ITextEditorProps) {
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
     // const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    if (value) currentText.current = value;
+    if (value || value === '') currentText.current = value;
     eventBus.emit('editor:update-scene', { scene: currentText.current });
     api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
       const targetValue = currentText.current.split('\n')[lineNumber - 1];
