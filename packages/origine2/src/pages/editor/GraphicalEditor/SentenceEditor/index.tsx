@@ -6,7 +6,7 @@ import {
   AddMusic,
   AddPicture,
   AlignLeftTwo,
-  AlignTextBottomOne, ApplicationEffect,
+  AlignTextBottomOne,
   AutoWidth,
   Avatar,
   Code,
@@ -22,7 +22,9 @@ import {
   NewPicture,
   People,
   SwitchThemes, Transform,
-  VideoTwo
+  VideoTwo,
+  RightSmallUp,
+  TrendingUp
 } from "@icon-park/react";
 import ChangeBg from "./ChangeBg";
 import ChangeFigure from "./ChangeFigure";
@@ -45,6 +47,7 @@ import SetTransform from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTrans
 import styles from "./sentenceEditor.module.scss";
 import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput";
 import CallSteam from "@/pages/editor/GraphicalEditor/SentenceEditor/CallSteam";
+import SetTempAnimation from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTempAnimation";
 import { t } from "@lingui/macro";
 
 export interface ISentenceEditorProps {
@@ -99,11 +102,11 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   },
   {
     type: commandType.setAnimation,
-    title: () => t`设置动画`,
+    title: () => t`调用动画`,
     initialText: () => t`setAnimation:选择动画文件;`,
     component: SetAnimation,
     icon: <AutoWidth theme="multi-color" className={styles.iconSvg} size="24"/>,
-    descText: () => t`为立绘或背景图片设置动画效果`
+    descText: () => t`为立绘或背景图片调用动画效果`
   },
   {
     type: commandType.bgm,
@@ -235,11 +238,11 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   },
   {
     type:commandType.setTransform,
-    title:() => t`效果与变换`,
+    title:() => t`单段动画`,
     initialText: () => t`setTransform: -duration=0;`,
     component:SetTransform,
-    icon: <ApplicationEffect theme="multi-color" className={styles.iconSvg} size="24"/>,
-    descText: () => t`为立绘或背景图片设置效果或变换`
+    icon: <RightSmallUp theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`为立绘或背景图片设置单段动画效果`
   },
   {
     type:commandType.getUserInput,
@@ -256,5 +259,13 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component: CallSteam,
     icon: <GameHandle theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`调用 Steam 接口，支持多参数`
-  }
+  },
+  {
+    type: commandType.setTempAnimation,
+    title: () => t`多段动画`,
+    initialText: () => t`setTempAnimation:[{"duration":0},{"duration":500}];`,
+    component: SetTempAnimation,
+    icon: <TrendingUp theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`为立绘或背景图片设置多段动画效果`
+  },
 ];

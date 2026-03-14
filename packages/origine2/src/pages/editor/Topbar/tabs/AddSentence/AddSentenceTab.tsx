@@ -31,6 +31,7 @@ export function AddSentenceTab() {
   const btsExtra = pickSentenceType([14, 15]);
   const btsSystem = pickSentenceType([16, 17, 22]);
   const btsControl = pickSentenceType([3, 19, 20]);
+  const btsControl2 = pickSentenceType([23]);
 
   return <TopbarTab>
     <TabItem title={t`常规演出`}>
@@ -44,6 +45,9 @@ export function AddSentenceTab() {
     <TabItem title={t`舞台对象控制`}>
       <div>
         {btsControl}
+      </div>
+      <div>
+        {btsControl2}
       </div>
     </TabItem>
     <TabItem title={t`特殊演出`}>

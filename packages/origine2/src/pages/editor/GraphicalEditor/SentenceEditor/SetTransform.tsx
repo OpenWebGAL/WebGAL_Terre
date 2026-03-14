@@ -96,6 +96,16 @@ export default function SetTransform(props: ISentenceEditorProps) {
           />
         </div>
       </CommonOptions>
+      <CommonOptions key="5" title={t`缓动类型`}>
+        <WheelDropdown
+          options={easeTypeOptions}
+          value={ease.value}
+          onValueChange={(newValue) => {
+            ease.set(newValue?.toString() ?? "");
+            submit();
+          }}
+        />
+      </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>
         <TerreToggle title="" onChange={(newValue) => {
           isUsePreset.set(newValue);
@@ -124,16 +134,6 @@ export default function SetTransform(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-      <CommonOptions key="5" title={t`缓动类型`}>
-        <WheelDropdown
-          options={easeTypeOptions}
-          value={ease.value}
-          onValueChange={(newValue) => {
-            ease.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
       <CommonOptions key="6" title={t`补充默认值`}>
         <TerreToggle title="" onChange={(newValue) => {
           writeDefault.set(newValue);
