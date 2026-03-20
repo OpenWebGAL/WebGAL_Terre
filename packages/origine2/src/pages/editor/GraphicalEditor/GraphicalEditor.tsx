@@ -105,10 +105,19 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     submitScene(newSentences, updateIndex);
   }
 
+  // 判断是否为空 (识别含唯一空行的文件)
+  function isEmpty(): boolean {
+    const sentences = sentenceData.value;
+    return !sentences || (sentences.length === 1 && sentences[0].content === "");
+  }
+
   function addOneSentence(newContent: string, insertIndex: number) {
     const newSentence = generateSentenceItem(newContent);
     const newSentences = [...sentenceData.value];
-    newSentences.splice(insertIndex, 0, newSentence);
+
+    if (!isEmpty()) newSentences.splice(insertIndex, 0, newSentence);
+    else newSentences.splice(insertIndex = 0, 1, newSentence); // 处理空文件
+
     sentenceData.set(newSentences);
     submitScene(newSentences, insertIndex);
   }
