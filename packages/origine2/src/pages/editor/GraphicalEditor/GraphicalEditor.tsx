@@ -106,20 +106,21 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }
 
   // 判断是否为空 (识别含唯一空行的文件)
-  function isEmpty(): boolean {
-    const sentences = sentenceData.value;
+  function isEmpty(sentences: SentenceItem[]): boolean {
     return !sentences || (sentences.length === 1 && sentences[0].content === "");
   }
 
   function addOneSentence(newContent: string, insertIndex: number) {
     const newSentence = generateSentenceItem(newContent);
     const newSentences = [...sentenceData.value];
+    const shouldReplaceEmptyLine = isEmpty(newSentences);
+    const targetInsertIndex = shouldReplaceEmptyLine ? 0 : insertIndex;
+    const deleteCount = shouldReplaceEmptyLine ? 1 : 0;
 
-    if (!isEmpty()) newSentences.splice(insertIndex, 0, newSentence);
-    else newSentences.splice(insertIndex = 0, 1, newSentence); // 处理空文件
+    newSentences.splice(targetInsertIndex, deleteCount, newSentence);
 
     sentenceData.set(newSentences);
-    submitScene(newSentences, insertIndex);
+    submitScene(newSentences, targetInsertIndex);
   }
 
   function deleteOneSentence(index: number) {
