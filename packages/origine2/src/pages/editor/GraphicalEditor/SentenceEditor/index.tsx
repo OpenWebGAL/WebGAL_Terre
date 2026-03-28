@@ -53,7 +53,8 @@ import { t } from "@lingui/macro";
 export interface ISentenceEditorProps {
   sentence: ISentence;
   onSubmit: (newSentence: string) => void;
-  index:number
+  index:number;
+  targetPath: string;
 }
 
 export interface ISentenceEditorConfig {

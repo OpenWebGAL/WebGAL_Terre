@@ -67,3 +67,14 @@ export class ApplyTemplateToGameDto {
   })
   gameDir: string;
 }
+
+export class ImageDimensionsResponseDto {
+  @ApiProperty({ description: 'Width of the image in pixels' })
+  width: number;
+
+  @ApiProperty({ description: 'Height of the image in pixels' })
+  height: number;
+
+  @ApiProperty({ description: 'Image file type (e.g., jpg, png, gif, webp)' })
+  type: string;
+}
