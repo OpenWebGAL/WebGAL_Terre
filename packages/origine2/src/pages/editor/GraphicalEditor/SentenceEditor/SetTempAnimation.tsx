@@ -231,6 +231,9 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
             const newEffect = { target: target.value, transform: transform };
             WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
           }}
+          sentence={props.sentence}
+          index={props.index}
+          targetPath={props.targetPath}
         />
       </TerrePanel>
       <CommonOptions key="usePresetTarget" title={t`使用预设目标`}>

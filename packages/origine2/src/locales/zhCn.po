@@ -1,17 +1,18 @@
+#
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2024-04-03 22:03+0800\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: zhCn\n"
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-03 22:03+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: zhCn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: @lingui/cli\n"
 
 msgid ";注释"
 msgstr ";注释"
@@ -523,6 +524,9 @@ msgstr "图形编辑器"
 msgid "图片"
 msgstr "图片"
 
+msgid "图片差分"
+msgstr "图片差分"
+
 msgid "圆形"
 msgstr "圆形"
 
@@ -1015,6 +1019,9 @@ msgstr "显示预览窗口"
 msgid "普通对话"
 msgstr "普通对话"
 
+msgid "更多选项"
+msgstr "更多选项"
+
 msgid "未指定"
 msgstr "未指定"
 
@@ -1119,6 +1126,9 @@ msgstr "法语"
 
 msgid "泛光"
 msgstr "泛光"
+
+msgid "注视"
+msgstr "注视"
 
 msgid "注视点X(-1~1)"
 msgstr "注视点X(-1~1)"
@@ -1245,6 +1255,9 @@ msgstr "目前没有打开任何文件"
 
 msgid "相对"
 msgstr "相对"
+
+msgid "眨眼"
+msgstr "眨眼"
 
 msgid "眨眼间隔(毫秒)"
 msgstr "眨眼间隔(毫秒)"
@@ -1374,6 +1387,9 @@ msgstr "缓动类型"
 
 msgid "编辑图标"
 msgstr "编辑图标"
+
+msgid "编辑更多选项"
+msgstr "编辑更多选项"
 
 msgid "编辑模板"
 msgstr "编辑模板"
@@ -1731,6 +1747,9 @@ msgstr "选项按钮外层"
 
 msgid "透明度（0-1）"
 msgstr "透明度（0-1）"
+
+msgid "通用"
+msgstr "通用"
 
 msgid "通过选项进入不同的场景"
 msgstr "通过选项进入不同的场景"

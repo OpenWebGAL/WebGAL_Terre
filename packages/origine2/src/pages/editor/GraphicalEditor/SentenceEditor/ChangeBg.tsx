@@ -226,6 +226,9 @@ export default function ChangeBg(props: ISentenceEditorProps) {
               const newEffect = { target: 'bg-main', transform: transform };
               WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
             }}
+            sentence={props.sentence}
+            index={props.index}
+            targetPath={props.targetPath}
           />
         </div>
       </TerrePanel>
