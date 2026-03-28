@@ -328,13 +328,13 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   const shouldRenderBottomBar = useMemo(() => {
     switch (panelType.value) {
-      // 效果编辑器需要底部栏
-      case "effect":
-        return true;
-      case "moreOptions":
-        return false;
-      default:
-        return false;
+    // 效果编辑器需要底部栏
+    case "effect":
+      return true;
+    case "moreOptions":
+      return false;
+    default:
+      return false;
     }
   }, [panelType.value]);
 
@@ -461,74 +461,72 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     return <>
       {/* 图片立绘 */}
       {!figureFile.value.includes('.json') && (
-        <>
-          <OptionCategory key={'animationFlagOptionGroup'} title={t`图片差分`}>
-            <CommonOptions title={t`唇形同步与眨眼`} key="animationFlagOption">
-              <WheelDropdown
-                options={animationFlags}
-                value={animationFlag.value}
-                onValueChange={(newValue) => {
-                  animationFlag.set(newValue?.toString() ?? "");
-                  submit();
-                }}
-              />
-            </CommonOptions>
-            {animationFlag.value === "on" && (
-              <>
-                <CommonOptions key="mouthOpenOption" title={t`张开嘴`}>
-                  <>
-                    {mouthOpen.value + "\u00a0\u00a0"}
-                    <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
-                      mouthOpen.set(fileDesc?.name ?? "");
-                      submit();
-                    }}
-                    extNames={extNameMap.get('image')}/>
-                  </>
-                </CommonOptions>
-                <CommonOptions key="mouthHalfOpenOption" title={t`半张嘴`}>
-                  <>
-                    {mouthHalfOpen.value + "\u00a0\u00a0"}
-                    <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
-                      mouthHalfOpen.set(fileDesc?.name ?? "");
-                      submit();
-                    }}
-                    extNames={extNameMap.get('image')}/>
-                  </>
-                </CommonOptions>
-                <CommonOptions key="mouthCloseOption" title={t`闭上嘴`}>
-                  <>
-                    {mouthClose.value + "\u00a0\u00a0"}
-                    <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
-                      mouthClose.set(fileDesc?.name ?? "");
-                      submit();
-                    }}
-                    extNames={extNameMap.get('image')}/>
-                  </>
-                </CommonOptions>
-                <CommonOptions key="eyesOpenOption" title={t`睁开眼睛`}>
-                  <>
-                    {eyesOpen.value + "\u00a0\u00a0"}
-                    <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
-                      eyesOpen.set(fileDesc?.name ?? "");
-                      submit();
-                    }}
-                    extNames={extNameMap.get('image')}/>
-                  </>
-                </CommonOptions>
-                <CommonOptions key="eyesCloseOption" title={t`闭上眼睛`}>
-                  <>
-                    {eyesClose.value + "\u00a0\u00a0"}
-                    <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
-                      eyesClose.set(fileDesc?.name ?? "");
-                      submit();
-                    }}
-                    extNames={extNameMap.get('image')}/>
-                  </>
-                </CommonOptions>
-              </>
-            )}
-          </OptionCategory>
-        </>
+        <OptionCategory key="animationFlagOptionGroup" title={t`图片差分`}>
+          <CommonOptions title={t`唇形同步与眨眼`} key="animationFlagOption">
+            <WheelDropdown
+              options={animationFlags}
+              value={animationFlag.value}
+              onValueChange={(newValue) => {
+                animationFlag.set(newValue?.toString() ?? "");
+                submit();
+              }}
+            />
+          </CommonOptions>
+          {animationFlag.value === "on" && (
+            <>
+              <CommonOptions key="mouthOpenOption" title={t`张开嘴`}>
+                <>
+                  {mouthOpen.value + "\u00a0\u00a0"}
+                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
+                    mouthOpen.set(fileDesc?.name ?? "");
+                    submit();
+                  }}
+                  extNames={extNameMap.get('image')}/>
+                </>
+              </CommonOptions>
+              <CommonOptions key="mouthHalfOpenOption" title={t`半张嘴`}>
+                <>
+                  {mouthHalfOpen.value + "\u00a0\u00a0"}
+                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
+                    mouthHalfOpen.set(fileDesc?.name ?? "");
+                    submit();
+                  }}
+                  extNames={extNameMap.get('image')}/>
+                </>
+              </CommonOptions>
+              <CommonOptions key="mouthCloseOption" title={t`闭上嘴`}>
+                <>
+                  {mouthClose.value + "\u00a0\u00a0"}
+                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
+                    mouthClose.set(fileDesc?.name ?? "");
+                    submit();
+                  }}
+                  extNames={extNameMap.get('image')}/>
+                </>
+              </CommonOptions>
+              <CommonOptions key="eyesOpenOption" title={t`睁开眼睛`}>
+                <>
+                  {eyesOpen.value + "\u00a0\u00a0"}
+                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
+                    eyesOpen.set(fileDesc?.name ?? "");
+                    submit();
+                  }}
+                  extNames={extNameMap.get('image')}/>
+                </>
+              </CommonOptions>
+              <CommonOptions key="eyesCloseOption" title={t`闭上眼睛`}>
+                <>
+                  {eyesClose.value + "\u00a0\u00a0"}
+                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
+                    eyesClose.set(fileDesc?.name ?? "");
+                    submit();
+                  }}
+                  extNames={extNameMap.get('image')}/>
+                </>
+              </CommonOptions>
+            </>
+          )}
+        </OptionCategory>
       )}
       {/* Live2D 立绘 */}
       {figureFile.value.includes('.json') && !isSpineJsonFormat && (
@@ -754,12 +752,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         {(() => {
           switch (panelType.value) {
-            case "effect":
-              return renderEffectEditor();
-            case "moreOptions":
-              return renderMoreOptions();
-            default:
-              return null;
+          case "effect":
+            return renderEffectEditor();
+          case "moreOptions":
+            return renderMoreOptions();
+          default:
+            return null;
           }
         })()}
       </TerrePanel>
