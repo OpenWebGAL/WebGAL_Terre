@@ -1061,9 +1061,6 @@ msgstr "Title Button Text"
 msgid "标题按钮文字内层"
 msgstr "Title Button Text Inner"
 
-msgid "标题按钮文字占位"
-msgstr "Title Button Text Placeholder"
-
 msgid "标题按钮文字外层"
 msgstr "Title Button Text Outer"
 
