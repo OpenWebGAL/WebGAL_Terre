@@ -527,6 +527,9 @@ msgstr "グラフィックエディタ"
 msgid "图片"
 msgstr "画像"
 
+msgid "图片差分"
+msgstr "画像差分"
+
 msgid "圆形"
 msgstr "円形"
 
@@ -1019,6 +1022,9 @@ msgstr "プレビューウィンドウを表示"
 msgid "普通对话"
 msgstr "ダイアログ"
 
+msgid "更多选项"
+msgstr "その他のオプション"
+
 msgid "未指定"
 msgstr "指定なし"
 
@@ -1111,6 +1117,9 @@ msgstr "フランス語"
 
 msgid "泛光"
 msgstr "ブルーム"
+
+msgid "注视"
+msgstr "注視"
 
 msgid "注视点X(-1~1)"
 msgstr "注視点X（-1～1）"
@@ -1237,6 +1246,9 @@ msgstr "現在開いているファイルはありません"
 
 msgid "相对"
 msgstr "相対"
+
+msgid "眨眼"
+msgstr "瞬き"
 
 msgid "眨眼间隔(毫秒)"
 msgstr "瞬き間隔（ミリ秒）"
@@ -1366,6 +1378,9 @@ msgstr "イージングタイプ"
 
 msgid "编辑图标"
 msgstr "編集アイコン"
+
+msgid "编辑更多选项"
+msgstr "その他のオプションを編集"
 
 msgid "编辑模板"
 msgstr "テンプレートを編集"
@@ -1723,6 +1738,9 @@ msgstr "選択肢ボタン外層"
 
 msgid "透明度（0-1）"
 msgstr "透明度（０－１）"
+
+msgid "通用"
+msgstr "一般"
 
 msgid "通过选项进入不同的场景"
 msgstr "選択肢からシーンに切り替えることが可能です"

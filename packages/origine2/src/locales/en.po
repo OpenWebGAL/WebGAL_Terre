@@ -527,6 +527,9 @@ msgstr "Graphical editor"
 msgid "图片"
 msgstr "Image"
 
+msgid "图片差分"
+msgstr "Image differential"
+
 msgid "圆形"
 msgstr "Circle"
 
@@ -1019,6 +1022,9 @@ msgstr "Show preview window"
 msgid "普通对话"
 msgstr "General dialogue"
 
+msgid "更多选项"
+msgstr "More options"
+
 msgid "未指定"
 msgstr "Unspecified"
 
@@ -1111,6 +1117,9 @@ msgstr "French"
 
 msgid "泛光"
 msgstr "Bloom"
+
+msgid "注视"
+msgstr "Focus"
 
 msgid "注视点X(-1~1)"
 msgstr "Focus X (-1~1)"
@@ -1237,6 +1246,9 @@ msgstr "No file currently open"
 
 msgid "相对"
 msgstr "Relative"
+
+msgid "眨眼"
+msgstr "Blink"
 
 msgid "眨眼间隔(毫秒)"
 msgstr "Blink interval (ms)"
@@ -1366,6 +1378,9 @@ msgstr "Ease type"
 
 msgid "编辑图标"
 msgstr "Edit icon"
+
+msgid "编辑更多选项"
+msgstr "Edit more options"
 
 msgid "编辑模板"
 msgstr "Edit template"
@@ -1723,6 +1738,9 @@ msgstr "Selection Button Wrapper"
 
 msgid "透明度（0-1）"
 msgstr "Opacity (0-1)"
+
+msgid "通用"
+msgstr "General"
 
 msgid "通过选项进入不同的场景"
 msgstr "Enter different scenes through options"
