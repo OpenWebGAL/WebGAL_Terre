@@ -205,7 +205,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
   }
 
   return (
-    <>
+    <div style={{ pointerEvents: isDisplay ? 'auto' : 'none' }}>
       {/* 占位的div */}
       <div
         ref={targetRef}
@@ -290,7 +290,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 
