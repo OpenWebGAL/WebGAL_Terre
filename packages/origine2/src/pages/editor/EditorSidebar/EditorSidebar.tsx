@@ -2,13 +2,14 @@ import styles from "./editorSidebar.module.scss";
 import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
 import { eventBus } from "@/utils/eventBus";
-import {Button, Switch, Tab, TabList} from "@fluentui/react-components";
+import { Button, Switch, Tab, TabList } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
-import {IGameEditorSidebarTabs, ITag} from "@/types/gameEditor";
+import { IGameEditorSidebarTabs, ITag } from "@/types/gameEditor";
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { WsUtil } from "@/utils/wsUtil";
+import TransformableBox from '@/pages/editor/TransformableBox/TransformableBox';
 
 let startX = 0;
 let prevXvalue = 0;
@@ -26,6 +27,7 @@ export default function EditorSideBar() {
   const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
   const isShowPreview = useEditorStore.use.isShowPreview();
   const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -33,6 +35,7 @@ export default function EditorSideBar() {
   const tags = useGameEditorContext((state) => state.tags);
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
+  const PreviewControlRef = useRef(null);
 
   const ifRef = useRef<HTMLIFrameElement | null>(null);
   useEffect(() => {
@@ -142,8 +145,8 @@ export default function EditorSideBar() {
     open: handleOpen,
   };
 
-  const assetsTabs =(
-    <TabList style={{padding: '0 3px 0 4px'}} size="small" selectedValue={currentSidebarTab}
+  const assetsTabs = (
+    <TabList style={{ padding: '0 3px 0 4px' }} size="small" selectedValue={currentSidebarTab}
       onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
     >
       <Tab value="asset" style={{ padding: '2px 2px 3.5px 2px' }}>{t`资源`}</Tab>
@@ -182,14 +185,29 @@ export default function EditorSideBar() {
               onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
             />
           </div>
+          <div
+            ref={PreviewControlRef}
+            className={styles.previewWindow}
+            style={{
+              position: 'absolute',
+              left: 0,
+              bottom: 0,
+              overflow: 'hidden',
+              display: isShowPreview && isWindowAdjustment ? 'block' : 'none',
+            }}
+          >
+            <TransformableBox
+              parents={PreviewControlRef}
+            />
+          </div>
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          { isShowPreview && <iframe
+          {isShowPreview && <iframe
             ref={ifRef}
             id="gamePreviewIframe"
             frameBorder="0"
             className={styles.previewWindow}
             src={`/games/${gameDir}`}
-          /> }
+          />}
         </div>
 
         <div className={styles.sidebarContent}>

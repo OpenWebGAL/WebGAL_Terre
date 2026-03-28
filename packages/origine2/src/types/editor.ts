@@ -23,6 +23,7 @@ export interface IEditorState {
   cascaderDelimiters: string[],
   isDarkMode: boolean,
   isUseRealtimeEffect: boolean, // 是否使用实时效果
+  isWindowAdjustment: boolean, // 预览窗口调整功能是否开启
 }
 
 export interface IEditorAction {
@@ -46,4 +47,5 @@ export interface IEditorAction {
   updateCascaderDelimiters: (cascadeDelimiters: IEditorState['cascaderDelimiters']) => void,
   updateIsDarkMode: (isDarkMode: IEditorState['isDarkMode']) => void,
   updateIsUseRealtimeEffect: (isUseRealtimeEffect: IEditorState['isUseRealtimeEffect']) => void,
+  updateIsWindowAdjustment: (isWindowAdjustment: IEditorState['isWindowAdjustment']) => void,
 }
