@@ -193,6 +193,7 @@ export default function EditorSideBar() {
               left: 0,
               bottom: 0,
               overflow: 'hidden',
+              pointerEvents: 'none',
               display: isShowPreview && isWindowAdjustment ? 'block' : 'none',
             }}
           >
