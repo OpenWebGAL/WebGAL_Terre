@@ -133,9 +133,6 @@ msgstr "unlockBgm:;"
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
 
-msgid "WebGAL Classic"
-msgstr "WebGAL Classic"
-
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -877,20 +874,14 @@ msgstr "效果音文件"
 msgid "文件名"
 msgstr "文件名"
 
-msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
-msgstr "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
-
 msgid "文件名不可包含特殊符号"
 msgstr "文件名不可包含特殊符号"
 
-msgid "文件路径含有非法字符"
-msgstr "文件路径含有非法字符"
-
-msgid "清除提示"
-msgstr "清除提示"
-
 msgid "文件大小"
 msgstr "文件大小"
+
+msgid "文件路径含有非法字符"
+msgstr "文件路径含有非法字符"
 
 msgid "文字大小"
 msgstr "文字大小"
@@ -1176,6 +1167,9 @@ msgstr "添加语句"
 
 msgid "清除当前舞台的特殊效果"
 msgstr "清除当前舞台的特殊效果"
+
+msgid "清除提示"
+msgstr "清除提示"
 
 msgid "清除特效"
 msgstr "清除特效"

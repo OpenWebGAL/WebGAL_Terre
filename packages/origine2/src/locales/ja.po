@@ -133,9 +133,6 @@ msgstr "unlockBgm:;"
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
 
-msgid "WebGAL Classic"
-msgstr "WebGAL Classic"
-
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -877,20 +874,14 @@ msgstr "効果音ファイル"
 msgid "文件名"
 msgstr "ファイル名"
 
-msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
-msgstr "ファイル名に特殊記号は使用できません: '/\\\\:*?\"<>|'"
-
 msgid "文件名不可包含特殊符号"
 msgstr "ファイル名に使用できない特殊文字"
 
-msgid "文件路径含有非法字符"
-msgstr "ファイルパスに無効な文字が含まれています"
-
-msgid "清除提示"
-msgstr "チップをクリア"
-
 msgid "文件大小"
 msgstr "ファイルサイズ"
+
+msgid "文件路径含有非法字符"
+msgstr "ファイルパスに無効な文字が含まれています"
 
 msgid "文字大小"
 msgstr "文字サイズ"
@@ -1176,6 +1167,9 @@ msgstr "ステートメントを追加"
 
 msgid "清除当前舞台的特殊效果"
 msgstr "現在のステージの特殊効果をクリア"
+
+msgid "清除提示"
+msgstr "チップをクリア"
 
 msgid "清除特效"
 msgstr "特殊効果をクリア"
