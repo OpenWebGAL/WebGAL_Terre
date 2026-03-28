@@ -136,9 +136,9 @@ export function ToXOffset(
   return xOffset;
 }
 
+// TODO: 实现实际的 Live2D 模型尺寸获取逻辑，当前使用固定的模拟尺寸
 export function getLive2dSize(): Promise<{ width: number; height: number }> {
-  // 模拟获取 Live2D 模型尺寸的异步函数
   return new Promise((resolve) => {
-    resolve({ width: 800, height: 1600 }); // 返回一个模拟尺寸
+    resolve({ width: 800, height: 1600 });
   });
 }

@@ -114,7 +114,13 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
     if (!event.lineSentence) {
       return;
     }
-    const transformObj = JSON.parse(event.lineSentence.content === '' ? '{}' : event.lineSentence.content);
+    let transformObj: any = {};
+    try {
+      transformObj = JSON.parse(event.lineSentence.content === '' ? '{}' : event.lineSentence.content);
+    } catch (e) {
+      console.error('Failed to parse setTransform content:', event.lineSentence.content, e);
+      return;
+    }
     const target = event.lineSentence.args.find((arg) => arg.key === 'target')?.value;
     GetImgPathAndDirection(target as string, event.targetPath).then(({ imgPath, direction }) => {
       if (imgPath !== '' && !imgPath.endsWith('.json')) {

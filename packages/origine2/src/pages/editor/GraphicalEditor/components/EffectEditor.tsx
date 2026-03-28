@@ -431,52 +431,50 @@ export function EffectEditor(props: {
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
   const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
 
-  useEffect(() => {
-    // 将 sentence 对象转换回原始命令行字符串
-    const sentenceToRawLine = (sentence: ISentence): string => {
-      let base = sentence.commandRaw;
-      if (sentence.content) {
-        base += ':' + sentence.content;
-      }
-      if (sentence.args && sentence.args.length > 0) {
-        for (const arg of sentence.args) {
-          let value = arg.value;
-          // 如果是对象，转成 JSON 字符串
-          if (typeof value === 'object') {
-            value = JSON.stringify(value);
-          }
-          base += ` -${arg.key}=${value}`;
+  // 将 sentence 对象转换回原始命令行字符串
+  const sentenceToRawLine = useCallback((sentence: ISentence): string => {
+    let base = sentence.commandRaw;
+    if (sentence.content) {
+      base += ':' + sentence.content;
+    }
+    if (sentence.args && sentence.args.length > 0) {
+      for (const arg of sentence.args) {
+        let value = arg.value;
+        if (typeof value === 'object') {
+          value = JSON.stringify(value);
         }
+        base += ` -${arg.key}=${value}`;
       }
-      return base;
-    };
-    const handleWindowAdjustmentChange = (checked: boolean) => {
-      updateIsWindowAdjustment(checked);
-      if (checked) {
-        updateIsShowPreview(true);
-        updateIsEnableLivePreview(true);
-      }
-    };
+    }
+    return base;
+  }, []);
+
+  // 挂载时启用窗口调整，卸载时关闭
+  useEffect(() => {
     const lineContent = sentenceToRawLine(props.sentence);
-    const Adjustment = () => {
-      const lineNumber = props.index; // 如果 index 从 0 开始
-      const targetPath = props.targetPath;
-      WsUtil.sendSyncCommand(targetPath, lineNumber, lineContent);
-      eventBus.emit('editor:pixi-sync-command', {
-        targetPath,
-        lineNumber,
-        lineContent,
-        lineSentence: props.sentence,
-      });
-    };
     if (lineContent.startsWith("changeFigure") || lineContent.startsWith("setTransform")) {
-      handleWindowAdjustmentChange(true);
-      Adjustment();
+      updateIsWindowAdjustment(true);
+      updateIsShowPreview(true);
+      updateIsEnableLivePreview(true);
     }
     return () => {
       updateIsWindowAdjustment(false);
     };
   }, []);
+
+  // 当 sentence 变化时，同步拖拽框状态
+  useEffect(() => {
+    const lineContent = sentenceToRawLine(props.sentence);
+    if (lineContent.startsWith("changeFigure") || lineContent.startsWith("setTransform")) {
+      WsUtil.sendSyncCommand(props.targetPath, props.index, lineContent);
+      eventBus.emit('editor:pixi-sync-command', {
+        targetPath: props.targetPath,
+        lineNumber: props.index,
+        lineContent,
+        lineSentence: props.sentence,
+      });
+    }
+  }, [props.sentence, props.index, props.targetPath]);
   return (
     <>
       {fieldGroups.map((group, index) => (

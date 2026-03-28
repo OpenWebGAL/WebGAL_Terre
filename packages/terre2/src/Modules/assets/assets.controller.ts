@@ -179,8 +179,7 @@ export class AssetsController {
     description: 'Path to the image file relative to public/',
   })
   async getImageDimensions(@Param('imagePath') imagePath: string) {
-    const decodedPath = decodeURI(imagePath);
-    return this.assets.getImageDimensions(decodedPath);
+    return this.assets.getImageDimensions(imagePath);
   }
 
   @Post('copyFileWithIncrement')

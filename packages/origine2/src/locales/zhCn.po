@@ -14,17 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: @lingui/cli\n"
 
-msgid "%"
-msgstr "%"
+msgid ";注释"
+msgstr ";注释"
 
 msgid "*设置拾色器后，点击此按钮以保存更改"
 msgstr "*设置拾色器后，点击此按钮以保存更改"
 
-msgid "1, 2, 3, ..."
-msgstr "1, 2, 3, ..."
-
-msgid ";注释"
-msgstr ";注释"
+msgid "%"
+msgstr "%"
 
 msgid "<0>应用新的模板</0>"
 msgstr "<0>应用新的模板</0>"
@@ -32,14 +29,38 @@ msgstr "<0>应用新的模板</0>"
 msgid "<0>当前应用的模板：{currentTemplateName}</0>"
 msgstr "<0>当前应用的模板：{currentTemplateName}</0>"
 
+msgid "1, 2, 3, ..."
+msgstr "1, 2, 3, ..."
+
 msgid "BGM"
 msgstr "BGM"
 
 msgid "BGM 音量"
 msgstr "BGM 音量"
 
+msgid "bgm:选择背景音乐;"
+msgstr "bgm:选择背景音乐;"
+
+msgid "callScene:选择场景文件;"
+msgstr "callScene:选择场景文件;"
+
+msgid "callSteam: -achievementId=;"
+msgstr "callSteam: -achievementId=;"
+
 msgid "CG"
 msgstr "CG"
+
+msgid "changeBg: 选择背景图片;"
+msgstr "changeBg: 选择背景图片;"
+
+msgid "changeFigure:选择立绘文件;"
+msgstr "changeFigure:选择立绘文件;"
+
+msgid "changeScene:选择场景文件;"
+msgstr "changeScene:选择场景文件;"
+
+msgid "choose:选项:选择场景文件;"
+msgstr "choose:选项:选择场景文件;"
 
 msgid "CSS 属性值"
 msgstr "CSS 属性值"
@@ -47,8 +68,20 @@ msgstr "CSS 属性值"
 msgid "CSS 属性名："
 msgstr "CSS 属性名："
 
+msgid "end;"
+msgstr "end;"
+
+msgid "font-family"
+msgstr "font-family"
+
+msgid "getUserInput:;"
+msgstr "getUserInput:;"
+
 msgid "Intro 文本"
 msgstr "Intro 文本"
+
+msgid "intro:;"
+msgstr "intro:;"
 
 msgid "Live2D 动作"
 msgstr "Live2D 动作"
@@ -56,14 +89,50 @@ msgstr "Live2D 动作"
 msgid "Live2D 表情"
 msgstr "Live2D 表情"
 
+msgid "miniAvatar:选择小头像;"
+msgstr "miniAvatar:选择小头像;"
+
+msgid "pixiInit;"
+msgstr "pixiInit;"
+
+msgid "pixiPerform:snow;"
+msgstr "pixiPerform:snow;"
+
+msgid "playEffect:选择效果音文件;"
+msgstr "playEffect:选择效果音文件;"
+
+msgid "playVideo:选择视频文件;"
+msgstr "playVideo:选择视频文件;"
+
 msgid "RGB电影滤镜"
 msgstr "RGB电影滤镜"
+
+msgid "setAnimation:选择动画文件;"
+msgstr "setAnimation:选择动画文件;"
+
+msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+
+msgid "setTextbox:hide;"
+msgstr "setTextbox:hide;"
+
+msgid "setTransform: -duration=0;"
+msgstr "setTransform: -duration=0;"
+
+msgid "setTransition:;"
+msgstr "setTransition:;"
 
 msgid "Spine 动画"
 msgstr "Spine 动画"
 
 msgid "Steam AppID"
 msgstr "Steam AppID"
+
+msgid "unlockBgm:;"
+msgstr "unlockBgm:;"
+
+msgid "unlockCg:;"
+msgstr "unlockCg:;"
 
 msgid "WebGAL Classic"
 msgstr "WebGAL Classic"
@@ -82,75 +151,6 @@ msgstr "Y轴位移"
 
 msgid "Y轴缩放"
 msgstr "Y轴缩放"
-
-msgid "bgm:选择背景音乐;"
-msgstr "bgm:选择背景音乐;"
-
-msgid "callScene:选择场景文件;"
-msgstr "callScene:选择场景文件;"
-
-msgid "callSteam: -achievementId=;"
-msgstr "callSteam: -achievementId=;"
-
-msgid "changeBg: 选择背景图片;"
-msgstr "changeBg: 选择背景图片;"
-
-msgid "changeFigure:选择立绘文件;"
-msgstr "changeFigure:选择立绘文件;"
-
-msgid "changeScene:选择场景文件;"
-msgstr "changeScene:选择场景文件;"
-
-msgid "choose:选项:选择场景文件;"
-msgstr "choose:选项:选择场景文件;"
-
-msgid "end;"
-msgstr "end;"
-
-msgid "font-family"
-msgstr "font-family"
-
-msgid "getUserInput:;"
-msgstr "getUserInput:;"
-
-msgid "intro:;"
-msgstr "intro:;"
-
-msgid "miniAvatar:选择小头像;"
-msgstr "miniAvatar:选择小头像;"
-
-msgid "pixiInit;"
-msgstr "pixiInit;"
-
-msgid "pixiPerform:snow;"
-msgstr "pixiPerform:snow;"
-
-msgid "playEffect:选择效果音文件;"
-msgstr "playEffect:选择效果音文件;"
-
-msgid "playVideo:选择视频文件;"
-msgstr "playVideo:选择视频文件;"
-
-msgid "setAnimation:选择动画文件;"
-msgstr "setAnimation:选择动画文件;"
-
-msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-
-msgid "setTextbox:hide;"
-msgstr "setTextbox:hide;"
-
-msgid "setTransform: -duration=0;"
-msgstr "setTransform: -duration=0;"
-
-msgid "setTransition:;"
-msgstr "setTransition:;"
-
-msgid "unlockBgm:;"
-msgstr "unlockBgm:;"
-
-msgid "unlockCg:;"
-msgstr "unlockCg:;"
 
 msgid "z-index"
 msgstr "z-index"
@@ -209,19 +209,11 @@ msgstr "中间立绘"
 msgid "为当前的舞台添加特殊效果"
 msgstr "为当前的舞台添加特殊效果"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:107
-msgid "为立绘或背景图片设置动画效果"
-msgstr "为立绘或背景图片设置动画效果"
-
 msgid "为立绘或背景图片设置单段动画效果"
 msgstr "为立绘或背景图片设置单段动画效果"
 
 msgid "为立绘或背景图片设置多段动画效果"
 msgstr "为立绘或背景图片设置多段动画效果"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:243
-msgid "为立绘或背景图片设置效果或变换"
-msgstr "为立绘或背景图片设置效果或变换"
 
 msgid "为立绘或背景图片调用动画效果"
 msgstr "为立绘或背景图片调用动画效果"
@@ -366,6 +358,21 @@ msgstr "内层文本"
 
 msgid "内边距"
 msgstr "内边距"
+
+msgid "最大宽度"
+msgstr "最大宽度"
+
+msgid "最大高度"
+msgstr "最大高度"
+
+msgid "最小宽度"
+msgstr "最小宽度"
+
+msgid "最小高度"
+msgstr "最小高度"
+
+msgid "最新版本"
+msgstr "最新版本"
 
 msgid "写入变量"
 msgstr "写入变量"
@@ -844,10 +851,6 @@ msgstr "故障电影滤镜"
 msgid "效果"
 msgstr "效果"
 
-#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:239
-msgid "效果与变换"
-msgstr "效果与变换"
-
 msgid "效果声音"
 msgstr "效果声音"
 
@@ -877,9 +880,6 @@ msgstr "文件名"
 
 msgid "文件名不可包含特殊符号"
 msgstr "文件名不可包含特殊符号"
-
-msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
-msgstr "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
 
 msgid "文件大小"
 msgstr "文件大小"
@@ -911,14 +911,14 @@ msgstr "文本显示"
 msgid "文本框"
 msgstr "文本框"
 
+msgid "文本框（小头像关闭时）"
+msgstr "文本框（小头像关闭时）"
+
 msgid "文本框文本"
 msgstr "文本框文本"
 
 msgid "文本框背景"
 msgstr "文本框背景"
-
-msgid "文本框（小头像关闭时）"
-msgstr "文本框（小头像关闭时）"
 
 msgid "文本长度 (em)"
 msgstr "文本长度 (em)"
@@ -1018,21 +1018,6 @@ msgstr "显示预览窗口"
 
 msgid "普通对话"
 msgstr "普通对话"
-
-msgid "最大宽度"
-msgstr "最大宽度"
-
-msgid "最大高度"
-msgstr "最大高度"
-
-msgid "最小宽度"
-msgstr "最小宽度"
-
-msgid "最小高度"
-msgstr "最小高度"
-
-msgid "最新版本"
-msgstr "最新版本"
 
 msgid "未指定"
 msgstr "未指定"
@@ -1274,6 +1259,21 @@ msgstr "确定要删除 \"{templateName}\" 模板吗？"
 msgid "确认按钮文本"
 msgstr "确认按钮文本"
 
+msgid "视图"
+msgstr "视图"
+
+msgid "视觉小说编辑，再进化"
+msgstr "视觉小说编辑，再进化"
+
+msgid "视频"
+msgstr "视频"
+
+msgid "视频文件"
+msgstr "视频文件"
+
+msgid "视频选项"
+msgstr "视频选项"
+
 msgid "禁止跳过视频"
 msgstr "禁止跳过视频"
 
@@ -1304,14 +1304,11 @@ msgstr "立绘文件"
 msgid "简体中文"
 msgstr "简体中文"
 
-msgid "紧急回避"
-msgstr "紧急回避"
-
-msgid "繁体中文"
-msgstr "繁体中文"
-
 msgid "红色通道"
 msgstr "红色通道"
+
+msgid "紧急回避"
+msgstr "紧急回避"
 
 msgid "纹理"
 msgstr "纹理"
@@ -1378,6 +1375,9 @@ msgstr "编辑游戏"
 
 msgid "编辑组件"
 msgstr "编辑组件"
+
+msgid "繁体中文"
+msgstr "繁体中文"
 
 msgid "缩放"
 msgstr "缩放"
@@ -1481,20 +1481,11 @@ msgstr "要删除属性{0}吗？"
 msgid "覆盖"
 msgstr "覆盖"
 
-msgid "视图"
-msgstr "视图"
+msgid "角色名，留空以继承上句"
+msgstr "角色名，留空以继承上句"
 
-msgid "视觉小说编辑，再进化"
-msgstr "视觉小说编辑，再进化"
-
-msgid "视频"
-msgstr "视频"
-
-msgid "视频文件"
-msgstr "视频文件"
-
-msgid "视频选项"
-msgstr "视频选项"
+msgid "角色名，留空以继承上句:对话;"
+msgstr "角色名，留空以继承上句:对话;"
 
 msgid "角色名内层文本"
 msgstr "角色名内层文本"
@@ -1510,12 +1501,6 @@ msgstr "角色名文本框"
 
 msgid "角色名文本框背景"
 msgstr "角色名文本框背景"
-
-msgid "角色名，留空以继承上句"
-msgstr "角色名，留空以继承上句"
-
-msgid "角色名，留空以继承上句:对话;"
-msgstr "角色名，留空以继承上句:对话;"
 
 msgid "角落头像"
 msgstr "角落头像"
@@ -1540,10 +1525,6 @@ msgstr "解锁鉴赏类型"
 
 msgid "设置"
 msgstr "设置"
-
-#: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:103
-msgid "设置动画"
-msgstr "设置动画"
 
 msgid "设置立绘或背景的进出场动画"
 msgstr "设置立绘或背景的进出场动画"
@@ -1683,6 +1664,9 @@ msgstr "选择文件"
 msgid "选择游戏引擎版本"
 msgstr "选择游戏引擎版本"
 
+msgid "选择视频文件"
+msgstr "选择视频文件"
+
 msgid "选择立绘文件"
 msgstr "选择立绘文件"
 
@@ -1691,9 +1675,6 @@ msgstr "选择背景文件"
 
 msgid "选择背景音乐"
 msgstr "选择背景音乐"
-
-msgid "选择视频文件"
-msgstr "选择视频文件"
 
 msgid "选择语音文件"
 msgstr "选择语音文件"
@@ -1734,11 +1715,11 @@ msgstr "选项名称"
 msgid "选项按钮"
 msgstr "选项按钮"
 
-msgid "选项按钮外层"
-msgstr "选项按钮外层"
-
 msgid "选项按钮（禁用）"
 msgstr "选项按钮（禁用）"
+
+msgid "选项按钮外层"
+msgstr "选项按钮外层"
 
 msgid "透明度（0-1）"
 msgstr "透明度（0-1）"
@@ -1883,86 +1864,3 @@ msgstr "鼠标指针"
 
 msgid "鼠标按下样式"
 msgstr "鼠标按下样式"
-
-#~ msgid "Steam 成就"
-#~ msgstr "Steam 成就"
-
-#~ msgid "Steam 成就 ID"
-#~ msgstr "Steam 成就 ID"
-
-#~ msgid "X轴位移："
-#~ msgstr "X轴位移："
-
-#~ msgid "X轴缩放："
-#~ msgstr "X轴缩放："
-
-#~ msgid "Y轴位移："
-#~ msgstr "Y轴位移："
-
-#~ msgid "为立绘或背景图片设置效果"
-#~ msgstr "为立绘或背景图片设置效果"
-
-#~ msgid ""
-#~ "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
-#~ msgstr ""
-#~ "你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。"
-
-#~ msgid "厚度："
-#~ msgstr "厚度："
-
-#~ msgid "发布的游戏可以在"
-#~ msgstr "发布的游戏可以在"
-
-#~ msgid "填写 Steam 成就 ID"
-#~ msgstr "填写 Steam 成就 ID"
-
-#~ msgid "实时预览"
-#~ msgstr "实时预览"
-
-#~ msgid "展示，欢迎分享你的作品！"
-#~ msgstr "展示，欢迎分享你的作品！"
-
-#~ msgid "持续时间（单位为毫秒）"
-#~ msgstr "持续时间（单位为毫秒）"
-
-#~ msgid "新按钮"
-#~ msgstr "新按钮"
-
-#~ msgid "新按钮被点击了！"
-#~ msgstr "新按钮被点击了！"
-
-#~ msgid "旋转："
-#~ msgstr "旋转："
-
-#~ msgid "模糊："
-#~ msgstr "模糊："
-
-#~ msgid "点击我"
-#~ msgstr "点击我"
-
-#~ msgid "继承上一句"
-#~ msgstr "继承上一句"
-
-#~ msgid "继承模式"
-#~ msgstr "继承模式"
-
-#~ msgid "绿色（0-255）："
-#~ msgstr "绿色（0-255）："
-
-#~ msgid "设置效果"
-#~ msgstr "设置效果"
-
-#~ msgid "设置立绘或背景的进出场效果"
-#~ msgstr "设置立绘或背景的进出场效果"
-
-#~ msgid "设置转场"
-#~ msgstr "设置转场"
-
-#~ msgid "设置转场效果"
-#~ msgstr "设置转场效果"
-
-#~ msgid "调用 Steam 接口解锁成就"
-#~ msgstr "调用 Steam 接口解锁成就"
-
-#~ msgid "选项菜单"
-#~ msgstr "选项菜单"

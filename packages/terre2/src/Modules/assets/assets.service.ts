@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import sizeOf from 'image-size';
-import { readFileSync } from 'fs';
+import { readFile } from 'fs/promises';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 
 @Injectable()
@@ -14,8 +14,12 @@ export class AssetsService {
    */
   async getImageDimensions(imagePath: string) {
     try {
-      const fullPath = this.webgalFs.getPathFromRoot(`public/${imagePath}`);
-      const buffer = readFileSync(fullPath);
+      const relativePath = `public/${imagePath}`;
+      if (WebgalFsService.hasInvalidPathSegments(relativePath)) {
+        throw new Error('Invalid path segments detected');
+      }
+      const fullPath = this.webgalFs.getPathFromRoot(relativePath);
+      const buffer = await readFile(fullPath);
       const dimensions = sizeOf(buffer);
       return {
         width: dimensions.width,
