@@ -1051,14 +1051,14 @@ msgstr "标题按钮列表"
 msgid "标题按钮文字"
 msgstr "标题按钮文字"
 
+msgid "标题按钮文字内层"
+msgstr "标题按钮文字内层"
+
 msgid "标题按钮文字占位"
 msgstr "标题按钮文字占位"
 
 msgid "标题按钮文字外层"
 msgstr "标题按钮文字外层"
-
-msgid "标题按钮文字内层"
-msgstr "标题按钮文字内层"
 
 msgid "标题按钮禁用"
 msgstr "标题按钮禁用"

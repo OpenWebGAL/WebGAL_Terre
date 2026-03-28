@@ -35,7 +35,7 @@ export default function Sidebar(props: ISidebarProps) {
   const [gameName, setGameName] = useState(t`新的游戏`);
   const [gameDir, setGameDir] = useState(t`新的游戏`);
   const [derivative, setDerivative] = useState<string | undefined>(undefined);
-  const [templateName, setTemplateName] = useState<string | undefined>(undefined);
+  const [templateDir, setTemplateDir] = useState<string | undefined>(undefined);
 
   // 可用的衍生版
   const derivativeEnginesResp = useSWR('derivativeEngines', async () => {
@@ -48,25 +48,35 @@ export default function Sidebar(props: ISidebarProps) {
     return resp.data as unknown as { name: string; dir: string }[];
   });
 
-  const defaultDerivativeValue = 'WebGAL Standard';
-  const defaultTemplateValue = 'WebGAL Refine 2026';
+  const DEFAULT_OPTION = '__DEFAULT__';
+  const defaultTemplateName = 'WebGAL Refine 2026';
 
-  const selector = <Dropdown value={derivative ?? t`WebGAL Standard`}
-    selectedOptions={[derivative ?? defaultDerivativeValue]} onOptionSelect={(_, elem) => {
-      setDerivative(elem.optionValue === defaultDerivativeValue ? undefined : elem.optionValue);
+  const getTemplateDisplayName = (dir: string | undefined): string => {
+    if (!dir) return defaultTemplateName;
+    return templatesResp.data?.find(e => e.dir === dir)?.name ?? dir;
+  };
+
+  const getDerivativeDisplayName = (val: string | undefined): string => {
+    if (!val) return t`WebGAL Standard`;
+    return val;
+  };
+
+  const selector = <Dropdown value={getDerivativeDisplayName(derivative)}
+    selectedOptions={[derivative ?? DEFAULT_OPTION]} onOptionSelect={(_, elem) => {
+      setDerivative(elem.optionValue === DEFAULT_OPTION ? undefined : elem.optionValue);
     }}>
-    <Option key="default-engine" value={defaultDerivativeValue}>{t`WebGAL Standard`}</Option>
+    <Option key="default-engine" value={DEFAULT_OPTION}>{t`WebGAL Standard`}</Option>
     {(derivativeEnginesResp.data ?? []).map(e =>
       <Option key={e} value={e}>{e}</Option>
     )}
   </Dropdown>;
 
-  const selectorTemplate = <Dropdown value={templateName ?? defaultTemplateValue}
-    selectedOptions={[templateName ?? defaultTemplateValue]}
+  const selectorTemplate = <Dropdown value={getTemplateDisplayName(templateDir)}
+    selectedOptions={[templateDir ?? DEFAULT_OPTION]}
     onOptionSelect={(_, elem) => {
-      setTemplateName(elem.optionValue === defaultTemplateValue ? undefined : elem.optionValue);
+      setTemplateDir(elem.optionValue === DEFAULT_OPTION ? undefined : elem.optionValue);
     }}>
-    <Option key="default-template" value={defaultTemplateValue}>{defaultTemplateValue}</Option>
+    <Option key="default-template" value={DEFAULT_OPTION}>{defaultTemplateName}</Option>
     {(templatesResp.data ?? []).map(e =>
       <Option key={e.dir} value={e.dir}>{e.name}</Option>
     )}
@@ -78,7 +88,7 @@ export default function Sidebar(props: ISidebarProps) {
         gameName: gameName.trim(),
         gameDir,
         derivative,
-        templateDir: templateName,
+        templateDir,
       });
       setCreateGameFormOpen(false);
       setGameName(t`新的游戏`);
