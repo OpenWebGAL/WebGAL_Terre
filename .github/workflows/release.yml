@@ -73,6 +73,28 @@ jobs:
         with:
           name: WebGAL_Terre_Mac
           path: release/WebGAL_Terre_Mac.zip
+  build-mac-x64:
+    name: Build MacOS x64 Binary
+    runs-on: macos-15-intel
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+      - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: sh release-mac-x64.sh
+      - name: Compress
+        run: 7z a -tzip release/WebGAL_Terre_Mac_Intel.zip release/*
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WebGAL_Terre_Mac_Intel
+          path: release/WebGAL_Terre_Mac_Intel.zip
   build-windows:
     name: Build Windows Binary
     runs-on: windows-2022
@@ -164,7 +186,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    needs: ['build-linux','build-arm64','build-mac','build-windows','build-windows-nsis','build-android']
+    needs: ['build-linux','build-arm64','build-mac','build-mac-x64','build-windows','build-windows-nsis','build-android']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -212,6 +234,16 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: WebGAL_Terre_Mac/WebGAL_Terre_Mac.zip
           asset_name: WebGAL_Terre_Mac_${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload MacOS Intel Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: WebGAL_Terre_Mac_Intel/WebGAL_Terre_Mac_Intel.zip
+          asset_name: WebGAL_Terre_Mac_Intel_${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
       - name: Upload Windows Asset

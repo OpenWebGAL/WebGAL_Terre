@@ -11,6 +11,7 @@ import { DeleteFive, Sort, DownOne, RightOne, Play } from "@icon-park/react";
 import AddSentence, { addSentenceType } from "./components/AddSentence";
 import { editorLineHolder } from "@/runtime/WG_ORIGINE_RUNTIME";
 import { eventBus } from "@/utils/eventBus";
+import { createId } from "@/utils/createId";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 
@@ -31,7 +32,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const sentenceData = useValue<SentenceItem[]>([]);
 
   const generateSentenceItem = (content: string): SentenceItem => ({
-    id: crypto.randomUUID(),
+    id: createId(),
     content,
     show: true,
   });
@@ -47,7 +48,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
         return existing && existing.content === content
           ? existing
           : {
-            id: crypto.randomUUID(),
+            id: createId(),
             content,
             show: existing?.show ?? true
           };
@@ -104,12 +105,22 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     submitScene(newSentences, updateIndex);
   }
 
+  // 判断是否为空 (识别含唯一空行的文件)
+  function isEmpty(sentences: SentenceItem[]): boolean {
+    return !sentences || (sentences.length === 1 && sentences[0].content === "");
+  }
+
   function addOneSentence(newContent: string, insertIndex: number) {
     const newSentence = generateSentenceItem(newContent);
     const newSentences = [...sentenceData.value];
-    newSentences.splice(insertIndex, 0, newSentence);
+    const shouldReplaceEmptyLine = isEmpty(newSentences);
+    const targetInsertIndex = shouldReplaceEmptyLine ? 0 : insertIndex;
+    const deleteCount = shouldReplaceEmptyLine ? 1 : 0;
+
+    newSentences.splice(targetInsertIndex, deleteCount, newSentence);
+
     sentenceData.set(newSentences);
-    submitScene(newSentences, insertIndex);
+    submitScene(newSentences, targetInsertIndex);
   }
 
   function deleteOneSentence(index: number) {
