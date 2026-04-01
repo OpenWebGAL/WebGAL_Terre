@@ -56,6 +56,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
+  const [spineSkinsList, setSpineSkinsList] = useState<string[]>([]);
   const [isSpineJsonFormat, setIsSpineJsonFormat] = useState(false);
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
 
@@ -63,6 +64,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const currentExpression = useValue(
     getArgByKey(props.sentence, "expression").toString() ?? ""
   );
+  const currentSkin = useValue(getArgByKey(props.sentence, "skin").toString() ?? "");
 
   const figurePositions = new Map<FigurePosition, string>([
     ["", t`中间`],
@@ -183,11 +185,19 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           setIsSpineJsonFormat(true);
           const animations = Object.keys(data.animations);
           setL2dMotionsList(animations.sort((a, b) => a.localeCompare(b)));
+          // 处理 Spine JSON 格式的 skins
+          if (Array.isArray(data.skins)) {
+            const skins: string[] = data.skins.map((s: { name: string }) => s.name);
+            setSpineSkinsList(skins.sort((a, b) => a.localeCompare(b)));
+          } else {
+            setSpineSkinsList([]);
+          }
           // Spine JSON 格式忽略 expressions
           setL2dExpressionsList([]);
         } else {
           // Live2D 格式
           setIsSpineJsonFormat(false);
+          setSpineSkinsList([]);
 
           if (data?.motions) {
             // 处理 motions
@@ -280,6 +290,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         ]),
         {key: "motion", value: currentMotion.value},
         {key: "expression", value: currentExpression.value},
+        {key: "skin", value: currentSkin.value},
         {key: "bounds", value: bounds.value},
         {key: "blink", value: updateBlinkParam()},
         {key: "focus", value: updateFocusParam()},
@@ -701,6 +712,18 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
                 value={currentExpression.value}
                 onValueChange={(newValue) => {
                   newValue && currentExpression.set(newValue);
+                  submit();
+                }}
+              />
+            </CommonOptions>
+          )}
+          {isSpineJsonFormat && (
+            <CommonOptions key="26" title={t`Spine 皮肤`}>
+              <SearchableCascader
+                optionList={spineSkinsList}
+                value={currentSkin.value}
+                onValueChange={(newValue) =>{
+                  newValue && currentSkin.set(newValue);
                   submit();
                 }}
               />

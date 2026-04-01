@@ -125,6 +125,9 @@ msgstr "setTransition:;"
 msgid "Spine 动画"
 msgstr "Spine 动画"
 
+msgid "Spine 皮肤"
+msgstr "Spine 皮肤"
+
 msgid "Steam AppID"
 msgstr "Steam AppID"
 
