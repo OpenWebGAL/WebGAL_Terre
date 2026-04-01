@@ -137,9 +137,6 @@ msgstr "unlockBgm:;"
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
 
-msgid "WebGAL Classic"
-msgstr "WebGAL Classic"
-
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -1063,6 +1060,15 @@ msgstr "Title Button List"
 
 msgid "标题按钮文字"
 msgstr "Title Button Text"
+
+msgid "标题按钮文字内层"
+msgstr "Title Button Text Inner"
+
+msgid "标题按钮文字外层"
+msgstr "Title Button Text Outer"
+
+msgid "标题按钮禁用"
+msgstr "Title Button Disabled"
 
 msgid "标题背景图片"
 msgstr "Title background image"
