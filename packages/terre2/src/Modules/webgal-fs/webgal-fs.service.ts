@@ -101,10 +101,13 @@ export class WebgalFsService {
    */
   async copy(src: string, dest: string): Promise<boolean> {
     try {
+      this.logger.log(`复制: ${decodeURI(src)} -> ${decodeURI(dest)}`);
       await fs.cp(decodeURI(src), decodeURI(dest), { recursive: true });
       return true;
     } catch (error) {
-      this.logger.error('Copy file failed');
+      this.logger.error(
+        `复制失败: ${decodeURI(src)} -> ${decodeURI(dest)}, ${String(error)}`,
+      );
       return false;
     }
   }
@@ -124,11 +127,15 @@ export class WebgalFsService {
    */
   async mkdir(src, dirName) {
     if (!WebgalFsService.checkFileName(dirName)) return false;
+    const dirPath = join(decodeURI(src), decodeURI(dirName));
 
     return await fs
-      .mkdir(join(decodeURI(src), decodeURI(dirName)))
+      .mkdir(dirPath)
+      .then(() => {
+        this.logger.log(`创建文件夹: ${dirPath}`);
+      })
       .catch(() => {
-        this.logger.log('跳过文件夹创建');
+        this.logger.log(`跳过文件夹创建（已存在）: ${dirPath}`);
       });
   }
 
@@ -164,8 +171,14 @@ export class WebgalFsService {
 
     return await new Promise((resolve) => {
       fs.rename(oldPath, newPath)
-        .then(() => resolve('File renamed!'))
-        .catch(() => resolve('File not exist!'));
+        .then(() => {
+          this.logger.log(`重命名文件: ${oldPath} -> ${newPath}`);
+          resolve('File renamed!');
+        })
+        .catch(() => {
+          this.logger.warn(`重命名文件失败（文件不存在）: ${oldPath}`);
+          resolve('File not exist!');
+        });
     });
   }
 
@@ -175,10 +188,15 @@ export class WebgalFsService {
    */
   async deleteFile(path: string) {
     return await new Promise((resolve) => {
-      this.logger.log(path);
       fs.unlink(decodeURI(path))
-        .then(() => resolve('File Deleted'))
-        .catch(() => resolve('File not exist!'));
+        .then(() => {
+          this.logger.log(`删除文件: ${decodeURI(path)}`);
+          resolve('File Deleted');
+        })
+        .catch(() => {
+          this.logger.warn(`删除文件失败（文件不存在）: ${decodeURI(path)}`);
+          resolve('File not exist!');
+        });
     });
   }
 
@@ -201,11 +219,14 @@ export class WebgalFsService {
           }),
         );
         await fs.rmdir(path);
+        this.logger.log(`删除目录: ${path}`);
       } else {
         await fs.unlink(path);
+        this.logger.log(`删除文件: ${path}`);
       }
       return true;
     } catch (error) {
+      this.logger.error(`删除失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;
     }
   }
@@ -227,9 +248,11 @@ export class WebgalFsService {
       const newPath = dir + decodeURI(newName);
 
       await fs.rename(path, newPath);
+      this.logger.log(`重命名: ${path} -> ${newPath}`);
 
       return true;
     } catch (error) {
+      this.logger.error(`重命名失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;
     }
   }
@@ -275,12 +298,14 @@ export class WebgalFsService {
 
       if (!(await this.existsDir(directory))) {
         await fs.mkdir(directory, { recursive: true });
+        this.logger.log(`创建目录: ${directory}`);
       }
 
       await fs.writeFile(decodedPath, '');
+      this.logger.log(`创建空文件: ${decodedPath}`);
       return 'created';
     } catch (error) {
-      this.logger.error(`创建文件失败: ${error.message}`);
+      this.logger.error(`创建文件失败: ${String(error)}`);
       return 'path error or no right.';
     }
   }
@@ -293,8 +318,14 @@ export class WebgalFsService {
   async updateTextFile(path: string, content: string) {
     return await new Promise(async (resolve) => {
       fs.writeFile(decodeURI(path), content)
-        .then(() => resolve('Updated.'))
-        .catch(() => resolve('path error or no right.'));
+        .then(() => {
+          this.logger.log(`更新文件: ${decodeURI(path)}`);
+          resolve('Updated.');
+        })
+        .catch(() => {
+          this.logger.error(`更新文件失败: ${decodeURI(path)}`);
+          resolve('path error or no right.');
+        });
     });
   }
   /**
@@ -338,8 +369,14 @@ export class WebgalFsService {
 
         return await new Promise((resolve) => {
           fs.writeFile(path, newTextFile)
-            .then(() => resolve('Replaced.'))
-            .catch(() => resolve('Path error or no text'));
+            .then(() => {
+              this.logger.log(`替换文件内容: ${path}`);
+              resolve('Replaced.');
+            })
+            .catch(() => {
+              this.logger.error(`替换文件内容失败: ${path}`);
+              resolve('Path error or no text');
+            });
         });
       } else return false;
     } catch (error) {
@@ -365,20 +402,17 @@ export class WebgalFsService {
   ): Promise<boolean> {
     try {
       const targetDirectory = decodeURI(_targetDirectory);
-      await fs.mkdir(this.getPathFromRoot(targetDirectory), {
-        recursive: true,
-      });
+      const targetPath = this.getPathFromRoot(targetDirectory);
+      await fs.mkdir(targetPath, { recursive: true });
+      this.logger.log(`创建目录: ${targetPath}`);
       for (const file of fileList) {
-        await fs.writeFile(
-          `${this.getPathFromRoot(targetDirectory)}/${decodeURI(
-            file.fileName,
-          )}`,
-          file.file,
-        );
+        const filePath = `${targetPath}/${decodeURI(file.fileName)}`;
+        await fs.writeFile(filePath, file.file);
+        this.logger.log(`写入文件: ${filePath}`);
       }
       return true;
     } catch (error) {
-      console.error(error);
+      this.logger.error(`写入文件失败: ${String(error)}`);
       return false;
     }
   }
@@ -408,6 +442,7 @@ export class WebgalFsService {
     const newPath = join(dir, newName);
 
     await fs.copyFile(filePath, newPath);
+    this.logger.log(`复制文件: ${filePath} -> ${newPath}`);
     return newPath;
   }
 }
