@@ -11,13 +11,9 @@ import {
   type EventEnvelope,
   type PreviewCommandType,
   type PreviewReadyUpdatedPayload,
-  type ReloadTemplatesPayload,
-  type RunSceneContentPayload,
-  type RunSnippetPayload,
+  type RequestPayloadByType,
   type SetComponentVisibilityPayload,
   type SetEffectPayload,
-  type SetFontOptimizationPayload,
-  type SyncScenePayload,
   type StageSnapshotUpdatedPayload,
 } from '@webgal/editor-preview-protocol';
 
@@ -36,16 +32,6 @@ interface SyncSceneInput {
 type HostEventEnvelope =
   | EventEnvelope<PreviewReadyUpdatedPayload, 'preview.ready.updated'>
   | EventEnvelope<StageSnapshotUpdatedPayload, 'stage.snapshot.updated'>;
-
-interface PreviewCommandPayloadMap {
-  'preview.command.sync-scene': SyncScenePayload;
-  'preview.command.run-scene-content': RunSceneContentPayload;
-  'preview.command.run-snippet': RunSnippetPayload;
-  'preview.command.reload-templates': ReloadTemplatesPayload;
-  'preview.command.set-effect': SetEffectPayload;
-  'preview.command.set-component-visibility': SetComponentVisibilityPayload;
-  'preview.command.set-font-optimization': SetFontOptimizationPayload;
-}
 
 function normalizeSceneName(scenePath: string): string {
   const normalizedPath = scenePath.replace(/\\/g, '/');
@@ -151,7 +137,7 @@ function ensureEditorPreviewClientStarted() {
 
 function sendPreviewCommand<TType extends PreviewCommandType>(
   type: TType,
-  payload: PreviewCommandPayloadMap[TType],
+  payload: RequestPayloadByType[TType],
 ): boolean {
   ensureEditorPreviewClientStarted();
   editorPreviewTransport?.ensureConnected();
