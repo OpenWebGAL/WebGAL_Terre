@@ -79,6 +79,10 @@ export class WebGalWebSocketGateway {
       return Buffer.concat(rawData).toString();
     }
 
+    if (rawData instanceof ArrayBuffer) {
+      return Buffer.from(rawData).toString();
+    }
+
     return rawData.toString();
   }
 }
