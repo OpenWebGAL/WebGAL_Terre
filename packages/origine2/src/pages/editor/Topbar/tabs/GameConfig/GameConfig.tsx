@@ -17,7 +17,7 @@ import {api} from "@/api";
 import {t, Trans} from "@lingui/macro";
 import useSWR from "swr";
 import axios from "axios";
-import {WsUtil} from "@/utils/wsUtil";
+import {EditorPreviewClient} from "@/utils/editorPreviewClient";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
@@ -63,7 +63,7 @@ export default function GameConfig() {
     if (selectedTemplate) {
       await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir: selectedTemplate.dir});
       // 更新模板后，让游戏再去拉一次模板的样式文件
-      WsUtil.sendTemplateRefetchCommand();
+      EditorPreviewClient.reloadTemplates();
       await currentTemplateResp.mutate();
     }
   }

@@ -12,7 +12,7 @@ import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -73,8 +73,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
               submit();
             }}
             onUpdate={(transform) => {
-              const newEffect = { target: target.value, transform: transform };
-              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+              EditorPreviewClient.setEffect({ target: target.value, transform });
             }}
             sentence={props.sentence}
             index={props.index}

@@ -9,7 +9,7 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { TerrePanel } from "../components/TerrePanel";
 import { EffectEditor } from "../components/EffectEditor";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Text } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
@@ -228,8 +228,7 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
             submit();
           }}
           onUpdate={(transform)=>{
-            const newEffect = { target: target.value, transform: transform };
-            WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+            EditorPreviewClient.setEffect({ target: target.value, transform });
           }}
           sentence={props.sentence}
           index={props.index}

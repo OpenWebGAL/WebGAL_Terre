@@ -18,7 +18,7 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { OptionCategory } from "../components/OptionCategory";
 
 type FigurePosition = "" | "left" | "right";
@@ -327,8 +327,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               target = "fig-center";
             }
           }
-          const newEffect = { target: target, transform: transform };
-          WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+          EditorPreviewClient.setEffect({ target, transform });
         }}
         sentence={props.sentence}
         index={props.index}
