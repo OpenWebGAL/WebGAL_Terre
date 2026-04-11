@@ -125,9 +125,32 @@ export class ManageGameService {
       `Game_name:${gameName};`,
     );
 
+    // Always apply a template: delete the scaffold template first, then copy the selected or default one
+    const gameTemplatePath = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameDir}/game/template`,
+    );
+    await this.webgalFs.deleteFileOrDirectory(gameTemplatePath);
+
+    let templateApplied = false;
     if (templateDir) {
+      const templatePath = this.webgalFs.getPathFromRoot(
+        `/public/templates/${templateDir}/`,
+      );
+      if (await this.webgalFs.existsDir(templatePath)) {
+        await this.webgalFs.copy(
+          templatePath,
+          this.webgalFs.getPathFromRoot(
+            `/public/games/${gameDir}/game/template/`,
+          ),
+        );
+        templateApplied = true;
+      }
+    }
+    if (!templateApplied) {
       await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
+        this.webgalFs.getPathFromRoot(
+          '/assets/templates/WebGAL_Default_Template/',
+        ),
         this.webgalFs.getPathFromRoot(
           `/public/games/${gameDir}/game/template/`,
         ),

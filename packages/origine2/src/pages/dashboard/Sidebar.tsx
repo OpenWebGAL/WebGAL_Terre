@@ -34,8 +34,8 @@ export default function Sidebar(props: ISidebarProps) {
   const [createGameFormOpen, setCreateGameFormOpen] = useState(false);
   const [gameName, setGameName] = useState(t`新的游戏`);
   const [gameDir, setGameDir] = useState(t`新的游戏`);
-  const [derivative, setDerivative] = useState<string | undefined>('__STANDARD__WG__');
-  const [templateName, setTemplateName] = useState<string | undefined>('__STANDARD__WG__');
+  const [derivative, setDerivative] = useState<string | undefined>(undefined);
+  const [templateDir, setTemplateDir] = useState<string | undefined>(undefined);
 
   // 可用的衍生版
   const derivativeEnginesResp = useSWR('derivativeEngines', async () => {
@@ -45,28 +45,40 @@ export default function Sidebar(props: ISidebarProps) {
 
   const templatesResp = useSWR('template-list-selector', async () => {
     const resp = await api.manageTemplateControllerGetTemplateList();
-    return resp.data as unknown as { name: string }[];
+    return resp.data as unknown as { name: string; dir: string }[];
   });
 
+  const DEFAULT_OPTION = '__DEFAULT__';
+  const defaultTemplateName = 'WebGAL Refine 2026';
 
-  const selector = <Dropdown value={derivative === '__STANDARD__WG__' ? t`WebGAL Standard` : derivative}
-    selectedOptions={[derivative ?? '__STANDARD__WG__']} onOptionSelect={(_, elem) => {
-      setDerivative(elem.optionValue);
+  const getTemplateDisplayName = (dir: string | undefined): string => {
+    if (!dir) return defaultTemplateName;
+    return templatesResp.data?.find(e => e.dir === dir)?.name ?? dir;
+  };
+
+  const getDerivativeDisplayName = (val: string | undefined): string => {
+    if (!val) return t`WebGAL Standard`;
+    return val;
+  };
+
+  const selector = <Dropdown value={getDerivativeDisplayName(derivative)}
+    selectedOptions={[derivative ?? DEFAULT_OPTION]} onOptionSelect={(_, elem) => {
+      setDerivative(elem.optionValue === DEFAULT_OPTION ? undefined : elem.optionValue);
     }}>
-    <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Standard`}</Option>
+    <Option key="default-engine" value={DEFAULT_OPTION}>{t`WebGAL Standard`}</Option>
     {(derivativeEnginesResp.data ?? []).map(e =>
       <Option key={e} value={e}>{e}</Option>
     )}
   </Dropdown>;
 
-  const selectorTemplate = <Dropdown value={templateName === '__STANDARD__WG__' ? t`WebGAL Classic` : templateName}
-    selectedOptions={[templateName ?? '__STANDARD__WG__']}
+  const selectorTemplate = <Dropdown value={getTemplateDisplayName(templateDir)}
+    selectedOptions={[templateDir ?? DEFAULT_OPTION]}
     onOptionSelect={(_, elem) => {
-      setTemplateName(elem.optionValue);
+      setTemplateDir(elem.optionValue === DEFAULT_OPTION ? undefined : elem.optionValue);
     }}>
-    <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Classic`}</Option>
+    <Option key="default-template" value={DEFAULT_OPTION}>{defaultTemplateName}</Option>
     {(templatesResp.data ?? []).map(e =>
-      <Option key={e.name} value={e.name}>{e.name}</Option>
+      <Option key={e.dir} value={e.dir}>{e.name}</Option>
     )}
   </Dropdown>;
 
@@ -75,8 +87,8 @@ export default function Sidebar(props: ISidebarProps) {
       props.createGame({
         gameName: gameName.trim(),
         gameDir,
-        derivative: derivative === '__STANDARD__WG__' ? undefined : derivative,
-        templateDir: templateName === '__STANDARD__WG__' ? undefined : templateName,
+        derivative,
+        templateDir,
       });
       setCreateGameFormOpen(false);
       setGameName(t`新的游戏`);

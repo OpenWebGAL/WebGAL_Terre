@@ -1,17 +1,18 @@
+#
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2024-04-03 21:59+0800\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: ja\n"
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-03 21:59+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: @lingui/cli\n"
 
 msgid ";注释"
 msgstr ";コメント"
@@ -109,6 +110,9 @@ msgstr "RGB映画"
 msgid "setAnimation:选择动画文件;"
 msgstr "setAnimation: アニメーションを選択;"
 
+msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
+
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -121,6 +125,9 @@ msgstr "setTransition:;"
 msgid "Spine 动画"
 msgstr "Spine アニメーション"
 
+msgid "Spine 皮肤"
+msgstr "Spine スキン"
+
 msgid "Steam AppID"
 msgstr "Steam AppID"
 
@@ -129,9 +136,6 @@ msgstr "unlockBgm:;"
 
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
-
-msgid "WebGAL Classic"
-msgstr "WebGAL Classic"
 
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
@@ -205,11 +209,14 @@ msgstr "中央の立ち絵"
 msgid "为当前的舞台添加特殊效果"
 msgstr "現在のステージに特殊効果を追加する"
 
-msgid "为立绘或背景图片设置动画效果"
-msgstr "立ち絵や背景画像にアニメーションを指定する"
+msgid "为立绘或背景图片设置单段动画效果"
+msgstr "立ち絵や背景画像に単一のアニメーション効果を設定する"
 
-msgid "为立绘或背景图片设置效果或变换"
-msgstr "人物や背景画像にエフェクトや変形を設定する。"
+msgid "为立绘或背景图片设置多段动画效果"
+msgstr "立ち絵や背景画像に複数のアニメーション効果を設定する"
+
+msgid "为立绘或背景图片调用动画效果"
+msgstr "立ち絵や背景画像にアニメーション効果を適用する"
 
 msgid "主要样式"
 msgstr "メインスタイル"
@@ -439,11 +446,17 @@ msgstr "太字"
 msgid "动画"
 msgstr "アニメーション"
 
+msgid "动画帧控制"
+msgstr "フレームコントロール"
+
 msgid "半张嘴"
 msgstr "半分開いた口"
 
 msgid "单位毫秒。 0~ 有效"
 msgstr "ミリ秒単位。 0~ 有効"
+
+msgid "单段动画"
+msgstr "単一のアニメーション"
 
 msgid "单行注释"
 msgstr "一行コメント"
@@ -484,6 +497,9 @@ msgstr "右の立ち絵"
 msgid "右对齐"
 msgstr "右揃え"
 
+msgid "向上添加"
+msgstr "上に追加"
+
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "BGMの再生を開始、切り替え、または停止する"
 
@@ -510,6 +526,9 @@ msgstr "グラフィックエディタ"
 
 msgid "图片"
 msgstr "画像"
+
+msgid "图片差分"
+msgstr "画像差分"
 
 msgid "圆形"
 msgstr "円形"
@@ -558,6 +577,9 @@ msgstr "外側テキスト"
 
 msgid "外边距"
 msgstr "マージン"
+
+msgid "多段动画"
+msgstr "複数のアニメーション"
 
 msgid "大"
 msgstr "大きい"
@@ -823,14 +845,14 @@ msgstr "効果音を再生"
 msgid "播放视频"
 msgstr "動画の再生"
 
+msgid "操作"
+msgstr "操作"
+
 msgid "故障电影滤镜"
 msgstr "グリッチ映画"
 
 msgid "效果"
 msgstr "エフェクト"
-
-msgid "效果与变换"
-msgstr "効果と変身"
 
 msgid "效果声音"
 msgstr "効果音"
@@ -859,11 +881,14 @@ msgstr "効果音ファイル"
 msgid "文件名"
 msgstr "ファイル名"
 
-msgid "文件名不可包含特殊符号: '/\\\\:*?\"<>|'"
-msgstr "ファイル名に特殊記号は使用できません: '/\\\\:*?\"<>|'"
+msgid "文件名不可包含特殊符号"
+msgstr "ファイル名に使用できない特殊文字"
 
 msgid "文件大小"
 msgstr "ファイルサイズ"
+
+msgid "文件路径含有非法字符"
+msgstr "ファイルパスに無効な文字が含まれています"
 
 msgid "文字大小"
 msgstr "文字サイズ"
@@ -997,6 +1022,9 @@ msgstr "プレビューウィンドウを表示"
 msgid "普通对话"
 msgstr "ダイアログ"
 
+msgid "更多选项"
+msgstr "その他のオプション"
+
 msgid "未指定"
 msgstr "指定なし"
 
@@ -1032,6 +1060,15 @@ msgstr "タイトルボタンリスト"
 
 msgid "标题按钮文字"
 msgstr "タイトルボタンテキスト"
+
+msgid "标题按钮文字内层"
+msgstr "タイトルボタンテキスト内層"
+
+msgid "标题按钮文字外层"
+msgstr "タイトルボタンテキスト外層"
+
+msgid "标题按钮禁用"
+msgstr "タイトルボタン無効"
 
 msgid "标题背景图片"
 msgstr "タイトルの背景画像"
@@ -1090,6 +1127,9 @@ msgstr "フランス語"
 msgid "泛光"
 msgstr "ブルーム"
 
+msgid "注视"
+msgstr "注視"
+
 msgid "注视点X(-1~1)"
 msgstr "注視点X（-1～1）"
 
@@ -1129,6 +1169,9 @@ msgstr "コメントを追加します"
 msgid "添加一首音乐到音乐鉴赏界面"
 msgstr "BGM鑑賞に任意のBGMを追加する"
 
+msgid "添加动画帧"
+msgstr "アニメーションフレームを追加"
+
 msgid "添加属性"
 msgstr "属性を追加"
 
@@ -1146,6 +1189,9 @@ msgstr "ステートメントを追加"
 
 msgid "清除当前舞台的特殊效果"
 msgstr "現在のステージの特殊効果をクリア"
+
+msgid "清除提示"
+msgstr "チップをクリア"
 
 msgid "清除特效"
 msgstr "特殊効果をクリア"
@@ -1209,6 +1255,9 @@ msgstr "現在開いているファイルはありません"
 
 msgid "相对"
 msgstr "相対"
+
+msgid "眨眼"
+msgstr "瞬き"
 
 msgid "眨眼间隔(毫秒)"
 msgstr "瞬き間隔（ミリ秒）"
@@ -1338,6 +1387,9 @@ msgstr "イージングタイプ"
 
 msgid "编辑图标"
 msgstr "編集アイコン"
+
+msgid "编辑更多选项"
+msgstr "その他のオプションを編集"
 
 msgid "编辑模板"
 msgstr "テンプレートを編集"
@@ -1498,9 +1550,6 @@ msgstr "タイプ"
 msgid "设置"
 msgstr "設定"
 
-msgid "设置动画"
-msgstr "アニメーション"
-
 msgid "设置立绘或背景的进出场动画"
 msgstr "人物や背景のアニメーションを設定する。"
 
@@ -1548,6 +1597,9 @@ msgstr "シーンの呼び出し/切り替え"
 
 msgid "调用一段场景文件，在结束后返回父场景"
 msgstr "シーンファイルを呼び出し、終了後に親シーンに戻る"
+
+msgid "调用动画"
+msgstr "アニメーションを呼び出す"
 
 msgid "调用场景"
 msgstr "シーンを呼び出す"
@@ -1695,6 +1747,9 @@ msgstr "選択肢ボタン外層"
 
 msgid "透明度（0-1）"
 msgstr "透明度（０－１）"
+
+msgid "通用"
+msgstr "一般"
 
 msgid "通过选项进入不同的场景"
 msgstr "選択肢からシーンに切り替えることが可能です"
