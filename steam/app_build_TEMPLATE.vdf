@@ -1,0 +1,11 @@
+"AppBuild"
+{
+  "AppID" "__APP_ID__"
+  "Desc" "WebGAL Terre Electron build"
+  "ContentRoot" "__CONTENT_ROOT__"
+  "BuildOutput" "..\output\"
+  "Depots"
+  {
+    "__DEPOT_ID__" "depot_build_TEMPLATE.vdf"
+  }
+}
