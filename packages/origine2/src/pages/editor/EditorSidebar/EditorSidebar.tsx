@@ -157,7 +157,7 @@ export default function EditorSideBar() {
       if (!iframeDoc) return;
       (iframeDoc.querySelector('.html-body__title-enter') as HTMLDivElement)?.click();
     };
-    ifRef.current?.addEventListener('load', fn, { once: true });
+    ifRef.current?.addEventListener('load', fn);
     return () => {
       ifRef.current?.removeEventListener('load', fn);
     };
