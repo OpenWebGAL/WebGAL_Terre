@@ -380,6 +380,12 @@ msgstr "写入变量"
 msgid "分支选择"
 msgstr "分支选择"
 
+msgid "分隔符"
+msgstr "分隔符"
+
+msgid "分隔符设置"
+msgstr "分隔符设置"
+
 msgid "切换到另一个场景文件，并清除当前场景"
 msgstr "切换到另一个场景文件，并清除当前场景"
 
@@ -796,6 +802,9 @@ msgstr "拼接模式"
 
 msgid "指针"
 msgstr "指针"
+
+msgid "换行设置"
+msgstr "换行设置"
 
 msgid "排序方式"
 msgstr "排序方式"
@@ -1751,6 +1760,9 @@ msgstr "透明度（0-1）"
 msgid "通用"
 msgstr "通用"
 
+msgid "通用设置"
+msgstr "通用设置"
+
 msgid "通过选项进入不同的场景"
 msgstr "通过选项进入不同的场景"
 
@@ -1838,8 +1850,14 @@ msgstr "预览"
 msgid "预览图标"
 msgstr "预览图标"
 
+msgid "预览性能"
+msgstr "预览性能"
+
 msgid "预览窗口"
 msgstr "预览窗口"
+
+msgid "预览设置"
+msgstr "预览设置"
 
 msgid "颜色"
 msgstr "颜色"
@@ -1882,6 +1900,9 @@ msgstr "默认值50"
 
 msgid "默认语言"
 msgstr "默认语言"
+
+msgid "默认选项"
+msgstr "默认选项"
 
 msgid "鼠标悬浮样式"
 msgstr "鼠标悬浮样式"

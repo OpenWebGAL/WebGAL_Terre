@@ -140,7 +140,7 @@ export default function SettingPage() {
       },
       {
         key: 'font',
-        title: t`字体设置`,
+        title: t`字体配置`,
         order: 4,
         options: [
           {

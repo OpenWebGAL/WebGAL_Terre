@@ -380,6 +380,12 @@ msgstr "変数を書く"
 msgid "分支选择"
 msgstr "選択肢"
 
+msgid "分隔符"
+msgstr "分離子です"
+
+msgid "分隔符设置"
+msgstr "セパレータ設定です"
+
 msgid "切换到另一个场景文件，并清除当前场景"
 msgstr "別のシーンファイルに切り替えて現在のシーンをクリアする"
 
@@ -796,6 +802,9 @@ msgstr "連結モード"
 
 msgid "指针"
 msgstr "ポインター"
+
+msgid "换行设置"
+msgstr "改行設定です"
 
 msgid "排序方式"
 msgstr "並べ替え"
@@ -1751,6 +1760,9 @@ msgstr "透明度（０－１）"
 msgid "通用"
 msgstr "一般"
 
+msgid "通用设置"
+msgstr "汎用設定です"
+
 msgid "通过选项进入不同的场景"
 msgstr "選択肢からシーンに切り替えることが可能です"
 
@@ -1838,8 +1850,14 @@ msgstr "プレビュー"
 msgid "预览图标"
 msgstr "プレビューアイコン"
 
+msgid "预览性能"
+msgstr "プレビュー性能です"
+
 msgid "预览窗口"
 msgstr "プレビューウィンドウ"
+
+msgid "预览设置"
+msgstr "プレビュー設定です"
 
 msgid "颜色"
 msgstr "色"
@@ -1882,6 +1900,9 @@ msgstr "デフォルト値は50"
 
 msgid "默认语言"
 msgstr "デフォルト言語"
+
+msgid "默认选项"
+msgstr "デフォルトオプション"
 
 msgid "鼠标悬浮样式"
 msgstr "マウスホバースタイル"

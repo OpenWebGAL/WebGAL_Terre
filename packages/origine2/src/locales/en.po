@@ -380,6 +380,12 @@ msgstr "Write Variable"
 msgid "分支选择"
 msgstr "Choose branch"
 
+msgid "分隔符"
+msgstr "Separator"
+
+msgid "分隔符设置"
+msgstr "Separator settings"
+
 msgid "切换到另一个场景文件，并清除当前场景"
 msgstr "Turn to new scene, and clear this scene"
 
@@ -796,6 +802,9 @@ msgstr "Concat mode"
 
 msgid "指针"
 msgstr "Pointer"
+
+msgid "换行设置"
+msgstr "Line break setting"
 
 msgid "排序方式"
 msgstr "Sort by"
@@ -1751,6 +1760,9 @@ msgstr "Opacity (0-1)"
 msgid "通用"
 msgstr "General"
 
+msgid "通用设置"
+msgstr "General Settings"
+
 msgid "通过选项进入不同的场景"
 msgstr "Enter different scenes through options"
 
@@ -1838,8 +1850,14 @@ msgstr "Preview"
 msgid "预览图标"
 msgstr "Preview icon"
 
+msgid "预览性能"
+msgstr "Preview performance"
+
 msgid "预览窗口"
 msgstr "Preview window"
+
+msgid "预览设置"
+msgstr "Preview settings"
 
 msgid "颜色"
 msgstr "Color"
@@ -1882,6 +1900,9 @@ msgstr "Default 50"
 
 msgid "默认语言"
 msgstr "Default Language"
+
+msgid "默认选项"
+msgstr "Default option"
 
 msgid "鼠标悬浮样式"
 msgstr "Mouse hover style"
