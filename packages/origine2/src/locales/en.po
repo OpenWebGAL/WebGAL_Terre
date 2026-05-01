@@ -137,6 +137,9 @@ msgstr "unlockBgm:;"
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
 
+msgid "wait:1000;"
+msgstr "wait:1000;"
+
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -314,8 +317,14 @@ msgstr "Offset top (for positioning)"
 msgid "停止 BGM"
 msgstr "Stop the BGM"
 
+msgid "停止位置"
+msgstr "Stop position"
+
 msgid "像素"
 msgstr "pixel"
+
+msgid "允许跳过"
+msgstr "Allow skipping"
 
 msgid "光辉电影滤镜"
 msgstr "Godray film"
@@ -485,6 +494,9 @@ msgstr "Unpin"
 msgid "变换"
 msgstr "Transform"
 
+msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
+msgstr "Possible causes include a loop jump in the script, or too many lines to fast-forward before the target line."
+
 msgid "可选项"
 msgstr "Selectable options"
 
@@ -629,6 +641,12 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
+msgid "实时预览已停止"
+msgstr "Live preview stopped"
+
+msgid "实时预览快进超过了超时时间限制，已停止继续演算。"
+msgstr "Live preview fast-forward exceeded the timeout limit, so further calculation has stopped."
+
 msgid "实时预览打开"
 msgstr "Live preview on"
 
@@ -722,6 +740,9 @@ msgstr "Created"
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
 
+msgid "已快进行数"
+msgstr "Fast-forwarded lines"
+
 msgid "帮助"
 msgstr "Help"
 
@@ -754,6 +775,9 @@ msgstr "Open mouth"
 
 msgid "强度"
 msgstr "Intensity"
+
+msgid "当前场景"
+msgstr "Current scene"
 
 msgid "当前版本"
 msgstr "Current version"
@@ -1253,6 +1277,9 @@ msgstr "Percentage. 0-100 valid"
 msgid "目前没有打开任何文件"
 msgstr "No file currently open"
 
+msgid "目标行"
+msgstr "Target line"
+
 msgid "相对"
 msgstr "Relative"
 
@@ -1295,6 +1322,9 @@ msgstr "Video file"
 msgid "视频选项"
 msgstr "Video options"
 
+msgid "禁止跳过"
+msgstr "Disable skipping"
+
 msgid "禁止跳过视频"
 msgstr "Disable skipping video"
 
@@ -1321,6 +1351,15 @@ msgstr "ID of figure illustration"
 
 msgid "立绘文件"
 msgstr "Figure file"
+
+msgid "等待"
+msgstr "Wait"
+
+msgid "等待一段时间"
+msgstr "Wait for a while"
+
+msgid "等待时间（单位为毫秒）"
+msgstr "Wait time (ms)"
 
 msgid "简体中文"
 msgstr "Simplified Chinese"
@@ -1859,6 +1898,9 @@ msgstr "Gaussian Blur"
 msgid "默认"
 msgstr "Default"
 
+msgid "默认值"
+msgstr "Default value"
+
 msgid "默认值0"
 msgstr "Default 0"
 
@@ -1882,6 +1924,9 @@ msgstr "Default 50"
 
 msgid "默认语言"
 msgstr "Default Language"
+
+msgid "默认选项"
+msgstr "Default option"
 
 msgid "鼠标悬浮样式"
 msgstr "Mouse hover style"

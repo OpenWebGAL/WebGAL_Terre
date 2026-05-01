@@ -137,6 +137,9 @@ msgstr "unlockBgm:;"
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
 
+msgid "wait:1000;"
+msgstr "wait:1000;"
+
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -314,8 +317,14 @@ msgstr "上部のオフセット（位置決め用）"
 msgid "停止 BGM"
 msgstr "BGMを停止"
 
+msgid "停止位置"
+msgstr "停止位置"
+
 msgid "像素"
 msgstr "ピクセル"
+
+msgid "允许跳过"
+msgstr "スキップを許可"
 
 msgid "光辉电影滤镜"
 msgstr "ゴッドレイ映画"
@@ -485,6 +494,9 @@ msgstr "ピン留めを解除"
 msgid "变换"
 msgstr "トランスフォーム"
 
+msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
+msgstr "スクリプト内のループジャンプ、または対象行までの早送り行数が多すぎることが原因の可能性があります。"
+
 msgid "可选项"
 msgstr "選択可能な選択肢"
 
@@ -629,6 +641,12 @@ msgstr "リアルタイムプレビューオフ"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "リアルタイムプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。"
 
+msgid "实时预览已停止"
+msgstr "リアルタイムプレビューを停止しました"
+
+msgid "实时预览快进超过了超时时间限制，已停止继续演算。"
+msgstr "リアルタイムプレビューの早送りがタイムアウト制限を超えたため、以降の演算を停止しました。"
+
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
 
@@ -722,6 +740,9 @@ msgstr "作成済み"
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "ファイルまたはフォルダは既に存在します {0}"
 
+msgid "已快进行数"
+msgstr "早送り済み行数"
+
 msgid "帮助"
 msgstr "ヘルプ"
 
@@ -754,6 +775,9 @@ msgstr "開いた口"
 
 msgid "强度"
 msgstr "強度"
+
+msgid "当前场景"
+msgstr "現在のシーン"
 
 msgid "当前版本"
 msgstr "現在のバージョン"
@@ -1253,6 +1277,9 @@ msgstr "百分率。 0-100 有効"
 msgid "目前没有打开任何文件"
 msgstr "現在開いているファイルはありません"
 
+msgid "目标行"
+msgstr "対象行"
+
 msgid "相对"
 msgstr "相対"
 
@@ -1295,6 +1322,9 @@ msgstr "動画ファイル"
 msgid "视频选项"
 msgstr "動画のオプション"
 
+msgid "禁止跳过"
+msgstr "スキップを禁止"
+
 msgid "禁止跳过视频"
 msgstr "動画のスキップを無効にする"
 
@@ -1321,6 +1351,15 @@ msgstr "関連する立ち絵のID"
 
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
+
+msgid "等待"
+msgstr "待機"
+
+msgid "等待一段时间"
+msgstr "一定時間待機"
+
+msgid "等待时间（单位为毫秒）"
+msgstr "待機時間（ミリ秒）"
 
 msgid "简体中文"
 msgstr "簡体字中国語"
@@ -1859,6 +1898,9 @@ msgstr "ぼかし"
 msgid "默认"
 msgstr "デフォルト"
 
+msgid "默认值"
+msgstr "デフォルト値"
+
 msgid "默认值0"
 msgstr "デフォルト値は0"
 
@@ -1882,6 +1924,9 @@ msgstr "デフォルト値は50"
 
 msgid "默认语言"
 msgstr "デフォルト言語"
+
+msgid "默认选项"
+msgstr "デフォルト選択肢"
 
 msgid "鼠标悬浮样式"
 msgstr "マウスホバースタイル"

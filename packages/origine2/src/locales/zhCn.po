@@ -137,6 +137,9 @@ msgstr "unlockBgm:;"
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
 
+msgid "wait:1000;"
+msgstr "wait:1000;"
+
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -314,8 +317,14 @@ msgstr "偏移顶部距离（定位用）"
 msgid "停止 BGM"
 msgstr "停止 BGM"
 
+msgid "停止位置"
+msgstr "停止位置"
+
 msgid "像素"
 msgstr "像素"
+
+msgid "允许跳过"
+msgstr "允许跳过"
 
 msgid "光辉电影滤镜"
 msgstr "光辉电影滤镜"
@@ -485,6 +494,9 @@ msgstr "取消固定"
 msgid "变换"
 msgstr "变换"
 
+msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
+msgstr "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
+
 msgid "可选项"
 msgstr "可选项"
 
@@ -629,6 +641,12 @@ msgstr "实时预览关闭"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 
+msgid "实时预览已停止"
+msgstr "实时预览已停止"
+
+msgid "实时预览快进超过了超时时间限制，已停止继续演算。"
+msgstr "实时预览快进超过了超时时间限制，已停止继续演算。"
+
 msgid "实时预览打开"
 msgstr "实时预览打开"
 
@@ -722,6 +740,9 @@ msgstr "已创建"
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
 
+msgid "已快进行数"
+msgstr "已快进行数"
+
 msgid "帮助"
 msgstr "帮助"
 
@@ -754,6 +775,9 @@ msgstr "张开嘴"
 
 msgid "强度"
 msgstr "强度"
+
+msgid "当前场景"
+msgstr "当前场景"
 
 msgid "当前版本"
 msgstr "当前版本"
@@ -1253,6 +1277,9 @@ msgstr "百分比。 0-100 有效"
 msgid "目前没有打开任何文件"
 msgstr "目前没有打开任何文件"
 
+msgid "目标行"
+msgstr "目标行"
+
 msgid "相对"
 msgstr "相对"
 
@@ -1295,6 +1322,9 @@ msgstr "视频文件"
 msgid "视频选项"
 msgstr "视频选项"
 
+msgid "禁止跳过"
+msgstr "禁止跳过"
+
 msgid "禁止跳过视频"
 msgstr "禁止跳过视频"
 
@@ -1321,6 +1351,15 @@ msgstr "立绘插图的ID"
 
 msgid "立绘文件"
 msgstr "立绘文件"
+
+msgid "等待"
+msgstr "等待"
+
+msgid "等待一段时间"
+msgstr "等待一段时间"
+
+msgid "等待时间（单位为毫秒）"
+msgstr "等待时间（单位为毫秒）"
 
 msgid "简体中文"
 msgstr "简体中文"
@@ -1859,6 +1898,9 @@ msgstr "高斯模糊"
 msgid "默认"
 msgstr "默认"
 
+msgid "默认值"
+msgstr "默认值"
+
 msgid "默认值0"
 msgstr "默认值0"
 
@@ -1882,6 +1924,9 @@ msgstr "默认值50"
 
 msgid "默认语言"
 msgstr "默认语言"
+
+msgid "默认选项"
+msgstr "默认选项"
 
 msgid "鼠标悬浮样式"
 msgstr "鼠标悬浮样式"
