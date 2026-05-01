@@ -1,22 +1,10 @@
+import { useEffect, useState, useMemo } from 'react';
 import s from './settings.module.scss';
-import { useEffect, useState } from 'react';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
 import TerreToggle from '@/components/terreToggle/TerreToggle';
 import { t } from '@lingui/macro';
 import { candidateFontSizes } from './constants';
 import { PreviewOpen, PreviewClose } from '@icon-park/react';
-import {
-  Menu,
-  MenuTrigger,
-  MenuPopover,
-  MenuList,
-  MenuItem,
-  Tooltip,
-  Input,
-  Combobox,
-  Option,
-  Switch,
-} from '@fluentui/react-components';
 import {
   ArrowEnterLeftFilled,
   ArrowEnterLeftRegular,
@@ -31,8 +19,9 @@ import {
   NavigationRegular,
 } from '@fluentui/react-icons';
 import useEditorStore from '@/store/useEditorStore';
+import type { SettingCategory } from './constants';
+import { SettingPageContent } from './SettingCategoryRenderer';
 
-// Icon definitions
 const LocalLanguageIcon = bundleIcon(LocalLanguageFilled, LocalLanguageRegular);
 const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
 const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
@@ -68,212 +57,199 @@ export default function SettingPage() {
     }
   }, [tempFontSize, updateEditorFontSize]);
 
+  const settingsCategories = useMemo((): SettingCategory[] => {
+    const cat: SettingCategory[] = [
+      {
+        key: 'common',
+        title: t`通用设置`,
+        order: 1,
+        options: [
+          {
+            key: 'language',
+            type: 'select',
+            label: t`语言`,
+            icon: <LocalLanguageIcon className={s.iconColor} />,
+            value: t`语言`,
+            options: [
+              { label: '简体中文', value: 'zhCn' },
+              { label: 'English', value: 'en' },
+              { label: '日本語', value: 'ja' },
+            ],
+            onChange: updateLanguage as (value: string) => void,
+          },
+        ],
+      },
+      {
+        key: 'preview',
+        title: t`预览设置`,
+        order: 2,
+        options: [
+          {
+            key: 'showPreview',
+            type: 'switch',
+            label: isShowPreview ? t`显示预览窗口` : t`关闭预览窗口`,
+            icon: isShowPreview ? <PreviewOpen className={s.iconColor} /> : <PreviewClose className={s.iconColor} />,
+            checked: isShowPreview,
+            onChange: (checked: boolean) => updateIsShowPreview(checked),
+          },
+          {
+            key: 'enableLivePreview',
+            type: 'switch',
+            label: isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`,
+            icon: isEnableLivePreview ? <LiveIcon className={s.iconColor} /> : <LiveOffIcon className={s.iconColor} />,
+            checked: isEnableLivePreview,
+            description: t`实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。`,
+            onChange: (checked: boolean) => updateIsEnableLivePreview(checked),
+          },
+        ],
+      },
+      {
+        key: 'previewPerformance',
+        title: t`预览性能`,
+        order: 3,
+        options: [
+          {
+            key: 'useExpSyncFast',
+            type: 'switch',
+            label: t`快速预览语句`,
+            description: t`该功能将大幅提升实时预览效率，但可能出现异常。`,
+            checked: isUseExpSyncFast,
+            onChange: (checked: boolean) => updateIsUseExpSyncFast(checked),
+          },
+          {
+            key: 'useRealtimeEffect',
+            type: 'switch',
+            label: t`快速预览效果`,
+            checked: isUseRealtimeEffect,
+            onChange: (checked: boolean) => updateIsUseRealtimeEffect(checked),
+          },
+        ],
+      },
+      {
+        key: 'font',
+        title: t`字体设置`,
+        order: 4,
+        options: [
+          {
+            key: 'fontFamily',
+            type: 'input',
+            label: t`字体`,
+            value: editorFontFamily,
+            onChange: (value) => updateEditorFontFamily(value),
+          },
+          {
+            key: 'fontSize',
+            type: 'combo',
+            label: t`字体大小`,
+            value: tempFontSize,
+            options: candidateFontSizes.map((s) => s.toString()),
+            onChange: (value) => setTempFontSize(value),
+          },
+        ],
+      },
+      {
+        key: 'lineWrap',
+        title: t`换行设置`,
+        order: 5,
+        options: [
+          {
+            key: 'autoWarp',
+            type: 'switch',
+            label: isAutoWarp ? t`自动换行` : t`永不换行`,
+            icon: isAutoWarp ? (
+              <ArrowEnterLeftIcon className={s.iconColor} />
+            ) : (
+              <NavigationIcon className={s.iconColor} />
+            ),
+            checked: isAutoWarp,
+            onChange: () => updateIsAutoWarp(!isAutoWarp),
+          },
+        ],
+      },
+      {
+        key: 'delimiter',
+        title: t`分隔符设置`,
+        order: 6,
+        options: [
+          {
+            key: 'toggleDelimitersCustomizable',
+            type: 'custom',
+            render: () => (
+              <div className={s.settingRow} key="toggleDelimitersCustomizable">
+                <div className={s.settingText}>{t`是否自定义分隔符`}</div>
+                <div className={s.settingControl}>
+                  <TerreToggle
+                    title={t`是否自定义分隔符`}
+                    onChange={() => {
+                      const next = !isCascaderDelimitersCustomizable;
+                      updateIsCascaderDelimitersCustomizable(next);
+                      if (!next) {
+                        updateCascaderDelimiters(['/']);
+                      }
+                    }}
+                    onText={t`启用`}
+                    offText={t`关闭`}
+                    isChecked={isCascaderDelimitersCustomizable}
+                  />
+                </div>
+              </div>
+            ),
+          },
+          ...(isCascaderDelimitersCustomizable
+            ? [
+                {
+                  key: 'cascaderDelimiters',
+                  type: 'custom',
+                  render: () => (
+                    <div className={s.settingRow} key="cascaderDelimiters">
+                      <div className={s.settingIcon} />
+                      <div className={s.settingText}>{t`分隔符`}</div>
+                      <div className={s.settingControl}>
+                        <TagInputPicker
+                          onOptionSelect={(options) => {
+                            updateCascaderDelimiters(options);
+                          }}
+                          selectedOptions={cascaderDelimiters}
+                        />
+                      </div>
+                    </div>
+                  ),
+                } as const,
+                {
+                  key: 'delimiterTips',
+                  type: 'custom',
+                  render: () => (
+                    <div className={s.tabItem} key="delimiterTips">
+                      <div
+                        className={s.settingText}
+                        style={{ padding: '0 12px', fontSize: 'smaller', color: 'var(--primary)' }}
+                      >
+                        {t`点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。`}
+                      </div>
+                    </div>
+                  ),
+                } as const,
+            ]
+            : []),
+        ],
+      },
+    ];
+    return cat;
+  }, [
+    isShowPreview,
+    isEnableLivePreview,
+    isUseExpSyncFast,
+    isUseRealtimeEffect,
+    editorFontFamily,
+    tempFontSize,
+    isAutoWarp,
+    isCascaderDelimitersCustomizable,
+    cascaderDelimiters,
+  ]);
+
   return (
     <div className={s.settingPage}>
-      <div className={s.settingsTabs}>
-        {/* Common Settings */}
-        <div className={s.tabItem}>
-          <div className={s.tabTitle}>{t`通用设置`}</div>
-        </div>
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingIcon}>
-              <LocalLanguageIcon className={s.iconColor} />
-            </div>
-            <div className={s.settingText}>{t`语言`}</div>
-            <div className={s.settingControl}>
-              <Menu>
-                <MenuTrigger>
-                  <button
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      margin: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                    }}
-                  >
-                    <span>{t`语言`}</span>
-                  </button>
-                </MenuTrigger>
-                <MenuPopover>
-                  <MenuList>
-                    <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
-                    <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
-                    <MenuItem onClick={() => updateLanguage('ja')}>日本語</MenuItem>
-                  </MenuList>
-                </MenuPopover>
-              </Menu>
-            </div>
-          </div>
-        </div>
-
-        {/* Preview Setting */}
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingIcon}>
-              {isShowPreview ? <PreviewOpen className={s.iconColor} /> : <PreviewClose className={s.iconColor} />}
-            </div>
-            <div className={s.settingText}>{isShowPreview ? t`显示预览窗口` : t`关闭预览窗口`}</div>
-            <div className={s.settingControl}>
-              <Switch checked={isShowPreview} onChange={() => updateIsShowPreview(!isShowPreview)} />
-            </div>
-          </div>
-        </div>
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingIcon}>
-              {isEnableLivePreview ? <LiveIcon className={s.iconColor} /> : <LiveOffIcon className={s.iconColor} />}
-            </div>
-            <div className={s.settingText}>{isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}</div>
-            <div className={s.settingControl}>
-              <Tooltip
-                content={
-                  <div className={s.previewTips}>
-                    {t`实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。`}
-                  </div>
-                }
-                relationship="description"
-                showDelay={0}
-                hideDelay={0}
-              >
-                <Switch
-                  checked={isEnableLivePreview}
-                  onChange={() => updateIsEnableLivePreview(!isEnableLivePreview)}
-                />
-              </Tooltip>
-            </div>
-          </div>
-        </div>
-
-        {/* Preview Performance Settings */}
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingText}>{t`快速预览语句`}</div>
-            <div className={s.settingControl}>
-              <Tooltip
-                content={<div className={s.previewTips}>{t`该功能将大幅提升实时预览效率，但可能出现异常。`}</div>}
-                relationship="description"
-                showDelay={0}
-                hideDelay={0}
-              >
-                <Switch
-                  label={t`快速预览语句`}
-                  labelPosition="after"
-                  checked={isUseExpSyncFast}
-                  onChange={() => updateIsUseExpSyncFast(!isUseExpSyncFast)}
-                />
-              </Tooltip>
-            </div>
-          </div>
-        </div>
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingText}>{t`快速预览效果`}</div>
-            <div className={s.settingControl}>
-              <Switch
-                label={t`快速预览效果`}
-                labelPosition="after"
-                checked={isUseRealtimeEffect}
-                onChange={() => updateIsUseRealtimeEffect(!isUseRealtimeEffect)}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Font Settings */}
-        <div className={s.tabItem}>
-          <div className={s.tabTitle}>{t`字体设置`}</div>
-          <div className={s.settingRow}>
-            <div className={s.settingText}>{t`字体`}</div>
-            <div className={s.settingControl}>
-              <Input
-                className={`${s.fontFamilyInput}`}
-                value={editorFontFamily}
-                onChange={(ev) => updateEditorFontFamily(ev.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingText}>{t`字体大小`}</div>
-            <div className={s.settingControl}>
-              <Combobox
-                freeform
-                style={{ minWidth: 'unset' }}
-                input={{ style: { width: '40px' } }}
-                value={tempFontSize}
-                onChange={(ev) => setTempFontSize(ev.target.value)}
-                onOptionSelect={(_, data) => setTempFontSize(data.optionValue ?? '')}
-              >
-                {candidateFontSizes.map((option) => (
-                  <Option key={option}>{option.toString()}</Option>
-                ))}
-              </Combobox>
-            </div>
-          </div>
-        </div>
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingIcon}>
-              {isAutoWarp ? <ArrowEnterLeftIcon className={s.iconColor} /> : <NavigationIcon className={s.iconColor} />}
-            </div>
-            <div className={s.settingText}>{isAutoWarp ? t`自动换行` : t`永不换行`}</div>
-            <div className={s.settingControl}>
-              <Switch checked={isAutoWarp} onChange={() => updateIsAutoWarp(!isAutoWarp)} />
-            </div>
-          </div>
-        </div>
-
-        {/* Delimiter Settings */}
-        <div className={s.tabItem}>
-          <div className={s.settingRow}>
-            <div className={s.settingText}>{t`是否自定义分隔符`}</div>
-            <div className={s.settingControl}>
-              <TerreToggle
-                title={t`是否自定义分隔符`}
-                onChange={() => {
-                  const next = !isCascaderDelimitersCustomizable;
-                  updateIsCascaderDelimitersCustomizable(next);
-                  if (!next) {
-                    updateCascaderDelimiters(['/']);
-                  }
-                }}
-                onText={t`启用`}
-                offText={t`关闭`}
-                isChecked={isCascaderDelimitersCustomizable}
-              />
-            </div>
-          </div>
-        </div>
-        {isCascaderDelimitersCustomizable && (
-          <div className={s.tabItem}>
-            <div className={s.settingRow}>
-              <div className={s.settingIcon} />
-              <div className={s.settingText}>{t`分隔符`}</div>
-              <div className={s.settingControl}>
-                <TagInputPicker
-                  onOptionSelect={(options) => {
-                    updateCascaderDelimiters(options);
-                  }}
-                  selectedOptions={cascaderDelimiters}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-        {isCascaderDelimitersCustomizable && (
-          <div className={s.tabItem}>
-            <div className={s.settingText} style={{ padding: '0 12px', fontSize: 'smaller', color: 'var(--primary)' }}>
-              {t`点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。`}
-            </div>
-          </div>
-        )}
-      </div>
+      <SettingPageContent categories={settingsCategories} />
     </div>
   );
 }
