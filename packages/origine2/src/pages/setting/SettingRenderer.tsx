@@ -10,6 +10,7 @@ import {
   Combobox,
   Option,
   Switch,
+  Button,
 } from '@fluentui/react-components';
 import { SettingOption } from './constants';
 
@@ -37,20 +38,9 @@ export const renderSettingOption = (option: SettingOption) => {
         <div className={s.settingControl}>
           <Menu>
             <MenuTrigger>
-              <button
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  margin: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}
-              >
+              <Button appearance="transparent">
                 <span>{option.value}</span>
-              </button>
+              </Button>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
