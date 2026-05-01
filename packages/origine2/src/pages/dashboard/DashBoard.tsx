@@ -1,13 +1,13 @@
-import {useEffect, useRef} from "react";
-import {useValue} from "../../hooks/useValue";
-import {logger} from "../../utils/logger";
-import {Message, TestRefRef} from "../../components/message/Message";
-import styles from "./dashboard.module.scss";
-import Sidebar from "./Sidebar";
-import TemplateSidebar from "./TemplateSidebar";
-import GamePreview from "./GamePreview";
-import About from "./About";
-import {WebgalParser} from "../editor/GraphicalEditor/parser";
+import { useEffect, useRef } from 'react';
+import { useValue } from '../../hooks/useValue';
+import { logger } from '../../utils/logger';
+import { Message, TestRefRef } from '../../components/message/Message';
+import styles from './dashboard.module.scss';
+import Sidebar from './Sidebar';
+import TemplateSidebar from './TemplateSidebar';
+import GamePreview from './GamePreview';
+import About from './About';
+import { WebgalParser } from '../editor/GraphicalEditor/parser';
 import {
   Button,
   Menu,
@@ -29,8 +29,8 @@ import {
   Toolbar,
   ToolbarButton,
   useId,
-  useToastController
-} from "@fluentui/react-components";
+  useToastController,
+} from '@fluentui/react-components';
 import {
   AlbumFilled,
   AlbumRegular,
@@ -40,18 +40,21 @@ import {
   GamesFilled,
   GamesRegular,
   LocalLanguage24Filled,
-  LocalLanguage24Regular
-} from "@fluentui/react-icons";
-import classNames from "classnames";
-import useEditorStore from "@/store/useEditorStore";
-import {api} from "@/api";
-import useSWR, {useSWRConfig} from "swr";
+  LocalLanguage24Regular,
+  SettingsFilled,
+  SettingsRegular,
+} from '@fluentui/react-icons';
+import classNames from 'classnames';
+import useEditorStore from '@/store/useEditorStore';
+import { api } from '@/api';
+import useSWR, { useSWRConfig } from 'swr';
 import { goTo } from '@/router';
-import {t} from "@lingui/macro";
-import { useRelease } from "@/hooks/useRelease";
-import { __INFO } from "@/config/info";
-import {CreateGameDto, CreateTemplateDto} from "@/api/Api";
-import { Platte } from "@icon-park/react";
+import { t } from '@lingui/macro';
+import { useRelease } from '@/hooks/useRelease';
+import { __INFO } from '@/config/info';
+import { CreateGameDto, CreateTemplateDto } from '@/api/Api';
+import { Platte } from '@icon-park/react';
+import SettingPage from '../setting/SettingPage';
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -65,21 +68,22 @@ const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regul
 const GameIcon = bundleIcon(GamesFilled, GamesRegular);
 const AlbumIcon = bundleIcon(AlbumFilled, AlbumRegular);
 const DismissIcon = bundleIcon(DismissFilled, DismissRegular);
+const SettingsIcon = bundleIcon(SettingsFilled, SettingsRegular);
 
 export const gameListFetcher = async () => {
   const gameList = (await api.manageGameControllerGetGameList()).data;
-  logger.info("返回的游戏列表", gameList);
+  logger.info('返回的游戏列表', gameList);
   return gameList;
 };
 
 export const templateListFetcher = async () => {
   const templateList = (await api.manageTemplateControllerGetTemplateList()).data;
-  logger.info("返回的模板列表", templateList);
+  logger.info('返回的模板列表', templateList);
   return templateList;
 };
 
 export default function DashBoard() {
-  const {mutate} = useSWRConfig();
+  const { mutate } = useSWRConfig();
 
   const subPage = useEditorStore.use.subPage();
   const updateLanguage = useEditorStore.use.updateLanguage();
@@ -105,21 +109,21 @@ export default function DashBoard() {
   const setCurrentTemplate = (e: string | null) => currentTemplate.set(e);
 
   async function createGame(createGameData: CreateGameDto) {
-    const res = await api.manageGameControllerCreateGame(createGameData).then(r => r.data);
-    logger.info("创建结果：", res);
+    const res = await api.manageGameControllerCreateGame(createGameData).then((r) => r.data);
+    logger.info('创建结果：', res);
     messageRef.current!.showMessage(`${createGameData.gameName} ` + t`已创建`, 2000);
     refreash();
   }
 
   async function createTemplate(template: CreateTemplateDto) {
-    console.log("createTeplate:" + template);
-    const res = await api.manageTemplateControllerCreateTemplate(template).then(r => r.data);
-    logger.info("创建结果：", res);
+    console.log('createTeplate:' + template);
+    const res = await api.manageTemplateControllerCreateTemplate(template).then((r) => r.data);
+    logger.info('创建结果：', res);
     refreash();
   }
 
-  const {data: gameList} = useSWR("game-list", gameListFetcher);
-  const {data: templateList} = useSWR("template-list", templateListFetcher);
+  const { data: gameList } = useSWR('game-list', gameListFetcher);
+  const { data: templateList } = useSWR('template-list', templateListFetcher);
 
   const refreash = () => {
     setCurrentGame(null);
@@ -137,7 +141,7 @@ export default function DashBoard() {
   const releaseHasNotified = useRef(false);
   const releaseTimeout = 5000;
 
-  const releaseToasterId = useId("release-toaster");
+  const releaseToasterId = useId('release-toaster');
   const { dispatchToast } = useToastController(releaseToasterId);
   const releaseNotify = () => {
     if (releaseHasNotified.current || !latestRelease || ignoreVersion === __INFO.version) return;
@@ -154,9 +158,14 @@ export default function DashBoard() {
           {t`发现新版本`}
         </ToastTitle>
         <ToastBody>
-          <Text size={200} style={{lineHeight: 1.5}}>
-            {t`当前版本`}: {`${__INFO.version} (${__INFO.buildTime.toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}<br />
-            {t`最新版本`}: {`${latestRelease.version} (${new Date(latestRelease.releaseTime).toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
+          <Text size={200} style={{ lineHeight: 1.5 }}>
+            {t`当前版本`}:{' '}
+            {`${__INFO.version} (${__INFO.buildTime.toLocaleString('zh-CN', dateTimeOptions).replaceAll('/', '-')})`}
+            <br />
+            {t`最新版本`}:{' '}
+            {`${latestRelease.version} (${new Date(latestRelease.releaseTime)
+              .toLocaleString('zh-CN', dateTimeOptions)
+              .replaceAll('/', '-')})`}
           </Text>
         </ToastBody>
         <ToastFooter>
@@ -170,32 +179,28 @@ export default function DashBoard() {
           </ToastTrigger>
         </ToastFooter>
       </Toast>,
-      { timeout: releaseTimeout, intent: "info" }
+      { timeout: releaseTimeout, intent: 'info' },
     );
 
     releaseHasNotified.current = true;
   };
 
-  useEffect(
-    () => {
-      if (latestRelease?.hasNewVersion) {
-        releaseNotify();
-        logger.info(`发现新版本：${latestRelease.version}`, latestRelease);
-      }
-    },
-    [latestRelease?.hasNewVersion]
-  );
+  useEffect(() => {
+    if (latestRelease?.hasNewVersion) {
+      releaseNotify();
+      logger.info(`发现新版本：${latestRelease.version}`, latestRelease);
+    }
+  }, [latestRelease?.hasNewVersion]);
 
   return (
     <div className={styles.dashboard_container}>
       <div className={styles.topBar}>
         WebGAL Terre
         <Toolbar>
-          <About/>
+          <About />
           <Menu>
             <MenuTrigger>
-              <ToolbarButton aria-label={t`语言`}
-                icon={<LocalLanguageIcon/>}>{t`语言`}</ToolbarButton>
+              <ToolbarButton aria-label={t`语言`} icon={<LocalLanguageIcon />}>{t`语言`}</ToolbarButton>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
@@ -207,8 +212,7 @@ export default function DashBoard() {
           </Menu>
           <Menu>
             <MenuTrigger>
-              <ToolbarButton aria-label={t`主题`}
-                icon={<Platte/>}>{t`主题`}</ToolbarButton>
+              <ToolbarButton aria-label={t`主题`} icon={<Platte />}>{t`主题`}</ToolbarButton>
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
@@ -222,39 +226,61 @@ export default function DashBoard() {
       <div className={styles.container_main}>
         <div className={styles.tabListContainer}>
           <TabList selectedValue={selectedValue} onTabSelect={onTabSelect} vertical size="large">
-            <Tab className={classNames(styles.tabItem, selectedValue === 'game' ? styles.active : '')} id="Game"
-              icon={<GameIcon fontSize={24}/>} value="game">{t`游戏`}</Tab>
-            <Tab className={classNames(styles.tabItem, selectedValue === 'template' ? styles.active : '')}
-              id="Template" icon={<AlbumIcon fontSize={24}/>} value="template">{t`模板`}</Tab>
+            <Tab
+              className={classNames(styles.tabItem, selectedValue === 'game' ? styles.active : '')}
+              id="Game"
+              icon={<GameIcon fontSize={24} />}
+              value="game"
+            >{t`游戏`}</Tab>
+            <Tab
+              className={classNames(styles.tabItem, selectedValue === 'template' ? styles.active : '')}
+              id="Template"
+              icon={<AlbumIcon fontSize={24} />}
+              value="template"
+            >{t`模板`}</Tab>
+            <Tab
+              className={classNames(styles.tabItem, selectedValue === 'setting' ? styles.active : '')}
+              id="Setting"
+              icon={<SettingsIcon fontSize={24} />}
+              value="setting"
+            >{t`设置`}</Tab>
           </TabList>
         </div>
-        {selectedValue === "game" && <div className={styles.dashboard_main}>
-          <Message ref={messageRef}/>
-          <Sidebar
-            refreash={refreash}
-            createGame={createGame}
-            setCurrentGame={setCurrentGame}
-            currentSetGame={currentGame.value}
-            gameList={gameList ? gameList : []}
-          />
-          {
-            currentGame.value && gameList &&
-            <GamePreview
-              currentGame={currentGame.value}
+        {selectedValue === 'game' && (
+          <div className={styles.dashboard_main}>
+            <Message ref={messageRef} />
+            <Sidebar
+              refreash={refreash}
+              createGame={createGame}
               setCurrentGame={setCurrentGame}
-              gameInfo={gameList.find(e => e.dir === currentGame.value)!}
+              currentSetGame={currentGame.value}
+              gameList={gameList ? gameList : []}
             />
-          }
-        </div>
-        }
-        {selectedValue === "template" && <div className={styles.dashboard_main}>
-          <TemplateSidebar
-            refreash={refreash}
-            createTemplate={createTemplate}
-            setCurrentTemplate={setCurrentTemplate}
-            currentSetTemplate={currentTemplate.value}
-            templateList={templateList ? templateList : []}/>
-        </div>}
+            {currentGame.value && gameList && (
+              <GamePreview
+                currentGame={currentGame.value}
+                setCurrentGame={setCurrentGame}
+                gameInfo={gameList.find((e) => e.dir === currentGame.value)!}
+              />
+            )}
+          </div>
+        )}
+        {selectedValue === 'template' && (
+          <div className={styles.dashboard_main}>
+            <TemplateSidebar
+              refreash={refreash}
+              createTemplate={createTemplate}
+              setCurrentTemplate={setCurrentTemplate}
+              currentSetTemplate={currentTemplate.value}
+              templateList={templateList ? templateList : []}
+            />
+          </div>
+        )}
+        {selectedValue === 'setting' && (
+          <div className={styles.dashboard_main}>
+            <SettingPage />
+          </div>
+        )}
       </div>
       <Toaster toasterId={releaseToasterId} />
     </div>

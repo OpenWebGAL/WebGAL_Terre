@@ -5,8 +5,9 @@ import GameEditorProvider from '@/pages/editor/GameEditorProvider';
 import Editor from '@/pages/editor/Editor';
 import TemplateEditorProvider from '@/pages/templateEditor/TemplateEditorProvider';
 import TemplateEditor from '@/pages/templateEditor/TemplateEditor';
+import SettingPage from '@/pages/setting/SettingPage';
 
-export type IPage = 'dashboard' | 'game' | 'template';
+export type IPage = 'dashboard' | 'game' | 'template' | 'setting';
 
 export const routes: { [key in IPage]: { url: string; element: ReactNode } } = {
   dashboard: {
@@ -28,6 +29,10 @@ export const routes: { [key in IPage]: { url: string; element: ReactNode } } = {
         <TemplateEditor />
       </TemplateEditorProvider>
     ),
+  },
+  setting: {
+    url: '#/setting',
+    element: <SettingPage />,
   },
 };
 
@@ -55,7 +60,7 @@ export function useHashRouter() {
           updateSubPage(_page);
           goTo('dashboard', _page);
         }
-      } else if (_page === 'dashboard' && ['game', 'template'].includes(_subPage)) {
+      } else if (_page === 'dashboard' && ['game', 'template', 'setting'].includes(_subPage)) {
         updatePage('dashboard');
         updateSubPage(_subPage);
       } else {

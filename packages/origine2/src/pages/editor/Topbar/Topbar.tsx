@@ -3,7 +3,6 @@ import {useEffect} from "react";
 import TopbarTabButton from "@/pages/editor/Topbar/TopbarTabButton";
 import ConfigTab from "@/pages/editor/Topbar/tabs/GameConfig/ConfigTab";
 import {ViewTab} from "@/pages/editor/Topbar/tabs/ViewConfig/ViewTab";
-import {SettingsTab} from "@/pages/editor/Topbar/tabs/Settings/SettingsTab";
 import {HelpTab} from "@/pages/editor/Topbar/tabs/Help/HelpTab";
 import {ExportTab} from "@/pages/editor/Topbar/tabs/Export/ExportTab";
 import TopbarTabButtonSpecial from "@/pages/editor/Topbar/TopbarTabButtonSpecial";
@@ -102,7 +101,6 @@ export default function TopBar() {
       >
         <Tab value="config">{t`配置`}</Tab>
         <Tab value="view">{t`视图`}</Tab>
-        <Tab value="settings">{t`设置`}</Tab>
         <Tab value="help">{t`帮助`}</Tab>
         <Tab value="export">{t`导出`}</Tab>
         {isShowAddSceneTab && <Tab value="addSentence">
@@ -219,7 +217,6 @@ export default function TopBar() {
     {/* </div> */}
     {currentTopbarTab === 'config' && <ConfigTab/>}
     {currentTopbarTab === 'view' && <ViewTab/>}
-    {currentTopbarTab === 'settings' && <SettingsTab/>}
     {currentTopbarTab === 'help' && <HelpTab/>}
     {currentTopbarTab === 'export' && <ExportTab/>}
     {currentTopbarTab === 'addSentence' && <AddSentenceTab/>}
