@@ -32,6 +32,9 @@ msgstr "<0>当前应用的模板：{currentTemplateName}</0>"
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
+msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
+msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
+
 msgid "BGM"
 msgstr "BGM"
 
@@ -68,8 +71,14 @@ msgstr "CSS 属性值"
 msgid "CSS 属性名："
 msgstr "CSS 属性名："
 
+msgid "enable 开启，none 或留空关闭"
+msgstr "enable 开启，none 或留空关闭"
+
 msgid "end;"
 msgstr "end;"
+
+msgid "filmMode:enable;"
+msgstr "filmMode:enable;"
 
 msgid "font-family"
 msgstr "font-family"
@@ -82,6 +91,12 @@ msgstr "Intro 文本"
 
 msgid "intro:;"
 msgstr "intro:;"
+
+msgid "jumpLabel:label_1;"
+msgstr "jumpLabel:label_1;"
+
+msgid "label:label_1;"
+msgstr "label:label_1;"
 
 msgid "Live2D 动作"
 msgstr "Live2D 动作"
@@ -110,6 +125,9 @@ msgstr "RGB电影滤镜"
 msgid "setAnimation:选择动画文件;"
 msgstr "setAnimation:选择动画文件;"
 
+msgid "setComplexAnimation:universalSoftIn -target=fig-center;"
+msgstr "setComplexAnimation:universalSoftIn -target=fig-center;"
+
 msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
 msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
 
@@ -121,6 +139,15 @@ msgstr "setTransform: -duration=0;"
 
 msgid "setTransition:;"
 msgstr "setTransition:;"
+
+msgid "setVar:a=1;"
+msgstr "setVar:a=1;"
+
+msgid "showVars 通常不需要内容"
+msgstr "showVars 通常不需要内容"
+
+msgid "showVars;"
+msgstr "showVars;"
 
 msgid "Spine 动画"
 msgstr "Spine 动画"
@@ -182,6 +209,12 @@ msgstr "下一步"
 msgid "下移"
 msgstr "下移"
 
+msgid "不使用 clear 参数"
+msgstr "不使用 clear 参数"
+
+msgid "不使用 when 条件"
+msgstr "不使用 when 条件"
+
 msgid "不可选项"
 msgstr "不可选项"
 
@@ -193,6 +226,9 @@ msgstr "不显示角色名"
 
 msgid "不设定"
 msgstr "不设定"
+
+msgid "与同目标动画并行"
+msgstr "与同目标动画并行"
 
 msgid "两端对齐"
 msgstr "两端对齐"
@@ -233,11 +269,17 @@ msgstr "主题"
 msgid "亮度"
 msgstr "亮度"
 
+msgid "从本场景选择"
+msgstr "从本场景选择"
+
 msgid "代码编辑器"
 msgstr "代码编辑器"
 
 msgid "伽马值"
 msgstr "伽马值"
+
+msgid "使用 clear 参数清除"
+msgstr "使用 clear 参数清除"
 
 msgid "使用中的模板："
 msgstr "使用中的模板："
@@ -266,6 +308,24 @@ msgstr "使用预设目标"
 msgid "例如：-100,-100,100,100"
 msgstr "例如：-100,-100,100,100"
 
+msgid "例如：^.{1,12}$"
+msgstr "例如：^.{1,12}$"
+
+msgid "例如：a=1 或 name=WebGAL"
+msgstr "例如：a=1 或 name=WebGAL"
+
+msgid "例如：a>0 && flag==true"
+msgstr "例如：a>0 && flag==true"
+
+msgid "例如：fig-center"
+msgstr "例如：fig-center"
+
+msgid "例如：i"
+msgstr "例如：i"
+
+msgid "例如：universalSoftIn"
+msgstr "例如：universalSoftIn"
+
 msgid "侧边栏"
 msgstr "侧边栏"
 
@@ -283,6 +343,9 @@ msgstr "保存模板配置失败，请稍后重试"
 
 msgid "保持闭眼(毫秒)"
 msgstr "保持闭眼(毫秒)"
+
+msgid "保留角色名"
+msgstr "保留角色名"
 
 msgid "修改时间"
 msgstr "修改时间"
@@ -332,6 +395,9 @@ msgstr "光辉电影滤镜"
 msgid "入场时长（单位为毫秒）"
 msgstr "入场时长（单位为毫秒）"
 
+msgid "全局变量"
+msgstr "全局变量"
+
 msgid "全屏文字"
 msgstr "全屏文字"
 
@@ -362,6 +428,9 @@ msgstr "关闭背景"
 msgid "关闭预览窗口"
 msgstr "关闭预览窗口"
 
+msgid "内容"
+msgstr "内容"
+
 msgid "内层文本"
 msgstr "内层文本"
 
@@ -383,8 +452,14 @@ msgstr "最小高度"
 msgid "最新版本"
 msgstr "最新版本"
 
+msgid "写入全局变量"
+msgstr "写入全局变量"
+
 msgid "写入变量"
 msgstr "写入变量"
+
+msgid "写入当前存档变量"
+msgstr "写入当前存档变量"
 
 msgid "分支选择"
 msgstr "分支选择"
@@ -455,6 +530,9 @@ msgstr "加粗"
 msgid "动画"
 msgstr "动画"
 
+msgid "动画名"
+msgstr "动画名"
+
 msgid "动画帧控制"
 msgstr "动画帧控制"
 
@@ -472,6 +550,9 @@ msgstr "单行注释"
 
 msgid "厚度"
 msgstr "厚度"
+
+msgid "原样式->新样式，多个用逗号分隔"
+msgstr "原样式->新样式，多个用逗号分隔"
 
 msgid "参数值"
 msgstr "参数值"
@@ -493,6 +574,12 @@ msgstr "取消固定"
 
 msgid "变换"
 msgstr "变换"
+
+msgid "变量表达式"
+msgstr "变量表达式"
+
+msgid "可用 $0 表示当前输入"
+msgstr "可用 $0 表示当前输入"
 
 msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
 msgstr "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
@@ -520,6 +607,9 @@ msgstr "启动图"
 
 msgid "启用"
 msgstr "启用"
+
+msgid "启用 when 条件"
+msgstr "启用 when 条件"
 
 msgid "启用视频跳过"
 msgstr "启用视频跳过"
@@ -563,11 +653,17 @@ msgstr "圆角矩形"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "在对话框的左下角显示一个小头像"
 
+msgid "在当前场景内创建跳转标签"
+msgstr "在当前场景内创建跳转标签"
+
 msgid "在文件管理器中打开"
 msgstr "在文件管理器中打开"
 
 msgid "在新标签页中预览"
 msgstr "在新标签页中预览"
+
+msgid "在游戏中显示当前变量"
+msgstr "在游戏中显示当前变量"
 
 msgid "在这里放置编辑组件"
 msgstr "在这里放置编辑组件"
@@ -581,8 +677,17 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
+msgid "场景文件或本场景 label"
+msgstr "场景文件或本场景 label"
+
 msgid "填写参数值"
 msgstr "填写参数值"
+
+msgid "复杂动画"
+msgstr "复杂动画"
+
+msgid "复杂动画名来自引擎内置动画。若要使用项目动画文件，通常应使用“调用动画”。"
+msgstr "复杂动画名来自引擎内置动画。若要使用项目动画文件，通常应使用“调用动画”。"
 
 msgid "外层文本"
 msgstr "外层文本"
@@ -755,8 +860,14 @@ msgstr "常规演出"
 msgid "平铺"
 msgstr "平铺"
 
+msgid "并行动画"
+msgstr "并行动画"
+
 msgid "应用"
 msgstr "应用"
+
+msgid "应用样式"
+msgstr "应用样式"
 
 msgid "应用的模板"
 msgstr "应用的模板"
@@ -803,11 +914,17 @@ msgstr "手动触发下一句"
 msgid "手动输入 ID"
 msgstr "手动输入 ID"
 
+msgid "打开或关闭电影模式"
+msgstr "打开或关闭电影模式"
+
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
 msgid "执行到此句"
 msgstr "执行到此句"
+
+msgid "执行后清除角色名"
+msgstr "执行后清除角色名"
 
 msgid "扩展名"
 msgstr "扩展名"
@@ -817,6 +934,9 @@ msgstr "拼接先前文本框内的语句"
 
 msgid "拼接模式"
 msgstr "拼接模式"
+
+msgid "持续时间（毫秒）"
+msgstr "持续时间（毫秒）"
 
 msgid "指针"
 msgstr "指针"
@@ -853,6 +973,9 @@ msgstr "提示：效果只有在切换到不同背景或关闭之前的背景再
 
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "提示：样式中用到的资源放在 assets 目录下"
+
+msgid "提示按钮文本"
+msgstr "提示按钮文本"
 
 msgid "搜索选项"
 msgstr "搜索选项"
@@ -1025,6 +1148,9 @@ msgstr "是否要删除 \"{gameName}\" ？"
 msgid "显示侧边栏"
 msgstr "显示侧边栏"
 
+msgid "显示变量"
+msgstr "显示变量"
+
 msgid "显示效果"
 msgstr "显示效果"
 
@@ -1049,6 +1175,12 @@ msgstr "普通对话"
 msgid "更多选项"
 msgstr "更多选项"
 
+msgid "替换 UI 样式标签"
+msgstr "替换 UI 样式标签"
+
+msgid "替换同目标动画"
+msgstr "替换同目标动画"
+
 msgid "未指定"
 msgstr "未指定"
 
@@ -1067,8 +1199,20 @@ msgstr "本句执行后执行下一句"
 msgid "本句执行后等待"
 msgstr "本句执行后等待"
 
+msgid "本场景内唯一的 label 名称"
+msgstr "本场景内唯一的 label 名称"
+
+msgid "条件执行"
+msgstr "条件执行"
+
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "查看展示到 WebGAL 主页的指引"
+
+msgid "标签"
+msgstr "标签"
+
+msgid "标签名"
+msgstr "标签名"
 
 msgid "标题"
 msgstr "标题"
@@ -1100,6 +1244,12 @@ msgstr "标题背景图片"
 msgid "标题背景音乐"
 msgstr "标题背景音乐"
 
+msgid "校验失败提示"
+msgstr "校验失败提示"
+
+msgid "样式替换"
+msgstr "样式替换"
+
 msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
@@ -1123,6 +1273,9 @@ msgstr "模糊"
 
 msgid "櫻花"
 msgstr "櫻花"
+
+msgid "正则标记"
+msgstr "正则标记"
 
 msgid "正在上传"
 msgstr "正在上传"
@@ -1220,6 +1373,12 @@ msgstr "清除提示"
 msgid "清除特效"
 msgstr "清除特效"
 
+msgid "清除立绘"
+msgstr "清除立绘"
+
+msgid "清除角色名"
+msgstr "清除角色名"
+
 msgid "游戏"
 msgstr "游戏"
 
@@ -1271,11 +1430,26 @@ msgstr "点状电影滤镜"
 msgid "特殊演出"
 msgstr "特殊演出"
 
+msgid "电影模式"
+msgstr "电影模式"
+
+msgid "电影模式值"
+msgstr "电影模式值"
+
+msgid "留空使用默认值"
+msgstr "留空使用默认值"
+
 msgid "百分比。 0-100 有效"
 msgstr "百分比。 0-100 有效"
 
 msgid "目前没有打开任何文件"
 msgstr "目前没有打开任何文件"
+
+msgid "目标"
+msgstr "目标"
+
+msgid "目标 ID"
+msgstr "目标 ID"
 
 msgid "目标行"
 msgstr "目标行"
@@ -1535,6 +1709,9 @@ msgstr "行脚本"
 msgid "补充默认值"
 msgstr "补充默认值"
 
+msgid "表达式"
+msgstr "表达式"
+
 msgid "裁剪形状"
 msgstr "裁剪形状"
 
@@ -1589,6 +1766,12 @@ msgstr "解锁鉴赏类型"
 msgid "设置"
 msgstr "设置"
 
+msgid "设置变量"
+msgstr "设置变量"
+
+msgid "设置普通变量或全局变量"
+msgstr "设置普通变量或全局变量"
+
 msgid "设置立绘或背景的进出场动画"
 msgstr "设置立绘或背景的进出场动画"
 
@@ -1597,6 +1780,9 @@ msgstr "设置自定义级联选择器分隔符（输入后按回车键确认）
 
 msgid "该功能将大幅提升实时预览效率，但可能出现异常。"
 msgstr "该功能将大幅提升实时预览效率，但可能出现异常。"
+
+msgid "该指令会在文本框显示当前变量。"
+msgstr "该指令会在文本框显示当前变量。"
 
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgstr "该指令没有被识别，请打开脚本编辑模式以手动编辑"
@@ -1609,6 +1795,9 @@ msgstr "语言"
 
 msgid "语音"
 msgstr "语音"
+
+msgid "语音音量"
+msgstr "语音音量"
 
 msgid "请完整填写每个字体的信息"
 msgstr "请完整填写每个字体的信息"
@@ -1646,6 +1835,9 @@ msgstr "调用场景"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "调用场景，新场景结束后返回父场景"
 
+msgid "调用引擎内置复杂动画"
+msgstr "调用引擎内置复杂动画"
+
 msgid "资源"
 msgstr "资源"
 
@@ -1664,8 +1856,26 @@ msgstr "起点弹跳"
 msgid "跨语句动画"
 msgstr "跨语句动画"
 
+msgid "跳转 label"
+msgstr "跳转 label"
+
+msgid "跳转到当前场景内的标签"
+msgstr "跳转到当前场景内的标签"
+
+msgid "跳转标签"
+msgstr "跳转标签"
+
 msgid "软化（0-1）"
 msgstr "软化（0-1）"
+
+msgid "输入指令内容"
+msgstr "输入指令内容"
+
+msgid "输入本场景内的 label 名称"
+msgstr "输入本场景内的 label 名称"
+
+msgid "输入校验正则"
+msgstr "输入校验正则"
 
 msgid "输入目标 ID"
 msgstr "输入目标 ID"
@@ -1732,6 +1942,9 @@ msgstr "选择视频文件"
 
 msgid "选择立绘文件"
 msgstr "选择立绘文件"
+
+msgid "选择背景图片"
+msgstr "选择背景图片"
 
 msgid "选择背景文件"
 msgstr "选择背景文件"
@@ -1817,6 +2030,9 @@ msgstr "鉴赏功能"
 msgid "鉴赏图片"
 msgstr "鉴赏图片"
 
+msgid "鉴赏系列"
+msgstr "鉴赏系列"
+
 msgid "鉴赏资源文件"
 msgstr "鉴赏资源文件"
 
@@ -1897,6 +2113,9 @@ msgstr "高斯模糊"
 
 msgid "默认"
 msgstr "默认"
+
+msgid "默认 default"
+msgstr "默认 default"
 
 msgid "默认值"
 msgstr "默认值"

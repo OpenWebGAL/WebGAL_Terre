@@ -35,6 +35,14 @@
   flex: 1;
 }
 
+.sentenceEditBody {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: 100%;
+}
+
 .head {
   display: flex;
   align-items: center;

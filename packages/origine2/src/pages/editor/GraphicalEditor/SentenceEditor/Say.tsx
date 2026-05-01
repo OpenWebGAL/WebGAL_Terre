@@ -24,6 +24,7 @@ export default function Say(props: ISentenceEditorProps) {
   const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const isNoSpeaker = useValue(props.sentence.commandRaw === "");
   const figureId = useValue(getArgByKey(props.sentence, "figureId").toString() ?? "");
+  const isClearSpeaker = useValue(!!getArgByKey(props.sentence, "clear"));
   const figurePosition = useValue<FigurePosition>("");
   const figurePositions = new Map<FigurePosition, string>([
     [ "", t`未指定` ],
@@ -86,6 +87,7 @@ export default function Say(props: ISentenceEditorProps) {
         ...(vocal.value !== "" ? [
           {key: vocal.value, value: true},
         ] : []),
+        {key: "volume", value: vocal.value !== "" ? volume.value : ""},
         // 如果继承说话者, 并且对话内容为空
         // 添加一个 -sayPlaceHolder 参数，防止变成注释
         ...(inheritSpeaker && sayContent === "" ? [
@@ -96,6 +98,7 @@ export default function Say(props: ISentenceEditorProps) {
 
         {key: "concat", value: isConcat.value},
         {key: "notend", value: isNotend.value},
+        {key: "clear", value: isClearSpeaker.value},
         {key: "fontSize", value: (fontSize.value !== "default" ? fontSize.value : "")},
         {key: "left", value: figurePosition.value === "left"},
         {key: "right", value: figurePosition.value === "right"},
@@ -215,6 +218,18 @@ export default function Say(props: ISentenceEditorProps) {
             isChecked={isNoSpeaker.value}
           />
         </CommonOptions>
+        <CommonOptions key="clearSpeaker" title={t`清除角色名`}>
+          <TerreToggle
+            title=""
+            onChange={(newValue) => {
+              isClearSpeaker.set(newValue);
+              submit();
+            }}
+            onText={t`执行后清除角色名`}
+            offText={t`保留角色名`}
+            isChecked={isClearSpeaker.value}
+          />
+        </CommonOptions>
         <CommonOptions key="isConcat" title={t`拼接模式`}>
           <TerreToggle
             title=""
@@ -255,6 +270,19 @@ export default function Say(props: ISentenceEditorProps) {
             />
           </>
         </CommonOptions>
+        {vocal.value !== "" && <CommonOptions key="VocalVolume" title={t`语音音量`}>
+          <input
+            value={volume.value}
+            onChange={(ev) => {
+              const newValue = ev.target.value;
+              volume.set(newValue ?? "");
+            }}
+            onBlur={submit}
+            className={styles.sayInput}
+            placeholder={t`百分比。 0-100 有效`}
+            style={{ width: "100%" }}
+          />
+        </CommonOptions>}
         <CommonOptions title={t`关联立绘`}>
           <WheelDropdown
             options={figurePositions}

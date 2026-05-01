@@ -32,6 +32,9 @@ msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
+msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
+msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
+
 msgid "BGM"
 msgstr "BGM"
 
@@ -68,8 +71,14 @@ msgstr "CSS プロパティ値"
 msgid "CSS 属性名："
 msgstr "CSS プロパティ名："
 
+msgid "enable 开启，none 或留空关闭"
+msgstr "enable でオン、none または空欄でオフ"
+
 msgid "end;"
 msgstr "end;"
+
+msgid "filmMode:enable;"
+msgstr "filmMode:enable;"
 
 msgid "font-family"
 msgstr "font-family"
@@ -82,6 +91,12 @@ msgstr "Intro テキスト"
 
 msgid "intro:;"
 msgstr "intro:;"
+
+msgid "jumpLabel:label_1;"
+msgstr "jumpLabel:label_1;"
+
+msgid "label:label_1;"
+msgstr "label:label_1;"
 
 msgid "Live2D 动作"
 msgstr "Live2D モーション"
@@ -110,6 +125,9 @@ msgstr "RGB映画"
 msgid "setAnimation:选择动画文件;"
 msgstr "setAnimation: アニメーションを選択;"
 
+msgid "setComplexAnimation:universalSoftIn -target=fig-center;"
+msgstr "setComplexAnimation:universalSoftIn -target=fig-center;"
+
 msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
 msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
 
@@ -121,6 +139,15 @@ msgstr "setTransform: -duration=0;"
 
 msgid "setTransition:;"
 msgstr "setTransition:;"
+
+msgid "setVar:a=1;"
+msgstr "setVar:a=1;"
+
+msgid "showVars 通常不需要内容"
+msgstr "showVars は通常、内容を必要としません"
+
+msgid "showVars;"
+msgstr "showVars;"
 
 msgid "Spine 动画"
 msgstr "Spine アニメーション"
@@ -182,6 +209,12 @@ msgstr "次に"
 msgid "下移"
 msgstr "下へ移動"
 
+msgid "不使用 clear 参数"
+msgstr "clear パラメータを使用しない"
+
+msgid "不使用 when 条件"
+msgstr "when 条件を使用しない"
+
 msgid "不可选项"
 msgstr "選択できない選択肢"
 
@@ -193,6 +226,9 @@ msgstr "キャラクター名は設定不可"
 
 msgid "不设定"
 msgstr "未設定"
+
+msgid "与同目标动画并行"
+msgstr "同じ対象のアニメーションと並行実行"
 
 msgid "两端对齐"
 msgstr "両端揃え"
@@ -233,11 +269,17 @@ msgstr "テーマ"
 msgid "亮度"
 msgstr "輝度"
 
+msgid "从本场景选择"
+msgstr "このシーンから選択"
+
 msgid "代码编辑器"
 msgstr "コードエディタ"
 
 msgid "伽马值"
 msgstr "ガンマ"
+
+msgid "使用 clear 参数清除"
+msgstr "clear パラメータで消去"
 
 msgid "使用中的模板："
 msgstr "使用中のテンプレート："
@@ -266,6 +308,24 @@ msgstr "事前設定されたターゲットを使用"
 msgid "例如：-100,-100,100,100"
 msgstr "例えば：-100,-100,100,100"
 
+msgid "例如：^.{1,12}$"
+msgstr "例：^.{1,12}$"
+
+msgid "例如：a=1 或 name=WebGAL"
+msgstr "例：a=1 または name=WebGAL"
+
+msgid "例如：a>0 && flag==true"
+msgstr "例：a>0 && flag==true"
+
+msgid "例如：fig-center"
+msgstr "例：fig-center"
+
+msgid "例如：i"
+msgstr "例：i"
+
+msgid "例如：universalSoftIn"
+msgstr "例：universalSoftIn"
+
 msgid "侧边栏"
 msgstr "サイドバー"
 
@@ -283,6 +343,9 @@ msgstr "テンプレート設定の保存に失敗しました。しばらくし
 
 msgid "保持闭眼(毫秒)"
 msgstr "目を閉じたままにする時間(ミリ秒)"
+
+msgid "保留角色名"
+msgstr "キャラクター名を保持"
 
 msgid "修改时间"
 msgstr "最終更新"
@@ -332,6 +395,9 @@ msgstr "ゴッドレイ映画"
 msgid "入场时长（单位为毫秒）"
 msgstr "入場時間（ミリ秒）"
 
+msgid "全局变量"
+msgstr "グローバル変数"
+
 msgid "全屏文字"
 msgstr "全画面テキスト"
 
@@ -362,6 +428,9 @@ msgstr "背景画像を非表示"
 msgid "关闭预览窗口"
 msgstr "プレビューウィンドウを閉じる"
 
+msgid "内容"
+msgstr "内容"
+
 msgid "内层文本"
 msgstr "内側テキスト"
 
@@ -383,8 +452,14 @@ msgstr "最小高さ"
 msgid "最新版本"
 msgstr "最新バージョン"
 
+msgid "写入全局变量"
+msgstr "グローバル変数に書き込む"
+
 msgid "写入变量"
 msgstr "変数を書く"
+
+msgid "写入当前存档变量"
+msgstr "現在のセーブ変数に書き込む"
 
 msgid "分支选择"
 msgstr "選択肢"
@@ -455,6 +530,9 @@ msgstr "太字"
 msgid "动画"
 msgstr "アニメーション"
 
+msgid "动画名"
+msgstr "アニメーション名"
+
 msgid "动画帧控制"
 msgstr "フレームコントロール"
 
@@ -472,6 +550,9 @@ msgstr "一行コメント"
 
 msgid "厚度"
 msgstr "厚さ"
+
+msgid "原样式->新样式，多个用逗号分隔"
+msgstr "元のスタイル->新しいスタイル、複数はカンマで区切る"
 
 msgid "参数值"
 msgstr "パラメータ値"
@@ -493,6 +574,12 @@ msgstr "ピン留めを解除"
 
 msgid "变换"
 msgstr "トランスフォーム"
+
+msgid "变量表达式"
+msgstr "変数式"
+
+msgid "可用 $0 表示当前输入"
+msgstr "$0 で現在の入力を表せます"
 
 msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
 msgstr "スクリプト内のループジャンプ、または対象行までの早送り行数が多すぎることが原因の可能性があります。"
@@ -520,6 +607,9 @@ msgstr "ロゴ"
 
 msgid "启用"
 msgstr "有効化"
+
+msgid "启用 when 条件"
+msgstr "when 条件を有効化"
 
 msgid "启用视频跳过"
 msgstr "動画のスキップを有効にする"
@@ -563,11 +653,17 @@ msgstr "角丸方形"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "ダイアログの左下に小さなアバターを表示します"
 
+msgid "在当前场景内创建跳转标签"
+msgstr "現在のシーン内にジャンプ用ラベルを作成"
+
 msgid "在文件管理器中打开"
 msgstr "ファイルエクスプローラーで開く"
 
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
+
+msgid "在游戏中显示当前变量"
+msgstr "ゲーム内に現在の変数を表示"
 
 msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
@@ -581,8 +677,17 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
+msgid "场景文件或本场景 label"
+msgstr "シーンファイルまたはこのシーンの label"
+
 msgid "填写参数值"
 msgstr "パラメータ値を入力"
+
+msgid "复杂动画"
+msgstr "複雑アニメーション"
+
+msgid "复杂动画名来自引擎内置动画。若要使用项目动画文件，通常应使用“调用动画”。"
+msgstr "複雑アニメーション名はエンジン内蔵アニメーションに由来します。プロジェクトのアニメーションファイルを使う場合は通常「アニメーション呼び出し」を使用します。"
 
 msgid "外层文本"
 msgstr "外側テキスト"
@@ -755,8 +860,14 @@ msgstr "通常演出"
 msgid "平铺"
 msgstr "タイリング"
 
+msgid "并行动画"
+msgstr "並行アニメーション"
+
 msgid "应用"
 msgstr "適用"
+
+msgid "应用样式"
+msgstr "スタイルを適用"
 
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
@@ -803,11 +914,17 @@ msgstr "手動で次の行を表示"
 msgid "手动输入 ID"
 msgstr "IDを手動で設定"
 
+msgid "打开或关闭电影模式"
+msgstr "映画モードをオン/オフ"
+
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
 msgid "执行到此句"
 msgstr "この文まで実行"
+
+msgid "执行后清除角色名"
+msgstr "実行後にキャラクター名を消去"
 
 msgid "扩展名"
 msgstr "拡張子"
@@ -817,6 +934,9 @@ msgstr "前のテキストボックスの内容をつなげる"
 
 msgid "拼接模式"
 msgstr "連結モード"
+
+msgid "持续时间（毫秒）"
+msgstr "継続時間（ミリ秒）"
 
 msgid "指针"
 msgstr "ポインター"
@@ -853,6 +973,9 @@ msgstr "ヒント：エフェクトは、異なる背景に切り替えるか、
 
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "ヒント：スタイルで使用されるリソースは assets ディレクトリにあります"
+
+msgid "提示按钮文本"
+msgstr "提示ボタンのテキスト"
 
 msgid "搜索选项"
 msgstr "検索オプション"
@@ -1025,6 +1148,9 @@ msgstr "\"{gameName}\"を削除してもよろしいですか？"
 msgid "显示侧边栏"
 msgstr "サイドバーを表示"
 
+msgid "显示变量"
+msgstr "変数を表示"
+
 msgid "显示效果"
 msgstr "エフェクト"
 
@@ -1049,6 +1175,12 @@ msgstr "ダイアログ"
 msgid "更多选项"
 msgstr "その他のオプション"
 
+msgid "替换 UI 样式标签"
+msgstr "UI スタイルタグを置換"
+
+msgid "替换同目标动画"
+msgstr "同じ対象のアニメーションを置換"
+
 msgid "未指定"
 msgstr "指定なし"
 
@@ -1067,8 +1199,20 @@ msgstr "この文が実行された後、次の文を実行"
 msgid "本句执行后等待"
 msgstr "この文が実行されるのを待つ"
 
+msgid "本场景内唯一的 label 名称"
+msgstr "このシーン内で一意の label 名"
+
+msgid "条件执行"
+msgstr "条件実行"
+
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "WebGAL ホームページに作品を掲載する手順を見る"
+
+msgid "标签"
+msgstr "ラベル"
+
+msgid "标签名"
+msgstr "ラベル名"
 
 msgid "标题"
 msgstr "タイトル"
@@ -1100,6 +1244,12 @@ msgstr "タイトルの背景画像"
 msgid "标题背景音乐"
 msgstr "タイトルのBGM"
 
+msgid "校验失败提示"
+msgstr "検証失敗メッセージ"
+
+msgid "样式替换"
+msgstr "スタイル置換"
+
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
@@ -1123,6 +1273,9 @@ msgstr "ぼやける"
 
 msgid "櫻花"
 msgstr "桜"
+
+msgid "正则标记"
+msgstr "正規表現フラグ"
 
 msgid "正在上传"
 msgstr "アップロード中"
@@ -1220,6 +1373,12 @@ msgstr "チップをクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
+msgid "清除立绘"
+msgstr "立ち絵を消去"
+
+msgid "清除角色名"
+msgstr "キャラクター名を消去"
+
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1271,11 +1430,26 @@ msgstr "ドット映画"
 msgid "特殊演出"
 msgstr "特別演出"
 
+msgid "电影模式"
+msgstr "映画モード"
+
+msgid "电影模式值"
+msgstr "映画モードの値"
+
+msgid "留空使用默认值"
+msgstr "空欄で既定値を使用"
+
 msgid "百分比。 0-100 有效"
 msgstr "百分率。 0-100 有効"
 
 msgid "目前没有打开任何文件"
 msgstr "現在開いているファイルはありません"
+
+msgid "目标"
+msgstr "対象"
+
+msgid "目标 ID"
+msgstr "対象 ID"
 
 msgid "目标行"
 msgstr "対象行"
@@ -1535,6 +1709,9 @@ msgstr " スクリプトの行、"
 msgid "补充默认值"
 msgstr "デフォルト値を補う"
 
+msgid "表达式"
+msgstr "式"
+
 msgid "裁剪形状"
 msgstr "クリップ形状"
 
@@ -1589,6 +1766,12 @@ msgstr "タイプ"
 msgid "设置"
 msgstr "設定"
 
+msgid "设置变量"
+msgstr "変数を設定"
+
+msgid "设置普通变量或全局变量"
+msgstr "通常変数またはグローバル変数を設定"
+
 msgid "设置立绘或背景的进出场动画"
 msgstr "人物や背景のアニメーションを設定する。"
 
@@ -1597,6 +1780,9 @@ msgstr "カスタムカスケードセレクター区切り文字を設定（入
 
 msgid "该功能将大幅提升实时预览效率，但可能出现异常。"
 msgstr "この機能はリアルタイムプレビューの効率を大幅に向上させますが、異常が発生する可能性があります。"
+
+msgid "该指令会在文本框显示当前变量。"
+msgstr "このコマンドは現在の変数をテキストボックスに表示します。"
 
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgstr "このコマンドは認識されません、スクリプト編集モードで編集してください"
@@ -1609,6 +1795,9 @@ msgstr "言語"
 
 msgid "语音"
 msgstr "ボイス"
+
+msgid "语音音量"
+msgstr "ボイス音量"
 
 msgid "请完整填写每个字体的信息"
 msgstr "各フォントの情報をすべて入力してください"
@@ -1646,6 +1835,9 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
+msgid "调用引擎内置复杂动画"
+msgstr "エンジン内蔵の複雑アニメーションを呼び出す"
+
 msgid "资源"
 msgstr "アセット"
 
@@ -1664,8 +1856,26 @@ msgstr "バウンスイン"
 msgid "跨语句动画"
 msgstr "アニメーションを維持する"
 
+msgid "跳转 label"
+msgstr "ジャンプ label"
+
+msgid "跳转到当前场景内的标签"
+msgstr "現在のシーン内のラベルへジャンプ"
+
+msgid "跳转标签"
+msgstr "ラベルへジャンプ"
+
 msgid "软化（0-1）"
 msgstr "柔らかさ (0-1)"
+
+msgid "输入指令内容"
+msgstr "コマンド内容を入力"
+
+msgid "输入本场景内的 label 名称"
+msgstr "このシーン内の label 名を入力"
+
+msgid "输入校验正则"
+msgstr "入力検証の正規表現"
 
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
@@ -1732,6 +1942,9 @@ msgstr "動画ファイルを選択"
 
 msgid "选择立绘文件"
 msgstr "立ち絵ファイルを選択"
+
+msgid "选择背景图片"
+msgstr "背景画像を選択"
 
 msgid "选择背景文件"
 msgstr "背景画像ファイルを選択"
@@ -1817,6 +2030,9 @@ msgstr "鑑賞機能"
 msgid "鉴赏图片"
 msgstr "CG鑑賞"
 
+msgid "鉴赏系列"
+msgstr "鑑賞シリーズ"
+
 msgid "鉴赏资源文件"
 msgstr "CG/BGMファイルを選択"
 
@@ -1897,6 +2113,9 @@ msgstr "ぼかし"
 
 msgid "默认"
 msgstr "デフォルト"
+
+msgid "默认 default"
+msgstr "既定値 default"
 
 msgid "默认值"
 msgstr "デフォルト値"

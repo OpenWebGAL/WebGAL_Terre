@@ -25,13 +25,11 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
   const submit = () => {
     const submitString = combineSubmitString(
       unlockType.value,
-      (unlockName.value === "" ? "" : fileName.value),
+      fileName.value,
       props.sentence.args,
       [
-        ...(unlockName.value === "" ? [
-          {key: "name", value: unlockName.value},
-          {key: "series", value: unlockSeries.value},
-        ] : []),
+        {key: "name", value: unlockName.value},
+        {key: "series", value: unlockSeries.value},
       ],
       props.sentence.inlineComment,
     );
@@ -81,6 +79,18 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           className={styles.sayInput}
           style={{ width: "200px" }}
           placeholder={t`解锁的 CG 或 BGM 名称`}
+        />
+      </CommonOptions>
+      <CommonOptions title={t`鉴赏系列`}>
+        <input value={unlockSeries.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            unlockSeries.set(newValue);
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{ width: "200px" }}
+          placeholder={t`默认 default`}
         />
       </CommonOptions>
     </div>
