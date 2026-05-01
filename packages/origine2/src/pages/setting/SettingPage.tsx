@@ -3,7 +3,7 @@ import s from './settings.module.scss';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
 import TerreToggle from '@/components/terreToggle/TerreToggle';
 import { t } from '@lingui/macro';
-import { candidateFontSizes, languagesDefine } from './constants';
+import { candidateFontSizes } from './constants';
 import { PreviewOpen, PreviewClose } from '@icon-park/react';
 import {
   ArrowEnterLeftFilled,
@@ -17,6 +17,8 @@ import {
   LocalLanguageRegular,
   NavigationFilled,
   NavigationRegular,
+  SettingsFilled,
+  SettingsRegular,
 } from '@fluentui/react-icons';
 import useEditorStore from '@/store/useEditorStore';
 import type { SettingCategory } from './constants';
@@ -27,6 +29,7 @@ const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
 const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
 const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeftFilled, ArrowEnterLeftRegular);
 const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
+const SettingsIcon = bundleIcon(SettingsFilled, SettingsRegular);
 
 export default function SettingPage() {
   const updateLanguage = useEditorStore.use.updateLanguage();
@@ -49,7 +52,15 @@ export default function SettingPage() {
   const cascaderDelimiters = useEditorStore.use.cascaderDelimiters();
   const currentLanguage = useEditorStore.use.language();
   const updateCascaderDelimiters = useEditorStore.use.updateCascaderDelimiters();
+  const isDarkMode = useEditorStore.use.isDarkMode();
+  const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
   const [tempFontSize, setTempFontSize] = useState(editorFontSize.toString());
+
+  const languagesDefine = [
+    { label: t`简体中文`, value: 'zhCn' },
+    { label: t`英语`, value: 'en' },
+    { label: t`日语`, value: 'ja' },
+  ];
 
   const settingsCategories = useMemo((): SettingCategory[] => {
     const cat: SettingCategory[] = [
@@ -66,6 +77,18 @@ export default function SettingPage() {
             value: languagesDefine.find((v) => v.value === currentLanguage)!.label,
             options: languagesDefine,
             onChange: updateLanguage as (value: string) => void,
+          },
+          {
+            key: 'theme',
+            type: 'select',
+            label: t`主题`,
+            icon: <SettingsIcon className={s.iconColor} />,
+            value: isDarkMode ? t`深色` : t`浅色`,
+            options: [
+              { label: t`浅色`, value: 'light' },
+              { label: t`深色`, value: 'dark' },
+            ],
+            onChange: (value: string) => updateIsDarkMode(value === 'dark'),
           },
         ],
       },
@@ -226,6 +249,8 @@ export default function SettingPage() {
     ];
     return cat;
   }, [
+    languagesDefine,
+    isDarkMode,
     isShowPreview,
     isEnableLivePreview,
     isUseExpSyncFast,

@@ -86,8 +86,6 @@ export default function DashBoard() {
   const { mutate } = useSWRConfig();
 
   const subPage = useEditorStore.use.subPage();
-  const updateLanguage = useEditorStore.use.updateLanguage();
-  const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
 
   const messageRef = useRef<TestRefRef>(null);
 
@@ -198,29 +196,6 @@ export default function DashBoard() {
         WebGAL Terre
         <Toolbar>
           <About />
-          <Menu>
-            <MenuTrigger>
-              <ToolbarButton aria-label={t`语言`} icon={<LocalLanguageIcon />}>{t`语言`}</ToolbarButton>
-            </MenuTrigger>
-            <MenuPopover>
-              <MenuList>
-                <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
-                <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
-                <MenuItem onClick={() => updateLanguage('ja')}>日本語</MenuItem>
-              </MenuList>
-            </MenuPopover>
-          </Menu>
-          <Menu>
-            <MenuTrigger>
-              <ToolbarButton aria-label={t`主题`} icon={<Platte />}>{t`主题`}</ToolbarButton>
-            </MenuTrigger>
-            <MenuPopover>
-              <MenuList>
-                <MenuItem onClick={() => updateIsDarkMode(false)}>{t`浅色`}</MenuItem>
-                <MenuItem onClick={() => updateIsDarkMode(true)}>{t`深色`}</MenuItem>
-              </MenuList>
-            </MenuPopover>
-          </Menu>
         </Toolbar>
       </div>
       <div className={styles.container_main}>
