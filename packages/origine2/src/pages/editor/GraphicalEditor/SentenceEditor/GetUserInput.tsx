@@ -11,9 +11,10 @@ export default function GetUserInput(props: ISentenceEditorProps) {
   const title = useValue(((titleFromArgs === 0 ? '' : titleFromArgs) ?? '').toString());
   const buttonTextFromArgs = getArgByKey(props.sentence, "buttonText");
   const buttonText = useValue(((buttonTextFromArgs === 0 ? '' : buttonTextFromArgs) ?? '').toString());
+  const defaultValueFromArgs = getArgByKey(props.sentence, "defaultValue");
+  const defaultValue = useValue((defaultValueFromArgs ?? '').toString());
   const varKey = useValue(props.sentence.content);
   const submit = () => {
-    console.log(varKey.value, title.value, buttonText.value);
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
       varKey.value,
@@ -21,6 +22,7 @@ export default function GetUserInput(props: ISentenceEditorProps) {
       [
         {key: "title", value: title.value},
         {key: "buttonText", value: buttonText.value},
+        {key: "defaultValue", value: defaultValue.value},
       ],
       props.sentence.inlineComment,
     );
@@ -56,6 +58,17 @@ export default function GetUserInput(props: ISentenceEditorProps) {
           onChange={(ev) => {
             const newValue = ev.target.value;
             buttonText.set(newValue ?? "");
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{width: "100%"}}
+        />
+      </CommonOptions>
+      <CommonOptions title={t`默认值`} key="4">
+        <input value={defaultValue.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            defaultValue.set(newValue ?? "");
           }}
           onBlur={submit}
           className={styles.sayInput}

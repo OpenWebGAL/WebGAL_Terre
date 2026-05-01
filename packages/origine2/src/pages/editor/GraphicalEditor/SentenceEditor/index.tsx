@@ -18,6 +18,7 @@ import {
   ListCheckbox,
   Logout,
   GameHandle,
+  Hourglass,
   Music,
   NewPicture,
   People,
@@ -48,6 +49,7 @@ import styles from "./sentenceEditor.module.scss";
 import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput";
 import CallSteam from "@/pages/editor/GraphicalEditor/SentenceEditor/CallSteam";
 import SetTempAnimation from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTempAnimation";
+import Wait from "@/pages/editor/GraphicalEditor/SentenceEditor/Wait";
 import { t } from "@lingui/macro";
 
 export interface ISentenceEditorProps {
@@ -252,6 +254,14 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component:GetUserInput,
     icon: <EnterTheKeyboard theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`获取来自用户的字符输入`
+  },
+  {
+    type: commandType.wait,
+    title: () => t`等待`,
+    initialText: () => t`wait:1000;`,
+    component: Wait,
+    icon: <Hourglass theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`等待一段时间`
   },
   {
     type: commandType.callSteam,
