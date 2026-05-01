@@ -1,7 +1,11 @@
 import { ReactNode } from 'react';
 
-export const candidateFontSizes: number[] = [
-  8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 24, 28
+export const candidateFontSizes: number[] = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 24, 28];
+
+export const languagesDefine = [
+  { label: '简体中文', value: 'zhCn' },
+  { label: 'English', value: 'en' },
+  { label: '日本語', value: 'ja' },
 ];
 
 export type SettingItemType = 'switch' | 'select' | 'input' | 'combo' | 'custom';

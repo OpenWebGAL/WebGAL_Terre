@@ -3,7 +3,7 @@ import s from './settings.module.scss';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
 import TerreToggle from '@/components/terreToggle/TerreToggle';
 import { t } from '@lingui/macro';
-import { candidateFontSizes } from './constants';
+import { candidateFontSizes, languagesDefine } from './constants';
 import { PreviewOpen, PreviewClose } from '@icon-park/react';
 import {
   ArrowEnterLeftFilled,
@@ -47,15 +47,9 @@ export default function SettingPage() {
   const isCascaderDelimitersCustomizable = useEditorStore.use.isCascaderDelimitersCustomizable();
   const updateIsCascaderDelimitersCustomizable = useEditorStore.use.updateIsCascaderDelimitersCustomizable();
   const cascaderDelimiters = useEditorStore.use.cascaderDelimiters();
+  const currentLanguage = useEditorStore.use.language();
   const updateCascaderDelimiters = useEditorStore.use.updateCascaderDelimiters();
   const [tempFontSize, setTempFontSize] = useState(editorFontSize.toString());
-
-  useEffect(() => {
-    const testValue = Number.parseFloat(tempFontSize);
-    if (!isNaN(testValue)) {
-      updateEditorFontSize(testValue);
-    }
-  }, [tempFontSize, updateEditorFontSize]);
 
   const settingsCategories = useMemo((): SettingCategory[] => {
     const cat: SettingCategory[] = [
@@ -69,12 +63,8 @@ export default function SettingPage() {
             type: 'select',
             label: t`语言`,
             icon: <LocalLanguageIcon className={s.iconColor} />,
-            value: t`语言`,
-            options: [
-              { label: '简体中文', value: 'zhCn' },
-              { label: 'English', value: 'en' },
-              { label: '日本語', value: 'ja' },
-            ],
+            value: languagesDefine.find((v) => v.value === currentLanguage)!.label,
+            options: languagesDefine,
             onChange: updateLanguage as (value: string) => void,
           },
         ],
@@ -246,6 +236,13 @@ export default function SettingPage() {
     isCascaderDelimitersCustomizable,
     cascaderDelimiters,
   ]);
+
+  useEffect(() => {
+    const testValue = Number.parseFloat(tempFontSize);
+    if (!isNaN(testValue)) {
+      updateEditorFontSize(testValue);
+    }
+  }, [tempFontSize, updateEditorFontSize]);
 
   return (
     <div className={s.settingPage}>
