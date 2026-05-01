@@ -1037,6 +1037,9 @@ msgstr "その他のオプション"
 msgid "未指定"
 msgstr "指定なし"
 
+msgid "未知语言"
+msgstr "未知の言語です"
+
 msgid "未识别"
 msgstr "認識されないコマンド"
 

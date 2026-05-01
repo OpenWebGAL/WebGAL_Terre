@@ -56,11 +56,18 @@ export default function SettingPage() {
   const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
   const [tempFontSize, setTempFontSize] = useState(editorFontSize.toString());
 
-  const languagesDefine = [
-    { label: t`简体中文`, value: 'zhCn' },
-    { label: t`英语`, value: 'en' },
-    { label: t`日语`, value: 'ja' },
-  ];
+  const languagesDefine = useMemo(
+    () => [
+      { label: t`简体中文`, value: 'zhCn' },
+      { label: t`英语`, value: 'en' },
+      { label: t`日语`, value: 'ja' },
+    ],
+    [],
+  );
+
+  useEffect(() => {
+    setTempFontSize(editorFontSize.toString());
+  }, [editorFontSize]);
 
   const settingsCategories = useMemo((): SettingCategory[] => {
     const cat: SettingCategory[] = [
@@ -74,7 +81,7 @@ export default function SettingPage() {
             type: 'select',
             label: t`语言`,
             icon: <LocalLanguageIcon className={s.iconColor} />,
-            value: languagesDefine.find((v) => v.value === currentLanguage)!.label,
+            value: languagesDefine.find((v) => v.value === currentLanguage)?.label ?? t`未知语言`,
             options: languagesDefine,
             onChange: updateLanguage as (value: string) => void,
           },
@@ -249,13 +256,13 @@ export default function SettingPage() {
     ];
     return cat;
   }, [
-    languagesDefine,
     isDarkMode,
     isShowPreview,
     isEnableLivePreview,
     isUseExpSyncFast,
     isUseRealtimeEffect,
     editorFontFamily,
+    editorFontSize,
     tempFontSize,
     isAutoWarp,
     isCascaderDelimitersCustomizable,

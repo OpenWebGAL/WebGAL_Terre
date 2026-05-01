@@ -1037,6 +1037,9 @@ msgstr "更多选项"
 msgid "未指定"
 msgstr "未指定"
 
+msgid "未知语言"
+msgstr "未知语言"
+
 msgid "未识别"
 msgstr "未识别"
 
