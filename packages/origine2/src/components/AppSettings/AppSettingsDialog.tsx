@@ -256,7 +256,7 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
 
   return (
     <Dialog open={open} onOpenChange={(_, data) => onOpenChange(data.open)}>
-      <DialogSurface className={styles.dialogSurface}>
+      <DialogSurface className={styles.dialogSurface} style={{width: 'min(1150px, calc(100vw - 32px))', maxWidth: 'min(1150px, calc(100vw - 32px))'}}>
         <DialogBody>
           <DialogTitle
             action={

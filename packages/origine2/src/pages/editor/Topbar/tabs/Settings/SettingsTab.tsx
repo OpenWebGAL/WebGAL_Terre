@@ -29,6 +29,7 @@ import {
   NavigationFilled,
   NavigationRegular,
   Settings20Regular,
+  SplitVertical20Regular,
 } from '@fluentui/react-icons';
 import { Platte } from '@icon-park/react';
 import TopbarTab from '@/pages/editor/Topbar/components/TopbarTab';
@@ -179,7 +180,7 @@ export function SettingsTab() {
           <div className={s.cascaderSettings}>
             <IconWithTextItem
               onClick={toggleCascaderDelimiter}
-              icon={<Settings20Regular />}
+              icon={<SplitVertical20Regular />}
               text={isCascaderDelimitersCustomizable ? t`启用` : t`关闭`}
             />
             {isCascaderDelimitersCustomizable && (

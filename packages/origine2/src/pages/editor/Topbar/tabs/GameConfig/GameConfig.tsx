@@ -302,7 +302,7 @@ export function GameConfigDialog({
 }) {
   return (
     <Dialog open={open} onOpenChange={(_, data) => onOpenChange(data.open)}>
-      <DialogSurface className={dialogStyles.dialogSurface}>
+      <DialogSurface className={dialogStyles.dialogSurface} style={{width: 'min(1150px, calc(100vw - 32px))', maxWidth: 'min(1150px, calc(100vw - 32px))'}}>
         <DialogBody>
           <DialogTitle
             action={
