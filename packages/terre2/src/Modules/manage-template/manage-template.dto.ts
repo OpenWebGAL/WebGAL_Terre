@@ -17,7 +17,7 @@ export class TemplateFontConfigDto {
 export class TemplateConfigDto {
   @ApiProperty({ description: 'The name of the template' })
   name: string;
-  @ApiProperty({ description: 'The id of the template' })
+  @ApiProperty({ description: 'The id of the template', required: false })
   id?: string;
   @ApiProperty({ description: 'The webgal version of the template' })
   'webgal-version': string;

@@ -80,9 +80,12 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateInfoDto | null>(null);
 
   useEffect(() => {
-    if (templateList && currentTemplateResp.data && currentTemplateResp.data.id) {
-      const selectedTemplate = templateList.find(template => template.id === currentTemplateResp.data?.id);
-      selectedTemplate && setSelectedTemplate(selectedTemplate);
+    if (templateList && currentTemplateResp.data) {
+      const currentTemplate = currentTemplateResp.data;
+      const selectedTemplate = currentTemplate.id
+        ? templateList.find(template => template.id === currentTemplate.id)
+        : templateList.find(template => template.name === currentTemplate.name);
+      setSelectedTemplate(selectedTemplate ?? null);
     }
   }, [templateList, currentTemplateResp.data]);
 
@@ -231,9 +234,7 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
                 }
               }}
             >
-              {/* 应用模板的接口还不支持应用默认模板 */}
-              {/* <Option key="__standard" value="__STANDARD__WG__">{t`WebGAL Classic`}</Option> */}
-              {(templateList ?? []).map(template => <Option key={template.name} value={template.dir}>{template.name}</Option>)}
+              {(templateList ?? []).map(template => <Option key={template.dir} value={template.dir}>{template.name}</Option>)}
             </Dropdown>
             <Trans>
               <Button onClick={applyNewTemplate}>应用新的模板</Button>

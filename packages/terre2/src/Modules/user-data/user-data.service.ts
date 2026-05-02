@@ -37,6 +37,7 @@ const USER_DATA_DIR_NAME = '.webgal_terre';
 const CONFIG_FILE_NAME = 'config.json';
 const CONFIG_VERSION = TERRE_VERSION;
 const PORTABLE_DATA_DIR_NAME = 'data';
+const DEFAULT_TEMPLATE_DIR = 'WebGAL_Default_Template';
 const BUILT_IN_TEMPLATE_DIRS = new Set(['WebGAL_Classic', 'WebGAL Black']);
 const MANAGED_DATA_DIRS = [
   'games',
@@ -87,6 +88,7 @@ export class UserDataService {
 
     const userPath = this.safeResolve(userRoot, templateName);
     if (preferUser) return userPath;
+    if (templateName === DEFAULT_TEMPLATE_DIR) return this.getDefaultTemplateRoot();
 
     const installPath = this.safeResolve(
       this.getInstallPath('public/templates'),
@@ -126,6 +128,10 @@ export class UserDataService {
       this.getInstallPath('assets/templates/WebGAL_Default_Template'),
       rawPath,
     );
+  }
+
+  static getDefaultTemplateDir() {
+    return DEFAULT_TEMPLATE_DIR;
   }
 
   static isPathInsideAllowedRoots(pathToCheck: string): boolean {
@@ -207,6 +213,10 @@ export class UserDataService {
   }
 
   static async resolveReadableTemplateFile(templateName: string, filePath = '') {
+    if (templateName === DEFAULT_TEMPLATE_DIR) {
+      return this.safeResolve(this.getDefaultTemplateRoot(), filePath);
+    }
+
     const userPath = this.safeResolve(
       this.getUserTemplateRoot(templateName),
       filePath,
@@ -451,6 +461,10 @@ export class UserDataService {
   private static resolveTemplateLogicalPath(templatePath: string) {
     const [templateName, ...rest] = templatePath.split('/');
     const relativePath = rest.join('/');
+    if (templateName === DEFAULT_TEMPLATE_DIR) {
+      return this.safeResolve(this.getDefaultTemplateRoot(), relativePath);
+    }
+
     const userTemplatePath = this.safeResolve(
       this.getUserTemplateRoot(templateName),
       relativePath,

@@ -43,8 +43,10 @@ export class ManageTemplateService {
       .filter((file) => file.isDir)
       .forEach((file) => templateDirs.set(file.name, file));
     const fileInfo = Array.from(templateDirs.values());
+    const defaultTemplate = await this.getDefaultTemplateInfo();
     const templateList: Promise<TemplateInfoDto>[] = fileInfo
       .filter((file) => file.isDir)
+      .filter((file) => file.name !== UserDataService.getDefaultTemplateDir())
       .map(async (item): Promise<TemplateInfoDto> => {
         try {
           const templateConfig: TemplateConfigDto =
@@ -60,7 +62,24 @@ export class ManageTemplateService {
           return null;
         }
       });
-    return (await Promise.all(templateList)).filter((e) => e !== null);
+    return [defaultTemplate, ...(await Promise.all(templateList))].filter(
+      (e): e is TemplateInfoDto => e !== null,
+    );
+  }
+
+  private async getDefaultTemplateInfo(): Promise<TemplateInfoDto | null> {
+    try {
+      const templateConfig = await this.getTemplateConfig(
+        UserDataService.getDefaultTemplateDir(),
+      );
+      return {
+        ...templateConfig,
+        dir: UserDataService.getDefaultTemplateDir(),
+        builtIn: true,
+      };
+    } catch {
+      return null;
+    }
   }
 
   /**
