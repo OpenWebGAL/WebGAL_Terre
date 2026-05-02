@@ -8,9 +8,10 @@ import {
   UserDataOperationResultDto,
   UserDataStatusDto,
 } from './user-data.dto';
+import { TERRE_VERSION } from '../../version';
 
 interface UserDataConfig {
-  version: number;
+  version: string;
   userDataPath?: string;
 }
 
@@ -34,7 +35,7 @@ interface MoveResult {
 
 const USER_DATA_DIR_NAME = '.webgal_terre';
 const CONFIG_FILE_NAME = 'config.json';
-const CONFIG_VERSION = 1;
+const CONFIG_VERSION = TERRE_VERSION;
 const PORTABLE_DATA_DIR_NAME = 'data';
 const BUILT_IN_TEMPLATE_DIRS = new Set(['WebGAL_Classic', 'WebGAL Black']);
 const MANAGED_DATA_DIRS = [
@@ -413,8 +414,8 @@ export class UserDataService {
   private static async readConfig(configPath: string): Promise<UserDataConfig> {
     try {
       const text = await fs.readFile(configPath, 'utf8');
-      const parsed = JSON.parse(text) as UserDataConfig;
-      return { version: CONFIG_VERSION, ...parsed };
+      const parsed = JSON.parse(text) as Partial<UserDataConfig>;
+      return { ...parsed, version: CONFIG_VERSION };
     } catch {
       return { version: CONFIG_VERSION };
     }

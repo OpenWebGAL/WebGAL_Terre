@@ -3,6 +3,7 @@ import * as fs from 'fs/promises';
 import * as os from 'os';
 import * as path from 'path';
 import { UserDataService } from './user-data.service';
+import { TERRE_VERSION } from '../../version';
 
 describe('UserDataService', () => {
   const testRoot = path.join(
@@ -39,7 +40,7 @@ describe('UserDataService', () => {
       portableDataRoot: path.join(testRoot, 'data'),
       isPortable: false,
       hasPortableDataDir: false,
-      config: { version: 1 },
+      config: { version: TERRE_VERSION },
     };
 
     await (UserDataService as any).ensureStateDirectories();
@@ -56,5 +57,22 @@ describe('UserDataService', () => {
     await expect(
       fs.stat(path.join(activeUserDataRoot, 'Exported_Games')),
     ).resolves.toBeDefined();
+  });
+
+  it('normalizes config version to the current Terre version', async () => {
+    const configPath = path.join(testRoot, 'config.json');
+    const customPath = path.join(testRoot, 'custom-data');
+    await fs.mkdir(path.dirname(configPath), { recursive: true });
+    await fs.writeFile(
+      configPath,
+      JSON.stringify({ version: 1, userDataPath: customPath }),
+    );
+
+    const config = await (UserDataService as any).readConfig(configPath);
+
+    expect(config).toEqual({
+      version: TERRE_VERSION,
+      userDataPath: customPath,
+    });
   });
 });

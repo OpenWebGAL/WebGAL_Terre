@@ -2,7 +2,7 @@ import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as fsp from 'fs/promises';
 import { webgalParser } from '../../util/webgal-parser';
-import { version_number } from '../../main';
+import { version_number } from '../../version';
 import { TemplateConfigDto, TemplateInfoDto } from './manage-template.dto';
 import { randomUUID } from 'crypto';
 import { UserDataService } from '../user-data/user-data.service';
