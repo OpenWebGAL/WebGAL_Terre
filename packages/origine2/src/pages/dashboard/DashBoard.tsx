@@ -54,10 +54,10 @@ import { __INFO } from "@/config/info";
 import {CreateGameDto, CreateTemplateDto} from "@/api/Api";
 import { Platte } from "@icon-park/react";
 import {
+  AppSettingsDialog,
   USER_DATA_STATUS_KEY,
-  UserDataSettingsDialog,
   userDataStatusFetcher
-} from "@/components/UserDataSettings/UserDataSettingsDialog";
+} from "@/components/AppSettings/AppSettingsDialog";
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -92,7 +92,7 @@ export default function DashBoard() {
   const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
 
   const messageRef = useRef<TestRefRef>(null);
-  const [userDataSettingsOpen, setUserDataSettingsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // 左侧栏页签
   const selectedValue = subPage;
@@ -214,7 +214,7 @@ export default function DashBoard() {
             </Text>
           </ToastBody>
           <ToastFooter>
-            <Button appearance="primary" size="small" onClick={() => setUserDataSettingsOpen(true)}>
+            <Button appearance="primary" size="small" onClick={() => setSettingsOpen(true)}>
               {t`打开设置`}
             </Button>
           </ToastFooter>
@@ -235,9 +235,9 @@ export default function DashBoard() {
           <ToolbarButton
             aria-label={t`用户数据`}
             icon={<Settings20Regular/>}
-            onClick={() => setUserDataSettingsOpen(true)}
+            onClick={() => setSettingsOpen(true)}
           >
-            {t`用户数据`}
+            {t`设置`}
           </ToolbarButton>
           <Menu>
             <MenuTrigger>
@@ -304,7 +304,7 @@ export default function DashBoard() {
         </div>}
       </div>
       <Toaster toasterId={releaseToasterId} />
-      <UserDataSettingsDialog open={userDataSettingsOpen} onOpenChange={setUserDataSettingsOpen} />
+      <AppSettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
     </div>
   );
 }

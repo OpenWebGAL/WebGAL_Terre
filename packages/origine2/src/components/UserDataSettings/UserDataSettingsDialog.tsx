@@ -1,21 +1,13 @@
 import {
   Badge,
   Button,
-  Dialog,
-  DialogActions,
-  DialogBody,
-  DialogContent,
-  DialogSurface,
-  DialogTitle,
   Input,
   Spinner,
-  ToolbarButton,
 } from '@fluentui/react-components';
 import {
   ArrowSync20Regular,
   Database20Regular,
   FolderOpen20Regular,
-  Settings20Regular,
 } from '@fluentui/react-icons';
 import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
@@ -60,11 +52,6 @@ interface UserDataOperationResult {
   status: UserDataStatus;
 }
 
-interface UserDataSettingsDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
 export const USER_DATA_STATUS_KEY = '/api/userData/status';
 
 export const userDataStatusFetcher = async () => {
@@ -72,32 +59,9 @@ export const userDataStatusFetcher = async () => {
   return resp.data;
 };
 
-export function UserDataSettingsButton({
-  appearance = 'subtle',
-}: {
-  appearance?: 'subtle' | 'transparent' | 'primary';
-}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <ToolbarButton
-        appearance={appearance}
-        icon={<Settings20Regular />}
-        onClick={() => setOpen(true)}
-      >
-        {t`用户数据`}
-      </ToolbarButton>
-      <UserDataSettingsDialog open={open} onOpenChange={setOpen} />
-    </>
-  );
-}
-
-export function UserDataSettingsDialog({
-  open,
-  onOpenChange,
-}: UserDataSettingsDialogProps) {
+export function UserDataSettingsPanel() {
   const { data: status, isLoading, mutate: mutateStatus } = useSWR(
-    open ? USER_DATA_STATUS_KEY : null,
+    USER_DATA_STATUS_KEY,
     userDataStatusFetcher,
   );
   const [targetPath, setTargetPath] = useState('');
@@ -213,123 +177,112 @@ export function UserDataSettingsDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={(_, data) => onOpenChange(data.open)}>
-      <DialogSurface className={styles.dialogSurface}>
-        <DialogBody>
-          <DialogTitle>{t`用户数据设置`}</DialogTitle>
-          <DialogContent className={styles.content}>
-            {isLoading && <Spinner label={t`正在读取用户数据设置`} />}
-            {status && (
-              <>
-                <div className={styles.section}>
-                  <div className={styles.sectionTitle}>{t`当前状态`}</div>
-                  <div className={styles.row}>
-                    <span>{t`模式`}</span>
-                    <div>
-                      <Badge appearance="filled" color={status.isPortable ? 'important' : 'brand'}>
-                        {status.isPortable ? t`Portable 模式` : t`用户目录模式`}
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className={styles.row}>
-                    <span>{t`用户数据目录`}</span>
-                    <div className={styles.pathValue} title={status.activeUserDataRoot}>
-                      {status.activeUserDataRoot}
-                    </div>
-                  </div>
-                  <div className={styles.row}>
-                    <span>{t`配置目录`}</span>
-                    <div className={styles.pathValue} title={status.configRoot}>
-                      {status.configRoot}
-                    </div>
-                  </div>
-                  <div className={styles.actions}>
-                    <Button icon={<FolderOpen20Regular />} onClick={() => openPath('active')}>
-                      {t`打开用户数据目录`}
-                    </Button>
-                    <Button icon={<FolderOpen20Regular />} onClick={() => openPath('config')}>
-                      {t`打开配置目录`}
-                    </Button>
-                    <Button icon={<FolderOpen20Regular />} onClick={() => openPath('app')}>
-                      {t`打开安装目录`}
-                    </Button>
-                  </div>
-                </div>
+    <>
+      {isLoading && <Spinner label={t`正在读取用户数据设置`} />}
+      {status && (
+        <>
+          <div className={styles.section}>
+            <div className={styles.sectionTitle}>{t`当前状态`}</div>
+            <div className={styles.row}>
+              <span>{t`模式`}</span>
+              <div>
+                <Badge appearance="filled" color={status.isPortable ? 'important' : 'brand'}>
+                  {status.isPortable ? t`Portable 模式` : t`用户目录模式`}
+                </Badge>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <span>{t`用户数据目录`}</span>
+              <div className={styles.pathValue} title={status.activeUserDataRoot}>
+                {status.activeUserDataRoot}
+              </div>
+            </div>
+            <div className={styles.row}>
+              <span>{t`配置目录`}</span>
+              <div className={styles.pathValue} title={status.configRoot}>
+                {status.configRoot}
+              </div>
+            </div>
+            <div className={styles.actions}>
+              <Button icon={<FolderOpen20Regular />} onClick={() => openPath('active')}>
+                {t`打开用户数据目录`}
+              </Button>
+              <Button icon={<FolderOpen20Regular />} onClick={() => openPath('config')}>
+                {t`打开配置目录`}
+              </Button>
+              <Button icon={<FolderOpen20Regular />} onClick={() => openPath('app')}>
+                {t`打开安装目录`}
+              </Button>
+            </div>
+          </div>
 
-                <div className={styles.section}>
-                  <div className={styles.sectionTitle}>{t`用户数据位置`}</div>
-                  <div className={styles.message}>
-                    {t`配置始终保存在统一的 .webgal_terre 目录。游戏、自定义模板和定制引擎可以迁移到其他磁盘。`}
-                  </div>
-                  <Input
-                    value={targetPath}
-                    disabled={status.isPortable || busy}
-                    onChange={(_, data) => setTargetPath(data.value)}
-                    contentBefore={<Database20Regular />}
-                  />
-                  <div className={styles.actions}>
-                    <Button
-                      icon={<FolderOpen20Regular />}
-                      disabled={status.isPortable || busy}
-                      onClick={chooseDirectory}
-                    >
-                      {t`选择目录`}
-                    </Button>
-                    <Button
-                      appearance="primary"
-                      disabled={status.isPortable || busy || !targetPath.trim()}
-                      onClick={setUserDataPath}
-                    >
-                      {t`迁移到此目录`}
-                    </Button>
-                    <Button disabled={status.isPortable || busy} onClick={resetUserDataPath}>
-                      {t`恢复默认目录`}
-                    </Button>
-                  </div>
-                  {status.isPortable && (
-                    <div className={styles.message}>
-                      {t`当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。`}
-                    </div>
-                  )}
-                </div>
-
-                {status.legacyMigration.needsMigrationNotice && (
-                  <div className={styles.notice}>
-                    <div className={styles.sectionTitle}>{t`4.6 用户数据迁移`}</div>
-                    <div className={styles.message}>{migrationText}</div>
-                    <div className={styles.actions}>
-                      <Button
-                        appearance="primary"
-                        icon={<ArrowSync20Regular />}
-                        disabled={busy}
-                        onClick={migrateLegacy}
-                      >
-                        {t`开始迁移`}
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {operationMessage && <div className={styles.message}>{operationMessage}</div>}
-                {conflicts.length > 0 && (
-                  <div className={styles.danger}>
-                    {t`以下目标路径已存在，未覆盖：`}
-                    <ul>
-                      {conflicts.map((conflict) => (
-                        <li key={conflict}>{conflict}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </>
+          <div className={styles.section}>
+            <div className={styles.sectionTitle}>{t`用户数据位置`}</div>
+            <div className={styles.message}>
+              {t`配置始终保存在统一的 .webgal_terre 目录。游戏、自定义模板和定制引擎可以迁移到其他磁盘。`}
+            </div>
+            <Input
+              value={targetPath}
+              disabled={status.isPortable || busy}
+              onChange={(_, data) => setTargetPath(data.value)}
+              contentBefore={<Database20Regular />}
+            />
+            <div className={styles.actions}>
+              <Button
+                icon={<FolderOpen20Regular />}
+                disabled={status.isPortable || busy}
+                onClick={chooseDirectory}
+              >
+                {t`选择目录`}
+              </Button>
+              <Button
+                appearance="primary"
+                disabled={status.isPortable || busy || !targetPath.trim()}
+                onClick={setUserDataPath}
+              >
+                {t`迁移到此目录`}
+              </Button>
+              <Button disabled={status.isPortable || busy} onClick={resetUserDataPath}>
+                {t`恢复默认目录`}
+              </Button>
+            </div>
+            {status.isPortable && (
+              <div className={styles.message}>
+                {t`当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。`}
+              </div>
             )}
-          </DialogContent>
-          <DialogActions>
-            {busy && <Spinner size="tiny" />}
-            <Button onClick={() => onOpenChange(false)}>{t`关闭`}</Button>
-          </DialogActions>
-        </DialogBody>
-      </DialogSurface>
-    </Dialog>
+          </div>
+
+          {status.legacyMigration.needsMigrationNotice && (
+            <div className={styles.notice}>
+              <div className={styles.sectionTitle}>{t`4.6 用户数据迁移`}</div>
+              <div className={styles.message}>{migrationText}</div>
+              <div className={styles.actions}>
+                <Button
+                  appearance="primary"
+                  icon={<ArrowSync20Regular />}
+                  disabled={busy}
+                  onClick={migrateLegacy}
+                >
+                  {t`开始迁移`}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {operationMessage && <div className={styles.message}>{operationMessage}</div>}
+          {conflicts.length > 0 && (
+            <div className={styles.danger}>
+              {t`以下目标路径已存在，未覆盖：`}
+              <ul>
+                {conflicts.map((conflict) => (
+                  <li key={conflict}>{conflict}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
+      )}
+    </>
   );
 }

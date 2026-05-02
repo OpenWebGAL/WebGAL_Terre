@@ -437,9 +437,6 @@ msgstr "Hide the figure"
 msgid "关闭背景"
 msgstr "Hide the background"
 
-msgid "关闭预览窗口"
-msgstr "Close the preview window"
-
 msgid "内容"
 msgstr "Content"
 
@@ -484,6 +481,9 @@ msgstr "Change scene"
 
 msgid "切换场景，新场景直接替换父场景"
 msgstr "Change scene, new scene will replace old scene"
+
+msgid "切换界面语言"
+msgstr "Switch interface language"
 
 msgid "切换立绘"
 msgstr "Change figure"
@@ -761,9 +761,6 @@ msgstr "Positioning"
 msgid "实时预览关闭"
 msgstr "Live preview off"
 
-msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
-msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
-
 msgid "实时预览已停止"
 msgstr "Live preview stopped"
 
@@ -772,9 +769,6 @@ msgstr "Live preview fast-forward exceeded the timeout limit, so further calcula
 
 msgid "实时预览打开"
 msgstr "Live preview on"
-
-msgid "实验性快速预览"
-msgstr "Experimental fast preview"
 
 msgid "宽度"
 msgstr "Width"
@@ -872,6 +866,9 @@ msgstr "Help"
 msgid "帮助文档"
 msgstr "Documents"
 
+msgid "常用设置"
+msgstr "Common settings"
+
 msgid "常规演出"
 msgstr "Regular performance"
 
@@ -952,6 +949,9 @@ msgstr "Manually enter ID"
 
 msgid "打开安装目录"
 msgstr "Open install directory"
+
+msgid "打开完整设置"
+msgstr "Open full settings"
 
 msgid "打开或关闭电影模式"
 msgstr "Turn film mode on or off"
@@ -1232,8 +1232,14 @@ msgstr "Show preview window"
 msgid "普通对话"
 msgstr "General dialogue"
 
+msgid "更多设置"
+msgstr "More settings"
+
 msgid "更多选项"
 msgstr "More options"
+
+msgid "更多配置"
+msgstr "More config"
 
 msgid "替换 UI 样式标签"
 msgstr "Replace UI style tags"
@@ -1493,9 +1499,6 @@ msgstr "Filter"
 msgid "点击或拖拽文件至此上传"
 msgstr "Click or drag file to this area to upload"
 
-msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
-msgstr "Click or press Backspace to delete the old separator. Enter a new separator and press Enter to confirm."
-
 msgid "点状电影滤镜"
 msgstr "Dot film filter"
 
@@ -1510,9 +1513,6 @@ msgstr "User data location"
 
 msgid "用户数据目录"
 msgstr "User data directory"
-
-msgid "用户数据设置"
-msgstr "User data settings"
 
 msgid "用户数据迁移"
 msgstr "User data migration"
@@ -1868,9 +1868,6 @@ msgstr "Setting the animation of the figure or background."
 msgid "设置自定义级联选择器分隔符（输入后按回车键确认）"
 msgstr "Set custom cascade selector separator (press Enter to confirm after input)"
 
-msgid "该功能将大幅提升实时预览效率，但可能出现异常。"
-msgstr "This feature will greatly improve real-time preview efficiency, but may cause exceptions."
-
 msgid "该指令会在文本框显示当前变量。"
 msgstr "This command displays current variables in the textbox."
 
@@ -2194,9 +2191,6 @@ msgstr "Built-in template"
 
 msgid "预置模板保存在安装目录，请先复制为自定义模板再编辑"
 msgstr "Built-in templates are stored in the install directory. Copy one as a custom template before editing."
-
-msgid "预览"
-msgstr "Preview"
 
 msgid "预览图标"
 msgstr "Preview icon"

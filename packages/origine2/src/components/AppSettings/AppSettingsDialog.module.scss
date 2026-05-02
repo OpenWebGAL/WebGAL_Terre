@@ -1,0 +1,151 @@
+.dialogSurface {
+  width: min(1080px, calc(100vw - 32px));
+  max-width: min(1080px, calc(100vw - 32px));
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 16px;
+  max-height: min(76vh, 760px);
+  overflow: hidden;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 12px;
+  border-right: var(--border-sm);
+}
+
+.navButton {
+  justify-content: flex-start;
+}
+
+.sections {
+  min-width: 0;
+  overflow: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: var(--border-sm);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  color: var(--text-sub);
+  font-size: 13px;
+}
+
+.tile {
+  width: 172px;
+  min-height: 76px;
+  border: var(--border-sm);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  color: var(--text);
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tile:hover {
+  background: var(--bg-button-hover);
+}
+
+.tileActive {
+  border-color: var(--primary);
+  background: var(--primary-5pct);
+}
+
+.tileIcon {
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.tileText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tileTitle {
+  font-weight: 600;
+  color: var(--text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tileDescription {
+  color: var(--text-sub);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.inlineActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cascaderInput {
+  max-width: 420px;
+}
+
+@media (max-width: 760px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .nav {
+    border-right: none;
+    border-bottom: var(--border-sm);
+    padding-right: 0;
+    padding-bottom: 12px;
+  }
+}

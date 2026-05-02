@@ -1,0 +1,42 @@
+.dialogSurface {
+  width: min(1080px, calc(100vw - 32px));
+  max-width: min(1080px, calc(100vw - 32px));
+}
+
+.content {
+  max-height: min(76vh, 760px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.configGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.quickContent {
+  display: contents;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px 0;
+  border-bottom: var(--border-sm);
+}
+
+.fieldTitle {
+  font-size: 13px;
+  color: var(--text-sub);
+}
+
+.fieldContent {
+  min-width: 0;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}

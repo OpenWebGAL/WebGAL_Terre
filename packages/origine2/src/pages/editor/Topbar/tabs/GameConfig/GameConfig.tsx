@@ -1,6 +1,7 @@
 import styles from "../topbarTabs.module.scss";
+import dialogStyles from './gameConfigDialog.module.scss';
 import {useValue} from "../../../../../hooks/useValue";
-import {useEffect, useRef, useState} from "react";
+import {ReactNode, useEffect, useRef, useState} from "react";
 import {cloneDeep} from "lodash";
 import ChooseFile from "../../../ChooseFile/ChooseFile";
 import TagTitleWrapper from "@/components/TagTitleWrapper/TagTitleWrapper";
@@ -10,8 +11,28 @@ import {logger} from "@/utils/logger";
 import {textboxThemes} from "./constants";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
 import {Add, Plus, Write} from "@icon-park/react";
-import {Button, Dropdown, Input, Option} from "@fluentui/react-components";
-import {AddFilled, AddRegular, Dismiss24Filled, Dismiss24Regular, IconsFilled, IconsRegular, bundleIcon} from "@fluentui/react-icons";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogSurface,
+  DialogTitle,
+  Dropdown,
+  Input,
+  Option,
+} from "@fluentui/react-components";
+import {
+  AddFilled,
+  AddRegular,
+  Dismiss24Filled,
+  Dismiss24Regular,
+  IconsFilled,
+  IconsRegular,
+  Settings20Regular,
+  bundleIcon,
+} from "@fluentui/react-icons";
 import useEditorStore from "@/store/useEditorStore";
 import {api} from "@/api";
 import {t, Trans} from "@lingui/macro";
@@ -26,7 +47,11 @@ import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
 const AddIcon = bundleIcon(AddFilled, AddRegular);
 
-export default function GameConfig() {
+interface GameConfigProps {
+  mode?: 'quick' | 'full';
+}
+
+export default function GameConfig({ mode = 'full' }: GameConfigProps) {
   const gameDir = useEditorStore.use.subPage();
 
   // 拿到游戏配置
@@ -117,58 +142,70 @@ export default function GameConfig() {
     }
   }
 
+  const renderConfigItem = (title: string, children: ReactNode, wide = false) => {
+    if (mode === 'quick') {
+      return <TabItem title={title}>{children}</TabItem>;
+    }
+    return (
+      <div className={`${dialogStyles.field} ${wide ? dialogStyles.wide : ''}`}>
+        <div className={dialogStyles.fieldTitle}>{title}</div>
+        <div className={dialogStyles.fieldContent}>{children}</div>
+      </div>
+    );
+  };
+
   return (
-    <>
-      <TabItem title={t`游戏名称`}>
+    <div className={mode === 'full' ? dialogStyles.configGrid : dialogStyles.quickContent}>
+      {renderConfigItem(t`游戏名称`,
         <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
-          onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>
-      </TabItem>
-      <TabItem title={t`游戏识别码`}>
+          onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>,
+      )}
+      {renderConfigItem(t`游戏识别码`,
         <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>
-      </TabItem>
-      <TabItem title={t`游戏简介`}>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>,
+      )}
+      {mode === 'full' && renderConfigItem(t`游戏简介`,
         <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
-          onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>
-      </TabItem>
-      <TabItem title={t`游戏包名`}>
+          onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>,
+      )}
+      {mode === 'full' && renderConfigItem(t`游戏包名`,
         <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>
-      </TabItem>
-      <TabItem title={t`Steam AppID`}>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>,
+      )}
+      {mode === 'full' && renderConfigItem(t`Steam AppID`,
         <GameConfigEditor key="steamAppId" value={getConfigContentAsString('Steam_AppID')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Steam_AppID', e)}/>
-      </TabItem>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Steam_AppID', e)}/>,
+      )}
       {/* <TabItem title={t`文本框主题`}> */}
       {/*  <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')} */}
       {/*    onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} */}
       {/*    selectItems={textboxThemes}/> */}
       {/* </TabItem> */}
-      <TabItem title={t`标题背景图片`}>
+      {mode === 'full' && renderConfigItem(t`标题背景图片`,
         <GameConfigEditorWithFileChoose
           sourceBase="background"
           extNameList={extNameMap.get('image') ?? []}
           key="titleBackground"
           value={getConfigContentAsString('Title_img')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>
-      </TabItem>
-      <TabItem title={t`标题背景音乐`}>
-        <div className={styles.sidebar_gameconfig_title}>{}</div>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Title_img', e)}/>,
+      )}
+      {mode === 'full' && renderConfigItem(t`标题背景音乐`,
         <GameConfigEditorWithFileChoose
           extNameList={extNameMap.get('audio') ?? []}
           sourceBase="bgm" key="titleBgm"
           value={getConfigContentAsString('Title_bgm')}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>
-      </TabItem>
-      <TabItem title={t`启动图`}>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>,
+      )}
+      {mode === 'full' && renderConfigItem(t`启动图`,
         <GameConfigEditorWithImageFileChoose
           sourceBase="background"
           extNameList={extNameMap.get('image') ?? []}
           key="logoImage"
           value={getConfigContentAsStringArray('Game_Logo')}
-          onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>
-      </TabItem>
-      <TabItem title={t`应用的模板`}>
+          onChange={(e: string[]) => updateGameConfigArrayByKey('Game_Logo', e)}/>,
+        true,
+      )}
+      {renderConfigItem(t`应用的模板`,
         <div className={styles.applyTemplateWrapper}>
           <Trans>
             <div>
@@ -195,9 +232,10 @@ export default function GameConfig() {
               <Button onClick={applyNewTemplate}>应用新的模板</Button>
             </Trans>
           </div>
-        </div>
-      </TabItem>
-      <TabItem title={t`游戏图标`}>
+        </div>,
+        true,
+      )}
+      {mode === 'full' && renderConfigItem(t`游戏图标`,
         <IconCreator
           gameDir={gameDir}
           triggerButton={
@@ -207,9 +245,9 @@ export default function GameConfig() {
               text={t`修改游戏图标`}
             />
           }
-        />
-      </TabItem>
-      <TabItem title={t`紧急回避`}>
+        />,
+      )}
+      {renderConfigItem(t`紧急回避`,
         <GameConfigEditorWithSelector
           key="isUserForward"
           value={getConfigContentAsString('Show_panic') ? getConfigContentAsString('Show_panic') : 'true'}
@@ -217,9 +255,9 @@ export default function GameConfig() {
             {key: 'true', text: t`启用`},
             {key: 'false', text: t`禁用`}
           ]}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Show_panic', e)}/>
-      </TabItem>
-      <TabItem title={t`鉴赏功能`}>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Show_panic', e)}/>,
+      )}
+      {renderConfigItem(t`鉴赏功能`,
         <GameConfigEditorWithSelector
           key="isUserForward"
           value={getConfigContentAsString('Enable_Appreciation') ? getConfigContentAsString('Enable_Appreciation') : 'false'}
@@ -227,9 +265,9 @@ export default function GameConfig() {
             {key: 'true', text: t`启用`},
             {key: 'false', text: t`禁用`}
           ]}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>
-      </TabItem>
-      <TabItem title={t`默认语言`}>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>,
+      )}
+      {renderConfigItem(t`默认语言`,
         <GameConfigEditorWithSelector
           key="language_select"
           value={getConfigContentAsString('Default_Language') ? getConfigContentAsString('Default_Language') : ''}
@@ -242,9 +280,43 @@ export default function GameConfig() {
             {key: 'fr', text: t`法语`},
             {key: 'de', text: t`德语`},
           ]}
-          onChange={(e: string) => updateGameConfigSimpleByKey('Default_Language', e)}/>
-      </TabItem>
-    </>
+          onChange={(e: string) => updateGameConfigSimpleByKey('Default_Language', e)}/>,
+      )}
+    </div>
+  );
+}
+
+export function GameConfigDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  return (
+    <Dialog open={open} onOpenChange={(_, data) => onOpenChange(data.open)}>
+      <DialogSurface className={dialogStyles.dialogSurface}>
+        <DialogBody>
+          <DialogTitle>{t`游戏配置`}</DialogTitle>
+          <DialogContent className={dialogStyles.content}>
+            <GameConfig mode="full" />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => onOpenChange(false)}>{t`关闭`}</Button>
+          </DialogActions>
+        </DialogBody>
+      </DialogSurface>
+    </Dialog>
+  );
+}
+
+export function GameConfigDialogButton({ onClick }: { onClick: () => void }) {
+  return (
+    <IconWithTextItem
+      onClick={onClick}
+      icon={<Settings20Regular />}
+      text={t`更多配置`}
+    />
   );
 }
 
