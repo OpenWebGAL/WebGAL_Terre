@@ -94,7 +94,7 @@ export interface GameInfoDto {
   /** The cover of the game */
   cover: string;
   /** The template config of the game */
-  template: TemplateConfigDto;
+  template: TemplateConfigDto | null;
 }
 
 export interface CreateGameDto {
