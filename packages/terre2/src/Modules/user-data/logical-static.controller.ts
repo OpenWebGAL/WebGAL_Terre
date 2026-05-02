@@ -177,14 +177,22 @@ export class LogicalStaticController {
       throw new NotFoundException('The requested file does not exist.');
     }
     return new Promise<void>((resolve, reject) => {
-      res.sendFile(filePath, (error) => {
+      res.sendFile(filePath, (error: NodeJS.ErrnoException) => {
         if (error) {
+          if (this.isRequestAbortError(error)) {
+            resolve();
+            return;
+          }
           reject(error);
           return;
         }
         resolve();
       });
     });
+  }
+
+  private isRequestAbortError(error: NodeJS.ErrnoException) {
+    return error.code === 'ECONNABORTED';
   }
 
   private normalizeRequestPath(rawPath: string) {
