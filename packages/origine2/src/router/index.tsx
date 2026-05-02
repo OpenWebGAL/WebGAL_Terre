@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, type ReactElement } from 'react';
 import useEditorStore from '@/store/useEditorStore';
 import DashBoard from '@/pages/dashboard/DashBoard';
 import GameEditorProvider from '@/pages/editor/GameEditorProvider';
@@ -8,7 +8,7 @@ import TemplateEditor from '@/pages/templateEditor/TemplateEditor';
 
 export type IPage = 'dashboard' | 'game' | 'template';
 
-export const routes: { [key in IPage]: { url: string; element: ReactNode } } = {
+export const routes: { [key in IPage]: { url: string; element: ReactElement } } = {
   dashboard: {
     url: '#/dashboard',
     element: <DashBoard />,
@@ -31,7 +31,7 @@ export const routes: { [key in IPage]: { url: string; element: ReactNode } } = {
   },
 };
 
-export function RouterPage({ page }: { page: IPage }) {
+export function RouterPage({ page }: { page: IPage }): ReactElement {
   return routes[page].element || routes.dashboard.element;
 }
 

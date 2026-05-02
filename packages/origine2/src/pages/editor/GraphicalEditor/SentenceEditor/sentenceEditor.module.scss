@@ -14,6 +14,13 @@
   gap: 4px;
 }
 
+.commonArgItem {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
 .flex1 {
   flex: 1;
 }

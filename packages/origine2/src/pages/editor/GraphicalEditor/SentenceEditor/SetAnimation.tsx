@@ -28,6 +28,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
+  const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
   
   const submit = () => {
     const submitString = combineSubmitString(
@@ -38,6 +39,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
         {key: "target", value: target.value},
         {key: "writeDefault", value: writeDefault.value},
         {key: "keep", value: keep.value},
+        {key: "parallel", value: parallel.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -96,6 +98,12 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           keep.set(newValue);
           submit();
         }} onText={t`开启`} offText={t`关闭`} isChecked={keep.value} />
+      </CommonOptions>
+      <CommonOptions key="7" title={t`并行动画`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          parallel.set(newValue);
+          submit();
+        }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
       </CommonOptions>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {

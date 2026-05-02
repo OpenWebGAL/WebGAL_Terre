@@ -24,6 +24,10 @@ export interface IFile {
   lastModified?: number;
 }
 
+interface IAssetsReadResponse {
+  dirInfo?: IFile[];
+}
+
 export type IFileConfig = Map<
   string,
   {
@@ -128,10 +132,10 @@ export default function Assets(
 
   const assetsFetcher = async () => {
     const res = await api.assetsControllerReadAssets(currentFullPath.join('/'));
-    const data = res.data as unknown as object;
+    const data = res.data as unknown as IAssetsReadResponse;
     const path = currentPath.value;
-    if ('dirInfo' in data && data.dirInfo) {
-      const dirInfo = (data.dirInfo as IFile[]).map((item) => ({ ...item, path: [...path, item.name].join('/') }));
+    if (Array.isArray(data.dirInfo)) {
+      const dirInfo = data.dirInfo.map((item) => ({ ...item, path: [...path, item.name].join('/') }));
       return dirInfo.filter(e => e.name !== '.gitkeep');
     } else return [];
   };

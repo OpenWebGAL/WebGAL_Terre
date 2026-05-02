@@ -6,9 +6,8 @@ import {
   extname,
   isAbsolute,
   join,
-  relative,
-  resolve,
 } from 'path';
+import { UserDataService } from '../user-data/user-data.service';
 
 export interface IFileInfo {
   name: string;
@@ -54,14 +53,14 @@ export class WebgalFsService {
     });
   }
 
-  private isPathInsideWorkingDirectory(pathToCheck: string): boolean {
-    const rootPath = resolve(process.cwd());
-    const resolvedPath = resolve(pathToCheck);
-    const relativePath = relative(rootPath, resolvedPath);
-    return (
-      relativePath === '' ||
-      (!relativePath.startsWith('..') && !isAbsolute(relativePath))
-    );
+  private isPathInsideAllowedRoots(pathToCheck: string): boolean {
+    return UserDataService.isPathInsideAllowedRoots(pathToCheck);
+  }
+
+  private normalizeFsPath(_path: string): string {
+    const decodedPath = decodeURI(_path);
+    if (isAbsolute(decodedPath)) return decodedPath;
+    return this.getPathFromRoot(decodedPath);
   }
 
   greet() {
@@ -73,7 +72,7 @@ export class WebgalFsService {
    * @param dir 目录，需用 path 处理。
    */
   async getDirInfo(_dir: string): Promise<IFileInfo[]> {
-    const dir = decodeURI(_dir);
+    const dir = this.normalizeFsPath(_dir);
     const fileNames = await fs.readdir(dir);
     const dirInfoPromises = fileNames.map((e) => {
       const elementPath = this.getPath(`${dir}/${e}`);
@@ -117,7 +116,7 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPathFromRoot(rawPath: string) {
-    return join(process.cwd(), ...decodeURI(rawPath).split('/'));
+    return UserDataService.resolveLogicalPath(rawPath);
   }
 
   /**
@@ -127,7 +126,11 @@ export class WebgalFsService {
    */
   async mkdir(src, dirName) {
     if (!WebgalFsService.checkFileName(dirName)) return false;
-    const dirPath = join(decodeURI(src), decodeURI(dirName));
+    const decodedSrc = decodeURI(src);
+    const normalizedSrc = isAbsolute(decodedSrc)
+      ? decodedSrc
+      : this.getPathFromRoot(decodedSrc);
+    const dirPath = join(normalizedSrc, decodeURI(dirName));
 
     return await fs
       .mkdir(dirPath)
@@ -261,7 +264,7 @@ export class WebgalFsService {
    * 检查文件是否存在
    */
   async exists(_path: string): Promise<boolean> {
-    const path = decodeURI(_path);
+    const path = this.normalizeFsPath(_path);
 
     return await fs
       .stat(path)
@@ -275,8 +278,9 @@ export class WebgalFsService {
    * @returns
    */
   async existsDir(path: string): Promise<boolean> {
+    const normalizedPath = this.normalizeFsPath(path);
     return await fs
-      .stat(path)
+      .stat(normalizedPath)
       .then((stats) => stats.isDirectory())
       .catch(() => false);
   }
@@ -288,8 +292,8 @@ export class WebgalFsService {
   async createEmptyFile(path: string) {
     try {
       const decodedPath = decodeURI(path);
-      if (!this.isPathInsideWorkingDirectory(decodedPath)) {
-        throw new Error('Path is out of workspace');
+      if (!this.isPathInsideAllowedRoots(decodedPath)) {
+        throw new Error('Path is out of allowed roots');
       }
       if (WebgalFsService.hasInvalidPathSegments(decodedPath)) {
         throw new Error('There are unexpected marks in path');
@@ -402,7 +406,10 @@ export class WebgalFsService {
   ): Promise<boolean> {
     try {
       const targetDirectory = decodeURI(_targetDirectory);
-      const targetPath = this.getPathFromRoot(targetDirectory);
+      const targetPath = this.normalizeFsPath(targetDirectory);
+      if (!this.isPathInsideAllowedRoots(targetPath)) {
+        throw new Error('Path is out of allowed roots');
+      }
       await fs.mkdir(targetPath, { recursive: true });
       this.logger.log(`创建目录: ${targetPath}`);
       for (const file of fileList) {

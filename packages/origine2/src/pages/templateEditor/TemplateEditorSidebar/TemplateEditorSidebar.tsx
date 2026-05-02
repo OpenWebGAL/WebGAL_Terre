@@ -17,6 +17,7 @@ import useSWR, { mutate } from 'swr';
 import TemplateConfigDialog from './TemplateConfigDialog';
 import {PlugConnected20Regular, Settings20Regular} from "@fluentui/react-icons";
 import { createId } from '@/utils/createId';
+import { AppSettingsButton } from '@/components/AppSettings/AppSettingsDialog';
 
 export default function TemplateEditorSidebar() {
   const templateDir = useEditorStore.use.subPage();
@@ -65,6 +66,7 @@ export default function TemplateEditorSidebar() {
         <span className={styles.title}>
           {templateConfig ? templateConfig.name : templateDir}
         </span>
+        <AppSettingsButton appearance="subtle" />
       </div>
       <TemplateActions
         templateConfig={templateConfig}

@@ -186,6 +186,8 @@ export interface TemplateInfoDto {
   fonts?: TemplateFontConfigDto[];
   /** The dir of the template */
   dir: string;
+  /** Whether the template is built in */
+  builtIn?: boolean;
 }
 
 export interface CreateTemplateDto {

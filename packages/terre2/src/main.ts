@@ -20,9 +20,10 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import './logger';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
+import { UserDataService } from './Modules/user-data/user-data.service';
 
 let WEBGAL_PORT = 3000; // 默认端口
-export const version_number = `4.5.18`;
+export const version_number = `4.6.0`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }
@@ -92,6 +93,7 @@ async function ensureTemplateFiles() {
 async function bootstrap() {
   // 在启动应用前确保模板文件存在
   await ensureTemplateFiles();
+  await UserDataService.initialize();
 
   const app = await NestFactory.create(AppModule);
 
