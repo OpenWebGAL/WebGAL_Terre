@@ -437,6 +437,9 @@ msgstr "Hide the figure"
 msgid "关闭背景"
 msgstr "Hide the background"
 
+msgid "关闭预览窗口"
+msgstr "Close preview pane"
+
 msgid "内容"
 msgstr "Content"
 
@@ -769,6 +772,9 @@ msgstr "Live preview fast-forward exceeded the timeout limit, so further calcula
 
 msgid "实时预览打开"
 msgstr "Live preview on"
+
+msgid "实验性快速预览"
+msgstr "Experimental fast preview"
 
 msgid "宽度"
 msgstr "Width"
@@ -2191,6 +2197,9 @@ msgstr "Built-in template"
 
 msgid "预置模板保存在安装目录，请先复制为自定义模板再编辑"
 msgstr "Built-in templates are stored in the install directory. Copy one as a custom template before editing."
+
+msgid "预览"
+msgstr "Preview"
 
 msgid "预览图标"
 msgstr "Preview icon"

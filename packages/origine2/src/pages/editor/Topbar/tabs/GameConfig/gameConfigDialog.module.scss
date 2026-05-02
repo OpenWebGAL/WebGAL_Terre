@@ -11,8 +11,9 @@
 
 .configGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  column-gap: 24px;
+  row-gap: 12px;
 }
 
 .quickContent {
@@ -24,7 +25,7 @@
   flex-direction: column;
   gap: 8px;
   min-width: 0;
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: var(--border-sm);
 }
 
@@ -35,6 +36,9 @@
 
 .fieldContent {
   min-width: 0;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
 }
 
 .wide {

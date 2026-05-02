@@ -14,11 +14,11 @@ import {Add, Plus, Write} from "@icon-park/react";
 import {
   Button,
   Dialog,
-  DialogActions,
   DialogBody,
   DialogContent,
   DialogSurface,
   DialogTitle,
+  DialogTrigger,
   Dropdown,
   Input,
   Option,
@@ -46,6 +46,7 @@ import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
 
 const IconsIcon = bundleIcon(IconsFilled, IconsRegular);
 const AddIcon = bundleIcon(AddFilled, AddRegular);
+const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
 
 interface GameConfigProps {
   mode?: 'quick' | 'full';
@@ -239,11 +240,11 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
         <IconCreator
           gameDir={gameDir}
           triggerButton={
-            <IconWithTextItem
-              onClick={() => {}}
+            <Button
               icon={<IconsIcon />}
-              text={t`修改游戏图标`}
-            />
+            >
+              {t`修改游戏图标`}
+            </Button>
           }
         />,
       )}
@@ -297,13 +298,18 @@ export function GameConfigDialog({
     <Dialog open={open} onOpenChange={(_, data) => onOpenChange(data.open)}>
       <DialogSurface className={dialogStyles.dialogSurface}>
         <DialogBody>
-          <DialogTitle>{t`游戏配置`}</DialogTitle>
+          <DialogTitle
+            action={
+              <DialogTrigger action="close">
+                <Button appearance="subtle" aria-label={t`关闭`} icon={<DismissIcon />} />
+              </DialogTrigger>
+            }
+          >
+            {t`游戏配置`}
+          </DialogTitle>
           <DialogContent className={dialogStyles.content}>
             <GameConfig mode="full" />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={() => onOpenChange(false)}>{t`关闭`}</Button>
-          </DialogActions>
         </DialogBody>
       </DialogSurface>
     </Dialog>
@@ -371,7 +377,7 @@ function GameConfigEditorWithSelector(props: IGameConfigEditor & {
         const key = data.optionValue ?? '';
         props.onChange(key);
       }}
-      style={{minWidth: 0}}
+      style={{minWidth: 110}}
     >
       {props.selectItems.map((item) => <Option key={item.key} value={item.key}>{item.text}</Option>)}
     </Dropdown>
@@ -409,8 +415,6 @@ function GameConfigEditorWithImageFileChoose(props: IGameConfigEditorMulti & {
   const gameDir = useEditorStore.use.subPage();
   const inputBoxRef = useRef<HTMLInputElement>(null);
   const images = props.value;
-
-  const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
 
   const addImage = (imageName: string) => {
     const newImages = [...images, imageName];

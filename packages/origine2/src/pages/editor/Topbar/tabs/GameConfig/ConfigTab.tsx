@@ -13,10 +13,10 @@ export default function ConfigTab(){
   return (
     <>
       <TopbarTab>
+        <GameConfig mode="quick"/>
         <TabItem title={t`游戏配置`}>
           <GameConfigDialogButton onClick={() => setConfigOpen(true)} />
         </TabItem>
-        <GameConfig mode="quick"/>
       </TopbarTab>
       <GameConfigDialog open={configOpen} onOpenChange={setConfigOpen} />
     </>

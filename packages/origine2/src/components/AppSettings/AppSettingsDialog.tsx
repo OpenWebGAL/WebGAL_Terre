@@ -2,11 +2,11 @@ import {
   Button,
   Combobox,
   Dialog,
-  DialogActions,
   DialogBody,
   DialogContent,
   DialogSurface,
   DialogTitle,
+  DialogTrigger,
   Input,
   Menu,
   MenuItem,
@@ -17,6 +17,8 @@ import {
   ToolbarButton,
 } from '@fluentui/react-components';
 import {
+  Dismiss24Filled,
+  Dismiss24Regular,
   ArrowEnterLeftFilled,
   ArrowEnterLeftRegular,
   ArrowRepeatAllFilled,
@@ -50,6 +52,7 @@ const LocalLanguageIcon = bundleIcon(LocalLanguageFilled, LocalLanguageRegular);
 const LiveIcon = bundleIcon(LiveFilled, LiveOffFilled);
 const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeftFilled, ArrowEnterLeftRegular);
 const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
+const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
 
 interface AppSettingsDialogProps {
   open: boolean;
@@ -102,6 +105,14 @@ export function AppSettingsButton({
         appearance={appearance}
         icon={<Settings20Regular />}
         onClick={() => setOpen(true)}
+        style={{
+          fontWeight: 'normal',
+          fontSize: '14px',
+          paddingLeft: '4px',
+          paddingRight: '4px',
+          minWidth: 0,
+          textWrap: 'nowrap',
+        }}
       >
         {label}
       </ToolbarButton>
@@ -242,13 +253,16 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
     <Dialog open={open} onOpenChange={(_, data) => onOpenChange(data.open)}>
       <DialogSurface className={styles.dialogSurface}>
         <DialogBody>
-          <DialogTitle>{t`设置`}</DialogTitle>
+          <DialogTitle
+            action={
+              <DialogTrigger action="close">
+                <Button appearance="subtle" aria-label={t`关闭`} icon={<DismissIcon />} />
+              </DialogTrigger>
+            }
+          >
+            {t`设置`}
+          </DialogTitle>
           <DialogContent className={styles.content}>
-            <div className={styles.nav}>
-              <Button className={styles.navButton} appearance="subtle" onClick={() => onOpenChange(false)}>
-                {t`关闭`}
-              </Button>
-            </div>
             <div className={styles.sections}>
               <section className={styles.section}>
                 <div className={styles.sectionTitle}>{t`常用设置`}</div>
@@ -279,26 +293,23 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
                   </label>
                 </div>
               </section>
-              <section className={styles.section}>
-                <div className={styles.sectionTitle}>{t`自定义级联选择器分隔符`}</div>
-                {isCascaderDelimitersCustomizable && (
+              {isCascaderDelimitersCustomizable && (
+                <section className={styles.section}>
+                  <div className={styles.sectionTitle}>{t`自定义级联选择器分隔符`}</div>
                   <div className={styles.cascaderInput}>
                     <TagInputPicker
                       onOptionSelect={(options) => updateCascaderDelimiters(options)}
                       selectedOptions={cascaderDelimiters}
                     />
                   </div>
-                )}
-              </section>
+                </section>
+              )}
               <section className={styles.section}>
                 <div className={styles.sectionTitle}>{t`用户数据`}</div>
                 <UserDataSettingsPanel />
               </section>
             </div>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={() => onOpenChange(false)}>{t`关闭`}</Button>
-          </DialogActions>
         </DialogBody>
       </DialogSurface>
     </Dialog>

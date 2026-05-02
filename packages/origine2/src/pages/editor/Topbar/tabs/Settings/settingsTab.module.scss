@@ -23,8 +23,38 @@
 }
 
 .fontFamilyInput {
-  max-width: 320px;
+  width: 310px;
   margin: 0 5px 0 0;
+}
+
+.fontSizeInput {
+  width: 86px;
+}
+
+.editorSettings {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.inlineField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-sub);
+  font-size: 13px;
+}
+
+.cascaderSettings {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.cascaderPicker {
+  min-width: 220px;
+  max-width: 320px;
+  padding-bottom: 10px;
 }
 
 .prompt {
