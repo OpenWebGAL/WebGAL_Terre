@@ -23,7 +23,7 @@ import * as fsExtra from 'fs-extra';
 import { UserDataService } from './Modules/user-data/user-data.service';
 
 let WEBGAL_PORT = 3000; // 默认端口
-export const version_number = `4.5.18`;
+export const version_number = `4.6.0`;
 if (env.WEBGAL_PORT) {
   WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
 }
