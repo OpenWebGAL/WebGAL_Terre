@@ -68,6 +68,7 @@ export default function TemplateElement(props: ITemplateElementProps){
   };
 
   const templateName = props.templateInfo.dir;
+  const isBuiltIn = props.templateInfo.builtIn;
 
   return (
     <>
@@ -78,8 +79,14 @@ export default function TemplateElement(props: ITemplateElementProps){
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
           <div className={styles.templateElement_action} onClick={(event) => event.stopPropagation()}>
-            <Button appearance='primary' as='a' href={`${routes.template.url}/${props.templateInfo.dir}`}>
-              <span style={{textWrap: 'nowrap'}}>{t`编辑模板`}</span>
+            <Button
+              appearance='primary'
+              as={isBuiltIn ? undefined : 'a'}
+              href={isBuiltIn ? undefined : `${routes.template.url}/${props.templateInfo.dir}`}
+              disabled={isBuiltIn}
+              title={isBuiltIn ? t`预置模板保存在安装目录，请先复制为自定义模板再编辑` : undefined}
+            >
+              <span style={{textWrap: 'nowrap'}}>{isBuiltIn ? t`预置模板` : t`编辑模板`}</span>
             </Button>
             <Menu>
               <MenuTrigger>
@@ -89,8 +96,8 @@ export default function TemplateElement(props: ITemplateElementProps){
                 <MenuList>
                   <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t`在文件管理器中打开`}</MenuItem>
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
-                  <MenuItem icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名模板目录`}</MenuItem>
-                  <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除模板`}</MenuItem>
+                  <MenuItem disabled={isBuiltIn} icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名模板目录`}</MenuItem>
+                  <MenuItem disabled={isBuiltIn} icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除模板`}</MenuItem>
                 </MenuList>
               </MenuPopover>
             </Menu>

@@ -5,4 +5,7 @@ contextBridge.exposeInMainWorld('electronFuncs', {
         initialize: (appId) => ipcRenderer.invoke('steam-initialize', appId),
         unlockAchievement: (achievementId) => ipcRenderer.invoke('steam-unlock-achievement', achievementId),
     },
+    dialog: {
+        selectDirectory: (defaultPath) => ipcRenderer.invoke('dialog-select-directory', defaultPath),
+    },
 });

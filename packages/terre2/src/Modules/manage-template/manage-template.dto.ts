@@ -33,6 +33,9 @@ export class TemplateConfigDto {
 export class TemplateInfoDto extends TemplateConfigDto {
   @ApiProperty({ description: 'The dir of the template' })
   dir: string;
+
+  @ApiProperty({ description: 'Whether the template is built in' })
+  builtIn?: boolean;
 }
 
 export class CreateTemplateDto {

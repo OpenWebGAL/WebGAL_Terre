@@ -25,6 +25,7 @@ import { useEffect, useState } from 'react';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
 import TerreToggle from '@/components/terreToggle/TerreToggle';
 import { PreviewClose, PreviewOpen } from '@icon-park/react';
+import { UserDataSettingsButton } from '@/components/UserDataSettings/UserDataSettingsDialog';
 
 export function SettingsTab() {
 
@@ -85,6 +86,9 @@ export function SettingsTab() {
           </MenuList>
         </MenuPopover>
       </Menu>
+    </TabItem>
+    <TabItem title={t`用户数据`}>
+      <UserDataSettingsButton appearance="transparent" />
     </TabItem>
     <TabItem title={t`预览`}>
       <IconWithTextItem

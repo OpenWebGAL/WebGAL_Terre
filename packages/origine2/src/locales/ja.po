@@ -32,6 +32,9 @@ msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
+msgid "4.6 用户数据迁移"
+msgstr "4.6 ユーザーデータ移行"
+
 msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 
@@ -119,6 +122,9 @@ msgstr "playEffect: 効果音を選択;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo: 動画を選択;"
 
+msgid "Portable 模式"
+msgstr "Portable モード"
+
 msgid "RGB电影滤镜"
 msgstr "RGB映画"
 
@@ -169,6 +175,9 @@ msgstr "wait:1000;"
 
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
+
+msgid "WebGAL Terre 4.6 使用新的用户数据目录。建议检查并迁移旧版本数据。"
+msgstr "WebGAL Terre 4.6 は新しいユーザーデータディレクトリを使用します。旧バージョンのデータを確認して移行することをおすすめします。"
 
 msgid "X轴位移"
 msgstr "X軸位移"
@@ -274,6 +283,9 @@ msgstr "このシーンから選択"
 
 msgid "代码编辑器"
 msgstr "コードエディタ"
+
+msgid "以下目标路径已存在，未覆盖："
+msgstr "次の移行先パスは既に存在するため、上書きされませんでした："
 
 msgid "伽马值"
 msgstr "ガンマ"
@@ -547,6 +559,12 @@ msgstr "単一のアニメーション"
 
 msgid "单行注释"
 msgstr "一行コメント"
+
+msgid "即将把用户数据迁移到新的目录。文件较多时可能需要一些时间，迁移完成前请不要关闭 WebGAL Terre。"
+msgstr "ユーザーデータを新しいディレクトリへ移行します。ファイルが多い場合は時間がかかることがあります。移行が完了するまで WebGAL Terre を閉じないでください。"
+
+msgid "即将把用户数据迁移回默认目录。文件较多时可能需要一些时间。"
+msgstr "ユーザーデータを既定のディレクトリへ戻します。ファイルが多い場合は時間がかかることがあります。"
 
 msgid "厚度"
 msgstr "厚さ"
@@ -881,6 +899,9 @@ msgstr "遅延時間（秒）"
 msgid "开启"
 msgstr "有効化"
 
+msgid "开始迁移"
+msgstr "移行を開始"
+
 msgid "张开嘴"
 msgstr "開いた口"
 
@@ -890,8 +911,20 @@ msgstr "強度"
 msgid "当前场景"
 msgstr "現在のシーン"
 
+msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
+msgstr "現在 Portable モードです。実際のデータディレクトリはインストールディレクトリ内の data フォルダーで決まります。"
+
+msgid "当前没有检测到可迁移内容，但新版本已经切换为用户数据目录。"
+msgstr "移行可能な内容は検出されませんでしたが、このバージョンではユーザーデータディレクトリへ切り替わっています。"
+
 msgid "当前版本"
 msgstr "現在のバージョン"
+
+msgid "当前状态"
+msgstr "現在の状態"
+
+msgid "当前环境不支持系统文件夹选择器，请手动输入路径。"
+msgstr "現在の環境ではシステムのフォルダー選択を使用できません。パスを手動で入力してください。"
 
 msgid "德语"
 msgstr "ドイツ語"
@@ -905,6 +938,9 @@ msgstr "高速プレビュー文"
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
+msgid "恢复默认目录"
+msgstr "既定のディレクトリに戻す"
+
 msgid "我确定要删除游戏"
 msgstr "ゲームを削除することを確認しました"
 
@@ -914,11 +950,23 @@ msgstr "手動で次の行を表示"
 msgid "手动输入 ID"
 msgstr "IDを手動で設定"
 
+msgid "打开安装目录"
+msgstr "インストールディレクトリを開く"
+
 msgid "打开或关闭电影模式"
 msgstr "映画モードをオン/オフ"
 
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
+
+msgid "打开用户数据目录"
+msgstr "ユーザーデータディレクトリを開く"
+
+msgid "打开设置"
+msgstr "設定を開く"
+
+msgid "打开配置目录"
+msgstr "設定ディレクトリを開く"
 
 msgid "执行到此句"
 msgstr "この文まで実行"
@@ -994,6 +1042,9 @@ msgstr "動画の再生"
 
 msgid "操作"
 msgstr "操作"
+
+msgid "操作失败"
+msgstr "操作に失敗しました"
 
 msgid "故障电影滤镜"
 msgstr "グリッチ映画"
@@ -1133,6 +1184,15 @@ msgstr "一致するオプションがありません"
 msgid "日语"
 msgstr "日本語"
 
+msgid "旧定制引擎"
+msgstr "旧カスタムエンジン"
+
+msgid "旧游戏目录"
+msgstr "旧ゲームディレクトリ"
+
+msgid "旧自定义模板"
+msgstr "旧カスタムテンプレート"
+
 msgid "是否固定弹窗"
 msgstr "ポップアップをピン留め"
 
@@ -1253,6 +1313,12 @@ msgstr "スタイル置換"
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
+msgid "检测到需要迁移的内容：{0}。"
+msgstr "移行が必要な内容を検出しました：{0}。"
+
+msgid "模式"
+msgstr "モード"
+
 msgid "模板"
 msgstr "テンプレート"
 
@@ -1282,6 +1348,9 @@ msgstr "アップロード中"
 
 msgid "正在加载模板配置"
 msgstr "テンプレート設定を読み込み中"
+
+msgid "正在读取用户数据设置"
+msgstr "ユーザーデータ設定を読み込み中"
 
 msgid "正常"
 msgstr "通常"
@@ -1321,6 +1390,9 @@ msgstr "コメントは編集時のみ表示され、ゲームプレイ時には
 
 msgid "浅色"
 msgstr "ライト"
+
+msgid "浏览器已选择目录，但出于安全限制不会暴露本地绝对路径，无法直接用于迁移。请手动输入目录路径。"
+msgstr "ブラウザーでディレクトリを選択しましたが、セキュリティ上の制限によりローカルの絶対パスは公開されないため、移行には直接使用できません。ディレクトリパスを手動で入力してください。"
 
 msgid "淡入淡出"
 msgstr "フェードインとアウト"
@@ -1429,6 +1501,24 @@ msgstr "ドット映画"
 
 msgid "特殊演出"
 msgstr "特別演出"
+
+msgid "用户数据"
+msgstr "ユーザーデータ"
+
+msgid "用户数据位置"
+msgstr "ユーザーデータの場所"
+
+msgid "用户数据目录"
+msgstr "ユーザーデータディレクトリ"
+
+msgid "用户数据设置"
+msgstr "ユーザーデータ設定"
+
+msgid "用户数据迁移"
+msgstr "ユーザーデータ移行"
+
+msgid "用户目录模式"
+msgstr "ユーザーディレクトリモード"
 
 msgid "电影模式"
 msgstr "映画モード"
@@ -1880,6 +1970,9 @@ msgstr "入力検証の正規表現"
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
 
+msgid "迁移到此目录"
+msgstr "このディレクトリへ移行"
+
 msgid "过渡时间（单位为毫秒）"
 msgstr "トランジション時間（ミリ秒）"
 
@@ -1936,6 +2029,9 @@ msgstr "ファイルを選択"
 
 msgid "选择游戏引擎版本"
 msgstr "ゲームエンジンのバージョンを選択"
+
+msgid "选择目录"
+msgstr "ディレクトリを選択"
 
 msgid "选择视频文件"
 msgstr "動画ファイルを選択"
@@ -2009,8 +2105,14 @@ msgstr "選択肢からシーンに切り替えることが可能です"
 msgid "配置"
 msgstr "構成"
 
+msgid "配置始终保存在统一的 .webgal_terre 目录。游戏、自定义模板和定制引擎可以迁移到其他磁盘。"
+msgstr "設定は常に共通の .webgal_terre ディレクトリに保存されます。ゲーム、カスタムテンプレート、カスタムエンジンは別のディスクへ移行できます。"
+
 msgid "配置模板"
 msgstr "テンプレートを設定"
+
+msgid "配置目录"
+msgstr "設定ディレクトリ"
 
 msgid "重命名"
 msgstr "名前を変更"
@@ -2086,6 +2188,12 @@ msgstr "プロジェクトホームページ"
 
 msgid "预先反向"
 msgstr "アンティシペート"
+
+msgid "预置模板"
+msgstr "組み込みテンプレート"
+
+msgid "预置模板保存在安装目录，请先复制为自定义模板再编辑"
+msgstr "組み込みテンプレートはインストールディレクトリに保存されています。編集する前にカスタムテンプレートとしてコピーしてください。"
 
 msgid "预览"
 msgstr "プレビュー"

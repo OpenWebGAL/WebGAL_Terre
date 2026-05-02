@@ -73,7 +73,7 @@ export class ManageGameService {
    */
   async openAssetsDictionary(gameName: string, subFolder?: string) {
     const path = this.webgalFs.getPathFromRoot(
-      `public/games/${gameName}/game/${subFolder}`,
+      `public/games/${gameName}/game/${subFolder ?? ''}`,
     );
     await _open(path);
   }

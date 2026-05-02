@@ -1,5 +1,5 @@
 global['isElectron'] = true;
-const { app, BrowserWindow, globalShortcut, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog } = require('electron');
 const log = require('electron-log');
 const http = require('http');
 const path = require('path');
@@ -91,6 +91,20 @@ ipcMain.handle('steam-unlock-achievement', async (_event, achievementId) => {
         log.error(`Error unlocking Steam achievement ${achievementId}`, error);
         return false;
     }
+});
+
+ipcMain.handle('dialog-select-directory', async (_event, defaultPath) => {
+    const result = await dialog.showOpenDialog({
+        title: 'Select user data directory',
+        defaultPath: typeof defaultPath === 'string' && defaultPath.length > 0 ? defaultPath : undefined,
+        properties: ['openDirectory', 'createDirectory'],
+    });
+
+    if (result.canceled || result.filePaths.length === 0) {
+        return null;
+    }
+
+    return result.filePaths[0];
 });
 
 require('./dist/main');

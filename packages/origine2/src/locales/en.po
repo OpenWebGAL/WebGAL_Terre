@@ -32,6 +32,9 @@ msgstr "<0>Current template: {currentTemplateName}</0>"
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
+msgid "4.6 用户数据迁移"
+msgstr "4.6 User Data Migration"
+
 msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 
@@ -119,6 +122,9 @@ msgstr "playEffect: Choose a sound effect file;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo: Choose a video file;"
 
+msgid "Portable 模式"
+msgstr "Portable mode"
+
 msgid "RGB电影滤镜"
 msgstr "RGB film"
 
@@ -169,6 +175,9 @@ msgstr "wait:1000;"
 
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
+
+msgid "WebGAL Terre 4.6 使用新的用户数据目录。建议检查并迁移旧版本数据。"
+msgstr "WebGAL Terre 4.6 uses a new user data directory. Check and migrate old-version data."
 
 msgid "X轴位移"
 msgstr "X"
@@ -274,6 +283,9 @@ msgstr "Choose from current scene"
 
 msgid "代码编辑器"
 msgstr "Code Editor"
+
+msgid "以下目标路径已存在，未覆盖："
+msgstr "The following target paths already exist and were not overwritten:"
 
 msgid "伽马值"
 msgstr "Gamma"
@@ -547,6 +559,12 @@ msgstr "Single animation"
 
 msgid "单行注释"
 msgstr "Single line comment"
+
+msgid "即将把用户数据迁移到新的目录。文件较多时可能需要一些时间，迁移完成前请不要关闭 WebGAL Terre。"
+msgstr "User data will be migrated to the new directory. This may take some time if there are many files. Do not close WebGAL Terre before migration finishes."
+
+msgid "即将把用户数据迁移回默认目录。文件较多时可能需要一些时间。"
+msgstr "User data will be migrated back to the default directory. This may take some time if there are many files."
 
 msgid "厚度"
 msgstr "Thickness"
@@ -881,6 +899,9 @@ msgstr "Delay time (seconds)"
 msgid "开启"
 msgstr "On"
 
+msgid "开始迁移"
+msgstr "Start migration"
+
 msgid "张开嘴"
 msgstr "Open mouth"
 
@@ -890,8 +911,20 @@ msgstr "Intensity"
 msgid "当前场景"
 msgstr "Current scene"
 
+msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
+msgstr "Portable mode is active. The actual data directory is determined by the data folder in the install directory."
+
+msgid "当前没有检测到可迁移内容，但新版本已经切换为用户数据目录。"
+msgstr "No migratable content was detected, but this version has switched to the user data directory."
+
 msgid "当前版本"
 msgstr "Current version"
+
+msgid "当前状态"
+msgstr "Current status"
+
+msgid "当前环境不支持系统文件夹选择器，请手动输入路径。"
+msgstr "The current environment does not support the system folder picker. Enter the path manually."
 
 msgid "德语"
 msgstr "German"
@@ -905,6 +938,9 @@ msgstr "Fast preview sentences"
 msgid "忽略此版本"
 msgstr "Ignore this version"
 
+msgid "恢复默认目录"
+msgstr "Restore default directory"
+
 msgid "我确定要删除游戏"
 msgstr "I'm sure to delete the game"
 
@@ -914,11 +950,23 @@ msgstr "Manually trigger next intro sentence"
 msgid "手动输入 ID"
 msgstr "Manually enter ID"
 
+msgid "打开安装目录"
+msgstr "Open install directory"
+
 msgid "打开或关闭电影模式"
 msgstr "Turn film mode on or off"
 
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
+
+msgid "打开用户数据目录"
+msgstr "Open user data directory"
+
+msgid "打开设置"
+msgstr "Open settings"
+
+msgid "打开配置目录"
+msgstr "Open config directory"
 
 msgid "执行到此句"
 msgstr "Execute to this sentence"
@@ -994,6 +1042,9 @@ msgstr "Play video"
 
 msgid "操作"
 msgstr "Operation"
+
+msgid "操作失败"
+msgstr "Operation failed"
 
 msgid "故障电影滤镜"
 msgstr "Glitch film filter"
@@ -1133,6 +1184,15 @@ msgstr "No matching options"
 msgid "日语"
 msgstr "Japanese"
 
+msgid "旧定制引擎"
+msgstr "legacy custom engines"
+
+msgid "旧游戏目录"
+msgstr "legacy game directories"
+
+msgid "旧自定义模板"
+msgstr "legacy custom templates"
+
 msgid "是否固定弹窗"
 msgstr "Pin popup"
 
@@ -1253,6 +1313,12 @@ msgstr "Style replacement"
 msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
+msgid "检测到需要迁移的内容：{0}。"
+msgstr "Detected content to migrate: {0}."
+
+msgid "模式"
+msgstr "Mode"
+
 msgid "模板"
 msgstr "Template"
 
@@ -1282,6 +1348,9 @@ msgstr "Uploading"
 
 msgid "正在加载模板配置"
 msgstr "Loading template configuration"
+
+msgid "正在读取用户数据设置"
+msgstr "Reading user data settings"
 
 msgid "正常"
 msgstr "Normal"
@@ -1321,6 +1390,9 @@ msgstr "Comments are only visible when editing and will not be executed in the g
 
 msgid "浅色"
 msgstr "Light"
+
+msgid "浏览器已选择目录，但出于安全限制不会暴露本地绝对路径，无法直接用于迁移。请手动输入目录路径。"
+msgstr "The browser selected a directory, but security restrictions do not expose the local absolute path, so it cannot be used for migration directly. Enter the directory path manually."
 
 msgid "淡入淡出"
 msgstr "Fade in and out"
@@ -1429,6 +1501,24 @@ msgstr "Dot film filter"
 
 msgid "特殊演出"
 msgstr "Special performance"
+
+msgid "用户数据"
+msgstr "User data"
+
+msgid "用户数据位置"
+msgstr "User data location"
+
+msgid "用户数据目录"
+msgstr "User data directory"
+
+msgid "用户数据设置"
+msgstr "User data settings"
+
+msgid "用户数据迁移"
+msgstr "User data migration"
+
+msgid "用户目录模式"
+msgstr "User directory mode"
 
 msgid "电影模式"
 msgstr "Film mode"
@@ -1880,6 +1970,9 @@ msgstr "Input validation regex"
 msgid "输入目标 ID"
 msgstr "Enter Target ID"
 
+msgid "迁移到此目录"
+msgstr "Migrate to this directory"
+
 msgid "过渡时间（单位为毫秒）"
 msgstr "Transition duration (milliseconds)"
 
@@ -1936,6 +2029,9 @@ msgstr "Choose file"
 
 msgid "选择游戏引擎版本"
 msgstr "Select game engine version"
+
+msgid "选择目录"
+msgstr "Choose directory"
 
 msgid "选择视频文件"
 msgstr "Choose video file"
@@ -2009,8 +2105,14 @@ msgstr "Enter different scenes through options"
 msgid "配置"
 msgstr "Configuration"
 
+msgid "配置始终保存在统一的 .webgal_terre 目录。游戏、自定义模板和定制引擎可以迁移到其他磁盘。"
+msgstr "Configuration is always saved in the unified .webgal_terre directory. Games, custom templates, and custom engines can be migrated to another disk."
+
 msgid "配置模板"
 msgstr "Configure template"
+
+msgid "配置目录"
+msgstr "Config directory"
 
 msgid "重命名"
 msgstr "Rename"
@@ -2086,6 +2188,12 @@ msgstr "Project Homepage"
 
 msgid "预先反向"
 msgstr "Anticipate"
+
+msgid "预置模板"
+msgstr "Built-in template"
+
+msgid "预置模板保存在安装目录，请先复制为自定义模板再编辑"
+msgstr "Built-in templates are stored in the install directory. Copy one as a custom template before editing."
 
 msgid "预览"
 msgstr "Preview"
