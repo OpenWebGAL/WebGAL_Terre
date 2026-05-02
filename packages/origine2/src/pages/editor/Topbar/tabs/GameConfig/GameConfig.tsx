@@ -54,6 +54,7 @@ interface GameConfigProps {
 
 export default function GameConfig({ mode = 'full' }: GameConfigProps) {
   const gameDir = useEditorStore.use.subPage();
+  const compact = mode === 'quick';
 
   // 拿到游戏配置
   const gameConfig = useValue<WebgalConfig>([]);
@@ -159,22 +160,27 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
     <div className={mode === 'full' ? dialogStyles.configGrid : dialogStyles.quickContent}>
       {renderConfigItem(t`游戏名称`,
         <GameConfigEditor key="gameName" value={getConfigContentAsString('Game_name')}
+          compact={compact}
           onChange={(e: string) => updateGameConfigSimpleByKey("Game_name", e)}/>,
       )}
       {renderConfigItem(t`游戏识别码`,
         <GameConfigEditor key="gameKey" value={getConfigContentAsString('Game_key')}
+          compact={compact}
           onChange={(e: string) => updateGameConfigSimpleByKey('Game_key', e)}/>,
       )}
       {mode === 'full' && renderConfigItem(t`游戏简介`,
         <GameConfigEditor key="gameDescription" value={getConfigContentAsString('Description')}
+          compact={compact}
           onChange={(e: string) => updateGameConfigSimpleByKey("Description", e)}/>,
       )}
       {mode === 'full' && renderConfigItem(t`游戏包名`,
         <GameConfigEditor key="packageName" value={getConfigContentAsString('Package_name')}
+          compact={compact}
           onChange={(e: string) => updateGameConfigSimpleByKey('Package_name', e)}/>,
       )}
       {mode === 'full' && renderConfigItem(t`Steam AppID`,
         <GameConfigEditor key="steamAppId" value={getConfigContentAsString('Steam_AppID')}
+          compact={compact}
           onChange={(e: string) => updateGameConfigSimpleByKey('Steam_AppID', e)}/>,
       )}
       {/* <TabItem title={t`文本框主题`}> */}
@@ -330,6 +336,7 @@ interface IGameConfigEditor {
   key: string;
   value: string;
   onChange: Function;
+  compact?: boolean;
 }
 
 interface IGameConfigEditorMulti {
@@ -341,7 +348,7 @@ interface IGameConfigEditorMulti {
 function GameConfigEditor(props: IGameConfigEditor) {
   const showEditBox = useValue(false);
 
-  return <div className={styles.textEditArea} style={{maxWidth: 200}}>
+  return <div className={styles.textEditArea} style={props.compact ? {maxWidth: 200} : undefined}>
     {!showEditBox.value && props.value}
     {!showEditBox.value &&
       <span className={styles.editButton} onClick={() => showEditBox.set(true)}>

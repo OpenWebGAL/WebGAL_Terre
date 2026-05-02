@@ -761,6 +761,9 @@ msgstr "字重"
 msgid "定位方式"
 msgstr "定位方式"
 
+msgid "实时预览"
+msgstr "实时预览"
+
 msgid "实时预览关闭"
 msgstr "实时预览关闭"
 
@@ -935,8 +938,20 @@ msgstr "德语"
 msgid "快速预览效果"
 msgstr "快速预览效果"
 
+msgid "快速预览效果关闭"
+msgstr "快速预览效果关闭"
+
+msgid "快速预览效果打开"
+msgstr "快速预览效果打开"
+
 msgid "快速预览语句"
 msgstr "快速预览语句"
+
+msgid "快速预览语句关闭"
+msgstr "快速预览语句关闭"
+
+msgid "快速预览语句打开"
+msgstr "快速预览语句打开"
 
 msgid "忽略此版本"
 msgstr "忽略此版本"

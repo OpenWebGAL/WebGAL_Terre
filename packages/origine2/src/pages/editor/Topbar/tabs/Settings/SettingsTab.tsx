@@ -18,8 +18,12 @@ import {
   bundleIcon,
   EyeFilled,
   EyeOffFilled,
+  SparkleFilled,
+  SparkleRegular,
   LiveFilled,
   LiveOffFilled,
+  LiveOffRegular,
+  LiveRegular,
   LocalLanguageFilled,
   LocalLanguageRegular,
   NavigationFilled,
@@ -37,7 +41,8 @@ import { AppSettingsDialog } from '@/components/AppSettings/AppSettingsDialog';
 import s from './settingsTab.module.scss';
 
 const LocalLanguageIcon = bundleIcon(LocalLanguageFilled, LocalLanguageRegular);
-const LiveIcon = bundleIcon(LiveFilled, LiveOffFilled);
+const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
+const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
 const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeftFilled, ArrowEnterLeftRegular);
 const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 
@@ -123,7 +128,7 @@ export function SettingsTab() {
           />
           <IconWithTextItem
             onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
-            icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffFilled />}
+            icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
             text={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
           />
         </TabItem>
@@ -131,12 +136,12 @@ export function SettingsTab() {
           <IconWithTextItem
             onClick={() => updateIsUseExpSyncFast(!isUseExpSyncFast)}
             icon={isUseExpSyncFast ? <ArrowRepeatAllFilled /> : <ArrowRepeatAllOffRegular />}
-            text={t`快速预览语句`}
+            text={isUseExpSyncFast ? t`快速预览语句打开` : t`快速预览语句关闭`}
           />
           <IconWithTextItem
             onClick={() => updateIsUseRealtimeEffect(!isUseRealtimeEffect)}
-            icon={isUseRealtimeEffect ? <LiveIcon /> : <LiveOffFilled />}
-            text={t`快速预览效果`}
+            icon={isUseRealtimeEffect ? <SparkleFilled /> : <SparkleRegular />}
+            text={isUseRealtimeEffect ? t`快速预览效果打开` : t`快速预览效果关闭`}
           />
         </TabItem>
         <TabItem title={t`代码编辑器`}>

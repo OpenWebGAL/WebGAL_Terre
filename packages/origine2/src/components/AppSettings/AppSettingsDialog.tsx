@@ -26,8 +26,12 @@ import {
   bundleIcon,
   EyeFilled,
   EyeOffFilled,
+  SparkleFilled,
+  SparkleRegular,
   LiveFilled,
   LiveOffFilled,
+  LiveOffRegular,
+  LiveRegular,
   LocalLanguageFilled,
   LocalLanguageRegular,
   NavigationFilled,
@@ -49,7 +53,8 @@ export {
 } from '@/components/UserDataSettings/UserDataSettingsDialog';
 
 const LocalLanguageIcon = bundleIcon(LocalLanguageFilled, LocalLanguageRegular);
-const LiveIcon = bundleIcon(LiveFilled, LiveOffFilled);
+const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
+const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
 const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeftFilled, ArrowEnterLeftRegular);
 const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
@@ -180,29 +185,29 @@ export function SettingsShortcutGrid({
       />
       <SettingTile
         icon={isShowPreview ? <EyeFilled /> : <EyeOffFilled />}
-        title={t`显示预览窗口`}
-        description={isShowPreview ? t`启用` : t`关闭`}
+        title={t`预览窗口`}
+        description={isShowPreview ? t`显示预览窗口` : t`关闭预览窗口`}
         active={isShowPreview}
         onClick={() => updateIsShowPreview(!isShowPreview)}
       />
       <SettingTile
-        icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffFilled />}
-        title={t`实时预览打开`}
-        description={isEnableLivePreview ? t`启用` : t`关闭`}
+        icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
+        title={t`实时预览`}
+        description={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
         active={isEnableLivePreview}
         onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
       />
       <SettingTile
         icon={isUseExpSyncFast ? <ArrowRepeatAllFilled /> : <ArrowRepeatAllOffRegular />}
         title={t`快速预览语句`}
-        description={isUseExpSyncFast ? t`启用` : t`关闭`}
+        description={isUseExpSyncFast ? t`快速预览语句打开` : t`快速预览语句关闭`}
         active={isUseExpSyncFast}
         onClick={() => updateIsUseExpSyncFast(!isUseExpSyncFast)}
       />
       <SettingTile
-        icon={isUseRealtimeEffect ? <LiveIcon /> : <LiveOffFilled />}
+        icon={isUseRealtimeEffect ? <SparkleFilled /> : <SparkleRegular />}
         title={t`快速预览效果`}
-        description={isUseRealtimeEffect ? t`启用` : t`关闭`}
+        description={isUseRealtimeEffect ? t`快速预览效果打开` : t`快速预览效果关闭`}
         active={isUseRealtimeEffect}
         onClick={() => updateIsUseRealtimeEffect(!isUseRealtimeEffect)}
       />

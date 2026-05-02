@@ -761,6 +761,9 @@ msgstr "Font Weight"
 msgid "定位方式"
 msgstr "Positioning"
 
+msgid "实时预览"
+msgstr "Live preview"
+
 msgid "实时预览关闭"
 msgstr "Live preview off"
 
@@ -935,8 +938,20 @@ msgstr "German"
 msgid "快速预览效果"
 msgstr "Fast preview effects"
 
+msgid "快速预览效果关闭"
+msgstr "Fast preview effects off"
+
+msgid "快速预览效果打开"
+msgstr "Fast preview effects on"
+
 msgid "快速预览语句"
 msgstr "Fast preview sentences"
+
+msgid "快速预览语句关闭"
+msgstr "Fast preview sentences off"
+
+msgid "快速预览语句打开"
+msgstr "Fast preview sentences on"
 
 msgid "忽略此版本"
 msgstr "Ignore this version"

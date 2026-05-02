@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const icons = require\\('@fluentui/react-icons'\\); console.log\\('LightbulbFilled:', !!icons.LightbulbFilled\\); console.log\\('LightbulbOffFilled:', !!icons.LightbulbOffFilled\\); console.log\\('LiveRegular:', !!icons.LiveRegular\\); console.log\\('LiveOffRegular:', !!icons.LiveOffRegular\\);\")",
+      "Bash(node -e \"const icons = require\\('@fluentui/react-icons'\\); const lightbulb = Object.keys\\(icons\\).filter\\(k => k.toLowerCase\\(\\).includes\\('lightbulb'\\)\\); console.log\\(lightbulb.join\\('\\\\n'\\)\\);\")",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const icons = require\\('@fluentui/react-icons'\\); const candidates = ['Wand', 'PaintBrush', 'Sparkle', 'Eye', 'EyeTracking', 'Preview', 'Color', 'PaintBucket', 'Brush', 'Format', 'Style', 'Sparkles']; for \\(const c of candidates\\) { const filled = c + 'Filled'; const regular = c + 'Regular'; console.log\\(c + ': Filled=' + !!icons[filled] + ' Regular=' + !!icons[regular]\\); }\")"
+    ]
+  }
+}

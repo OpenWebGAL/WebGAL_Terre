@@ -761,6 +761,9 @@ msgstr "フォントの太さ"
 msgid "定位方式"
 msgstr "位置決め方法"
 
+msgid "实时预览"
+msgstr "リアルタイムプレビュー"
+
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
 
@@ -935,8 +938,20 @@ msgstr "ドイツ語"
 msgid "快速预览效果"
 msgstr "高速プレビューエフェクト"
 
+msgid "快速预览效果关闭"
+msgstr "高速プレビューエフェクトオフ"
+
+msgid "快速预览效果打开"
+msgstr "高速プレビューエフェクトオン"
+
 msgid "快速预览语句"
 msgstr "高速プレビュー文"
+
+msgid "快速预览语句关闭"
+msgstr "高速プレビュー文オフ"
+
+msgid "快速预览语句打开"
+msgstr "高速プレビュー文オン"
 
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
