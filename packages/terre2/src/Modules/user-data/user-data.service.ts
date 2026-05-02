@@ -407,11 +407,7 @@ export class UserDataService {
   }
 
   private static getDefaultUserDataRoot() {
-    const home = os.homedir();
-    if (process.platform === 'win32') {
-      return path.join(home, 'Documents', USER_DATA_DIR_NAME);
-    }
-    return path.join(home, USER_DATA_DIR_NAME);
+    return path.join(os.homedir(), USER_DATA_DIR_NAME);
   }
 
   private static async readConfig(configPath: string): Promise<UserDataConfig> {
@@ -443,10 +439,11 @@ export class UserDataService {
     await Promise.all([
       fs.mkdir(state.configRoot, { recursive: true }),
       fs.mkdir(state.activeUserDataRoot, { recursive: true }),
-      fs.mkdir(this.getGameRoot(), { recursive: true }),
-      fs.mkdir(this.getUserTemplateRoot(), { recursive: true }),
-      fs.mkdir(this.getDerivativeEngineRoot(), { recursive: true }),
-      fs.mkdir(this.getExportRoot(), { recursive: true }),
+      ...MANAGED_DATA_DIRS.map((dir) =>
+        fs.mkdir(path.join(state.activeUserDataRoot, dir), {
+          recursive: true,
+        }),
+      ),
     ]);
   }
 
