@@ -6,9 +6,11 @@ import {
 } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { IScene } from 'webgal-parser/build/types/interface/sceneInterface';
-import { pprintJSON } from '../../../util/strings';
 import { webgalParser } from '../../../util/webgal-parser';
-import { handleFileSuggestions } from './fileSuggestion';
+import {
+  handleAnimationFileSuggestions,
+  handleFileSuggestions,
+} from './fileSuggestion';
 import { commandType } from './commandArgs';
 import { lastVariables } from '../webgalLsp';
 import { getCommands } from '../suggestionRules/getCommands';
@@ -65,7 +67,6 @@ export function checkTriggerCompletion(
 
   if (changedLine > 0) {
     const line = currentDocumentLines[changedLine];
-    console.debug(`changed line: ${line}`);
     if (line.trimEnd().endsWith(':')) {
       triggerCompletionCallback();
     }
@@ -114,8 +115,6 @@ export async function complete(
     return getCommands();
   }
 
-  console.debug(`Line to complete: ${line}`);
-
   let suggestions: CompletionItem[] = [];
 
   // FIXME: Known bug: `getUserInput` returns commandType 0 (say)
@@ -129,13 +128,20 @@ export async function complete(
   // Currently, there SHOULD be only one sentence. But we still handle
   // potential modifications to the language specification.
   for (const sentence of scene.sentenceList) {
-    console.debug(`Sentence: ${pprintJSON(sentence, true)}`);
-
     let newSuggestions: CompletionItem[] = [];
 
     if (line.includes(' -')) {
       if (line.match('\\s\\-(\\w*?)$')) {
         newSuggestions = getArgsKey(line, sentence.command);
+      } else if (
+        line.match('\\s\\-(enter|exit)=[^\\s;]*$') &&
+        [
+          commandType.changeBg,
+          commandType.changeFigure,
+          commandType.setTransition,
+        ].includes(sentence.command)
+      ) {
+        newSuggestions = await handleAnimationFileSuggestions(basePath, line);
       }
     } else {
       switch (sentence.command) {
@@ -235,8 +241,6 @@ export async function complete(
 
     suggestions = suggestions.concat(newSuggestions);
   }
-
-  console.debug(`onCompletion: suggestions: ${pprintJSON(suggestions, true)}`);
 
   return suggestions;
 }

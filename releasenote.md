@@ -4,27 +4,37 @@
 
 #### 新功能
 
-新增全局暗色主题，并优化各编辑器和资源视图的暗色样式
+新增预览窗口拖拽调整功能，支持拖拽贴图与 Live2D 模型，并升级 pixi.js 至 8.14.0
 
-新增模板和字体配置
+新增 `setTempAnimation` 图形化编辑器
 
-新增快速同步特效
+新增 `changeFigure` 更多选项的图形化编辑支持
 
-动画编辑器支持舞台等更多目标，扩展动画能力
+新增 Spine 皮肤选择器
 
-集成 Steamworks.js，提供 Steam 功能的图形化编辑器
+新增 `setTransform` 图形化操作支持
 
-导出游戏增加展示到 WebGAL 主页的示例提示和指引链接
+新增文件路径合法性校验
+
+新增 Mac Intel (x64) 构建支持
+
+新增 WebGAL Refine 2026 模板及模板编辑器新组件类支持
 
 #### 修复
 
-修复资源路径编码问题，提升多平台打包稳定性
+修复语法高亮中转义分号（`\;`）未正确识别为内容的问题
 
-优化模板编辑器侧边栏样式
+修复组件树标题中显示多余占位条目的问题
 
-修复提交参数顺序问题
+修复图形化编辑器中编辑空文件时出现前导空行的问题
 
-修复误改 say 命令的问题
+修复脚本编辑器中删除全部脚本时意外回退的问题
+
+修复嵌套文件夹错误获得特殊图标的问题
+
+修复 `isEmpty` 函数参数处理与语句插入逻辑
+
+更新日语和简体中文翻译
 
 <!-- English Translation -->
 ## Release Notes
@@ -33,27 +43,37 @@
 
 #### New Features
 
-Added a global dark theme and polished dark-mode styles across editors and resource views
+Added drag-to-adjust functionality for the preview window, supporting dragging textures and Live2D models, with pixi.js upgraded to 8.14.0
 
-Added template and font configuration
+Added `setTempAnimation` graphical editor
 
-Added a fast sync effect
+Added more options for `changeFigure` graphical editing support
 
-Animation editor now supports stage and other targets to expand animation capabilities
+Added Spine skins chooser
 
-Integrated Steamworks.js with a graphical editor for Steam functions
+Added `setTransform` graphical editing support
 
-Added showcase hints and a guide link on the export tab to feature games on the WebGAL homepage
+Added file path validation
+
+Added Mac Intel (x64) build support
+
+Added WebGAL Refine 2026 template and template editor new component class support
 
 #### Fixes
 
-Fixed resource path encoding to stabilize multi-platform packaging
+Fixed escaped semicolons (`\;`) not being correctly recognized as content in syntax highlighting
 
-Improved template editor sidebar styling
+Fixed placeholder entry appearing in component tree title
 
-Fixed submit argument order
+Fixed leading empty line when editing empty files in graphical editor
 
-Fixed accidental change from `say` to comment
+Fixed unexpected revert when deleting all scripts in script editor
+
+Fixed nested folders incorrectly receiving special icons
+
+Fixed `isEmpty` function parameter handling and sentence insertion logic
+
+Updated Japanese and Simplified Chinese translations
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -62,24 +82,34 @@ Fixed accidental change from `say` to comment
 
 #### 新機能
 
-グローバルなダークテーマを追加し、各エディターやリソース表示のダークモードスタイルを整えました
+プレビューウィンドウのドラッグ調整機能を追加し、テクスチャおよび Live2D モデルのドラッグに対応、pixi.js を 8.14.0 にアップグレードしました
 
-テンプレートとフォントの設定を追加しました
+`setTempAnimation` グラフィカルエディターを追加しました
 
-高速同期エフェクトを追加しました
+`changeFigure` のグラフィカル編集オプションを拡充しました
 
-アニメーションエディターでステージなどのターゲットを選べるようにし、表現を拡張しました
+Spine スキン選択機能を追加しました
 
-Steamworks.js を統合し、Steam 機能のグラフィカルエディターを追加しました
+`setTransform` のグラフィカル操作に対応しました
 
-エクスポートタブに WebGAL ホームページ掲載用のショーケースヒントとガイドリンクを追加しました
+ファイルパスのバリデーション機能を追加しました
+
+Mac Intel (x64) ビルドに対応しました
+
+WebGAL Refine 2026 テンプレートおよびテンプレートエディターの新コンポーネントクラスに対応しました
 
 #### 修正
 
-リソースパスのエンコードを修正し、マルチプラットフォームのパッケージングを安定させました
+シンタックスハイライトでエスケープされたセミコロン（`\;`）がコンテンツとして正しく認識されない問題を修正しました
 
-テンプレートエディターのサイドバー表示を修正しました
+コンポーネントツリーのタイトルに余分なプレースホルダーが表示される問題を修正しました
 
-送信引数の順序を修正しました
+グラフィカルエディターで空ファイル編集時に先頭に空行が入る問題を修正しました
 
-誤って `say` を comment に置き換えた問題を修正しました
+スクリプトエディターで全スクリプト削除時に意図しない巻き戻しが発生する問題を修正しました
+
+ネストされたフォルダーに特殊アイコンが誤って適用される問題を修正しました
+
+`isEmpty` 関数のパラメーター処理とセンテンス挿入ロジックを修正しました
+
+日本語および簡体字中国語の翻訳を更新しました

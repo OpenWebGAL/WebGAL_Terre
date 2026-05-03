@@ -649,6 +649,35 @@
         ]
       }
     },
+    "/api/manageGame/updateAnimationTable": {
+      "post": {
+        "operationId": "ManageGameController_updateAnimationTable",
+        "summary": "Update Animation Table",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Animation table update data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAnimationTableDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Animation table updated."
+          },
+          "400": {
+            "description": "Failed to update the animation table."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
     "/api/manageGame/getGameConfig/{gameName}": {
       "get": {
         "operationId": "ManageGameController_getGameConfig",
@@ -1484,6 +1513,18 @@
           "gameName",
           "sceneName",
           "sceneData"
+        ]
+      },
+      "UpdateAnimationTableDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game directory"
+          }
+        },
+        "required": [
+          "gameName"
         ]
       },
       "GameConfigDto": {

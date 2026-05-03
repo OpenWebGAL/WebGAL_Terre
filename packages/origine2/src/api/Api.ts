@@ -139,6 +139,11 @@ export interface EditSceneDto {
   sceneData: string;
 }
 
+export interface UpdateAnimationTableDto {
+  /** The name of the game directory */
+  gameName: string;
+}
+
 export interface GameConfigDto {
   /** The name of the game */
   gameName: string;
@@ -423,6 +428,22 @@ export class Api<
       this.request<void, any>({
         path: `/api/test`,
         method: "GET",
+        ...params,
+      }),
+    /**
+     * 获取图片尺寸
+     * @tags Assets
+     * @name AssetsControllerGetImageDimensions
+     * @request GET:/api/assets/getImageDimensions/{imagePath}
+     */
+    assetsControllerGetImageDimensions: (
+      imagePath: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<{ width: number; height: number; type: string }, any>({
+        path: `/api/assets/getImageDimensions/${imagePath}`,
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -868,6 +889,26 @@ export class Api<
     ) =>
       this.request<void, void>({
         path: `/api/manageGame/editTextFile`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerUpdateAnimationTable
+     * @summary Update Animation Table
+     * @request POST:/api/manageGame/updateAnimationTable
+     */
+    manageGameControllerUpdateAnimationTable: (
+      data: UpdateAnimationTableDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/updateAnimationTable`,
         method: "POST",
         body: data,
         type: ContentType.Json,

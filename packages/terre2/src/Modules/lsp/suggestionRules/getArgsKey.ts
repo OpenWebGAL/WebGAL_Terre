@@ -28,6 +28,8 @@ export function getArgsKey(
         nextKey,
         continueKey,
         durationKey,
+        enterDurationKey,
+        exitDurationKey,
         transformKey,
         unlocknameKey,
         seriesKey,
@@ -42,6 +44,8 @@ export function getArgsKey(
         nextKey,
         continueKey,
         durationKey,
+        enterDurationKey,
+        exitDurationKey,
         idFigureKey,
         leftKey,
         rightKey,
@@ -96,7 +100,7 @@ export function getArgsKey(
       return [whenKey];
     }
     case commandType.choose: {
-      return [whenKey];
+      return [whenKey, defaultChooseKey];
     }
     case commandType.end: {
       return [whenKey];
@@ -215,6 +219,22 @@ changeScene:3.txt;
   `),
 };
 
+const defaultChooseKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'defaultChoose',
+  insertText: 'defaultChoose=',
+  detail: '快速预览默认选项',
+  documentation: markdown(`
+用于编辑器快速预览。设置后，快速预览遇到该选项语句时会自动选择指定序号的选项。
+
+示例：
+
+\`\`\`
+choose:选项 1:label_1|选项 2:label_2 -defaultChoose=1;
+\`\`\`
+  `),
+};
+
 const nextKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'next',
@@ -255,6 +275,27 @@ const durationKey: CompletionItem = {
   detail: '持续时间',
   documentation: markdown(`
 这个时间片的持续时间，单位为毫秒(ms)
+  `),
+};
+
+const enterDurationKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'enterDuration',
+  insertText: 'enterDuration=',
+  detail: '入场时长',
+  documentation: markdown(`
+入场动画的持续时间，单位为毫秒(ms)。
+若同时设置 \`duration\`，则此项优先生效。
+  `),
+};
+
+const exitDurationKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'exitDuration',
+  insertText: 'exitDuration=',
+  detail: '退场时长',
+  documentation: markdown(`
+退场动画的持续时间，单位为毫秒(ms)。
   `),
 };
 
@@ -898,7 +939,7 @@ const enterAnimationKey: CompletionItem = {
   insertText: 'enter=',
   detail: '入场动画',
   documentation: markdown(`
-设置入场动画
+设置入场动画（来自 \`game/animation\` 目录，通常不带 \`.json\` 后缀）
   `),
 };
 
@@ -908,7 +949,7 @@ const exitAnimationKey: CompletionItem = {
   insertText: 'exit=',
   detail: '退场动画',
   documentation: markdown(`
-设置退场动画
+设置退场动画（来自 \`game/animation\` 目录，通常不带 \`.json\` 后缀）
   `),
 };
 

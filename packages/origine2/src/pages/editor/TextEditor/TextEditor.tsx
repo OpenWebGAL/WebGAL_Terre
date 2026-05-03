@@ -13,7 +13,7 @@ import { eventBus } from '@/utils/eventBus';
 import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
-import {useValue} from "@/hooks/useValue";
+import { useValue } from "@/hooks/useValue";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -23,7 +23,7 @@ interface ITextEditorProps {
 export default function TextEditor(props: ITextEditorProps) {
   const target = useGameEditorContext((state) => state.currentTag);
   const tags = useGameEditorContext((state) => state.tags);
-  const currentText = { value: 'Loading Scene Data......' };
+  const currentText = useRef('Loading Scene Data......');
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
   const isEditorReady = useValue(false); // 读取完脚本才能算准备就绪
@@ -44,13 +44,13 @@ export default function TextEditor(props: ITextEditorProps) {
 
     configureMonaco(editor, monaco);
 
-    editor.onDidChangeCursorPosition(debounce((event:monaco.editor.ICursorPositionChangedEvent) => {
+    editor.onDidChangeCursorPosition(debounce((event: monaco.editor.ICursorPositionChangedEvent) => {
       const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
-          WsUtil.sendSyncCommand(target?.path??'', event.position.lineNumber, targetValue);
+          WsUtil.sendSyncCommand(target?.path ?? '', event.position.lineNumber, targetValue);
         }
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
@@ -78,7 +78,7 @@ export default function TextEditor(props: ITextEditorProps) {
     });
     editor.updateOptions({
       unicodeHighlight: { ambiguousCharacters: false },
-      wordWrap: isAutoWarp ? 'on' : 'off' ,
+      wordWrap: isAutoWarp ? 'on' : 'off',
       smoothScrolling: true,
       quickSuggestions: { other: true, comments: true, strings: true },
     });
@@ -109,17 +109,17 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {any} ev
    */
   const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
-    if(!isEditorReady.value) return;
+    if (!isEditorReady.value) return;
     logger.debug('编辑器提交更新');
     // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
     // const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    if (value) currentText.value = value;
-    eventBus.emit('editor:update-scene', { scene: currentText.value });
-    api.assetsControllerEditTextFile({textFile: currentText.value, path: props.targetPath}).then((res) => {
-      const targetValue = currentText.value.split('\n')[lineNumber - 1];
-      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
+    if (value || value === '') currentText.current = value;
+    eventBus.emit('editor:update-scene', { scene: currentText.current });
+    api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
+      const targetValue = currentText.current.split('\n')[lineNumber - 1];
+      WsUtil.sendSyncCommand(target?.path ?? '', lineNumber, targetValue);
     });
   }, 500);
 
@@ -129,14 +129,17 @@ export default function TextEditor(props: ITextEditorProps) {
       .get(path)
       .then((res) => res.data)
       .then((data) => {
-        // currentText.set(data);
-        currentText.value = data.toString();
-        eventBus.emit('editor:update-scene', { scene: data.toString() });
+        const dataStr = data.toString();
+        if (dataStr === currentText.current) {
+          return;
+        }
+        currentText.current = dataStr;
+        eventBus.emit('editor:update-scene', { scene: dataStr });
         const model = editorRef.current?.getModel();
         model?.applyEdits([
           {
             range: model.getFullModelRange(),
-            text: currentText.value,
+            text: currentText.current,
             forceMoveMarkers: true
           }
         ]);
@@ -175,7 +178,7 @@ export default function TextEditor(props: ITextEditorProps) {
         onChange={handleChange}
         defaultLanguage="webgal"
         language="webgal"
-        defaultValue={currentText.value}
+        defaultValue={currentText.current}
       />
     </div>
   );
