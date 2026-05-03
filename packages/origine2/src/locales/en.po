@@ -794,6 +794,9 @@ msgstr "Text in Textbox"
 msgid "对话框标题"
 msgstr "Dialog title"
 
+msgid "导入模板"
+msgstr "Import template"
+
 msgid "导出"
 msgstr "Export"
 
@@ -814,6 +817,9 @@ msgstr "Export Failed!"
 
 msgid "导出成功！"
 msgstr "Export Success!"
+
+msgid "导出模板"
+msgstr "Export template"
 
 msgid "将当前模板应用到选定的游戏"
 msgstr "Apply the current template to selected games"
@@ -1357,6 +1363,12 @@ msgstr "Template name"
 
 msgid "模板名称不能为空"
 msgstr "Template name cannot be empty"
+
+msgid "模板导入失败，请检查是否存在重名或模板是否完整"
+msgstr "Template import failed. Check whether a template with the same name exists or the template is complete."
+
+msgid "模板导入成功"
+msgstr "Template imported successfully"
 
 msgid "模板目录"
 msgstr "Template directory"

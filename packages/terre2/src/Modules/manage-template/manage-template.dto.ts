@@ -58,3 +58,18 @@ export class GetStyleByClassNameDto {
   @ApiProperty({ description: 'The path of stylesheet file to be fetched' })
   filePath: string;
 }
+
+export class OutputTemplateDto {
+  @ApiProperty({ description: 'The template directory name' })
+  templateDir: string;
+}
+
+export class ImportTemplateDto {
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: true,
+    description: "The template's zip file",
+  })
+  file: any;
+}

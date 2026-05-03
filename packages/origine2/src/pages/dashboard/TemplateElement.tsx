@@ -1,6 +1,7 @@
 import styles from "./templateElement.module.scss";
 import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, Input, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
-import { Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
+import type { ToastIntent } from "@fluentui/react-components";
+import { ArrowExportUp24Filled, ArrowExportUp24Regular, Delete24Filled, Delete24Regular, FolderOpen24Filled, FolderOpen24Regular, MoreVertical24Filled, MoreVertical24Regular, Open24Filled, Open24Regular, Rename24Filled, Rename24Regular, bundleIcon } from "@fluentui/react-icons";
 import { useMemo } from "react";
 import { useValue } from "../../hooks/useValue";
 import { api } from "@/api";
@@ -13,6 +14,7 @@ interface ITemplateElementProps {
   templateInfo: TemplateInfoDto;
   onClick: () => void;
   refreash?: () => void;
+  notify?: (intent: ToastIntent, content: string) => void;
   checked: boolean;
 }
 
@@ -21,6 +23,7 @@ const FolderOpenIcon = bundleIcon(FolderOpen24Filled, FolderOpen24Regular);
 const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
 const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
 const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
+const ArrowExportUpIcon = bundleIcon(ArrowExportUp24Filled, ArrowExportUp24Regular);
 
 export default function TemplateElement(props: ITemplateElementProps){
 
@@ -67,6 +70,17 @@ export default function TemplateElement(props: ITemplateElementProps){
     props?.refreash?.();
   };
 
+  const exportThisTemplate = async () => {
+    try {
+      const result = await api.manageTemplateControllerOutputTemplate({
+        templateDir: props.templateInfo.dir,
+      });
+      props.notify?.(result.data ? "success" : "error", result.data ? t`导出成功！` : t`导出失败！`);
+    } catch {
+      props.notify?.("error", t`导出失败！`);
+    }
+  };
+
   const templateName = props.templateInfo.dir;
   const isBuiltIn = props.templateInfo.builtIn;
 
@@ -97,6 +111,7 @@ export default function TemplateElement(props: ITemplateElementProps){
                   <MenuItem icon={<FolderOpenIcon />} onClick={() => openInFileExplorer()}>{t`在文件管理器中打开`}</MenuItem>
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
                   <MenuItem disabled={isBuiltIn} icon={<RenameIcon />} onClick={() => isShowRenameDialog.set(true)}>{t`重命名模板目录`}</MenuItem>
+                  <MenuItem icon={<ArrowExportUpIcon />} onClick={() => exportThisTemplate()}>{t`导出模板`}</MenuItem>
                   <MenuItem disabled={isBuiltIn} icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除模板`}</MenuItem>
                 </MenuList>
               </MenuPopover>
