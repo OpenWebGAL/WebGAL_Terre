@@ -292,13 +292,15 @@ export class ManageTemplateController {
   @ApiOperation({ summary: 'Output Template' })
   @ApiResponse({
     status: 200,
+    type: Boolean,
     description: 'Output Template Successfully.',
   })
   @ApiResponse({ status: 400, description: 'Output Template Failed.' })
-  async outputTemplate(@Body() outputTemplateParms: OutputTemplateDto) {
+  async outputTemplate(
+    @Body() outputTemplateParams: OutputTemplateDto,
+  ): Promise<boolean> {
     return await this.manageTemplate.outputTemplate(
-      outputTemplateParms.sourceDir,
-      outputTemplateParms.outPath,
+      outputTemplateParams.templateDir,
     );
   }
 
@@ -307,6 +309,7 @@ export class ManageTemplateController {
   @ApiOperation({ summary: 'Import Template' })
   @ApiResponse({
     status: 200,
+    type: Boolean,
     description: 'Import Template Successfully.',
   })
   @ApiResponse({ status: 400, description: 'Import Template Failed.' })
@@ -314,7 +317,12 @@ export class ManageTemplateController {
   @ApiBody({
     type: ImportTemplateDto,
   })
-  async importTemplate(@UploadedFile() file) {
+  async importTemplate(
+    @UploadedFile() file?: { buffer?: Buffer },
+  ): Promise<boolean> {
+    if (!file?.buffer) {
+      return false;
+    }
     return await this.manageTemplate.importTemplate(file.buffer);
   }
 }

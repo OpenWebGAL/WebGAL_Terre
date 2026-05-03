@@ -57,11 +57,8 @@ export class GetStyleByClassNameDto {
 }
 
 export class OutputTemplateDto {
-  @ApiProperty({ description: 'The path of the source directory' })
-  sourceDir: string;
-
-  @ApiProperty({ description: 'The path of the out directory' })
-  outPath: string;
+  @ApiProperty({ description: 'The template directory name' })
+  templateDir: string;
 }
 
 export class ImportTemplateDto {

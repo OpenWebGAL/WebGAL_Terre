@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import * as archiver from 'archiver';
+import archiver = require('archiver');
 import AdmZip = require('adm-zip');
 import {
   basename,
@@ -63,6 +63,16 @@ export class WebgalFsService {
     return (
       relativePath === '' ||
       (!relativePath.startsWith('..') && !isAbsolute(relativePath))
+    );
+  }
+
+  private hasUnsafeZipEntryPath(entryPath: string): boolean {
+    const normalizedEntryPath = entryPath.replace(/\\/g, '/');
+    return (
+      normalizedEntryPath.includes('\0') ||
+      normalizedEntryPath.startsWith('/') ||
+      /^[a-zA-Z]:($|\/)/.test(normalizedEntryPath) ||
+      WebgalFsService.hasInvalidPathSegments(normalizedEntryPath)
     );
   }
 
@@ -456,31 +466,60 @@ export class WebgalFsService {
     outPath: string,
     format: archiver.Format = 'zip',
   ): Promise<boolean> {
-    const dir = dirname(outPath);
-    await fs.mkdir(dir, { recursive: true });
-    const fileHandle = await fs.open(outPath, 'w');
-    const output = fileHandle.createWriteStream();
-    let resolve: (value: boolean | PromiseLike<boolean>) => void;
-    const promises: Promise<boolean> = new Promise((r) => (resolve = r));
-    const archive = archiver.create(format, {
-      zlib: { level: 9 },
-    });
-    archive.on('error', (err) => {
-      console.error(err);
-      resolve(false);
-    });
-    archive.on('warning', (err) => {
-      if (err.code === 'ENOENT') {
-        console.warn(err);
+    try {
+      const decodedSourceDir = decodeURI(sourceDir);
+      const decodedOutPath = decodeURI(outPath);
+      if (
+        !this.isPathInsideWorkingDirectory(decodedSourceDir) ||
+        !this.isPathInsideWorkingDirectory(decodedOutPath)
+      ) {
+        throw new Error('Path is out of workspace');
       }
-    });
-    output.on('close', () => {
-      resolve(true);
-    });
-    archive.pipe(output);
-    archive.directory(sourceDir, false);
-    await archive.finalize();
-    return promises;
+
+      const dir = dirname(decodedOutPath);
+      await fs.mkdir(dir, { recursive: true });
+      const fileHandle = await fs.open(decodedOutPath, 'w');
+      const output = fileHandle.createWriteStream();
+      const archive = archiver.create(format, {
+        zlib: { level: 9 },
+      });
+
+      return await new Promise<boolean>((resolve) => {
+        let settled = false;
+        const finish = (value: boolean) => {
+          if (!settled) {
+            settled = true;
+            resolve(value);
+          }
+        };
+
+        archive.on('error', (err) => {
+          this.logger.error(`压缩目录失败: ${String(err)}`);
+          finish(false);
+        });
+        archive.on('warning', (err) => {
+          if (err.code === 'ENOENT') {
+            this.logger.warn(`压缩目录警告: ${String(err)}`);
+          }
+        });
+        output.on('error', (err) => {
+          this.logger.error(`写入压缩文件失败: ${String(err)}`);
+          finish(false);
+        });
+        output.on('close', () => {
+          finish(true);
+        });
+        archive.pipe(output);
+        archive.directory(decodedSourceDir, false);
+        archive.finalize().catch((err) => {
+          this.logger.error(`压缩目录失败: ${String(err)}`);
+          finish(false);
+        });
+      });
+    } catch (error) {
+      this.logger.error(`压缩目录失败: ${String(error)}`);
+      return false;
+    }
   }
 
   /**
@@ -490,27 +529,37 @@ export class WebgalFsService {
     sourceZip: string | Buffer,
     targetDir: string,
   ): Promise<boolean> {
-    let resolve: (value: boolean | PromiseLike<boolean>) => void;
-    const promises: Promise<boolean> = new Promise((r) => (resolve = r));
     try {
-      await fs.mkdir(targetDir, { recursive: true });
+      const decodedTargetDir = decodeURI(targetDir);
+      if (!this.isPathInsideWorkingDirectory(decodedTargetDir)) {
+        throw new Error('Path is out of workspace');
+      }
 
       const zip = new AdmZip(sourceZip);
+      const hasUnsafeEntry = zip
+        .getEntries()
+        .some((entry) => this.hasUnsafeZipEntryPath(entry.entryName));
 
-      zip.extractAllToAsync(targetDir, true, true, (err) => {
-        if (err) {
-          console.error(err);
-          resolve(false);
-        } else {
-          resolve(true);
-        }
+      if (hasUnsafeEntry) {
+        throw new Error('Zip contains unsafe entry path');
+      }
+
+      await fs.mkdir(decodedTargetDir, { recursive: true });
+
+      return await new Promise<boolean>((resolve) => {
+        zip.extractAllToAsync(decodedTargetDir, true, true, (err) => {
+          if (err) {
+            this.logger.error(`解压缩失败: ${String(err)}`);
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        });
       });
     } catch (error) {
-      console.error(error);
-      resolve(false);
+      this.logger.error(`解压缩失败: ${String(error)}`);
+      return false;
     }
-
-    return promises;
   }
 
   /**
@@ -520,12 +569,17 @@ export class WebgalFsService {
     zipPath: string | Buffer,
     entryPath: string,
   ): Buffer | null {
-    const zip = new AdmZip(zipPath);
-    const entry = zip.getEntry(entryPath);
-    if (!entry) {
+    try {
+      const zip = new AdmZip(zipPath);
+      const entry = zip.getEntry(entryPath);
+      if (!entry) {
+        return null;
+      }
+      const buf = zip.readFile(entry);
+      return buf;
+    } catch (error) {
+      this.logger.error(`读取压缩包文件失败: ${String(error)}`);
       return null;
     }
-    const buf = zip.readFile(entry);
-    return buf;
   }
 }

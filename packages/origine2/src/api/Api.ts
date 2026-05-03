@@ -217,10 +217,8 @@ export interface GetStyleByClassNameDto {
 }
 
 export interface OutputTemplateDto {
-  /** The path of the source directory */
-  sourceDir: string;
-  /** The path of the out directory */
-  outPath: string;
+  /** The template directory name */
+  templateDir: string;
 }
 
 export interface ImportTemplateDto {
@@ -1189,7 +1187,7 @@ export class Api<
       data: OutputTemplateDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, void>({
+      this.request<boolean, void>({
         path: `/api/manageTemplate/outputTemplate`,
         method: "POST",
         body: data,
@@ -1209,7 +1207,7 @@ export class Api<
       data: ImportTemplateDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, void>({
+      this.request<boolean, void>({
         path: `/api/manageTemplate/importTemplate`,
         method: "POST",
         body: data,

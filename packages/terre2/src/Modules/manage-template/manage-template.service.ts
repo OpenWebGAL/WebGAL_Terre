@@ -6,7 +6,7 @@ import { version_number } from '../../main';
 import { TemplateConfigDto, TemplateInfoDto } from './manage-template.dto';
 import { randomUUID } from 'crypto';
 import { _open } from '../../util/open';
-import { dirname, normalize } from 'path';
+import { dirname } from 'path';
 
 @Injectable()
 export class ManageTemplateService {
@@ -14,6 +14,28 @@ export class ManageTemplateService {
     private readonly logger: ConsoleLogger,
     private readonly webgalFs: WebgalFsService,
   ) {}
+
+  private async templateDirExists(templateDir: string): Promise<boolean> {
+    try {
+      const templatesDir = await this.webgalFs.getDirInfo(
+        this.webgalFs.getPathFromRoot('/public/templates'),
+      );
+      return templatesDir.some(
+        (fileInfo) => fileInfo.name === templateDir && fileInfo.isDir,
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  private isSafeTemplateDirName(templateDir: string): boolean {
+    return (
+      templateDir.length > 0 &&
+      templateDir !== '.' &&
+      templateDir !== '..' &&
+      WebgalFsService.checkFileName(templateDir)
+    );
+  }
 
   /**
    * 获取模板列表
@@ -208,41 +230,37 @@ export class ManageTemplateService {
 
   /**
    * 导出模板zip
-   * @param sourceDir 源目录
-   * @param outPath 输出目录
+   * @param templateDir 模板目录
    */
-  async outputTemplate(sourceDir: string, outPath: string): Promise<boolean> {
-    // 检查是否存在这个模板
-    const checkDir = await this.webgalFs.getDirInfo(
-      this.webgalFs.getPathFromRoot(`/public/templates`),
-    );
-    let isThisTemplateExist = false;
-    checkDir.forEach((e) => {
-      const info: IFileInfo = e as IFileInfo;
-      if (info.name === sourceDir && info.isDir) {
-        isThisTemplateExist = true;
-      }
-    });
-    if (!isThisTemplateExist) {
+  async outputTemplate(templateDir: string): Promise<boolean> {
+    if (!this.isSafeTemplateDirName(templateDir)) {
       return false;
     }
 
-    const dis = this.webgalFs.getPathFromRoot(`/public/templates/${outPath}/`);
+    if (!(await this.templateDirExists(templateDir))) {
+      return false;
+    }
+
+    const outputPath = this.webgalFs.getPathFromRoot(
+      `/public/templates/${templateDir}.zip`,
+    );
 
     const res = await this.webgalFs.compressedDirectory(
-      this.webgalFs.getPathFromRoot(`/public/templates/${sourceDir}/`),
-      dis,
+      this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
+      outputPath,
       'zip',
     );
 
-    _open(dirname(dis), { background: false });
+    if (res) {
+      _open(dirname(outputPath), { background: false });
+    }
 
     return res;
   }
 
   /**
    * 导入模板zip
-   * @param sourceDir 源目录
+   * @param source 模板zip
    */
   async importTemplate(source: string | Buffer): Promise<boolean> {
     const metaRaw = this.webgalFs.readFileInZipToBuffer(
@@ -259,30 +277,19 @@ export class ManageTemplateService {
       return false;
     }
 
-    // 检查是否存在这个模板
-    const checkDir = await this.webgalFs.getDirInfo(
-      this.webgalFs.getPathFromRoot(`/public/templates`),
-    );
+    const templateDir = meta.name?.trim();
 
-    let isThisTemplateExist = false;
-
-    checkDir.forEach((e) => {
-      const info: IFileInfo = e as IFileInfo;
-      if (info.name === meta.name && info.isDir) {
-        isThisTemplateExist = true;
-      }
-    });
-
-    // 存在则失败
-    if (isThisTemplateExist) {
+    if (!templateDir || !this.isSafeTemplateDirName(templateDir)) {
       return false;
     }
 
-    const fileName = normalize(meta.name);
+    if (await this.templateDirExists(templateDir)) {
+      return false;
+    }
 
     const res = await this.webgalFs.decompressedDirectory(
       source,
-      this.webgalFs.getPathFromRoot(`/public/templates/${fileName}`),
+      this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}`),
     );
 
     return res;
