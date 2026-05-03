@@ -1,4 +1,4 @@
-.sidebar_main{
+.sidebar_main {
   width: 100%;
   min-width: 20rem;
   height: 100%;
@@ -10,14 +10,14 @@
   width: 100%;
 }
 
-.sidebar_top{
+.sidebar_top {
   display: flex;
   flex-direction: column;
   padding: 1rem;
   gap: 0.5rem;
 }
 
-.sidebar_top_title{
+.sidebar_top_title {
   font-size: 165%;
   font-weight: 500;
   color: var(--primary);
@@ -25,15 +25,26 @@
   width: 100%;
   padding: 0.5rem 0.5rem 0.5rem 0.25rem;
 }
-.sidebar_top_buttons{
+
+.sidebar_top_buttons {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  > div {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex: 1;
+  }
 }
 
-.game_list{
+.sidebar_top_buttons_right_container {
+  justify-content: right;
+}
+
+.game_list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr) );
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   grid-gap: 0.5rem;
   padding: 0 1rem 1rem 1rem;
 }

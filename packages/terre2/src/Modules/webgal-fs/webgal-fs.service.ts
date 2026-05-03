@@ -1,5 +1,7 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
+import * as archiver from 'archiver';
+import AdmZip = require('adm-zip');
 import {
   basename,
   dirname,
@@ -444,5 +446,86 @@ export class WebgalFsService {
     await fs.copyFile(filePath, newPath);
     this.logger.log(`复制文件: ${filePath} -> ${newPath}`);
     return newPath;
+  }
+
+  /**
+   * 压缩指定目录为指定压缩格式
+   */
+  async compressedDirectory(
+    sourceDir: string,
+    outPath: string,
+    format: archiver.Format = 'zip',
+  ): Promise<boolean> {
+    const dir = dirname(outPath);
+    await fs.mkdir(dir, { recursive: true });
+    const fileHandle = await fs.open(outPath, 'w');
+    const output = fileHandle.createWriteStream();
+    let resolve: (value: boolean | PromiseLike<boolean>) => void;
+    const promises: Promise<boolean> = new Promise((r) => (resolve = r));
+    const archive = archiver.create(format, {
+      zlib: { level: 9 },
+    });
+    archive.on('error', (err) => {
+      console.error(err);
+      resolve(false);
+    });
+    archive.on('warning', (err) => {
+      if (err.code === 'ENOENT') {
+        console.warn(err);
+      }
+    });
+    output.on('close', () => {
+      resolve(true);
+    });
+    archive.pipe(output);
+    archive.directory(sourceDir, false);
+    await archive.finalize();
+    return promises;
+  }
+
+  /**
+   * 解压缩指定文件到指定目录
+   */
+  async decompressedDirectory(
+    sourceZip: string | Buffer,
+    targetDir: string,
+  ): Promise<boolean> {
+    let resolve: (value: boolean | PromiseLike<boolean>) => void;
+    const promises: Promise<boolean> = new Promise((r) => (resolve = r));
+    try {
+      await fs.mkdir(targetDir, { recursive: true });
+
+      const zip = new AdmZip(sourceZip);
+
+      zip.extractAllToAsync(targetDir, true, true, (err) => {
+        if (err) {
+          console.error(err);
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      resolve(false);
+    }
+
+    return promises;
+  }
+
+  /**
+   * 读取压缩包中的文件内容
+   */
+  readFileInZipToBuffer(
+    zipPath: string | Buffer,
+    entryPath: string,
+  ): Buffer | null {
+    const zip = new AdmZip(zipPath);
+    const entry = zip.getEntry(entryPath);
+    if (!entry) {
+      return null;
+    }
+    const buf = zip.readFile(entry);
+    return buf;
   }
 }
