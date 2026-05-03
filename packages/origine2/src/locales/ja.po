@@ -320,8 +320,8 @@ msgstr "事前設定されたターゲットを使用"
 msgid "例如：-100,-100,100,100"
 msgstr "例えば：-100,-100,100,100"
 
-msgid "例如：^.{1,12}$"
-msgstr "例：^.{1,12}$"
+msgid "例如：^.{regexRange}$"
+msgstr "例：^.{regexRange}$"
 
 msgid "例如：a=1 或 name=WebGAL"
 msgstr "例：a=1 または name=WebGAL"

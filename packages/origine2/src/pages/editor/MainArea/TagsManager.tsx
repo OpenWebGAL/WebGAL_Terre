@@ -1,4 +1,4 @@
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import styles from "./tagsManager.module.scss";
 import { cloneDeep } from "lodash";
 import { CloseSmall } from "@icon-park/react";

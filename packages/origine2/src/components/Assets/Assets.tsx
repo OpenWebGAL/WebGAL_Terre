@@ -101,9 +101,8 @@ export default function Assets(
   const extNames = extNameTypes?.length ? extNameTypes.map((item) => extNameMap.get(item)).flat() : allowedExtNames ?? [];
   const filterText = useValue('');
 
-  const cols = useValue(1);
-
   const scrollRef = useRef<FixedSizeList | null>(null);
+  const colsRef = useRef(1);
 
   const normalizePath = (path: string) => path.replace(/\\/g, '/');
   const animationRootPath = useMemo(() => normalizePath([...rootPath, 'animation'].join('/')), [rootPath]);
@@ -200,14 +199,15 @@ export default function Assets(
   );
 
   // 自动滚动
-  useMemo(
+  useEffect(
     () => {
       const index = sortedFiles.findIndex(item => item.path === lastPath.value.join('/'));
-      setTimeout(() => {
-        scrollToIndex(Math.ceil(index / cols.value));
+      const timer = setTimeout(() => {
+        scrollToIndex(Math.max(0, Math.floor(index / colsRef.current)));
       }, 100);
+      return () => clearTimeout(timer);
     },
-    [lastPath.value]
+    [lastPath.value, sortedFiles]
   );
 
   const handleRefresh = () => {
@@ -582,15 +582,15 @@ export default function Assets(
               ({ height, width } : { height: number, width: number }) => {
                 const gridCols = Math.max(1, Math.floor(width / 96));
                 const listCols = Math.max(1, Math.floor(width / 192));
-
-                viewType === 'grid' ? cols.set(gridCols) : cols.set(listCols);
+                const columnCount = viewType === 'grid' ? gridCols : listCols;
+                colsRef.current = columnCount;
 
                 const rowRenderer = ({index, style}: { index: number, style: CSSProperties }) => {
                   return (
-                    <div style={{...style, display: 'grid', gridTemplateColumns: `repeat(${cols.value}, 1fr)`}}>
+                    <div style={{...style, display: 'grid', gridTemplateColumns: `repeat(${columnCount}, 1fr)`}}>
                       {
-                        Array.from({ length: cols.value }).map((_, i) => {
-                          const fileIndex = index * cols.value + i;
+                        Array.from({ length: columnCount }).map((_, i) => {
+                          const fileIndex = index * columnCount + i;
                           if (fileIndex >= sortedFiles.length) return null;
                           return (
                             <FileElement
@@ -618,8 +618,8 @@ export default function Assets(
                   <FixedSizeList
                     height={height}
                     width={width}
-                    itemCount={Math.ceil(sortedFiles.length / (viewType === 'list' ? listCols : gridCols))}
-                    itemSize={viewType === 'list' ? 28 : width / cols.value}
+                    itemCount={Math.ceil(sortedFiles.length / columnCount)}
+                    itemSize={viewType === 'list' ? 28 : width / columnCount}
                     ref={scrollRef}
                   >
                     {rowRenderer}

@@ -5,7 +5,7 @@ import { useEffect, useMemo } from "react";
 import { WsUtil } from "../../../utils/wsUtil";
 import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
 import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import { DeleteFive, Sort, DownOne, RightOne, Play } from "@icon-park/react";
@@ -17,7 +17,7 @@ import { createId } from "@/utils/createId";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 
-import type { DropResult } from 'react-beautiful-dnd';
+import type { DropResult } from '@hello-pangea/dnd';
 
 interface IGraphicalEditorProps {
   targetPath: string;

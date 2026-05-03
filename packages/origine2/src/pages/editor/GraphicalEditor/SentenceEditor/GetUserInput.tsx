@@ -9,6 +9,8 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 const argText = (value: string | boolean | number, zeroAsEmpty = false) =>
   (zeroAsEmpty && value === 0 ? "" : (value ?? "").toString());
 
+const regexRange = "{1,12}";
+
 export default function GetUserInput(props: ISentenceEditorProps) {
   const titleFromArgs = getArgByKey(props.sentence, "title");
   const title = useValue(argText(titleFromArgs, true));
@@ -94,7 +96,7 @@ export default function GetUserInput(props: ISentenceEditorProps) {
           }}
           onBlur={submit}
           className={styles.sayInput}
-          placeholder={t`例如：^.{1,12}$`}
+          placeholder={t`例如：^.${regexRange}$`}
           style={{width: "100%"}}
         />
       </CommonOptions>

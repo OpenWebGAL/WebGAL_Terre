@@ -320,8 +320,8 @@ msgstr "Use prepared target"
 msgid "例如：-100,-100,100,100"
 msgstr "For example: -100,-100,100,100 "
 
-msgid "例如：^.{1,12}$"
-msgstr "Example: ^.{1,12}$"
+msgid "例如：^.{regexRange}$"
+msgstr "Example: ^.{regexRange}$"
 
 msgid "例如：a=1 或 name=WebGAL"
 msgstr "Example: a=1 or name=WebGAL"
