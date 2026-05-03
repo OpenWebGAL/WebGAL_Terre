@@ -4,37 +4,17 @@
 
 #### 新功能
 
-新增预览窗口拖拽调整功能，支持拖拽贴图与 Live2D 模型，并升级 pixi.js 至 8.14.0
+新增模板导入与导出功能，支持通过 ZIP 文件导入模板、导出模板并打开导出目录，并会校验重名与不完整模板
 
-新增 `setTempAnimation` 图形化编辑器
+新增 `choose` 语句默认选项的图形化编辑与 `defaultChoose` 参数补全支持，可用于快速预览时自动选择指定选项
 
-新增 `changeFigure` 更多选项的图形化编辑支持
+新增编辑器默认语言自动检测，会根据已保存语言或浏览器语言选择简体中文、日语或英语
 
-新增 Spine 皮肤选择器
-
-新增 `setTransform` 图形化操作支持
-
-新增文件路径合法性校验
-
-新增 Mac Intel (x64) 构建支持
-
-新增 WebGAL Refine 2026 模板及模板编辑器新组件类支持
+新增 Electron 端 Steamworks 集成，支持 Steam Overlay 初始化与成就解锁接口，并优化 Electron 启动加载与应用图标
 
 #### 修复
 
-修复语法高亮中转义分号（`\;`）未正确识别为内容的问题
-
-修复组件树标题中显示多余占位条目的问题
-
-修复图形化编辑器中编辑空文件时出现前导空行的问题
-
-修复脚本编辑器中删除全部脚本时意外回退的问题
-
-修复嵌套文件夹错误获得特殊图标的问题
-
-修复 `isEmpty` 函数参数处理与语句插入逻辑
-
-更新日语和简体中文翻译
+修复角色对话语法高亮在分号注释前误识别冒号的问题
 
 <!-- English Translation -->
 ## Release Notes
@@ -43,37 +23,17 @@
 
 #### New Features
 
-Added drag-to-adjust functionality for the preview window, supporting dragging textures and Live2D models, with pixi.js upgraded to 8.14.0
+Added template import and export support, including ZIP import, template export, automatic opening of the export folder, and validation for duplicate or incomplete templates
 
-Added `setTempAnimation` graphical editor
+Added graphical editing for the `choose` default option and completion support for the `defaultChoose` parameter, allowing quick preview to automatically select the specified option
 
-Added more options for `changeFigure` graphical editing support
+Added automatic editor language detection for Simplified Chinese, Japanese, and English based on saved preferences or browser language
 
-Added Spine skins chooser
-
-Added `setTransform` graphical editing support
-
-Added file path validation
-
-Added Mac Intel (x64) build support
-
-Added WebGAL Refine 2026 template and template editor new component class support
+Added Electron Steamworks integration with Steam Overlay initialization and achievement unlock APIs, plus improved Electron startup loading and app icon setup
 
 #### Fixes
 
-Fixed escaped semicolons (`\;`) not being correctly recognized as content in syntax highlighting
-
-Fixed placeholder entry appearing in component tree title
-
-Fixed leading empty line when editing empty files in graphical editor
-
-Fixed unexpected revert when deleting all scripts in script editor
-
-Fixed nested folders incorrectly receiving special icons
-
-Fixed `isEmpty` function parameter handling and sentence insertion logic
-
-Updated Japanese and Simplified Chinese translations
+Fixed character-dialogue syntax highlighting incorrectly treating colons in semicolon comments as statement operators
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -82,34 +42,14 @@ Updated Japanese and Simplified Chinese translations
 
 #### 新機能
 
-プレビューウィンドウのドラッグ調整機能を追加し、テクスチャおよび Live2D モデルのドラッグに対応、pixi.js を 8.14.0 にアップグレードしました
+テンプレートのインポート/エクスポート機能を追加し、ZIP からの取り込み、テンプレートの書き出し、書き出し先フォルダーの自動表示に対応し、重複名や不完全なテンプレートも検証するようにしました
 
-`setTempAnimation` グラフィカルエディターを追加しました
+`choose` 文のデフォルト選択肢をグラフィカルエディターで編集できるようにし、`defaultChoose` パラメーターの補完に対応しました。クイックプレビューで指定した選択肢を自動選択できます
 
-`changeFigure` のグラフィカル編集オプションを拡充しました
+保存済みの言語設定またはブラウザー言語に基づき、簡体字中国語、日本語、英語からエディターの既定言語を自動選択する機能を追加しました
 
-Spine スキン選択機能を追加しました
-
-`setTransform` のグラフィカル操作に対応しました
-
-ファイルパスのバリデーション機能を追加しました
-
-Mac Intel (x64) ビルドに対応しました
-
-WebGAL Refine 2026 テンプレートおよびテンプレートエディターの新コンポーネントクラスに対応しました
+Electron 版に Steamworks 連携を追加し、Steam Overlay の初期化と実績解除 API に対応しました。また、Electron の起動時読み込みとアプリアイコン設定を改善しました
 
 #### 修正
 
-シンタックスハイライトでエスケープされたセミコロン（`\;`）がコンテンツとして正しく認識されない問題を修正しました
-
-コンポーネントツリーのタイトルに余分なプレースホルダーが表示される問題を修正しました
-
-グラフィカルエディターで空ファイル編集時に先頭に空行が入る問題を修正しました
-
-スクリプトエディターで全スクリプト削除時に意図しない巻き戻しが発生する問題を修正しました
-
-ネストされたフォルダーに特殊アイコンが誤って適用される問題を修正しました
-
-`isEmpty` 関数のパラメーター処理とセンテンス挿入ロジックを修正しました
-
-日本語および簡体字中国語の翻訳を更新しました
+キャラクター台詞のシンタックスハイライトで、セミコロンコメント内のコロンを文の演算子として誤認識する問題を修正しました
