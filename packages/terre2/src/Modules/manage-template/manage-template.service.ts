@@ -5,6 +5,8 @@ import { webgalParser } from '../../util/webgal-parser';
 import { version_number } from '../../main';
 import { TemplateConfigDto, TemplateInfoDto } from './manage-template.dto';
 import { randomUUID } from 'crypto';
+import { _open } from '../../util/open';
+import { dirname } from 'path';
 
 @Injectable()
 export class ManageTemplateService {
@@ -12,6 +14,28 @@ export class ManageTemplateService {
     private readonly logger: ConsoleLogger,
     private readonly webgalFs: WebgalFsService,
   ) {}
+
+  private async templateDirExists(templateDir: string): Promise<boolean> {
+    try {
+      const templatesDir = await this.webgalFs.getDirInfo(
+        this.webgalFs.getPathFromRoot('/public/templates'),
+      );
+      return templatesDir.some(
+        (fileInfo) => fileInfo.name === templateDir && fileInfo.isDir,
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  private isSafeTemplateDirName(templateDir: string): boolean {
+    return (
+      templateDir.length > 0 &&
+      templateDir !== '.' &&
+      templateDir !== '..' &&
+      WebgalFsService.checkFileName(templateDir)
+    );
+  }
 
   /**
    * 获取模板列表
@@ -202,5 +226,72 @@ export class ManageTemplateService {
       throw new NotFoundException();
     }
     return classNameStyle as string;
+  }
+
+  /**
+   * 导出模板zip
+   * @param templateDir 模板目录
+   */
+  async outputTemplate(templateDir: string): Promise<boolean> {
+    if (!this.isSafeTemplateDirName(templateDir)) {
+      return false;
+    }
+
+    if (!(await this.templateDirExists(templateDir))) {
+      return false;
+    }
+
+    const outputPath = this.webgalFs.getPathFromRoot(
+      `/public/templates/${templateDir}.zip`,
+    );
+
+    const res = await this.webgalFs.compressedDirectory(
+      this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
+      outputPath,
+      'zip',
+    );
+
+    if (res) {
+      _open(dirname(outputPath), { background: false });
+    }
+
+    return res;
+  }
+
+  /**
+   * 导入模板zip
+   * @param source 模板zip
+   */
+  async importTemplate(source: string | Buffer): Promise<boolean> {
+    const metaRaw = this.webgalFs.readFileInZipToBuffer(
+      source,
+      'template.json',
+    );
+    if (!metaRaw) return false;
+
+    let meta: TemplateConfigDto;
+    try {
+      meta = JSON.parse(metaRaw.toString()) as TemplateConfigDto;
+    } catch (error) {
+      this.logger.error('Failed to parse template.json from zip', error);
+      return false;
+    }
+
+    const templateDir = meta.name?.trim();
+
+    if (!templateDir || !this.isSafeTemplateDirName(templateDir)) {
+      return false;
+    }
+
+    if (await this.templateDirExists(templateDir)) {
+      return false;
+    }
+
+    const res = await this.webgalFs.decompressedDirectory(
+      source,
+      this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}`),
+    );
+
+    return res;
   }
 }

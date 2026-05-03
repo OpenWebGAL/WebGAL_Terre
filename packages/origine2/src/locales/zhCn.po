@@ -650,6 +650,9 @@ msgstr "对话框文字"
 msgid "对话框标题"
 msgstr "对话框标题"
 
+msgid "导入模板"
+msgstr "导入模板"
+
 msgid "导出"
 msgstr "导出"
 
@@ -670,6 +673,9 @@ msgstr "导出失败！"
 
 msgid "导出成功！"
 msgstr "导出成功！"
+
+msgid "导出模板"
+msgstr "导出模板"
 
 msgid "将当前模板应用到选定的游戏"
 msgstr "将当前模板应用到选定的游戏"
@@ -1090,6 +1096,12 @@ msgstr "模板名称"
 
 msgid "模板名称不能为空"
 msgstr "模板名称不能为空"
+
+msgid "模板导入失败，请检查是否存在重名或模板是否完整"
+msgstr "模板导入失败，请检查是否存在重名或模板是否完整"
+
+msgid "模板导入成功"
+msgstr "模板导入成功"
 
 msgid "模板目录"
 msgstr "模板目录"
@@ -1882,6 +1894,9 @@ msgstr "默认值50"
 
 msgid "默认语言"
 msgstr "默认语言"
+
+msgid "默认选项"
+msgstr "默认选项"
 
 msgid "鼠标悬浮样式"
 msgstr "鼠标悬浮样式"

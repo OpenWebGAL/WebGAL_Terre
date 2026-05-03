@@ -216,6 +216,19 @@ export interface GetStyleByClassNameDto {
   filePath: string;
 }
 
+export interface OutputTemplateDto {
+  /** The template directory name */
+  templateDir: string;
+}
+
+export interface ImportTemplateDto {
+  /**
+   * The template's zip file
+   * @format binary
+   */
+  file: File;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -1159,6 +1172,46 @@ export class Api<
         body: data,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerOutputTemplate
+     * @summary Output Template
+     * @request POST:/api/manageTemplate/outputTemplate
+     */
+    manageTemplateControllerOutputTemplate: (
+      data: OutputTemplateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<boolean, void>({
+        path: `/api/manageTemplate/outputTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerImportTemplate
+     * @summary Import Template
+     * @request POST:/api/manageTemplate/importTemplate
+     */
+    manageTemplateControllerImportTemplate: (
+      data: ImportTemplateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<boolean, void>({
+        path: `/api/manageTemplate/importTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.FormData,
         ...params,
       }),
   };

@@ -9,18 +9,29 @@ import {
   Param,
   Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ManageTemplateService } from './manage-template.service';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import {
   CreateTemplateDto,
   GetStyleByClassNameDto,
+  ImportTemplateDto,
+  OutputTemplateDto,
   TemplateConfigDto,
   TemplateInfoDto,
   UpdateTemplateConfigDto,
 } from './manage-template.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiConsumes,
+} from '@nestjs/swagger';
 import { ApplyTemplateToGameDto } from '../assets/assets.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('api/manageTemplate')
 @ApiTags('Manage Template')
 export class ManageTemplateController {
@@ -275,5 +286,43 @@ export class ManageTemplateController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  @Post('outputTemplate')
+  @ApiOperation({ summary: 'Output Template' })
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: 'Output Template Successfully.',
+  })
+  @ApiResponse({ status: 400, description: 'Output Template Failed.' })
+  async outputTemplate(
+    @Body() outputTemplateParams: OutputTemplateDto,
+  ): Promise<boolean> {
+    return await this.manageTemplate.outputTemplate(
+      outputTemplateParams.templateDir,
+    );
+  }
+
+  @Post('importTemplate')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({ summary: 'Import Template' })
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: 'Import Template Successfully.',
+  })
+  @ApiResponse({ status: 400, description: 'Import Template Failed.' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    type: ImportTemplateDto,
+  })
+  async importTemplate(
+    @UploadedFile() file?: { buffer?: Buffer },
+  ): Promise<boolean> {
+    if (!file?.buffer) {
+      return false;
+    }
+    return await this.manageTemplate.importTemplate(file.buffer);
   }
 }

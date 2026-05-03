@@ -3,6 +3,7 @@ import createSelectors from '@/utils/createSelectors';
 import { updateUserConfiguration } from '@codingame/monaco-vscode-configuration-service-override';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { getDefaultLanguage } from '@/utils/language';
 
 let subPageChangedCallback: (subPage: string) => void = () => {};
 
@@ -16,7 +17,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       page: 'dashboard',
       subPage: '',
       expand: 0,
-      language: 'zhCn',
+      language: getDefaultLanguage(),
       editorFontFamily: "Consolas, 'Courier New', monospace",
       editorFontSize: 14,
       viewType: 'list',

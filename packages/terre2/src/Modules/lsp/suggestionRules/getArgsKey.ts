@@ -100,7 +100,7 @@ export function getArgsKey(
       return [whenKey];
     }
     case commandType.choose: {
-      return [whenKey];
+      return [whenKey, defaultChooseKey];
     }
     case commandType.end: {
       return [whenKey];
@@ -216,6 +216,22 @@ changeScene:3.txt;
 
 
 任何语句都可以加上 \`-when\` 参数来控制是否执行。通过组合 \`-when\` 参数和 \`jumpLabel\` \`callScene\` \`changeScene\`，你可以实现带条件判断的流程控制。
+  `),
+};
+
+const defaultChooseKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'defaultChoose',
+  insertText: 'defaultChoose=',
+  detail: '快速预览默认选项',
+  documentation: markdown(`
+用于编辑器快速预览。设置后，快速预览遇到该选项语句时会自动选择指定序号的选项。
+
+示例：
+
+\`\`\`
+choose:选项 1:label_1|选项 2:label_2 -defaultChoose=1;
+\`\`\`
   `),
 };
 
