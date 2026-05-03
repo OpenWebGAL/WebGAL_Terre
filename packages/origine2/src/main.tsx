@@ -21,7 +21,6 @@ import {messages as zhCnMessages} from "./locales/zhCn";
 import {messages as jaMessages} from "./locales/ja";
 import useEditorStore from "./store/useEditorStore";
 import { useEffect } from "react";
-import { getDefaultLanguage } from "./utils/language";
 
 i18n.load({
   en: enMessages,
@@ -65,7 +64,7 @@ darkTheme.colorBrandForeground1 = terre[110];
 darkTheme.colorBrandForeground2 = terre[120];
 initializeIcons();
 
-i18n.activate(getDefaultLanguage());
+i18n.activate(useEditorStore.getState().language);
 
 function Main() {
   const isDarkMode = useEditorStore.use.isDarkMode();

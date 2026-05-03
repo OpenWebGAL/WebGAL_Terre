@@ -2,13 +2,12 @@ import type { IEditorState } from '@/types/editor';
 
 export type EditorLanguage = IEditorState['language'];
 
-const fallbackLanguage: EditorLanguage = 'zhCn';
-const unsupportedBrowserFallbackLanguage: EditorLanguage = 'en';
+const defaultLanguage: EditorLanguage = 'zhCn';
 
 function normalizeBrowserLanguage(language: string): EditorLanguage | undefined {
   const normalizedLanguage = language.toLowerCase().replace('_', '-');
 
-  if (normalizedLanguage === 'zhcn' || normalizedLanguage.startsWith('zh')) {
+  if (normalizedLanguage === 'zh' || normalizedLanguage.startsWith('zh-') || normalizedLanguage === 'zhcn') {
     return 'zhCn';
   }
   if (normalizedLanguage === 'ja' || normalizedLanguage.startsWith('ja-')) {
@@ -23,11 +22,11 @@ function normalizeBrowserLanguage(language: string): EditorLanguage | undefined 
 
 export function getDefaultLanguage(): EditorLanguage {
   if (typeof navigator === 'undefined') {
-    return fallbackLanguage;
+    return defaultLanguage;
   }
 
   const browserLanguages = [
-    ...Array.from(navigator.languages ?? []),
+    ...(navigator.languages ?? []),
     navigator.language,
   ].filter((language): language is string => Boolean(language));
 
@@ -38,5 +37,5 @@ export function getDefaultLanguage(): EditorLanguage {
     }
   }
 
-  return unsupportedBrowserFallbackLanguage;
+  return defaultLanguage;
 }
