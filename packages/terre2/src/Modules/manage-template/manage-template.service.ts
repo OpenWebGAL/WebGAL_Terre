@@ -2,9 +2,12 @@ import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as fsp from 'fs/promises';
 import { webgalParser } from '../../util/webgal-parser';
-import { version_number } from '../../main';
+import { version_number } from '../../version';
 import { TemplateConfigDto, TemplateInfoDto } from './manage-template.dto';
 import { randomUUID } from 'crypto';
+import { UserDataService } from '../user-data/user-data.service';
+import { _open } from '../../util/open';
+import { dirname } from 'path';
 
 @Injectable()
 export class ManageTemplateService {
@@ -13,17 +16,61 @@ export class ManageTemplateService {
     private readonly webgalFs: WebgalFsService,
   ) {}
 
+  private async templateDirExists(templateDir: string): Promise<boolean> {
+    try {
+      if (!this.isSafeTemplateDirName(templateDir)) {
+        return false;
+      }
+      return await this.webgalFs.existsDir(
+        UserDataService.getTemplateRoot(templateDir),
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  private isSafeTemplateDirName(templateDir: string): boolean {
+    return (
+      templateDir.length > 0 &&
+      templateDir !== '.' &&
+      templateDir !== '..' &&
+      WebgalFsService.checkFileName(templateDir)
+    );
+  }
+
   /**
    * 获取模板列表
    */
   async getTemplateList(): Promise<TemplateInfoDto[]> {
-    // 如果模板文件夹不存在就创建
-    if (!(await this.webgalFs.existsDir('public/templates')))
-      await this.webgalFs.mkdir('public', 'templates');
-    const path = this.webgalFs.getPathFromRoot(`public/templates`);
-    const fileInfo = await this.webgalFs.getDirInfo(path);
+    await this.webgalFs.mkdir(UserDataService.getUserTemplateRoot(), '');
+    const userTemplateRoot = UserDataService.getUserTemplateRoot();
+    const installTemplateRoot = UserDataService.getInstallPath(
+      'public/templates',
+    );
+    const userTemplates = (await this.webgalFs.existsDir(userTemplateRoot))
+      ? await this.webgalFs.getDirInfo(userTemplateRoot)
+      : [];
+    const installTemplates = (await this.webgalFs.existsDir(installTemplateRoot))
+      ? await this.webgalFs.getDirInfo(installTemplateRoot)
+      : [];
+    const userTemplateNames = new Set(
+      userTemplates.filter((file) => file.isDir).map((file) => file.name),
+    );
+    const installTemplateNames = new Set(
+      installTemplates.filter((file) => file.isDir).map((file) => file.name),
+    );
+    const templateDirs = new Map<string, IFileInfo>();
+    installTemplates
+      .filter((file) => file.isDir)
+      .forEach((file) => templateDirs.set(file.name, file));
+    userTemplates
+      .filter((file) => file.isDir)
+      .forEach((file) => templateDirs.set(file.name, file));
+    const fileInfo = Array.from(templateDirs.values());
+    const defaultTemplate = await this.getDefaultTemplateInfo();
     const templateList: Promise<TemplateInfoDto>[] = fileInfo
       .filter((file) => file.isDir)
+      .filter((file) => file.name !== UserDataService.getDefaultTemplateDir())
       .map(async (item): Promise<TemplateInfoDto> => {
         try {
           const templateConfig: TemplateConfigDto =
@@ -31,12 +78,32 @@ export class ManageTemplateService {
           return {
             ...templateConfig,
             dir: item.name,
+            builtIn:
+              installTemplateNames.has(item.name) &&
+              !userTemplateNames.has(item.name),
           };
         } catch {
           return null;
         }
       });
-    return (await Promise.all(templateList)).filter((e) => e !== null);
+    return [defaultTemplate, ...(await Promise.all(templateList))].filter(
+      (e): e is TemplateInfoDto => e !== null,
+    );
+  }
+
+  private async getDefaultTemplateInfo(): Promise<TemplateInfoDto | null> {
+    try {
+      const templateConfig = await this.getTemplateConfig(
+        UserDataService.getDefaultTemplateDir(),
+      );
+      return {
+        ...templateConfig,
+        dir: UserDataService.getDefaultTemplateDir(),
+        builtIn: true,
+      };
+    } catch {
+      return null;
+    }
   }
 
   /**
@@ -49,13 +116,11 @@ export class ManageTemplateService {
     templateDir: string,
   ): Promise<boolean> {
     // 检查是否存在这个模板
-    const checkDir = await this.webgalFs.getDirInfo(
-      this.webgalFs.getPathFromRoot(`/public/templates`),
-    );
+    const checkDir = await this.getTemplateList();
     let isThisTemplateExist = false;
     checkDir.forEach((e) => {
-      const info: IFileInfo = e as IFileInfo;
-      if (info.name === templateDir && info.isDir) {
+      const info = e as TemplateInfoDto;
+      if (info.dir === templateDir) {
         isThisTemplateExist = true;
       }
     });
@@ -64,7 +129,7 @@ export class ManageTemplateService {
     }
     // 创建文件夹
     await this.webgalFs.mkdir(
-      this.webgalFs.getPathFromRoot('/public/templates'),
+      UserDataService.getUserTemplateRoot(),
       templateDir,
     );
     // 递归复制
@@ -72,7 +137,7 @@ export class ManageTemplateService {
       this.webgalFs.getPathFromRoot(
         '/assets/templates/WebGAL_Default_Template/',
       ),
-      this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
+      UserDataService.getUserTemplateRoot(templateDir),
     );
 
     /**
@@ -151,6 +216,9 @@ export class ManageTemplateService {
     const templatePath = this.webgalFs.getPathFromRoot(
       `/public/templates/${templateDir}`,
     );
+    if (templatePath !== UserDataService.getUserTemplateRoot(templateDir)) {
+      return false;
+    }
     return this.webgalFs.deleteFileOrDirectory(templatePath);
   }
 
@@ -202,5 +270,73 @@ export class ManageTemplateService {
       throw new NotFoundException();
     }
     return classNameStyle as string;
+  }
+
+  /**
+   * 导出模板zip
+   * @param templateDir 模板目录
+   */
+  async outputTemplate(templateDir: string): Promise<boolean> {
+    if (!this.isSafeTemplateDirName(templateDir)) {
+      return false;
+    }
+
+    if (!(await this.templateDirExists(templateDir))) {
+      return false;
+    }
+
+    const templatePath = UserDataService.getTemplateRoot(templateDir);
+    const outputPath = UserDataService.getUserTemplateRoot(
+      `${templateDir}.zip`,
+    );
+
+    const res = await this.webgalFs.compressedDirectory(
+      templatePath,
+      outputPath,
+      'zip',
+    );
+
+    if (res) {
+      _open(dirname(outputPath), { background: false });
+    }
+
+    return res;
+  }
+
+  /**
+   * 导入模板zip
+   * @param source 模板zip
+   */
+  async importTemplate(source: string | Buffer): Promise<boolean> {
+    const metaRaw = this.webgalFs.readFileInZipToBuffer(
+      source,
+      'template.json',
+    );
+    if (!metaRaw) return false;
+
+    let meta: TemplateConfigDto;
+    try {
+      meta = JSON.parse(metaRaw.toString()) as TemplateConfigDto;
+    } catch (error) {
+      this.logger.error('Failed to parse template.json from zip', error);
+      return false;
+    }
+
+    const templateDir = meta.name?.trim();
+
+    if (!templateDir || !this.isSafeTemplateDirName(templateDir)) {
+      return false;
+    }
+
+    if (await this.templateDirExists(templateDir)) {
+      return false;
+    }
+
+    const res = await this.webgalFs.decompressedDirectory(
+      source,
+      UserDataService.getUserTemplateRoot(templateDir),
+    );
+
+    return res;
   }
 }

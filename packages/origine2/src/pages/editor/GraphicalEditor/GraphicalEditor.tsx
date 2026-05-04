@@ -5,17 +5,19 @@ import { useEffect, useMemo } from "react";
 import { EditorPreviewClient } from "../../../utils/editorPreviewClient";
 import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
+import { commandType } from "webgal-parser/src/interface/sceneInterface";
 import { DeleteFive, Sort, DownOne, RightOne, Play } from "@icon-park/react";
 import AddSentence, { addSentenceType } from "./components/AddSentence";
+import SentenceArgOption from "./components/SentenceArgOption";
 import { editorLineHolder } from "@/runtime/WG_ORIGINE_RUNTIME";
 import { eventBus } from "@/utils/eventBus";
 import { createId } from "@/utils/createId";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 
-import type { DropResult } from 'react-beautiful-dnd';
+import type { DropResult } from '@hello-pangea/dnd';
 
 interface IGraphicalEditorProps {
   targetPath: string;
@@ -212,6 +214,13 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const mergedSceneText = useMemo(() => mergeToString(sentenceData.value.map(item => item.content)), [sentenceData.value]);
 
   const parsedScene = mergedSceneText === "" ? { sentenceList: [] } : parseScene(mergedSceneText);
+  const sceneLabels = useMemo(
+    () => parsedScene.sentenceList
+      .filter(sentence => sentence.command === commandType.label)
+      .map(sentence => sentence.content.trim())
+      .filter(Boolean),
+    [parsedScene]
+  );
 
   useEffect(() => {
     const handleDragUpdate = (data: any) => {
@@ -297,9 +306,21 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                               </div>
                             </div>
                           </div>
-                          {sentenceItem.show && <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
-                            updateSentenceByIndex(newSentence, i);
-                          }} targetPath={props.targetPath} />}
+                          {sentenceItem.show && <div className={styles.sentenceEditBody}>
+                            <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
+                              updateSentenceByIndex(newSentence, i);
+                            }} targetPath={props.targetPath} sceneLabels={sceneLabels} />
+                            {sentenceConfig !== sentenceEditorDefault && sentence.command !== commandType.comment && <SentenceArgOption
+                              sentence={sentence}
+                              rawSentence={sentenceItem.content}
+                              argKey="when"
+                              title={t`条件执行`}
+                              enabledText={t`启用 when 条件`}
+                              disabledText={t`不使用 when 条件`}
+                              placeholder={t`例如：a>0 && flag==true`}
+                              onSubmit={(newSentence) => updateSentenceByIndex(newSentence, i)}
+                            />}
+                          </div>}
                         </div>
                       </div>
                     </div>

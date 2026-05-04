@@ -6,6 +6,7 @@ import {
   isPreviewCommandRequestEnvelope,
   isProtocolEnvelope,
   type EventEnvelope,
+  type FastPreviewTimeoutPayload,
   type ProtocolEnvelope,
   type PreviewReadyUpdatedPayload,
   type RegisterPreviewRequestPayload,
@@ -45,11 +46,16 @@ const REGISTER_PREVIEW_TYPE = 'session.register-preview';
 const FORWARDED_EVENT_TYPES = new Set([
   'preview.ready.updated',
   'stage.snapshot.updated',
+  'preview.event.fast-preview-timeout',
 ]);
 
 type ForwardedHostEventEnvelope =
   | EventEnvelope<PreviewReadyUpdatedPayload, 'preview.ready.updated'>
-  | EventEnvelope<StageSnapshotUpdatedPayload, 'stage.snapshot.updated'>;
+  | EventEnvelope<StageSnapshotUpdatedPayload, 'stage.snapshot.updated'>
+  | EventEnvelope<
+      FastPreviewTimeoutPayload,
+      'preview.event.fast-preview-timeout'
+    >;
 
 type RegisterPreviewRequestEnvelope = RequestEnvelope<
   RegisterPreviewRequestPayload,
@@ -80,6 +86,7 @@ const LEGACY_DEBUG_COMMAND = {
   TEMP_SCENE: 6,
   FONT_OPTIMIZATION: 7,
   SET_EFFECT: 8,
+  FAST_PREVIEW_TIMEOUT: 9,
 } as const;
 
 type LegacyDebugCommandValue =
@@ -101,6 +108,18 @@ interface LegacyDebugEnvelope {
 interface LegacyRawEnvelope {
   event: string;
   data: unknown;
+}
+
+interface LegacyFastPreviewTimeoutPayload {
+  scene?: string;
+  sceneName?: string;
+  sentence?: number;
+  sentenceId?: number;
+  targetSentence?: number;
+  targetSentenceId?: number;
+  forwardedLineCount: number;
+  elapsedMs: number;
+  maxDurationMs: number;
 }
 
 function parseRequestedProtocols(request: IncomingMessage): string[] {
@@ -163,6 +182,38 @@ function createLegacyDebugEnvelope(
       message: options?.message ?? '',
     },
   };
+}
+
+function parseLegacyFastPreviewTimeoutPayload(
+  rawMessage: string,
+): FastPreviewTimeoutPayload | null {
+  try {
+    const payload = JSON.parse(rawMessage) as LegacyFastPreviewTimeoutPayload;
+    const sceneName = payload.sceneName ?? payload.scene;
+    const sentenceId = payload.sentenceId ?? payload.sentence;
+    const targetSentenceId = payload.targetSentenceId ?? payload.targetSentence;
+    if (
+      typeof sceneName !== 'string' ||
+      typeof sentenceId !== 'number' ||
+      typeof targetSentenceId !== 'number' ||
+      typeof payload.forwardedLineCount !== 'number' ||
+      typeof payload.elapsedMs !== 'number' ||
+      typeof payload.maxDurationMs !== 'number'
+    ) {
+      return null;
+    }
+
+    return {
+      sceneName,
+      sentenceId,
+      targetSentenceId,
+      forwardedLineCount: payload.forwardedLineCount,
+      elapsedMs: payload.elapsedMs,
+      maxDurationMs: payload.maxDurationMs,
+    };
+  } catch {
+    return null;
+  }
 }
 
 function translatePreviewCommandToLegacyEnvelope(
@@ -427,7 +478,25 @@ export class LegacyEditorPreviewAdapter {
     client: WebSocket,
     envelope: LegacyRawEnvelope,
   ) {
-    if (!this.isLegacyStageSyncEnvelope(envelope)) {
+    if (!this.isLegacyDebugEnvelope(envelope)) {
+      return;
+    }
+
+    if (
+      envelope.data.command === LEGACY_DEBUG_COMMAND.FAST_PREVIEW_TIMEOUT &&
+      this.options.forwardHostEventToV1Editors
+    ) {
+      const payload = parseLegacyFastPreviewTimeoutPayload(
+        envelope.data.message,
+      );
+      if (!payload) {
+        return;
+      }
+
+      this.options.forwardHostEventToV1Editors(
+        createEventEnvelope('preview.event.fast-preview-timeout', payload),
+      );
+
       return;
     }
 
@@ -470,6 +539,20 @@ export class LegacyEditorPreviewAdapter {
   }
 
   private isLegacyStageSyncEnvelope(
+    value: LegacyRawEnvelope,
+  ): value is LegacyDebugEnvelope {
+    return (
+      isRecord(value.data) &&
+      typeof value.data.command === 'number' &&
+      isRecord(value.data.sceneMsg) &&
+      typeof value.data.sceneMsg.scene === 'string' &&
+      typeof value.data.sceneMsg.sentence === 'number' &&
+      typeof value.data.message === 'string' &&
+      isRecord(value.data.stageSyncMsg)
+    );
+  }
+
+  private isLegacyDebugEnvelope(
     value: LegacyRawEnvelope,
   ): value is LegacyDebugEnvelope {
     return (

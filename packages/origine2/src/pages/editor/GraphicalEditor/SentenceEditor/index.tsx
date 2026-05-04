@@ -18,6 +18,7 @@ import {
   ListCheckbox,
   Logout,
   GameHandle,
+  Hourglass,
   Music,
   NewPicture,
   People,
@@ -48,6 +49,8 @@ import styles from "./sentenceEditor.module.scss";
 import GetUserInput from "@/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput";
 import CallSteam from "@/pages/editor/GraphicalEditor/SentenceEditor/CallSteam";
 import SetTempAnimation from "@/pages/editor/GraphicalEditor/SentenceEditor/SetTempAnimation";
+import Wait from "@/pages/editor/GraphicalEditor/SentenceEditor/Wait";
+import BasicCommands from "@/pages/editor/GraphicalEditor/SentenceEditor/BasicCommands";
 import { t } from "@lingui/macro";
 
 export interface ISentenceEditorProps {
@@ -55,6 +58,7 @@ export interface ISentenceEditorProps {
   onSubmit: (newSentence: string) => void;
   index:number;
   targetPath: string;
+  sceneLabels?: string[];
 }
 
 export interface ISentenceEditorConfig {
@@ -108,6 +112,14 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component: SetAnimation,
     icon: <AutoWidth theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`为立绘或背景图片调用动画效果`
+  },
+  {
+    type: commandType.setComplexAnimation,
+    title: () => t`复杂动画`,
+    initialText: () => t`setComplexAnimation:universalSoftIn -target=fig-center;`,
+    component: BasicCommands,
+    icon: <AutoWidth theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`调用引擎内置复杂动画`
   },
   {
     type: commandType.bgm,
@@ -174,6 +186,30 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     descText: () => t`通过选项进入不同的场景`
   },
   {
+    type: commandType.label,
+    title: () => t`标签`,
+    initialText: () => t`label:label_1;`,
+    component: BasicCommands,
+    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`在当前场景内创建跳转标签`
+  },
+  {
+    type: commandType.jumpLabel,
+    title: () => t`跳转标签`,
+    initialText: () => t`jumpLabel:label_1;`,
+    component: BasicCommands,
+    icon: <CornerRightUp theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`跳转到当前场景内的标签`
+  },
+  {
+    type: commandType.setVar,
+    title: () => t`设置变量`,
+    initialText: () => t`setVar:a=1;`,
+    component: BasicCommands,
+    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`设置普通变量或全局变量`
+  },
+  {
     type: commandType.miniAvatar,
     title: () => t`角落头像`,
     initialText: () => t`miniAvatar:选择小头像;`,
@@ -214,6 +250,22 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     descText: () => t`控制是否要显示文本框`
   },
   {
+    type: commandType.showVars,
+    title: () => t`显示变量`,
+    initialText: () => t`showVars;`,
+    component: BasicCommands,
+    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`在游戏中显示当前变量`
+  },
+  {
+    type: commandType.filmMode,
+    title: () => t`电影模式`,
+    initialText: () => t`filmMode:enable;`,
+    component: BasicCommands,
+    icon: <SwitchThemes theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`打开或关闭电影模式`
+  },
+  {
     type: commandType.end,
     title: () => t`结束游戏`,
     initialText: () => t`end;`,
@@ -252,6 +304,22 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component:GetUserInput,
     icon: <EnterTheKeyboard theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`获取来自用户的字符输入`
+  },
+  {
+    type: commandType.applyStyle,
+    title: () => t`应用样式`,
+    initialText: () => t`applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;`,
+    component: BasicCommands,
+    icon: <Code theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`替换 UI 样式标签`
+  },
+  {
+    type: commandType.wait,
+    title: () => t`等待`,
+    initialText: () => t`wait:1000;`,
+    component: Wait,
+    icon: <Hourglass theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`等待一段时间`
   },
   {
     type: commandType.callSteam,

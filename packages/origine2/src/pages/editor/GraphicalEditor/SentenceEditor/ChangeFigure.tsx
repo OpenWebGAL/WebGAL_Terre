@@ -35,6 +35,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const isHaveSpineArg = figureFile.value.includes('?type=spine');
   const figurePosition = useValue<FigurePosition>("");
   const isNoFile = props.sentence.content === "";
+  const clear = useValue(getArgByKey(props.sentence, "clear") === true);
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
@@ -266,6 +267,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       [
         {key: "left", value: figurePosition.value === "left"},
         {key: "right", value: figurePosition.value === "right"},
+        {key: "clear", value: clear.value},
         {key: "id", value: id.value},
         {key: "transform", value: json.value},
         {key: "duration", value: duration.value},
@@ -653,6 +655,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           submit();
         }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
       </CommonOptions>
+      <CommonOptions key="clearFigure" title={t`清除立绘`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          clear.set(newValue);
+          submit();
+        }} onText={t`使用 clear 参数清除`} offText={t`不使用 clear 参数`} isChecked={clear.value} />
+      </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t`立绘文件`}>
           <>
@@ -669,17 +677,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
             />
           </>
         </CommonOptions>}
-      <CommonOptions key="2" title={t`连续执行`}>
-        <TerreToggle
-          title=""
-          onChange={(newValue) => {
-            isGoNext.set(newValue);
-            submit();
-          }}
-          onText={t`本句执行后执行下一句`}
-          offText={t`本句执行后等待`} isChecked={isGoNext.value}
-        />
-      </CommonOptions>
       <CommonOptions title={t`z-index`} key="z-index">
         <input value={zIndex.value}
           onChange={(ev) => {
@@ -783,7 +780,17 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           }
         })()}
       </TerrePanel>
-
+      <CommonOptions key="2" title={t`连续执行`}>
+        <TerreToggle
+          title=""
+          onChange={(newValue) => {
+            isGoNext.set(newValue);
+            submit();
+          }}
+          onText={t`本句执行后执行下一句`}
+          offText={t`本句执行后等待`} isChecked={isGoNext.value}
+        />
+      </CommonOptions>
     </div>
   </div>;
 }

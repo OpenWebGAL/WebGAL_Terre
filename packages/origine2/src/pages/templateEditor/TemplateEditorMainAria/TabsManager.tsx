@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styles from './tabsManager.module.scss';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { CloseSmall } from '@icon-park/react';
 import { getFileIcon } from '@/utils/getFileIcon';
 import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';

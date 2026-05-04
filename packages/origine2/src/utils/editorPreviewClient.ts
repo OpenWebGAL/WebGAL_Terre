@@ -9,6 +9,7 @@ import {
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
   isHostEventEnvelope,
   type EventEnvelope,
+  type FastPreviewTimeoutPayload,
   type PreviewCommandType,
   type PreviewReadyUpdatedPayload,
   type RequestPayloadByType,
@@ -31,7 +32,11 @@ interface SyncSceneInput {
 
 type HostEventEnvelope =
   | EventEnvelope<PreviewReadyUpdatedPayload, 'preview.ready.updated'>
-  | EventEnvelope<StageSnapshotUpdatedPayload, 'stage.snapshot.updated'>;
+  | EventEnvelope<StageSnapshotUpdatedPayload, 'stage.snapshot.updated'>
+  | EventEnvelope<
+      FastPreviewTimeoutPayload,
+      'preview.event.fast-preview-timeout'
+    >;
 
 function normalizeSceneName(scenePath: string): string {
   const normalizedPath = scenePath.replace(/\\/g, '/');
@@ -78,6 +83,11 @@ function consumeHostEvent(event: HostEventEnvelope) {
     lastStageSnapshot = event.payload;
     eventBus.emit('editor-preview:stage-snapshot', {
       snapshot: event.payload,
+    });
+    return;
+  case 'preview.event.fast-preview-timeout':
+    eventBus.emit('editor-preview:fast-preview-timeout', {
+      payload: event.payload,
     });
     return;
   }

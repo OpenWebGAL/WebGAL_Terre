@@ -8,7 +8,7 @@ type EmptyObject = Record<string, never>;
 export interface SyncScenePayload {
   sceneName: string;
   sentenceId: number;
-  syncMode: 'stable' | 'fast';
+  syncMode?: 'stable' | 'fast';
 }
 
 export interface RunSceneContentPayload {
@@ -92,9 +92,19 @@ export interface StageSnapshotUpdatedPayload {
   stageState: JsonObject;
 }
 
+export interface FastPreviewTimeoutPayload {
+  sceneName: string;
+  sentenceId: number;
+  targetSentenceId: number;
+  forwardedLineCount: number;
+  elapsedMs: number;
+  maxDurationMs: number;
+}
+
 export interface EventPayloadByType {
   'preview.ready.updated': PreviewReadyUpdatedPayload;
   'stage.snapshot.updated': StageSnapshotUpdatedPayload;
+  'preview.event.fast-preview-timeout': FastPreviewTimeoutPayload;
 }
 
 export type HostEventType = keyof EventPayloadByType;
@@ -102,6 +112,7 @@ export type HostEventType = keyof EventPayloadByType;
 export const HOST_EVENT_TYPES = [
   'preview.ready.updated',
   'stage.snapshot.updated',
+  'preview.event.fast-preview-timeout',
 ] as const;
 
 export interface RegisterPreviewRequestPayload {

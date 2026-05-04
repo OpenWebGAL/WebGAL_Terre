@@ -38,6 +38,7 @@ const LEGACY_DEBUG_COMMAND = {
   TEMP_SCENE: 6,
   FONT_OPTIMIZATION: 7,
   SET_EFFECT: 8,
+  FAST_PREVIEW_TIMEOUT: 9,
 } as const;
 
 function createUpgradeRequest(protocolHeader?: string) {
@@ -444,6 +445,53 @@ describe('LegacyEditorPreviewAdapter', () => {
             effects: [],
             currentSentence: 'legacy',
           },
+        }),
+      ),
+    ]);
+  });
+
+  it('translates legacy fast preview timeout payloads into V1 timeout events', () => {
+    const forwardedEvents: string[] = [];
+    const adapter = new LegacyEditorPreviewAdapter({
+      forwardHostEventToV1Editors: (envelope) => {
+        forwardedEvents.push(JSON.stringify(envelope));
+      },
+    });
+    const legacySocket = new MockSocket('');
+
+    adapter.addConnection(legacySocket as never);
+    adapter.handleMessage(
+      legacySocket as never,
+      JSON.stringify({
+        event: 'message',
+        data: {
+          command: LEGACY_DEBUG_COMMAND.FAST_PREVIEW_TIMEOUT,
+          sceneMsg: {
+            scene: 'legacy-start.txt',
+            sentence: 7,
+          },
+          stageSyncMsg: {},
+          message: JSON.stringify({
+            sceneName: 'legacy-start.txt',
+            sentenceId: 7,
+            targetSentenceId: 15,
+            forwardedLineCount: 8,
+            elapsedMs: 2200,
+            maxDurationMs: 2000,
+          }),
+        },
+      }),
+    );
+
+    expect(forwardedEvents).toEqual([
+      JSON.stringify(
+        createEventEnvelope('preview.event.fast-preview-timeout', {
+          sceneName: 'legacy-start.txt',
+          sentenceId: 7,
+          targetSentenceId: 15,
+          forwardedLineCount: 8,
+          elapsedMs: 2200,
+          maxDurationMs: 2000,
         }),
       ),
     ]);

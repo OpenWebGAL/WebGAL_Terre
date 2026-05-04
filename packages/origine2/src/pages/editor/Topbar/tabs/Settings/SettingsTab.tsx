@@ -1,41 +1,63 @@
-import s from './settingsTab.module.scss';
-import TopbarTab from "@/pages/editor/Topbar/components/TopbarTab";
-import { TabItem } from "@/pages/editor/Topbar/components/TabItem";
-import { IconWithTextItem } from "@/pages/editor/Topbar/components/IconWithTextItem";
+import { useEffect, useState } from 'react';
+import { t } from '@lingui/macro';
+import {
+  Combobox,
+  Input,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
+  Option,
+} from '@fluentui/react-components';
 import {
   ArrowEnterLeftFilled,
   ArrowEnterLeftRegular,
   ArrowRepeatAllFilled,
   ArrowRepeatAllOffRegular,
   bundleIcon,
+  EyeFilled,
+  EyeOffFilled,
+  SparkleFilled,
+  SparkleRegular,
   LiveFilled,
-  LiveRegular,
   LiveOffFilled,
   LiveOffRegular,
+  LiveRegular,
   LocalLanguageFilled,
   LocalLanguageRegular,
   NavigationFilled,
   NavigationRegular,
+  Settings20Regular,
+  SplitVertical20Regular,
 } from '@fluentui/react-icons';
-import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Tooltip, Input, Combobox, Option, Switch } from '@fluentui/react-components';
+import { Platte } from '@icon-park/react';
+import TopbarTab from '@/pages/editor/Topbar/components/TopbarTab';
+import { TabItem } from '@/pages/editor/Topbar/components/TabItem';
+import { IconWithTextItem } from '@/pages/editor/Topbar/components/IconWithTextItem';
 import useEditorStore from '@/store/useEditorStore';
-import { t } from '@lingui/macro';
-import { candidateFontSizes } from './constants';
-import { useEffect, useState } from 'react';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
-import TerreToggle from '@/components/terreToggle/TerreToggle';
-import { PreviewClose, PreviewOpen } from '@icon-park/react';
+import { candidateFontSizes } from '@/pages/editor/Topbar/tabs/Settings/constants';
+import { AppSettingsDialog } from '@/components/AppSettings/AppSettingsDialog';
+import s from './settingsTab.module.scss';
+
+const LocalLanguageIcon = bundleIcon(LocalLanguageFilled, LocalLanguageRegular);
+const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
+const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
+const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeftFilled, ArrowEnterLeftRegular);
+const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
 
 export function SettingsTab() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [tempFontSize, setTempFontSize] = useState('');
 
   const updateLanguage = useEditorStore.use.updateLanguage();
-
-  const LocalLanguageIcon = bundleIcon(LocalLanguageFilled, LocalLanguageRegular);
-  const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
-  const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
-  const ArrowEnterLeftIcon = bundleIcon(ArrowEnterLeftFilled, ArrowEnterLeftRegular);
-  const NavigationIcon = bundleIcon(NavigationFilled, NavigationRegular);
-
+  const isDarkMode = useEditorStore.use.isDarkMode();
+  const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
+  const editorFontFamily = useEditorStore.use.editorFontFamily();
+  const editorFontSize = useEditorStore.use.editorFontSize();
+  const updateEditorFontFamily = useEditorStore.use.updateEditorFontFamily();
+  const updateEditorFontSize = useEditorStore.use.updateEditorFontSize();
   const isAutoWarp = useEditorStore.use.isAutoWarp();
   const updateIsAutoWarp = useEditorStore.use.updateIsAutoWarp();
   const isShowPreview = useEditorStore.use.isShowPreview();
@@ -46,162 +68,140 @@ export function SettingsTab() {
   const updateIsUseExpSyncFast = useEditorStore.use.updateIsUseExpFastSync();
   const isUseRealtimeEffect = useEditorStore.use.isUseRealtimeEffect();
   const updateIsUseRealtimeEffect = useEditorStore.use.updateIsUseRealtimeEffect();
-
-  const editorFontFamily = useEditorStore.use.editorFontFamily();
-  const editorFontSize = useEditorStore.use.editorFontSize();
-  const updateEditorFontFamily = useEditorStore.use.updateEditorFontFamily();
-  const updateEditorFontSize = useEditorStore.use.updateEditorFontSize();
-
   const isCascaderDelimitersCustomizable = useEditorStore.use.isCascaderDelimitersCustomizable();
   const updateIsCascaderDelimitersCustomizable = useEditorStore.use.updateIsCascaderDelimitersCustomizable();
   const cascaderDelimiters = useEditorStore.use.cascaderDelimiters();
   const updateCascaderDelimiters = useEditorStore.use.updateCascaderDelimiters();
 
-  const [tempFontSize, setTempFontSize] = useState(editorFontSize.toString());
+  useEffect(() => {
+    setTempFontSize(editorFontSize.toString());
+  }, [editorFontSize]);
 
   useEffect(() => {
     const testValue = Number.parseFloat(tempFontSize);
-    if (!isNaN(testValue)) {
+    if (!Number.isNaN(testValue)) {
       updateEditorFontSize(testValue);
     }
   }, [tempFontSize]);
 
-  return <TopbarTab>
-    <TabItem title={t`语言`}>
-      <Menu>
-        <MenuTrigger>
-          <div>
-            <IconWithTextItem
-              icon={<LocalLanguageIcon className={s.iconColor} />}
-              text={t`语言`}
-            />
-          </div>
-        </MenuTrigger>
-        <MenuPopover>
-          <MenuList>
-            <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
-            <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
-            <MenuItem onClick={() => updateLanguage('ja')}>日本语</MenuItem>
-          </MenuList>
-        </MenuPopover>
-      </Menu>
-    </TabItem>
-    <TabItem title={t`预览`}>
-      <IconWithTextItem
-        onClick={() => {
-          updateIsShowPreview(!isShowPreview);
-        }}
-        icon={isShowPreview ? <PreviewOpen className={s.iconColor} /> : <PreviewClose className={s.iconColor} />}
-        text={isShowPreview ? t`显示预览窗口` : t`关闭预览窗口`}
-      />
-      <Tooltip
-        content={<div
-          className={s.previewTips}>{t`实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。`}</div>}
-        relationship="description"
-        showDelay={0}
-        hideDelay={0}
-      >
-        <div>
+  const toggleCascaderDelimiter = () => {
+    const next = !isCascaderDelimitersCustomizable;
+    updateIsCascaderDelimitersCustomizable(next);
+    if (!next) {
+      updateCascaderDelimiters(['/']);
+    }
+  };
+
+  return (
+    <>
+      <TopbarTab>
+        <TabItem title={t`语言`}>
+          <Menu>
+            <MenuTrigger>
+              <div>
+                <IconWithTextItem
+                  icon={<LocalLanguageIcon />}
+                  text={t`语言`}
+                />
+              </div>
+            </MenuTrigger>
+            <MenuPopover>
+              <MenuList>
+                <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
+                <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
+                <MenuItem onClick={() => updateLanguage('ja')}>日本語</MenuItem>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
+        </TabItem>
+        <TabItem title={t`主题`}>
           <IconWithTextItem
-            onClick={() => {
-              updateIsEnableLivePreview(!isEnableLivePreview);
-            }}
-            icon={isEnableLivePreview ? <LiveIcon className={s.iconColor} /> : <LiveOffIcon className={s.iconColor} />}
+            onClick={() => updateIsDarkMode(!isDarkMode)}
+            icon={<Platte className={s.iconColor} />}
+            text={isDarkMode ? t`深色` : t`浅色`}
+          />
+        </TabItem>
+        <TabItem title={t`预览`}>
+          <IconWithTextItem
+            onClick={() => updateIsShowPreview(!isShowPreview)}
+            icon={isShowPreview ? <EyeFilled /> : <EyeOffFilled />}
+            text={isShowPreview ? t`显示预览窗口` : t`关闭预览窗口`}
+          />
+          <IconWithTextItem
+            onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
+            icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
             text={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
           />
-        </div>
-      </Tooltip>
-    </TabItem>
-    <TabItem title={t`实验性快速预览`}>
-      {/* <IconWithTextItem
-        onClick={() => {
-          updateIsUseExpSyncFast(!isUseExpSyncFast);
-        }}
-        icon={isUseExpSyncFast ? <ArrowRepeatAllFilled className={s.iconColor} /> : <ArrowRepeatAllOffRegular className={s.iconColor} />}
-        text={isUseExpSyncFast ? t`启用` : t`关闭`}
-      />
-      {isUseExpSyncFast && <div className={s.tips}>
-        {t`你已启用实验性快速预览，该功能将大幅提升实时预览效率，但可能出现异常。特别提示：不要在上一次实时预览跳转还没有完全结束时（尤其是有动画没有结束时）再次跳转。`}
-      </div>} */}
-      <div style={{display: 'flex', flexDirection: 'column'}}>
-        <Tooltip
-          content={<div
-            className={s.previewTips}>{t`该功能将大幅提升实时预览效率，但可能出现异常。`}</div>}
-          relationship="description"
-          showDelay={0}
-          hideDelay={0}
-        >
-          <Switch
-            label={t`快速预览语句`}
-            labelPosition="after"
-            checked={isUseExpSyncFast}
-            onChange={() => updateIsUseExpSyncFast(!isUseExpSyncFast)}
+        </TabItem>
+        <TabItem title={t`实验性快速预览`}>
+          <IconWithTextItem
+            onClick={() => updateIsUseExpSyncFast(!isUseExpSyncFast)}
+            icon={isUseExpSyncFast ? <ArrowRepeatAllFilled /> : <ArrowRepeatAllOffRegular />}
+            text={isUseExpSyncFast ? t`快速预览语句打开` : t`快速预览语句关闭`}
           />
-        </Tooltip>
-        <Switch
-          label={t`快速预览效果`}
-          labelPosition="after"
-          checked={isUseRealtimeEffect}
-          onChange={() => updateIsUseRealtimeEffect(!isUseRealtimeEffect)}
-        />
-      </div>
-    </TabItem>
-    <TabItem title={t`代码编辑器`}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ marginLeft: 10 }}>
-          <div className={s.prompt}>{t`字体`}</div>
-          <Input className={s.fontFamilyInput}
-            value={editorFontFamily}
-            onChange={(ev) => updateEditorFontFamily(ev.target.value)} />
-        </div>
-        <div style={{ marginRight: 10 }}>
-          <div className={s.prompt}>{t`字体大小`}</div>
-          <Combobox freeform
-            style={{ minWidth: 'unset' }}
-            input={{ style: { width: '40px' } }}
-            value={tempFontSize}
-            onChange={(ev) => setTempFontSize(ev.target.value)}
-            onOptionSelect={(_, data) => setTempFontSize(data.optionValue ?? '')}>
-            {candidateFontSizes.map((option) => (
-              <Option key={option}>{option.toString()}</Option>
-            ))}
-          </Combobox>
-        </div>
-        <IconWithTextItem
-          onClick={() => {
-            updateIsAutoWarp(!isAutoWarp);
-          }}
-          icon={isAutoWarp ? <ArrowEnterLeftIcon className={s.iconColor} /> : <NavigationIcon className={s.iconColor} />}
-          text={isAutoWarp ? t`自动换行` : t`永不换行`}
-        />
-      </div>
-    </TabItem>
-    <TabItem title={t`自定义级联选择器分隔符`}>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
-        <TerreToggle
-          title={t`是否自定义分隔符`}
-          onChange={() => {
-            const next = !isCascaderDelimitersCustomizable;
-            updateIsCascaderDelimitersCustomizable(next);
-            if (!next) { updateCascaderDelimiters(['/']); }
-          }}
-          onText={t`启用`}
-          offText={t`关闭`}
-          isChecked={isCascaderDelimitersCustomizable}
-        />
-        {isCascaderDelimitersCustomizable ? (
-          <>
-            <TagInputPicker
-              onOptionSelect={(options) => {
-                updateCascaderDelimiters(options);
-              }}
-              selectedOptions={cascaderDelimiters}
-            /><div className={s.tips}>
-              {t`点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。`}
-            </div>
-          </>
-        ) : null}
-      </div>
-    </TabItem>
-  </TopbarTab>;
+          <IconWithTextItem
+            onClick={() => updateIsUseRealtimeEffect(!isUseRealtimeEffect)}
+            icon={isUseRealtimeEffect ? <SparkleFilled /> : <SparkleRegular />}
+            text={isUseRealtimeEffect ? t`快速预览效果打开` : t`快速预览效果关闭`}
+          />
+        </TabItem>
+        <TabItem title={t`代码编辑器`}>
+          <div className={s.editorSettings}>
+            <label className={s.inlineField}>
+              <span>{t`字体`}</span>
+              <Input
+                className={s.fontFamilyInput}
+                value={editorFontFamily}
+                onChange={(ev) => updateEditorFontFamily(ev.target.value)}
+              />
+            </label>
+            <label className={s.inlineField}>
+              <span>{t`字体大小`}</span>
+              <Combobox
+                className={s.fontSizeInput}
+                freeform
+                value={tempFontSize}
+                onChange={(ev) => setTempFontSize(ev.target.value)}
+                onOptionSelect={(_, data) => setTempFontSize(data.optionValue ?? '')}
+              >
+                {candidateFontSizes.map((option) => (
+                  <Option key={option}>{option.toString()}</Option>
+                ))}
+              </Combobox>
+            </label>
+            <IconWithTextItem
+              onClick={() => updateIsAutoWarp(!isAutoWarp)}
+              icon={isAutoWarp ? <ArrowEnterLeftIcon /> : <NavigationIcon />}
+              text={isAutoWarp ? t`自动换行` : t`永不换行`}
+            />
+          </div>
+        </TabItem>
+        <TabItem title={t`自定义级联选择器分隔符`}>
+          <div className={s.cascaderSettings}>
+            <IconWithTextItem
+              onClick={toggleCascaderDelimiter}
+              icon={<SplitVertical20Regular />}
+              text={isCascaderDelimitersCustomizable ? t`启用` : t`关闭`}
+            />
+            {isCascaderDelimitersCustomizable && (
+              <div className={s.cascaderPicker}>
+                <TagInputPicker
+                  onOptionSelect={(options) => updateCascaderDelimiters(options)}
+                  selectedOptions={cascaderDelimiters}
+                />
+              </div>
+            )}
+          </div>
+        </TabItem>
+        <TabItem title={t`设置`}>
+          <IconWithTextItem
+            onClick={() => setSettingsOpen(true)}
+            icon={<Settings20Regular />}
+            text={t`更多设置`}
+          />
+        </TabItem>
+      </TopbarTab>
+      <AppSettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+    </>
+  );
 }

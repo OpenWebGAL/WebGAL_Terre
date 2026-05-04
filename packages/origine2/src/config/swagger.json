@@ -1115,6 +1115,76 @@
         ]
       }
     },
+    "/api/manageTemplate/outputTemplate": {
+      "post": {
+        "operationId": "ManageTemplateController_outputTemplate",
+        "summary": "Output Template",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OutputTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Output Template Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Output Template Failed."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/importTemplate": {
+      "post": {
+        "operationId": "ManageTemplateController_importTemplate",
+        "summary": "Import Template",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import Template Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Import Template Failed."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
     "/template-preview/{templateName}/game/template/{path}": {
       "get": {
         "operationId": "TemplatePreviewController_getTemplateAsset",
@@ -1330,7 +1400,6 @@
         },
         "required": [
           "name",
-          "id",
           "webgal-version"
         ]
       },
@@ -1351,6 +1420,7 @@
           },
           "template": {
             "description": "The template config of the game",
+            "nullable": true,
             "allOf": [
               {
                 "$ref": "#/components/schemas/TemplateConfigDto"
@@ -1653,6 +1723,31 @@
         "required": [
           "className",
           "filePath"
+        ]
+      },
+      "OutputTemplateDto": {
+        "type": "object",
+        "properties": {
+          "templateDir": {
+            "type": "string",
+            "description": "The template directory name"
+          }
+        },
+        "required": [
+          "templateDir"
+        ]
+      },
+      "ImportTemplateDto": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "The template's zip file"
+          }
+        },
+        "required": [
+          "file"
         ]
       }
     }

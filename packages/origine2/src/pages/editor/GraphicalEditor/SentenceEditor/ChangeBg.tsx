@@ -89,13 +89,6 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('video') ?? []]}/>
         </>
       </CommonOptions>}
-      <CommonOptions key="2" title={t`连续执行`}>
-        <TerreToggle title="" onChange={(newValue) => {
-          isGoNext.set(newValue);
-          submit();
-        }} onText={t`本句执行后执行下一句`}
-        offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
-      </CommonOptions>
       {!isNoFile && <CommonOptions key="3" title={t`解锁名称`}>
         <input value={unlockName.value}
           onChange={(ev) => {
@@ -106,6 +99,18 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           className={styles.sayInput}
           style={{width: "200px"}}
           placeholder={t`解锁的 CG 名称`}
+        />
+      </CommonOptions>}
+      {!isNoFile && <CommonOptions key="3.1" title={t`鉴赏系列`}>
+        <input value={unlockSeries.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            unlockSeries.set(newValue);
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{width: "200px"}}
+          placeholder={t`默认 default`}
         />
       </CommonOptions>}
       <CommonOptions key="23" title={t`显示效果`}>
@@ -231,6 +236,13 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           />
         </div>
       </TerrePanel>
+      <CommonOptions key="2" title={t`连续执行`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          isGoNext.set(newValue);
+          submit();
+        }} onText={t`本句执行后执行下一句`}
+        offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
+      </CommonOptions>
     </div>
   </div>;
 }

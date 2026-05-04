@@ -16,6 +16,7 @@ export function getArgsKey(
         figureIdKey,
         speakerKey,
         vocalKey,
+        volumeKey,
         clearKey,
         leftSayKey,
         rightSayKey,
@@ -46,6 +47,7 @@ export function getArgsKey(
         durationKey,
         enterDurationKey,
         exitDurationKey,
+        clearKey,
         idFigureKey,
         leftKey,
         rightKey,
@@ -53,6 +55,7 @@ export function getArgsKey(
         zIndexKey,
         motionKey,
         expressionKey,
+        skinKey,
         boundsKey,
         animationFlagKey,
         eyesOpenKey,
@@ -100,7 +103,7 @@ export function getArgsKey(
       return [whenKey];
     }
     case commandType.choose: {
-      return [whenKey];
+      return [whenKey, defaultChooseKey];
     }
     case commandType.end: {
       return [whenKey];
@@ -108,11 +111,18 @@ export function getArgsKey(
     case commandType.setComplexAnimation: {
       return [whenKey, nextKey, continueKey, targetKey, durationKey];
     }
+    case commandType.setFilter: {
+      return [];
+    }
     case commandType.label: {
       return [whenKey];
     }
     case commandType.jumpLabel: {
       return [whenKey];
+    }
+    case commandType.chooseLabel:
+    case commandType.if: {
+      return [];
     }
     case commandType.setVar: {
       return [whenKey, globalKey];
@@ -143,6 +153,7 @@ export function getArgsKey(
         targetKey,
         writeDefaultKey,
         keepKey,
+        parallelKey,
       ];
     }
     case commandType.playEffect: {
@@ -156,6 +167,7 @@ export function getArgsKey(
         targetKey,
         writeDefaultKey,
         keepKey,
+        parallelKey,
       ];
     }
     case commandType.setTransform: {
@@ -167,6 +179,7 @@ export function getArgsKey(
         easeKey,
         writeDefaultKey,
         keepKey,
+        parallelKey,
         durationKey,
       ];
     }
@@ -174,13 +187,22 @@ export function getArgsKey(
       return [whenKey, targetKey, enterAnimationKey, exitAnimationKey];
     }
     case commandType.getUserInput: {
-      return [whenKey, titleKey, buttonTextKey, defaultValueKey];
+      return [
+        whenKey,
+        titleKey,
+        buttonTextKey,
+        defaultValueKey,
+        ruleKey,
+        ruleFlagKey,
+        ruleTextKey,
+        ruleButtonTextKey,
+      ];
     }
     case commandType.applyStyle: {
       return [whenKey];
     }
     case commandType.wait: {
-      return [whenKey];
+      return [whenKey, nobreakKey];
     }
     case commandType.callSteam: {
       return [whenKey, achievementIdKey];
@@ -216,6 +238,22 @@ changeScene:3.txt;
 
 
 任何语句都可以加上 \`-when\` 参数来控制是否执行。通过组合 \`-when\` 参数和 \`jumpLabel\` \`callScene\` \`changeScene\`，你可以实现带条件判断的流程控制。
+  `),
+};
+
+const defaultChooseKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'defaultChoose',
+  insertText: 'defaultChoose=',
+  detail: '快速预览默认选项',
+  documentation: markdown(`
+用于编辑器快速预览。设置后，快速预览遇到该选项语句时会自动选择指定序号的选项。
+
+示例：
+
+\`\`\`
+choose:选项 1:label_1|选项 2:label_2 -defaultChoose=1;
+\`\`\`
   `),
 };
 
@@ -658,6 +696,16 @@ changeFigure:xxx.json -motion=angry -expression=angry01;
   `),
 };
 
+const skinKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'skin',
+  insertText: 'skin=',
+  detail: 'Spine 皮肤',
+  documentation: markdown(`
+切换 Spine 立绘的皮肤。
+  `),
+};
+
 const boundsKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'bounds',
@@ -781,6 +829,16 @@ const keepKey: CompletionItem = {
   documentation: markdown(`
 开启后, 动画可以跨对话播放, 直至被下一个同目标的
 \`setTransform\` \`setAnimation\` \`setTempAnimation\` 打断
+  `),
+};
+
+const parallelKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'parallel',
+  insertText: 'parallel',
+  detail: '并行动画',
+  documentation: markdown(`
+开启后，同目标上的动画不会打断已有动画，而是并行播放。
   `),
 };
 
@@ -977,6 +1035,46 @@ const defaultValueKey: CompletionItem = {
   `),
 };
 
+const ruleKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'rule',
+  insertText: 'rule=',
+  detail: '输入校验正则',
+  documentation: markdown(`
+为 getUserInput 添加正则校验。
+  `),
+};
+
+const ruleFlagKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'ruleFlag',
+  insertText: 'ruleFlag=',
+  detail: '正则标记',
+  documentation: markdown(`
+传给正则表达式的标记，例如 i。
+  `),
+};
+
+const ruleTextKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'ruleText',
+  insertText: 'ruleText=',
+  detail: '校验失败提示',
+  documentation: markdown(`
+输入不匹配 rule 时显示的提示，文本中可用 $0 表示当前输入。
+  `),
+};
+
+const ruleButtonTextKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'ruleButtonText',
+  insertText: 'ruleButtonText=',
+  detail: '校验提示按钮文本',
+  documentation: markdown(`
+校验失败提示框的按钮文本。
+  `),
+};
+
 const vocalKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
   label: 'vocal',
@@ -1014,5 +1112,15 @@ const achievementIdKey: CompletionItem = {
   detail: '成就ID',
   documentation: markdown(`
 成就ID
+  `),
+};
+
+const nobreakKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'nobreak',
+  insertText: 'nobreak',
+  detail: '禁止跳过等待',
+  documentation: markdown(`
+用于 wait 指令，开启后等待期间不能被跳过。
   `),
 };

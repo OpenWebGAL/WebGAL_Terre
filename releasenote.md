@@ -4,29 +4,35 @@
 
 #### 新功能
 
-新增 `callSteam` 命令，并提供图形化参数编辑支持
+新增 4.6 用户数据目录体系，游戏、模板、定制引擎和导出内容会统一保存在用户数据目录中，后续升级不再需要手动迁移安装目录下的工程文件。
 
-`changeFigure` 和 `changeBg` 新增动画选择，并支持自动构建 animationTable
+新增用户数据迁移入口，可将旧版本中的游戏、自定义模板和定制引擎迁移到新的用户数据目录。
 
-新增角色混合模式（blend mode）参数支持
+新增用户数据设置，可打开用户数据目录、配置目录、安装目录，并支持恢复默认目录或迁移到指定目录。
 
-文本编辑器支持保留行内注释
+新增 portable 模式支持，安装目录下存在 `data` 文件夹时可使用便携数据目录。
 
-资源管理新增创建文件复制按钮，提升素材整理效率
+新增快速预览超时提示弹窗，用于说明循环跳转或快进计算过长导致的预览中止。
+
+新增更多常用语句的图形化编辑项，包含 `wait`、输入相关语句和基础命令参数。
+
+重构设置界面与仪表盘侧边栏，用户数据、应用设置和编辑器设置入口更加集中。
+
+优化游戏、资源、模板和导出文件的访问方式，以适配新的用户数据目录。
+
+优化图形化编辑器参数面板，更多命令可以通过开关、选项、目标和默认值输入来编辑。
+
+优化默认模板和游戏模板处理，减少模板为空或默认模板配置异常时的错误。
+
+更新内置模板和默认模板配置，以适配 4.6 的工程结构。
 
 #### 修复
 
-修复 Windows 下路径与文件名校验逻辑，创建空文件更稳定
+修复资源列表在特定情况下可能报错的问题。
 
-修复安全上下文下 UUID 生成问题
+修复部分模板名称、目录或默认模板为空时可能导致的界面异常。
 
-修复文本编辑器拖拽处理与文本更新逻辑，避免异常后缀与重复更新
-
-修复文本编辑器快速建议缺失问题
-
-修复 `changeFigure` 的 `setEffect` 与 spine 类型处理问题
-
-修复发布脚本并更新打包图标
+修复 Windows 用户目录路径在部分环境下处理不正确的问题。
 
 <!-- English Translation -->
 ## Release Notes
@@ -35,33 +41,35 @@
 
 #### New Features
 
-Added the `callSteam` command with graphical argument editing support
+Added the 4.6 user data directory system. Games, templates, custom engines, and exported files are now stored in the user data directory, so future upgrades no longer require manually moving project files inside the installation directory.
 
-Added animation selection to `changeFigure` and `changeBg`, with automatic animationTable generation
+Added a user data migration entry for moving games, custom templates, and custom engines from older versions into the new user data directory.
 
-Added blend mode argument support for figures
+Added user data settings for opening the user data directory, config directory, and install directory, with support for restoring the default directory or migrating to a specified directory.
 
-Text editor now preserves inline comments
+Added portable mode support. When a `data` folder exists in the installation directory, Terre can use it as the portable data directory.
 
-Added a file-copy button in assets management to speed up resource organization
+Added a fast preview timeout warning dialog to explain preview stops caused by loop jumps or overly long fast-forward calculations.
+
+Added graphical editing entries for more common statements, including `wait`, input-related statements, and basic command parameters.
+
+Refactored the settings UI and dashboard sidebar, making user data, application settings, and editor settings easier to access from one place.
+
+Improved access to games, assets, templates, and exported files for the new user data directory.
+
+Improved the graphical editor parameter panel so more commands can be edited with switches, options, targets, and default-value inputs.
+
+Improved default template and game template handling, reducing errors when templates are empty or default template configuration is abnormal.
+
+Updated built-in and default template configuration for the 4.6 project structure.
 
 #### Fixes
 
-Fixed path and filename validation on Windows for more reliable empty-file creation
+Fixed the asset list possibly throwing errors in specific cases.
 
-Fixed UUID generation issues in secure contexts
+Fixed UI issues that could occur when template names, directories, or default template values are empty.
 
-Fixed text editor drag/drop handling and text update logic to avoid suffix pollution and redundant updates
-
-Fixed missing quick suggestions in the text editor
-
-Fixed `setEffect` handling and spine type processing in `changeFigure`
-
-Updated incremental copy naming to a 3-digit suffix format (for example `_001`)
-
-Optimized animationTable auto-update triggers to reduce unnecessary refreshes
-
-Fixed release scripts and updated packaging icon
+Fixed incorrect Windows user directory path handling in some environments.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -70,30 +78,32 @@ Fixed release scripts and updated packaging icon
 
 #### 新機能
 
-`callSteam` コマンドを追加し、引数のグラフィカル編集に対応しました
+4.6 のユーザーデータディレクトリ体系を追加しました。ゲーム、テンプレート、カスタムエンジン、エクスポート内容はユーザーデータディレクトリに保存されるため、今後のアップグレードでインストールディレクトリ内のプロジェクトファイルを手動移行する必要がなくなります。
 
-`changeFigure` と `changeBg` にアニメーション選択を追加し、animationTable の自動構築に対応しました
+旧バージョンのゲーム、カスタムテンプレート、カスタムエンジンを新しいユーザーデータディレクトリへ移行する入口を追加しました。
 
-キャラクターのブレンドモード（blend mode）引数に対応しました
+ユーザーデータディレクトリ、設定ディレクトリ、インストールディレクトリを開けるユーザーデータ設定を追加し、既定ディレクトリへの復元や指定ディレクトリへの移行にも対応しました。
 
-テキストエディターでインラインコメントを保持できるようにしました
+portable モードに対応しました。インストールディレクトリ内に `data` フォルダーがある場合、Terre はそれを portable データディレクトリとして使用できます。
 
-アセット管理にファイル複製ボタンを追加し、素材整理の効率を向上しました
+ループジャンプや長すぎる早送り計算によるプレビュー停止を説明する高速プレビュータイムアウト警告ダイアログを追加しました。
+
+`wait`、入力関連文、基本コマンドのパラメーターなど、より多くの常用文をグラフィカルに編集できるようにしました。
+
+設定 UI とダッシュボードのサイドバーをリファクタリングし、ユーザーデータ、アプリ設定、エディター設定へアクセスしやすくしました。
+
+新しいユーザーデータディレクトリに合わせて、ゲーム、素材、テンプレート、エクスポートファイルの扱いを改善しました。
+
+グラフィカルエディターのパラメーターパネルを改善し、より多くのコマンドをスイッチ、選択肢、ターゲット、既定値入力で編集できるようにしました。
+
+既定テンプレートとゲームテンプレートの処理を改善し、テンプレートが空の場合や既定テンプレート設定が異常な場合のエラーを減らしました。
+
+4.6 のプロジェクト構造に合わせて、組み込みテンプレートと既定テンプレート設定を更新しました。
 
 #### 修正
 
-Windows 環境でのパス／ファイル名バリデーションを修正し、空ファイル作成の安定性を向上しました
+特定の場合に素材一覧がエラーになる問題を修正しました。
 
-セキュアコンテキストでの UUID 生成問題を修正しました
+テンプレート名、ディレクトリ、既定テンプレート値が空の場合に発生する可能性がある UI 問題を修正しました。
 
-テキストエディターのドラッグ＆ドロップ処理とテキスト更新ロジックを修正し、不要な接尾辞や重複更新を防止しました
-
-テキストエディターのクイックサジェストが表示されない問題を修正しました
-
-`changeFigure` の `setEffect` と spine タイプ処理の問題を修正しました
-
-ファイル複製時の連番ルールを 3 桁（例 `_001`）に統一しました
-
-animationTable の自動更新トリガーを最適化し、不要なリフレッシュを削減しました
-
-リリーススクリプトを修正し、パッケージアイコンを更新しました
+一部環境で Windows ユーザーディレクトリのパス処理が正しくない問題を修正しました。

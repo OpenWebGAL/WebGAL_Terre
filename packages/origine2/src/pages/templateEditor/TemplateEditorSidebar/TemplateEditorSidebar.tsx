@@ -17,6 +17,7 @@ import useSWR, { mutate } from 'swr';
 import TemplateConfigDialog from './TemplateConfigDialog';
 import {PlugConnected20Regular, Settings20Regular} from "@fluentui/react-icons";
 import { createId } from '@/utils/createId';
+import { AppSettingsButton } from '@/components/AppSettings/AppSettingsDialog';
 
 export default function TemplateEditorSidebar() {
   const templateDir = useEditorStore.use.subPage();
@@ -65,6 +66,7 @@ export default function TemplateEditorSidebar() {
         <span className={styles.title}>
           {templateConfig ? templateConfig.name : templateDir}
         </span>
+        <AppSettingsButton appearance="subtle" />
       </div>
       <TemplateActions
         templateConfig={templateConfig}
@@ -102,12 +104,22 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
   const [gameList, setGameList] = useState<GameInfoDto[]>([]);
   const [selectedGameDirs, setSelectedGameDirs] = useState<string[]>([]);
 
+  const isGameUsingCurrentTemplate = (game: GameInfoDto) => {
+    const gameTemplate = game.template;
+    if (!gameTemplate) return false;
+    if (templateConfig?.id && gameTemplate.id) return gameTemplate.id === templateConfig.id;
+    const currentTemplateName = templateConfig?.name ?? templateDir;
+    return gameTemplate.name === currentTemplateName || gameTemplate.name === templateDir;
+  };
+
   const getGameList = async () => {
     const gameList = (await api.manageGameControllerGetGameList()).data;
-    const selectedGameDirs = gameList.filter((game) => game.template.name === templateDir).map((game) => game.dir);
+    const selectedGameDirs = gameList.filter(isGameUsingCurrentTemplate).map((game) => game.dir);
     setGameList(gameList);
     setSelectedGameDirs(selectedGameDirs);
   };
+
+  const getGameTemplateName = (game: GameInfoDto) => game.template?.name ?? t`无`;
 
   const applyTemplate = async () => {
     const apply = selectedGameDirs.map(async (gameDir) => await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir}));
@@ -182,7 +194,7 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
                           <div>
                             <div>{game.name}</div>
                             <div style={{fontSize: '90%', color: 'var(--text-sub)'}}>
-                              {t`使用中的模板：` + game.template.name}
+                              {t`使用中的模板：` + getGameTemplateName(game)}
                             </div>
                           </div>
                         </div>

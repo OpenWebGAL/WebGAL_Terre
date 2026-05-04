@@ -5,6 +5,7 @@ on:
   push:
     tags:
       - '*.*'
+      - '!*beta*'
 
 jobs:
   build-linux:
