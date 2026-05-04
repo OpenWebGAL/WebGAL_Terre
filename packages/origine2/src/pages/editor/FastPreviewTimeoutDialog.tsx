@@ -27,11 +27,23 @@ function parseFastPreviewTimeoutMessage(message: string): IFastPreviewTimeoutPay
 
 function normalizeLegacyPayload(
   payload: IFastPreviewTimeoutPayload,
-): FastPreviewTimeoutPayload {
+): FastPreviewTimeoutPayload | null {
+  const sceneName = payload.sceneName ?? payload.scene;
+  const sentenceId = payload.sentenceId ?? payload.sentence;
+  const targetSentenceId = payload.targetSentenceId ?? payload.targetSentence;
+
+  if (
+    typeof sceneName !== "string" ||
+    typeof sentenceId !== "number" ||
+    typeof targetSentenceId !== "number"
+  ) {
+    return null;
+  }
+
   return {
-    sceneName: payload.sceneName ?? payload.scene,
-    sentenceId: payload.sentenceId ?? payload.sentence,
-    targetSentenceId: payload.targetSentenceId ?? payload.targetSentence,
+    sceneName,
+    sentenceId,
+    targetSentenceId,
     forwardedLineCount: payload.forwardedLineCount,
     elapsedMs: payload.elapsedMs,
     maxDurationMs: payload.maxDurationMs,
@@ -45,7 +57,10 @@ export default function FastPreviewTimeoutDialog() {
     const handleMessage = ({ message }: { message: string }) => {
       const timeoutPayload = parseFastPreviewTimeoutMessage(message);
       if (timeoutPayload) {
-        setPayload(normalizeLegacyPayload(timeoutPayload));
+        const normalizedPayload = normalizeLegacyPayload(timeoutPayload);
+        if (normalizedPayload) {
+          setPayload(normalizedPayload);
+        }
       }
     };
     const handleV1Timeout = ({
@@ -53,9 +68,7 @@ export default function FastPreviewTimeoutDialog() {
     }: {
       payload: FastPreviewTimeoutPayload;
     }) => {
-      if (timeoutPayload) {
-        setPayload(timeoutPayload);
-      }
+      setPayload(timeoutPayload);
     };
 
     eventBus.on("web-socket:on-message", handleMessage);

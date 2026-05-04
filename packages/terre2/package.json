@@ -41,7 +41,6 @@
     "@nestjs/swagger": "^7.4.2",
     "@nestjs/websockets": "^10.4.22",
     "@types/image-size": "^0.7.0",
-    "@types/parse-path": "^7.1.0",
     "@webgal/editor-preview-protocol": "1.0.0",
     "@yao-pkg/pkg": "6.4.1",
     "class-transformer": "^0.5.1",

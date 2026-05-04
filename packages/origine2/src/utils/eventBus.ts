@@ -1,5 +1,6 @@
 import mitt from 'mitt';
 import type {
+  FastPreviewTimeoutPayload,
   PreviewReadyUpdatedPayload,
   StageSnapshotUpdatedPayload,
 } from '@webgal/editor-preview-protocol';
@@ -22,12 +23,18 @@ type EditorEvents = {
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
 };
 
+interface TransportEvents {
+  'web-socket:on-message': { message: string };
+};
+
 interface EditorPreviewEvents {
   'editor-preview:ready': PreviewReadyUpdatedPayload;
   'editor-preview:stage-snapshot': { snapshot: StageSnapshotUpdatedPayload };
+  'editor-preview:fast-preview-timeout': { payload: FastPreviewTimeoutPayload };
 }
 
 type Events = Record<PropertyKey, unknown> &
+  TransportEvents &
   IframeEvents &
   EditorEvents &
   EditorPreviewEvents;
