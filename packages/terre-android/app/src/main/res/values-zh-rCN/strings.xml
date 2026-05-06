@@ -12,4 +12,5 @@
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
     <string name="start">启动</string>
+    <string name="files">文件</string>
 </resources>
