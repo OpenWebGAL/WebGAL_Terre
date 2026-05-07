@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -76,16 +77,18 @@ object Notification {
             .setOngoing(true)
             .setContentIntent(appPendingIntent)
 
-        val browserIntent =
-            Intent(Intent.ACTION_VIEW, context.getString(R.string.local_url).toUri())
-        val browserPendingIntent: PendingIntent = PendingIntent.getActivity(
+        val openIntent = Intent(context, MainActivity::class.java).apply {
+            action = MainActivity.ACTION_OPEN
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val openPendingIntent: PendingIntent = PendingIntent.getActivity(
             context,
-            0,
-            browserIntent,
+            NOTIFICATION_ID, // Use NOTIFICATION_ID to distinguish from appPendingIntent
+            openIntent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        builder.addAction(0, context.getString(R.string.open_browser), browserPendingIntent)
+        builder.addAction(0, context.getString(R.string.open), openPendingIntent)
 
         return builder.build()
     }

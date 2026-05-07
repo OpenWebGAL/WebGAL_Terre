@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.DocumentsContract
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -58,15 +59,19 @@ fun MainScreen(
                             Icon(Icons.AutoMirrored.Rounded.OpenInNew, contentDescription = null)
                         },
                         text = {
-                            Text(stringResource(R.string.open_browser))
+                            Text(stringResource(R.string.open))
                         },
                         onClick = {
-                            val intent =
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    context.getString(R.string.local_url).toUri()
-                                )
-                            context.startActivity(intent)
+                            val uri = context.getString(R.string.local_url).toUri()
+                            try {
+                                val customTabsIntent = CustomTabsIntent.Builder().build()
+                                customTabsIntent.launchUrl(context, uri)
+                            } catch (e: Exception) {
+                                val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                                context.startActivity(intent)
+                            }
                         }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
