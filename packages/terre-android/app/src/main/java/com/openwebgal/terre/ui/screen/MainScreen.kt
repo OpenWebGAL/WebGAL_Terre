@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.DocumentsContract
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.openwebgal.terre.R
 import com.openwebgal.terre.service.TerreService
 import com.openwebgal.terre.store.TerreStore
+import com.openwebgal.terre.utils.BrowserUtils
 import com.openwebgal.terre.viewmodel.TerreViewModel
 import kotlin.system.exitProcess
 
@@ -62,16 +62,7 @@ fun MainScreen(
                             Text(stringResource(R.string.open))
                         },
                         onClick = {
-                            val uri = context.getString(R.string.local_url).toUri()
-                            try {
-                                val customTabsIntent = CustomTabsIntent.Builder().build()
-                                customTabsIntent.launchUrl(context, uri)
-                            } catch (e: Exception) {
-                                val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                }
-                                context.startActivity(intent)
-                            }
+                            BrowserUtils.openBrowser(context, context.getString(R.string.local_url))
                         }
                     )
                     Spacer(modifier = Modifier.width(8.dp))

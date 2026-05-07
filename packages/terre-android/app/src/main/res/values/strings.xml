@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">WebGAL Terre</string>
     <string name="exit">Exit</string>
     <string name="open">Open</string>
+    <string name="could_not_open_browser">Could not open browser</string>
     <string name="channel_name">WebGAL Terre</string>
     <string name="channel_description">Notifications for WebGAL Terre</string>
     <string name="notification_title">WebGAL Terre</string>

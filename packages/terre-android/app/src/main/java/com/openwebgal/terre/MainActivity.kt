@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,6 +18,7 @@ import com.openwebgal.terre.service.TerreService
 import com.openwebgal.terre.store.TerreStore
 import com.openwebgal.terre.ui.screen.MainScreen
 import com.openwebgal.terre.ui.theme.TerreTheme
+import com.openwebgal.terre.utils.BrowserUtils
 
 class MainActivity : ComponentActivity() {
 
@@ -61,20 +61,7 @@ class MainActivity : ComponentActivity() {
 
     private fun handleIntent(intent: Intent?) {
         if (intent?.action == ACTION_OPEN) {
-            openBrowser()
-        }
-    }
-
-    private fun openBrowser() {
-        val uri = getString(R.string.local_url).toUri()
-        try {
-            val customTabsIntent = CustomTabsIntent.Builder().build()
-            customTabsIntent.launchUrl(this, uri)
-        } catch (e: Exception) {
-            val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            startActivity(intent)
+            BrowserUtils.openBrowser(this, getString(R.string.local_url))
         }
     }
 
