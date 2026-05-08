@@ -15,7 +15,10 @@ object BrowserUtils {
             val customTabsIntent = CustomTabsIntent.Builder().build()
             customTabsIntent.launchUrl(context, uri)
         } catch (e: Exception) {
-            val intent = Intent(Intent.ACTION_VIEW, uri)
+            val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+                addCategory(Intent.CATEGORY_BROWSABLE)
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
             try {
                 context.startActivity(intent)
             } catch (e2: ActivityNotFoundException) {
