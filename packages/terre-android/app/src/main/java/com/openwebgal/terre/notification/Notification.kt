@@ -77,7 +77,10 @@ object Notification {
             .setContentIntent(appPendingIntent)
 
         val browserIntent =
-            Intent(Intent.ACTION_VIEW, context.getString(R.string.local_url).toUri())
+            Intent(Intent.ACTION_VIEW, context.getString(R.string.local_url).toUri()).apply {
+                addCategory(Intent.CATEGORY_BROWSABLE)
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
         val browserPendingIntent: PendingIntent = PendingIntent.getActivity(
             context,
             0,
