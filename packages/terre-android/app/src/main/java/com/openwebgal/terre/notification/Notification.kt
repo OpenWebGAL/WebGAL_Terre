@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.openwebgal.terre.MainActivity
 import com.openwebgal.terre.R
+import com.openwebgal.terre.utils.BrowserUtils
 import com.openwebgal.terre.store.TerreStore
 
 object Notification {
@@ -76,11 +77,8 @@ object Notification {
             .setOngoing(true)
             .setContentIntent(appPendingIntent)
 
-        val browserIntent =
-            Intent(Intent.ACTION_VIEW, context.getString(R.string.local_url).toUri()).apply {
-                addCategory(Intent.CATEGORY_BROWSABLE)
-                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
+        val browserIntent = BrowserUtils.createBrowserIntent(context.getString(R.string.local_url))
+
         val browserPendingIntent: PendingIntent = PendingIntent.getActivity(
             context,
             0,
