@@ -418,7 +418,8 @@ export class UserDataService {
   }
 
   private static getDefaultUserDataRoot() {
-    return path.join(os.homedir(), USER_DATA_DIR_NAME);
+    const baseDir = os.platform() === 'android' ? process.cwd() : os.homedir();
+    return path.join(baseDir, USER_DATA_DIR_NAME);
   }
 
   private static async readConfig(configPath: string): Promise<UserDataConfig> {

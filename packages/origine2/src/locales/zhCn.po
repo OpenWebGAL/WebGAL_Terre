@@ -824,6 +824,12 @@ msgstr "导出模板"
 msgid "将当前模板应用到选定的游戏"
 msgstr "将当前模板应用到选定的游戏"
 
+msgid "将文本框文本设置为已读"
+msgstr "将文本框文本设置为已读"
+
+msgid "将文本框文本设置为未读"
+msgstr "将文本框文本设置为未读"
+
 msgid "小"
 msgstr "小"
 
@@ -874,6 +880,15 @@ msgstr "已存在文件或文件夹 {0}，请输入其他名称"
 
 msgid "已快进行数"
 msgstr "已快进行数"
+
+msgid "已读文本"
+msgstr "已读文本"
+
+msgid "已读文本内层"
+msgstr "已读文本内层"
+
+msgid "已读文本外层"
+msgstr "已读文本外层"
 
 msgid "帮助"
 msgstr "帮助"

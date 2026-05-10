@@ -39,6 +39,7 @@ const LEGACY_DEBUG_COMMAND = {
   FONT_OPTIMIZATION: 7,
   SET_EFFECT: 8,
   FAST_PREVIEW_TIMEOUT: 9,
+  SET_TEXT_READ_MODE: 10,
 } as const;
 
 function createUpgradeRequest(protocolHeader?: string) {
@@ -288,6 +289,15 @@ describe('LegacyEditorPreviewAdapter', () => {
       ),
     );
     adapter.forwardPreviewCommand(
+      createRequestEnvelope(
+        'preview.command.set-text-read-mode',
+        'req-set-text-read-mode',
+        {
+          isRead: true,
+        },
+      ),
+    );
+    adapter.forwardPreviewCommand(
       createRequestEnvelope('preview.command.set-effect', 'req-set-effect', {
         target: 'fig-center',
         transform: {
@@ -378,6 +388,20 @@ describe('LegacyEditorPreviewAdapter', () => {
           },
           stageSyncMsg: {},
           message: 'true',
+        },
+      }),
+      JSON.stringify({
+        event: 'message',
+        data: {
+          command: LEGACY_DEBUG_COMMAND.SET_TEXT_READ_MODE,
+          sceneMsg: {
+            scene: '',
+            sentence: 0,
+          },
+          stageSyncMsg: {},
+          message: JSON.stringify({
+            isRead: true,
+          }),
         },
       }),
       JSON.stringify({

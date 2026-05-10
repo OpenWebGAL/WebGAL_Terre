@@ -824,6 +824,12 @@ msgstr "テンプレートをエクスポート"
 msgid "将当前模板应用到选定的游戏"
 msgstr "選択したゲームに現在のテンプレートを適用する"
 
+msgid "将文本框文本设置为已读"
+msgstr "テキストボックスのテキストを既読に設定"
+
+msgid "将文本框文本设置为未读"
+msgstr "テキストボックスのテキストを未読に設定"
+
 msgid "小"
 msgstr "小さい"
 
@@ -874,6 +880,15 @@ msgstr "ファイルまたはフォルダは既に存在します {0}"
 
 msgid "已快进行数"
 msgstr "早送り済み行数"
+
+msgid "已读文本"
+msgstr ""
+
+msgid "已读文本内层"
+msgstr ""
+
+msgid "已读文本外层"
+msgstr ""
 
 msgid "帮助"
 msgstr "ヘルプ"

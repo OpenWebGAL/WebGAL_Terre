@@ -212,6 +212,12 @@ export class EditorPreviewClient {
     });
   }
 
+  public static setTextReadMode(isRead: boolean) {
+    return sendPreviewCommand('preview.command.set-text-read-mode', {
+      isRead,
+    });
+  }
+
   public static setEffect(payload: SetEffectPayload) {
     return sendPreviewCommand('preview.command.set-effect', payload);
   }

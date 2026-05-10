@@ -824,6 +824,12 @@ msgstr "Export template"
 msgid "将当前模板应用到选定的游戏"
 msgstr "Apply the current template to selected games"
 
+msgid "将文本框文本设置为已读"
+msgstr "Set text box text as read"
+
+msgid "将文本框文本设置为未读"
+msgstr "Set text box text as unread"
+
 msgid "小"
 msgstr "Small"
 
@@ -874,6 +880,15 @@ msgstr "File or folder already exists {0}, please enter another name"
 
 msgid "已快进行数"
 msgstr "Fast-forwarded lines"
+
+msgid "已读文本"
+msgstr ""
+
+msgid "已读文本内层"
+msgstr ""
+
+msgid "已读文本外层"
+msgstr ""
 
 msgid "帮助"
 msgstr "Help"

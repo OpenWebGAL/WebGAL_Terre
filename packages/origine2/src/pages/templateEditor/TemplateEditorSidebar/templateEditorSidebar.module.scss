@@ -14,12 +14,55 @@
   //margin-left: 4px;
 }
 
+.actionsBlock {
+  width: 100%;
+  background: var(--bg-card);
+  border: var(--border-md);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
 .actions {
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  height: 100%;
+  padding: 4px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.actionButton {
+  width: 100%;
+  height: 28px;
+  min-height: 28px;
+  box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex !important;
   align-items: center;
   gap: 8px;
-  padding: 0 0 8px;
-  flex-wrap: wrap;
+  justify-content: flex-start !important;
+  font-size: 13px;
+  font-weight: 400 !important;
+  text-align: left;
+
+  * {
+    font-weight: 400 !important;
+  }
+
+  :global(.fui-Button__content) {
+    flex: 0 1 auto;
+    text-align: left;
+  }
+
+  :global(.fui-Button__icon) {
+    width: 20px;
+    min-width: 20px;
+    display: inline-flex;
+    justify-content: center;
+  }
 }
 
 .title {
@@ -43,17 +86,20 @@
 
 .divider {
   width: 100%;
-  height: 4px;
+  height: 8px;
   overflow: hidden;
   -webkit-user-select: none;
   user-select: none;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  padding: 0.75px 4px;
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  box-sizing: border-box;
 
   & .dividerLine {
     visibility: hidden;
+    height: 2px;
+    width: 100%;
+    border-radius: var(--radius-md);
   }
 }
 
@@ -62,10 +108,7 @@
 
   & .dividerLine {
     visibility: visible;
-    height: 100%;
-    width: 100%;
     background: var(--primary);
-    border-radius: var(--radius-md);
   }
 }
 
@@ -74,6 +117,7 @@
 
   & .dividerLine {
     visibility: visible;
+    background: var(--primary);
   }
 }
 

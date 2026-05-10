@@ -17,6 +17,7 @@ import {
   type SetComponentVisibilityPayload,
   type SetEffectPayload,
   type SetFontOptimizationPayload,
+  type SetTextReadModePayload,
   type SyncScenePayload,
   type StageSnapshotUpdatedPayload,
 } from '@webgal/editor-preview-protocol';
@@ -75,6 +76,10 @@ type PreviewCommandRequestEnvelope =
   | RequestEnvelope<
       SetFontOptimizationPayload,
       'preview.command.set-font-optimization'
+    >
+  | RequestEnvelope<
+      SetTextReadModePayload,
+      'preview.command.set-text-read-mode'
     >;
 
 const LEGACY_DEBUG_COMMAND = {
@@ -87,6 +92,7 @@ const LEGACY_DEBUG_COMMAND = {
   FONT_OPTIMIZATION: 7,
   SET_EFFECT: 8,
   FAST_PREVIEW_TIMEOUT: 9,
+  SET_TEXT_READ_MODE: 10,
 } as const;
 
 type LegacyDebugCommandValue =
@@ -263,6 +269,13 @@ function translatePreviewCommandToLegacyEnvelope(
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.FONT_OPTIMIZATION, {
         message: envelope.payload.enabled.toString(),
       });
+    case 'preview.command.set-text-read-mode':
+      return createLegacyDebugEnvelope(
+        LEGACY_DEBUG_COMMAND.SET_TEXT_READ_MODE,
+        {
+          message: JSON.stringify(envelope.payload),
+        },
+      );
     case 'preview.command.set-effect':
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.SET_EFFECT, {
         message: JSON.stringify(envelope.payload),

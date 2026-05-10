@@ -132,6 +132,20 @@ line-height: 1.9em;
 overflow: hidden;
 }
 
+.readText {
+}
+
+.readTextOuter {
+background-image: none;
+background-clip: border-box;
+-webkit-background-clip: border-box;
+color: #C0C0C0;
+-webkit-text-fill-color: #C0C0C0;
+}
+
+.readTextInner {
+}
+
 .TextBox_main_miniavatarOff {
 left: 25px;
 }

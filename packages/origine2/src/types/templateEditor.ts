@@ -11,6 +11,7 @@ export interface ITemplateEditorState {
   isCodeMode: boolean,
   isShowDebugger: boolean,
   sidebarWidth: number,
+  templateActionsHeight: number,
   componentTreeHeight: number,
   previewHeight: number,
 }
@@ -22,6 +23,7 @@ export interface ITemplateEditorAction {
   updateIsCodeMode: (isCodeMode: ITemplateEditorState['isCodeMode']) => void,
   updateIsShowDebugger: (isShowDebugger: ITemplateEditorState['isShowDebugger']) => void,
   updateSidebarWidth: (sidebarWidth: ITemplateEditorState['sidebarWidth']) => void,
+  updateTemplateActionsHeight: (templateActionsHeight: ITemplateEditorState['templateActionsHeight']) => void,
   updateComponentTreeHeight: (componentTreeheight: ITemplateEditorState['componentTreeHeight']) => void,
   updatePreviewHeight: (previewHeight: ITemplateEditorState['previewHeight']) => void,
 }
