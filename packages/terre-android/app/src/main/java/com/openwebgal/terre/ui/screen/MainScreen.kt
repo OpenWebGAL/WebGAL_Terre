@@ -35,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.openwebgal.terre.R
 import com.openwebgal.terre.service.TerreService
 import com.openwebgal.terre.store.TerreStore
+import com.openwebgal.terre.utils.BrowserUtils
 import com.openwebgal.terre.viewmodel.TerreViewModel
 import kotlin.system.exitProcess
 
@@ -61,12 +62,7 @@ fun MainScreen(
                             Text(stringResource(R.string.open_browser))
                         },
                         onClick = {
-                            val intent =
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    context.getString(R.string.local_url).toUri()
-                                )
-                            context.startActivity(intent)
+                            BrowserUtils.openBrowser(context, context.getString(R.string.local_url))
                         }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
