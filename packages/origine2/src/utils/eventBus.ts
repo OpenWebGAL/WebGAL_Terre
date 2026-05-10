@@ -23,10 +23,6 @@ type EditorEvents = {
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
 };
 
-interface TransportEvents {
-  'web-socket:on-message': { message: string };
-};
-
 interface EditorPreviewEvents {
   'editor-preview:ready': PreviewReadyUpdatedPayload;
   'editor-preview:stage-snapshot': { snapshot: StageSnapshotUpdatedPayload };
@@ -34,7 +30,6 @@ interface EditorPreviewEvents {
 }
 
 type Events = Record<PropertyKey, unknown> &
-  TransportEvents &
   IframeEvents &
   EditorEvents &
   EditorPreviewEvents;
