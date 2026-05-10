@@ -14,7 +14,6 @@ import {
   MenuPopover,
   MenuTrigger,
   Option,
-  ToolbarButton,
 } from '@fluentui/react-components';
 import {
   Dismiss24Filled,
@@ -67,6 +66,7 @@ interface AppSettingsDialogProps {
 interface AppSettingsButtonProps {
   appearance?: 'subtle' | 'transparent' | 'primary';
   label?: ReactNode;
+  className?: string;
 }
 
 interface SettingTileProps {
@@ -102,15 +102,17 @@ export function SettingTile({
 export function AppSettingsButton({
   appearance = 'subtle',
   label = t`设置`,
+  className,
 }: AppSettingsButtonProps) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <ToolbarButton
+      <Button
+        className={className}
         appearance={appearance}
         icon={<Settings20Regular />}
         onClick={() => setOpen(true)}
-        style={{
+        style={className ? undefined : {
           fontWeight: 'normal',
           fontSize: '14px',
           paddingLeft: '4px',
@@ -120,7 +122,7 @@ export function AppSettingsButton({
         }}
       >
         {label}
-      </ToolbarButton>
+      </Button>
       <AppSettingsDialog open={open} onOpenChange={setOpen} />
     </>
   );
