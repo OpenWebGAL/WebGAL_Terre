@@ -875,6 +875,15 @@ msgstr "File or folder already exists {0}, please enter another name"
 msgid "已快进行数"
 msgstr "Fast-forwarded lines"
 
+msgid "已读文本"
+msgstr ""
+
+msgid "已读文本内层"
+msgstr ""
+
+msgid "已读文本外层"
+msgstr ""
+
 msgid "帮助"
 msgstr "Help"
 

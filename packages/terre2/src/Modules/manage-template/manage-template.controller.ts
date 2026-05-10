@@ -271,7 +271,7 @@ export class ManageTemplateController {
         getStyleDto.className,
       );
 
-      if (!style) {
+      if (style === undefined) {
         throw new HttpException(
           { status: 'error', message: 'Style not found.' },
           HttpStatus.NOT_FOUND,
