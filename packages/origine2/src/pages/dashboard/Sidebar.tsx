@@ -28,6 +28,7 @@ interface ISidebarProps {
 
 const AddIcon = bundleIcon(AddFilled, AddRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
+const DEFAULT_TEMPLATE_DIR = 'WebGAL_Default_Template';
 
 export default function Sidebar(props: ISidebarProps) {
 
@@ -77,7 +78,7 @@ export default function Sidebar(props: ISidebarProps) {
       setTemplateDir(elem.optionValue === DEFAULT_OPTION ? undefined : elem.optionValue);
     }}>
     <Option key="default-template" value={DEFAULT_OPTION}>{defaultTemplateName}</Option>
-    {(templatesResp.data ?? []).map(e =>
+    {(templatesResp.data ?? []).filter(e => e.dir !== DEFAULT_TEMPLATE_DIR).map(e =>
       <Option key={e.dir} value={e.dir}>{e.name}</Option>
     )}
   </Dropdown>;

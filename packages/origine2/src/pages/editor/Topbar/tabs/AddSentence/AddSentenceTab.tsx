@@ -5,33 +5,40 @@ import {ISentenceEditorConfig, sentenceEditorConfig} from "@/pages/editor/Graphi
 import {cloneElement} from "react";
 import {eventBus} from "@/utils/eventBus";
 import {t} from "@lingui/macro";
+import {commandType} from "webgal-parser/src/interface/sceneInterface";
 
 function addSentenceText(text: string) {
   eventBus.emit('editor:topbar-add-sentence', { sentence: text });
 }
 
-function pickSentenceType(indexes: Array<number>) {
-  return indexes.map(index => sentenceEditorConfig[index]).filter(item => item !== undefined).map((e, index) => convertSentenceToNode(e, index));
+function pickSentenceType(types: Array<commandType>) {
+  return types
+    .map(type => sentenceEditorConfig.find(item => item.type === type))
+    .filter((item): item is ISentenceEditorConfig => item !== undefined)
+    .map(convertSentenceToNode);
 }
 
-function convertSentenceToNode(sentence: ISentenceEditorConfig, index: number) {
+function convertSentenceToNode(sentence: ISentenceEditorConfig) {
   const iconSmall = cloneElement(sentence.icon, {size: "18px"});
-  return <IconWithTextItemSmall key={`sentenceAddSmall${index}`} onClick={() => addSentenceText(sentence.initialText())}
+  return <IconWithTextItemSmall key={`sentenceAddSmall${sentence.type}`} onClick={() => addSentenceText(sentence.initialText())}
     icon={iconSmall}
     text={sentence.title()}/>;
 }
 
 export function AddSentenceTab() {
 
-  const btsCommon1 = pickSentenceType([0, 1, 2]);
-  const btsCommon2 = pickSentenceType([4, 5]);
-  const btsSpecial = pickSentenceType([8, 12, 13]);
-  const btsSpecial2 = pickSentenceType([6, 7, 21]);
-  const btsBranch = pickSentenceType([9, 10, 11]);
-  const btsExtra = pickSentenceType([14, 15]);
-  const btsSystem = pickSentenceType([16, 17, 22]);
-  const btsControl = pickSentenceType([3, 19, 20]);
-  const btsControl2 = pickSentenceType([23]);
+  const btsCommon1 = pickSentenceType([commandType.say, commandType.changeBg, commandType.changeFigure]);
+  const btsCommon2 = pickSentenceType([commandType.bgm, commandType.video, commandType.playEffect]);
+  const btsControl = pickSentenceType([commandType.setAnimation, commandType.setComplexAnimation, commandType.setTransform]);
+  const btsControl2 = pickSentenceType([commandType.setTempAnimation, commandType.setTransition]);
+  const btsSpecial = pickSentenceType([commandType.pixi, commandType.pixiInit, commandType.intro]);
+  const btsSpecial2 = pickSentenceType([commandType.miniAvatar, commandType.setTextbox, commandType.filmMode]);
+  const btsBranch = pickSentenceType([commandType.callScene, commandType.changeScene, commandType.choose]);
+  const btsBranch2 = pickSentenceType([commandType.label, commandType.jumpLabel]);
+  const btsExtra = pickSentenceType([commandType.unlockCg, commandType.unlockBgm]);
+  const btsSystem = pickSentenceType([commandType.getUserInput, commandType.setVar, commandType.showVars]);
+  const btsSystem2 = pickSentenceType([commandType.wait, commandType.applyStyle, commandType.callSteam]);
+  const btsSystem3 = pickSentenceType([commandType.end]);
 
   return <TopbarTab>
     <TabItem title={t`常规演出`}>
@@ -62,6 +69,9 @@ export function AddSentenceTab() {
       <div>
         {btsBranch}
       </div>
+      <div>
+        {btsBranch2}
+      </div>
     </TabItem>
     <TabItem title={t`鉴赏`}>
       <div>
@@ -71,6 +81,12 @@ export function AddSentenceTab() {
     <TabItem title={t`游戏控制`}>
       <div>
         {btsSystem}
+      </div>
+      <div>
+        {btsSystem2}
+      </div>
+      <div>
+        {btsSystem3}
       </div>
     </TabItem>
   </TopbarTab>;

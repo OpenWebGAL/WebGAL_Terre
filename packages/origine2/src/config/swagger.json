@@ -1400,7 +1400,6 @@
         },
         "required": [
           "name",
-          "id",
           "webgal-version"
         ]
       },
@@ -1421,6 +1420,7 @@
           },
           "template": {
             "description": "The template config of the game",
+            "nullable": true,
             "allOf": [
               {
                 "$ref": "#/components/schemas/TemplateConfigDto"

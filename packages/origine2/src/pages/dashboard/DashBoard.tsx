@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useValue} from "../../hooks/useValue";
 import {logger} from "../../utils/logger";
 import {Message, TestRefRef} from "../../components/message/Message";
@@ -40,7 +40,8 @@ import {
   GamesFilled,
   GamesRegular,
   LocalLanguage24Filled,
-  LocalLanguage24Regular
+  LocalLanguage24Regular,
+  Settings20Regular
 } from "@fluentui/react-icons";
 import classNames from "classnames";
 import useEditorStore from "@/store/useEditorStore";
@@ -52,6 +53,12 @@ import { useRelease } from "@/hooks/useRelease";
 import { __INFO } from "@/config/info";
 import {CreateGameDto, CreateTemplateDto} from "@/api/Api";
 import { Platte } from "@icon-park/react";
+import {
+  AppSettingsDialog,
+  USER_DATA_STATUS_KEY,
+  userDataStatusFetcher
+} from "@/components/AppSettings/AppSettingsDialog";
+import { getMigrationGuideUrl } from "@/utils/language";
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -82,10 +89,12 @@ export default function DashBoard() {
   const {mutate} = useSWRConfig();
 
   const subPage = useEditorStore.use.subPage();
+  const language = useEditorStore.use.language();
   const updateLanguage = useEditorStore.use.updateLanguage();
   const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
 
   const messageRef = useRef<TestRefRef>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // 左侧栏页签
   const selectedValue = subPage;
@@ -120,6 +129,9 @@ export default function DashBoard() {
 
   const {data: gameList} = useSWR("game-list", gameListFetcher);
   const {data: templateList} = useSWR("template-list", templateListFetcher);
+  const {data: userDataStatus} = useSWR(USER_DATA_STATUS_KEY, userDataStatusFetcher);
+  const hasLoadedUserLists = Array.isArray(gameList) && Array.isArray(templateList);
+  const hasExistingUserData = (gameList?.length ?? 0) > 0 || (templateList ?? []).some((template) => !template.builtIn);
 
   const refreash = () => {
     setCurrentGame(null);
@@ -135,10 +147,12 @@ export default function DashBoard() {
   const ignoreVersion = useEditorStore.use.ignoreVersion();
   const updateIgnoreVersion = useEditorStore.use.updateIgnoreVersion();
   const releaseHasNotified = useRef(false);
+  const migrationHasNotified = useRef(false);
   const releaseTimeout = 5000;
 
   const releaseToasterId = useId("release-toaster");
   const { dispatchToast } = useToastController(releaseToasterId);
+  const migrationGuideUrl = getMigrationGuideUrl(language);
   const releaseNotify = () => {
     if (releaseHasNotified.current || !latestRelease || ignoreVersion === __INFO.version) return;
 
@@ -186,12 +200,51 @@ export default function DashBoard() {
     [latestRelease?.hasNewVersion]
   );
 
+  useEffect(
+    () => {
+      if (
+        !hasLoadedUserLists ||
+        hasExistingUserData ||
+        !userDataStatus?.legacyMigration.needsMigrationNotice ||
+        migrationHasNotified.current
+      ) return;
+      dispatchToast(
+        <Toast>
+          <ToastTitle>{t`用户数据迁移`}</ToastTitle>
+          <ToastBody>
+            <Text size={200} style={{lineHeight: 1.5}}>
+              {t`WebGAL Terre 4.6 使用新的用户数据目录。建议检查并迁移旧版本数据。`}
+            </Text>
+          </ToastBody>
+          <ToastFooter>
+            <Button appearance="secondary" size="small" as="a" href={migrationGuideUrl} target="_blank">
+              {t`查看迁移文档`}
+            </Button>
+            <Button appearance="primary" size="small" onClick={() => setSettingsOpen(true)}>
+              {t`打开设置`}
+            </Button>
+          </ToastFooter>
+        </Toast>,
+        { timeout: releaseTimeout, intent: "info" }
+      );
+      migrationHasNotified.current = true;
+    },
+    [hasLoadedUserLists, hasExistingUserData, migrationGuideUrl, userDataStatus?.legacyMigration.needsMigrationNotice]
+  );
+
   return (
     <div className={styles.dashboard_container}>
       <div className={styles.topBar}>
         WebGAL Terre
         <Toolbar>
           <About/>
+          <ToolbarButton
+            aria-label={t`用户数据`}
+            icon={<Settings20Regular/>}
+            onClick={() => setSettingsOpen(true)}
+          >
+            {t`设置`}
+          </ToolbarButton>
           <Menu>
             <MenuTrigger>
               <ToolbarButton aria-label={t`语言`}
@@ -257,6 +310,7 @@ export default function DashBoard() {
         </div>}
       </div>
       <Toaster toasterId={releaseToasterId} />
+      <AppSettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
     </div>
   );
 }

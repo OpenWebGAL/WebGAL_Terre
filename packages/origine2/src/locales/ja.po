@@ -32,6 +32,12 @@ msgstr "<0>現在適用中のテンプレート：{currentTemplateName}</0>"
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
+msgid "4.6 用户数据迁移"
+msgstr "4.6 ユーザーデータ移行"
+
+msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
+msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
+
 msgid "BGM"
 msgstr "BGM"
 
@@ -68,8 +74,14 @@ msgstr "CSS プロパティ値"
 msgid "CSS 属性名："
 msgstr "CSS プロパティ名："
 
+msgid "enable 开启，none 或留空关闭"
+msgstr "enable でオン、none または空欄でオフ"
+
 msgid "end;"
 msgstr "end;"
+
+msgid "filmMode:enable;"
+msgstr "filmMode:enable;"
 
 msgid "font-family"
 msgstr "font-family"
@@ -82,6 +94,12 @@ msgstr "Intro テキスト"
 
 msgid "intro:;"
 msgstr "intro:;"
+
+msgid "jumpLabel:label_1;"
+msgstr "jumpLabel:label_1;"
+
+msgid "label:label_1;"
+msgstr "label:label_1;"
 
 msgid "Live2D 动作"
 msgstr "Live2D モーション"
@@ -104,11 +122,17 @@ msgstr "playEffect: 効果音を選択;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo: 動画を選択;"
 
+msgid "Portable 模式"
+msgstr "Portable モード"
+
 msgid "RGB电影滤镜"
 msgstr "RGB映画"
 
 msgid "setAnimation:选择动画文件;"
 msgstr "setAnimation: アニメーションを選択;"
+
+msgid "setComplexAnimation:universalSoftIn -target=fig-center;"
+msgstr "setComplexAnimation:universalSoftIn -target=fig-center;"
 
 msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
 msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
@@ -121,6 +145,15 @@ msgstr "setTransform: -duration=0;"
 
 msgid "setTransition:;"
 msgstr "setTransition:;"
+
+msgid "setVar:a=1;"
+msgstr "setVar:a=1;"
+
+msgid "showVars 通常不需要内容"
+msgstr "showVars は通常、内容を必要としません"
+
+msgid "showVars;"
+msgstr "showVars;"
 
 msgid "Spine 动画"
 msgstr "Spine アニメーション"
@@ -137,8 +170,14 @@ msgstr "unlockBgm:;"
 msgid "unlockCg:;"
 msgstr "unlockCg:;"
 
+msgid "wait:1000;"
+msgstr "wait:1000;"
+
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
+
+msgid "WebGAL Terre 4.6 使用新的用户数据目录。建议检查并迁移旧版本数据。"
+msgstr "WebGAL Terre 4.6 は新しいユーザーデータディレクトリを使用します。旧バージョンのデータを確認して移行することをおすすめします。"
 
 msgid "X轴位移"
 msgstr "X軸位移"
@@ -179,6 +218,12 @@ msgstr "次に"
 msgid "下移"
 msgstr "下へ移動"
 
+msgid "不使用 clear 参数"
+msgstr "clear パラメータを使用しない"
+
+msgid "不使用 when 条件"
+msgstr "when 条件を使用しない"
+
 msgid "不可选项"
 msgstr "選択できない選択肢"
 
@@ -190,6 +235,9 @@ msgstr "キャラクター名は設定不可"
 
 msgid "不设定"
 msgstr "未設定"
+
+msgid "与同目标动画并行"
+msgstr "同じ対象のアニメーションと並行実行"
 
 msgid "两端对齐"
 msgstr "両端揃え"
@@ -230,17 +278,29 @@ msgstr "テーマ"
 msgid "亮度"
 msgstr "輝度"
 
+msgid "从本场景选择"
+msgstr "このシーンから選択"
+
 msgid "代码编辑器"
 msgstr "コードエディタ"
 
+msgid "以下目标路径已存在，未覆盖："
+msgstr "次の移行先パスは既に存在するため、上書きされませんでした："
+
 msgid "伽马值"
 msgstr "ガンマ"
+
+msgid "使用 clear 参数清除"
+msgstr "clear パラメータで消去"
 
 msgid "使用中的模板："
 msgstr "使用中のテンプレート："
 
 msgid "使用引擎内置的特效"
 msgstr "デフォルトの特殊効果を使用"
+
+msgid "使用此标签"
+msgstr "このラベルを使用"
 
 msgid "使用特效"
 msgstr "特殊効果を使う"
@@ -263,6 +323,24 @@ msgstr "事前設定されたターゲットを使用"
 msgid "例如：-100,-100,100,100"
 msgstr "例えば：-100,-100,100,100"
 
+msgid "例如：^.{regexRange}$"
+msgstr "例：^.{regexRange}$"
+
+msgid "例如：a=1 或 name=WebGAL"
+msgstr "例：a=1 または name=WebGAL"
+
+msgid "例如：a>0 && flag==true"
+msgstr "例：a>0 && flag==true"
+
+msgid "例如：fig-center"
+msgstr "例：fig-center"
+
+msgid "例如：i"
+msgstr "例：i"
+
+msgid "例如：universalSoftIn"
+msgstr "例：universalSoftIn"
+
 msgid "侧边栏"
 msgstr "サイドバー"
 
@@ -280,6 +358,9 @@ msgstr "テンプレート設定の保存に失敗しました。しばらくし
 
 msgid "保持闭眼(毫秒)"
 msgstr "目を閉じたままにする時間(ミリ秒)"
+
+msgid "保留角色名"
+msgstr "キャラクター名を保持"
 
 msgid "修改时间"
 msgstr "最終更新"
@@ -314,14 +395,23 @@ msgstr "上部のオフセット（位置決め用）"
 msgid "停止 BGM"
 msgstr "BGMを停止"
 
+msgid "停止位置"
+msgstr "停止位置"
+
 msgid "像素"
 msgstr "ピクセル"
+
+msgid "允许跳过"
+msgstr "スキップを許可"
 
 msgid "光辉电影滤镜"
 msgstr "ゴッドレイ映画"
 
 msgid "入场时长（单位为毫秒）"
 msgstr "入場時間（ミリ秒）"
+
+msgid "全局变量"
+msgstr "グローバル変数"
 
 msgid "全屏文字"
 msgstr "全画面テキスト"
@@ -353,6 +443,9 @@ msgstr "背景画像を非表示"
 msgid "关闭预览窗口"
 msgstr "プレビューウィンドウを閉じる"
 
+msgid "内容"
+msgstr "内容"
+
 msgid "内层文本"
 msgstr "内側テキスト"
 
@@ -374,8 +467,14 @@ msgstr "最小高さ"
 msgid "最新版本"
 msgstr "最新バージョン"
 
+msgid "写入全局变量"
+msgstr "グローバル変数に書き込む"
+
 msgid "写入变量"
 msgstr "変数を書く"
+
+msgid "写入当前存档变量"
+msgstr "現在のセーブ変数に書き込む"
 
 msgid "分支选择"
 msgstr "選択肢"
@@ -388,6 +487,9 @@ msgstr "シーンの切り替え"
 
 msgid "切换场景，新场景直接替换父场景"
 msgstr "シーン切り替え後、新しいシーンを親シーンとして置き換え"
+
+msgid "切换界面语言"
+msgstr "表示言語を切り替える"
 
 msgid "切换立绘"
 msgstr "立ち絵の切り替え"
@@ -446,6 +548,9 @@ msgstr "太字"
 msgid "动画"
 msgstr "アニメーション"
 
+msgid "动画名"
+msgstr "アニメーション名"
+
 msgid "动画帧控制"
 msgstr "フレームコントロール"
 
@@ -461,8 +566,17 @@ msgstr "単一のアニメーション"
 msgid "单行注释"
 msgstr "一行コメント"
 
+msgid "即将把用户数据迁移到新的目录。文件较多时可能需要一些时间，迁移完成前请不要关闭 WebGAL Terre。"
+msgstr "ユーザーデータを新しいディレクトリへ移行します。ファイルが多い場合は時間がかかることがあります。移行が完了するまで WebGAL Terre を閉じないでください。"
+
+msgid "即将把用户数据迁移回默认目录。文件较多时可能需要一些时间。"
+msgstr "ユーザーデータを既定のディレクトリへ戻します。ファイルが多い場合は時間がかかることがあります。"
+
 msgid "厚度"
 msgstr "厚さ"
+
+msgid "原样式->新样式，多个用逗号分隔"
+msgstr "元のスタイル->新しいスタイル、複数はカンマで区切る"
 
 msgid "参数值"
 msgstr "パラメータ値"
@@ -484,6 +598,15 @@ msgstr "ピン留めを解除"
 
 msgid "变换"
 msgstr "トランスフォーム"
+
+msgid "变量表达式"
+msgstr "変数式"
+
+msgid "可用 $0 表示当前输入"
+msgstr "$0 で現在の入力を表せます"
+
+msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
+msgstr "スクリプト内のループジャンプ、または対象行までの早送り行数が多すぎることが原因の可能性があります。"
 
 msgid "可选项"
 msgstr "選択可能な選択肢"
@@ -508,6 +631,9 @@ msgstr "ロゴ"
 
 msgid "启用"
 msgstr "有効化"
+
+msgid "启用 when 条件"
+msgstr "when 条件を有効化"
 
 msgid "启用视频跳过"
 msgstr "動画のスキップを有効にする"
@@ -551,11 +677,17 @@ msgstr "角丸方形"
 msgid "在对话框的左下角显示一个小头像"
 msgstr "ダイアログの左下に小さなアバターを表示します"
 
+msgid "在当前场景内创建跳转标签"
+msgstr "現在のシーン内にジャンプ用ラベルを作成"
+
 msgid "在文件管理器中打开"
 msgstr "ファイルエクスプローラーで開く"
 
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
+
+msgid "在游戏中显示当前变量"
+msgstr "ゲーム内に現在の変数を表示"
 
 msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
@@ -571,6 +703,12 @@ msgstr "シーンファイル"
 
 msgid "填写参数值"
 msgstr "パラメータ値を入力"
+
+msgid "复杂动画"
+msgstr "複雑アニメーション"
+
+msgid "复杂动画名来自引擎内置动画。若要使用项目动画文件，通常应使用“调用动画”。"
+msgstr "複雑アニメーション名はエンジン内蔵アニメーションに由来します。プロジェクトのアニメーションファイルを使う場合は通常「アニメーション呼び出し」を使用します。"
 
 msgid "外层文本"
 msgstr "外側テキスト"
@@ -623,17 +761,23 @@ msgstr "フォントの太さ"
 msgid "定位方式"
 msgstr "位置決め方法"
 
+msgid "实时预览"
+msgstr "リアルタイムプレビュー"
+
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
 
-msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
-msgstr "リアルタイムプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。"
+msgid "实时预览已停止"
+msgstr "リアルタイムプレビューを停止しました"
+
+msgid "实时预览快进超过了超时时间限制，已停止继续演算。"
+msgstr "リアルタイムプレビューの早送りがタイムアウト制限を超えたため、以降の演算を停止しました。"
 
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
 
 msgid "实验性快速预览"
-msgstr "実験的な高速プレビュー"
+msgstr "実験的高速プレビュー"
 
 msgid "宽度"
 msgstr "幅"
@@ -679,6 +823,12 @@ msgstr "テンプレートをエクスポート"
 
 msgid "将当前模板应用到选定的游戏"
 msgstr "選択したゲームに現在のテンプレートを適用する"
+
+msgid "将文本框文本设置为已读"
+msgstr "テキストボックスのテキストを既読に設定"
+
+msgid "将文本框文本设置为未读"
+msgstr "テキストボックスのテキストを未読に設定"
 
 msgid "小"
 msgstr "小さい"
@@ -728,11 +878,26 @@ msgstr "作成済み"
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "ファイルまたはフォルダは既に存在します {0}"
 
+msgid "已快进行数"
+msgstr "早送り済み行数"
+
+msgid "已读文本"
+msgstr "既読テキスト"
+
+msgid "已读文本内层"
+msgstr "既読テキスト内側"
+
+msgid "已读文本外层"
+msgstr "既読テキスト外側"
+
 msgid "帮助"
 msgstr "ヘルプ"
 
 msgid "帮助文档"
 msgstr "ヘルプドキュメント"
+
+msgid "常用设置"
+msgstr "よく使う設定"
 
 msgid "常规演出"
 msgstr "通常演出"
@@ -740,8 +905,14 @@ msgstr "通常演出"
 msgid "平铺"
 msgstr "タイリング"
 
+msgid "并行动画"
+msgstr "並行アニメーション"
+
 msgid "应用"
 msgstr "適用"
+
+msgid "应用样式"
+msgstr "スタイルを適用"
 
 msgid "应用的模板"
 msgstr "すでに適用されているテンプレート"
@@ -755,14 +926,35 @@ msgstr "遅延時間（秒）"
 msgid "开启"
 msgstr "有効化"
 
+msgid "开始迁移"
+msgstr "移行を開始"
+
 msgid "张开嘴"
 msgstr "開いた口"
 
 msgid "强度"
 msgstr "強度"
 
+msgid "当前场景"
+msgstr "現在のシーン"
+
+msgid "当前场景没有可选标签"
+msgstr "現在のシーンに選択可能なラベルはありません"
+
+msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
+msgstr "現在 Portable モードです。実際のデータディレクトリはインストールディレクトリ内の data フォルダーで決まります。"
+
+msgid "当前没有检测到可迁移内容，但新版本已经切换为用户数据目录。"
+msgstr "移行可能な内容は検出されませんでしたが、このバージョンではユーザーデータディレクトリへ切り替わっています。"
+
 msgid "当前版本"
 msgstr "現在のバージョン"
+
+msgid "当前状态"
+msgstr "現在の状態"
+
+msgid "当前环境不支持系统文件夹选择器，请手动输入路径。"
+msgstr "現在の環境ではシステムのフォルダー選択を使用できません。パスを手動で入力してください。"
 
 msgid "德语"
 msgstr "ドイツ語"
@@ -770,11 +962,26 @@ msgstr "ドイツ語"
 msgid "快速预览效果"
 msgstr "高速プレビューエフェクト"
 
+msgid "快速预览效果关闭"
+msgstr "高速プレビューエフェクトオフ"
+
+msgid "快速预览效果打开"
+msgstr "高速プレビューエフェクトオン"
+
 msgid "快速预览语句"
 msgstr "高速プレビュー文"
 
+msgid "快速预览语句关闭"
+msgstr "高速プレビュー文オフ"
+
+msgid "快速预览语句打开"
+msgstr "高速プレビュー文オン"
+
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
+
+msgid "恢复默认目录"
+msgstr "既定のディレクトリに戻す"
 
 msgid "我确定要删除游戏"
 msgstr "ゲームを削除することを確認しました"
@@ -785,11 +992,32 @@ msgstr "手動で次の行を表示"
 msgid "手动输入 ID"
 msgstr "IDを手動で設定"
 
+msgid "打开安装目录"
+msgstr "インストールディレクトリを開く"
+
+msgid "打开完整设置"
+msgstr "すべての設定を開く"
+
+msgid "打开或关闭电影模式"
+msgstr "映画モードをオン/オフ"
+
 msgid "打开效果编辑器"
 msgstr "エフェクトエディタを開く"
 
+msgid "打开用户数据目录"
+msgstr "ユーザーデータディレクトリを開く"
+
+msgid "打开设置"
+msgstr "設定を開く"
+
+msgid "打开配置目录"
+msgstr "設定ディレクトリを開く"
+
 msgid "执行到此句"
 msgstr "この文まで実行"
+
+msgid "执行后清除角色名"
+msgstr "実行後にキャラクター名を消去"
 
 msgid "扩展名"
 msgstr "拡張子"
@@ -799,6 +1027,9 @@ msgstr "前のテキストボックスの内容をつなげる"
 
 msgid "拼接模式"
 msgstr "連結モード"
+
+msgid "持续时间（毫秒）"
+msgstr "継続時間（ミリ秒）"
 
 msgid "指针"
 msgstr "ポインター"
@@ -836,6 +1067,9 @@ msgstr "ヒント：エフェクトは、異なる背景に切り替えるか、
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "ヒント：スタイルで使用されるリソースは assets ディレクトリにあります"
 
+msgid "提示按钮文本"
+msgstr "提示ボタンのテキスト"
+
 msgid "搜索选项"
 msgstr "検索オプション"
 
@@ -853,6 +1087,9 @@ msgstr "動画の再生"
 
 msgid "操作"
 msgstr "操作"
+
+msgid "操作失败"
+msgstr "操作に失敗しました"
 
 msgid "故障电影滤镜"
 msgstr "グリッチ映画"
@@ -992,6 +1229,15 @@ msgstr "一致するオプションがありません"
 msgid "日语"
 msgstr "日本語"
 
+msgid "旧定制引擎"
+msgstr "旧カスタムエンジン"
+
+msgid "旧游戏目录"
+msgstr "旧ゲームディレクトリ"
+
+msgid "旧自定义模板"
+msgstr "旧カスタムテンプレート"
+
 msgid "是否固定弹窗"
 msgstr "ポップアップをピン留め"
 
@@ -1006,6 +1252,9 @@ msgstr "\"{gameName}\"を削除してもよろしいですか？"
 
 msgid "显示侧边栏"
 msgstr "サイドバーを表示"
+
+msgid "显示变量"
+msgstr "変数を表示"
 
 msgid "显示效果"
 msgstr "エフェクト"
@@ -1028,8 +1277,20 @@ msgstr "プレビューウィンドウを表示"
 msgid "普通对话"
 msgstr "ダイアログ"
 
+msgid "更多设置"
+msgstr "その他の設定"
+
 msgid "更多选项"
 msgstr "その他のオプション"
+
+msgid "更多配置"
+msgstr "その他の設定"
+
+msgid "替换 UI 样式标签"
+msgstr "UI スタイルタグを置換"
+
+msgid "替换同目标动画"
+msgstr "同じ対象のアニメーションを置換"
 
 msgid "未指定"
 msgstr "指定なし"
@@ -1040,6 +1301,9 @@ msgstr "認識されないコマンド"
 msgid "未识别的指令"
 msgstr "認識されないコマンド"
 
+msgid "未选择跳转目标"
+msgstr "ジャンプ先が選択されていません"
+
 msgid "本句前插入句子"
 msgstr "選択した文の前に追加"
 
@@ -1049,8 +1313,23 @@ msgstr "この文が実行された後、次の文を実行"
 msgid "本句执行后等待"
 msgstr "この文が実行されるのを待つ"
 
+msgid "本场景内唯一的 label 名称"
+msgstr "このシーン内で一意の label 名"
+
+msgid "条件执行"
+msgstr "条件実行"
+
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "WebGAL ホームページに作品を掲載する手順を見る"
+
+msgid "查看迁移文档"
+msgstr "移行ガイドを見る"
+
+msgid "标签"
+msgstr "ラベル"
+
+msgid "标签名"
+msgstr "ラベル名"
 
 msgid "标题"
 msgstr "タイトル"
@@ -1082,8 +1361,20 @@ msgstr "タイトルの背景画像"
 msgid "标题背景音乐"
 msgstr "タイトルのBGM"
 
+msgid "校验失败提示"
+msgstr "検証失敗メッセージ"
+
+msgid "样式替换"
+msgstr "スタイル置換"
+
 msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
+
+msgid "检测到需要迁移的内容：{0}。"
+msgstr "移行が必要な内容を検出しました：{0}。"
+
+msgid "模式"
+msgstr "モード"
 
 msgid "模板"
 msgstr "テンプレート"
@@ -1112,11 +1403,17 @@ msgstr "ぼやける"
 msgid "櫻花"
 msgstr "桜"
 
+msgid "正则标记"
+msgstr "正規表現フラグ"
+
 msgid "正在上传"
 msgstr "アップロード中"
 
 msgid "正在加载模板配置"
 msgstr "テンプレート設定を読み込み中"
+
+msgid "正在读取用户数据设置"
+msgstr "ユーザーデータ設定を読み込み中"
 
 msgid "正常"
 msgstr "通常"
@@ -1156,6 +1453,9 @@ msgstr "コメントは編集時のみ表示され、ゲームプレイ時には
 
 msgid "浅色"
 msgstr "ライト"
+
+msgid "浏览器已选择目录，但出于安全限制不会暴露本地绝对路径，无法直接用于迁移。请手动输入目录路径。"
+msgstr "ブラウザーでディレクトリを選択しましたが、セキュリティ上の制限によりローカルの絶対パスは公開されないため、移行には直接使用できません。ディレクトリパスを手動で入力してください。"
 
 msgid "淡入淡出"
 msgstr "フェードインとアウト"
@@ -1208,6 +1508,12 @@ msgstr "チップをクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
+msgid "清除立绘"
+msgstr "立ち絵を消去"
+
+msgid "清除角色名"
+msgstr "キャラクター名を消去"
+
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1250,20 +1556,50 @@ msgstr "フィルター"
 msgid "点击或拖拽文件至此上传"
 msgstr "ここまでクリックかドラッグでアップロードします"
 
-msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
-msgstr "クリックまたはBackspaceキーで古い区切り文字を削除し、新しい区切り文字を入力してEnterキーで確定してください。"
-
 msgid "点状电影滤镜"
 msgstr "ドット映画"
 
 msgid "特殊演出"
 msgstr "特別演出"
 
+msgid "用户数据"
+msgstr "ユーザーデータ"
+
+msgid "用户数据位置"
+msgstr "ユーザーデータの場所"
+
+msgid "用户数据目录"
+msgstr "ユーザーデータディレクトリ"
+
+msgid "用户数据迁移"
+msgstr "ユーザーデータ移行"
+
+msgid "用户目录模式"
+msgstr "ユーザーディレクトリモード"
+
+msgid "电影模式"
+msgstr "映画モード"
+
+msgid "电影模式值"
+msgstr "映画モードの値"
+
+msgid "留空使用默认值"
+msgstr "空欄で既定値を使用"
+
 msgid "百分比。 0-100 有效"
 msgstr "百分率。 0-100 有効"
 
 msgid "目前没有打开任何文件"
 msgstr "現在開いているファイルはありません"
+
+msgid "目标"
+msgstr "対象"
+
+msgid "目标 ID"
+msgstr "対象 ID"
+
+msgid "目标行"
+msgstr "対象行"
 
 msgid "相对"
 msgstr "相対"
@@ -1307,6 +1643,9 @@ msgstr "動画ファイル"
 msgid "视频选项"
 msgstr "動画のオプション"
 
+msgid "禁止跳过"
+msgstr "スキップを禁止"
+
 msgid "禁止跳过视频"
 msgstr "動画のスキップを無効にする"
 
@@ -1333,6 +1672,15 @@ msgstr "関連する立ち絵のID"
 
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
+
+msgid "等待"
+msgstr "待機"
+
+msgid "等待一段时间"
+msgstr "一定時間待機"
+
+msgid "等待时间（单位为毫秒）"
+msgstr "待機時間（ミリ秒）"
 
 msgid "简体中文"
 msgstr "簡体字中国語"
@@ -1508,6 +1856,9 @@ msgstr " スクリプトの行、"
 msgid "补充默认值"
 msgstr "デフォルト値を補う"
 
+msgid "表达式"
+msgstr "式"
+
 msgid "裁剪形状"
 msgstr "クリップ形状"
 
@@ -1562,14 +1913,20 @@ msgstr "タイプ"
 msgid "设置"
 msgstr "設定"
 
+msgid "设置变量"
+msgstr "変数を設定"
+
+msgid "设置普通变量或全局变量"
+msgstr "通常変数またはグローバル変数を設定"
+
 msgid "设置立绘或背景的进出场动画"
 msgstr "人物や背景のアニメーションを設定する。"
 
 msgid "设置自定义级联选择器分隔符（输入后按回车键确认）"
 msgstr "カスタムカスケードセレクター区切り文字を設定（入力後Enterキーで確定）"
 
-msgid "该功能将大幅提升实时预览效率，但可能出现异常。"
-msgstr "この機能はリアルタイムプレビューの効率を大幅に向上させますが、異常が発生する可能性があります。"
+msgid "该指令会在文本框显示当前变量。"
+msgstr "このコマンドは現在の変数をテキストボックスに表示します。"
 
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgstr "このコマンドは認識されません、スクリプト編集モードで編集してください"
@@ -1582,6 +1939,9 @@ msgstr "言語"
 
 msgid "语音"
 msgstr "ボイス"
+
+msgid "语音音量"
+msgstr "ボイス音量"
 
 msgid "请完整填写每个字体的信息"
 msgstr "各フォントの情報をすべて入力してください"
@@ -1619,6 +1979,9 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
+msgid "调用引擎内置复杂动画"
+msgstr "エンジン内蔵の複雑アニメーションを呼び出す"
+
 msgid "资源"
 msgstr "アセット"
 
@@ -1637,11 +2000,44 @@ msgstr "バウンスイン"
 msgid "跨语句动画"
 msgstr "アニメーションを維持する"
 
+msgid "跳转 label"
+msgstr "ジャンプ label"
+
+msgid "跳转到场景"
+msgstr "シーンへジャンプ"
+
+msgid "跳转到当前场景内的标签"
+msgstr "現在のシーン内のラベルへジャンプ"
+
+msgid "跳转到本场景标签"
+msgstr "このシーンのラベルへジャンプ"
+
+msgid "跳转标签"
+msgstr "ラベルへジャンプ"
+
 msgid "软化（0-1）"
 msgstr "柔らかさ (0-1)"
 
+msgid "输入 label 名称"
+msgstr "ラベル名を入力"
+
+msgid "输入任意标签"
+msgstr "任意のラベルを入力"
+
+msgid "输入指令内容"
+msgstr "コマンド内容を入力"
+
+msgid "输入本场景内的 label 名称"
+msgstr "このシーン内の label 名を入力"
+
+msgid "输入校验正则"
+msgstr "入力検証の正規表現"
+
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
+
+msgid "迁移到此目录"
+msgstr "このディレクトリへ移行"
 
 msgid "过渡时间（单位为毫秒）"
 msgstr "トランジション時間（ミリ秒）"
@@ -1700,11 +2096,17 @@ msgstr "ファイルを選択"
 msgid "选择游戏引擎版本"
 msgstr "ゲームエンジンのバージョンを選択"
 
+msgid "选择目录"
+msgstr "ディレクトリを選択"
+
 msgid "选择视频文件"
 msgstr "動画ファイルを選択"
 
 msgid "选择立绘文件"
 msgstr "立ち絵ファイルを選択"
+
+msgid "选择背景图片"
+msgstr "背景画像を選択"
 
 msgid "选择背景文件"
 msgstr "背景画像ファイルを選択"
@@ -1717,6 +2119,9 @@ msgstr "音声ファイルを選択"
 
 msgid "选择调用参数"
 msgstr "呼び出しパラメータを選択"
+
+msgid "选择跳转目标"
+msgstr "ジャンプ先を選択"
 
 msgid "选择进入动画"
 msgstr "入るアニメーションを選択"
@@ -1769,8 +2174,14 @@ msgstr "選択肢からシーンに切り替えることが可能です"
 msgid "配置"
 msgstr "構成"
 
+msgid "配置始终保存在统一的 .webgal_terre 目录。游戏、自定义模板和定制引擎可以迁移到其他磁盘。"
+msgstr "設定は常に共通の .webgal_terre ディレクトリに保存されます。ゲーム、カスタムテンプレート、カスタムエンジンは別のディスクへ移行できます。"
+
 msgid "配置模板"
 msgstr "テンプレートを設定"
+
+msgid "配置目录"
+msgstr "設定ディレクトリ"
 
 msgid "重命名"
 msgstr "名前を変更"
@@ -1789,6 +2200,9 @@ msgstr "鑑賞機能"
 
 msgid "鉴赏图片"
 msgstr "CG鑑賞"
+
+msgid "鉴赏系列"
+msgstr "鑑賞シリーズ"
 
 msgid "鉴赏资源文件"
 msgstr "CG/BGMファイルを選択"
@@ -1844,6 +2258,12 @@ msgstr "プロジェクトホームページ"
 msgid "预先反向"
 msgstr "アンティシペート"
 
+msgid "预置模板"
+msgstr "組み込みテンプレート"
+
+msgid "预置模板保存在安装目录，请先复制为自定义模板再编辑"
+msgstr "組み込みテンプレートはインストールディレクトリに保存されています。編集する前にカスタムテンプレートとしてコピーしてください。"
+
 msgid "预览"
 msgstr "プレビュー"
 
@@ -1871,6 +2291,12 @@ msgstr "ぼかし"
 msgid "默认"
 msgstr "デフォルト"
 
+msgid "默认 default"
+msgstr "既定値 default"
+
+msgid "默认值"
+msgstr "デフォルト値"
+
 msgid "默认值0"
 msgstr "デフォルト値は0"
 
@@ -1896,7 +2322,7 @@ msgid "默认语言"
 msgstr "デフォルト言語"
 
 msgid "默认选项"
-msgstr "デフォルトオプション"
+msgstr "デフォルト選択肢"
 
 msgid "鼠标悬浮样式"
 msgstr "マウスホバースタイル"

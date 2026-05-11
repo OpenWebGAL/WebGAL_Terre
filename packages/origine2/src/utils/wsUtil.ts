@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {DebugCommand, IComponentVisibilityCommand, IDebugMessage} from "@/types/debugProtocol";
+import {DebugCommand, IComponentVisibilityCommand, IDebugMessage, ITextReadModeCommand} from "@/types/debugProtocol";
 import useEditorStore from "@/store/useEditorStore";
 import {eventBus} from "@/utils/eventBus";
 
@@ -179,6 +179,19 @@ export class WsUtil {
       },// @ts-ignore
       stageSyncMsg: {},
       message: newEffect,
+    });
+  };
+
+  public static sendTextReadModeCommand(isRead: boolean) {
+    const command: ITextReadModeCommand = { isRead };
+    this.sendMessageToCurrentWs({
+      command: DebugCommand.SET_TEXT_READ_MODE,
+      sceneMsg: {
+        scene: "",
+        sentence: 0
+      },// @ts-ignore
+      stageSyncMsg: {},
+      message: JSON.stringify(command),
     });
   };
 

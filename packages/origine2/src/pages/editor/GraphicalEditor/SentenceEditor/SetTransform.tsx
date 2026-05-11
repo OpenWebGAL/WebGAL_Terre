@@ -40,6 +40,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const easeTypeOptions = useEaseTypeOptions();
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
+  const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
 
   const submit = () => {
     const submitString = combineSubmitString(
@@ -52,6 +53,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
         { key: "ease", value: ease.value },
         { key: "writeDefault", value: writeDefault.value },
         { key: "keep", value: keep.value },
+        { key: "parallel", value: parallel.value },
         { key: "next", value: isGoNext.value },
       ],
       props.sentence.inlineComment,
@@ -154,6 +156,12 @@ export default function SetTransform(props: ISentenceEditorProps) {
           keep.set(newValue);
           submit();
         }} onText={t`开启`} offText={t`关闭`} isChecked={keep.value} />
+      </CommonOptions>
+      <CommonOptions key="8" title={t`并行动画`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          parallel.set(newValue);
+          submit();
+        }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
       </CommonOptions>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {

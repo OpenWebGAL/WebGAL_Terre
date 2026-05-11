@@ -10,6 +10,7 @@ const initState: ITemplateEditorState = {
   isCodeMode: false,
   isShowDebugger: false,
   sidebarWidth: 280,
+  templateActionsHeight: 148,
   componentTreeHeight: 400,
   previewHeight: 280,
 };
@@ -25,6 +26,7 @@ export const createTemplateEditorStore = (templateName: string) =>
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
         updateSidebarWidth: (sidebarWidth) => set({ sidebarWidth }),
+        updateTemplateActionsHeight: (templateActionsHeight) => set({ templateActionsHeight }),
         updateComponentTreeHeight: (componentTreeHeight) => set({ componentTreeHeight }),
         updatePreviewHeight: (previewHeight) => set({ previewHeight }),
       }),

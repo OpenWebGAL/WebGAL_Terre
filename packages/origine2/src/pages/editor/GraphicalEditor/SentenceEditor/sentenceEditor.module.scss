@@ -2,6 +2,7 @@
   display: flex;
   align-items: flex-start;
   flex-flow: column;
+  width: 100%;
 }
 
 .editItem {
@@ -10,6 +11,13 @@
   align-items: stretch;
   // margin: 4px 0 0 0;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.commonArgItem {
+  display: flex;
+  align-items: stretch;
   flex-wrap: wrap;
   gap: 4px;
 }
@@ -48,4 +56,116 @@
 
 .iconParkIcon > svg > path{
   stroke: var(--text);
+}
+
+.chooseBranchItem {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.chooseBranchItem + .chooseBranchItem {
+  border-top: 1px solid var(--black-10pct);
+}
+
+.chooseBranchAddRow {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+  padding: 8px 0;
+}
+
+.chooseOptionInput {
+  width: 40%;
+  min-width: 220px;
+  max-width: 440px;
+}
+
+.chooseTargetArrow {
+  color: var(--text-sub);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  flex: 0 0 auto;
+}
+
+.chooseTargetDisplay {
+  min-width: 220px;
+  max-width: min(360px, 100%);
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text);
+}
+
+.chooseTargetButton {
+  white-space: nowrap;
+}
+
+.chooseTargetText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chooseTargetPlaceholder {
+  color: var(--text-sub);
+}
+
+.chooseTargetDialogSurface {
+  width: min(720px, calc(100vw - 32px));
+  max-width: min(720px, calc(100vw - 32px));
+}
+
+.chooseTargetDialogContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chooseTargetSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--black-10pct);
+}
+
+.chooseTargetSection:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.chooseTargetSectionTitle {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.chooseTargetSectionBody,
+.chooseManualLabel,
+.chooseLabelList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chooseTargetCurrent {
+  color: var(--text-sub);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chooseTargetEmpty {
+  color: var(--text-sub);
 }

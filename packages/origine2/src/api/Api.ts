@@ -79,7 +79,7 @@ export interface TemplateConfigDto {
   /** The name of the template */
   name: string;
   /** The id of the template */
-  id: string;
+  id?: string;
   /** The webgal version of the template */
   "webgal-version": string;
   /** The font registrations of the template */
@@ -94,7 +94,7 @@ export interface GameInfoDto {
   /** The cover of the game */
   cover: string;
   /** The template config of the game */
-  template: TemplateConfigDto;
+  template: TemplateConfigDto | null;
 }
 
 export interface CreateGameDto {
@@ -186,6 +186,8 @@ export interface TemplateInfoDto {
   fonts?: TemplateFontConfigDto[];
   /** The dir of the template */
   dir: string;
+  /** Whether the template is built in */
+  builtIn?: boolean;
 }
 
 export interface CreateTemplateDto {

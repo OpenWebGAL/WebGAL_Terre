@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Assets, {IFileFunction} from '@/components/Assets/Assets';
 import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
@@ -15,12 +15,15 @@ import { GameInfoDto, TemplateConfigDto } from '@/api/Api';
 import { List, ListItem } from "@fluentui/react-list-preview";
 import useSWR, { mutate } from 'swr';
 import TemplateConfigDialog from './TemplateConfigDialog';
-import {PlugConnected20Regular, Settings20Regular} from "@fluentui/react-icons";
+import {PlugConnected20Regular, Settings20Regular, Textbox20Regular, TextboxCheckmark20Regular} from "@fluentui/react-icons";
 import { createId } from '@/utils/createId';
+import { AppSettingsButton } from '@/components/AppSettings/AppSettingsDialog';
+import { WsUtil } from '@/utils/wsUtil';
 
 export default function TemplateEditorSidebar() {
   const templateDir = useEditorStore.use.subPage();
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
+  const templateActionsHeight = useTemplateEditorContext((state) => state.templateActionsHeight);
   const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
 
   const tabs = useTemplateEditorContext((state) => state.tabs);
@@ -66,12 +69,15 @@ export default function TemplateEditorSidebar() {
           {templateConfig ? templateConfig.name : templateDir}
         </span>
       </div>
-      <TemplateActions
-        templateConfig={templateConfig}
-        onTemplateConfigUpdated={async () => {
-          await mutateTemplateConfig();
-        }}
-      />
+      <div className={styles.actionsBlock} style={{height: `${templateActionsHeight}px`}}>
+        <TemplateActions
+          templateConfig={templateConfig}
+          onTemplateConfigUpdated={async () => {
+            await mutateTemplateConfig();
+          }}
+        />
+      </div>
+      <TemplateActionsReSizer/>
       <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
         <ComponentTree/>
       </div>
@@ -98,16 +104,27 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
 
   const [applyTemplateDialogIsOpen, setApplyTemplateDialogIsOpen] = useState(false);
   const [configDialogIsOpen, setConfigDialogIsOpen] = useState(false);
+  const [isTextReadMode, setIsTextReadMode] = useState(false);
 
   const [gameList, setGameList] = useState<GameInfoDto[]>([]);
   const [selectedGameDirs, setSelectedGameDirs] = useState<string[]>([]);
 
+  const isGameUsingCurrentTemplate = (game: GameInfoDto) => {
+    const gameTemplate = game.template;
+    if (!gameTemplate) return false;
+    if (templateConfig?.id && gameTemplate.id) return gameTemplate.id === templateConfig.id;
+    const currentTemplateName = templateConfig?.name ?? templateDir;
+    return gameTemplate.name === currentTemplateName || gameTemplate.name === templateDir;
+  };
+
   const getGameList = async () => {
     const gameList = (await api.manageGameControllerGetGameList()).data;
-    const selectedGameDirs = gameList.filter((game) => game.template.name === templateDir).map((game) => game.dir);
+    const selectedGameDirs = gameList.filter(isGameUsingCurrentTemplate).map((game) => game.dir);
     setGameList(gameList);
     setSelectedGameDirs(selectedGameDirs);
   };
+
+  const getGameTemplateName = (game: GameInfoDto) => game.template?.name ?? t`无`;
 
   const applyTemplate = async () => {
     const apply = selectedGameDirs.map(async (gameDir) => await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir}));
@@ -115,12 +132,19 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
     setApplyTemplateDialogIsOpen(false);
   };
 
+  const toggleTextReadMode = () => {
+    const nextMode = !isTextReadMode;
+    setIsTextReadMode(nextMode);
+    WsUtil.sendTextReadModeCommand(nextMode);
+  };
+
   return (
     <>
       <div className={styles.actions}>
+        <AppSettingsButton appearance="transparent" className={styles.actionButton} />
         <Button
+          className={styles.actionButton}
           appearance='transparent'
-          size='small'
           icon={<Settings20Regular />}
           aria-label={t`配置模板`}
           title={t`配置模板`}
@@ -129,8 +153,19 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
           {t`配置模板`}
         </Button>
         <Button
+          className={styles.actionButton}
           appearance='transparent'
-          size='small'
+          aria-pressed={isTextReadMode}
+          icon={isTextReadMode ? <TextboxCheckmark20Regular /> : <Textbox20Regular />}
+          aria-label={isTextReadMode ? t`将文本框文本设置为未读` : t`将文本框文本设置为已读`}
+          title={isTextReadMode ? t`将文本框文本设置为未读` : t`将文本框文本设置为已读`}
+          onClick={toggleTextReadMode}
+        >
+          {isTextReadMode ? t`将文本框文本设置为未读` : t`将文本框文本设置为已读`}
+        </Button>
+        <Button
+          className={styles.actionButton}
+          appearance='transparent'
           icon={<PlugConnected20Regular />}
           aria-label={t`将当前模板应用到选定的游戏`}
           title={t`将当前模板应用到选定的游戏`}
@@ -182,7 +217,7 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
                           <div>
                             <div>{game.name}</div>
                             <div style={{fontSize: '90%', color: 'var(--text-sub)'}}>
-                              {t`使用中的模板：` + game.template.name}
+                              {t`使用中的模板：` + getGameTemplateName(game)}
                             </div>
                           </div>
                         </div>
@@ -205,26 +240,73 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
   );
 };
 
+function TemplateActionsReSizer() {
+  const templateActionsHeight = useTemplateEditorContext((state) => state.templateActionsHeight);
+  const updateTemplateActionsHeight = useTemplateEditorContext((state) => state.updateTemplateActionsHeight);
+
+  return (
+    <SidebarBlockResizer
+      height={templateActionsHeight}
+      minHeight={42}
+      onResize={updateTemplateActionsHeight}
+    />
+  );
+}
+
 function ComponentTreeReSizer() {
   const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
   const updateComponentTreeHeight = useTemplateEditorContext((state) => state.updateComponentTreeHeight);
 
-  const minHeight = 0;
+  return (
+    <SidebarBlockResizer
+      height={componentTreeHeight}
+      minHeight={0}
+      onResize={updateComponentTreeHeight}
+    />
+  );
+}
+
+interface SidebarBlockResizerProps {
+  height: number;
+  minHeight: number;
+  onResize: (height: number) => void;
+}
+
+function SidebarBlockResizer({height, minHeight, onResize}: SidebarBlockResizerProps) {
   const [isDragging, setIsDragging] = useState(false);
-  const [initY, setInitY] = useState(0);
+  const lastYRef = useRef(0);
+  const heightRef = useRef(height);
+
+  useEffect(() => {
+    if (!isDragging) {
+      heightRef.current = height;
+    }
+  }, [height, isDragging]);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    heightRef.current = height;
+    lastYRef.current = event.clientY;
     setIsDragging(true);
-    setInitY(event.clientY);
   };
 
   useEffect(
     () => {
-      const moveHandler = (event: any) => {
+      if (!isDragging) return;
+
+      const previousCursor = document.body.style.cursor;
+      const previousUserSelect = document.body.style.userSelect;
+      document.body.style.cursor = 'ns-resize';
+      document.body.style.userSelect = 'none';
+
+      const moveHandler = (event: MouseEvent) => {
         if (!isDragging) return;
-        const deltaY = event.clientY - initY;
-        const newHeight = Math.max(minHeight, componentTreeHeight + deltaY);
-        updateComponentTreeHeight(newHeight);
+        event.preventDefault();
+        const deltaY = event.clientY - lastYRef.current;
+        const newHeight = Math.max(minHeight, heightRef.current + deltaY);
+        heightRef.current = newHeight;
+        lastYRef.current = event.clientY;
+        onResize(newHeight);
       };
 
       const upHandler = () => {
@@ -235,11 +317,13 @@ function ComponentTreeReSizer() {
       document.addEventListener("mouseup", upHandler);
 
       return () => {
+        document.body.style.cursor = previousCursor;
+        document.body.style.userSelect = previousUserSelect;
         document.removeEventListener("mousemove", moveHandler);
         document.removeEventListener("mouseup", upHandler);
       };
     },
-    [isDragging, initY]
+    [isDragging, minHeight, onResize]
   );
 
   return (
