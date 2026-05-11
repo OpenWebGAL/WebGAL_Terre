@@ -1322,6 +1322,9 @@ msgstr "条件执行"
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "查看展示到 WebGAL 主页的指引"
 
+msgid "查看迁移文档"
+msgstr "查看迁移文档"
+
 msgid "标签"
 msgstr "标签"
 

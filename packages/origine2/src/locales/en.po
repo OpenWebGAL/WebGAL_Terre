@@ -1322,6 +1322,9 @@ msgstr "Conditional execution"
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "See how to feature your game on the WebGAL homepage"
 
+msgid "查看迁移文档"
+msgstr "View migration guide"
+
 msgid "标签"
 msgstr "Label"
 

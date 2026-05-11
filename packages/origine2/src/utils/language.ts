@@ -39,3 +39,15 @@ export function getDefaultLanguage(): EditorLanguage {
 
   return defaultLanguage;
 }
+
+export function getMigrationGuideUrl(language: EditorLanguage): string {
+  switch (language) {
+  case 'en':
+    return 'https://docs.openwebgal.com/en/migration.html';
+  case 'ja':
+    return 'https://docs.openwebgal.com/ja/migration.html';
+  case 'zhCn':
+  default:
+    return 'https://docs.openwebgal.com/migration.html';
+  }
+}
