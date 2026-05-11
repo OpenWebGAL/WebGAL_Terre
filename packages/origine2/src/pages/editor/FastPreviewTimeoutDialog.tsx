@@ -9,36 +9,25 @@ import {
   DialogTitle,
 } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
-import { DebugCommand, IDebugMessage, IFastPreviewTimeoutPayload } from "@/types/debugProtocol";
+import type { FastPreviewTimeoutPayload } from "@webgal/editor-preview-protocol";
 import { eventBus } from "@/utils/eventBus";
 
-function parseFastPreviewTimeoutMessage(message: string): IFastPreviewTimeoutPayload | null {
-  try {
-    const debugMessage = JSON.parse(message) as IDebugMessage;
-    if (debugMessage.data.command !== DebugCommand.FAST_PREVIEW_TIMEOUT) {
-      return null;
-    }
-    return JSON.parse(debugMessage.data.message) as IFastPreviewTimeoutPayload;
-  } catch {
-    return null;
-  }
-}
-
 export default function FastPreviewTimeoutDialog() {
-  const [payload, setPayload] = useState<IFastPreviewTimeoutPayload | null>(null);
+  const [payload, setPayload] = useState<FastPreviewTimeoutPayload | null>(null);
 
   useEffect(() => {
-    const handleMessage = ({ message }: { message: string }) => {
-      const timeoutPayload = parseFastPreviewTimeoutMessage(message);
-      if (timeoutPayload) {
-        setPayload(timeoutPayload);
-      }
+    const handleV1Timeout = ({
+      payload: timeoutPayload,
+    }: {
+      payload: FastPreviewTimeoutPayload;
+    }) => {
+      setPayload(timeoutPayload);
     };
 
-    eventBus.on("web-socket:on-message", handleMessage);
+    eventBus.on("editor-preview:fast-preview-timeout", handleV1Timeout);
 
     return () => {
-      eventBus.off("web-socket:on-message", handleMessage);
+      eventBus.off("editor-preview:fast-preview-timeout", handleV1Timeout);
     };
   }, []);
 
@@ -52,11 +41,11 @@ export default function FastPreviewTimeoutDialog() {
             <p>{t`可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。`}</p>
             {payload && (
               <p>
-                {t`当前场景`}：{payload.scene}
+                {t`当前场景`}：{payload.sceneName}
                 <br />
-                {t`目标行`}：{payload.targetSentence}
+                {t`目标行`}：{payload.targetSentenceId}
                 <br />
-                {t`停止位置`}：{payload.sentence}
+                {t`停止位置`}：{payload.sentenceId}
                 <br />
                 {t`已快进行数`}：{payload.forwardedLineCount}
                 <br />

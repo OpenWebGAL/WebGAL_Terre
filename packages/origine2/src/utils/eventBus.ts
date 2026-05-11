@@ -1,9 +1,9 @@
 import mitt from 'mitt';
-
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type WebSocketEvents = {
-  'web-socket:on-message': { message: string };
-};
+import type {
+  FastPreviewTimeoutPayload,
+  PreviewReadyUpdatedPayload,
+  StageSnapshotUpdatedPayload,
+} from '@webgal/editor-preview-protocol';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type IframeEvents = {
@@ -23,6 +23,15 @@ type EditorEvents = {
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
 };
 
-type Events = WebSocketEvents & IframeEvents & EditorEvents;
+interface EditorPreviewEvents {
+  'editor-preview:ready': PreviewReadyUpdatedPayload;
+  'editor-preview:stage-snapshot': { snapshot: StageSnapshotUpdatedPayload };
+  'editor-preview:fast-preview-timeout': { payload: FastPreviewTimeoutPayload };
+}
+
+type Events = Record<PropertyKey, unknown> &
+  IframeEvents &
+  EditorEvents &
+  EditorPreviewEvents;
 
 export const eventBus = mitt<Events>();
