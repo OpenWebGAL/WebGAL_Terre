@@ -299,6 +299,9 @@ msgstr "Template in use: "
 msgid "使用引擎内置的特效"
 msgstr "Use the special effects prepared in engine"
 
+msgid "使用此标签"
+msgstr "Use this label"
+
 msgid "使用特效"
 msgstr "Apply special effect"
 
@@ -698,9 +701,6 @@ msgstr "Scenes and branches"
 msgid "场景文件"
 msgstr "Scene file"
 
-msgid "场景文件或本场景 label"
-msgstr "Scene file or current-scene label"
-
 msgid "填写参数值"
 msgstr "Fill in parameter value"
 
@@ -882,13 +882,13 @@ msgid "已快进行数"
 msgstr "Fast-forwarded lines"
 
 msgid "已读文本"
-msgstr ""
+msgstr "Read text"
 
 msgid "已读文本内层"
-msgstr ""
+msgstr "Read text inner layer"
 
 msgid "已读文本外层"
-msgstr ""
+msgstr "Read text outer layer"
 
 msgid "帮助"
 msgstr "Help"
@@ -937,6 +937,9 @@ msgstr "Intensity"
 
 msgid "当前场景"
 msgstr "Current scene"
+
+msgid "当前场景没有可选标签"
+msgstr "No labels are available in the current scene"
 
 msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
 msgstr "Portable mode is active. The actual data directory is determined by the data folder in the install directory."
@@ -1297,6 +1300,9 @@ msgstr "Unrecognized"
 
 msgid "未识别的指令"
 msgstr "Unrecognized command"
+
+msgid "未选择跳转目标"
+msgstr "No jump target selected"
 
 msgid "本句前插入句子"
 msgstr "Insert sentence before this"
@@ -1994,14 +2000,26 @@ msgstr "Keep animation"
 msgid "跳转 label"
 msgstr "Jump label"
 
+msgid "跳转到场景"
+msgstr "Jump to scene"
+
 msgid "跳转到当前场景内的标签"
 msgstr "Jump to a label in the current scene"
+
+msgid "跳转到本场景标签"
+msgstr "Jump to a label in this scene"
 
 msgid "跳转标签"
 msgstr "Jump label"
 
 msgid "软化（0-1）"
 msgstr "Softness (0-1)"
+
+msgid "输入 label 名称"
+msgstr "Enter label name"
+
+msgid "输入任意标签"
+msgstr "Enter any label"
 
 msgid "输入指令内容"
 msgstr "Enter command content"
@@ -2098,6 +2116,9 @@ msgstr "Choose voice file"
 
 msgid "选择调用参数"
 msgstr "Select call parameter"
+
+msgid "选择跳转目标"
+msgstr "Select jump target"
 
 msgid "选择进入动画"
 msgstr "Choose enter animation"

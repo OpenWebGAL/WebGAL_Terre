@@ -299,6 +299,9 @@ msgstr "使用中的模板："
 msgid "使用引擎内置的特效"
 msgstr "使用引擎内置的特效"
 
+msgid "使用此标签"
+msgstr "使用此标签"
+
 msgid "使用特效"
 msgstr "使用特效"
 
@@ -698,9 +701,6 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
-msgid "场景文件或本场景 label"
-msgstr "场景文件或本场景 label"
-
 msgid "填写参数值"
 msgstr "填写参数值"
 
@@ -937,6 +937,9 @@ msgstr "强度"
 
 msgid "当前场景"
 msgstr "当前场景"
+
+msgid "当前场景没有可选标签"
+msgstr "当前场景没有可选标签"
 
 msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
 msgstr "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
@@ -1297,6 +1300,9 @@ msgstr "未识别"
 
 msgid "未识别的指令"
 msgstr "未识别的指令"
+
+msgid "未选择跳转目标"
+msgstr "未选择跳转目标"
 
 msgid "本句前插入句子"
 msgstr "本句前插入句子"
@@ -1994,14 +2000,26 @@ msgstr "跨语句动画"
 msgid "跳转 label"
 msgstr "跳转 label"
 
+msgid "跳转到场景"
+msgstr "跳转到场景"
+
 msgid "跳转到当前场景内的标签"
 msgstr "跳转到当前场景内的标签"
+
+msgid "跳转到本场景标签"
+msgstr "跳转到本场景标签"
 
 msgid "跳转标签"
 msgstr "跳转标签"
 
 msgid "软化（0-1）"
 msgstr "软化（0-1）"
+
+msgid "输入 label 名称"
+msgstr "输入 label 名称"
+
+msgid "输入任意标签"
+msgstr "输入任意标签"
 
 msgid "输入指令内容"
 msgstr "输入指令内容"
@@ -2098,6 +2116,9 @@ msgstr "选择语音文件"
 
 msgid "选择调用参数"
 msgstr "选择调用参数"
+
+msgid "选择跳转目标"
+msgstr "选择跳转目标"
 
 msgid "选择进入动画"
 msgstr "选择进入动画"

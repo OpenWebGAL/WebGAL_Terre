@@ -299,6 +299,9 @@ msgstr "使用中のテンプレート："
 msgid "使用引擎内置的特效"
 msgstr "デフォルトの特殊効果を使用"
 
+msgid "使用此标签"
+msgstr "このラベルを使用"
+
 msgid "使用特效"
 msgstr "特殊効果を使う"
 
@@ -698,9 +701,6 @@ msgstr "シーンとブランチ"
 msgid "场景文件"
 msgstr "シーンファイル"
 
-msgid "场景文件或本场景 label"
-msgstr "シーンファイルまたはこのシーンの label"
-
 msgid "填写参数值"
 msgstr "パラメータ値を入力"
 
@@ -882,13 +882,13 @@ msgid "已快进行数"
 msgstr "早送り済み行数"
 
 msgid "已读文本"
-msgstr ""
+msgstr "既読テキスト"
 
 msgid "已读文本内层"
-msgstr ""
+msgstr "既読テキスト内側"
 
 msgid "已读文本外层"
-msgstr ""
+msgstr "既読テキスト外側"
 
 msgid "帮助"
 msgstr "ヘルプ"
@@ -937,6 +937,9 @@ msgstr "強度"
 
 msgid "当前场景"
 msgstr "現在のシーン"
+
+msgid "当前场景没有可选标签"
+msgstr "現在のシーンに選択可能なラベルはありません"
 
 msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
 msgstr "現在 Portable モードです。実際のデータディレクトリはインストールディレクトリ内の data フォルダーで決まります。"
@@ -1297,6 +1300,9 @@ msgstr "認識されないコマンド"
 
 msgid "未识别的指令"
 msgstr "認識されないコマンド"
+
+msgid "未选择跳转目标"
+msgstr "ジャンプ先が選択されていません"
 
 msgid "本句前插入句子"
 msgstr "選択した文の前に追加"
@@ -1994,14 +2000,26 @@ msgstr "アニメーションを維持する"
 msgid "跳转 label"
 msgstr "ジャンプ label"
 
+msgid "跳转到场景"
+msgstr "シーンへジャンプ"
+
 msgid "跳转到当前场景内的标签"
 msgstr "現在のシーン内のラベルへジャンプ"
+
+msgid "跳转到本场景标签"
+msgstr "このシーンのラベルへジャンプ"
 
 msgid "跳转标签"
 msgstr "ラベルへジャンプ"
 
 msgid "软化（0-1）"
 msgstr "柔らかさ (0-1)"
+
+msgid "输入 label 名称"
+msgstr "ラベル名を入力"
+
+msgid "输入任意标签"
+msgstr "任意のラベルを入力"
 
 msgid "输入指令内容"
 msgstr "コマンド内容を入力"
@@ -2098,6 +2116,9 @@ msgstr "音声ファイルを選択"
 
 msgid "选择调用参数"
 msgstr "呼び出しパラメータを選択"
+
+msgid "选择跳转目标"
+msgstr "ジャンプ先を選択"
 
 msgid "选择进入动画"
 msgstr "入るアニメーションを選択"
