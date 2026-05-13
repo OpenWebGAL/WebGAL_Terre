@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
 import { logger } from '../../../utils/logger';
@@ -108,8 +108,7 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {string} value
    * @param {any} ev
    */
-  const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
-    if (!isEditorReady.value) return;
+  const submitChange = useMemo(() => debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     logger.debug('编辑器提交更新');
     // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
@@ -121,7 +120,18 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = currentText.current.split('\n')[lineNumber - 1];
       WsUtil.sendSyncCommand(target?.path ?? '', lineNumber, targetValue);
     });
-  }, 500);
+  }, 500), [props.targetPath, target?.path]);
+
+  const handleChange = (value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+    if (!isEditorReady.value) return;
+    submitChange(value, ev);
+  };
+
+  useEffect(() => {
+    return () => {
+      submitChange.cancel();
+    };
+  }, [submitChange]);
 
   function updateEditData() {
     const path = props.targetPath;
