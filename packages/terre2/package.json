@@ -60,7 +60,7 @@
     "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-ws-jsonrpc-webgal": "0.2.1",
     "webgal-engine": "4.6.0",
-    "webgal-parser": "4.5.18",
+    "webgal-parser": "4.6.1",
     "webpack": "5.76.0",
     "ws": "8.18.0",
     "archiver": "^7.0.1",

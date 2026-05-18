@@ -13166,14 +13166,14 @@ webgal-engine@4.6.0:
     uuid "^9.0.0"
     vite-plugin-package-version "^1.0.2"
 
-webgal-parser@4.5.18:
-  version "4.5.18"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.5.18.tgz#384a497714be85d5cf3884863826b8186b509453"
-  integrity sha512-PJmHKfqwF4dWtDM9a2nG5NEND9I3XsYDmt25zSnhhfE772g3sNWdImlLrA0CFh/vXblTwNTqbpum8U59UAAnpg==
+webgal-parser@4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.6.1.tgz#63549821b5b95f52fd61a162434d20e6b739d4b2"
+  integrity sha512-HGdXqk1sPP7+3pfaorWltQO2A4zncxLIGOQ7ghyhSR/fbn8oUeKbqQbmrQE/UySnUaj6lcsK8pvtI/c+PMD9Gw==
   dependencies:
     chevrotain "^10.5.0"
     cloudlogjs "^1.0.11"
-    lodash "^4.17.21"
+    lodash "^4.17.23"
     tsx "^3.12.7"
 
 webidl-conversions@^3.0.0:
