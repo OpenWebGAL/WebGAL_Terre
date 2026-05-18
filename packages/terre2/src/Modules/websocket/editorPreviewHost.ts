@@ -319,6 +319,7 @@ export class EditorPreviewHost {
     this.v1Connections.delete(client);
     if (this.activeEmbeddedPreview === client) {
       this.activeEmbeddedPreview = null;
+      this.activeGameId = undefined;
     }
   }
 

@@ -171,6 +171,52 @@ describe('EditorPreviewHost', () => {
     ]);
   });
 
+  it('clears the active game route when the active embedded preview disconnects', () => {
+    const host = new EditorPreviewHost();
+    const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);
+    const embeddedPreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+    const nextGamePreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+
+    connectV1Client(host, editorSocket);
+    connectV1Client(host, embeddedPreviewSocket);
+    connectV1Client(host, nextGamePreviewSocket);
+
+    registerPreview(host, embeddedPreviewSocket, {
+      gameId: 'game-key-1',
+      embeddedLaunchId: 'embedded-launch-1',
+    });
+    registerPreview(host, nextGamePreviewSocket, {
+      gameId: 'game-key-2',
+    });
+    clearSentMessages(embeddedPreviewSocket, nextGamePreviewSocket);
+
+    host.removeConnection(embeddedPreviewSocket as never);
+    host.handleMessage(
+      editorSocket as never,
+      JSON.stringify(
+        createRequestEnvelope(
+          'preview.command.reload-templates',
+          'req-reload-templates',
+          {},
+        ),
+      ),
+    );
+
+    expect(nextGamePreviewSocket.sentMessages).toEqual([
+      JSON.stringify(
+        createRequestEnvelope(
+          'preview.command.reload-templates',
+          'req-reload-templates',
+          {},
+        ),
+      ),
+    ]);
+  });
+
   it('forwards stage snapshots only from previews that still belong to the active game', () => {
     const host = new EditorPreviewHost();
     const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);
