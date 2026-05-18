@@ -58,6 +58,7 @@ import {
   USER_DATA_STATUS_KEY,
   userDataStatusFetcher
 } from "@/components/AppSettings/AppSettingsDialog";
+import { getMigrationGuideUrl } from "@/utils/language";
 
 export interface DateTimeFormatOptions {
   year: 'numeric' | '2-digit';
@@ -88,6 +89,7 @@ export default function DashBoard() {
   const {mutate} = useSWRConfig();
 
   const subPage = useEditorStore.use.subPage();
+  const language = useEditorStore.use.language();
   const updateLanguage = useEditorStore.use.updateLanguage();
   const updateIsDarkMode = useEditorStore.use.updateIsDarkMode();
 
@@ -150,6 +152,7 @@ export default function DashBoard() {
 
   const releaseToasterId = useId("release-toaster");
   const { dispatchToast } = useToastController(releaseToasterId);
+  const migrationGuideUrl = getMigrationGuideUrl(language);
   const releaseNotify = () => {
     if (releaseHasNotified.current || !latestRelease || ignoreVersion === __INFO.version) return;
 
@@ -214,6 +217,9 @@ export default function DashBoard() {
             </Text>
           </ToastBody>
           <ToastFooter>
+            <Button appearance="secondary" size="small" as="a" href={migrationGuideUrl} target="_blank">
+              {t`查看迁移文档`}
+            </Button>
             <Button appearance="primary" size="small" onClick={() => setSettingsOpen(true)}>
               {t`打开设置`}
             </Button>
@@ -223,7 +229,7 @@ export default function DashBoard() {
       );
       migrationHasNotified.current = true;
     },
-    [hasLoadedUserLists, hasExistingUserData, userDataStatus?.legacyMigration.needsMigrationNotice]
+    [hasLoadedUserLists, hasExistingUserData, migrationGuideUrl, userDataStatus?.legacyMigration.needsMigrationNotice]
   );
 
   return (

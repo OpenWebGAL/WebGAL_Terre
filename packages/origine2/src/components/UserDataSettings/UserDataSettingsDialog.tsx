@@ -13,6 +13,8 @@ import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import useSWR, { mutate } from 'swr';
 import { t } from '@lingui/macro';
+import useEditorStore from '@/store/useEditorStore';
+import { getMigrationGuideUrl } from '@/utils/language';
 import styles from './UserDataSettingsDialog.module.scss';
 
 declare global {
@@ -68,6 +70,8 @@ export function UserDataSettingsPanel() {
   const [operationMessage, setOperationMessage] = useState('');
   const [conflicts, setConflicts] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+  const language = useEditorStore.use.language();
+  const migrationGuideUrl = getMigrationGuideUrl(language);
 
   useEffect(() => {
     if (status) setTargetPath(status.configuredUserDataRoot);
@@ -258,6 +262,9 @@ export function UserDataSettingsPanel() {
               <div className={styles.sectionTitle}>{t`4.6 用户数据迁移`}</div>
               <div className={styles.message}>{migrationText}</div>
               <div className={styles.actions}>
+                <Button as="a" href={migrationGuideUrl} target="_blank">
+                  {t`查看迁移文档`}
+                </Button>
                 <Button
                   appearance="primary"
                   icon={<ArrowSync20Regular />}
