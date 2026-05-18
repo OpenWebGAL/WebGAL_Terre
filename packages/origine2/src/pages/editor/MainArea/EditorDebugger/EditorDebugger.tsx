@@ -6,42 +6,28 @@ import {ReactNode, useEffect} from "react";
 import {eventBus} from "@/utils/eventBus";
 import {Terminal} from 'primereact/terminal';
 import {TerminalService} from 'primereact/terminalservice';
-import {WsUtil} from "@/utils/wsUtil";
-import {IDebugMessage} from "@/types/debugProtocol";
+import {EditorPreviewClient} from "@/utils/editorPreviewClient";
 
 export default function EditorDebugger() {
   const mode = useValue<'state' | 'console'>('console');
 
-  const editorValue = useValue<object>({});
+  const editorValue = useValue<object>(EditorPreviewClient.getLastStageSnapshot()?.stageState ?? {});
 
   useEffect(() => {
-
-    const handleMessage = ({ message }: { message: string }) => {
-      let obj = {};
-      try {
-        const result = JSON.parse(message) as IDebugMessage;
-        if(result) obj=result.data;
-      }catch (e){
-        // 什么也不做
-        // 错误处理，你为什么只是看着！！！！！！
-      }
-      // @ts-ignore
-      const value = obj?.stageSyncMsg;
-      if (value) {
-        editorValue.set(value);
-      }
+    const handleStageSnapshot = ({ snapshot }: { snapshot: { stageState: object } }) => {
+      editorValue.set(snapshot.stageState);
     };
 
-    eventBus.on('web-socket:on-message', handleMessage);
+    eventBus.on('editor-preview:stage-snapshot', handleStageSnapshot);
 
     return () => {
-      eventBus.off('web-socket:on-message', handleMessage);
+      eventBus.off('editor-preview:stage-snapshot', handleStageSnapshot);
     };
   }, []);
 
   useEffect(() => {
     const commandHandler = (text: string) => {
-      WsUtil.sendExeCommand(text);
+      EditorPreviewClient.runSnippet(text);
       TerminalService.emit('response', 'Command sent.');
     };
 

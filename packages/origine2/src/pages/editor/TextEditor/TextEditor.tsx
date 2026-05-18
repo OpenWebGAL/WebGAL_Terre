@@ -8,7 +8,7 @@ import debounce from 'lodash/debounce';
 
 // 语法高亮文件
 import { editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME } from '../../../runtime/WG_ORIGINE_RUNTIME';
-import { WsUtil } from '../../../utils/wsUtil';
+import { EditorPreviewClient } from '../../../utils/editorPreviewClient';
 import { eventBus } from '@/utils/eventBus';
 import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
@@ -50,7 +50,11 @@ export default function TextEditor(props: ITextEditorProps) {
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
-          WsUtil.sendSyncCommand(target?.path ?? '', event.position.lineNumber, targetValue);
+          EditorPreviewClient.sendSyncScene({
+            scenePath: target?.path ?? '',
+            lineNumber: event.position.lineNumber,
+            lineCommandString: targetValue,
+          });
         }
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
@@ -119,7 +123,11 @@ export default function TextEditor(props: ITextEditorProps) {
     eventBus.emit('editor:update-scene', { scene: currentText.current });
     api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
       const targetValue = currentText.current.split('\n')[lineNumber - 1];
-      WsUtil.sendSyncCommand(target?.path ?? '', lineNumber, targetValue);
+      EditorPreviewClient.sendSyncScene({
+        scenePath: target?.path ?? '',
+        lineNumber,
+        lineCommandString: targetValue,
+      });
     });
   }, 500);
 

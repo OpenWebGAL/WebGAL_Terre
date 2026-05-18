@@ -15,7 +15,7 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "../components/WheelDropdown";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -228,8 +228,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
               submit();
             }}
             onUpdate={(transform) => {
-              const newEffect = { target: 'bg-main', transform: transform };
-              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+              EditorPreviewClient.setEffect({ target: 'bg-main', transform });
             }}
             sentence={props.sentence}
             index={props.index}

@@ -5,7 +5,7 @@ import {extractCss} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/e
 import {formCss} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/formCss";
 import {updateScssFile} from "@/pages/templateEditor/TemplateGraphicalEditor/utils/updateScssFile";
 import WebgalClassEditor from "@/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor";
-import {WsUtil} from "@/utils/wsUtil";
+import {EditorPreviewClient} from "@/utils/editorPreviewClient";
 import WithStateEditor from "@/pages/templateEditor/TemplateGraphicalEditor/withStateEditor";
 import {t} from "@lingui/macro";
 import s from './templateGraphicalEditor.module.scss';
@@ -34,7 +34,7 @@ export default function TemplateGraphicalEditor(props: ITemplateGraphicalEditorP
   const handleSubmit = async () => {
     await updateScssFile(path, className, formCss(extracted));
     await classDataResp.mutate();
-    WsUtil.sendTemplateRefetchCommand();
+    EditorPreviewClient.reloadTemplates();
   };
 
   function addStateToCss(state:string){

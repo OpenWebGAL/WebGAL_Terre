@@ -2,7 +2,7 @@ import { useValue } from "../../../hooks/useValue";
 import { parseScene } from "./parser";
 import axios from "axios";
 import { useEffect, useMemo } from "react";
-import { WsUtil } from "../../../utils/wsUtil";
+import { EditorPreviewClient } from "../../../utils/editorPreviewClient";
 import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
@@ -95,7 +95,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       path: props.targetPath
     }).then(() => {
       const targetValue = newSentences[index].content;
-      WsUtil.sendSyncCommand(props.targetPath, updateIndex, targetValue);
+      EditorPreviewClient.sendSyncScene({
+        scenePath: props.targetPath,
+        lineNumber: updateIndex,
+        lineCommandString: targetValue,
+      });
       fetchScene();
     });
   }
@@ -160,7 +164,12 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 
   function syncToIndex(index: number) {
     const targetValue = sentenceData.value[index]?.content || "";
-    WsUtil.sendSyncCommand(props.targetPath, index + 1, targetValue, true);
+    EditorPreviewClient.sendSyncScene({
+      scenePath: props.targetPath,
+      lineNumber: index + 1,
+      lineCommandString: targetValue,
+      force: true,
+    });
     editorLineHolder.recordSceneEditingLine(props.targetPath, index + 1);
     // 传递假消息，为了在不使用此功能的时候清除拖拽框
     eventBus.emit('editor:pixi-sync-command', {
@@ -216,7 +225,11 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   useEffect(() => {
     const handleDragUpdate = (data: any) => {
       fetchScene();
-      WsUtil.sendSyncCommand(data.targetPath, data.lineNumber, data.newCommand);
+      EditorPreviewClient.sendSyncScene({
+        scenePath: data.targetPath,
+        lineNumber: data.lineNumber,
+        lineCommandString: data.newCommand,
+      });
     };
     eventBus.on('editor:drag-update-scene', handleDragUpdate);
     return () => {
