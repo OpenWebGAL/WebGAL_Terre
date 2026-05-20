@@ -7,13 +7,12 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString } from "@/utils/combineSubmitString";
-import { TerrePanel } from "../components/TerrePanel";
 import { EffectEditor } from "../components/EffectEditor";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Text } from "@fluentui/react-components";
-import useEditorStore from "@/store/useEditorStore";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { CloseSmall, Down, More, Plus, Up } from "@icon-park/react";
+import { eventBus } from "@/utils/eventBus";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -26,7 +25,6 @@ interface IAnimationFrame {
 export default function SetTempAnimation(props: ISentenceEditorProps) {
   const content = useValue(props.sentence.content);
   const animationFrameArray = useValue<IAnimationFrame[]>(initTransformArray(content.value));
-  const currentFrameIndex = useValue<number>(0);
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const presetTargets = new Map<PresetTarget, string>([
     [ "fig-left", t`左侧立绘` ],
@@ -41,8 +39,6 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
   const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
-
-  const updateExpand = useEditorStore.use.updateExpand();
   const easeTypeOptions = useEaseTypeOptions();
 
   const submit = () => {
@@ -169,8 +165,22 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
         </CommonOptions>
         <CommonOptions key={`effect-button-${index}`} title={t`效果编辑`}>
           <Button onClick={() => {
-            currentFrameIndex.set(index);
-            updateExpand(props.index);
+            eventBus.emit('editor:open-global-terre-panel', {
+              title: t`效果编辑器`,
+              children: <EffectEditor
+                json={animationFrameArray.value[index]?.transform ?? "{}"}
+                onChange={(newJson)=>{
+                  updateFrame(index, { ...animationFrameArray.value[index], transform: newJson || "{}" });
+                  submit();
+                }}
+                onUpdate={(transform)=>{
+                  EditorPreviewClient.setEffect({ target: target.value, transform });
+                }}
+                sentence={props.sentence}
+                index={props.index}
+                targetPath={props.targetPath}
+              />,
+            });
           }}>
             {t`打开效果编辑器`}
           </Button>
@@ -222,21 +232,6 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
       </Button>
     </div>
     <div className={styles.editItem}>
-      <TerrePanel key={`effect-editor-${props.index}`} sentenceIndex={props.index} title={t`效果编辑器`}>
-        <EffectEditor
-          json={animationFrameArray.value[currentFrameIndex.value]?.transform ?? "{}"}
-          onChange={(newJson)=>{
-            updateFrame(currentFrameIndex.value, { ...animationFrameArray.value[currentFrameIndex.value], transform: newJson || "{}" });
-            submit();
-          }}
-          onUpdate={(transform)=>{
-            EditorPreviewClient.setEffect({ target: target.value, transform });
-          }}
-          sentence={props.sentence}
-          index={props.index}
-          targetPath={props.targetPath}
-        />
-      </TerrePanel>
       <CommonOptions key="usePresetTarget" title={t`使用预设目标`}>
         <TerreToggle title="" onChange={(newValue) => {
           isUsePreset.set(newValue);

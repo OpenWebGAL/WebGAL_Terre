@@ -1,4 +1,5 @@
 import mitt from 'mitt';
+import type { ReactNode } from 'react';
 import type {
   FastPreviewTimeoutPayload,
   PreviewReadyUpdatedPayload,
@@ -14,6 +15,12 @@ type IframeEvents = {
 type EditorEvents = {
   'editor:update-scene': { scene: string };
   'editor:topbar-add-sentence': { sentence: string };
+  'editor:open-global-terre-panel': {
+    title: string;
+    children: ReactNode;
+    bottomBarChildren?: ReactNode;
+    width?: number;
+  };
   'editor:pixi-sync-command': {
     targetPath: string;
     lineNumber: number;

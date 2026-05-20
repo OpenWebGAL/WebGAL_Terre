@@ -20,6 +20,7 @@ import SearchableCascader from "@/pages/editor/GraphicalEditor/components/Search
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { OptionCategory } from "../components/OptionCategory";
+import { eventBus } from "@/utils/eventBus";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -337,19 +338,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       />
     </>;
   };
-
-  const shouldRenderBottomBar = useMemo(() => {
-    switch (panelType.value) {
-    // 效果编辑器需要底部栏
-    case "effect":
-      return true;
-    case "moreOptions":
-      return false;
-    default:
-      return false;
-    }
-  }, [panelType.value]);
-
 
   const renderEffectEditorBottomBar = () => {
     return <>
@@ -752,8 +740,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={() => {
-          panelType.set("effect");
-          updateExpand(props.index);
+          eventBus.emit('editor:open-global-terre-panel', {
+            title: t`效果编辑器`,
+            children: renderEffectEditor(),
+            bottomBarChildren: renderEffectEditorBottomBar(),
+          });
         }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
       {shouldRenderMoreOptions && (
@@ -764,22 +755,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           }}>{t`编辑更多选项`}</Button>
         </CommonOptions>
       )}
-      <TerrePanel
-        title={panelType.value === "effect" ? t`效果编辑器` : t`更多选项`}
+      {panelType.value === "moreOptions" && <TerrePanel
+        title={t`更多选项`}
         sentenceIndex={props.index}
-        bottomBarChildren={shouldRenderBottomBar ? renderEffectEditorBottomBar() : undefined}
       >
-        {(() => {
-          switch (panelType.value) {
-          case "effect":
-            return renderEffectEditor();
-          case "moreOptions":
-            return renderMoreOptions();
-          default:
-            return null;
-          }
-        })()}
-      </TerrePanel>
+        {renderMoreOptions()}
+      </TerrePanel>}
       <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle
           title=""

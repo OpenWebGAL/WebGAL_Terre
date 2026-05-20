@@ -1,21 +1,21 @@
-import { useValue } from "../../../hooks/useValue";
 import { parseScene } from "./parser";
 import axios from "axios";
-import { useEffect, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EditorPreviewClient } from "../../../utils/editorPreviewClient";
 import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
 import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
-import { commandType } from "webgal-parser/src/interface/sceneInterface";
+import { commandType, type ISentence } from "webgal-parser/src/interface/sceneInterface";
 import { DeleteFive, Sort, DownOne, RightOne, Play } from "@icon-park/react";
-import AddSentence, { addSentenceType } from "./components/AddSentence";
+import { AddSentenceButton, AddSentenceDialog, addSentenceType } from "./components/AddSentence";
 import SentenceArgOption from "./components/SentenceArgOption";
 import { editorLineHolder } from "@/runtime/WG_ORIGINE_RUNTIME";
 import { eventBus } from "@/utils/eventBus";
 import { createId } from "@/utils/createId";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
+import { GlobalTerrePanel } from "./components/TerrePanel";
 
 import type { DropResult } from '@hello-pangea/dnd';
 
@@ -31,19 +31,29 @@ interface SentenceItem {
 }
 
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
-  const sentenceData = useValue<SentenceItem[]>([]);
+  const [sentenceData, setSentenceData] = useState<SentenceItem[]>([]);
+  const sentenceDataRef = useRef<SentenceItem[]>([]);
+  const [addSentenceDialog, setAddSentenceDialog] = useState<{
+    titleText: string;
+    insertIndex: number;
+  } | null>(null);
 
-  const generateSentenceItem = (content: string): SentenceItem => ({
+  const updateSentenceData = useCallback((newSentences: SentenceItem[]) => {
+    sentenceDataRef.current = newSentences;
+    setSentenceData(newSentences);
+  }, []);
+
+  const generateSentenceItem = useCallback((content: string): SentenceItem => ({
     id: createId(),
     content,
     show: true,
-  });
+  }), []);
 
-  function fetchScene() {
+  const fetchScene = useCallback(() => {
     const processFetchedData = (data: object) => {
       const text = data.toString();
       const newContents = splitToArray(text);
-      const currentSentences = sentenceData.value;
+      const currentSentences = sentenceDataRef.current;
 
       const newSentences = newContents.map((content, i) => {
         const existing = currentSentences[i];
@@ -56,18 +66,18 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
           };
       });
 
-      sentenceData.set(newSentences);
+      updateSentenceData(newSentences);
       eventBus.emit('editor:update-scene', { scene: text });
     };
 
     axios.get(props.targetPath)
       .then(res => res.data)
       .then(processFetchedData);
-  }
+  }, [props.targetPath, updateSentenceData]);
 
   useEffect(() => {
     fetchScene();
-  }, []);
+  }, [fetchScene]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -83,9 +93,9 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       window.removeEventListener('focus', fetchScene);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [fetchScene]);
 
-  function submitScene(newSentences: SentenceItem[], index: number) {
+  const submitScene = useCallback((newSentences: SentenceItem[], index: number) => {
     const newScene = mergeToString(newSentences.map(item => item.content));
     const updateIndex = index + 1;
     editorLineHolder.recordSceneEditingLine(props.targetPath, updateIndex);
@@ -94,64 +104,66 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       textFile: newScene,
       path: props.targetPath
     }).then(() => {
-      const targetValue = newSentences[index].content;
+      const targetValue = newSentences[index]?.content ?? "";
       EditorPreviewClient.sendSyncScene({
         scenePath: props.targetPath,
         lineNumber: updateIndex,
         lineCommandString: targetValue,
       });
+      eventBus.emit('editor:update-scene', { scene: newScene });
+    }).catch(() => {
       fetchScene();
     });
-  }
+  }, [fetchScene, props.targetPath]);
 
-  function updateSentenceByIndex(newContent: string, updateIndex: number) {
-    const newSentences = [...sentenceData.value];
+  const updateSentenceByIndex = useCallback((newContent: string, updateIndex: number) => {
+    const newSentences = [...sentenceDataRef.current];
     newSentences[updateIndex] = { ...newSentences[updateIndex], content: newContent };
-    sentenceData.set(newSentences);
+    updateSentenceData(newSentences);
     submitScene(newSentences, updateIndex);
-  }
+  }, [submitScene, updateSentenceData]);
 
   // 判断是否为空 (识别含唯一空行的文件)
   function isEmpty(sentences: SentenceItem[]): boolean {
     return !sentences || (sentences.length === 1 && sentences[0].content === "");
   }
 
-  function addOneSentence(newContent: string, insertIndex: number) {
+  const addOneSentence = useCallback((newContent: string, insertIndex: number) => {
     const newSentence = generateSentenceItem(newContent);
-    const newSentences = [...sentenceData.value];
+    const newSentences = [...sentenceDataRef.current];
     const shouldReplaceEmptyLine = isEmpty(newSentences);
     const targetInsertIndex = shouldReplaceEmptyLine ? 0 : insertIndex;
     const deleteCount = shouldReplaceEmptyLine ? 1 : 0;
 
     newSentences.splice(targetInsertIndex, deleteCount, newSentence);
 
-    sentenceData.set(newSentences);
+    updateSentenceData(newSentences);
     submitScene(newSentences, targetInsertIndex);
-  }
+  }, [generateSentenceItem, submitScene, updateSentenceData]);
 
-  function deleteOneSentence(index: number) {
-    const newSentences = [...sentenceData.value];
+  const deleteOneSentence = useCallback((index: number) => {
+    const newSentences = [...sentenceDataRef.current];
     newSentences.splice(index, 1);
-    sentenceData.set(newSentences);
+    updateSentenceData(newSentences);
     submitScene(newSentences, Math.min(index, newSentences.length - 1));
-  }
+  }, [submitScene, updateSentenceData]);
 
-  function changeShowSentence(index: number) {
-    const newSentences = [...sentenceData.value];
+  const changeShowSentence = useCallback((index: number) => {
+    const newSentences = [...sentenceDataRef.current];
     newSentences[index] = { ...newSentences[index], show: !newSentences[index].show };
-    sentenceData.set(newSentences);
-  }
+    updateSentenceData(newSentences);
+  }, [updateSentenceData]);
 
   // 重新记录数组顺序
-  const reorder = (startIndex: number, endIndex: number) => {
-    const newSentences = [...sentenceData.value];
+  const reorder = useCallback((startIndex: number, endIndex: number) => {
+    const newSentences = [...sentenceDataRef.current];
     const [removed] = newSentences.splice(startIndex, 1);
     newSentences.splice(endIndex, 0, removed);
-    sentenceData.set(newSentences);
+    updateSentenceData(newSentences);
     submitScene(newSentences, endIndex);
-  };
+  }, [submitScene, updateSentenceData]);
 
-  function onDragEnd(result: DropResult) {
+  const onDragEnd = useCallback((result: DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -160,10 +172,10 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       result.source.index,
       result.destination.index
     );
-  }
+  }, [props.targetPath, reorder]);
 
-  function syncToIndex(index: number) {
-    const targetValue = sentenceData.value[index]?.content || "";
+  const syncToIndex = useCallback((index: number) => {
+    const targetValue = sentenceDataRef.current[index]?.content || "";
     EditorPreviewClient.sendSyncScene({
       scenePath: props.targetPath,
       lineNumber: index + 1,
@@ -178,7 +190,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       lineContent: "",
       lineSentence: null,
     });
-  }
+  }, [props.targetPath]);
 
   useEffect(() => {
     const targetLine = editorLineHolder.getSceneLine(props.targetPath);
@@ -194,26 +206,41 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     if (targetLine > 3) {
       scrollToFunc();
     }
-  }, []);
+  }, [props.targetPath]);
 
-  function addNewSentenceAttach(sentence: string) {
-    addOneSentence(sentence, sentenceData.value.length);
-  }
+  const addNewSentenceAttach = useCallback((sentence: string) => {
+    addOneSentence(sentence, sentenceDataRef.current.length);
+  }, [addOneSentence]);
 
-  function handleAdd({ sentence } : { sentence: string }) {
+  const handleAdd = useCallback(({ sentence } : { sentence: string }) => {
     addNewSentenceAttach(sentence);
-  }
+  }, [addNewSentenceAttach]);
 
   useEffect(() => {
     eventBus.on('editor:topbar-add-sentence', handleAdd);
     return () => {
       eventBus.off('editor:topbar-add-sentence', handleAdd);
     };
-  }, [sentenceData.value]);
+  }, [handleAdd]);
 
-  const mergedSceneText = useMemo(() => mergeToString(sentenceData.value.map(item => item.content)), [sentenceData.value]);
+  const openAddSentenceDialog = useCallback((titleText: string, insertIndex: number) => {
+    setAddSentenceDialog({ titleText, insertIndex });
+  }, []);
 
-  const parsedScene = mergedSceneText === "" ? { sentenceList: [] } : parseScene(mergedSceneText);
+  const handleChooseSentence = useCallback((newSentence: string) => {
+    if (!addSentenceDialog) {
+      return;
+    }
+    addOneSentence(newSentence, addSentenceDialog.insertIndex);
+    setAddSentenceDialog(null);
+  }, [addOneSentence, addSentenceDialog]);
+
+  const mergedSceneText = useMemo(() => mergeToString(sentenceData.map(item => item.content)), [sentenceData]);
+
+  const parsedScene = useMemo(
+    () => mergedSceneText === "" ? { sentenceList: [] } : parseScene(mergedSceneText),
+    [mergedSceneText]
+  );
   const sceneLabels = useMemo(
     () => parsedScene.sentenceList
       .filter(sentence => sentence.command === commandType.label)
@@ -235,7 +262,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     return () => {
       eventBus.off('editor:drag-update-scene', handleDragUpdate);
     };
-  }, []);
+  }, [fetchScene]);
   return <div className={styles.main} id="graphical-editor-main">
     <div style={{ flex: 1, padding: '14px 4px 0 4px' }}>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -249,93 +276,142 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
               ref={provided.innerRef}
             >
               {parsedScene.sentenceList.map((sentence, i) => {
-                // 实际显示的行数
-                const index = i + 1;
-                // console.log(sentence.command);
-                const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
-                const SentenceEditor = sentenceConfig.component;
-                const sentenceItem = sentenceData.value[i];
-                return <Draggable key={sentenceItem.id} draggableId={sentenceItem.id} index={i}>
-                  {(provided) => (
-                    <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                    >
-                      <div className={styles.addForwardArea}>
-                        <div className={styles.addForwardAreaButtonGroup}>
-                          <div className={styles.addForwardAreaButton}>
-                            <AddSentence titleText={t`本句前插入句子`} type={addSentenceType.forward}
-                              onChoose={(newSentence) => addOneSentence(newSentence, i)} />
-                          </div>
-                        </div>
-                      </div>
-                      <div className={styles.sentenceEditorContent}>
-                        <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
-                          <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
-                            strokeWidth={3} />
-                        </div>
-                        <div className={styles.seArea}>
-                          <div className={styles.head}>
-                            <div className={styles.title}>
-                              {sentenceConfig.title()}
-                            </div>
-                            <div className={styles.optionButton}
-                              onClick={() => changeShowSentence(i)}>
-                              {sentenceItem.show ?
-                                <DownOne strokeWidth={3} theme="outline" size="18"
-                                  fill="#005CAF" /> :
-                                <RightOne strokeWidth={3} theme="outline" size="18"
-                                  fill="#005CAF" />}
-                            </div>
-                            <div className={styles.optionButtonContainer}>
-                              <div className={styles.optionButton}
-                                onClick={() => deleteOneSentence(i)}>
-                                <DeleteFive strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="14"
-                                  fill="var(--text)" />
-                                <div>
-                                  {t`删除本句`}
-                                </div>
-                              </div>
-                              <div className={styles.optionButton}
-                                onClick={() => syncToIndex(i)}>
-                                <Play strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="14"
-                                  fill="var(--text)" />
-                                <div>
-                                  {t`执行到此句`}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          {sentenceItem.show && <div className={styles.sentenceEditBody}>
-                            <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
-                              updateSentenceByIndex(newSentence, i);
-                            }} targetPath={props.targetPath} sceneLabels={sceneLabels} />
-                            {sentenceConfig !== sentenceEditorDefault && sentence.command !== commandType.comment && <SentenceArgOption
-                              sentence={sentence}
-                              rawSentence={sentenceItem.content}
-                              argKey="when"
-                              title={t`条件执行`}
-                              enabledText={t`启用 when 条件`}
-                              disabledText={t`不使用 when 条件`}
-                              placeholder={t`例如：a>0 && flag==true`}
-                              onSubmit={(newSentence) => updateSentenceByIndex(newSentence, i)}
-                            />}
-                          </div>}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </Draggable>;
+                const sentenceItem = sentenceData[i];
+                if (!sentenceItem) return null;
+                return <SentenceRow
+                  key={sentenceItem.id}
+                  sentence={sentence}
+                  sentenceItem={sentenceItem}
+                  index={i}
+                  targetPath={props.targetPath}
+                  sceneLabels={sceneLabels}
+                  onAddBefore={openAddSentenceDialog}
+                  onDelete={deleteOneSentence}
+                  onSync={syncToIndex}
+                  onToggleShow={changeShowSentence}
+                  onUpdate={updateSentenceByIndex}
+                />;
               })}
               {provided.placeholder}
               <div className={styles.addWrapper}>
-                <AddSentence titleText={t`添加语句`} type={addSentenceType.backward}
-                  onChoose={(newSentence) => addOneSentence(newSentence, sentenceData.value.length)} />
+                <AddSentenceButton
+                  titleText={t`添加语句`}
+                  type={addSentenceType.backward}
+                  onClick={() => openAddSentenceDialog(t`添加语句`, sentenceData.length)}
+                />
               </div>
             </div>
           )}
         </Droppable>
       </DragDropContext>
     </div>
+    <AddSentenceDialog
+      open={!!addSentenceDialog}
+      titleText={addSentenceDialog?.titleText ?? ""}
+      onChoose={handleChooseSentence}
+      onOpenChange={(open) => !open && setAddSentenceDialog(null)}
+    />
+    <StableGlobalTerrePanel />
   </div>;
 }
+
+const StableGlobalTerrePanel = memo(GlobalTerrePanel);
+
+const SentenceRow = memo((props: {
+  sentence: ISentence;
+  sentenceItem: SentenceItem;
+  index: number;
+  targetPath: string;
+  sceneLabels: string[];
+  onAddBefore: (titleText: string, insertIndex: number) => void;
+  onDelete: (index: number) => void;
+  onSync: (index: number) => void;
+  onToggleShow: (index: number) => void;
+  onUpdate: (newContent: string, updateIndex: number) => void;
+}) => {
+  const { sentence, sentenceItem, index: i, targetPath, sceneLabels } = props;
+  const index = i + 1;
+  const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
+  const SentenceEditor = sentenceConfig.component;
+
+  return <Draggable key={sentenceItem.id} draggableId={sentenceItem.id} index={i}>
+    {(provided) => (
+      <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+      >
+        <div className={styles.addForwardArea}>
+          <div className={styles.addForwardAreaButtonGroup}>
+            <div className={styles.addForwardAreaButton}>
+              <AddSentenceButton
+                titleText={t`本句前插入句子`}
+                type={addSentenceType.forward}
+                onClick={() => props.onAddBefore(t`本句前插入句子`, i)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={styles.sentenceEditorContent}>
+          <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
+            <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
+              strokeWidth={3} />
+          </div>
+          <div className={styles.seArea}>
+            <div className={styles.head}>
+              <div className={styles.title}>
+                {sentenceConfig.title()}
+              </div>
+              <div className={styles.optionButton}
+                onClick={() => props.onToggleShow(i)}>
+                {sentenceItem.show ?
+                  <DownOne strokeWidth={3} theme="outline" size="18"
+                    fill="#005CAF" /> :
+                  <RightOne strokeWidth={3} theme="outline" size="18"
+                    fill="#005CAF" />}
+              </div>
+              <div className={styles.optionButtonContainer}>
+                <div className={styles.optionButton}
+                  onClick={() => props.onDelete(i)}>
+                  <DeleteFive strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="14"
+                    fill="var(--text)" />
+                  <div>
+                    {t`删除本句`}
+                  </div>
+                </div>
+                <div className={styles.optionButton}
+                  onClick={() => props.onSync(i)}>
+                  <Play strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="14"
+                    fill="var(--text)" />
+                  <div>
+                    {t`执行到此句`}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {sentenceItem.show && <div className={styles.sentenceEditBody}>
+              <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
+                props.onUpdate(newSentence, i);
+              }} targetPath={targetPath} sceneLabels={sceneLabels} />
+              {sentenceConfig !== sentenceEditorDefault && sentence.command !== commandType.comment && <SentenceArgOption
+                sentence={sentence}
+                rawSentence={sentenceItem.content}
+                argKey="when"
+                title={t`条件执行`}
+                enabledText={t`启用 when 条件`}
+                disabledText={t`不使用 when 条件`}
+                placeholder={t`例如：a>0 && flag==true`}
+                onSubmit={(newSentence) => props.onUpdate(newSentence, i)}
+              />}
+            </div>}
+          </div>
+        </div>
+      </div>
+    )}
+  </Draggable>;
+}, (prev, next) => (
+  prev.sentence === next.sentence &&
+  prev.sentenceItem === next.sentenceItem &&
+  prev.index === next.index &&
+  prev.targetPath === next.targetPath &&
+  prev.sceneLabels === next.sceneLabels
+));
