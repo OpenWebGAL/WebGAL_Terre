@@ -15,6 +15,7 @@ interface ISentenceArgOptionProps {
   disabledText: string;
   placeholder: string;
   onSubmit: (newSentence: string) => void;
+  inline?: boolean;
 }
 
 function isEscaped(text: string, index: number) {
@@ -98,8 +99,8 @@ export default function SentenceArgOption(props: ISentenceArgOptionProps) {
     }));
   };
 
-  return <div className={styles.commonArgItem}>
-    <CommonOptions title={props.title}>
+  const content = <>
+    <CommonOptions title={props.title} key="toggle">
       <TerreToggle
         title=""
         onChange={(newValue) => {
@@ -115,7 +116,7 @@ export default function SentenceArgOption(props: ISentenceArgOptionProps) {
         isChecked={isEnabled.value}
       />
     </CommonOptions>
-    {isEnabled.value && <CommonOptions title={t`表达式`}>
+    {isEnabled.value && <CommonOptions title={t`表达式`} key="expression">
       <input
         value={expression.value}
         onChange={(ev) => expression.set(ev.target.value ?? "")}
@@ -125,5 +126,7 @@ export default function SentenceArgOption(props: ISentenceArgOptionProps) {
         style={{ width: "100%" }}
       />
     </CommonOptions>}
-  </div>;
+  </>;
+
+  return props.inline ? content : <div className={styles.commonArgItem}>{content}</div>;
 }

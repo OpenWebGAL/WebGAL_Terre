@@ -231,6 +231,8 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={openEffectEditor}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
@@ -238,6 +240,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         }} onText={t`本句执行后执行下一句`}
         offText={t`本句执行后等待`} isChecked={isGoNext.value}/>
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

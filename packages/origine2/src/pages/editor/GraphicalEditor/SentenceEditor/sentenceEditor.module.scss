@@ -20,6 +20,7 @@
   align-items: stretch;
   flex-wrap: wrap;
   gap: 4px;
+  width: 100%;
 }
 
 .flex1 {
@@ -168,4 +169,39 @@
 
 .chooseTargetEmpty {
   color: var(--text-sub);
+}
+
+.introTextList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.introTextItem {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.introTextItem + .introTextItem {
+  border-top: 1px solid var(--black-10pct);
+}
+
+.introTextInput {
+  flex: 1;
+  width: auto;
+  min-width: 220px;
+}
+
+.introTextActionRow {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  gap: 8px;
+  padding: 8px 0;
 }

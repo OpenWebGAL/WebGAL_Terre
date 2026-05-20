@@ -1,6 +1,6 @@
 import { commandType, ISentence } from "webgal-parser/src/interface/sceneInterface";
 import Say from "./Say";
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, ReactNode } from "react";
 import {
   Acoustic,
   AddMusic,
@@ -59,6 +59,7 @@ export interface ISentenceEditorProps {
   index:number;
   targetPath: string;
   sceneLabels?: string[];
+  extraOptions?: ReactNode;
 }
 
 export interface ISentenceEditorConfig {

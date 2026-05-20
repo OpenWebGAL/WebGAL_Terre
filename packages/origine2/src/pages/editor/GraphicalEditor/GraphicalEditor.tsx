@@ -30,6 +30,15 @@ interface SentenceItem {
   show: boolean;
 }
 
+const inlineArgOptionCommands = new Set<commandType>([
+  commandType.changeBg,
+  commandType.changeFigure,
+  commandType.setAnimation,
+  commandType.setComplexAnimation,
+  commandType.setTransform,
+  commandType.setTempAnimation,
+]);
+
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const [sentenceData, setSentenceData] = useState<SentenceItem[]>([]);
   const sentenceDataRef = useRef<SentenceItem[]>([]);
@@ -333,6 +342,18 @@ const SentenceRow = memo((props: {
   const index = i + 1;
   const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
   const SentenceEditor = sentenceConfig.component;
+  const argOption = sentenceConfig !== sentenceEditorDefault && sentence.command !== commandType.comment && <SentenceArgOption
+    sentence={sentence}
+    rawSentence={sentenceItem.content}
+    argKey="when"
+    title={t`条件执行`}
+    enabledText={t`启用 when 条件`}
+    disabledText={t`不使用 when 条件`}
+    placeholder={t`例如：a>0 && flag==true`}
+    onSubmit={(newSentence) => props.onUpdate(newSentence, i)}
+    inline={inlineArgOptionCommands.has(sentence.command)}
+  />;
+  const inlineArgOption = inlineArgOptionCommands.has(sentence.command);
 
   return <Draggable key={sentenceItem.id} draggableId={sentenceItem.id} index={i}>
     {(provided) => (
@@ -391,17 +412,8 @@ const SentenceRow = memo((props: {
             {sentenceItem.show && <div className={styles.sentenceEditBody}>
               <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
                 props.onUpdate(newSentence, i);
-              }} targetPath={targetPath} sceneLabels={sceneLabels} />
-              {sentenceConfig !== sentenceEditorDefault && sentence.command !== commandType.comment && <SentenceArgOption
-                sentence={sentence}
-                rawSentence={sentenceItem.content}
-                argKey="when"
-                title={t`条件执行`}
-                enabledText={t`启用 when 条件`}
-                disabledText={t`不使用 when 条件`}
-                placeholder={t`例如：a>0 && flag==true`}
-                onSubmit={(newSentence) => props.onUpdate(newSentence, i)}
-              />}
+              }} targetPath={targetPath} sceneLabels={sceneLabels} extraOptions={inlineArgOption ? argOption : undefined} />
+              {!inlineArgOption && argOption}
             </div>}
           </div>
         </div>

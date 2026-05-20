@@ -761,6 +761,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         {renderMoreOptions()}
       </TerrePanel>}
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle
           title=""
@@ -772,6 +774,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           offText={t`本句执行后等待`} isChecked={isGoNext.value}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

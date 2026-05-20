@@ -278,12 +278,15 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
           submit();
         }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
       </CommonOptions>
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions key="isGoNext" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
         }} onText={t`本句执行后执行下一句`} offText={t`本句执行后等待`} isChecked={isGoNext.value} />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }
