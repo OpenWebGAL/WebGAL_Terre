@@ -634,7 +634,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`关闭立绘`}>
+      <CommonOptions key="isNoDialog" title={t`立绘显示状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
             figureFile.set(t`选择立绘文件`);
@@ -643,7 +643,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           submit();
         }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
       </CommonOptions>
-      <CommonOptions key="clearFigure" title={t`清除立绘`}>
+      <CommonOptions key="clearFigure" title={t`立绘清除参数`}>
         <TerreToggle title="" onChange={(newValue) => {
           clear.set(newValue);
           submit();

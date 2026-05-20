@@ -34,7 +34,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions title={t`清除特效`} key="1">
+      <CommonOptions title={t`特效状态`} key="1">
         <TerreToggle title="" onChange={(newValue) => {
           isSetEffectsOff.set(newValue);
           if (!newValue) {
@@ -43,7 +43,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
           submit();
         }} onText={t`清除特效`} offText={t`使用特效`} isChecked={isSetEffectsOff.value} />
       </CommonOptions>
-      {!isSetEffectsOff.value && <CommonOptions key="2" title={t`使用预制特效`}>
+      {!isSetEffectsOff.value && <CommonOptions key="2" title={t`特效来源`}>
         <TerreToggle title="" onChange={(newValue) => {
           isUsePreset.set(newValue);
         }}

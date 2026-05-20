@@ -30,7 +30,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`关闭效果音`}>
+      <CommonOptions key="isNoDialog" title={t`效果音播放状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
             fileName.set(t`选择效果音文件`);

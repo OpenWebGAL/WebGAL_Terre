@@ -41,6 +41,9 @@ msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;
 msgid "BGM"
 msgstr "BGM"
 
+msgid "BGM 播放状态"
+msgstr "BGM playback status"
+
 msgid "BGM 音量"
 msgstr "BGM volume"
 
@@ -391,9 +394,6 @@ msgstr "Offset bottom (for positioning)"
 
 msgid "偏移顶部距离（定位用）"
 msgstr "Offset top (for positioning)"
-
-msgid "停止 BGM"
-msgstr "Stop the BGM"
 
 msgid "停止位置"
 msgstr "Stop position"
@@ -842,6 +842,9 @@ msgstr "Mini avatar container"
 msgid "小头像文件"
 msgstr "Avatar file"
 
+msgid "小头像显示状态"
+msgstr "Mini avatar display status"
+
 msgid "尚未添加任何字体"
 msgstr "No fonts added yet"
 
@@ -1118,6 +1121,9 @@ msgstr "Sound effect ID (Input ID makes this effect loop, you can't stop it by t
 msgid "效果音 音量"
 msgstr "Sound effect volume"
 
+msgid "效果音播放状态"
+msgstr "Sound effect playback status"
+
 msgid "效果音文件"
 msgstr "Sound effect file"
 
@@ -1163,6 +1169,9 @@ msgstr "Textbox (when avatar is closed)"
 msgid "文本框文本"
 msgstr "Text Box Text"
 
+msgid "文本框显示状态"
+msgstr "Textbox display status"
+
 msgid "文本框背景"
 msgstr "Text Box Background"
 
@@ -1207,9 +1216,6 @@ msgstr "New game"
 
 msgid "方形"
 msgstr "Square"
-
-msgid "旁白模式"
-msgstr "Voiceover mode"
 
 msgid "旁白模式，无角色名"
 msgstr "Voiceover mode, no role name"
@@ -1508,12 +1514,6 @@ msgstr "Clear tip"
 msgid "清除特效"
 msgstr "Clear effects"
 
-msgid "清除立绘"
-msgstr "Clear figure"
-
-msgid "清除角色名"
-msgstr "Clear role name"
-
 msgid "游戏"
 msgstr "Games"
 
@@ -1558,6 +1558,12 @@ msgstr "Click or drag file to this area to upload"
 
 msgid "点状电影滤镜"
 msgstr "Dot film filter"
+
+msgid "特效来源"
+msgstr "Effect source"
+
+msgid "特效状态"
+msgstr "Effect status"
 
 msgid "特殊演出"
 msgstr "Special performance"
@@ -1672,6 +1678,12 @@ msgstr "ID of figure illustration"
 
 msgid "立绘文件"
 msgstr "Figure file"
+
+msgid "立绘显示状态"
+msgstr "Figure display status"
+
+msgid "立绘清除参数"
+msgstr "Figure clear parameter"
 
 msgid "等待"
 msgstr "Wait"
@@ -1790,6 +1802,9 @@ msgstr "Background image"
 msgid "背景文件"
 msgstr "Background file"
 
+msgid "背景显示状态"
+msgstr "Background display status"
+
 msgid "背景音乐"
 msgstr "Background music"
 
@@ -1877,6 +1892,9 @@ msgstr "Role name, leave blank to inherit from previous sentence: Dialogue;"
 msgid "角色名内层文本"
 msgstr "Role Name Inner Text"
 
+msgid "角色名处理"
+msgstr "Role name handling"
+
 msgid "角色名外层文本"
 msgstr "Role Name Outer Text"
 
@@ -1888,6 +1906,9 @@ msgstr "Role Name Text Box"
 
 msgid "角色名文本框背景"
 msgstr "Role Name Text Box Background"
+
+msgid "角色名显示"
+msgstr "Role name display"
 
 msgid "角落头像"
 msgstr "Corner avatar"

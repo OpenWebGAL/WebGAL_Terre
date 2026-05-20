@@ -40,7 +40,7 @@ export default function Bgm(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`停止 BGM`}>
+      <CommonOptions key="isNoDialog" title={t`BGM 播放状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if(!newValue){
             bgmFile.set(t`选择背景音乐`);

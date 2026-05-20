@@ -185,7 +185,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`关闭背景`}>
+      <CommonOptions key="isNoDialog" title={t`背景显示状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
             bgFile.set(t`选择背景文件`);
