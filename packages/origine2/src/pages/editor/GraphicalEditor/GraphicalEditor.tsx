@@ -7,7 +7,7 @@ import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
 import { commandType, type ISentence } from "webgal-parser/src/interface/sceneInterface";
-import { DeleteFive, Sort, DownOne, RightOne, Play } from "@icon-park/react";
+import { DeleteFive, Sort, DownOne, RightOne, Play, LinkOne } from "@icon-park/react";
 import { AddSentenceButton, AddSentenceDialog, addSentenceType } from "./components/AddSentence";
 import SentenceArgOption from "./components/SentenceArgOption";
 import { editorLineHolder } from "@/runtime/WG_ORIGINE_RUNTIME";
@@ -16,6 +16,7 @@ import { createId } from "@/utils/createId";
 import { t } from "@lingui/macro";
 import { api } from "@/api";
 import { GlobalTerrePanel } from "./components/TerrePanel";
+import { getArgByKey } from "./utils/getArgByKey";
 
 import type { DropResult } from '@hello-pangea/dnd';
 
@@ -201,6 +202,23 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     });
   }, [props.targetPath]);
 
+  const syncCurrentLine = useCallback(() => {
+    const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || 1;
+    EditorPreviewClient.sendSyncScene({
+      scenePath: props.targetPath,
+      lineNumber,
+      lineCommandString: sentenceDataRef.current[lineNumber - 1]?.content || "",
+      force: true,
+    });
+  }, [props.targetPath]);
+
+  useEffect(() => {
+    eventBus.on('editor:sync-current-line', syncCurrentLine);
+    return () => {
+      eventBus.off('editor:sync-current-line', syncCurrentLine);
+    };
+  }, [syncCurrentLine]);
+
   useEffect(() => {
     const targetLine = editorLineHolder.getSceneLine(props.targetPath);
     const scrollToFunc = () => {
@@ -292,6 +310,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
                   sentence={sentence}
                   sentenceItem={sentenceItem}
                   index={i}
+                  linkedWithPrevious={i > 0 && getArgByKey(parsedScene.sentenceList[i - 1], "next") === true}
                   targetPath={props.targetPath}
                   sceneLabels={sceneLabels}
                   onAddBefore={openAddSentenceDialog}
@@ -330,6 +349,7 @@ const SentenceRow = memo((props: {
   sentence: ISentence;
   sentenceItem: SentenceItem;
   index: number;
+  linkedWithPrevious: boolean;
   targetPath: string;
   sceneLabels: string[];
   onAddBefore: (titleText: string, insertIndex: number) => void;
@@ -338,7 +358,7 @@ const SentenceRow = memo((props: {
   onToggleShow: (index: number) => void;
   onUpdate: (newContent: string, updateIndex: number) => void;
 }) => {
-  const { sentence, sentenceItem, index: i, targetPath, sceneLabels } = props;
+  const { sentence, sentenceItem, index: i, linkedWithPrevious, targetPath, sceneLabels } = props;
   const index = i + 1;
   const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
   const SentenceEditor = sentenceConfig.component;
@@ -362,6 +382,7 @@ const SentenceRow = memo((props: {
         {...provided.draggableProps}
       >
         <div className={styles.addForwardArea}>
+          {linkedWithPrevious && <div className={styles.nextChain} title={t`由上一句的 next 连续执行`}><LinkOne theme="outline" size="20" strokeWidth={3} /></div>}
           <div className={styles.addForwardAreaButtonGroup}>
             <div className={styles.addForwardAreaButton}>
               <AddSentenceButton
@@ -424,6 +445,7 @@ const SentenceRow = memo((props: {
   prev.sentence === next.sentence &&
   prev.sentenceItem === next.sentenceItem &&
   prev.index === next.index &&
+  prev.linkedWithPrevious === next.linkedWithPrevious &&
   prev.targetPath === next.targetPath &&
   prev.sceneLabels === next.sceneLabels
 ));

@@ -27,6 +27,7 @@ type EditorEvents = {
     lineContent: string;
     lineSentence: import('webgal-parser/src/interface/sceneInterface').ISentence | null;
   };
+  'editor:sync-current-line': null;
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
 };
 

@@ -24,6 +24,14 @@ export interface IEditorState {
   isDarkMode: boolean,
   isUseRealtimeEffect: boolean, // 是否使用实时效果
   isWindowAdjustment: boolean, // 预览窗口调整功能是否开启
+  debugVariables: IDebugVariable[],
+}
+
+export interface IDebugVariable {
+  id: string,
+  key: string,
+  value: string,
+  isGlobal: boolean,
 }
 
 export interface IEditorAction {
@@ -48,4 +56,5 @@ export interface IEditorAction {
   updateIsDarkMode: (isDarkMode: IEditorState['isDarkMode']) => void,
   updateIsUseRealtimeEffect: (isUseRealtimeEffect: IEditorState['isUseRealtimeEffect']) => void,
   updateIsWindowAdjustment: (isWindowAdjustment: IEditorState['isWindowAdjustment']) => void,
+  updateDebugVariables: (debugVariables: IEditorState['debugVariables']) => void,
 }

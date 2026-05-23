@@ -23,6 +23,22 @@
   width: 100%;
 }
 
+.assetPreview {
+  width: 44px;
+  height: 32px;
+  object-fit: contain;
+  vertical-align: middle;
+  border: var(--border-sm);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-input);
+}
+
+.filePreviewRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .flex1 {
   flex: 1;
 }

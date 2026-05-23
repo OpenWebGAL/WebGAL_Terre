@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
 import { logger } from '../../../utils/logger';
@@ -130,6 +130,23 @@ export default function TextEditor(props: ITextEditorProps) {
       });
     });
   }, 500), []);
+
+  const syncCurrentLine = useCallback(() => {
+    const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || editorRef.current?.getPosition()?.lineNumber || 1;
+    EditorPreviewClient.sendSyncScene({
+      scenePath: target?.path ?? '',
+      lineNumber,
+      lineCommandString: currentText.current.split('\n')[lineNumber - 1] ?? '',
+      force: true,
+    });
+  }, [props.targetPath, target?.path]);
+
+  useEffect(() => {
+    eventBus.on('editor:sync-current-line', syncCurrentLine);
+    return () => {
+      eventBus.off('editor:sync-current-line', syncCurrentLine);
+    };
+  }, [syncCurrentLine]);
 
   useEffect(() => () => handleChange.flush(), [handleChange]);
 

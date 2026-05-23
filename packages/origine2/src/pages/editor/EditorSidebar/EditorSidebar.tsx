@@ -95,13 +95,14 @@ export default function EditorSideBar() {
       }
 
       EditorPreviewClient.setFontOptimization(isUseFontOptimization);
+      if (isEnableLivePreview) eventBus.emit('editor:sync-current-line', null);
     };
 
     eventBus.on('editor-preview:ready', handlePreviewReady);
     return () => {
       eventBus.off('editor-preview:ready', handlePreviewReady);
     };
-  }, [isUseFontOptimization]);
+  }, [isEnableLivePreview, isUseFontOptimization]);
 
   useEffect(() => {
     EditorPreviewClient.setFontOptimization(isUseFontOptimization);

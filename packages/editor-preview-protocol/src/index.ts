@@ -5,18 +5,27 @@ export const EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL =
 
 type EmptyObject = Record<string, never>;
 
+export interface DebugVariablePayload {
+  key: string;
+  value: string;
+  isGlobal?: boolean;
+}
+
 export interface SyncScenePayload {
   sceneName: string;
   sentenceId: number;
   syncMode?: 'stable' | 'fast';
+  debugVariables?: DebugVariablePayload[];
 }
 
 export interface RunSceneContentPayload {
   sceneContent: string;
+  debugVariables?: DebugVariablePayload[];
 }
 
 export interface RunSnippetPayload {
   snippet: string;
+  debugVariables?: DebugVariablePayload[];
 }
 
 export type ReloadTemplatesPayload = EmptyObject;

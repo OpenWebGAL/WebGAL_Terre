@@ -21,6 +21,7 @@ import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { OptionCategory } from "../components/OptionCategory";
 import { eventBus } from "@/utils/eventBus";
+import { AssetPreview } from "../components/AssetPreview";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -651,8 +652,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t`立绘文件`}>
-          <>
-            {figureFile.value + "\u00a0\u00a0"}
+          <div className={styles.filePreviewRow}>
+            <AssetPreview basePath="figure" file={figureFile.value} />
+            <span>{figureFile.value}</span>
             <ChooseFile
               title={t`选择立绘文件`}
               basePath={['figure']}
@@ -663,7 +665,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               }}
               extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? []]}
             />
-          </>
+          </div>
         </CommonOptions>}
       <CommonOptions title={t`z-index`} key="z-index">
         <input value={zIndex.value}

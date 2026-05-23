@@ -15,6 +15,7 @@ import WheelDropdown from "../components/WheelDropdown";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { eventBus } from "@/utils/eventBus";
+import { AssetPreview } from "../components/AssetPreview";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -195,14 +196,15 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         }} onText={t`关闭背景`} offText={t`显示背景`} isChecked={isNoFile}/>
       </CommonOptions>
       {!isNoFile && <CommonOptions key="1" title={t`背景文件`}>
-        <>
-          {bgFile.value + "\u00a0\u00a0"}
+        <div className={styles.filePreviewRow}>
+          <AssetPreview basePath="background" file={bgFile.value} />
+          <span>{bgFile.value}</span>
           <ChooseFile title={t`选择背景文件`} basePath={['background']} selectedFilePath={bgFile.value} onChange={(fileDesc) => {
             bgFile.set(fileDesc?.name ?? "");
             submit();
           }}
           extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('video') ?? []]}/>
-        </>
+        </div>
       </CommonOptions>}
       {!isNoFile && <CommonOptions key="3" title={t`解锁名称`}>
         <input value={unlockName.value}

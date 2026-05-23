@@ -1,4 +1,5 @@
 import useEditorStore from '@/store/useEditorStore';
+import type { IDebugVariable } from '@/types/editor';
 import { createId } from '@/utils/createId';
 import { eventBus } from '@/utils/eventBus';
 import { getWsUrl } from '@/utils/getWsUrl';
@@ -9,6 +10,7 @@ import {
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
   isHostEventEnvelope,
   type EventEnvelope,
+  type DebugVariablePayload,
   type FastPreviewTimeoutPayload,
   type PreviewCommandType,
   type PreviewReadyUpdatedPayload,
@@ -121,6 +123,20 @@ function bindLifecycleEvents() {
   });
 }
 
+function buildDebugVariablesPayload(debugVariables: IDebugVariable[]): DebugVariablePayload[] {
+  return debugVariables
+    .filter(item => item.key.trim())
+    .map(item => ({
+      key: item.key.trim(),
+      value: item.value.trim(),
+      isGlobal: item.isGlobal,
+    }));
+}
+
+function getDebugVariablesPayload() {
+  return buildDebugVariablesPayload(useEditorStore.getState().debugVariables);
+}
+
 function ensureEditorPreviewClientStarted() {
   if (editorPreviewClientStarted) {
     return;
@@ -187,18 +203,21 @@ export class EditorPreviewClient {
       sceneName: normalizeSceneName(scenePath),
       sentenceId: lineNumber,
       syncMode: editorState.isUseExpFastSync ? 'fast' : 'stable',
+      debugVariables: getDebugVariablesPayload(),
     });
   }
 
   public static runSnippet(snippet: string) {
     return sendPreviewCommand('preview.command.run-snippet', {
       snippet,
+      debugVariables: getDebugVariablesPayload(),
     });
   }
 
   public static runSceneContent(sceneContent: string) {
     return sendPreviewCommand('preview.command.run-scene-content', {
       sceneContent,
+      debugVariables: getDebugVariablesPayload(),
     });
   }
 
