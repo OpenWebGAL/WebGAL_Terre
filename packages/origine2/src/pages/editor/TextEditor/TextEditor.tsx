@@ -132,7 +132,7 @@ export default function TextEditor(props: ITextEditorProps) {
   }, 500), []);
 
   const syncCurrentLine = useCallback(() => {
-    const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || editorRef.current?.getPosition()?.lineNumber || 1;
+    const lineNumber = editorLineHolder.getSceneLineOrFirstLine(props.targetPath);
     EditorPreviewClient.sendSyncScene({
       scenePath: target?.path ?? '',
       lineNumber,

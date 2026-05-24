@@ -203,7 +203,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }, [props.targetPath]);
 
   const syncCurrentLine = useCallback(() => {
-    const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || 1;
+    const lineNumber = editorLineHolder.getSceneLineOrFirstLine(props.targetPath);
     EditorPreviewClient.sendSyncScene({
       scenePath: props.targetPath,
       lineNumber,

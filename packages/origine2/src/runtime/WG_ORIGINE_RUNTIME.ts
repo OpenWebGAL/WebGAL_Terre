@@ -10,7 +10,7 @@ export const lspSceneName = {value: ""};
 
 class EditorLineHolder{
   private mapSceneUrlToSentence = new Map<string,Position>();
-  
+
   public recordSceneEditingLine(sceneUrl: string, lineNumber: number) {
     this.mapSceneUrlToSentence.set(sceneUrl, new Position(lineNumber, 0));
     // console.log(this.mapSceneUrlToSentence);
@@ -23,6 +23,11 @@ class EditorLineHolder{
 
   public getSceneLine(sceneUrl: string): number {
     return this.mapSceneUrlToSentence.get(sceneUrl)?.lineNumber ?? 0;
+  }
+
+  public getSceneLineOrFirstLine(sceneUrl: string): number {
+    const lineNumber = this.getSceneLine(sceneUrl);
+    return lineNumber > 0 ? lineNumber : 1;
   }
 
   public getScenePosition(sceneUrl: string): Position {
