@@ -6,7 +6,6 @@ import useEditorStore from "@/store/useEditorStore";
 import { api } from "@/api";
 import { t } from "@lingui/macro";
 import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
-import { join } from 'path';
 import { ReactNode, useCallback, useEffect } from "react";
 import { bundleIcon, DismissFilled, DismissRegular, WarningFilled, WarningRegular } from "@fluentui/react-icons";
 

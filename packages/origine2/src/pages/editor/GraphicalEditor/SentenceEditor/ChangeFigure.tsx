@@ -18,8 +18,10 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { OptionCategory } from "../components/OptionCategory";
+import { eventBus } from "@/utils/eventBus";
+import { AssetPreview } from "../components/AssetPreview";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -329,8 +331,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               target = "fig-center";
             }
           }
-          const newEffect = { target: target, transform: transform };
-          WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
+          EditorPreviewClient.setEffect({ target, transform });
         }}
         sentence={props.sentence}
         index={props.index}
@@ -338,19 +339,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       />
     </>;
   };
-
-  const shouldRenderBottomBar = useMemo(() => {
-    switch (panelType.value) {
-    // 效果编辑器需要底部栏
-    case "effect":
-      return true;
-    case "moreOptions":
-      return false;
-    default:
-      return false;
-    }
-  }, [panelType.value]);
-
 
   const renderEffectEditorBottomBar = () => {
     return <>
@@ -647,7 +635,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`关闭立绘`}>
+      <CommonOptions key="isNoDialog" title={t`立绘显示状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
             figureFile.set(t`选择立绘文件`);
@@ -656,7 +644,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           submit();
         }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
       </CommonOptions>
-      <CommonOptions key="clearFigure" title={t`清除立绘`}>
+      <CommonOptions key="clearFigure" title={t`立绘清除参数`}>
         <TerreToggle title="" onChange={(newValue) => {
           clear.set(newValue);
           submit();
@@ -664,8 +652,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t`立绘文件`}>
-          <>
-            {figureFile.value + "\u00a0\u00a0"}
+          <div className={styles.filePreviewRow}>
+            <AssetPreview basePath="figure" file={figureFile.value} />
+            <span>{figureFile.value}</span>
             <ChooseFile
               title={t`选择立绘文件`}
               basePath={['figure']}
@@ -676,7 +665,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               }}
               extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? []]}
             />
-          </>
+          </div>
         </CommonOptions>}
       <CommonOptions title={t`z-index`} key="z-index">
         <input value={zIndex.value}
@@ -753,8 +742,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={() => {
-          panelType.set("effect");
-          updateExpand(props.index);
+          eventBus.emit('editor:open-global-terre-panel', {
+            title: t`效果编辑器`,
+            children: renderEffectEditor(),
+            bottomBarChildren: renderEffectEditorBottomBar(),
+          });
         }}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
       {shouldRenderMoreOptions && (
@@ -765,22 +757,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           }}>{t`编辑更多选项`}</Button>
         </CommonOptions>
       )}
-      <TerrePanel
-        title={panelType.value === "effect" ? t`效果编辑器` : t`更多选项`}
+      {panelType.value === "moreOptions" && <TerrePanel
+        title={t`更多选项`}
         sentenceIndex={props.index}
-        bottomBarChildren={shouldRenderBottomBar ? renderEffectEditorBottomBar() : undefined}
       >
-        {(() => {
-          switch (panelType.value) {
-          case "effect":
-            return renderEffectEditor();
-          case "moreOptions":
-            return renderMoreOptions();
-          default:
-            return null;
-          }
-        })()}
-      </TerrePanel>
+        {renderMoreOptions()}
+      </TerrePanel>}
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle
           title=""
@@ -792,6 +776,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           offText={t`本句执行后等待`} isChecked={isGoNext.value}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

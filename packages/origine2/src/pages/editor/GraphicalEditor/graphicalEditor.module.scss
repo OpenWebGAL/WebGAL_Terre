@@ -132,6 +132,24 @@
   visibility: hidden;
 }
 
+.nextChain {
+  position: absolute;
+  z-index: 2;
+  left: 6px;
+  top: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--primary);
+  pointer-events: none;
+}
+
+.nextChain svg {
+  transform: scaleX(-1);
+}
+
 .addForwardAreaButtonGroup {
   position: absolute;
   top: -11.5px;

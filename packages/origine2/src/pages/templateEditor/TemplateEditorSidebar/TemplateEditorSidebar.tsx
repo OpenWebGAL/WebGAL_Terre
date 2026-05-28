@@ -18,7 +18,7 @@ import TemplateConfigDialog from './TemplateConfigDialog';
 import {PlugConnected20Regular, Settings20Regular, Textbox20Regular, TextboxCheckmark20Regular} from "@fluentui/react-icons";
 import { createId } from '@/utils/createId';
 import { AppSettingsButton } from '@/components/AppSettings/AppSettingsDialog';
-import { WsUtil } from '@/utils/wsUtil';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 
 export default function TemplateEditorSidebar() {
   const templateDir = useEditorStore.use.subPage();
@@ -135,7 +135,7 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
   const toggleTextReadMode = () => {
     const nextMode = !isTextReadMode;
     setIsTextReadMode(nextMode);
-    WsUtil.sendTextReadModeCommand(nextMode);
+    EditorPreviewClient.setTextReadMode(nextMode);
   };
 
   return (

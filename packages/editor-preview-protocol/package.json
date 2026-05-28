@@ -1,0 +1,16 @@
+{
+  "name": "@webgal/editor-preview-protocol",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MPL-2.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json"
+  }
+}

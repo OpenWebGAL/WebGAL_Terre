@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import axios from 'axios';
 import { api } from '@/api';
-import { WsUtil } from '@/utils/wsUtil';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import useEditorStore from '@/store/useEditorStore';
 
 export default function TextEditor({ path }: { path: string }) {
@@ -21,7 +21,7 @@ export default function TextEditor({ path }: { path: string }) {
   const update = async (text: string) => {
     await api.assetsControllerEditTextFile({ textFile: text, path: path });
     await mutate(path);
-    WsUtil.sendTemplateRefetchCommand();
+    EditorPreviewClient.reloadTemplates();
   };
 
   const iframeRef = useRef<HTMLIFrameElement>(null);

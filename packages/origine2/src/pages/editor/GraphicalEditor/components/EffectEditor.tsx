@@ -17,7 +17,7 @@ import type {
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
 import useEditorStore from '@/store/useEditorStore';
-import { WsUtil } from '@/utils/wsUtil';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import { eventBus } from '@/utils/eventBus';
 import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 
@@ -466,7 +466,11 @@ export function EffectEditor(props: {
   useEffect(() => {
     const lineContent = sentenceToRawLine(props.sentence);
     if (lineContent.startsWith("changeFigure") || lineContent.startsWith("setTransform")) {
-      WsUtil.sendSyncCommand(props.targetPath, props.index, lineContent);
+      EditorPreviewClient.sendSyncScene({
+        scenePath: props.targetPath,
+        lineNumber: props.index,
+        lineCommandString: lineContent,
+      });
       eventBus.emit('editor:pixi-sync-command', {
         targetPath: props.targetPath,
         lineNumber: props.index,
