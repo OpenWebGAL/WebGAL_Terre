@@ -72,13 +72,17 @@ export function parseFigureCommand(line: string) {
 export async function SetFtoChangeF(target: string, targetPath: string): Promise<string> {
   const sceneTXT = await GetSceneTXT(targetPath);
   const lines = sceneTXT.split('\n');
+  const list = [];
   for (const line of lines) {
     const match = line.match(/-id=([^\s;]+)/);
     if (match && match[1] === target) {
-      return line.trim();
+      list.push(line.trim());
     }
   }
-  throw new Error('未找到对应的 changeFigure 语句');
+  if (list.length === 0) {
+    throw new Error('未找到对应的 changeFigure 语句');
+  }
+  return list.pop()!;
 }
 
 /**
