@@ -200,7 +200,9 @@ export class LogicalStaticController {
   }
 
   private isGameProjectFile(requestPath: string) {
-    return requestPath === 'game' || requestPath.startsWith('game/');
+    return ['game', 'lib'].some(
+      (dir) => requestPath === dir || requestPath.startsWith(`${dir}/`),
+    );
   }
 
   private safeJoin(root: string, relativePath: string) {

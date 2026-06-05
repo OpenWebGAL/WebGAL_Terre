@@ -42,6 +42,13 @@ describe('LogicalStaticController', () => {
       'Disk read failed',
     );
   });
+
+  it('treats game lib files as game project files', () => {
+    expect(isGameProjectFile(controller, 'lib')).toBe(true);
+    expect(isGameProjectFile(controller, 'lib/live2dcubismcore.min.js')).toBe(
+      true,
+    );
+  });
 });
 
 function sendFile(
@@ -54,4 +61,15 @@ function sendFile(
       sendFile(filePath: string, res: { sendFile: jest.Mock }): Promise<void>;
     }
   ).sendFile(filePath, res);
+}
+
+function isGameProjectFile(
+  controller: LogicalStaticController,
+  requestPath: string,
+) {
+  return (
+    controller as unknown as {
+      isGameProjectFile(requestPath: string): boolean;
+    }
+  ).isGameProjectFile(requestPath);
 }
