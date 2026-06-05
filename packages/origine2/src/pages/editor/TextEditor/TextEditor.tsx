@@ -14,6 +14,7 @@ import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
 import { useValue } from "@/hooks/useValue";
+import { createSceneInsight } from "@/utils/sceneInsight";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -117,6 +118,7 @@ export default function TextEditor(props: ITextEditorProps) {
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value || value === '') currentText.current = value;
     eventBus.emit('editor:update-scene', { scene: currentText.current });
+    emitSceneInsight(currentText.current);
     api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
       const targetValue = currentText.current.split('\n')[lineNumber - 1];
       WsUtil.sendSyncCommand(target?.path ?? '', lineNumber, targetValue);
@@ -135,6 +137,7 @@ export default function TextEditor(props: ITextEditorProps) {
         }
         currentText.current = dataStr;
         eventBus.emit('editor:update-scene', { scene: dataStr });
+        emitSceneInsight(dataStr);
         const model = editorRef.current?.getModel();
         model?.applyEdits([
           {
@@ -148,6 +151,15 @@ export default function TextEditor(props: ITextEditorProps) {
         editorRef?.current?.setPosition(targetPosition);
         editorRef?.current?.revealPositionInCenterIfOutsideViewport(targetPosition, monaco.editor.ScrollType.Immediate);
       });
+  }
+
+  function emitSceneInsight(scene: string) {
+    eventBus.emit('editor:update-scene-insight', {
+      scene,
+      sceneName,
+      targetPath: props.targetPath,
+      insight: createSceneInsight(scene, sceneName, props.targetPath),
+    });
   }
 
   useEffect(() => {

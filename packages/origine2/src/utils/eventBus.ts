@@ -13,6 +13,12 @@ type IframeEvents = {
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type EditorEvents = {
   'editor:update-scene': { scene: string };
+  'editor:update-scene-insight': {
+    scene: string;
+    sceneName: string;
+    targetPath: string;
+    insight: import('@/utils/sceneInsight').SceneInsight;
+  };
   'editor:topbar-add-sentence': { sentence: string };
   'editor:pixi-sync-command': {
     targetPath: string;
