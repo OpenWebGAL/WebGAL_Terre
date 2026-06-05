@@ -1,5 +1,4 @@
 // 基础工具函数集合
-import { MutableRefObject } from 'react';
 import axios from 'axios';
 
 // 预览窗口的默认尺寸（游戏引擎的标准分辨率）
@@ -13,11 +12,11 @@ const previewWindow = {
  * @param parents - 父元素的 ref
  * @returns 窗口尺寸对象 { width, height }
  */
-export const getParentWindowSize = (parents?: MutableRefObject<HTMLElement | null> | null) => {
-  if (parents?.current instanceof HTMLElement) {
+export const getParentWindowSize = (parent?: HTMLElement | null) => {
+  if (parent instanceof HTMLElement) {
     return {
-      width: parents.current.clientWidth,
-      height: parents.current.clientHeight,
+      width: parent.clientWidth,
+      height: parent.clientHeight,
     };
   }
   // 如果没有父元素，使用默认预览窗口尺寸作为父窗口尺寸
@@ -27,14 +26,11 @@ export const getParentWindowSize = (parents?: MutableRefObject<HTMLElement | nul
 /**
  * 将预览窗口的像素坐标转换为操控窗口的像素坐标（保持视觉比例）
  * @param previewPixel - 预览窗口中的坐标 { x, y }
- * @param parents - 父元素的 ref
+ * @param parent - 父元素
  * @returns 操控窗口中的坐标 { x, y }
  */
-export const convertPreviewToControl = (
-  previewPixel: { x: number; y: number },
-  parents?: MutableRefObject<HTMLElement | null> | null,
-) => {
-  const parentWindow = getParentWindowSize(parents);
+export const convertPreviewToControl = (previewPixel: { x: number; y: number }, parent?: HTMLElement | null) => {
+  const parentWindow = getParentWindowSize(parent);
   return {
     x: (previewPixel.x / previewWindow.width) * parentWindow.width,
     y: (previewPixel.y / previewWindow.height) * parentWindow.height,
@@ -44,14 +40,11 @@ export const convertPreviewToControl = (
 /**
  * 将操控窗口的像素坐标转换为预览窗口的像素坐标（保持视觉比例）
  * @param parentPixel - 操控窗口中的坐标 { x, y }
- * @param parents - 父元素的 ref
+ * @param parent - 父元素
  * @returns 预览窗口中的坐标 { x, y }
  */
-export const convertControlToPreview = (
-  parentPixel: { x: number; y: number },
-  parents?: MutableRefObject<HTMLElement | null> | null,
-) => {
-  const parentWindow = getParentWindowSize(parents);
+export const convertControlToPreview = (parentPixel: { x: number; y: number }, parent?: HTMLElement | null) => {
+  const parentWindow = getParentWindowSize(parent);
   return {
     x: (parentPixel.x / parentWindow.width) * previewWindow.width,
     y: (parentPixel.y / parentWindow.height) * previewWindow.height,
@@ -99,11 +92,12 @@ export function calculateScaledImageSize(
  * 将编辑器语句中的图片路径转换为实际的文件路径
  * @param command - 命令字符串（如 "changeFigure:image.png"）
  * @param targetPath - 目标路径
+ * @param directory - 图片所在目录
  * @returns 文件路径或 null
  */
-export function convertCommandPathToFilePath(fileName: string, targetPath: string): string {
+export function convertCommandPathToFilePath(directory: string, fileName: string, targetPath: string): string {
   const gamePath = targetPath.match(/(games\/[^/]+)/)?.[1]; // 提取游戏目录路径
-  return fileName && gamePath ? `${gamePath}/game/figure/${fileName}` : '';
+  return fileName && gamePath ? `${gamePath}/game/${directory}/${fileName}` : '';
 }
 
 /**
@@ -117,18 +111,14 @@ export async function GetSceneTXT(path: string): Promise<string> {
 /**
  * 根据方向计算 X 轴偏移量（用于定位图形）
  * @param direction - 方向 ('center', 'right', 'left')
- * @param parents - 父元素的 ref
+ * @param parent - 父元素
  * @param imageWidth - 图片宽度
  * @returns X 轴偏移量
  */
-export function ToXOffset(
-  direction: string,
-  parents?: MutableRefObject<HTMLElement | null> | null,
-  imageWidth = 0,
-): number {
-  const parentWindow = getParentWindowSize(parents);
+export function ToXOffset(direction: string, parent?: HTMLElement | null, imageWidth = 0): number {
+  const parentWindow = getParentWindowSize(parent);
   let xOffset = 0;
-  if (direction === 'center') {
+  if (direction === 'center' || direction === '') {
     xOffset = parentWindow.width / 2 - imageWidth / 2;
   } else if (direction === 'right') {
     xOffset = parentWindow.width - imageWidth;

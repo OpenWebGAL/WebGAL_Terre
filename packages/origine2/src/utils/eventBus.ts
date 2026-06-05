@@ -29,6 +29,7 @@ type EditorEvents = {
   };
   'editor:sync-current-line': null;
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
+  'editor:sync-dragger': { x: number; y: number; scaleX: number; scaleY: number; rotation: number };
 };
 
 interface EditorPreviewEvents {
@@ -37,9 +38,6 @@ interface EditorPreviewEvents {
   'editor-preview:fast-preview-timeout': { payload: FastPreviewTimeoutPayload };
 }
 
-type Events = Record<PropertyKey, unknown> &
-  IframeEvents &
-  EditorEvents &
-  EditorPreviewEvents;
+type Events = Record<PropertyKey, unknown> & IframeEvents & EditorEvents & EditorPreviewEvents;
 
 export const eventBus = mitt<Events>();

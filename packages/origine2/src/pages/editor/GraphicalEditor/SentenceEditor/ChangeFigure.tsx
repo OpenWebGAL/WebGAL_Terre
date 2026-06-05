@@ -61,7 +61,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
   const [spineSkinsList, setSpineSkinsList] = useState<string[]>([]);
   const [isSpineJsonFormat, setIsSpineJsonFormat] = useState(false);
-  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
 
   const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
   const currentExpression = useValue(

@@ -1,33 +1,55 @@
-import React, { useRef, useState, useEffect, MutableRefObject } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Moveable from 'react-moveable';
 import { eventBus } from '@/utils/eventBus';
 import { api } from '@/api';
 import {
   calculateScaledImageSize,
   convertPreviewToControl,
-  convertControlToPreview,
   radiansToDegrees,
-  degreesToRadians,
   convertCommandPathToFilePath,
   getLive2dSize,
 } from './baseUtils';
-import {
-  parseFigureCommand,
-  updateFrameState,
-  // parseSetTransformCommand,
-  GetImgPathAndDirection,
-} from './dragStartUtils';
-import { syncCommandToFile, generateMergeTransform } from './dragEndUtils';
+import { parseFigureCommand, GetImgPathAndDirection } from './dragStartUtils';
+import { getFigureTransformFromFrameInfo } from './dragEndUtils';
 import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
+import { useValue } from '@/hooks/useValue';
+import { ToXOffset } from './baseUtils';
+import useEditorStore from '@/store/useEditorStore';
 
 interface TransformableBoxProps {
-  parents?: MutableRefObject<HTMLElement | null> | null;
-  onChange?: (state: { x: number; y: number; width: number; height: number; rotation: number }) => void;
+  parent: HTMLElement;
+  sentenceInfo: {
+    scenePath: string;
+    lineNumber: number;
+    lineContent: string;
+    lineSentence: ISentence;
+  };
+  onDragging?: (transform: {
+    position?: {
+      x?: number;
+      y?: number;
+    };
+    scale?: {
+      x?: number;
+      y?: number;
+    };
+    rotation?: number;
+  }) => void;
+  onDragEnd?: () => void;
 }
 
-const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onChange }) => {
-  // 组件状态
-  const [frame, setFrame] = useState({
+const TransformableBox: React.FC<TransformableBoxProps> = ({ parent, sentenceInfo, onDragging, onDragEnd }) => {
+  const moveableRef = useRef<Moveable>(null);
+  // 拖拽框状态
+  const frameState = useValue({
+    translate: [0, 0] as [number, number],
+    rotate: 0,
+    scale: [1, 1] as [number, number],
+    width: 200,
+    height: 200,
+  });
+  // 临时状态
+  const tempState = useValue({
     translate: [0, 0] as [number, number],
     rotate: 0,
     scale: [1, 1] as [number, number],
@@ -36,262 +58,251 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parents = null, onC
   });
   const targetRef = useRef<HTMLDivElement | null>(null);
   const [keepRatio, setKeepRatio] = useState(true); // 是否保持宽高比
-  const [isDisplay, setIsDisplay] = useState(false); // 控制框是否显示
   const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
-  const commandContextRef = useRef<{
-    targetPath: string;
-    lineNumber: number;
-    lineContent: string;
-    lineSentence: ISentence | null;
-    direction: string;
+  const lastParentSize = useRef<{ width: number; height: number } | null>(null); // 记录这个，当父元素宽度变化时使用
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
+  const infoRef = useRef<{
+    sentence: { scenePath: string; lineNumber: number; lineContent: string; lineSentence: ISentence | null };
+    transformObj: { position: { x: number; y: number }; rotation: number; scale: { x: number; y: number } };
+    figure: { fileName: string; type: string; direction: string; width: number; height: number };
   } | null>(null);
-  const lastParentSize = useRef<{ width: number; height: number } | null>(null);
-
-  // 监听 点击事件
+  // 信息录入与初始位置设置
   useEffect(() => {
-    function handlePixiSyncCommand(event: {
-      targetPath: string;
-      lineNumber: number;
-      lineContent: string;
-      lineSentence: ISentence | null;
-    }) {
-      if (event.lineContent.startsWith('changeFigure') && !/changeFigure:\s*none\b/.test(event.lineContent)) {
-        ChangeFigure(event);
-      } else if (event.lineContent.startsWith('setTransform')) {
-        SetTransform(event);
-      } else {
-        setIsDisplay(false);
+    infoRef.current = {
+      sentence: sentenceInfo,
+      transformObj: parseFigureCommand(sentenceInfo.lineContent).transformObj,
+      figure: {
+        fileName: '',
+        type: '',
+        direction: '',
+        width: 0,
+        height: 0,
+      },
+    };
+    getFileNameAndDirection(sentenceInfo).then(({ fileName, direction }) => {
+      const directory = sentenceInfo.lineSentence.commandRaw === 'changeBg' ? 'background' : 'figure';
+      getSize(directory, fileName, sentenceInfo.scenePath).then(([width, height]) => {
+        infoRef.current!.figure = {
+          fileName,
+          type: fileName.endsWith('.json') ? 'json' : 'image',
+          direction,
+          width,
+          height,
+        };
+      });
+    });
+  }, []);
+
+  // 计算出拖拽框的位置并更新
+  const updateFrame = useCallback(() => {
+    const position = infoRef.current?.transformObj.position
+      ? convertPreviewToControl(infoRef.current.transformObj.position, parent)
+      : { x: 0, y: 0 };
+
+    const scaledSize = calculateScaledImageSize(
+      infoRef.current?.figure.width ?? 0,
+      infoRef.current?.figure.height ?? 0,
+    );
+    const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parent);
+
+    frameState.set({
+      ...frameState.value,
+      translate: [
+        position.x + ToXOffset(infoRef.current!.figure.direction ?? '', parent, size.x ?? frameState.value.width),
+        position.y,
+      ],
+      scale: [infoRef.current!.transformObj.scale.x, infoRef.current!.transformObj.scale.y],
+      rotate: radiansToDegrees(infoRef.current!.transformObj.rotation),
+      width: size.x,
+      height: size.y,
+    });
+    tempState.set(frameState.value);
+  }, []);
+  // 刷新
+  const refresh = useCallback(() => {
+    if (moveableRef.current) {
+      moveableRef.current.updateRect();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isWindowAdjustment) {
+      updateFrame();
+      setRemountKey((prev) => prev + 1); // 强制重新挂载 Moveable 以适应新的窗口调整
+    }
+  }, [isWindowAdjustment]);
+
+  // 拖拽框移动
+  useEffect(() => {
+    const handleSyncDragger = (transform: {
+      x: number;
+      y: number;
+      scaleX: number;
+      scaleY: number;
+      rotation: number;
+    }) => {
+      if (!infoRef.current) {
         return;
       }
-    }
-    eventBus.on('editor:pixi-sync-command', handlePixiSyncCommand);
+      infoRef.current.transformObj = {
+        position: {
+          x: transform.x,
+          y: transform.y,
+        },
+        scale: {
+          x: transform.scaleX,
+          y: transform.scaleY,
+        },
+        rotation: transform.rotation,
+      };
+      updateFrame();
+      refresh();
+    };
+    eventBus.on('editor:sync-dragger', handleSyncDragger);
     return () => {
-      eventBus.off('editor:pixi-sync-command', handlePixiSyncCommand);
+      eventBus.off('editor:sync-dragger', handleSyncDragger);
     };
   }, []);
-  // 主要逻辑
-  const ChangeFigure = (event: {
-    targetPath: string;
-    lineNumber: number;
-    lineContent: string;
-    lineSentence: ISentence | null;
-  }) => {
-    let fileName = event.lineSentence?.content || '';
-    if (fileName === 'none' || fileName === '') {
-      return;
-    }
-
-    if (!fileName.endsWith('.json')) {
-      const filePath = convertCommandPathToFilePath(event.lineSentence!.content, event.targetPath) || ''; // 提取图片路径
-      api.assetsControllerGetImageDimensions(filePath).then((res) => {
-        const scaledSize = calculateScaledImageSize(res.data.width, res.data.height); // 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
-        const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-        const { direction, transformObj } = parseFigureCommand(event.lineContent);
-        commandContextRef.current = { ...event, direction };
-        setIsDisplay(true);
-        updateFrame(direction, transformObj, size.x, size.y); // !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
-        setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
-      });
-    } else {
-      getLive2dSize().then(({ width, height }) => {
-        const scaledSize = { width, height }; // 为了适配游戏引擎里面原本的逻辑，让图片能够完整地被容纳。
-        const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-        const { direction, transformObj } = parseFigureCommand(event.lineContent);
-        commandContextRef.current = { ...event, direction };
-        setIsDisplay(true);
-        updateFrame(direction, transformObj, size.x, size.y); // !!!注意，这里不管高和宽怎么变都不影响最终的变换结果，因为最终影响图形高宽的元素是缩放。
-        setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
-      });
-    }
-  };
-
-  const SetTransform = (event: {
-    targetPath: string;
-    lineNumber: number;
-    lineContent: string;
-    lineSentence: ISentence | null;
-  }) => {
-    if (!event.lineSentence) {
-      return;
-    }
-    let transformObj: any = {};
-    try {
-      transformObj = JSON.parse(event.lineSentence.content === '' ? '{}' : event.lineSentence.content);
-    } catch (e) {
-      console.error('Failed to parse setTransform content:', event.lineSentence.content, e);
-      return;
-    }
-    const target = event.lineSentence.args.find((arg) => arg.key === 'target')?.value;
-    GetImgPathAndDirection(target as string, event.targetPath).then(({ imgPath, direction }) => {
-      if (imgPath !== '' && !imgPath.endsWith('.json')) {
-        api.assetsControllerGetImageDimensions(imgPath).then((imgRes) => {
-          const scaledSize = calculateScaledImageSize(imgRes.data.width, imgRes.data.height);
-          const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-          commandContextRef.current = { ...event, direction };
-          setIsDisplay(true);
-          updateFrame(direction, transformObj, size.x, size.y);
-          setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
-        });
-      } else if (imgPath !== '' && imgPath.endsWith('.json')) {
-        getLive2dSize().then(({ width, height }) => {
-          const scaledSize = { width, height };
-          const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parents);
-          commandContextRef.current = { ...event, direction };
-          setIsDisplay(true);
-          updateFrame(direction, transformObj, size.x, size.y);
-          setRemountKey((prevKey) => prevKey + 1); // 强制重新挂载 Moveable 以更新位置
-        });
-      }
-    });
-  };
 
   // 监听父元素宽度变化，按比例自动刷新
   useEffect(() => {
-    if (!parents?.current || !isDisplay) return;
-    const parentEl = parents.current;
     const resizeObserver = new ResizeObserver(() => {
       const prev = lastParentSize.current;
-      const newSize = { width: parentEl.clientWidth, height: parentEl.clientHeight };
+      const newSize = { width: parent.clientWidth, height: parent.clientHeight };
 
       if (prev && prev.width > 0 && prev.height > 0) {
         const scaleX = newSize.width / prev.width;
         const scaleY = newSize.height / prev.height;
         // 按比例更新 frame 状态，包括位置和尺寸
-        setFrame((f) => ({
-          ...f,
-          translate: [f.translate[0] * scaleX, f.translate[1] * scaleY],
-          width: f.width * scaleX,
-          height: f.height * scaleY,
-        }));
-        setRemountKey((k) => k + 1); // 强制刷新 Moveable
+        frameState.set({
+          ...frameState.value,
+          translate: [frameState.value.translate[0] * scaleX, frameState.value.translate[1] * scaleY],
+          width: frameState.value.width * scaleX,
+          height: frameState.value.height * scaleY,
+        });
+        refresh();
       }
       lastParentSize.current = newSize;
     });
 
     // 初始记录
-    lastParentSize.current = { width: parentEl.clientWidth, height: parentEl.clientHeight };
-    resizeObserver.observe(parentEl);
+    lastParentSize.current = { width: parent.clientWidth, height: parent.clientHeight };
+    resizeObserver.observe(parent);
 
     return () => resizeObserver.disconnect();
-  }, [isDisplay]);
-
-  // 将字符串解析出来的数据应用到拖拽框上
-  // eslint-disable-next-line max-params
-  function updateFrame(direction: string, transformObj: any, width?: number, height?: number) {
-    updateFrameState(direction, transformObj, width, height, parents, setFrame);
-  }
-
-  // 将当前控制框的数据转换回ChangeFigure
-  function FrameToChangeFigure(LineContent: string | undefined): string {
-    const baseCommand = LineContent?.replace(/\s*-transform=\{[\s\S]*\};?/, '').trim() || '';
-    const { direction, transformObj } = parseFigureCommand(LineContent || '');
-    const transformString = JSON.stringify(generateMergeTransform(transformObj, direction, frame, parents));
-    if (transformString) {
-      return `${baseCommand} -transform=${transformString}`;
-    }
-    return baseCommand;
-  }
-
-  // 将当前控制框的数据转换回setTransform
-  function FrameToSetTransform(
-    LineContent: string | undefined,
-    direction: string,
-    lineSentence: ISentence | null | undefined,
-  ): string {
-    const tailCommand = lineSentence?.args.map(({ key, value }) => ` -${key}=${value}`).join('') || '';
-    const transformObj = JSON.parse(!lineSentence || lineSentence?.content === '' ? '{}' : lineSentence.content);
-    const mergedTransformObj = generateMergeTransform(transformObj, direction, frame, parents);
-    return 'setTransform:' + JSON.stringify(mergedTransformObj) + (tailCommand ? ` ${tailCommand}` : '');
-  }
+  }, []);
 
   return (
-    <div style={{ pointerEvents: isDisplay ? 'auto' : 'none' }}>
+    <div
+      style={{
+        display: isWindowAdjustment ? 'block' : 'none',
+        pointerEvents: isWindowAdjustment ? 'auto' : 'none',
+      }}
+    >
       {/* 占位的div */}
       <div
         ref={targetRef}
         style={{
-          width: `${frame.width}px`,
-          height: `${frame.height}px`,
-          transform: `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg) scale(${frame.scale[0]}, ${frame.scale[1]})`,
+          width: `${frameState.value.width}px`,
+          height: `${frameState.value.height}px`,
+          transform: `translate(${frameState.value.translate[0]}px, ${frameState.value.translate[1]}px) rotate(${frameState.value.rotate}deg) scale(${frameState.value.scale[0]}, ${frameState.value.scale[1]})`,
         }}
       >
         <div />
       </div>
-      {isDisplay && (
-        <Moveable
-          key={remountKey}
-          target={targetRef}
-          origin={false}
-          draggable={true}
-          scalable={true}
-          rotatable={true}
-          throttleDrag={0}
-          throttleScale={0}
-          throttleRotate={0}
-          keepRatio={keepRatio}
-          rotationPosition="right"
-          // 缩放开始时，根据拖动方向动态设置 keepRatio
-          onScaleStart={({ direction }) => {
-            const isCorner = Math.abs(direction[0]) === 1 && Math.abs(direction[1]) === 1;
-            setKeepRatio(isCorner);
-          }}
-          // 拖拽事件
-          onDrag={({ beforeTranslate }) => {
-            const translate = [beforeTranslate[0], beforeTranslate[1]] as [number, number];
-            setFrame((f) => ({ ...f, translate }));
-            onChange?.({
-              x: translate[0],
-              y: translate[1],
-              width: frame.width,
-              height: frame.height,
-              rotation: frame.rotate,
-            });
-          }}
-          // 缩放事件
-          onScale={({ scale, drag }) => {
-            const translate = drag.beforeTranslate as [number, number];
-            const scaleArray = [scale[0], scale[1]] as [number, number];
-            setFrame((f) => ({ ...f, scale: scaleArray, translate }));
-            const actualWidth = frame.width * scale[0];
-            const actualHeight = frame.height * scale[1];
-            onChange?.({
-              x: translate[0],
-              y: translate[1],
-              width: actualWidth,
-              height: actualHeight,
-              rotation: frame.rotate,
-            });
-          }}
-          // 旋转事件 - 同步旋转时的位置变化
-          onRotate={({ beforeRotate, drag }) => {
-            const translate = drag.beforeTranslate as [number, number];
-            setFrame((f) => ({ ...f, rotate: beforeRotate, translate }));
-            onChange?.({
-              x: translate[0],
-              y: translate[1],
-              width: frame.width,
-              height: frame.height,
-              rotation: beforeRotate,
-            });
-          }}
-          onRenderEnd={() => {
-            if (commandContextRef.current?.lineContent.startsWith('changeFigure')) {
-              syncCommandToFile(commandContextRef.current, FrameToChangeFigure(commandContextRef.current?.lineContent));
-            } else if (commandContextRef.current?.lineContent.startsWith('setTransform')) {
-              syncCommandToFile(
-                commandContextRef.current,
-                FrameToSetTransform(
-                  commandContextRef.current?.lineContent,
-                  commandContextRef.current.direction,
-                  commandContextRef.current.lineSentence,
-                ),
-              );
-            }
-          }}
-        />
-      )}
+      <Moveable
+        ref={moveableRef}
+        key={remountKey}
+        target={targetRef}
+        origin={false}
+        draggable={true}
+        scalable={true}
+        rotatable={true}
+        throttleDrag={0}
+        throttleScale={0}
+        throttleRotate={0}
+        keepRatio={keepRatio}
+        rotationPosition="right"
+        // 拖拽事件
+        onDrag={({ beforeTranslate }) => {
+          const translate = [beforeTranslate[0], beforeTranslate[1]] as [number, number];
+          tempState.set({ ...tempState.value, translate });
+          onDragging?.(
+            getFigureTransformFromFrameInfo(infoRef.current?.figure.direction ?? '', tempState.value, parent),
+          );
+        }}
+        // 缩放开始时，根据拖动方向动态设置 keepRatio
+        onScaleStart={({ direction }) => {
+          const isCorner = Math.abs(direction[0]) === 1 && Math.abs(direction[1]) === 1;
+          setKeepRatio(isCorner);
+        }}
+        onScale={({ scale, drag }) => {
+          const translate = drag.beforeTranslate as [number, number];
+          const scaleArray = [scale[0], scale[1]] as [number, number];
+          tempState.set({ ...tempState.value, scale: scaleArray, translate });
+          onDragging?.(
+            getFigureTransformFromFrameInfo(infoRef.current?.figure.direction ?? '', tempState.value, parent),
+          );
+        }}
+        // 旋转事件 - 同步旋转时的位置变化
+        onRotate={({ beforeRotation, drag }) => {
+          const translate = drag.beforeTranslate as [number, number];
+          tempState.set({ ...tempState.value, rotate: beforeRotation, translate });
+          onDragging?.(
+            getFigureTransformFromFrameInfo(infoRef.current?.figure.direction ?? '', tempState.value, parent),
+          );
+        }}
+        // 渲染结束事件
+        onRenderEnd={() => {
+          onDragEnd?.();
+        }}
+      />
     </div>
   );
 };
 
 export default TransformableBox;
+
+const getFileNameAndDirection = async (event: {
+  scenePath: string;
+  lineNumber: number;
+  lineContent: string;
+  lineSentence: ISentence;
+}) => {
+  if (event.lineContent.startsWith('changeFigure') && !/changeFigure:\s*none/.test(event.lineContent)) {
+    const fileName = event.lineSentence?.content || '';
+    const direction = parseFigureCommand(event.lineContent).direction;
+    return { fileName, direction };
+  }
+  if (event.lineContent.startsWith('changeBg') && !/changeBg:\s*none/.test(event.lineContent)) {
+    const fileName = event.lineSentence?.content || '';
+    const direction = parseFigureCommand(event.lineContent).direction;
+    return { fileName, direction };
+  }
+  if (event.lineContent.startsWith('setTransform')) {
+    const target = event.lineSentence?.args.find((arg) => arg.key === 'target')?.value;
+    const res = await GetImgPathAndDirection(target as string, event.scenePath, event.lineNumber);
+    return { fileName: res.fileName, direction: res.direction };
+  }
+  if (event.lineContent.startsWith('setTempAnimation')) {
+    const target = event.lineSentence?.args.find((arg) => arg.key === 'target')?.value;
+    const res = await GetImgPathAndDirection(target as string, event.scenePath, event.lineNumber);
+    return { fileName: res.fileName, direction: res.direction };
+  }
+  return { fileName: '', direction: '' };
+};
+
+const getSize = async (directory: string, fileName: string, scenePath: string) => {
+  if (fileName === 'none' || fileName === '') {
+    return [0, 0];
+  }
+  if (!fileName.endsWith('.json')) {
+    const filePath = convertCommandPathToFilePath(directory, fileName, scenePath) || ''; // 提取图片路径
+    console.log('@@@filePath', filePath);
+    const res = await api.assetsControllerGetImageDimensions(filePath);
+    return [res.data.width, res.data.height];
+  } else {
+    const { width, height } = await getLive2dSize();
+    return [width, height];
+  }
+};

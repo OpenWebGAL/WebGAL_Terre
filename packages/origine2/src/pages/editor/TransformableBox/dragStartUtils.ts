@@ -66,14 +66,15 @@ export function parseFigureCommand(line: string) {
 /**
  * 根据 setTransform 寻找到对应的 changeFigure 语句
  * @param target - 目标值
- * @param targetPath - 目标文件路径
+ * @param scenePath - 场景文件路径
  * @returns changeFigure 语句
  */
-export async function SetFtoChangeF(target: string, targetPath: string): Promise<string> {
-  const sceneTXT = await GetSceneTXT(targetPath);
+export async function SetFtoChangeF(target: string, scenePath: string, lineNumber: number): Promise<string> {
+  const sceneTXT = await GetSceneTXT(scenePath);
   const lines = sceneTXT.split('\n');
   const list = [];
-  for (const line of lines) {
+  for (let i = 0; i < lineNumber; i++) {
+    const line = lines[i];
     const match = line.match(/-id=([^\s;]+)/);
     if (match && match[1] === target) {
       list.push(line.trim());
@@ -88,21 +89,23 @@ export async function SetFtoChangeF(target: string, targetPath: string): Promise
 /**
  * 根据 setTransform 语句获取图片路径和方位
  * @param target - 目标值
- * @param targetPath - 目标文件路径
+ * @param scenePath - 场景文件路径
+ * @param lineNumber - 行号
  * @returns 图片路径和方位
  */
 export async function GetImgPathAndDirection(
   target: string,
-  targetPath: string,
-): Promise<{ imgPath: string; direction: string }> {
-  const ChangeF = await SetFtoChangeF(target, targetPath);
+  scenePath: string,
+  lineNumber: number,
+): Promise<{ fileName: string; imgPath: string; direction: string }> {
+  const ChangeF = await SetFtoChangeF(target, scenePath, lineNumber);
   const { direction } = parseFigureCommand(ChangeF);
   const fileName = ChangeF.replace(/changeFigure:/, '')
     .split(' -')[0]
     .split(';')[0]
     .trim(); // 提取文件名部分
-  const imgPath = convertCommandPathToFilePath(fileName, targetPath);
-  return { imgPath, direction };
+  const imgPath = convertCommandPathToFilePath('figure', fileName, scenePath);
+  return { fileName, imgPath, direction };
 }
 
 /**
@@ -111,7 +114,7 @@ export async function GetImgPathAndDirection(
  * @param transformObj - 变换对象
  * @param width - 可选宽度
  * @param height - 可选高度
- * @param parents - 父元素的 ref
+ * @param parent - 父元素
  * @param setFrame - setFrame 函数
  */
 // eslint-disable-next-line max-params
@@ -120,16 +123,16 @@ export function updateFrameState(
   transformObj: any,
   width?: number,
   height?: number,
-  parents?: MutableRefObject<HTMLElement | null> | null,
+  parent?: HTMLElement | null,
   setFrame?: (updater: (prev: any) => any) => void,
 ) {
   if (!setFrame) return;
 
-  const position = transformObj?.position ? convertPreviewToControl(transformObj.position, parents) : { x: 0, y: 0 };
+  const position = transformObj?.position ? convertPreviewToControl(transformObj.position, parent) : { x: 0, y: 0 };
 
   setFrame((prev) => ({
     ...prev,
-    translate: [position.x + ToXOffset(direction, parents, width || prev.width), position.y],
+    translate: [position.x + ToXOffset(direction, parent, width || prev.width), position.y],
     scale: [transformObj?.scale?.x ?? 1, transformObj?.scale?.y ?? 1],
     rotate: radiansToDegrees(transformObj?.rotation ?? 0),
     width: width || prev.width,

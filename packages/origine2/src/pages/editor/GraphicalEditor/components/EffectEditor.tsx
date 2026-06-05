@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { ColorPicker, IColor } from '@fluentui/react';
-import { Button, Checkbox, Input, Slider } from '@fluentui/react-components';
+import { Button, Checkbox, Input, Slider, Switch } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import { debounce } from 'lodash';
 import { useValue } from '@/hooks/useValue';
@@ -20,6 +20,8 @@ import useEditorStore from '@/store/useEditorStore';
 import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import { eventBus } from '@/utils/eventBus';
 import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
+import { createPortal } from 'react-dom';
+import TransformableBox from '@/pages/editor/TransformableBox/TransformableBox';
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -104,6 +106,9 @@ const EffectInputField = memo(
     const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
     let [innerVal, setInnerVal] = useState((val ?? '').toString());
+    useEffect(() => {
+      setInnerVal((val ?? '').toString());
+    }, [val]);
     const config = effectConfig[fieldKey];
     const handleChange = useCallback(
       (value: string) => {
@@ -428,8 +433,6 @@ export function EffectEditor(props: {
 
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
   const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
-  const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
-  const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
 
   // 将 sentence 对象转换回原始命令行字符串
   const sentenceToRawLine = useCallback((sentence: ISentence): string => {
@@ -449,14 +452,9 @@ export function EffectEditor(props: {
     return base;
   }, []);
 
-  // 挂载时启用窗口调整，卸载时关闭
+  // 挂载时关闭拖拽框，卸载时也关闭
   useEffect(() => {
-    const lineContent = sentenceToRawLine(props.sentence);
-    if (lineContent.startsWith("changeFigure") || lineContent.startsWith("setTransform")) {
-      updateIsWindowAdjustment(true);
-      updateIsShowPreview(true);
-      updateIsEnableLivePreview(true);
-    }
+    updateIsWindowAdjustment(false);
     return () => {
       updateIsWindowAdjustment(false);
     };
@@ -465,7 +463,7 @@ export function EffectEditor(props: {
   // 当 sentence 变化时，同步拖拽框状态
   useEffect(() => {
     const lineContent = sentenceToRawLine(props.sentence);
-    if (lineContent.startsWith("changeFigure") || lineContent.startsWith("setTransform")) {
+    if (lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform')) {
       EditorPreviewClient.sendSyncScene({
         scenePath: props.targetPath,
         lineNumber: props.index,
@@ -479,8 +477,66 @@ export function EffectEditor(props: {
       });
     }
   }, [props.sentence, props.index, props.targetPath]);
+  // // 当立绘变换改变时，同步拖拽框与 input
+  useEffect(() => {
+    eventBus.emit('editor:sync-dragger', {
+      x: effectFields.value.x ?? 0,
+      y: effectFields.value.y ?? 0,
+      scaleX: effectFields.value.scaleX ?? 1,
+      scaleY: effectFields.value.scaleY ?? 1,
+      rotation: effectFields.value.rotation ?? 0,
+    });
+  }, [
+    effectFields.value.x,
+    effectFields.value.y,
+    effectFields.value.scaleX,
+    effectFields.value.scaleY,
+    effectFields.value.rotation,
+  ]);
   return (
     <>
+      <Switch
+        checked={isWindowAdjustment}
+        onChange={(_, checked) => {
+          updateIsWindowAdjustment(checked.checked);
+        }}
+        label={t`拖拽调整变换（建议打开快速预览效果）`}
+      />
+      {createPortal(
+        <TransformableBox
+          parent={document.getElementById('gamePreviewControl') as HTMLElement}
+          sentenceInfo={{
+            scenePath: props.targetPath,
+            lineNumber: props.index,
+            lineContent: sentenceToRawLine(props.sentence),
+            lineSentence: props.sentence,
+          }}
+          onDragging={(transform) => {
+            if (transform.position) {
+              if (transform.position.x !== undefined) {
+                updateField('x', transform.position.x);
+              }
+              if (transform.position.y !== undefined) {
+                updateField('y', transform.position.y);
+              }
+            }
+            if (transform.scale) {
+              if (transform.scale.x !== undefined) {
+                updateField('scaleX', transform.scale.x);
+              }
+              if (transform.scale.y !== undefined) {
+                updateField('scaleY', transform.scale.y);
+              }
+            }
+            updateField('rotation', transform.rotation);
+            update();
+          }}
+          onDragEnd={() => {
+            submit();
+          }}
+        />,
+        document.getElementById('gamePreviewControl') as HTMLElement,
+      )}
       {fieldGroups.map((group, index) => (
         <OptionCategory key={index + 1} title={group.title}>
           {index === 2 || index === 4 ? ( // 有拾色器的组
