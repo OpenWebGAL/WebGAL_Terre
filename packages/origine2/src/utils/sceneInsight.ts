@@ -152,7 +152,6 @@ const TERMINAL_COMMANDS = new Set(['end', 'changeScene']);
 const VARIABLE_WRITE_COMMANDS = new Set(['setVar']);
 const VARIABLE_CONDITION_COMMANDS = new Set(['if']);
 const RESERVED_WORDS = new Set(['true', 'false', 'null', 'undefined', 'and', 'or', 'not']);
-const VARIABLE_RE = /[A-Za-z_\u4e00-\u9fa5][\w\u4e00-\u9fa5]*/g;
 
 export function createSceneInsight(sceneText: string, sceneName: string, targetPath: string): SceneInsight {
   const lines = parseSceneLines(sceneText);
@@ -218,6 +217,10 @@ export function createSceneInsight(sceneText: string, sceneName: string, targetP
 }
 
 export function parseSceneLines(sceneText: string): ParsedSceneLine[] {
+  if (typeof sceneText !== 'string') {
+    return [];
+  }
+
   return sceneText.split(/\r?\n/).map((rawLine, index) => {
     const lineNumber = index + 1;
     const trimmed = rawLine.trim();
@@ -588,6 +591,7 @@ function validateAssets(context: SceneInsightBuildContext) {
 function validateFlow(context: SceneInsightBuildContext) {
   context.lines.forEach((line, index) => {
     if (!TERMINAL_COMMANDS.has(line.command)) return;
+    if (line.args.some((arg) => arg.key === 'when')) return;
     const next = findNextExecutableLine(context.lines, index + 1);
     if (!next || next.command === 'label') return;
     pushDiagnostic(context, 'info', 'unreachable-line', 'This line follows a terminal command before the next label.', next);
@@ -679,6 +683,7 @@ function parseArgValue(value: string): string | boolean | number {
 
 function splitInlineComment(rawLine: string): { statement: string; inlineComment: string } {
   let escaped = false;
+  let inQuote: string | null = null;
   for (let i = 0; i < rawLine.length; i++) {
     const char = rawLine[i];
     if (escaped) {
@@ -687,6 +692,17 @@ function splitInlineComment(rawLine: string): { statement: string; inlineComment
     }
     if (char === '\\') {
       escaped = true;
+      continue;
+    }
+    if ((char === '"' || char === "'") && !inQuote) {
+      inQuote = char;
+      continue;
+    }
+    if (char === inQuote) {
+      inQuote = null;
+      continue;
+    }
+    if (inQuote) {
       continue;
     }
     if (char === '/' && rawLine[i + 1] === '/') {
@@ -729,6 +745,7 @@ function splitEscaped(input: string, separator: string): string[] {
 
 function findUnescaped(input: string, target: string): number {
   let escaped = false;
+  let inQuote: string | null = null;
   for (let i = 0; i < input.length; i++) {
     const char = input[i];
     if (escaped) {
@@ -737,6 +754,17 @@ function findUnescaped(input: string, target: string): number {
     }
     if (char === '\\') {
       escaped = true;
+      continue;
+    }
+    if ((char === '"' || char === "'") && !inQuote) {
+      inQuote = char;
+      continue;
+    }
+    if (char === inQuote) {
+      inQuote = null;
+      continue;
+    }
+    if (inQuote) {
       continue;
     }
     if (char === target) return i;
@@ -757,14 +785,14 @@ function trimTrailingSemicolon(input: string): string {
 
 function extractVariableNames(expression: string): string[] {
   const names = new Set<string>();
-  const cleanExpression = expression.replace(/(["'`])(?:\\.|(?!\1).)*\1/g, ' ');
-  let match: RegExpExecArray | null;
-  while ((match = VARIABLE_RE.exec(cleanExpression)) !== null) {
-    const token = match[0];
+  const cleanExpression = expression.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`/g, ' ');
+  const variableRe = /[A-Za-z_\u4e00-\u9fa5][\w\u4e00-\u9fa5]*/g;
+  const matches = cleanExpression.match(variableRe) || [];
+  matches.forEach((token) => {
     if (!RESERVED_WORDS.has(token.toLowerCase())) {
       names.add(token);
     }
-  }
+  });
   return Array.from(names);
 }
 
