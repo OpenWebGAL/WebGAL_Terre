@@ -10,7 +10,6 @@ import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { createPreviewBootstrapProvide, isPreviewBootstrapRequest } from "@/utils/editorPreviewBootstrap";
-import TransformableBox from '@/pages/editor/TransformableBox/TransformableBox';
 import { createId } from '@/utils/createId';
 
 let startX = 0;
@@ -29,7 +28,6 @@ export default function EditorSideBar() {
   const isUseFontOptimization = useEditorStore.use.isUseFontOptimization();
   const isShowPreview = useEditorStore.use.isShowPreview();
   const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
-  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const currentSidebarTab = useGameEditorContext((state) => state.currentSidebarTab);
@@ -246,6 +244,7 @@ export default function EditorSideBar() {
           </div>
           <div
             ref={PreviewControlRef}
+            id="gamePreviewControl"
             className={styles.previewWindow}
             style={{
               position: 'absolute',
@@ -253,13 +252,9 @@ export default function EditorSideBar() {
               bottom: 0,
               overflow: 'hidden',
               pointerEvents: 'none',
-              display: isShowPreview && isWindowAdjustment ? 'block' : 'none',
+              display: isShowPreview ? 'block' : 'none',
             }}
-          >
-            <TransformableBox
-              parents={PreviewControlRef}
-            />
-          </div>
+          />
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
           {isShowPreview && <iframe
             ref={ifRef}

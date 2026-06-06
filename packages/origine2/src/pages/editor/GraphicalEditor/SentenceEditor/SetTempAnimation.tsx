@@ -7,12 +7,12 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString } from "@/utils/combineSubmitString";
-import { EffectEditor } from "../components/EffectEditor";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Text } from "@fluentui/react-components";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { CloseSmall, Down, More, Plus, Up } from "@icon-park/react";
-import { eventBus } from "@/utils/eventBus";
+import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
+import { useRef } from "react";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -109,6 +109,16 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
     animationFrameArray.set(newArray);
     joinFrameString();
   };
+  const effectFrameIndex = useRef(-1);
+  const openEffectEditor = useGlobalEffectEditor((event) => {
+    const index = effectFrameIndex.current;
+    if (event.action === 'change' && animationFrameArray.value[index]) {
+      updateFrame(index, { ...animationFrameArray.value[index], transform: event.value || "{}" });
+      submit();
+    } else if (event.action === 'preview') {
+      EditorPreviewClient.setEffect({ target: target.value, transform: event.value });
+    }
+  });
 
   const animationFrameElement = (index: number) => {
     if (index < 0 || index >= animationFrameArray.value.length) {
@@ -165,21 +175,13 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
         </CommonOptions>
         <CommonOptions key={`effect-button-${index}`} title={t`效果编辑`}>
           <Button onClick={() => {
-            eventBus.emit('editor:open-global-terre-panel', {
+            effectFrameIndex.current = index;
+            openEffectEditor({
               title: t`效果编辑器`,
-              children: <EffectEditor
-                json={animationFrameArray.value[index]?.transform ?? "{}"}
-                onChange={(newJson)=>{
-                  updateFrame(index, { ...animationFrameArray.value[index], transform: newJson || "{}" });
-                  submit();
-                }}
-                onUpdate={(transform)=>{
-                  EditorPreviewClient.setEffect({ target: target.value, transform });
-                }}
-                sentence={props.sentence}
-                index={props.index}
-                targetPath={props.targetPath}
-              />,
+              json: animationFrameArray.value[index]?.transform ?? "{}",
+              sentence: props.sentence,
+              index: props.index,
+              targetPath: props.targetPath,
             });
           }}>
             {t`打开效果编辑器`}

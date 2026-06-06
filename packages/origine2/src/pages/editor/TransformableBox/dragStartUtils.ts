@@ -8,7 +8,6 @@ import {
   convertPreviewToControl,
   radiansToDegrees,
   GetSceneTXT,
-  convertCommandPathToFilePath,
 } from './baseUtils';
 import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 
@@ -66,39 +65,51 @@ export function parseFigureCommand(line: string) {
 /**
  * 根据 setTransform 寻找到对应的 changeFigure 语句
  * @param target - 目标值
- * @param targetPath - 目标文件路径
+ * @param scenePath - 场景文件路径
  * @returns changeFigure 语句
  */
-export async function SetFtoChangeF(target: string, targetPath: string): Promise<string> {
-  const sceneTXT = await GetSceneTXT(targetPath);
-  const lines = sceneTXT.split('\n');
-  for (const line of lines) {
-    const match = line.match(/-id=([^\s;]+)/);
-    if (match && match[1] === target) {
-      return line.trim();
+export async function SetFtoChangeF(target: string, scenePath: string, lineNumber: number): Promise<string> {
+  const sceneTXT = await GetSceneTXT(scenePath);
+  const lines = sceneTXT.split('\n').slice(0, lineNumber - 1).reverse();
+  const direction = target.replace('fig-', '');
+  const line = lines.find((item) => {
+    if (!item.trim().startsWith('changeFigure:')) return false;
+    if (target.startsWith('fig-')) {
+      return !/-id=/.test(item) && parseFigureCommand(item).direction === direction;
     }
-  }
-  throw new Error('未找到对应的 changeFigure 语句');
+    return item.match(/-id=([^\s;]+)/)?.[1] === target;
+  });
+  if (!line) throw new Error('未找到对应的 changeFigure 语句');
+  return line.trim();
 }
 
 /**
- * 根据 setTransform 语句获取图片路径和方位
+ * 根据目标获取素材信息和方位
  * @param target - 目标值
- * @param targetPath - 目标文件路径
- * @returns 图片路径和方位
+ * @param scenePath - 场景文件路径
+ * @param lineNumber - 行号
+ * @returns 素材信息和方位
  */
 export async function GetImgPathAndDirection(
   target: string,
-  targetPath: string,
-): Promise<{ imgPath: string; direction: string }> {
-  const ChangeF = await SetFtoChangeF(target, targetPath);
+  scenePath: string,
+  lineNumber: number,
+): Promise<{ fileName: string; directory: string; direction: string }> {
+  if (target === 'stage-main') throw new Error('舞台没有单一素材');
+  if (target === 'bg-main') {
+    const sceneTXT = await GetSceneTXT(scenePath);
+    const line = sceneTXT.split('\n').slice(0, lineNumber - 1).reverse()
+      .find((item) => item.trim().startsWith('changeBg:'));
+    if (!line) throw new Error('未找到对应的 changeBg 语句');
+    return { fileName: line.trim().replace(/^changeBg:/, '').split(' -')[0].split(';')[0].trim(), directory: 'background', direction: 'center' };
+  }
+  const ChangeF = await SetFtoChangeF(target, scenePath, lineNumber);
   const { direction } = parseFigureCommand(ChangeF);
   const fileName = ChangeF.replace(/changeFigure:/, '')
     .split(' -')[0]
     .split(';')[0]
     .trim(); // 提取文件名部分
-  const imgPath = convertCommandPathToFilePath(fileName, targetPath);
-  return { imgPath, direction };
+  return { fileName, directory: 'figure', direction };
 }
 
 /**
@@ -107,7 +118,7 @@ export async function GetImgPathAndDirection(
  * @param transformObj - 变换对象
  * @param width - 可选宽度
  * @param height - 可选高度
- * @param parents - 父元素的 ref
+ * @param parent - 父元素
  * @param setFrame - setFrame 函数
  */
 // eslint-disable-next-line max-params
@@ -116,16 +127,16 @@ export function updateFrameState(
   transformObj: any,
   width?: number,
   height?: number,
-  parents?: MutableRefObject<HTMLElement | null> | null,
+  parent?: HTMLElement | null,
   setFrame?: (updater: (prev: any) => any) => void,
 ) {
   if (!setFrame) return;
 
-  const position = transformObj?.position ? convertPreviewToControl(transformObj.position, parents) : { x: 0, y: 0 };
+  const position = transformObj?.position ? convertPreviewToControl(transformObj.position, parent) : { x: 0, y: 0 };
 
   setFrame((prev) => ({
     ...prev,
-    translate: [position.x + ToXOffset(direction, parents, width || prev.width), position.y],
+    translate: [position.x + ToXOffset(direction, parent, width || prev.width), position.y],
     scale: [transformObj?.scale?.x ?? 1, transformObj?.scale?.y ?? 1],
     rotate: radiansToDegrees(transformObj?.rotation ?? 0),
     width: width || prev.width,

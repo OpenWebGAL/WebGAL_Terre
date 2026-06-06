@@ -6,8 +6,6 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { useEffect, useMemo, useState } from "react";
-import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
-import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
 import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
@@ -20,8 +18,8 @@ import SearchableCascader from "@/pages/editor/GraphicalEditor/components/Search
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { OptionCategory } from "../components/OptionCategory";
-import { eventBus } from "@/utils/eventBus";
 import { AssetPreview } from "../components/AssetPreview";
+import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -61,7 +59,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
   const [spineSkinsList, setSpineSkinsList] = useState<string[]>([]);
   const [isSpineJsonFormat, setIsSpineJsonFormat] = useState(false);
-  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
 
   const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
   const currentExpression = useValue(
@@ -80,21 +77,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["on", "ON"],
   ]);
 
-  const blendModeOptions = useMemo(() => new Map<string, string>([
-    ["", t`默认`],
-    ["normal", t`正常`],
-    ["add", t`线性减淡`],
-    ["multiply", t`正片叠底`],
-    ["screen", t`滤色`],
-  ]), []);
-
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
-  const normalizeAnimationName = (name: string) => name.replace(/\.json$/i, "");
-  const toAnimationFilePath = (name: string) => {
-    const normalized = normalizeAnimationName(name);
-    return normalized ? `${normalized}.json` : "";
-  };
 
   // Blink
   const blinkParam = useMemo(() => {
@@ -308,137 +292,37 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     props.onSubmit(submitString);
   };
 
-  const renderEffectEditor = () => {
-    return <>
-      <CommonTips
-        text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}
-      />
-      <EffectEditor
-        json={json.value.toString()}
-        onChange={(newJson) => {
-          json.set(newJson);
-          submit();
-        }}
-        onUpdate={(transform) => {
-          let target = id.value;
-          if (target === "") {
-            // 根据位置确定目标
-            if (figurePosition.value === "left") {
-              target = "fig-left";
-            } else if (figurePosition.value === "right") {
-              target = "fig-right";
-            } else {
-              target = "fig-center";
-            }
-          }
-          EditorPreviewClient.setEffect({ target, transform });
-        }}
-        sentence={props.sentence}
-        index={props.index}
-        targetPath={props.targetPath}
-      />
-    </>;
-  };
+  const openEffectEditor = useGlobalEffectEditor((event) => {
+    if (event.action === 'change') {
+      json.set(event.value);
+      submit();
+    } else if (event.action === 'preview') {
+      const target = id.value || `fig-${figurePosition.value || 'center'}`;
+      EditorPreviewClient.setEffect({ target, transform: event.value });
+    } else {
+      const values = { enterAnimation, exitAnimation, duration, enterDuration, exitDuration, ease, blendMode };
+      values[event.key].set(event.value as never);
+      if (event.submit) submit();
+    }
+  });
 
-  const renderEffectEditorBottomBar = () => {
-    return <>
-      <CommonOptions key="enterAnimation" title={t`选择进入动画`}>
-        <>
-          {enterAnimation.value}{"\u00a0"}
-          <ChooseFile
-            title={t`选择进入动画文件`}
-            basePath={['animation']}
-            selectedFilePath={toAnimationFilePath(enterAnimation.value)}
-            onChange={(file) => {
-              enterAnimation.set(normalizeAnimationName(file?.name ?? ""));
-              submit();
-            }}
-            extNames={extNameMap.get('json')}
-            hiddenFiles={['animationTable.json']}
-          />
-        </>
-      </CommonOptions>
-      <CommonOptions key="exitAnimation" title={t`选择退出动画`}>
-        <>
-          {exitAnimation.value}{"\u00a0"}
-          <ChooseFile
-            title={t`选择退出动画文件`}
-            basePath={['animation']}
-            selectedFilePath={toAnimationFilePath(exitAnimation.value)}
-            onChange={(file) => {
-              exitAnimation.set(normalizeAnimationName(file?.name ?? ""));
-              submit();
-            }}
-            extNames={extNameMap.get('json')}
-            hiddenFiles={['animationTable.json']}
-          />
-        </>
-      </CommonOptions>
-      <CommonOptions key="11" title={t`过渡时间（单位为毫秒）`}>
-        <div>
-          <Input placeholder={t`过渡时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
-            const newDuration = Number(data.value);
-            if (isNaN(newDuration) || data.value === '')
-              duration.set("");
-            else
-              duration.set(newDuration);
-          }} onBlur={submit}/>
-        </div>
-      </CommonOptions>
-      <CommonOptions key="enterDuration" title={t`入场时长（单位为毫秒）`}>
-        <div>
-          <Input
-            placeholder={t`入场时长（单位为毫秒）`}
-            value={enterDuration.value.toString()}
-            onChange={(_, data) => {
-              const newDuration = Number(data.value);
-              if (isNaN(newDuration) || data.value === '')
-                enterDuration.set("");
-              else
-                enterDuration.set(newDuration);
-            }}
-            onBlur={submit}
-          />
-        </div>
-      </CommonOptions>
-      <CommonOptions key="exitDuration" title={t`退场时长（单位为毫秒）`}>
-        <div>
-          <Input
-            placeholder={t`退场时长（单位为毫秒）`}
-            value={exitDuration.value.toString()}
-            onChange={(_, data) => {
-              const newDuration = Number(data.value);
-              if (isNaN(newDuration) || data.value === '')
-                exitDuration.set("");
-              else
-                exitDuration.set(newDuration);
-            }}
-            onBlur={submit}
-          />
-        </div>
-      </CommonOptions>
-      <CommonOptions key="5" title={t`缓动类型`}>
-        <WheelDropdown
-          options={easeTypeOptions}
-          value={ease.value}
-          onValueChange={(newValue) => {
-            ease.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
-      <CommonOptions title={t`混合模式`} key="blendMode">
-        <WheelDropdown
-          options={blendModeOptions}
-          value={blendMode.value}
-          onValueChange={(newValue) => {
-            blendMode.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
-    </>;
-  };
+  const showEffectEditor = () => openEffectEditor({
+    title: t`效果编辑器`,
+    json: json.value.toString(),
+    sentence: props.sentence,
+    index: props.index,
+    targetPath: props.targetPath,
+    tip: t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`,
+    options: {
+      enterAnimation: enterAnimation.value,
+      exitAnimation: exitAnimation.value,
+      duration: duration.value,
+      enterDuration: enterDuration.value,
+      exitDuration: exitDuration.value,
+      ease: ease.value,
+      blendMode: blendMode.value,
+    },
+  });
 
   const shouldRenderMoreOptions = useMemo(() => {
     if (!figureFile.value) {
@@ -741,13 +625,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         />
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
-        <Button onClick={() => {
-          eventBus.emit('editor:open-global-terre-panel', {
-            title: t`效果编辑器`,
-            children: renderEffectEditor(),
-            bottomBarChildren: renderEffectEditorBottomBar(),
-          });
-        }}>{t`打开效果编辑器`}</Button>
+        <Button onClick={showEffectEditor}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
       {shouldRenderMoreOptions && (
         <CommonOptions key="moreOptions" title={t`更多选项`}>

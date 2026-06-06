@@ -1037,6 +1037,9 @@ msgstr "Clear role name after execution"
 msgid "扩展名"
 msgstr "Extension name"
 
+msgid "拖拽调整变换（建议打开快速预览效果）"
+msgstr "Drag and resize to adjust the transformation (It is recommended to turn on \"Fast preview effects\")"
+
 msgid "拼接先前文本框内的语句"
 msgstr "Concat the sentences with previous text"
 
