@@ -230,6 +230,9 @@ msgstr "不使用 when 条件"
 msgid "不可选项"
 msgstr "不可选项"
 
+msgid "不应用模板"
+msgstr "不应用模板"
+
 msgid "不拼接先前文本框内的语句"
 msgstr "不拼接先前文本框内的语句"
 
@@ -992,6 +995,9 @@ msgstr "快速预览语句关闭"
 msgid "快速预览语句打开"
 msgstr "快速预览语句打开"
 
+msgid "忽略"
+msgstr "忽略"
+
 msgid "忽略此版本"
 msgstr "忽略此版本"
 
@@ -1321,6 +1327,9 @@ msgstr "替换 UI 样式标签"
 
 msgid "替换同目标动画"
 msgstr "替换同目标动画"
+
+msgid "未声明的默认变换和效果"
+msgstr "未声明的默认变换和效果"
 
 msgid "未指定"
 msgstr "未指定"
@@ -1772,6 +1781,9 @@ msgstr "继承现有效果"
 msgid "继承默认效果"
 msgstr "继承默认效果"
 
+msgid "继续游戏按钮"
+msgstr "继续游戏按钮"
+
 msgid "绿色通道"
 msgstr "绿色通道"
 
@@ -1897,6 +1909,9 @@ msgstr "蓝色通道"
 
 msgid "行脚本"
 msgstr "行脚本"
+
+msgid "补充"
+msgstr "补充"
 
 msgid "补充默认值"
 msgstr "补充默认值"
@@ -2255,6 +2270,9 @@ msgstr "鉴赏功能"
 msgid "鉴赏图片"
 msgstr "鉴赏图片"
 
+msgid "鉴赏排序"
+msgstr "鉴赏排序"
+
 msgid "鉴赏系列"
 msgstr "鉴赏系列"
 
@@ -2395,18 +2413,3 @@ msgstr "鼠标指针"
 
 msgid "鼠标按下样式"
 msgstr "鼠标按下样式"
-
-msgid "鉴赏排序"
-msgstr "鉴赏排序"
-
-msgid "继续游戏按钮"
-msgstr "继续游戏按钮"
-
-msgid "未声明的默认变换和效果"
-msgstr "未声明的默认变换和效果"
-
-msgid "忽略"
-msgstr "忽略"
-
-msgid "补充"
-msgstr "补充"

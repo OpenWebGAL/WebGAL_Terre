@@ -2,7 +2,7 @@ import GameElement from "./GameElement";
 import styles from "./sidebar.module.scss";
 import {useState} from "react";
 import {
-  Button, Dropdown,
+  Button, Checkbox, Dropdown,
   Input,
   Option,
   Popover,
@@ -37,6 +37,7 @@ export default function Sidebar(props: ISidebarProps) {
   const [gameDir, setGameDir] = useState(t`新的游戏`);
   const [derivative, setDerivative] = useState<string | undefined>(undefined);
   const [templateDir, setTemplateDir] = useState<string | undefined>(undefined);
+  const [ignoreTemplate, setIgnoreTemplate] = useState<boolean>(false);
 
   // 可用的衍生版
   const derivativeEnginesResp = useSWR('derivativeEngines', async () => {
@@ -90,6 +91,7 @@ export default function Sidebar(props: ISidebarProps) {
         gameDir,
         derivative,
         templateDir,
+        ignoreTemplate,
       });
       setCreateGameFormOpen(false);
       setGameName(t`新的游戏`);
@@ -133,8 +135,17 @@ export default function Sidebar(props: ISidebarProps) {
               />
               {t`选择游戏引擎版本`}
               {selector}
-              {t`选择应用的模板`}
-              {selectorTemplate}
+              <Checkbox
+                checked={ignoreTemplate}
+                onChange={(_, data) => setIgnoreTemplate(!!data.checked)}
+                label={t`不应用模板`}
+              />
+              {!ignoreTemplate && (
+                <>
+                  {t`选择应用的模板`}
+                  {selectorTemplate}
+                </>
+              )}
               <Button
                 appearance='primary'
                 disabled={

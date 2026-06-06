@@ -230,6 +230,9 @@ msgstr "Do not use when condition"
 msgid "不可选项"
 msgstr "Not selectable item"
 
+msgid "不应用模板"
+msgstr "Do not apply template"
+
 msgid "不拼接先前文本框内的语句"
 msgstr "No concat with previous text"
 
@@ -992,6 +995,9 @@ msgstr "Fast preview sentences off"
 msgid "快速预览语句打开"
 msgstr "Fast preview sentences on"
 
+msgid "忽略"
+msgstr "Ignore"
+
 msgid "忽略此版本"
 msgstr "Ignore this version"
 
@@ -1321,6 +1327,9 @@ msgstr "Replace UI style tags"
 
 msgid "替换同目标动画"
 msgstr "Replace animation on same target"
+
+msgid "未声明的默认变换和效果"
+msgstr "Undeclared default transforms and effects"
 
 msgid "未指定"
 msgstr "Unspecified"
@@ -1772,6 +1781,9 @@ msgstr "Inherit current effect"
 msgid "继承默认效果"
 msgstr "Inherit default effect"
 
+msgid "继续游戏按钮"
+msgstr "Continue button"
+
 msgid "绿色通道"
 msgstr "Green channel"
 
@@ -1897,6 +1909,9 @@ msgstr "Blue channel"
 
 msgid "行脚本"
 msgstr "Line of script"
+
+msgid "补充"
+msgstr "Fill in"
 
 msgid "补充默认值"
 msgstr "Write default"
@@ -2255,6 +2270,9 @@ msgstr "Gallery Feature"
 msgid "鉴赏图片"
 msgstr "Appreciation Image"
 
+msgid "鉴赏排序"
+msgstr "Gallery order"
+
 msgid "鉴赏系列"
 msgstr "Gallery series"
 
@@ -2395,18 +2413,3 @@ msgstr "Mouse cursor"
 
 msgid "鼠标按下样式"
 msgstr "Mouse down style"
-
-msgid "鉴赏排序"
-msgstr "Gallery order"
-
-msgid "继续游戏按钮"
-msgstr "Continue button"
-
-msgid "未声明的默认变换和效果"
-msgstr "Undeclared default transforms and effects"
-
-msgid "忽略"
-msgstr "Ignore"
-
-msgid "补充"
-msgstr "Fill in"

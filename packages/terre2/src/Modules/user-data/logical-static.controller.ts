@@ -118,10 +118,19 @@ export class LogicalStaticController {
     const hasCustomEngine = await this.pathIsFile(gameIndex);
     const gameFile = this.safeJoin(gameRoot, requestPath);
     const engineFile = this.safeJoin(engineRoot, requestPath);
-    const candidates =
-      hasCustomEngine || this.isGameProjectFile(requestPath)
-        ? [gameFile, engineFile]
-        : [engineFile];
+
+    const isGameTemplateFile =
+      requestPath === 'game/template' ||
+      requestPath.startsWith('game/template/');
+
+    let candidates: string[];
+    if (hasCustomEngine && isGameTemplateFile) {
+      candidates = [gameFile];
+    } else if (hasCustomEngine || this.isGameProjectFile(requestPath)) {
+      candidates = [gameFile, engineFile];
+    } else {
+      candidates = [engineFile];
+    }
 
     return this.sendFirstExistingFile(candidates, res);
   }

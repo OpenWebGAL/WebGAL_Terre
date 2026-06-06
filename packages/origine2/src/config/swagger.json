@@ -36,6 +36,129 @@
         ]
       }
     },
+    "/api/userData/status": {
+      "get": {
+        "operationId": "UserDataController_getStatus",
+        "summary": "Get user data status",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDataStatusDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Data"
+        ]
+      }
+    },
+    "/api/userData/migrateLegacy": {
+      "post": {
+        "operationId": "UserDataController_migrateLegacy",
+        "summary": "Migrate legacy install-dir user data",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDataOperationResultDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Data"
+        ]
+      }
+    },
+    "/api/userData/setPath": {
+      "post": {
+        "operationId": "UserDataController_setPath",
+        "summary": "Set and migrate user data path",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetUserDataPathDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDataOperationResultDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Data"
+        ]
+      }
+    },
+    "/api/userData/resetPath": {
+      "post": {
+        "operationId": "UserDataController_resetPath",
+        "summary": "Reset user data path to the default path",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDataOperationResultDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Data"
+        ]
+      }
+    },
+    "/api/userData/open": {
+      "post": {
+        "operationId": "UserDataController_open",
+        "summary": "Open user data related directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenUserDataPathDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User Data"
+        ]
+      }
+    },
     "/api/assets/readAssets/{readDirPath}": {
       "get": {
         "operationId": "AssetsController_readAssets",
@@ -247,6 +370,41 @@
           },
           "400": {
             "description": "Failed to edit the text."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
+    "/api/assets/getImageDimensions/{imagePath}": {
+      "get": {
+        "operationId": "AssetsController_getImageDimensions",
+        "summary": "Get Image Dimensions",
+        "parameters": [
+          {
+            "name": "imagePath",
+            "required": true,
+            "in": "path",
+            "description": "Path to the image file relative to public/",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the width, height, and type of the image.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageDimensionsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to get image dimensions."
           }
         },
         "tags": [
@@ -1184,34 +1342,6 @@
           "Manage Template"
         ]
       }
-    },
-    "/template-preview/{templateName}/game/template/{path}": {
-      "get": {
-        "operationId": "TemplatePreviewController_getTemplateAsset",
-        "parameters": [
-          {
-            "name": "path",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "templateName",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
     }
   },
   "info": {
@@ -1240,6 +1370,145 @@
           "platform",
           "arch"
         ]
+      },
+      "UserDataLegacyMigrationStatusDto": {
+        "type": "object",
+        "properties": {
+          "hasLegacyGames": {
+            "type": "boolean",
+            "description": "Whether legacy games exist in the install dir"
+          },
+          "hasLegacyCustomTemplates": {
+            "type": "boolean",
+            "description": "Whether legacy custom templates exist in the install dir"
+          },
+          "hasLegacyDerivativeEngines": {
+            "type": "boolean",
+            "description": "Whether legacy derivative engines exist in the install dir"
+          },
+          "needsMigrationNotice": {
+            "type": "boolean",
+            "description": "Whether UI should show the migration notice"
+          }
+        },
+        "required": [
+          "hasLegacyGames",
+          "hasLegacyCustomTemplates",
+          "hasLegacyDerivativeEngines",
+          "needsMigrationNotice"
+        ]
+      },
+      "UserDataStatusDto": {
+        "type": "object",
+        "properties": {
+          "appRoot": {
+            "type": "string",
+            "description": "The application install/runtime root"
+          },
+          "configRoot": {
+            "type": "string",
+            "description": "The unified configuration directory"
+          },
+          "configPath": {
+            "type": "string",
+            "description": "The unified configuration file path"
+          },
+          "defaultUserDataRoot": {
+            "type": "string",
+            "description": "The default user data directory"
+          },
+          "configuredUserDataRoot": {
+            "type": "string",
+            "description": "The configured user data directory"
+          },
+          "activeUserDataRoot": {
+            "type": "string",
+            "description": "The currently active user data directory"
+          },
+          "portableDataRoot": {
+            "type": "string",
+            "description": "The portable data directory under app root"
+          },
+          "isPortable": {
+            "type": "boolean",
+            "description": "Whether portable mode is currently active"
+          },
+          "hasPortableDataDir": {
+            "type": "boolean",
+            "description": "Whether app root data dir exists"
+          },
+          "legacyMigration": {
+            "$ref": "#/components/schemas/UserDataLegacyMigrationStatusDto"
+          }
+        },
+        "required": [
+          "appRoot",
+          "configRoot",
+          "configPath",
+          "defaultUserDataRoot",
+          "configuredUserDataRoot",
+          "activeUserDataRoot",
+          "portableDataRoot",
+          "isPortable",
+          "hasPortableDataDir",
+          "legacyMigration"
+        ]
+      },
+      "UserDataOperationResultDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether the operation succeeded"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable operation message"
+          },
+          "conflicts": {
+            "description": "Paths that could not be moved",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/UserDataStatusDto"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "conflicts",
+          "status"
+        ]
+      },
+      "SetUserDataPathDto": {
+        "type": "object",
+        "properties": {
+          "userDataPath": {
+            "type": "string",
+            "description": "The target user data directory"
+          }
+        },
+        "required": [
+          "userDataPath"
+        ]
+      },
+      "OpenUserDataPathDto": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "The path target to open",
+            "enum": [
+              "active",
+              "config",
+              "portable",
+              "app"
+            ]
+          }
+        }
       },
       "CreateNewFileDto": {
         "type": "object",
@@ -1331,6 +1600,28 @@
         "required": [
           "path",
           "textFile"
+        ]
+      },
+      "ImageDimensionsResponseDto": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "number",
+            "description": "Width of the image in pixels"
+          },
+          "height": {
+            "type": "number",
+            "description": "Height of the image in pixels"
+          },
+          "type": {
+            "type": "string",
+            "description": "Image file type (e.g., jpg, png, gif, webp)"
+          }
+        },
+        "required": [
+          "width",
+          "height",
+          "type"
         ]
       },
       "CopyFileWithIncrementDto": {
@@ -1453,6 +1744,10 @@
           "templateDir": {
             "type": "string",
             "description": "The dir of the template to be applied"
+          },
+          "ignoreTemplate": {
+            "type": "boolean",
+            "description": "Whether to ignore the template when creating the game"
           }
         },
         "required": [
@@ -1644,13 +1939,17 @@
           "dir": {
             "type": "string",
             "description": "The dir of the template"
+          },
+          "builtIn": {
+            "type": "boolean",
+            "description": "Whether the template is built in"
           }
         },
         "required": [
           "name",
-          "id",
           "webgal-version",
-          "dir"
+          "dir",
+          "builtIn"
         ]
       },
       "CreateTemplateDto": {

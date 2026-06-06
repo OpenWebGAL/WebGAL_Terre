@@ -230,6 +230,9 @@ msgstr "when 조건 사용하지 않음"
 msgid "不可选项"
 msgstr "선택 불가"
 
+msgid "不应用模板"
+msgstr "템플릿을 적용하지 않음"
+
 msgid "不拼接先前文本框内的语句"
 msgstr "이전 텍스트 창의 문장과 이어지지 않음"
 
@@ -992,6 +995,9 @@ msgstr "빠른 미리보기 문장 꺼짐"
 msgid "快速预览语句打开"
 msgstr "빠른 미리보기 문장 켜짐"
 
+msgid "忽略"
+msgstr "무시"
+
 msgid "忽略此版本"
 msgstr "이 버전 무시"
 
@@ -1321,6 +1327,9 @@ msgstr "UI 스타일 태그 교체"
 
 msgid "替换同目标动画"
 msgstr "동일 대상 애니메이션 교체"
+
+msgid "未声明的默认变换和效果"
+msgstr "선언되지 않은 기본 변형 및 효과"
 
 msgid "未指定"
 msgstr "지정되지 않음"
@@ -1772,6 +1781,9 @@ msgstr "기존 이펙트 유지"
 msgid "继承默认效果"
 msgstr "기본 이펙트 유지"
 
+msgid "继续游戏按钮"
+msgstr "이어하기 버튼"
+
 msgid "绿色通道"
 msgstr "초록 채널"
 
@@ -1897,6 +1909,9 @@ msgstr "파랑 채널"
 
 msgid "行脚本"
 msgstr "줄 스크립트"
+
+msgid "补充"
+msgstr "보완"
 
 msgid "补充默认值"
 msgstr "기본값 보충"
@@ -2255,6 +2270,9 @@ msgstr "갤러리"
 msgid "鉴赏图片"
 msgstr "이미지 감상"
 
+msgid "鉴赏排序"
+msgstr "감상 정렬"
+
 msgid "鉴赏系列"
 msgstr "시리즈 감상"
 
@@ -2395,18 +2413,3 @@ msgstr "마우스 포인터"
 
 msgid "鼠标按下样式"
 msgstr "마우스 클릭 스타일"
-
-msgid "鉴赏排序"
-msgstr "감상 정렬"
-
-msgid "继续游戏按钮"
-msgstr "이어하기 버튼"
-
-msgid "未声明的默认变换和效果"
-msgstr "선언되지 않은 기본 변형 및 효과"
-
-msgid "忽略"
-msgstr "무시"
-
-msgid "补充"
-msgstr "보완"

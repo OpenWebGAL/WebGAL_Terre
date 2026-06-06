@@ -230,6 +230,9 @@ msgstr "when 条件を使用しない"
 msgid "不可选项"
 msgstr "選択できない選択肢"
 
+msgid "不应用模板"
+msgstr "テンプレートを適用しない"
+
 msgid "不拼接先前文本框内的语句"
 msgstr "前のテキストボックス内の文を結合しない"
 
@@ -992,6 +995,9 @@ msgstr "高速プレビュー文オフ"
 msgid "快速预览语句打开"
 msgstr "高速プレビュー文オン"
 
+msgid "忽略"
+msgstr "無視"
+
 msgid "忽略此版本"
 msgstr "このバージョンを無視する"
 
@@ -1321,6 +1327,9 @@ msgstr "UI スタイルタグを置換"
 
 msgid "替换同目标动画"
 msgstr "同じ対象のアニメーションを置換"
+
+msgid "未声明的默认变换和效果"
+msgstr "未指定のデフォルト変換とエフェクト"
 
 msgid "未指定"
 msgstr "指定なし"
@@ -1772,6 +1781,9 @@ msgstr "現在の効果を継承する"
 msgid "继承默认效果"
 msgstr "デフォルトの効果を継承する"
 
+msgid "继续游戏按钮"
+msgstr "「続きから」ボタン"
+
 msgid "绿色通道"
 msgstr "緑のチャネル"
 
@@ -1897,6 +1909,9 @@ msgstr "青いチャネル"
 
 msgid "行脚本"
 msgstr " スクリプトの行、"
+
+msgid "补充"
+msgstr "補完"
 
 msgid "补充默认值"
 msgstr "デフォルト値を補う"
@@ -2255,6 +2270,9 @@ msgstr "鑑賞機能"
 msgid "鉴赏图片"
 msgstr "CG鑑賞"
 
+msgid "鉴赏排序"
+msgstr "鑑賞の並び順"
+
 msgid "鉴赏系列"
 msgstr "鑑賞シリーズ"
 
@@ -2395,18 +2413,3 @@ msgstr "マウスポインター"
 
 msgid "鼠标按下样式"
 msgstr "マウスクリックスタイル"
-
-msgid "鉴赏排序"
-msgstr "鑑賞の並び順"
-
-msgid "继续游戏按钮"
-msgstr "「続きから」ボタン"
-
-msgid "未声明的默认变换和效果"
-msgstr "未指定のデフォルト変換とエフェクト"
-
-msgid "忽略"
-msgstr "無視"
-
-msgid "补充"
-msgstr "補完"

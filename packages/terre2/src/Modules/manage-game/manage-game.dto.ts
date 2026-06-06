@@ -16,6 +16,11 @@ export class CreateGameDto {
     required: false,
   })
   templateDir?: string;
+  @ApiProperty({
+    description: 'Whether to ignore the template when creating the game',
+    required: false,
+  })
+  ignoreTemplate?: boolean;
 }
 
 export class EditFileNameDto {
