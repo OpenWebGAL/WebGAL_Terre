@@ -3,7 +3,6 @@ import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
 import { getArgByKey } from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
 import { useValue } from "@/hooks/useValue";
-import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { Button } from "@fluentui/react-components";
@@ -11,7 +10,7 @@ import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
-import { eventBus } from "@/utils/eventBus";
+import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -57,25 +56,24 @@ export default function SetTransform(props: ISentenceEditorProps) {
     );
     props.onSubmit(submitString);
   };
+  const openEffectEditor = useGlobalEffectEditor((event) => {
+    if (event.action === 'change') {
+      transform.set(event.value);
+      submit();
+    } else if (event.action === 'preview') {
+      EditorPreviewClient.setEffect({ target: target.value, transform: event.value });
+    }
+  });
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
       <CommonOptions title={t`效果编辑`}>
-        <Button onClick={() => eventBus.emit('editor:open-global-terre-panel', {
+        <Button onClick={() => openEffectEditor({
           title: t`效果编辑器`,
-          children: <EffectEditor
-            json={transform.value}
-            onChange={(newJson) => {
-              transform.set(newJson);
-              submit();
-            }}
-            onUpdate={(transform) => {
-              EditorPreviewClient.setEffect({ target: target.value, transform });
-            }}
-            sentence={props.sentence}
-            index={props.index}
-            targetPath={props.targetPath}
-          />,
+          json: transform.value,
+          sentence: props.sentence,
+          index: props.index,
+          targetPath: props.targetPath,
         })}>
           {t`打开效果编辑器`}
         </Button>

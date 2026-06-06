@@ -5,6 +5,38 @@ import type {
   PreviewReadyUpdatedPayload,
   StageSnapshotUpdatedPayload,
 } from '@webgal/editor-preview-protocol';
+import type { ISentence } from 'webgal-parser/src/interface/sceneInterface';
+
+export type EffectEditorOptionKey =
+  | 'enterAnimation'
+  | 'exitAnimation'
+  | 'duration'
+  | 'enterDuration'
+  | 'exitDuration'
+  | 'ease'
+  | 'blendMode';
+
+export interface GlobalEffectEditorPayload {
+  editorId: string;
+  title: string;
+  json: string;
+  sentence: ISentence;
+  index: number;
+  targetPath: string;
+  tip?: string;
+  options?: Partial<Record<EffectEditorOptionKey, string | number>>;
+}
+
+export type GlobalEffectEditorEvent =
+  | { editorId: string; action: 'change'; value: string }
+  | { editorId: string; action: 'preview'; value: any }
+  | {
+    editorId: string;
+    action: 'option';
+    key: EffectEditorOptionKey;
+    value: string | number;
+    submit?: boolean;
+  };
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type IframeEvents = {
@@ -21,11 +53,13 @@ type EditorEvents = {
     bottomBarChildren?: ReactNode;
     width?: number;
   };
+  'editor:open-global-effect-editor': GlobalEffectEditorPayload;
+  'editor:global-effect-editor-event': GlobalEffectEditorEvent;
   'editor:pixi-sync-command': {
     targetPath: string;
     lineNumber: number;
     lineContent: string;
-    lineSentence: import('webgal-parser/src/interface/sceneInterface').ISentence | null;
+    lineSentence: ISentence | null;
   };
   'editor:sync-current-line': null;
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };

@@ -494,6 +494,7 @@ export function EffectEditor(props: {
     effectFields.value.scaleY,
     effectFields.value.rotation,
   ]);
+  const previewControl = document.getElementById('gamePreviewControl');
   return (
     <>
       <Switch
@@ -504,9 +505,9 @@ export function EffectEditor(props: {
         }}
         label={t`拖拽调整变换（建议打开快速预览效果）`}
       />
-      {createPortal(
+      {previewControl && createPortal(
         <TransformableBox
-          parent={document.getElementById('gamePreviewControl') as HTMLElement}
+          parent={previewControl}
           sentenceInfo={{
             scenePath: props.targetPath,
             lineNumber: props.index,
@@ -518,22 +519,10 @@ export function EffectEditor(props: {
             if (!supported) updateIsWindowAdjustment(false);
           }}
           onDragging={(transform) => {
-            if (transform.position) {
-              if (transform.position.x !== undefined) {
-                updateField('x', transform.position.x);
-              }
-              if (transform.position.y !== undefined) {
-                updateField('y', transform.position.y);
-              }
-            }
-            if (transform.scale) {
-              if (transform.scale.x !== undefined) {
-                updateField('scaleX', transform.scale.x);
-              }
-              if (transform.scale.y !== undefined) {
-                updateField('scaleY', transform.scale.y);
-              }
-            }
+            updateField('x', transform.position?.x);
+            updateField('y', transform.position?.y);
+            updateField('scaleX', transform.scale?.x);
+            updateField('scaleY', transform.scale?.y);
             updateField('rotation', transform.rotation);
             update();
           }}
@@ -541,7 +530,7 @@ export function EffectEditor(props: {
             submit();
           }}
         />,
-        document.getElementById('gamePreviewControl') as HTMLElement,
+        previewControl,
       )}
       {fieldGroups.map((group, index) => (
         <OptionCategory key={index + 1} title={group.title}>
