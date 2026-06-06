@@ -1,6 +1,6 @@
 /** @type {import('@lingui/conf').LinguiConfig} */
 module.exports = {
-  locales: ["en", "zhCn", "ja"],
+  locales: ["en", "zhCn", "ja", "ko"],
   sourceLocale: "zhCn",
   fallbackLocales: {
     default: "zhCn",

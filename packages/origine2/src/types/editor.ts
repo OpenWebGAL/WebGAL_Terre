@@ -6,7 +6,7 @@ export interface IEditorState {
   page: IPage,
   subPage: string,
   expand: number,
-  language: 'zhCn' | 'en' | 'ja',
+  language: 'zhCn' | 'en' | 'ja' | 'ko',
   editorFontFamily: string,
   editorFontSize: number,
   viewType: IViewType,
