@@ -11,6 +11,7 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -37,6 +38,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
   const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
+  const ignoreDefault = useValue(getArgByKey(props.sentence, 'ignoreDefault') === true);
 
   const submit = () => {
     const submitString = combineSubmitString(
@@ -50,6 +52,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
         { key: "writeDefault", value: writeDefault.value },
         { key: "keep", value: keep.value },
         { key: "parallel", value: parallel.value },
+        { key: "ignoreDefault", value: ignoreDefault.value },
         { key: "next", value: isGoNext.value },
       ],
       props.sentence.inlineComment,
@@ -157,6 +160,10 @@ export default function SetTransform(props: ISentenceEditorProps) {
           submit();
         }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
       </CommonOptions>
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
     </div>
     <div className={styles.commonArgItem}>
       <CommonOptions key="20" title={t`连续执行`}>

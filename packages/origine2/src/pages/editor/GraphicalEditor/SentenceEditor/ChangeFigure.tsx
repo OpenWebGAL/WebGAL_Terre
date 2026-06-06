@@ -20,6 +20,7 @@ import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { OptionCategory } from "../components/OptionCategory";
 import { AssetPreview } from "../components/AssetPreview";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -54,6 +55,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const blink = useValue<string>(getArgByKey(props.sentence, "blink").toString() ?? "");
   const focus = useValue<string>(getArgByKey(props.sentence, "focus").toString() ?? "");
   const blendMode = useValue<string>(getArgByKey(props.sentence, "blendMode").toString() ?? "");
+  const ignoreDefault = useValue(getArgByKey(props.sentence, "ignoreDefault") === true);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
@@ -285,6 +287,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "ease", value: ease.value},
         {key: "zIndex", value: zIndex.value},
         {key: "blendMode", value: blendMode.value},
+        {key: "ignoreDefault", value: ignoreDefault.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -627,6 +630,10 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={showEffectEditor}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
       {shouldRenderMoreOptions && (
         <CommonOptions key="moreOptions" title={t`更多选项`}>
           <Button onClick={() => {

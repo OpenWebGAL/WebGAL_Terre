@@ -2395,3 +2395,18 @@ msgstr "마우스 포인터"
 
 msgid "鼠标按下样式"
 msgstr "마우스 클릭 스타일"
+
+msgid "鉴赏排序"
+msgstr "감상 정렬"
+
+msgid "继续游戏按钮"
+msgstr "이어하기 버튼"
+
+msgid "未声明的默认变换和效果"
+msgstr "선언되지 않은 기본 변형 및 효과"
+
+msgid "忽略"
+msgstr "무시"
+
+msgid "补充"
+msgstr "보완"

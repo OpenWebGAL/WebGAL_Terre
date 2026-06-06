@@ -13,6 +13,7 @@ import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { CloseSmall, Down, More, Plus, Up } from "@icon-park/react";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { useRef } from "react";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -39,6 +40,7 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
   const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
+  const ignoreDefault = useValue(getArgByKey(props.sentence, 'ignoreDefault') === true);
   const easeTypeOptions = useEaseTypeOptions();
 
   const submit = () => {
@@ -51,6 +53,7 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
         {key: "writeDefault", value: writeDefault.value},
         {key: "keep", value: keep.value},
         {key: "parallel", value: parallel.value},
+        {key: "ignoreDefault", value: ignoreDefault.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -280,6 +283,10 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
           submit();
         }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
       </CommonOptions>
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
     </div>
     <div className={styles.commonArgItem}>
       <CommonOptions key="isGoNext" title={t`连续执行`}>

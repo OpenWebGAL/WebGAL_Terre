@@ -2395,3 +2395,18 @@ msgstr "マウスポインター"
 
 msgid "鼠标按下样式"
 msgstr "マウスクリックスタイル"
+
+msgid "鉴赏排序"
+msgstr "鑑賞の並び順"
+
+msgid "继续游戏按钮"
+msgstr "「続きから」ボタン"
+
+msgid "未声明的默认变换和效果"
+msgstr "未指定のデフォルト変換とエフェクト"
+
+msgid "忽略"
+msgstr "無視"
+
+msgid "补充"
+msgstr "補完"

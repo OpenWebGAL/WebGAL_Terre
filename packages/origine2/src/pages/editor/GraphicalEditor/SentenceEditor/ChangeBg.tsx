@@ -12,6 +12,7 @@ import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { AssetPreview } from "../components/AssetPreview";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
   const isNoFile = props.sentence.content === "";
@@ -19,6 +20,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const bgFile = useValue(props.sentence.content);
   const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
+  const unlockOrder = useValue<number | string>(getArgByKey(props.sentence, "order") as number);
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
   const enterDuration = useValue<number | string>(getArgByKey(props.sentence, 'enterDuration') as number);
@@ -26,6 +28,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
   const enterAnimation = useValue(getArgByKey(props.sentence, 'enter').toString() ?? "");
   const exitAnimation = useValue(getArgByKey(props.sentence, 'exit').toString() ?? "");
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
+  const ignoreDefault = useValue(getArgByKey(props.sentence, 'ignoreDefault') === true);
   const submit = () => {
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
@@ -37,17 +40,20 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           {key: "ease", value: ease.value},
           {key: "unlockname", value: unlockName.value},
           {key: "series", value: unlockSeries.value},
+          {key: "order", value: unlockOrder.value},
         ] : [
           {key: "transform", value: ""},
           {key: "ease", value: ""},
           {key: "unlockname", value: ""},
           {key: "series", value: ""},
+          {key: "order", value: ""},
         ]),
         {key: "duration", value: duration.value},
         {key: "enterDuration", value: enterDuration.value},
         {key: "exitDuration", value: exitDuration.value},
         {key: "enter", value: enterAnimation.value},
         {key: "exit", value: exitAnimation.value},
+        {key: "ignoreDefault", value: ignoreDefault.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -133,9 +139,24 @@ export default function ChangeBg(props: ISentenceEditorProps) {
           placeholder={t`默认 default`}
         />
       </CommonOptions>}
+      {!isNoFile && <CommonOptions key="3.2" title={t`鉴赏排序`}>
+        <input
+          type="number"
+          value={unlockOrder.value}
+          onChange={(ev) => unlockOrder.set(ev.target.value === "" ? "" : Number(ev.target.value))}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{width: "200px"}}
+          placeholder={t`默认值0`}
+        />
+      </CommonOptions>}
       <CommonOptions key="23" title={t`显示效果`}>
         <Button onClick={showEffectEditor}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
     </div>
     <div className={styles.commonArgItem}>
       <CommonOptions key="2" title={t`连续执行`}>

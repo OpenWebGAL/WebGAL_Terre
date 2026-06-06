@@ -2395,3 +2395,18 @@ msgstr "Mouse cursor"
 
 msgid "鼠标按下样式"
 msgstr "Mouse down style"
+
+msgid "鉴赏排序"
+msgstr "Gallery order"
+
+msgid "继续游戏按钮"
+msgstr "Continue button"
+
+msgid "未声明的默认变换和效果"
+msgstr "Undeclared default transforms and effects"
+
+msgid "忽略"
+msgstr "Ignore"
+
+msgid "补充"
+msgstr "Fill in"

@@ -2395,3 +2395,18 @@ msgstr "鼠标指针"
 
 msgid "鼠标按下样式"
 msgstr "鼠标按下样式"
+
+msgid "鉴赏排序"
+msgstr "鉴赏排序"
+
+msgid "继续游戏按钮"
+msgstr "继续游戏按钮"
+
+msgid "未声明的默认变换和效果"
+msgstr "未声明的默认变换和效果"
+
+msgid "忽略"
+msgstr "忽略"
+
+msgid "补充"
+msgstr "补充"

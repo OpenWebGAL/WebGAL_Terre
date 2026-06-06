@@ -275,6 +275,16 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>,
       )}
+      {renderConfigItem(t`继续游戏按钮`,
+        <GameConfigEditorWithSelector
+          key="enableContinue"
+          value={getConfigContentAsString('Enable_Continue') || 'true'}
+          selectItems={[
+            {key: 'true', text: t`启用`},
+            {key: 'false', text: t`禁用`}
+          ]}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Continue', e)}/>,
+      )}
       {renderConfigItem(t`默认语言`,
         <GameConfigEditorWithSelector
           key="language_select"

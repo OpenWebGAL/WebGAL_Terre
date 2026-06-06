@@ -10,6 +10,7 @@ import {t} from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
 
@@ -17,6 +18,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
   const enterFileName = useValue(getArgByKey(props.sentence, 'enter'));
   const exitFileName = useValue(getArgByKey(props.sentence, 'exit'));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
+  const ignoreDefault = useValue(getArgByKey(props.sentence, "ignoreDefault") === true);
   const presetTargets = new Map<PresetTarget, string>([
     [ "fig-left", t`左侧立绘` ],
     [ "fig-center", t`中间立绘` ],
@@ -34,6 +36,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
         {key: "enter", value: enterFileName.value},
         {key: "exit", value: exitFileName.value},
         {key: "target", value: target.value},
+        {key: "ignoreDefault", value: ignoreDefault.value},
       ],
       props.sentence.inlineComment,
     );
@@ -87,6 +90,10 @@ export default function SetTransition(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
     </div>
   </div>;
 }
