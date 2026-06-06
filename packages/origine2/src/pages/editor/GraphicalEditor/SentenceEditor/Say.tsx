@@ -206,7 +206,7 @@ export default function Say(props: ISentenceEditorProps) {
         }}>{t`添加新行`}</Button>
       )}
       <div className={styles.editItem}>
-        <CommonOptions key="isNoDialog" title={t`旁白模式`}>
+        <CommonOptions key="isNoDialog" title={t`角色名显示`}>
           <TerreToggle
             title=""
             onChange={(newValue) => {
@@ -218,7 +218,7 @@ export default function Say(props: ISentenceEditorProps) {
             isChecked={isNoSpeaker.value}
           />
         </CommonOptions>
-        <CommonOptions key="clearSpeaker" title={t`清除角色名`}>
+        <CommonOptions key="clearSpeaker" title={t`角色名处理`}>
           <TerreToggle
             title=""
             onChange={(newValue) => {

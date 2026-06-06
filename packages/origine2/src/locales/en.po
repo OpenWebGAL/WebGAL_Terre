@@ -41,6 +41,9 @@ msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;
 msgid "BGM"
 msgstr "BGM"
 
+msgid "BGM 播放状态"
+msgstr "BGM playback status"
+
 msgid "BGM 音量"
 msgstr "BGM volume"
 
@@ -227,6 +230,9 @@ msgstr "Do not use when condition"
 msgid "不可选项"
 msgstr "Not selectable item"
 
+msgid "不应用模板"
+msgstr "Do not apply template"
+
 msgid "不拼接先前文本框内的语句"
 msgstr "No concat with previous text"
 
@@ -377,6 +383,9 @@ msgstr "bevel"
 msgid "值"
 msgstr "Value"
 
+msgid "值或表达式"
+msgstr "Value or expression"
+
 msgid "偏移"
 msgstr "Offset"
 
@@ -391,9 +400,6 @@ msgstr "Offset bottom (for positioning)"
 
 msgid "偏移顶部距离（定位用）"
 msgstr "Offset top (for positioning)"
-
-msgid "停止 BGM"
-msgstr "Stop the BGM"
 
 msgid "停止位置"
 msgstr "Stop position"
@@ -599,6 +605,9 @@ msgstr "Unpin"
 msgid "变换"
 msgstr "Transform"
 
+msgid "变量名"
+msgstr "Variable name"
+
 msgid "变量表达式"
 msgstr "Variable expression"
 
@@ -770,6 +779,9 @@ msgstr "Live preview off"
 msgid "实时预览已停止"
 msgstr "Live preview stopped"
 
+msgid "实时预览开始时自动注入，正式游戏不会触发。"
+msgstr "Automatically injected when live preview starts. Not triggered in the actual game."
+
 msgid "实时预览快进超过了超时时间限制，已停止继续演算。"
 msgstr "Live preview fast-forward exceeded the timeout limit, so further calculation has stopped."
 
@@ -841,6 +853,9 @@ msgstr "Mini avatar container"
 
 msgid "小头像文件"
 msgstr "Avatar file"
+
+msgid "小头像显示状态"
+msgstr "Mini avatar display status"
 
 msgid "尚未添加任何字体"
 msgstr "No fonts added yet"
@@ -956,6 +971,9 @@ msgstr "Current status"
 msgid "当前环境不支持系统文件夹选择器，请手动输入路径。"
 msgstr "The current environment does not support the system folder picker. Enter the path manually."
 
+msgid "当前预览变量"
+msgstr "Current preview variables"
+
 msgid "德语"
 msgstr "German"
 
@@ -976,6 +994,9 @@ msgstr "Fast preview sentences off"
 
 msgid "快速预览语句打开"
 msgstr "Fast preview sentences on"
+
+msgid "忽略"
+msgstr "Ignore"
 
 msgid "忽略此版本"
 msgstr "Ignore this version"
@@ -1021,6 +1042,9 @@ msgstr "Clear role name after execution"
 
 msgid "扩展名"
 msgstr "Extension name"
+
+msgid "拖拽调整变换（建议打开快速预览效果）"
+msgstr "Drag and resize to adjust the transformation (It is recommended to turn on \"Fast preview effects\")"
 
 msgid "拼接先前文本框内的语句"
 msgstr "Concat the sentences with previous text"
@@ -1118,6 +1142,9 @@ msgstr "Sound effect ID (Input ID makes this effect loop, you can't stop it by t
 msgid "效果音 音量"
 msgstr "Sound effect volume"
 
+msgid "效果音播放状态"
+msgstr "Sound effect playback status"
+
 msgid "效果音文件"
 msgstr "Sound effect file"
 
@@ -1163,6 +1190,9 @@ msgstr "Textbox (when avatar is closed)"
 msgid "文本框文本"
 msgstr "Text Box Text"
 
+msgid "文本框显示状态"
+msgstr "Textbox display status"
+
 msgid "文本框背景"
 msgstr "Text Box Background"
 
@@ -1174,6 +1204,9 @@ msgstr "Text Shadow"
 
 msgid "文档"
 msgstr "Document"
+
+msgid "新增变量"
+msgstr "Add variable"
 
 msgid "新增字体"
 msgstr "Add font"
@@ -1207,9 +1240,6 @@ msgstr "New game"
 
 msgid "方形"
 msgstr "Square"
-
-msgid "旁白模式"
-msgstr "Voiceover mode"
 
 msgid "旁白模式，无角色名"
 msgstr "Voiceover mode, no role name"
@@ -1277,6 +1307,12 @@ msgstr "Show preview window"
 msgid "普通对话"
 msgstr "General dialogue"
 
+msgid "暂无变量快照"
+msgstr "No variable snapshot"
+
+msgid "暂无调试变量，点击“新增变量”创建。"
+msgstr "No debug variables. Click \"Add variable\" to create one."
+
 msgid "更多设置"
 msgstr "More settings"
 
@@ -1318,6 +1354,9 @@ msgstr "Unique label name in this scene"
 
 msgid "条件执行"
 msgstr "Conditional execution"
+
+msgid "来自实时预览快照"
+msgstr "From live preview snapshot"
 
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "See how to feature your game on the WebGAL homepage"
@@ -1508,12 +1547,6 @@ msgstr "Clear tip"
 msgid "清除特效"
 msgstr "Clear effects"
 
-msgid "清除立绘"
-msgstr "Clear figure"
-
-msgid "清除角色名"
-msgstr "Clear role name"
-
 msgid "游戏"
 msgstr "Games"
 
@@ -1559,6 +1592,12 @@ msgstr "Click or drag file to this area to upload"
 msgid "点状电影滤镜"
 msgstr "Dot film filter"
 
+msgid "特效来源"
+msgstr "Effect source"
+
+msgid "特效状态"
+msgstr "Effect status"
+
 msgid "特殊演出"
 msgstr "Special performance"
 
@@ -1576,6 +1615,9 @@ msgstr "User data migration"
 
 msgid "用户目录模式"
 msgstr "User directory mode"
+
+msgid "由上一句的 next 连续执行"
+msgstr "Continuously executed by the previous sentence's next"
 
 msgid "电影模式"
 msgstr "Film mode"
@@ -1673,6 +1715,12 @@ msgstr "ID of figure illustration"
 msgid "立绘文件"
 msgstr "Figure file"
 
+msgid "立绘显示状态"
+msgstr "Figure display status"
+
+msgid "立绘清除参数"
+msgstr "Figure clear parameter"
+
 msgid "等待"
 msgstr "Wait"
 
@@ -1729,6 +1777,9 @@ msgstr "Inherit current effect"
 
 msgid "继承默认效果"
 msgstr "Inherit default effect"
+
+msgid "继续游戏按钮"
+msgstr "Continue button"
 
 msgid "绿色通道"
 msgstr "Green channel"
@@ -1789,6 +1840,9 @@ msgstr "Background image"
 
 msgid "背景文件"
 msgstr "Background file"
+
+msgid "背景显示状态"
+msgstr "Background display status"
 
 msgid "背景音乐"
 msgstr "Background music"
@@ -1853,6 +1907,9 @@ msgstr "Blue channel"
 msgid "行脚本"
 msgstr "Line of script"
 
+msgid "补充"
+msgstr "Fill in"
+
 msgid "补充默认值"
 msgstr "Write default"
 
@@ -1877,6 +1934,9 @@ msgstr "Role name, leave blank to inherit from previous sentence: Dialogue;"
 msgid "角色名内层文本"
 msgstr "Role Name Inner Text"
 
+msgid "角色名处理"
+msgstr "Role name handling"
+
 msgid "角色名外层文本"
 msgstr "Role Name Outer Text"
 
@@ -1888,6 +1948,9 @@ msgstr "Role Name Text Box"
 
 msgid "角色名文本框背景"
 msgstr "Role Name Text Box Background"
+
+msgid "角色名显示"
+msgstr "Role name display"
 
 msgid "角落头像"
 msgstr "Corner avatar"
@@ -1981,6 +2044,9 @@ msgstr "Call scene, return to parent scene after new scene ends"
 
 msgid "调用引擎内置复杂动画"
 msgstr "Call built-in complex animation"
+
+msgid "调试变量"
+msgstr "Debug variables"
 
 msgid "资源"
 msgstr "Assets"
@@ -2201,6 +2267,9 @@ msgstr "Gallery Feature"
 msgid "鉴赏图片"
 msgstr "Appreciation Image"
 
+msgid "鉴赏排序"
+msgstr "Gallery order"
+
 msgid "鉴赏系列"
 msgstr "Gallery series"
 
@@ -2209,6 +2278,15 @@ msgstr "Appreciation Asset File"
 
 msgid "鉴赏音乐"
 msgstr "Appreciation Music"
+
+msgid "长效"
+msgstr "Long-lived"
+
+msgid "长效变量"
+msgstr "Long-lived variable"
+
+msgid "长效变量用途"
+msgstr "Long-lived variable usage"
 
 msgid "闭上嘴"
 msgstr "Close Mouth"
@@ -2317,6 +2395,9 @@ msgstr "Default 24 hours"
 
 msgid "默认值50"
 msgstr "Default 50"
+
+msgid "默认变换和效果"
+msgstr "Default transforms and effects"
 
 msgid "默认语言"
 msgstr "Default Language"

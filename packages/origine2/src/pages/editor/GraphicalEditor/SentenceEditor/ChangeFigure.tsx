@@ -6,8 +6,6 @@ import { useValue } from "../../../../hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { useEffect, useMemo, useState } from "react";
-import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
-import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
 import axios from "axios";
 import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import { Button, Input } from "@fluentui/react-components";
@@ -18,8 +16,11 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import SearchableCascader from "@/pages/editor/GraphicalEditor/components/SearchableCascader";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { OptionCategory } from "../components/OptionCategory";
+import { AssetPreview } from "../components/AssetPreview";
+import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 type FigurePosition = "" | "left" | "right";
 type AnimationFlag = "" | "on";
@@ -54,12 +55,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const blink = useValue<string>(getArgByKey(props.sentence, "blink").toString() ?? "");
   const focus = useValue<string>(getArgByKey(props.sentence, "focus").toString() ?? "");
   const blendMode = useValue<string>(getArgByKey(props.sentence, "blendMode").toString() ?? "");
+  const ignoreDefault = useValue(getArgByKey(props.sentence, "ignoreDefault") === true);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [l2dMotionsList, setL2dMotionsList] = useState<string[]>([]);
   const [l2dExpressionsList, setL2dExpressionsList] = useState<string[]>([]);
   const [spineSkinsList, setSpineSkinsList] = useState<string[]>([]);
   const [isSpineJsonFormat, setIsSpineJsonFormat] = useState(false);
-  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
 
   const currentMotion = useValue(getArgByKey(props.sentence, "motion").toString() ?? "");
   const currentExpression = useValue(
@@ -78,21 +79,8 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["on", "ON"],
   ]);
 
-  const blendModeOptions = useMemo(() => new Map<string, string>([
-    ["", t`默认`],
-    ["normal", t`正常`],
-    ["add", t`线性减淡`],
-    ["multiply", t`正片叠底`],
-    ["screen", t`滤色`],
-  ]), []);
-
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
-  const normalizeAnimationName = (name: string) => name.replace(/\.json$/i, "");
-  const toAnimationFilePath = (name: string) => {
-    const normalized = normalizeAnimationName(name);
-    return normalized ? `${normalized}.json` : "";
-  };
 
   // Blink
   const blinkParam = useMemo(() => {
@@ -299,6 +287,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "ease", value: ease.value},
         {key: "zIndex", value: zIndex.value},
         {key: "blendMode", value: blendMode.value},
+        {key: "ignoreDefault", value: ignoreDefault.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -306,151 +295,37 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     props.onSubmit(submitString);
   };
 
-  const renderEffectEditor = () => {
-    return <>
-      <CommonTips
-        text={t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`}
-      />
-      <EffectEditor
-        json={json.value.toString()}
-        onChange={(newJson) => {
-          json.set(newJson);
-          submit();
-        }}
-        onUpdate={(transform) => {
-          let target = id.value;
-          if (target === "") {
-            // 根据位置确定目标
-            if (figurePosition.value === "left") {
-              target = "fig-left";
-            } else if (figurePosition.value === "right") {
-              target = "fig-right";
-            } else {
-              target = "fig-center";
-            }
-          }
-          const newEffect = { target: target, transform: transform };
-          WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
-        }}
-        sentence={props.sentence}
-        index={props.index}
-        targetPath={props.targetPath}
-      />
-    </>;
-  };
-
-  const shouldRenderBottomBar = useMemo(() => {
-    switch (panelType.value) {
-    // 效果编辑器需要底部栏
-    case "effect":
-      return true;
-    case "moreOptions":
-      return false;
-    default:
-      return false;
+  const openEffectEditor = useGlobalEffectEditor((event) => {
+    if (event.action === 'change') {
+      json.set(event.value);
+      submit();
+    } else if (event.action === 'preview') {
+      const target = id.value || `fig-${figurePosition.value || 'center'}`;
+      EditorPreviewClient.setEffect({ target, transform: event.value });
+    } else {
+      const values = { enterAnimation, exitAnimation, duration, enterDuration, exitDuration, ease, blendMode };
+      values[event.key].set(event.value as never);
+      if (event.submit) submit();
     }
-  }, [panelType.value]);
+  });
 
-
-  const renderEffectEditorBottomBar = () => {
-    return <>
-      <CommonOptions key="enterAnimation" title={t`选择进入动画`}>
-        <>
-          {enterAnimation.value}{"\u00a0"}
-          <ChooseFile
-            title={t`选择进入动画文件`}
-            basePath={['animation']}
-            selectedFilePath={toAnimationFilePath(enterAnimation.value)}
-            onChange={(file) => {
-              enterAnimation.set(normalizeAnimationName(file?.name ?? ""));
-              submit();
-            }}
-            extNames={extNameMap.get('json')}
-            hiddenFiles={['animationTable.json']}
-          />
-        </>
-      </CommonOptions>
-      <CommonOptions key="exitAnimation" title={t`选择退出动画`}>
-        <>
-          {exitAnimation.value}{"\u00a0"}
-          <ChooseFile
-            title={t`选择退出动画文件`}
-            basePath={['animation']}
-            selectedFilePath={toAnimationFilePath(exitAnimation.value)}
-            onChange={(file) => {
-              exitAnimation.set(normalizeAnimationName(file?.name ?? ""));
-              submit();
-            }}
-            extNames={extNameMap.get('json')}
-            hiddenFiles={['animationTable.json']}
-          />
-        </>
-      </CommonOptions>
-      <CommonOptions key="11" title={t`过渡时间（单位为毫秒）`}>
-        <div>
-          <Input placeholder={t`过渡时间（单位为毫秒）`} value={duration.value.toString()} onChange={(_, data) => {
-            const newDuration = Number(data.value);
-            if (isNaN(newDuration) || data.value === '')
-              duration.set("");
-            else
-              duration.set(newDuration);
-          }} onBlur={submit}/>
-        </div>
-      </CommonOptions>
-      <CommonOptions key="enterDuration" title={t`入场时长（单位为毫秒）`}>
-        <div>
-          <Input
-            placeholder={t`入场时长（单位为毫秒）`}
-            value={enterDuration.value.toString()}
-            onChange={(_, data) => {
-              const newDuration = Number(data.value);
-              if (isNaN(newDuration) || data.value === '')
-                enterDuration.set("");
-              else
-                enterDuration.set(newDuration);
-            }}
-            onBlur={submit}
-          />
-        </div>
-      </CommonOptions>
-      <CommonOptions key="exitDuration" title={t`退场时长（单位为毫秒）`}>
-        <div>
-          <Input
-            placeholder={t`退场时长（单位为毫秒）`}
-            value={exitDuration.value.toString()}
-            onChange={(_, data) => {
-              const newDuration = Number(data.value);
-              if (isNaN(newDuration) || data.value === '')
-                exitDuration.set("");
-              else
-                exitDuration.set(newDuration);
-            }}
-            onBlur={submit}
-          />
-        </div>
-      </CommonOptions>
-      <CommonOptions key="5" title={t`缓动类型`}>
-        <WheelDropdown
-          options={easeTypeOptions}
-          value={ease.value}
-          onValueChange={(newValue) => {
-            ease.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
-      <CommonOptions title={t`混合模式`} key="blendMode">
-        <WheelDropdown
-          options={blendModeOptions}
-          value={blendMode.value}
-          onValueChange={(newValue) => {
-            blendMode.set(newValue?.toString() ?? "");
-            submit();
-          }}
-        />
-      </CommonOptions>
-    </>;
-  };
+  const showEffectEditor = () => openEffectEditor({
+    title: t`效果编辑器`,
+    json: json.value.toString(),
+    sentence: props.sentence,
+    index: props.index,
+    targetPath: props.targetPath,
+    tip: t`提示：效果只有在切换到不同立绘或关闭之前的立绘再重新添加时生效。如果你要为现有的立绘设置效果，请使用单独的设置效果命令`,
+    options: {
+      enterAnimation: enterAnimation.value,
+      exitAnimation: exitAnimation.value,
+      duration: duration.value,
+      enterDuration: enterDuration.value,
+      exitDuration: exitDuration.value,
+      ease: ease.value,
+      blendMode: blendMode.value,
+    },
+  });
 
   const shouldRenderMoreOptions = useMemo(() => {
     if (!figureFile.value) {
@@ -647,7 +522,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`关闭立绘`}>
+      <CommonOptions key="isNoDialog" title={t`立绘显示状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
             figureFile.set(t`选择立绘文件`);
@@ -656,7 +531,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           submit();
         }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
       </CommonOptions>
-      <CommonOptions key="clearFigure" title={t`清除立绘`}>
+      <CommonOptions key="clearFigure" title={t`立绘清除参数`}>
         <TerreToggle title="" onChange={(newValue) => {
           clear.set(newValue);
           submit();
@@ -664,8 +539,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t`立绘文件`}>
-          <>
-            {figureFile.value + "\u00a0\u00a0"}
+          <div className={styles.filePreviewRow}>
+            <AssetPreview basePath="figure" file={figureFile.value} />
+            <span>{figureFile.value}</span>
             <ChooseFile
               title={t`选择立绘文件`}
               basePath={['figure']}
@@ -676,7 +552,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
               }}
               extNames={[...extNameMap.get('image') ?? [], ...extNameMap.get('json') ?? []]}
             />
-          </>
+          </div>
         </CommonOptions>}
       <CommonOptions title={t`z-index`} key="z-index">
         <input value={zIndex.value}
@@ -752,11 +628,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         />
       </CommonOptions>
       <CommonOptions key="23" title={t`显示效果`}>
-        <Button onClick={() => {
-          panelType.set("effect");
-          updateExpand(props.index);
-        }}>{t`打开效果编辑器`}</Button>
+        <Button onClick={showEffectEditor}>{t`打开效果编辑器`}</Button>
       </CommonOptions>
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
       {shouldRenderMoreOptions && (
         <CommonOptions key="moreOptions" title={t`更多选项`}>
           <Button onClick={() => {
@@ -765,22 +642,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           }}>{t`编辑更多选项`}</Button>
         </CommonOptions>
       )}
-      <TerrePanel
-        title={panelType.value === "effect" ? t`效果编辑器` : t`更多选项`}
+      {panelType.value === "moreOptions" && <TerrePanel
+        title={t`更多选项`}
         sentenceIndex={props.index}
-        bottomBarChildren={shouldRenderBottomBar ? renderEffectEditorBottomBar() : undefined}
       >
-        {(() => {
-          switch (panelType.value) {
-          case "effect":
-            return renderEffectEditor();
-          case "moreOptions":
-            return renderMoreOptions();
-          default:
-            return null;
-          }
-        })()}
-      </TerrePanel>
+        {renderMoreOptions()}
+      </TerrePanel>}
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle
           title=""
@@ -792,6 +661,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
           offText={t`本句执行后等待`} isChecked={isGoNext.value}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

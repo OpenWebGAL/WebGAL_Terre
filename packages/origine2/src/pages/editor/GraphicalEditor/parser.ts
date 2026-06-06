@@ -1,6 +1,6 @@
 import SceneParser from "webgal-parser";
 import { logger } from "../../../utils/logger";
-import {commandType, IScene} from "webgal-parser/src/interface/sceneInterface";
+import { IScene } from "webgal-parser/src/interface/sceneInterface";
 import { SCRIPT_CONFIG } from "webgal-parser/src/config/scriptConfig";
 
 
@@ -15,6 +15,8 @@ export const WebgalParser = new SceneParser(() => {
  */
 export const parseScene = (rawScene: string): IScene => {
   const parsedScene = WebgalParser.parse(rawScene, 'editing', 'editing.txt');
-  logger.info(`解析场景：${'editing'}，数据为：`, parsedScene);
+  if (import.meta.env.DEV) {
+    logger.info(`解析场景：${'editing'}，语句数：`, parsedScene.sentenceList.length);
+  }
   return parsedScene;
 };

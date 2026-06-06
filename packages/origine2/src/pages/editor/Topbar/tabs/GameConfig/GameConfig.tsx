@@ -38,7 +38,7 @@ import {api} from "@/api";
 import {t, Trans} from "@lingui/macro";
 import useSWR from "swr";
 import axios from "axios";
-import {WsUtil} from "@/utils/wsUtil";
+import {EditorPreviewClient} from "@/utils/editorPreviewClient";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
@@ -93,7 +93,7 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
     if (selectedTemplate) {
       await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir: selectedTemplate.dir});
       // 更新模板后，让游戏再去拉一次模板的样式文件
-      WsUtil.sendTemplateRefetchCommand();
+      EditorPreviewClient.reloadTemplates();
       await currentTemplateResp.mutate();
     }
   }
@@ -274,6 +274,16 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
             {key: 'false', text: t`禁用`}
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>,
+      )}
+      {renderConfigItem(t`继续游戏按钮`,
+        <GameConfigEditorWithSelector
+          key="enableContinue"
+          value={getConfigContentAsString('Enable_Continue') || 'true'}
+          selectItems={[
+            {key: 'true', text: t`启用`},
+            {key: 'false', text: t`禁用`}
+          ]}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Continue', e)}/>,
       )}
       {renderConfigItem(t`默认语言`,
         <GameConfigEditorWithSelector

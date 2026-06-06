@@ -22,6 +22,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const unlockName = useValue(getArgByKey(props.sentence, "name").toString() ?? "");
   const unlockSeries = useValue(getArgByKey(props.sentence, "series").toString() ?? "");
+  const unlockOrder = useValue<number | string>(getArgByKey(props.sentence, "order") as number);
   const submit = () => {
     const submitString = combineSubmitString(
       unlockType.value,
@@ -30,6 +31,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
       [
         {key: "name", value: unlockName.value},
         {key: "series", value: unlockSeries.value},
+        {key: "order", value: unlockType.value === "unlockCg" ? unlockOrder.value : ""},
       ],
       props.sentence.inlineComment,
     );
@@ -93,6 +95,17 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           placeholder={t`默认 default`}
         />
       </CommonOptions>
+      {unlockType.value === "unlockCg" && <CommonOptions title={t`鉴赏排序`}>
+        <input
+          type="number"
+          value={unlockOrder.value}
+          onChange={(ev) => unlockOrder.set(ev.target.value === "" ? "" : Number(ev.target.value))}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{ width: "200px" }}
+          placeholder={t`默认值0`}
+        />
+      </CommonOptions>}
     </div>
   </div>;
 }

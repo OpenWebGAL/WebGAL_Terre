@@ -83,7 +83,8 @@ export class ManageGameService {
    * @param createGameData
    */
   async createGame(createGameData: CreateGameDto): Promise<boolean> {
-    const { gameName, gameDir, derivative, templateDir } = createGameData;
+    const { gameName, gameDir, derivative, templateDir, ignoreTemplate } =
+      createGameData;
     // 检查是否存在这个游戏
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/games`),
@@ -125,14 +126,16 @@ export class ManageGameService {
       `Game_name:${gameName};`,
     );
 
-    // Always apply a template: delete the scaffold template first, then copy the selected or default one
-    const gameTemplatePath = this.webgalFs.getPathFromRoot(
-      `/public/games/${gameDir}/game/template`,
-    );
-    await this.webgalFs.deleteFileOrDirectory(gameTemplatePath);
+    // 应用模板时删除原有模板
+    if (!ignoreTemplate) {
+      const gameTemplatePath = this.webgalFs.getPathFromRoot(
+        `/public/games/${gameDir}/game/template`,
+      );
+      await this.webgalFs.deleteFileOrDirectory(gameTemplatePath);
+    }
 
     let templateApplied = false;
-    if (templateDir) {
+    if (templateDir && !ignoreTemplate) {
       const templatePath = this.webgalFs.getPathFromRoot(
         `/public/templates/${templateDir}/`,
       );
@@ -146,7 +149,7 @@ export class ManageGameService {
         templateApplied = true;
       }
     }
-    if (!templateApplied) {
+    if (!templateApplied && !ignoreTemplate) {
       await this.webgalFs.copy(
         this.webgalFs.getPathFromRoot(
           '/assets/templates/WebGAL_Default_Template/',

@@ -210,6 +210,8 @@ function SetComplexAnimationCommand(props: ISentenceEditorProps) {
         onBlur={submit}
         placeholder={t`留空使用默认值`}
       />
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions title={t`连续执行`}>
         <TerreToggle
           title=""
@@ -222,6 +224,7 @@ function SetComplexAnimationCommand(props: ISentenceEditorProps) {
           isChecked={isGoNext.value}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

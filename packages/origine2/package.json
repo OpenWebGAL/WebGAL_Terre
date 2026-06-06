@@ -1,12 +1,13 @@
 {
   "name": "webgal-origine-2",
   "private": true,
-  "version": "4.6.0",
+  "version": "4.6.1",
   "license": "MPL-2.0",
   "scripts": {
-    "dev": "lingui extract --clean && lingui compile --typescript && vite --host",
-    "build": "lingui extract --clean && lingui compile --typescript && tsc && vite build --base=./",
-    "build-lowram": "lingui extract --clean && lingui compile --typescript && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
+    "sync:editor-preview-protocol": "yarn workspace @webgal/editor-preview-protocol build",
+    "dev": "yarn run sync:editor-preview-protocol && lingui extract --clean && lingui compile --typescript && vite --host",
+    "build": "yarn run sync:editor-preview-protocol && lingui extract --clean && lingui compile --typescript && tsc && vite build --base=./",
+    "build-lowram": "yarn run sync:editor-preview-protocol && lingui extract --clean && lingui compile --typescript && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
     "lint": "eslint src/** --fix",
     "openapi": "tsx openapi.ts",
@@ -35,8 +36,9 @@
     "@lingui/macro": "^4.8.0",
     "@lingui/react": "^4.8.0",
     "@monaco-editor/react": "^4.4.5",
-    "@types/parse-path": "^7.1.0",
+    "@tanstack/react-virtual": "^3.13.26",
     "@uiw/react-json-view": "^2.0.0-alpha.12",
+    "@webgal/editor-preview-protocol": "1.0.0",
     "axios": "^1.12.0",
     "classnames": "^2.5.1",
     "cloudlogjs": "^1.0.11",
@@ -60,7 +62,7 @@
     "sass": "^1.51.0",
     "swr": "^2.2.4",
     "uuid": "^13.0.0",
-    "webgal-parser": "4.5.18",
+    "webgal-parser": "4.6.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

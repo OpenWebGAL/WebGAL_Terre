@@ -3,16 +3,15 @@ import { ISentenceEditorProps } from "./index";
 import styles from "./sentenceEditor.module.scss";
 import { getArgByKey } from "@/pages/editor/GraphicalEditor/utils/getArgByKey";
 import { useValue } from "@/hooks/useValue";
-import { EffectEditor } from "@/pages/editor/GraphicalEditor/components/EffectEditor";
 import TerreToggle from "@/components/terreToggle/TerreToggle";
-import { TerrePanel } from "@/pages/editor/GraphicalEditor/components/TerrePanel";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { Button } from "@fluentui/react-components";
-import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
+import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -23,10 +22,8 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const durationFromArgs = getArgByKey(sentence, 'duration');
   const transform = useValue((json ?? '') as string);
   const duration = useValue((durationFromArgs ?? 0) as number);
-  const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
-  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
   const presetTargets = new Map<PresetTarget, string>([
     [ "fig-left", t`左侧立绘` ],
     [ "fig-center", t`中间立绘` ],
@@ -41,6 +38,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
   const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
+  const ignoreDefault = useValue(getArgByKey(props.sentence, 'ignoreDefault') === true);
 
   const submit = () => {
     const submitString = combineSubmitString(
@@ -54,35 +52,34 @@ export default function SetTransform(props: ISentenceEditorProps) {
         { key: "writeDefault", value: writeDefault.value },
         { key: "keep", value: keep.value },
         { key: "parallel", value: parallel.value },
+        { key: "ignoreDefault", value: ignoreDefault.value },
         { key: "next", value: isGoNext.value },
       ],
       props.sentence.inlineComment,
     );
     props.onSubmit(submitString);
   };
+  const openEffectEditor = useGlobalEffectEditor((event) => {
+    if (event.action === 'change') {
+      transform.set(event.value);
+      submit();
+    } else if (event.action === 'preview') {
+      EditorPreviewClient.setEffect({ target: target.value, transform: event.value });
+    }
+  });
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
       <CommonOptions title={t`效果编辑`}>
-        <Button onClick={() => updateExpand(props.index)}>
+        <Button onClick={() => openEffectEditor({
+          title: t`效果编辑器`,
+          json: transform.value,
+          sentence: props.sentence,
+          index: props.index,
+          targetPath: props.targetPath,
+        })}>
           {t`打开效果编辑器`}
         </Button>
-        <TerrePanel key={`effect-editor-${props.index}`} sentenceIndex={props.index} title={t`效果编辑器`}>
-          <EffectEditor
-            json={transform.value}
-            onChange={(newJson) => {
-              transform.set(newJson);
-              submit();
-            }}
-            onUpdate={(transform) => {
-              const newEffect = { target: target.value, transform: transform };
-              WsUtil.sendSetEffectCommand(JSON.stringify(newEffect));
-            }}
-            sentence={props.sentence}
-            index={props.index}
-            targetPath={props.targetPath}
-          />
-        </TerrePanel>
       </CommonOptions>
       <CommonOptions key="10" title={t`过渡时间（单位为毫秒）`}>
         <div>
@@ -163,12 +160,19 @@ export default function SetTransform(props: ISentenceEditorProps) {
           submit();
         }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
       </CommonOptions>
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
         }} onText={t`本句执行后执行下一句`} offText={t`本句执行后等待`} isChecked={isGoNext.value} />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }
