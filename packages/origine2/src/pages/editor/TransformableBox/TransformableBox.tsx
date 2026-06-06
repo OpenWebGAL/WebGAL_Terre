@@ -65,6 +65,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   });
   const targetRef = useRef<HTMLDivElement | null>(null);
   const [keepRatio, setKeepRatio] = useState(true); // 是否保持宽高比
+  const [isReady, setIsReady] = useState(false);
   const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
   const lastParentSize = useRef<{ width: number; height: number } | null>(null); // 记录这个，当父元素宽度变化时使用
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
@@ -73,38 +74,6 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     transformObj: { position: { x: number; y: number }; rotation: number; scale: { x: number; y: number } };
     figure: { fileName: string; type: string; direction: string; width: number; height: number };
   } | null>(null);
-  // 信息录入与初始位置设置
-  useEffect(() => {
-    infoRef.current = {
-      sentence: sentenceInfo,
-      transformObj: parseFigureCommand(sentenceInfo.lineContent).transformObj,
-      figure: {
-        fileName: '',
-        type: '',
-        direction: '',
-        width: 0,
-        height: 0,
-      },
-    };
-    getFileNameAndDirection(sentenceInfo)
-      .then(({ fileName, direction }) => {
-        const directory = sentenceInfo.lineSentence.commandRaw === 'changeBg' ? 'background' : 'figure';
-        return getSize(directory, fileName, sentenceInfo.scenePath).then(([width, height]) => {
-          infoRef.current!.figure = {
-            fileName,
-            type: fileName.endsWith('.json') ? 'json' : 'image',
-            direction,
-            width,
-            height,
-          };
-          onSupportChange?.(true);
-        });
-      })
-      .catch(() => {
-        onSupportChange?.(false);
-      });
-  }, []);
-
   // 计算出拖拽框的位置并更新
   const updateFrame = useCallback(() => {
     const position = infoRef.current?.transformObj.position
@@ -129,6 +98,40 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       height: size.y,
     });
     tempState.set(frameState.value);
+  }, []);
+
+  // 信息录入与初始位置设置
+  useEffect(() => {
+    infoRef.current = {
+      sentence: sentenceInfo,
+      transformObj: parseFigureCommand(sentenceInfo.lineContent).transformObj,
+      figure: {
+        fileName: '',
+        type: '',
+        direction: '',
+        width: 0,
+        height: 0,
+      },
+    };
+    getFileNameAndDirection(sentenceInfo)
+      .then(({ fileName, direction }) => {
+        const directory = sentenceInfo.lineSentence.commandRaw === 'changeBg' ? 'background' : 'figure';
+        return getSize(directory, fileName, sentenceInfo.scenePath).then(([width, height]) => {
+          infoRef.current!.figure = {
+            fileName,
+            type: fileName.endsWith('.json') ? 'json' : 'image',
+            direction,
+            width,
+            height,
+          };
+          updateFrame();
+          setIsReady(true);
+          onSupportChange?.(true);
+        });
+      })
+      .catch(() => {
+        onSupportChange?.(false);
+      });
   }, []);
   // 刷新
   const refresh = useCallback(() => {
@@ -203,6 +206,8 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
 
     return () => resizeObserver.disconnect();
   }, []);
+
+  if (!isReady) return null;
 
   return (
     <div
