@@ -112,8 +112,7 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {string} value
    * @param {any} ev
    */
-  const handleChange = useMemo(() => debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
-    if (!isEditorReady.value) return;
+  const submitChange = useMemo(() => debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     logger.debug('编辑器提交更新');
     // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
@@ -129,7 +128,16 @@ export default function TextEditor(props: ITextEditorProps) {
         lineCommandString: targetValue,
       });
     });
-  }, 500), []);
+  }, 500), [props.targetPath, target?.path]);
+
+  const handleChange = (value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+    if (!isEditorReady.value) return;
+    submitChange(value, ev);
+  };
+
+  useEffect(() => {
+    return () => submitChange.flush();
+  }, [submitChange]);
 
   const syncCurrentLine = useCallback(() => {
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || editorRef.current?.getPosition()?.lineNumber || 1;
@@ -147,8 +155,6 @@ export default function TextEditor(props: ITextEditorProps) {
       eventBus.off('editor:sync-current-line', syncCurrentLine);
     };
   }, [syncCurrentLine]);
-
-  useEffect(() => () => handleChange.flush(), [handleChange]);
 
   function updateEditData() {
     const path = props.targetPath;
