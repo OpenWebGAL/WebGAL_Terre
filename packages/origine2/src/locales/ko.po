@@ -41,6 +41,9 @@ msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;
 msgid "BGM"
 msgstr "BGM"
 
+msgid "BGM 播放状态"
+msgstr "BGM 재생 상태"
+
 msgid "BGM 音量"
 msgstr "BGM 음량"
 
@@ -377,6 +380,9 @@ msgstr "모서리 깎기"
 msgid "值"
 msgstr "값"
 
+msgid "值或表达式"
+msgstr "값 또는 표현식"
+
 msgid "偏移"
 msgstr "오프셋"
 
@@ -391,9 +397,6 @@ msgstr "하단 오프셋 거리(위치 지정용)"
 
 msgid "偏移顶部距离（定位用）"
 msgstr "상단 오프셋 거리(위치 지정용)"
-
-msgid "停止 BGM"
-msgstr "BGM 정지"
 
 msgid "停止位置"
 msgstr "정지 위치"
@@ -599,6 +602,9 @@ msgstr "고정 해제"
 msgid "变换"
 msgstr "변형"
 
+msgid "变量名"
+msgstr "변수명"
+
 msgid "变量表达式"
 msgstr "변수 표현식"
 
@@ -770,6 +776,9 @@ msgstr "실시간 미리보기 꺼짐"
 msgid "实时预览已停止"
 msgstr "실시간 미리보기가 중지되었습니다"
 
+msgid "实时预览开始时自动注入，正式游戏不会触发。"
+msgstr "실시간 미리보기 시작 시 자동으로 주입되며, 실제 게임에서는 실행되지 않습니다."
+
 msgid "实时预览快进超过了超时时间限制，已停止继续演算。"
 msgstr "실시간 미리보기 빨리 감기가 제한 시간을 초과하여 연산을 중단했습니다."
 
@@ -841,6 +850,9 @@ msgstr "미니 프로필 용기"
 
 msgid "小头像文件"
 msgstr "미니 프로필 파일"
+
+msgid "小头像显示状态"
+msgstr "미니 프로필 표시 상태"
 
 msgid "尚未添加任何字体"
 msgstr "아직 폰트가 추가되지 않았습니다"
@@ -956,6 +968,9 @@ msgstr "현재 상태"
 msgid "当前环境不支持系统文件夹选择器，请手动输入路径。"
 msgstr "현재 환경은 시스템 파일 탐색기를 지원하지 않습니다. 경로를 수동으로 입력해 주세요."
 
+msgid "当前预览变量"
+msgstr "현재 미리보기 변수"
+
 msgid "德语"
 msgstr "독일어"
 
@@ -1022,6 +1037,9 @@ msgstr "실행 후 캐릭터 이름 초기화"
 msgid "扩展名"
 msgstr "확장명"
 
+msgid "拖拽调整变换（建议打开快速预览效果）"
+msgstr "드래그하여 변형 조정(빠른 미리보기 효과를 켜는 것을 권장합니다)"
+
 msgid "拼接先前文本框内的语句"
 msgstr "이전 텍스트 창 내의 문장과 이어 붙이기"
 
@@ -1080,7 +1098,7 @@ msgid "播放一段效果音"
 msgstr "효과음 클립 재생"
 
 msgid "播放效果音"
-msgstr "효과음 재생
+msgstr "효과음 재생"
 
 msgid "播放视频"
 msgstr "비디오 재생"
@@ -1117,6 +1135,9 @@ msgstr "효과음 ID (입력 시 효과음이 루프되며, 나중에 이 ID를 
 
 msgid "效果音 音量"
 msgstr "효과음 음량"
+
+msgid "效果音播放状态"
+msgstr "효과음 재생 상태"
 
 msgid "效果音文件"
 msgstr "효과음 파일"
@@ -1163,6 +1184,9 @@ msgstr "대화창(미니 프로필 꺼짐)"
 msgid "文本框文本"
 msgstr "대화창 텍스트"
 
+msgid "文本框显示状态"
+msgstr "대화창 표시 상태"
+
 msgid "文本框背景"
 msgstr "대화창 배경"
 
@@ -1174,6 +1198,9 @@ msgstr "텍스트 그림자"
 
 msgid "文档"
 msgstr "문서"
+
+msgid "新增变量"
+msgstr "변수 추가"
 
 msgid "新增字体"
 msgstr "새 폰트 추가"
@@ -1207,9 +1234,6 @@ msgstr "새로운 게임"
 
 msgid "方形"
 msgstr "사각형"
-
-msgid "旁白模式"
-msgstr "내레이션 모드"
 
 msgid "旁白模式，无角色名"
 msgstr "내레이션 모드, 캐릭터 이름 없음"
@@ -1277,6 +1301,12 @@ msgstr "미리보기 창 표시"
 msgid "普通对话"
 msgstr "일반 대화"
 
+msgid "暂无变量快照"
+msgstr "변수 스냅샷 없음"
+
+msgid "暂无调试变量，点击“新增变量”创建。"
+msgstr "디버그 변수가 없습니다. “변수 추가”를 클릭하여 생성하세요."
+
 msgid "更多设置"
 msgstr "추가 설정"
 
@@ -1318,6 +1348,9 @@ msgstr "이 장면 내의 유일한 label 이름"
 
 msgid "条件执行"
 msgstr "조건 실행"
+
+msgid "来自实时预览快照"
+msgstr "실시간 미리보기 스냅샷에서 가져옴"
 
 msgid "查看展示到 WebGAL 主页的指引"
 msgstr "WebGAL 홈페이지 가이드 보기"
@@ -1508,12 +1541,6 @@ msgstr "알림 초기화"
 msgid "清除特效"
 msgstr "특수 효과 초기화"
 
-msgid "清除立绘"
-msgstr "스탠딩 초기화"
-
-msgid "清除角色名"
-msgstr "캐릭터 이름 초기화"
-
 msgid "游戏"
 msgstr "게임"
 
@@ -1559,6 +1586,12 @@ msgstr "파일을 클릭하거나 여기로 드래그하여 업로드"
 msgid "点状电影滤镜"
 msgstr "점박이 영화 필터"
 
+msgid "特效来源"
+msgstr "특수 효과 출처"
+
+msgid "特效状态"
+msgstr "특수 효과 상태"
+
 msgid "特殊演出"
 msgstr "특수 이펙트"
 
@@ -1576,6 +1609,9 @@ msgstr "사용자 데이터 마이그레이션"
 
 msgid "用户目录模式"
 msgstr "사용자 디렉터리 모드"
+
+msgid "由上一句的 next 连续执行"
+msgstr "이전 문장의 next에 의해 연속 실행"
 
 msgid "电影模式"
 msgstr "시네마틱 모드"
@@ -1672,6 +1708,12 @@ msgstr "스탠딩 일러스트 ID"
 
 msgid "立绘文件"
 msgstr "스탠딩 파일"
+
+msgid "立绘显示状态"
+msgstr "스탠딩 표시 상태"
+
+msgid "立绘清除参数"
+msgstr "스탠딩 초기화 매개변수"
 
 msgid "等待"
 msgstr "대기"
@@ -1790,6 +1832,9 @@ msgstr "배경 이미지"
 msgid "背景文件"
 msgstr "배경 파일"
 
+msgid "背景显示状态"
+msgstr "배경 표시 상태"
+
 msgid "背景音乐"
 msgstr "배경음악"
 
@@ -1877,6 +1922,9 @@ msgstr "캐릭터 이름, 이전 문장과 이으려면 빈칸:대화;"
 msgid "角色名内层文本"
 msgstr "캐릭터 이름 내부 텍스트"
 
+msgid "角色名处理"
+msgstr "캐릭터 이름 처리"
+
 msgid "角色名外层文本"
 msgstr "캐릭터 이름 외부 텍스트"
 
@@ -1888,6 +1936,9 @@ msgstr "캐릭터 이름 텍스트 창"
 
 msgid "角色名文本框背景"
 msgstr "캐릭터 이름 텍스트 창 배경"
+
+msgid "角色名显示"
+msgstr "캐릭터 이름 표시"
 
 msgid "角落头像"
 msgstr "구석 미니 프로필"
@@ -1981,6 +2032,9 @@ msgstr "장면을 호출하며, 새 장면 종료 후 어버이 장면으로 돌
 
 msgid "调用引擎内置复杂动画"
 msgstr "엔진 내장 복잡 애니메이션 호출"
+
+msgid "调试变量"
+msgstr "디버그 변수"
 
 msgid "资源"
 msgstr "리소스"
@@ -2209,6 +2263,15 @@ msgstr "감상 리소스 파일"
 
 msgid "鉴赏音乐"
 msgstr "음악 감상"
+
+msgid "长效"
+msgstr "장기"
+
+msgid "长效变量"
+msgstr "장기 변수"
+
+msgid "长效变量用途"
+msgstr "장기 변수 용도"
 
 msgid "闭上嘴"
 msgstr "다문 입"
