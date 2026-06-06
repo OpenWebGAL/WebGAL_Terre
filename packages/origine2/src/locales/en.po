@@ -1328,9 +1328,6 @@ msgstr "Replace UI style tags"
 msgid "替换同目标动画"
 msgstr "Replace animation on same target"
 
-msgid "未声明的默认变换和效果"
-msgstr "Undeclared default transforms and effects"
-
 msgid "未指定"
 msgstr "Unspecified"
 
@@ -2398,6 +2395,9 @@ msgstr "Default 24 hours"
 
 msgid "默认值50"
 msgstr "Default 50"
+
+msgid "默认变换和效果"
+msgstr "Default transforms and effects"
 
 msgid "默认语言"
 msgstr "Default Language"

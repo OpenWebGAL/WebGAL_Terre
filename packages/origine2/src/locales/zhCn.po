@@ -1328,9 +1328,6 @@ msgstr "替换 UI 样式标签"
 msgid "替换同目标动画"
 msgstr "替换同目标动画"
 
-msgid "未声明的默认变换和效果"
-msgstr "未声明的默认变换和效果"
-
 msgid "未指定"
 msgstr "未指定"
 
@@ -2398,6 +2395,9 @@ msgstr "默认值24小时"
 
 msgid "默认值50"
 msgstr "默认值50"
+
+msgid "默认变换和效果"
+msgstr "默认变换和效果"
 
 msgid "默认语言"
 msgstr "默认语言"

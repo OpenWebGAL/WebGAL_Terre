@@ -1328,9 +1328,6 @@ msgstr "UI 스타일 태그 교체"
 msgid "替换同目标动画"
 msgstr "동일 대상 애니메이션 교체"
 
-msgid "未声明的默认变换和效果"
-msgstr "선언되지 않은 기본 변형 및 효과"
-
 msgid "未指定"
 msgstr "지정되지 않음"
 
@@ -2398,6 +2395,9 @@ msgstr "기본값 24시간"
 
 msgid "默认值50"
 msgstr "기본값 50"
+
+msgid "默认变换和效果"
+msgstr "기본 변환 및 효과"
 
 msgid "默认语言"
 msgstr "기본 언어"

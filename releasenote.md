@@ -14,6 +14,10 @@
 
 优化编辑器与实时预览的同步流程，场景切换、语句修改和手动同步时更加稳定。
 
+创建游戏时可以不使用模板。
+
+补充对鉴赏排序、继续游戏按钮是否启用、是否忽略默认变换效果的编辑器选项。
+
 #### 修复
 
 修复快速编辑或切换场景时，文本编辑器最后一次修改可能未及时保存的问题。
@@ -23,6 +27,8 @@
 修复预览窗口拖拽调整可能反复提交文件并影响效果编辑器性能的问题。
 
 修复同一立绘 ID 更换素材后，或使用部分预设目标和特殊 ID 时，拖拽调整框可能无法取得正确素材尺寸的问题。
+
+修复使用定制引擎时，返回错误的兜底模板文件的问题。
 
 <!-- English Translation -->
 ## Release Notes
@@ -39,7 +45,11 @@ Improved scrolling and editing performance for long scenes in the graphical edit
 
 Improved graphical statement editing with background and figure previews, plus clearer displays for continuous execution, conditional options, and toggle states.
 
-Improved synchronization between the editor and live preview for more reliable scene switching, statement editing, and manual resynchronization.
+Improved synchronization between the editor and live preview, making scene switching, statement editing, and manual resynchronization more stable.
+
+Games can now be created without using a template.
+
+Added editor options for gallery ordering, whether the Continue button is enabled, and whether default transform effects are ignored.
 
 #### Fixes
 
@@ -49,7 +59,7 @@ Fixed game extension libraries possibly failing to override built-in resources u
 
 Fixed preview drag adjustments possibly submitting files repeatedly and reducing effect editor performance.
 
-Fixed the drag adjustment box possibly using incorrect asset dimensions after replacing a figure with the same ID, or when using certain preset targets and special IDs.
+Fixed an issue where the wrong fallback template file could be returned when using a custom engine.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -62,11 +72,15 @@ Fixed the drag adjustment box possibly using incorrect asset dimensions after re
 
 デバッグ変数パネルを追加し、リアルタイムプレビュー開始時の変数注入、現在のプレビュー変数の確認、デバッグ領域の高さ調整に対応しました。
 
-長いシーンでのグラフィカルエディターのスクロールと編集性能を改善し、多数の文を含むシーンでの動作を軽快にしました。
+長いシーンでのグラフィカルエディターのスクロールと編集性能を改善し、多数の文を含むシーンでの動作の重さを軽減しました。
 
 背景と立ち絵の素材プレビューを追加し、連続実行の関係、条件オプション、切り替え状態をより分かりやすく表示するようにしました。
 
 エディターとリアルタイムプレビューの同期処理を改善し、シーン切り替え、文の編集、手動での再同期をより安定させました。
+
+テンプレートを使用せずにゲームを作成できるようになりました。
+
+鑑賞の並び順、「続きから」ボタンを有効にするかどうか、デフォルトの変形効果を無視するかどうかに関するエディターオプションを追加しました。
 
 #### 修正
 
@@ -77,3 +91,5 @@ Fixed the drag adjustment box possibly using incorrect asset dimensions after re
 プレビュー画面でのドラッグ調整によってファイルが繰り返し保存され、エフェクトエディターの性能が低下することがある問題を修正しました。
 
 同じ立ち絵 ID の素材を変更した場合や、一部のプリセットターゲットと特殊 ID を使用した場合に、ドラッグ調整枠が正しい素材サイズを取得できないことがある問題を修正しました。
+
+カスタムエンジンを使用している場合に、誤ったフォールバック用テンプレートファイルが返される問題を修正しました。
