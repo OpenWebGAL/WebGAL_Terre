@@ -23,6 +23,7 @@ interface TransformableBoxProps {
     lineNumber: number;
     lineContent: string;
     lineSentence: ISentence;
+    transform: string;
   };
   onSupportChange?: (supported: boolean) => void;
   onDragging?: (transform: {
@@ -71,13 +72,20 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
   const infoRef = useRef<{
     sentence: { scenePath: string; lineNumber: number; lineContent: string; lineSentence: ISentence | null };
-    transformObj: { position: { x: number; y: number }; rotation: number; scale: { x: number; y: number } };
+    transformObj: {
+      position?: { x?: number; y?: number };
+      rotation?: number;
+      scale?: { x?: number; y?: number };
+    };
     figure: { fileName: string; type: string; direction: string; width: number; height: number };
   } | null>(null);
   // 计算出拖拽框的位置并更新
   const updateFrame = useCallback(() => {
     const position = infoRef.current?.transformObj.position
-      ? convertPreviewToControl(infoRef.current.transformObj.position, parent)
+      ? convertPreviewToControl({
+        x: infoRef.current.transformObj.position.x ?? 0,
+        y: infoRef.current.transformObj.position.y ?? 0,
+      }, parent)
       : { x: 0, y: 0 };
 
     const scaledSize = calculateScaledImageSize(
@@ -92,8 +100,8 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         position.x + ToXOffset(infoRef.current!.figure.direction ?? '', parent, size.x ?? frameState.value.width),
         position.y,
       ],
-      scale: [infoRef.current!.transformObj.scale.x, infoRef.current!.transformObj.scale.y],
-      rotate: radiansToDegrees(infoRef.current!.transformObj.rotation),
+      scale: [infoRef.current!.transformObj.scale?.x ?? 1, infoRef.current!.transformObj.scale?.y ?? 1],
+      rotate: radiansToDegrees(infoRef.current!.transformObj.rotation ?? 0),
       width: size.x,
       height: size.y,
     });
@@ -102,9 +110,17 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
 
   // 信息录入与初始位置设置
   useEffect(() => {
+    let transformObj;
+    try {
+      transformObj = JSON.parse(sentenceInfo.transform || '{}');
+      if (!transformObj || typeof transformObj !== 'object' || Array.isArray(transformObj)) throw new Error();
+    } catch {
+      onSupportChange?.(false);
+      return;
+    }
     infoRef.current = {
       sentence: sentenceInfo,
-      transformObj: parseFigureCommand(sentenceInfo.lineContent).transformObj,
+      transformObj,
       figure: {
         fileName: '',
         type: '',
@@ -114,8 +130,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       },
     };
     getFileNameAndDirection(sentenceInfo)
-      .then(({ fileName, direction }) => {
-        const directory = sentenceInfo.lineSentence.commandRaw === 'changeBg' ? 'background' : 'figure';
+      .then(({ fileName, direction, directory }) => {
         return getSize(directory, fileName, sentenceInfo.scenePath).then(([width, height]) => {
           infoRef.current!.figure = {
             fileName,
@@ -289,36 +304,39 @@ const getFileNameAndDirection = async (event: {
   if (event.lineContent.startsWith('changeFigure') && !/changeFigure:\s*none/.test(event.lineContent)) {
     const fileName = event.lineSentence?.content || '';
     const direction = parseFigureCommand(event.lineContent).direction;
-    return { fileName, direction };
+    return { fileName, direction, directory: 'figure' };
   }
   if (event.lineContent.startsWith('changeBg') && !/changeBg:\s*none/.test(event.lineContent)) {
     const fileName = event.lineSentence?.content || '';
     const direction = parseFigureCommand(event.lineContent).direction;
-    return { fileName, direction };
+    return { fileName, direction, directory: 'background' };
   }
   if (event.lineContent.startsWith('setTransform')) {
     const target = event.lineSentence?.args.find((arg) => arg.key === 'target')?.value;
     const res = await GetImgPathAndDirection(target as string, event.scenePath, event.lineNumber);
-    return { fileName: res.fileName, direction: res.direction };
+    return res;
   }
   if (event.lineContent.startsWith('setTempAnimation')) {
     const target = event.lineSentence?.args.find((arg) => arg.key === 'target')?.value;
     const res = await GetImgPathAndDirection(target as string, event.scenePath, event.lineNumber);
-    return { fileName: res.fileName, direction: res.direction };
+    return res;
   }
-  return { fileName: '', direction: '' };
+  return { fileName: '', direction: '', directory: '' };
 };
 
 const getSize = async (directory: string, fileName: string, scenePath: string) => {
   if (fileName === 'none' || fileName === '') {
-    return [0, 0];
+    throw new Error('Empty image resource');
   }
+  let size: [number, number];
   if (!fileName.endsWith('.json')) {
     const filePath = convertCommandPathToFilePath(directory, fileName, scenePath) || ''; // 提取图片路径
     const res = await api.assetsControllerGetImageDimensions(filePath);
-    return [res.data.width, res.data.height];
+    size = [res.data.width, res.data.height];
   } else {
     const { width, height } = await getLive2dSize();
-    return [width, height];
+    size = [width, height];
   }
+  if (size.some((value) => !Number.isFinite(value) || value <= 0)) throw new Error('Invalid image dimensions');
+  return size;
 };

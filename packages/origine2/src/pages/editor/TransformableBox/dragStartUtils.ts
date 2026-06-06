@@ -8,7 +8,6 @@ import {
   convertPreviewToControl,
   radiansToDegrees,
   GetSceneTXT,
-  convertCommandPathToFilePath,
 } from './baseUtils';
 import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 
@@ -71,41 +70,46 @@ export function parseFigureCommand(line: string) {
  */
 export async function SetFtoChangeF(target: string, scenePath: string, lineNumber: number): Promise<string> {
   const sceneTXT = await GetSceneTXT(scenePath);
-  const lines = sceneTXT.split('\n');
-  const list = [];
-  for (let i = 0; i < lineNumber; i++) {
-    const line = lines[i];
-    const match = line.match(/-id=([^\s;]+)/);
-    if (match && match[1] === target) {
-      list.push(line.trim());
+  const lines = sceneTXT.split('\n').slice(0, lineNumber - 1).reverse();
+  const direction = target.replace('fig-', '');
+  const line = lines.find((item) => {
+    if (!item.trim().startsWith('changeFigure:')) return false;
+    if (target.startsWith('fig-')) {
+      return !/-id=/.test(item) && parseFigureCommand(item).direction === direction;
     }
-  }
-  if (list.length === 0) {
-    throw new Error('未找到对应的 changeFigure 语句');
-  }
-  return list.pop()!;
+    return item.match(/-id=([^\s;]+)/)?.[1] === target;
+  });
+  if (!line) throw new Error('未找到对应的 changeFigure 语句');
+  return line.trim();
 }
 
 /**
- * 根据 setTransform 语句获取图片路径和方位
+ * 根据目标获取素材信息和方位
  * @param target - 目标值
  * @param scenePath - 场景文件路径
  * @param lineNumber - 行号
- * @returns 图片路径和方位
+ * @returns 素材信息和方位
  */
 export async function GetImgPathAndDirection(
   target: string,
   scenePath: string,
   lineNumber: number,
-): Promise<{ fileName: string; imgPath: string; direction: string }> {
+): Promise<{ fileName: string; directory: string; direction: string }> {
+  if (target === 'stage-main') throw new Error('舞台没有单一素材');
+  if (target === 'bg-main') {
+    const sceneTXT = await GetSceneTXT(scenePath);
+    const line = sceneTXT.split('\n').slice(0, lineNumber - 1).reverse()
+      .find((item) => item.trim().startsWith('changeBg:'));
+    if (!line) throw new Error('未找到对应的 changeBg 语句');
+    return { fileName: line.trim().replace(/^changeBg:/, '').split(' -')[0].split(';')[0].trim(), directory: 'background', direction: 'center' };
+  }
   const ChangeF = await SetFtoChangeF(target, scenePath, lineNumber);
   const { direction } = parseFigureCommand(ChangeF);
   const fileName = ChangeF.replace(/changeFigure:/, '')
     .split(' -')[0]
     .split(';')[0]
     .trim(); // 提取文件名部分
-  const imgPath = convertCommandPathToFilePath('figure', fileName, scenePath);
-  return { fileName, imgPath, direction };
+  return { fileName, directory: 'figure', direction };
 }
 
 /**

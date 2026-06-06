@@ -513,6 +513,7 @@ export function EffectEditor(props: {
             lineNumber: props.index,
             lineContent: sentenceToRawLine(props.sentence),
             lineSentence: props.sentence,
+            transform: props.json,
           }}
           onSupportChange={(supported) => {
             setIsDragSupported(supported);
