@@ -175,6 +175,7 @@ export function SettingsShortcutGrid({
             <MenuItem onClick={() => updateLanguage('zhCn')}>简体中文</MenuItem>
             <MenuItem onClick={() => updateLanguage('en')}>English</MenuItem>
             <MenuItem onClick={() => updateLanguage('ja')}>日本語</MenuItem>
+            <MenuItem onClick={() => updateLanguage('ko')}>한국어</MenuItem>
           </MenuList>
         </MenuPopover>
       </Menu>
