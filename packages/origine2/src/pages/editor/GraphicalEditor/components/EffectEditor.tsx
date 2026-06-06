@@ -433,6 +433,7 @@ export function EffectEditor(props: {
 
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
   const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
+  const [isDragSupported, setIsDragSupported] = useState(false);
 
   // 将 sentence 对象转换回原始命令行字符串
   const sentenceToRawLine = useCallback((sentence: ISentence): string => {
@@ -497,6 +498,7 @@ export function EffectEditor(props: {
     <>
       <Switch
         checked={isWindowAdjustment}
+        disabled={!isDragSupported}
         onChange={(_, checked) => {
           updateIsWindowAdjustment(checked.checked);
         }}
@@ -510,6 +512,10 @@ export function EffectEditor(props: {
             lineNumber: props.index,
             lineContent: sentenceToRawLine(props.sentence),
             lineSentence: props.sentence,
+          }}
+          onSupportChange={(supported) => {
+            setIsDragSupported(supported);
+            if (!supported) updateIsWindowAdjustment(false);
           }}
           onDragging={(transform) => {
             if (transform.position) {

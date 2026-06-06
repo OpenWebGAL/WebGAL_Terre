@@ -24,6 +24,7 @@ interface TransformableBoxProps {
     lineContent: string;
     lineSentence: ISentence;
   };
+  onSupportChange?: (supported: boolean) => void;
   onDragging?: (transform: {
     position?: {
       x?: number;
@@ -38,7 +39,13 @@ interface TransformableBoxProps {
   onDragEnd?: () => void;
 }
 
-const TransformableBox: React.FC<TransformableBoxProps> = ({ parent, sentenceInfo, onDragging, onDragEnd }) => {
+const TransformableBox: React.FC<TransformableBoxProps> = ({
+  parent,
+  sentenceInfo,
+  onSupportChange,
+  onDragging,
+  onDragEnd,
+}) => {
   const moveableRef = useRef<Moveable>(null);
   // 拖拽框状态
   const frameState = useValue({
@@ -79,18 +86,23 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({ parent, sentenceInf
         height: 0,
       },
     };
-    getFileNameAndDirection(sentenceInfo).then(({ fileName, direction }) => {
-      const directory = sentenceInfo.lineSentence.commandRaw === 'changeBg' ? 'background' : 'figure';
-      getSize(directory, fileName, sentenceInfo.scenePath).then(([width, height]) => {
-        infoRef.current!.figure = {
-          fileName,
-          type: fileName.endsWith('.json') ? 'json' : 'image',
-          direction,
-          width,
-          height,
-        };
+    getFileNameAndDirection(sentenceInfo)
+      .then(({ fileName, direction }) => {
+        const directory = sentenceInfo.lineSentence.commandRaw === 'changeBg' ? 'background' : 'figure';
+        return getSize(directory, fileName, sentenceInfo.scenePath).then(([width, height]) => {
+          infoRef.current!.figure = {
+            fileName,
+            type: fileName.endsWith('.json') ? 'json' : 'image',
+            direction,
+            width,
+            height,
+          };
+          onSupportChange?.(true);
+        });
+      })
+      .catch(() => {
+        onSupportChange?.(false);
       });
-    });
   }, []);
 
   // 计算出拖拽框的位置并更新
@@ -298,7 +310,6 @@ const getSize = async (directory: string, fileName: string, scenePath: string) =
   }
   if (!fileName.endsWith('.json')) {
     const filePath = convertCommandPathToFilePath(directory, fileName, scenePath) || ''; // 提取图片路径
-    console.log('@@@filePath', filePath);
     const res = await api.assetsControllerGetImageDimensions(filePath);
     return [res.data.width, res.data.height];
   } else {

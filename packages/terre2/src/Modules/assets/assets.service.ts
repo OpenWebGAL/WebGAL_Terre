@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import sizeOf from 'image-size';
 import { readFile } from 'fs/promises';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
@@ -26,8 +26,8 @@ export class AssetsService {
         height: dimensions.height,
         type: dimensions.type,
       };
-    } catch (error) {
-      throw new Error(`Failed to get image dimensions: ${error.message}`);
+    } catch {
+      throw new BadRequestException('Unsupported image resource');
     }
   }
 }
