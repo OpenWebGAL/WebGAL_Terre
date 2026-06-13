@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   ReactFlow,
   Node,
@@ -17,7 +17,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import styles from './FlowchartEditor.module.scss';
 import { t } from '@lingui/macro';
-import { Button, Input, Dropdown, Option } from '@fluentui/react-components';
+import { Button, Input, Dropdown, Option, Switch } from '@fluentui/react-components';
 import {
   AddFilled,
   AddRegular,
@@ -45,6 +45,8 @@ const nodeTypes = {
 
 function FlowchartEditorContent() {
   const gameDir = useEditorStore.use.subPage();
+  const isAutoSaveFlowchart = useEditorStore.use.isAutoSaveFlowchart();
+  const updateIsAutoSaveFlowchart = useEditorStore.use.updateIsAutoSaveFlowchart();
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<IFlowchartNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [nextNodeId, setNextNodeId] = useState(1);
@@ -54,6 +56,7 @@ function FlowchartEditorContent() {
   const [currentFlowchartId, setCurrentFlowchartId] = useState<string>('main');
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState('');
+  const skipAutoSaveRef = useRef(true);
 
   const reactFlowInstance = useReactFlow();
 
@@ -62,6 +65,7 @@ function FlowchartEditorContent() {
 
   // 加载流程图
   useEffect(() => {
+    skipAutoSaveRef.current = true;
     loadFlowchart();
   }, [gameDir]);
 
@@ -161,6 +165,24 @@ function FlowchartEditorContent() {
     }
   };
 
+  useEffect(() => {
+    if (flowcharts.length > 0 && !isAutoSaveFlowchart) {
+      skipAutoSaveRef.current = false;
+    }
+  }, [flowcharts.length, isAutoSaveFlowchart]);
+
+  useEffect(() => {
+    if (!isAutoSaveFlowchart || flowcharts.length === 0) {
+      return;
+    }
+    if (skipAutoSaveRef.current) {
+      skipAutoSaveRef.current = false;
+      return;
+    }
+    const timer = setTimeout(() => void saveFlowchart(), 500);
+    return () => clearTimeout(timer);
+  }, [isAutoSaveFlowchart, nodes, edges, flowcharts, currentFlowchartId]);
+
   // 切换流程图
   const switchFlowchart = (flowchartId: string) => {
     // 先保存当前流程图，清理不必要的字段
@@ -253,7 +275,17 @@ function FlowchartEditorContent() {
 
     // 如果删除的是当前流程图，切换到主线
     if (flowchartId === currentFlowchartId) {
-      switchFlowchart('main');
+      const mainFlowchart = updatedFlowcharts.find(f => f.id === 'main');
+      if (mainFlowchart) {
+        setCurrentFlowchartId('main');
+        setNodes(mainFlowchart.nodes as Node<IFlowchartNodeData>[]);
+        setEdges(mainFlowchart.edges as Edge[]);
+        const maxId = mainFlowchart.nodes.reduce((max, node) => {
+          const id = parseInt(node.id.replace('node-', ''), 10);
+          return isNaN(id) ? max : Math.max(max, id);
+        }, 0);
+        setNextNodeId(maxId + 1);
+      }
     }
   };
 
@@ -471,6 +503,12 @@ function FlowchartEditorContent() {
           >
             {t`添加节点`}
           </Button>
+          <Switch
+            label={t`自动保存流程图`}
+            checked={isAutoSaveFlowchart}
+            onChange={(_, data) => updateIsAutoSaveFlowchart(data.checked)}
+            style={{ marginBottom: '10px' }}
+          />
           <Button
             icon={<SaveIcon />}
             onClick={saveFlowchart}
@@ -487,6 +525,7 @@ function FlowchartEditorContent() {
             <li>{t`每个流程图只能有一个根节点`}</li>
             <li>{t`双击节点名称可编辑`}</li>
             <li>{t`点击节点选择场景文件`}</li>
+            <li>{t`选中连线后按退格键可删除`}</li>
             <li>{t`不能创建循环连接`}</li>
           </ul>
         </div>
@@ -499,6 +538,7 @@ function FlowchartEditorContent() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
+          deleteKeyCode="Backspace"
           fitView
           fitViewOptions={{ padding: 0.2, maxZoom: 1, minZoom: 0.1 }}
           defaultViewport={{ x: 100, y: 100, zoom: 0.8 }}

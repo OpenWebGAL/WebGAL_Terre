@@ -1640,9 +1640,6 @@ msgstr "Filter"
 msgid "点击或拖拽文件至此上传"
 msgstr "Click or drag file to this area to upload"
 
-msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
-msgstr "Click or press Backspace to delete the old separator. Enter a new separator and press Enter to confirm."
-
 msgid "点击节点选择场景文件"
 msgstr ""
 
@@ -1919,6 +1916,9 @@ msgstr "Script editor"
 msgid "自动"
 msgstr "Auto"
 
+msgid "自动保存流程图"
+msgstr "Auto-save flowchart"
+
 msgid "自动换行"
 msgstr "Auto wrap"
 
@@ -2188,6 +2188,9 @@ msgstr "Execute Continuously"
 
 msgid "退场时长（单位为毫秒）"
 msgstr "Exit duration (milliseconds)"
+
+msgid "选中连线后按退格键可删除"
+msgstr "Select an edge and press Backspace to delete it"
 
 msgid "选择"
 msgstr "Choose"
