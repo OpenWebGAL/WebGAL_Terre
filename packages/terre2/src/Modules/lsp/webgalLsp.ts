@@ -223,7 +223,6 @@ export function createWsConnection(
   documents.onDidChangeContent(async (params) => {
     // connection.console.log('TextDocument didChange');
     checkTriggerCompletion(params, () => {
-      console.debug('Sending completion request to client...');
       connection.sendRequest('textDocument/completion');
     });
   });

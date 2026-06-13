@@ -1,7 +1,11 @@
 package com.openwebgal.terre.ui.screen
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.provider.DocumentsContract
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ExitToApp
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -30,7 +35,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.openwebgal.terre.R
 import com.openwebgal.terre.service.TerreService
 import com.openwebgal.terre.store.TerreStore
+import com.openwebgal.terre.utils.BrowserUtils
 import com.openwebgal.terre.viewmodel.TerreViewModel
+import kotlin.system.exitProcess
 
 @Composable
 fun MainScreen(
@@ -46,7 +53,7 @@ fun MainScreen(
         },
         floatingActionButton = {
             Row {
-                if (isRunning)
+                if (isRunning) {
                     ExtendedFloatingActionButton(
                         icon = {
                             Icon(Icons.AutoMirrored.Rounded.OpenInNew, contentDescription = null)
@@ -55,14 +62,30 @@ fun MainScreen(
                             Text(stringResource(R.string.open_browser))
                         },
                         onClick = {
-                            val intent =
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    context.getString(R.string.local_url).toUri()
-                                )
-                            context.startActivity(intent)
+                            BrowserUtils.openBrowser(context, context.getString(R.string.local_url))
                         }
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+                ExtendedFloatingActionButton(
+                    icon = {
+                        Icon(Icons.Rounded.Folder, contentDescription = null)
+                    },
+                    text = {
+                        Text(stringResource(R.string.files))
+                    },
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            val uri = DocumentsContract.buildRootUri(
+                                "com.openwebgal.terre.provider.documents",
+                                "root"
+                            )
+                            setDataAndType(uri, DocumentsContract.Root.MIME_TYPE_ITEM)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+                        context.startActivity(intent)
+                    }
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 ExtendedFloatingActionButton(
                     icon = {

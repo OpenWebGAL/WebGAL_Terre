@@ -11,6 +11,7 @@ async function updateWebGALEngineFiles() {
   const filesToDelete = [
     path.join(templateDir, 'assets'),
     path.join(templateDir, 'index.html'),
+    path.join(templateDir, 'webgal-engine.json'),
     path.join(templateDir, 'webgal-serviceworker.js'),
   ];
 
@@ -41,6 +42,13 @@ async function updateWebGALEngineFiles() {
       'dist',
       'index.html',
     );
+    const sourceManifest = path.join(
+      cwd,
+      'node_modules',
+      'webgal-engine',
+      'dist',
+      'webgal-engine.json',
+    );
     const sourceServiceWorker = path.join(
       cwd,
       'node_modules',
@@ -52,6 +60,7 @@ async function updateWebGALEngineFiles() {
     // 目标文件路径
     const targetAssetsDir = path.join(templateDir, 'assets');
     const targetIndex = path.join(templateDir, 'index.html');
+    const targetManifest = path.join(templateDir, 'webgal-engine.json');
     const targetServiceWorker = path.join(
       templateDir,
       'webgal-serviceworker.js',
@@ -64,6 +73,7 @@ async function updateWebGALEngineFiles() {
     await Promise.all([
       fsExtra.copy(sourceAssetsDir, targetAssetsDir),
       fsExtra.copy(sourceIndex, targetIndex),
+      fsExtra.copy(sourceManifest, targetManifest),
       fsExtra.copy(sourceServiceWorker, targetServiceWorker),
     ]);
 

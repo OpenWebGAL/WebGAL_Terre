@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
 import { logger } from '../../../utils/logger';
@@ -8,12 +8,12 @@ import debounce from 'lodash/debounce';
 
 // 语法高亮文件
 import { editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME } from '../../../runtime/WG_ORIGINE_RUNTIME';
-import { WsUtil } from '../../../utils/wsUtil';
+import { EditorPreviewClient } from '../../../utils/editorPreviewClient';
 import { eventBus } from '@/utils/eventBus';
 import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
-import {useValue} from "@/hooks/useValue";
+import { useValue } from "@/hooks/useValue";
 
 interface ITextEditorProps {
   targetPath: string;
@@ -44,13 +44,17 @@ export default function TextEditor(props: ITextEditorProps) {
 
     configureMonaco(editor, monaco);
 
-    editor.onDidChangeCursorPosition(debounce((event:monaco.editor.ICursorPositionChangedEvent) => {
+    editor.onDidChangeCursorPosition(debounce((event: monaco.editor.ICursorPositionChangedEvent) => {
       const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
         if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
-          WsUtil.sendSyncCommand(target?.path??'', event.position.lineNumber, targetValue);
+          EditorPreviewClient.sendSyncScene({
+            scenePath: target?.path ?? '',
+            lineNumber: event.position.lineNumber,
+            lineCommandString: targetValue,
+          });
         }
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
@@ -78,7 +82,7 @@ export default function TextEditor(props: ITextEditorProps) {
     });
     editor.updateOptions({
       unicodeHighlight: { ambiguousCharacters: false },
-      wordWrap: isAutoWarp ? 'on' : 'off' ,
+      wordWrap: isAutoWarp ? 'on' : 'off',
       smoothScrolling: true,
       quickSuggestions: { other: true, comments: true, strings: true },
     });
@@ -108,20 +112,49 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {string} value
    * @param {any} ev
    */
-  const handleChange = debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
-    if(!isEditorReady.value) return;
+  const submitChange = useMemo(() => debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     logger.debug('编辑器提交更新');
     // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
     // const lineNumber = ev.changes[0].range.startLineNumber;
     // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    if (value) currentText.current = value;
+    if (value || value === '') currentText.current = value;
     eventBus.emit('editor:update-scene', { scene: currentText.current });
     api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
       const targetValue = currentText.current.split('\n')[lineNumber - 1];
-      WsUtil.sendSyncCommand(target?.path??'', lineNumber, targetValue);
+      EditorPreviewClient.sendSyncScene({
+        scenePath: target?.path ?? '',
+        lineNumber,
+        lineCommandString: targetValue,
+      });
     });
-  }, 500);
+  }, 500), [props.targetPath, target?.path]);
+
+  const handleChange = (value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+    if (!isEditorReady.value) return;
+    submitChange(value, ev);
+  };
+
+  useEffect(() => {
+    return () => submitChange.flush();
+  }, [submitChange]);
+
+  const syncCurrentLine = useCallback(() => {
+    const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || editorRef.current?.getPosition()?.lineNumber || 1;
+    EditorPreviewClient.sendSyncScene({
+      scenePath: target?.path ?? '',
+      lineNumber,
+      lineCommandString: currentText.current.split('\n')[lineNumber - 1] ?? '',
+      force: true,
+    });
+  }, [props.targetPath, target?.path]);
+
+  useEffect(() => {
+    eventBus.on('editor:sync-current-line', syncCurrentLine);
+    return () => {
+      eventBus.off('editor:sync-current-line', syncCurrentLine);
+    };
+  }, [syncCurrentLine]);
 
   function updateEditData() {
     const path = props.targetPath;

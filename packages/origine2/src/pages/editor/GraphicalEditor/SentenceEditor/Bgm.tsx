@@ -6,7 +6,7 @@ import { useValue } from "../../../../hooks/useValue";
 import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import {getArgByKey} from "../utils/getArgByKey";
 import { t } from "@lingui/macro";
-import { combineSubmitString, argToString } from "@/utils/combineSubmitString";
+import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function Bgm(props: ISentenceEditorProps) {
@@ -40,7 +40,7 @@ export default function Bgm(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`停止 BGM`}>
+      <CommonOptions key="isNoDialog" title={t`BGM 播放状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if(!newValue){
             bgmFile.set(t`选择背景音乐`);
@@ -93,6 +93,18 @@ export default function Bgm(props: ISentenceEditorProps) {
           className={styles.sayInput}
           style={{ width: "200px" }}
           placeholder={t`解锁的 BGM 名称`}
+        />
+      </CommonOptions>}
+      {!isNoFile && <CommonOptions key="5" title={t`鉴赏系列`}>
+        <input value={unlockSeries.value}
+          onChange={(ev) => {
+            const newValue = ev.target.value;
+            unlockSeries.set(newValue);
+          }}
+          onBlur={submit}
+          className={styles.sayInput}
+          style={{ width: "200px" }}
+          placeholder={t`默认 default`}
         />
       </CommonOptions>}
     </div>

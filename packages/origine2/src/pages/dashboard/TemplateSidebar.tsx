@@ -1,11 +1,12 @@
 import styles from "./TemplateSidebar.module.scss";
-import { useState } from "react";
-import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Subtitle1 } from "@fluentui/react-components";
-import { AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon } from "@fluentui/react-icons";
+import { ChangeEvent, useRef, useState } from "react";
+import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Subtitle1, Toast, Toaster, ToastIntent, ToastTitle, useId, useToastController } from "@fluentui/react-components";
+import { AddFilled, AddRegular, ArrowImport24Filled, ArrowImport24Regular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon } from "@fluentui/react-icons";
 import TemplateElement from "./TemplateElement";
 import {t} from "@lingui/macro";
 import { CreateTemplateDto, TemplateInfoDto } from "@/api/Api";
 import normalizeFileName from "@/utils/normalizeFileName";
+import { api } from "@/api";
 
 interface ITemplateSidebarProps {
   templateList: TemplateInfoDto[];
@@ -17,12 +18,16 @@ interface ITemplateSidebarProps {
 
 const AddIcon = bundleIcon(AddFilled, AddRegular);
 const ArrowSyncIcon = bundleIcon(ArrowSyncFilled, ArrowSyncRegular);
+const ArrowImportIcon = bundleIcon(ArrowImport24Filled, ArrowImport24Regular);
 
 export default function TemplateSidebar(props:ITemplateSidebarProps){
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [createTemplateFormOpen, setCreateTemplateFormOpen] = useState(false);
   const [newTemplateName, setNewTemplateName] = useState(t`新的模板`);
   const [newTemplateDir, setNewTemplateDir] = useState(t`新的模板`);
+  const toasterId = useId("template-toaster");
+  const { dispatchToast, dismissAllToasts } = useToastController(toasterId);
 
   const isAllowCreate = newTemplateName
     && newTemplateName.trim() !== ''
@@ -38,6 +43,36 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
       setNewTemplateDir(t`新的模板`);
     }
   }
+
+  const notify = (intent: ToastIntent, content: string) => {
+    dismissAllToasts();
+    dispatchToast(
+      <Toast>
+        <ToastTitle>{content}</ToastTitle>
+      </Toast>,
+      { intent },
+    );
+  };
+
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+    try {
+      const result = await api.manageTemplateControllerImportTemplate({ file });
+      if (result.data) {
+        props.refreash?.();
+        notify("success", t`模板导入成功`);
+      } else {
+        notify("error", t`模板导入失败，请检查是否存在重名或模板是否完整`);
+      }
+    } catch {
+      notify("error", t`模板导入失败，请检查是否存在重名或模板是否完整`);
+    } finally {
+      event.target.value = "";
+    }
+  };
 
   return <div className={`${styles.sidebar_main}`}>
     <div className={styles.sidebar_top}>
@@ -81,6 +116,14 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
           </PopoverSurface>
         </Popover>
         <Button appearance='secondary' onClick={props.refreash} icon={<ArrowSyncIcon />} />
+        <input
+          type="file"
+          accept=".zip"
+          style={{display: "none"}}
+          ref={fileInputRef}
+          onChange={handleFileChange}
+        />
+        <Button appearance='secondary' icon={<ArrowImportIcon />} onClick={() => fileInputRef.current?.click()}>{t`导入模板`}</Button>
       </div>
     </div>
     <div className={styles.game_list}>
@@ -90,6 +133,7 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
           return <TemplateElement
             onClick={()=>{}}
             refreash={props.refreash}
+            notify={notify}
             templateInfo={e}
             key={e.dir}
             checked={checked}
@@ -97,5 +141,6 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
         })
       }
     </div>
+    <Toaster toasterId={toasterId} />
   </div>;
 }

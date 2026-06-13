@@ -1,14 +1,10 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import {
-  basename,
-  dirname,
-  extname,
-  isAbsolute,
-  join,
-  relative,
-  resolve,
-} from 'path';
+import archiver = require('archiver');
+import AdmZip = require('adm-zip');
+import { basename, dirname, extname, isAbsolute, join } from 'path';
+import { UserDataService } from '../user-data/user-data.service';
+import trash from 'trash';
 
 export interface IFileInfo {
   name: string;
@@ -54,13 +50,23 @@ export class WebgalFsService {
     });
   }
 
-  private isPathInsideWorkingDirectory(pathToCheck: string): boolean {
-    const rootPath = resolve(process.cwd());
-    const resolvedPath = resolve(pathToCheck);
-    const relativePath = relative(rootPath, resolvedPath);
+  private isPathInsideAllowedRoots(pathToCheck: string): boolean {
+    return UserDataService.isPathInsideAllowedRoots(pathToCheck);
+  }
+
+  private normalizeFsPath(_path: string): string {
+    const decodedPath = decodeURI(_path);
+    if (isAbsolute(decodedPath)) return decodedPath;
+    return this.getPathFromRoot(decodedPath);
+  }
+
+  private hasUnsafeZipEntryPath(entryPath: string): boolean {
+    const normalizedEntryPath = entryPath.replace(/\\/g, '/');
     return (
-      relativePath === '' ||
-      (!relativePath.startsWith('..') && !isAbsolute(relativePath))
+      normalizedEntryPath.includes('\0') ||
+      normalizedEntryPath.startsWith('/') ||
+      /^[a-zA-Z]:($|\/)/.test(normalizedEntryPath) ||
+      WebgalFsService.hasInvalidPathSegments(normalizedEntryPath)
     );
   }
 
@@ -73,7 +79,7 @@ export class WebgalFsService {
    * @param dir 目录，需用 path 处理。
    */
   async getDirInfo(_dir: string): Promise<IFileInfo[]> {
-    const dir = decodeURI(_dir);
+    const dir = this.normalizeFsPath(_dir);
     const fileNames = await fs.readdir(dir);
     const dirInfoPromises = fileNames.map((e) => {
       const elementPath = this.getPath(`${dir}/${e}`);
@@ -101,10 +107,13 @@ export class WebgalFsService {
    */
   async copy(src: string, dest: string): Promise<boolean> {
     try {
+      this.logger.log(`复制: ${decodeURI(src)} -> ${decodeURI(dest)}`);
       await fs.cp(decodeURI(src), decodeURI(dest), { recursive: true });
       return true;
     } catch (error) {
-      this.logger.error('Copy file failed');
+      this.logger.error(
+        `复制失败: ${decodeURI(src)} -> ${decodeURI(dest)}, ${String(error)}`,
+      );
       return false;
     }
   }
@@ -114,7 +123,7 @@ export class WebgalFsService {
    * @param rawPath 字符串路径
    */
   getPathFromRoot(rawPath: string) {
-    return join(process.cwd(), ...decodeURI(rawPath).split('/'));
+    return UserDataService.resolveLogicalPath(rawPath);
   }
 
   /**
@@ -124,11 +133,19 @@ export class WebgalFsService {
    */
   async mkdir(src, dirName) {
     if (!WebgalFsService.checkFileName(dirName)) return false;
+    const decodedSrc = decodeURI(src);
+    const normalizedSrc = isAbsolute(decodedSrc)
+      ? decodedSrc
+      : this.getPathFromRoot(decodedSrc);
+    const dirPath = join(normalizedSrc, decodeURI(dirName));
 
     return await fs
-      .mkdir(join(decodeURI(src), decodeURI(dirName)))
+      .mkdir(dirPath)
+      .then(() => {
+        this.logger.log(`创建文件夹: ${dirPath}`);
+      })
       .catch(() => {
-        this.logger.log('跳过文件夹创建');
+        this.logger.log(`跳过文件夹创建（已存在）: ${dirPath}`);
       });
   }
 
@@ -164,8 +181,14 @@ export class WebgalFsService {
 
     return await new Promise((resolve) => {
       fs.rename(oldPath, newPath)
-        .then(() => resolve('File renamed!'))
-        .catch(() => resolve('File not exist!'));
+        .then(() => {
+          this.logger.log(`重命名文件: ${oldPath} -> ${newPath}`);
+          resolve('File renamed!');
+        })
+        .catch(() => {
+          this.logger.warn(`重命名文件失败（文件不存在）: ${oldPath}`);
+          resolve('File not exist!');
+        });
     });
   }
 
@@ -175,10 +198,15 @@ export class WebgalFsService {
    */
   async deleteFile(path: string) {
     return await new Promise((resolve) => {
-      this.logger.log(path);
       fs.unlink(decodeURI(path))
-        .then(() => resolve('File Deleted'))
-        .catch(() => resolve('File not exist!'));
+        .then(() => {
+          this.logger.log(`删除文件: ${decodeURI(path)}`);
+          resolve('File Deleted');
+        })
+        .catch(() => {
+          this.logger.warn(`删除文件失败（文件不存在）: ${decodeURI(path)}`);
+          resolve('File not exist!');
+        });
     });
   }
 
@@ -201,11 +229,14 @@ export class WebgalFsService {
           }),
         );
         await fs.rmdir(path);
+        this.logger.log(`删除目录: ${path}`);
       } else {
         await fs.unlink(path);
+        this.logger.log(`删除文件: ${path}`);
       }
       return true;
     } catch (error) {
+      this.logger.error(`删除失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;
     }
   }
@@ -227,9 +258,34 @@ export class WebgalFsService {
       const newPath = dir + decodeURI(newName);
 
       await fs.rename(path, newPath);
+      this.logger.log(`重命名: ${path} -> ${newPath}`);
 
       return true;
     } catch (error) {
+      this.logger.error(`重命名失败: ${decodeURI(_path)}, ${String(error)}`);
+      return false;
+    }
+  }
+
+  /**
+   * 丢弃文件或目录(回收站)
+   * @param path
+   */
+  async trashFileOrDirectory(_path: string): Promise<boolean> {
+    try {
+      const path = decodeURI(_path);
+
+      const stat = await fs.stat(path);
+
+      if (stat.isDirectory()) {
+        this.logger.log(`丢弃目录: ${path}`);
+      } else {
+        this.logger.log(`丢弃文件: ${path}`);
+      }
+      await trash(path, { glob: false });
+      return true;
+    } catch (error) {
+      this.logger.error(`丢弃失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;
     }
   }
@@ -238,7 +294,7 @@ export class WebgalFsService {
    * 检查文件是否存在
    */
   async exists(_path: string): Promise<boolean> {
-    const path = decodeURI(_path);
+    const path = this.normalizeFsPath(_path);
 
     return await fs
       .stat(path)
@@ -252,8 +308,9 @@ export class WebgalFsService {
    * @returns
    */
   async existsDir(path: string): Promise<boolean> {
+    const normalizedPath = this.normalizeFsPath(path);
     return await fs
-      .stat(path)
+      .stat(normalizedPath)
       .then((stats) => stats.isDirectory())
       .catch(() => false);
   }
@@ -265,8 +322,8 @@ export class WebgalFsService {
   async createEmptyFile(path: string) {
     try {
       const decodedPath = decodeURI(path);
-      if (!this.isPathInsideWorkingDirectory(decodedPath)) {
-        throw new Error('Path is out of workspace');
+      if (!this.isPathInsideAllowedRoots(decodedPath)) {
+        throw new Error('Path is out of allowed roots');
       }
       if (WebgalFsService.hasInvalidPathSegments(decodedPath)) {
         throw new Error('There are unexpected marks in path');
@@ -275,12 +332,14 @@ export class WebgalFsService {
 
       if (!(await this.existsDir(directory))) {
         await fs.mkdir(directory, { recursive: true });
+        this.logger.log(`创建目录: ${directory}`);
       }
 
       await fs.writeFile(decodedPath, '');
+      this.logger.log(`创建空文件: ${decodedPath}`);
       return 'created';
     } catch (error) {
-      this.logger.error(`创建文件失败: ${error.message}`);
+      this.logger.error(`创建文件失败: ${String(error)}`);
       return 'path error or no right.';
     }
   }
@@ -293,8 +352,14 @@ export class WebgalFsService {
   async updateTextFile(path: string, content: string) {
     return await new Promise(async (resolve) => {
       fs.writeFile(decodeURI(path), content)
-        .then(() => resolve('Updated.'))
-        .catch(() => resolve('path error or no right.'));
+        .then(() => {
+          this.logger.log(`更新文件: ${decodeURI(path)}`);
+          resolve('Updated.');
+        })
+        .catch(() => {
+          this.logger.error(`更新文件失败: ${decodeURI(path)}`);
+          resolve('path error or no right.');
+        });
     });
   }
   /**
@@ -338,8 +403,14 @@ export class WebgalFsService {
 
         return await new Promise((resolve) => {
           fs.writeFile(path, newTextFile)
-            .then(() => resolve('Replaced.'))
-            .catch(() => resolve('Path error or no text'));
+            .then(() => {
+              this.logger.log(`替换文件内容: ${path}`);
+              resolve('Replaced.');
+            })
+            .catch(() => {
+              this.logger.error(`替换文件内容失败: ${path}`);
+              resolve('Path error or no text');
+            });
         });
       } else return false;
     } catch (error) {
@@ -365,20 +436,20 @@ export class WebgalFsService {
   ): Promise<boolean> {
     try {
       const targetDirectory = decodeURI(_targetDirectory);
-      await fs.mkdir(this.getPathFromRoot(targetDirectory), {
-        recursive: true,
-      });
+      const targetPath = this.normalizeFsPath(targetDirectory);
+      if (!this.isPathInsideAllowedRoots(targetPath)) {
+        throw new Error('Path is out of allowed roots');
+      }
+      await fs.mkdir(targetPath, { recursive: true });
+      this.logger.log(`创建目录: ${targetPath}`);
       for (const file of fileList) {
-        await fs.writeFile(
-          `${this.getPathFromRoot(targetDirectory)}/${decodeURI(
-            file.fileName,
-          )}`,
-          file.file,
-        );
+        const filePath = `${targetPath}/${decodeURI(file.fileName)}`;
+        await fs.writeFile(filePath, file.file);
+        this.logger.log(`写入文件: ${filePath}`);
       }
       return true;
     } catch (error) {
-      console.error(error);
+      this.logger.error(`写入文件失败: ${String(error)}`);
       return false;
     }
   }
@@ -408,6 +479,132 @@ export class WebgalFsService {
     const newPath = join(dir, newName);
 
     await fs.copyFile(filePath, newPath);
+    this.logger.log(`复制文件: ${filePath} -> ${newPath}`);
     return newPath;
+  }
+
+  /**
+   * 压缩指定目录为指定压缩格式
+   */
+  async compressedDirectory(
+    sourceDir: string,
+    outPath: string,
+    format: archiver.Format = 'zip',
+  ): Promise<boolean> {
+    try {
+      const decodedSourceDir = decodeURI(sourceDir);
+      const decodedOutPath = decodeURI(outPath);
+      if (
+        !this.isPathInsideAllowedRoots(decodedSourceDir) ||
+        !this.isPathInsideAllowedRoots(decodedOutPath)
+      ) {
+        throw new Error('Path is out of allowed roots');
+      }
+
+      const dir = dirname(decodedOutPath);
+      await fs.mkdir(dir, { recursive: true });
+      const fileHandle = await fs.open(decodedOutPath, 'w');
+      const output = fileHandle.createWriteStream();
+      const archive = archiver.create(format, {
+        zlib: { level: 9 },
+      });
+
+      return await new Promise<boolean>((resolve) => {
+        let settled = false;
+        const finish = (value: boolean) => {
+          if (!settled) {
+            settled = true;
+            resolve(value);
+          }
+        };
+
+        archive.on('error', (err) => {
+          this.logger.error(`压缩目录失败: ${String(err)}`);
+          finish(false);
+        });
+        archive.on('warning', (err) => {
+          if (err.code === 'ENOENT') {
+            this.logger.warn(`压缩目录警告: ${String(err)}`);
+          }
+        });
+        output.on('error', (err) => {
+          this.logger.error(`写入压缩文件失败: ${String(err)}`);
+          finish(false);
+        });
+        output.on('close', () => {
+          finish(true);
+        });
+        archive.pipe(output);
+        archive.directory(decodedSourceDir, false);
+        archive.finalize().catch((err) => {
+          this.logger.error(`压缩目录失败: ${String(err)}`);
+          finish(false);
+        });
+      });
+    } catch (error) {
+      this.logger.error(`压缩目录失败: ${String(error)}`);
+      return false;
+    }
+  }
+
+  /**
+   * 解压缩指定文件到指定目录
+   */
+  async decompressedDirectory(
+    sourceZip: string | Buffer,
+    targetDir: string,
+  ): Promise<boolean> {
+    try {
+      const decodedTargetDir = decodeURI(targetDir);
+      if (!this.isPathInsideAllowedRoots(decodedTargetDir)) {
+        throw new Error('Path is out of allowed roots');
+      }
+
+      const zip = new AdmZip(sourceZip);
+      const hasUnsafeEntry = zip
+        .getEntries()
+        .some((entry) => this.hasUnsafeZipEntryPath(entry.entryName));
+
+      if (hasUnsafeEntry) {
+        throw new Error('Zip contains unsafe entry path');
+      }
+
+      await fs.mkdir(decodedTargetDir, { recursive: true });
+
+      return await new Promise<boolean>((resolve) => {
+        zip.extractAllToAsync(decodedTargetDir, true, true, (err) => {
+          if (err) {
+            this.logger.error(`解压缩失败: ${String(err)}`);
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        });
+      });
+    } catch (error) {
+      this.logger.error(`解压缩失败: ${String(error)}`);
+      return false;
+    }
+  }
+
+  /**
+   * 读取压缩包中的文件内容
+   */
+  readFileInZipToBuffer(
+    zipPath: string | Buffer,
+    entryPath: string,
+  ): Buffer | null {
+    try {
+      const zip = new AdmZip(zipPath);
+      const entry = zip.getEntry(entryPath);
+      if (!entry) {
+        return null;
+      }
+      const buf = zip.readFile(entry);
+      return buf;
+    } catch (error) {
+      this.logger.error(`读取压缩包文件失败: ${String(error)}`);
+      return null;
+    }
   }
 }

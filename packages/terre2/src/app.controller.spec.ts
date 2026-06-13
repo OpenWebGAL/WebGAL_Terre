@@ -15,8 +15,10 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.apiTest()).toBe('API Test OK');
+    it('should return the API test message', () => {
+      expect(appController.apiTest()).toBe(
+        'WebGAL Terre Application API Test OK',
+      );
     });
   });
 });

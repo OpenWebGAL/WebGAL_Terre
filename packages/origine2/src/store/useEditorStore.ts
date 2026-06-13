@@ -3,6 +3,7 @@ import createSelectors from '@/utils/createSelectors';
 import { updateUserConfiguration } from '@codingame/monaco-vscode-configuration-service-override';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { getDefaultLanguage } from '@/utils/language';
 
 let subPageChangedCallback: (subPage: string) => void = () => {};
 
@@ -16,7 +17,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       page: 'dashboard',
       subPage: '',
       expand: 0,
-      language: 'zhCn',
+      language: getDefaultLanguage(),
       editorFontFamily: "Consolas, 'Courier New', monospace",
       editorFontSize: 14,
       viewType: 'list',
@@ -26,22 +27,26 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isShowPreview: true,
       isEnableLivePreview: false,
       isAutoWarp: false,
-      isUseExpFastSync:false,
+      isUseExpFastSync: false,
+      isWindowAdjustment: false, // 表示预览窗口调整功能是否开启
       isUseFontOptimization: false,
       ignoreVersion: '',
       isCascaderDelimitersCustomizable: false,
       cascaderDelimiters: ['/'],
       isDarkMode: false,
       isUseRealtimeEffect: true,
-      updatePage: (page) => set({page}),
+      debugVariables: [],
+      isTrash: false,
+      updateIsWindowAdjustment: (isWindowAdjustment) => set({ isWindowAdjustment }),
+      updatePage: (page) => set({ page }),
       updateSubPage: (subPage) => {
         set({ subPage });
         subPageChangedCallback(subPage);
       },
-      updateExpand: (index) => set({expand: index}),
-      updateLanguage: (language) => set({language}),
+      updateExpand: (index) => set({ expand: index }),
+      updateLanguage: (language) => set({ language }),
       updateEditorFontFamily: (editorFontFamily) => {
-        set({editorFontFamily});
+        set({ editorFontFamily });
         updateUserConfiguration(`{
           "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
@@ -50,7 +55,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
         }`);
       },
       updateEditorFontSize: (editorFontSize) => {
-        set({editorFontSize});
+        set({ editorFontSize });
         updateUserConfiguration(`{
           "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
@@ -61,17 +66,20 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateViewType: (viewType) => set({ viewType }),
       updateSortBy: (sortBy) => set({ sortBy }),
       updateSortOrder: (sortOrder) => set({ sortOrder }),
-      updateIisAutoHideToolbar: (isAutoHideToolbar) => set({isAutoHideToolbar}),
-      updateIsShowPreview: (isShowPreview) => set({isShowPreview}),
-      updateIsEnableLivePreview: (isEnableLivePreview) => set({isEnableLivePreview}),
-      updateIsAutoWarp: (isAutoWarp) => set({isAutoWarp}),
-      updateIsUseExpFastSync:(isUseExpFastSync)=> set({isUseExpFastSync}),
+      updateIisAutoHideToolbar: (isAutoHideToolbar) => set({ isAutoHideToolbar }),
+      updateIsShowPreview: (isShowPreview) => set({ isShowPreview }),
+      updateIsEnableLivePreview: (isEnableLivePreview) => set({ isEnableLivePreview }),
+      updateIsAutoWarp: (isAutoWarp) => set({ isAutoWarp }),
+      updateIsUseExpFastSync: (isUseExpFastSync) => set({ isUseExpFastSync }),
       updateIsUseFontOptimization: (isUseFontOptimization) => set({ isUseFontOptimization }),
-      updateIgnoreVersion: (ignoreVersion) => set({ignoreVersion}),
-      updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable) => set({isCascaderDelimitersCustomizable}) ,
-      updateCascaderDelimiters: (cascaderDelimiters) => set({cascaderDelimiters}),
+      updateIgnoreVersion: (ignoreVersion) => set({ ignoreVersion }),
+      updateIsCascaderDelimitersCustomizable: (isCascaderDelimitersCustomizable) =>
+        set({ isCascaderDelimitersCustomizable }),
+      updateCascaderDelimiters: (cascaderDelimiters) => set({ cascaderDelimiters }),
       updateIsDarkMode: (isDarkMode) => set({ isDarkMode }),
       updateIsUseRealtimeEffect: (isUseRealtimeEffect) => set({ isUseRealtimeEffect }),
+      updateDebugVariables: (debugVariables) => set({ debugVariables }),
+      updateIsTrash: (isTrash) => set({ isTrash }),
     }),
     {
       name: 'editor-storage',

@@ -4,29 +4,31 @@
 
 #### 新功能
 
-新增 `callSteam` 命令，并提供图形化参数编辑支持
+新增韩语界面，并支持根据系统语言自动选择韩语。
 
-`changeFigure` 和 `changeBg` 新增动画选择，并支持自动构建 animationTable
+新增调试变量面板，可在实时预览开始时注入变量、查看当前预览变量，并调整调试区域高度。
 
-新增角色混合模式（blend mode）参数支持
+优化图形化编辑器在长场景中的滚动与编辑性能，减少大量语句时的卡顿。
 
-文本编辑器支持保留行内注释
+优化图形化语句编辑体验，新增背景和立绘素材预览，并更清晰地展示连续执行关系、条件选项和开关状态。
 
-资源管理新增创建文件复制按钮，提升素材整理效率
+优化编辑器与实时预览的同步流程，场景切换、语句修改和手动同步时更加稳定。
+
+创建游戏时可以不使用模板。
+
+补充对鉴赏排序、继续游戏按钮是否启用、是否忽略默认变换效果的编辑器选项。
 
 #### 修复
 
-修复 Windows 下路径与文件名校验逻辑，创建空文件更稳定
+修复快速编辑或切换场景时，文本编辑器最后一次修改可能未及时保存的问题。
 
-修复安全上下文下 UUID 生成问题
+修复 4.6 用户数据目录下游戏自带扩展库可能无法正确覆盖内置资源的问题。
 
-修复文本编辑器拖拽处理与文本更新逻辑，避免异常后缀与重复更新
+修复预览窗口拖拽调整可能反复提交文件并影响效果编辑器性能的问题。
 
-修复文本编辑器快速建议缺失问题
+修复同一立绘 ID 更换素材后，或使用部分预设目标和特殊 ID 时，拖拽调整框可能无法取得正确素材尺寸的问题。
 
-修复 `changeFigure` 的 `setEffect` 与 spine 类型处理问题
-
-修复发布脚本并更新打包图标
+修复使用定制引擎时，返回错误的兜底模板文件的问题。
 
 <!-- English Translation -->
 ## Release Notes
@@ -35,33 +37,29 @@
 
 #### New Features
 
-Added the `callSteam` command with graphical argument editing support
+Added a Korean interface with automatic selection based on the system language.
 
-Added animation selection to `changeFigure` and `changeBg`, with automatic animationTable generation
+Added a debug variables panel for injecting variables when live preview starts, viewing current preview variables, and resizing the debugger area.
 
-Added blend mode argument support for figures
+Improved scrolling and editing performance for long scenes in the graphical editor, reducing lag in scenes with many statements.
 
-Text editor now preserves inline comments
+Improved graphical statement editing with background and figure previews, plus clearer displays for continuous execution, conditional options, and toggle states.
 
-Added a file-copy button in assets management to speed up resource organization
+Improved synchronization between the editor and live preview, making scene switching, statement editing, and manual resynchronization more stable.
+
+Games can now be created without using a template.
+
+Added editor options for gallery ordering, whether the Continue button is enabled, and whether default transform effects are ignored.
 
 #### Fixes
 
-Fixed path and filename validation on Windows for more reliable empty-file creation
+Fixed the last text edit possibly not being saved in time when editing quickly or switching scenes.
 
-Fixed UUID generation issues in secure contexts
+Fixed game extension libraries possibly failing to override built-in resources under the 4.6 user data directory.
 
-Fixed text editor drag/drop handling and text update logic to avoid suffix pollution and redundant updates
+Fixed preview drag adjustments possibly submitting files repeatedly and reducing effect editor performance.
 
-Fixed missing quick suggestions in the text editor
-
-Fixed `setEffect` handling and spine type processing in `changeFigure`
-
-Updated incremental copy naming to a 3-digit suffix format (for example `_001`)
-
-Optimized animationTable auto-update triggers to reduce unnecessary refreshes
-
-Fixed release scripts and updated packaging icon
+Fixed an issue where the wrong fallback template file could be returned when using a custom engine.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -70,30 +68,28 @@ Fixed release scripts and updated packaging icon
 
 #### 新機能
 
-`callSteam` コマンドを追加し、引数のグラフィカル編集に対応しました
+韓国語 UI を追加し、システム言語に応じた自動選択にも対応しました。
 
-`changeFigure` と `changeBg` にアニメーション選択を追加し、animationTable の自動構築に対応しました
+デバッグ変数パネルを追加し、リアルタイムプレビュー開始時の変数注入、現在のプレビュー変数の確認、デバッグ領域の高さ調整に対応しました。
 
-キャラクターのブレンドモード（blend mode）引数に対応しました
+長いシーンでのグラフィカルエディターのスクロールと編集性能を改善し、多数の文を含むシーンでの動作の重さを軽減しました。
 
-テキストエディターでインラインコメントを保持できるようにしました
+背景と立ち絵の素材プレビューを追加し、連続実行の関係、条件オプション、切り替え状態をより分かりやすく表示するようにしました。
 
-アセット管理にファイル複製ボタンを追加し、素材整理の効率を向上しました
+エディターとリアルタイムプレビューの同期処理を改善し、シーン切り替え、文の編集、手動での再同期をより安定させました。
+
+テンプレートを使用せずにゲームを作成できるようになりました。
+
+鑑賞の並び順、「続きから」ボタンを有効にするかどうか、デフォルトの変形効果を無視するかどうかに関するエディターオプションを追加しました。
 
 #### 修正
 
-Windows 環境でのパス／ファイル名バリデーションを修正し、空ファイル作成の安定性を向上しました
+素早く編集した場合やシーンを切り替えた場合に、テキストエディターの最後の変更がすぐに保存されないことがある問題を修正しました。
 
-セキュアコンテキストでの UUID 生成問題を修正しました
+4.6 のユーザーデータディレクトリ環境で、ゲーム付属の拡張ライブラリが組み込みリソースを正しく上書きできないことがある問題を修正しました。
 
-テキストエディターのドラッグ＆ドロップ処理とテキスト更新ロジックを修正し、不要な接尾辞や重複更新を防止しました
+プレビュー画面でのドラッグ調整によってファイルが繰り返し保存され、エフェクトエディターの性能が低下することがある問題を修正しました。
 
-テキストエディターのクイックサジェストが表示されない問題を修正しました
+同じ立ち絵 ID の素材を変更した場合や、一部のプリセットターゲットと特殊 ID を使用した場合に、ドラッグ調整枠が正しい素材サイズを取得できないことがある問題を修正しました。
 
-`changeFigure` の `setEffect` と spine タイプ処理の問題を修正しました
-
-ファイル複製時の連番ルールを 3 桁（例 `_001`）に統一しました
-
-animationTable の自動更新トリガーを最適化し、不要なリフレッシュを削減しました
-
-リリーススクリプトを修正し、パッケージアイコンを更新しました
+カスタムエンジンを使用している場合に、誤ったフォールバック用テンプレートファイルが返される問題を修正しました。

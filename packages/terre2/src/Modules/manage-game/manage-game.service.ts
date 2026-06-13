@@ -73,7 +73,7 @@ export class ManageGameService {
    */
   async openAssetsDictionary(gameName: string, subFolder?: string) {
     const path = this.webgalFs.getPathFromRoot(
-      `public/games/${gameName}/game/${subFolder}`,
+      `public/games/${gameName}/game/${subFolder ?? ''}`,
     );
     await _open(path);
   }
@@ -83,7 +83,8 @@ export class ManageGameService {
    * @param createGameData
    */
   async createGame(createGameData: CreateGameDto): Promise<boolean> {
-    const { gameName, gameDir, derivative, templateDir } = createGameData;
+    const { gameName, gameDir, derivative, templateDir, ignoreTemplate } =
+      createGameData;
     // 检查是否存在这个游戏
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/games`),
@@ -125,9 +126,34 @@ export class ManageGameService {
       `Game_name:${gameName};`,
     );
 
-    if (templateDir) {
+    // 应用模板时删除原有模板
+    if (!ignoreTemplate) {
+      const gameTemplatePath = this.webgalFs.getPathFromRoot(
+        `/public/games/${gameDir}/game/template`,
+      );
+      await this.webgalFs.deleteFileOrDirectory(gameTemplatePath);
+    }
+
+    let templateApplied = false;
+    if (templateDir && !ignoreTemplate) {
+      const templatePath = this.webgalFs.getPathFromRoot(
+        `/public/templates/${templateDir}/`,
+      );
+      if (await this.webgalFs.existsDir(templatePath)) {
+        await this.webgalFs.copy(
+          templatePath,
+          this.webgalFs.getPathFromRoot(
+            `/public/games/${gameDir}/game/template/`,
+          ),
+        );
+        templateApplied = true;
+      }
+    }
+    if (!templateApplied && !ignoreTemplate) {
       await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
+        this.webgalFs.getPathFromRoot(
+          '/assets/templates/WebGAL_Default_Template/',
+        ),
         this.webgalFs.getPathFromRoot(
           `/public/games/${gameDir}/game/template/`,
         ),

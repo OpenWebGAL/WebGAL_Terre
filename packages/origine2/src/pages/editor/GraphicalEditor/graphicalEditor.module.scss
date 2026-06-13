@@ -2,6 +2,28 @@
   height: 100%;
   display: flex;
   flex-flow: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.virtualScroller {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 14px 4px 0 4px;
+  box-sizing: border-box;
+}
+
+.virtualCanvas {
+  position: relative;
+  width: 100%;
+}
+
+.virtualItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .sentenceEditorWrapper {
@@ -33,6 +55,14 @@
 
 .seArea {
   flex: 1;
+}
+
+.sentenceEditBody {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: 100%;
 }
 
 .head {
@@ -122,6 +152,24 @@
   transition: visibility 0.2s linear, opacity 0.2s linear;
   opacity: 0;
   visibility: hidden;
+}
+
+.nextChain {
+  position: absolute;
+  z-index: 2;
+  left: 6px;
+  top: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--primary);
+  pointer-events: none;
+}
+
+.nextChain svg {
+  transform: scaleX(-1);
 }
 
 .addForwardAreaButtonGroup {

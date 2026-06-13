@@ -12,19 +12,38 @@ export enum addSentenceType {
   backward
 }
 
+interface IAddSentenceButtonProps {
+  titleText: string;
+  type: addSentenceType;
+  onClick: () => void;
+}
+
+interface IAddSentenceDialogProps {
+  open: boolean;
+  titleText: string;
+  onChoose: (newSentence: string) => void;
+  onOpenChange: (open: boolean) => void;
+}
+
 interface IAddSentenceProps {
   titleText: string;
-  type: addSentenceType
+  type: addSentenceType;
   onChoose: (newSentence: string) => void;
 }
 
-export default function AddSentence(props: IAddSentenceProps) {
+export function AddSentenceButton(props: IAddSentenceButtonProps) {
+  return <div className={stylesGe.optionButton} onClick={props.onClick}>
+    <Add strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"/>
+    {props.titleText}
+  </div>;
+}
+
+export function AddSentenceDialog(props: IAddSentenceDialogProps) {
   const DismissIcon = bundleIcon(Dismiss24Filled, Dismiss24Regular);
-  const isShowCallout = useValue(false);
   const addSentenceButtons = sentenceEditorConfig.filter(e => e.type !== commandType.comment).map(sentenceConfig => {
     return <div className={stylesAs.sentenceTypeButton} key={sentenceConfig.type} onClick={() => {
       props.onChoose(sentenceConfig.initialText());
-      isShowCallout.set(false);
+      props.onOpenChange(false);
     }}>
       <div style={{padding:'1px 0 0 0'}}>
         {sentenceConfig.icon}
@@ -40,35 +59,46 @@ export default function AddSentence(props: IAddSentenceProps) {
     </div>;
   });
 
+  return <Dialog
+    open={props.open}
+    onOpenChange={(_, data) => props.onOpenChange(data.open)}
+  >
+    <DialogSurface style={{ maxWidth: "960px"}}>
+      <DialogBody>
+        <DialogTitle
+          action={
+            <DialogTrigger action="close">
+              <Button
+                appearance="subtle"
+                aria-label="close"
+                icon={<DismissIcon />}
+              />
+            </DialogTrigger>
+          }
+        >{props.titleText}</DialogTitle>
+        <DialogContent>
+          <div className={stylesAs.sentenceTypeButtonList}>
+            {addSentenceButtons}
+          </div>
+        </DialogContent>
+      </DialogBody>
+    </DialogSurface>
+  </Dialog>;
+}
+
+export default function AddSentence(props: IAddSentenceProps) {
+  const isShowCallout = useValue(false);
   return <>
-    <div className={stylesGe.optionButton} onClick={() => isShowCallout.set(!isShowCallout.value)}>
-      <Add strokeWidth={3} style={{ padding: "2px 4px 0 0" }} theme="outline" size="16"/>
-      {props.titleText}
-    </div>
-    <Dialog
+    <AddSentenceButton
+      titleText={props.titleText}
+      type={props.type}
+      onClick={() => isShowCallout.set(!isShowCallout.value)}
+    />
+    <AddSentenceDialog
       open={isShowCallout.value}
-      onOpenChange={() => isShowCallout.set(false)}
-    >
-      <DialogSurface style={{ maxWidth: "960px"}}>
-        <DialogBody>
-          <DialogTitle
-            action={
-              <DialogTrigger action="close">
-                <Button
-                  appearance="subtle"
-                  aria-label="close"
-                  icon={<DismissIcon />}
-                />
-              </DialogTrigger>
-            }
-          >{props.titleText}</DialogTitle>
-          <DialogContent>
-            <div className={stylesAs.sentenceTypeButtonList}>
-              {addSentenceButtons}
-            </div>
-          </DialogContent>
-        </DialogBody>
-      </DialogSurface>
-    </Dialog>
+      titleText={props.titleText}
+      onChoose={props.onChoose}
+      onOpenChange={(open) => isShowCallout.set(open)}
+    />
   </>;
 }

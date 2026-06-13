@@ -13,7 +13,7 @@ import useEditorStore from "@/store/useEditorStore";
 import { api } from "@/api";
 import useSWR from "swr";
 
-const DEFAULT_FONT_CHAIN = ["思源宋体", "LXGW", "WebgalUI"] as const;
+const DEFAULT_FONT_CHAIN = ["资源圆体", "思源宋体", "WebgalUI"] as const;
 // const GENERIC_FONTS = ["serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui"] as const;
 const GENERIC_FONTS = [] as const;
 

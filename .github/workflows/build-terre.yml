@@ -78,6 +78,28 @@ jobs:
         with:
           name: WebGAL_Terre_Mac
           path: release/WebGAL_Terre_Mac.zip
+  build-mac-x64:
+    name: Build MacOS x64 Binary
+    runs-on: macos-15-intel
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+      - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: sh release-mac-x64.sh
+      - name: Compress
+        run: 7z a -tzip release/WebGAL_Terre_Mac_Intel.zip release/*
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WebGAL_Terre_Mac_Intel
+          path: release/WebGAL_Terre_Mac_Intel.zip
   build-windows:
     name: Build Windows Binary
     runs-on: windows-2022

@@ -145,7 +145,6 @@ export async function handleFileSuggestions(
     }
   }
   dirInfo = await fsService.getDirInfo(dirPath);
-  console.debug(dirInfo);
 
   return makeFileSuggestion(filterFiles(dirInfo));
 }

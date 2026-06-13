@@ -1,14 +1,16 @@
 import styles from "./editorSidebar.module.scss";
-import Assets, { IFile, IFileConfig, IFileFunction } from "@/components/Assets/Assets";
+import Assets, { IFileConfig, IFileFunction } from "@/components/Assets/Assets";
 import React, { useEffect, useRef } from "react";
 import { eventBus } from "@/utils/eventBus";
-import {Button, Switch, Tab, TabList} from "@fluentui/react-components";
+import { Button, Switch, Tab, TabList } from "@fluentui/react-components";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
-import {IGameEditorSidebarTabs, ITag} from "@/types/gameEditor";
+import { IGameEditorSidebarTabs, ITag } from "@/types/gameEditor";
 import { t } from "@lingui/macro";
 import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
+import { createPreviewBootstrapProvide, isPreviewBootstrapRequest } from "@/utils/editorPreviewBootstrap";
+import { createId } from '@/utils/createId';
 
 let startX = 0;
 let prevXvalue = 0;
@@ -33,20 +35,75 @@ export default function EditorSideBar() {
   const tags = useGameEditorContext((state) => state.tags);
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
+  const PreviewControlRef = useRef(null);
 
   const ifRef = useRef<HTMLIFrameElement | null>(null);
-  useEffect(() => {
-    if (ifRef.current) {
-      // @ts-ignore
-      ifRef!.current!.contentWindow.console.log = function () {
-      };
+  const embeddedLaunchIdRef = useRef(createId());
 
-      ifRef.current.onload = () => setTimeout(() => WsUtil.sendFontOptimizationCommand(isUseFontOptimization), 1000);
+  useEffect(() => {
+    EditorPreviewClient.ensureConnected();
+  }, []);
+
+  useEffect(() => {
+    const handleBootstrapMessage = (event: MessageEvent) => {
+      const iframeWindow = ifRef.current?.contentWindow;
+      if (!iframeWindow || event.source !== iframeWindow || !isPreviewBootstrapRequest(event.data)) {
+        return;
+      }
+
+      iframeWindow.postMessage(createPreviewBootstrapProvide(embeddedLaunchIdRef.current), '*');
+    };
+
+    window.addEventListener('message', handleBootstrapMessage);
+    return () => {
+      window.removeEventListener('message', handleBootstrapMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isShowPreview) {
+      embeddedLaunchIdRef.current = createId();
     }
-  });
+  }, [gameDir, isShowPreview]);
 
   useEffect(() => {
-    WsUtil.sendFontOptimizationCommand(isUseFontOptimization);
+    const iframeElement = ifRef.current;
+    if (!iframeElement) {
+      return;
+    }
+
+    iframeElement.onload = () => {
+      const iframeWindow = iframeElement.contentWindow;
+      if (!iframeWindow) {
+        return;
+      }
+
+      (iframeWindow as Window & { console: { log: (...args: unknown[]) => void } }).console.log = function () {};
+    };
+
+    return () => {
+      iframeElement.onload = null;
+    };
+  }, [gameDir, isShowPreview]);
+
+  useEffect(() => {
+    const handlePreviewReady = ({ ready }: { ready: boolean }) => {
+      if (!ready) {
+        return;
+      }
+
+      EditorPreviewClient.setFontOptimization(isUseFontOptimization);
+      if (isEnableLivePreview) eventBus.emit('editor:sync-current-line', null);
+    };
+
+    eventBus.on('editor-preview:ready', handlePreviewReady);
+    return () => {
+      eventBus.off('editor-preview:ready', handlePreviewReady);
+    };
+  }, [isEnableLivePreview, isUseFontOptimization]);
+
+  useEffect(() => {
+    EditorPreviewClient.setFontOptimization(isUseFontOptimization);
   }, [isUseFontOptimization]);
 
   useEffect(() => {
@@ -79,7 +136,7 @@ export default function EditorSideBar() {
 
   };
 
-  const handleDragEnd = (event: MouseEvent) => {
+  const handleDragEnd = (_event: MouseEvent) => {
     setTimeout(() => {
       const prevX = document.body.style.getPropertyValue("--sidebar-width");
       prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
@@ -100,7 +157,10 @@ export default function EditorSideBar() {
     };
   }, []);
 
-  const refreshGame = () => ifRef.current?.contentWindow?.location.reload();
+  const refreshGame = () => {
+    embeddedLaunchIdRef.current = createId();
+    ifRef.current?.contentWindow?.location.reload();
+  };
 
   useEffect(() => {
     eventBus.on('iframe:refresh-game', refreshGame);
@@ -160,8 +220,8 @@ export default function EditorSideBar() {
     open: handleOpen,
   };
 
-  const assetsTabs =(
-    <TabList style={{padding: '0 3px 0 4px'}} size="small" selectedValue={currentSidebarTab}
+  const assetsTabs = (
+    <TabList style={{ padding: '0 3px 0 4px' }} size="small" selectedValue={currentSidebarTab}
       onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
     >
       <Tab value="asset" style={{ padding: '2px 2px 3.5px 2px' }}>{t`资源`}</Tab>
@@ -200,14 +260,27 @@ export default function EditorSideBar() {
               onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
             />
           </div>
+          <div
+            ref={PreviewControlRef}
+            id="gamePreviewControl"
+            className={styles.previewWindow}
+            style={{
+              position: 'absolute',
+              left: 0,
+              bottom: 0,
+              overflow: 'hidden',
+              pointerEvents: 'none',
+              display: isShowPreview ? 'block' : 'none',
+            }}
+          />
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          { isShowPreview && <iframe
+          {isShowPreview && <iframe
             ref={ifRef}
             id="gamePreviewIframe"
             frameBorder="0"
             className={styles.previewWindow}
             src={`/games/${gameDir}`}
-          /> }
+          />}
         </div>
 
         <div className={styles.sidebarContent}>

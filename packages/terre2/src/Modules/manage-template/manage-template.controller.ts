@@ -9,18 +9,29 @@ import {
   Param,
   Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ManageTemplateService } from './manage-template.service';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import {
   CreateTemplateDto,
   GetStyleByClassNameDto,
+  ImportTemplateDto,
+  OutputTemplateDto,
   TemplateConfigDto,
   TemplateInfoDto,
   UpdateTemplateConfigDto,
 } from './manage-template.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiConsumes,
+} from '@nestjs/swagger';
 import { ApplyTemplateToGameDto } from '../assets/assets.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('api/manageTemplate')
 @ApiTags('Manage Template')
 export class ManageTemplateController {
@@ -196,6 +207,35 @@ export class ManageTemplateController {
     }
   }
 
+  @Delete('trash/:templateDir')
+  @ApiOperation({ summary: 'Delete Template' })
+  @ApiResponse({ status: 204, description: 'Template trashed successfully.' })
+  @ApiResponse({ status: 404, description: 'Template not found.' })
+  @ApiResponse({ status: 500, description: 'Internal server error.' })
+  async trashTemplate(@Param('templateDir') templateDir: string) {
+    try {
+      const trashResult = await this.manageTemplate.deleteTemplate(
+        templateDir,
+        true,
+      );
+
+      if (!trashResult) {
+        throw new HttpException(
+          { status: 'error', message: 'Template not found.' },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return;
+    } catch (error) {
+      console.error('Error trashing template:', error);
+      throw new HttpException(
+        { status: 'error', message: 'Internal server error.' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Post('applyTemplateToGame')
   @ApiOperation({ summary: 'Apply template to a game' })
   @ApiResponse({
@@ -260,7 +300,7 @@ export class ManageTemplateController {
         getStyleDto.className,
       );
 
-      if (!style) {
+      if (style === undefined) {
         throw new HttpException(
           { status: 'error', message: 'Style not found.' },
           HttpStatus.NOT_FOUND,
@@ -275,5 +315,43 @@ export class ManageTemplateController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  @Post('outputTemplate')
+  @ApiOperation({ summary: 'Output Template' })
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: 'Output Template Successfully.',
+  })
+  @ApiResponse({ status: 400, description: 'Output Template Failed.' })
+  async outputTemplate(
+    @Body() outputTemplateParams: OutputTemplateDto,
+  ): Promise<boolean> {
+    return await this.manageTemplate.outputTemplate(
+      outputTemplateParams.templateDir,
+    );
+  }
+
+  @Post('importTemplate')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({ summary: 'Import Template' })
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: 'Import Template Successfully.',
+  })
+  @ApiResponse({ status: 400, description: 'Import Template Failed.' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    type: ImportTemplateDto,
+  })
+  async importTemplate(
+    @UploadedFile() file?: { buffer?: Buffer },
+  ): Promise<boolean> {
+    if (!file?.buffer) {
+      return false;
+    }
+    return await this.manageTemplate.importTemplate(file.buffer);
   }
 }

@@ -119,7 +119,6 @@ function parseSemanticTokens(text: string, uri: string): IParsedToken[] {
     // intro has special syntax
     if (sentence.command === commandType.intro) {
       const values = sentence.content.split(/\|/);
-      console.debug(values);
 
       for (const value of values) {
         const valueOffset = line.indexOf(value, currentOffset);

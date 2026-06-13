@@ -3,7 +3,7 @@ import TemplateEditorSidebar from "./TemplateEditorSidebar/TemplateEditorSidebar
 import TemplateEditorMainAria from "./TemplateEditorMainAria/TemplateEditorMainAria";
 import styles from "./templateEditor.module.scss";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
-import { WsUtil } from "@/utils/wsUtil";
+import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import {
   useComponentTreeChoose,
   useComponentTreeTextbox,
@@ -24,18 +24,17 @@ export default function TemplateEditor() {
 
 export const sendComponentPreviewMessage = (componentPath: string, componentClass: string)=> {
   if (componentPath.includes(useComponentTreeTitle().path)) {
-    // set scene to title
-    WsUtil.setComponentVisibility([
-      { component: "showTitle", visibility: true },
-      { component: "showPanicOverlay", visibility: false },
-    ]);
+    EditorPreviewClient.setComponentVisibility({
+      showTitle: true,
+      showPanicOverlay: false,
+    });
   }
   else if (componentPath.includes(useComponentTreeTextbox().path)) {
-    const miniAvatar = !componentClass.toLowerCase().includes("miniavataroff") ? "miniavatar.webp" : "";
-    WsUtil.runTempScene(`changeBg:bg.webp -next;\nminiAvatar:${miniAvatar} -next;\n${useTemplateTempScene().textbox}`);
+    const miniAvatar = componentClass.toLowerCase().includes("miniavataroff") ? "" : "miniavatar.webp";
+    EditorPreviewClient.runSceneContent(`changeBg:bg.webp -next;\nminiAvatar:${miniAvatar} -next;\n${useTemplateTempScene().textbox}`);
   }
   else if (componentPath.includes(useComponentTreeChoose().path)) {
-    WsUtil.runTempScene(`changeBg:bg.webp -next;\n${useTemplateTempScene().choose}`);
+    EditorPreviewClient.runSceneContent(`changeBg:bg.webp -next;\n${useTemplateTempScene().choose}`);
   }
 };
 

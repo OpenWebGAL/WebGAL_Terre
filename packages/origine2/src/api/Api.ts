@@ -17,6 +17,59 @@ export interface OsInfoDto {
   arch: string;
 }
 
+export interface UserDataLegacyMigrationStatusDto {
+  /** Whether legacy games exist in the install dir */
+  hasLegacyGames: boolean;
+  /** Whether legacy custom templates exist in the install dir */
+  hasLegacyCustomTemplates: boolean;
+  /** Whether legacy derivative engines exist in the install dir */
+  hasLegacyDerivativeEngines: boolean;
+  /** Whether UI should show the migration notice */
+  needsMigrationNotice: boolean;
+}
+
+export interface UserDataStatusDto {
+  /** The application install/runtime root */
+  appRoot: string;
+  /** The unified configuration directory */
+  configRoot: string;
+  /** The unified configuration file path */
+  configPath: string;
+  /** The default user data directory */
+  defaultUserDataRoot: string;
+  /** The configured user data directory */
+  configuredUserDataRoot: string;
+  /** The currently active user data directory */
+  activeUserDataRoot: string;
+  /** The portable data directory under app root */
+  portableDataRoot: string;
+  /** Whether portable mode is currently active */
+  isPortable: boolean;
+  /** Whether app root data dir exists */
+  hasPortableDataDir: boolean;
+  legacyMigration: UserDataLegacyMigrationStatusDto;
+}
+
+export interface UserDataOperationResultDto {
+  /** Whether the operation succeeded */
+  success: boolean;
+  /** Human-readable operation message */
+  message: string;
+  /** Paths that could not be moved */
+  conflicts: string[];
+  status: UserDataStatusDto;
+}
+
+export interface SetUserDataPathDto {
+  /** The target user data directory */
+  userDataPath: string;
+}
+
+export interface OpenUserDataPathDto {
+  /** The path target to open */
+  target?: "active" | "config" | "portable" | "app";
+}
+
 export interface CreateNewFileDto {
   /** The source path where the directory will be created */
   source: string;
@@ -48,11 +101,25 @@ export interface RenameFileDto {
   newName: string;
 }
 
+export interface TrashFileOrDirDto {
+  /** The source path of the file or directory to be thrashed */
+  source: string;
+}
+
 export interface EditTextFileDto {
   /** The path of textfile */
   path: string;
   /** Text data content */
   textFile: string;
+}
+
+export interface ImageDimensionsResponseDto {
+  /** Width of the image in pixels */
+  width: number;
+  /** Height of the image in pixels */
+  height: number;
+  /** Image file type (e.g., jpg, png, gif, webp) */
+  type: string;
 }
 
 export interface CopyFileWithIncrementDto {
@@ -79,7 +146,7 @@ export interface TemplateConfigDto {
   /** The name of the template */
   name: string;
   /** The id of the template */
-  id: string;
+  id?: string;
   /** The webgal version of the template */
   "webgal-version": string;
   /** The font registrations of the template */
@@ -94,7 +161,7 @@ export interface GameInfoDto {
   /** The cover of the game */
   cover: string;
   /** The template config of the game */
-  template: TemplateConfigDto;
+  template: TemplateConfigDto | null;
 }
 
 export interface CreateGameDto {
@@ -106,6 +173,8 @@ export interface CreateGameDto {
   derivative?: string;
   /** The dir of the template to be applied */
   templateDir?: string;
+  /** Whether to ignore the template when creating the game */
+  ignoreTemplate?: boolean;
 }
 
 export interface EditFileNameDto {
@@ -170,6 +239,11 @@ export interface RenameDto {
   newName: string;
 }
 
+export interface TrashDto {
+  /** The source path of the file or directory to be trashed */
+  gameName: string;
+}
+
 export interface IconsDto {
   /** The icons of the game */
   platforms: string[];
@@ -184,13 +258,15 @@ export interface TemplateInfoDto {
   /** The name of the template */
   name: string;
   /** The id of the template */
-  id: string;
+  id?: string;
   /** The webgal version of the template */
   "webgal-version": string;
   /** The font registrations of the template */
   fonts?: TemplateFontConfigDto[];
   /** The dir of the template */
   dir: string;
+  /** Whether the template is built in */
+  builtIn: boolean;
 }
 
 export interface CreateTemplateDto {
@@ -219,6 +295,19 @@ export interface GetStyleByClassNameDto {
   className: string;
   /** The path of stylesheet file to be fetched */
   filePath: string;
+}
+
+export interface OutputTemplateDto {
+  /** The template directory name */
+  templateDir: string;
+}
+
+export interface ImportTemplateDto {
+  /**
+   * The template's zip file
+   * @format binary
+   */
+  file: File;
 }
 
 import type {
@@ -439,6 +528,95 @@ export class Api<
     /**
      * No description
      *
+     * @tags User Data
+     * @name UserDataControllerGetStatus
+     * @summary Get user data status
+     * @request GET:/api/userData/status
+     */
+    userDataControllerGetStatus: (params: RequestParams = {}) =>
+      this.request<UserDataStatusDto, any>({
+        path: `/api/userData/status`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User Data
+     * @name UserDataControllerMigrateLegacy
+     * @summary Migrate legacy install-dir user data
+     * @request POST:/api/userData/migrateLegacy
+     */
+    userDataControllerMigrateLegacy: (params: RequestParams = {}) =>
+      this.request<UserDataOperationResultDto, any>({
+        path: `/api/userData/migrateLegacy`,
+        method: "POST",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User Data
+     * @name UserDataControllerSetPath
+     * @summary Set and migrate user data path
+     * @request POST:/api/userData/setPath
+     */
+    userDataControllerSetPath: (
+      data: SetUserDataPathDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<UserDataOperationResultDto, any>({
+        path: `/api/userData/setPath`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User Data
+     * @name UserDataControllerResetPath
+     * @summary Reset user data path to the default path
+     * @request POST:/api/userData/resetPath
+     */
+    userDataControllerResetPath: (params: RequestParams = {}) =>
+      this.request<UserDataOperationResultDto, any>({
+        path: `/api/userData/resetPath`,
+        method: "POST",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User Data
+     * @name UserDataControllerOpen
+     * @summary Open user data related directory
+     * @request POST:/api/userData/open
+     */
+    userDataControllerOpen: (
+      data: OpenUserDataPathDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/userData/open`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Assets
      * @name AssetsControllerReadAssets
      * @summary Read Assets
@@ -570,6 +748,26 @@ export class Api<
      * No description
      *
      * @tags Assets
+     * @name AssetsControllerTrashFileOrDir
+     * @summary trash File or Directory
+     * @request POST:/api/assets/trash
+     */
+    assetsControllerTrashFileOrDir: (
+      data: TrashFileOrDirDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/assets/trash`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
      * @name AssetsControllerEditTextFile
      * @summary Edit Text File
      * @request POST:/api/assets/editTextFile
@@ -583,6 +781,25 @@ export class Api<
         method: "POST",
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
+     * @name AssetsControllerGetImageDimensions
+     * @summary Get Image Dimensions
+     * @request GET:/api/assets/getImageDimensions/{imagePath}
+     */
+    assetsControllerGetImageDimensions: (
+      imagePath: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<ImageDimensionsResponseDto, void>({
+        path: `/api/assets/getImageDimensions/${imagePath}`,
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -1002,6 +1219,23 @@ export class Api<
      * No description
      *
      * @tags Manage Game
+     * @name ManageGameControllerTrash
+     * @summary Trash File or Directory
+     * @request POST:/api/manageGame/trash
+     */
+    manageGameControllerTrash: (data: TrashDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageGame/trash`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
      * @name ManageGameControllerGetIcons
      * @summary Get Game Icons
      * @request GET:/api/manageGame/getIcons/{gameDir}
@@ -1153,6 +1387,24 @@ export class Api<
      * No description
      *
      * @tags Manage Template
+     * @name ManageTemplateControllerTrashTemplate
+     * @summary Delete Template
+     * @request DELETE:/api/manageTemplate/trash/{templateDir}
+     */
+    manageTemplateControllerTrashTemplate: (
+      templateDir: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/trash/${templateDir}`,
+        method: "DELETE",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
      * @name ManageTemplateControllerApplyTemplateToGame
      * @summary Apply template to a game
      * @request POST:/api/manageTemplate/applyTemplateToGame
@@ -1189,22 +1441,46 @@ export class Api<
         format: "json",
         ...params,
       }),
-  };
-  templatePreview = {
+
     /**
      * No description
      *
-     * @name TemplatePreviewControllerGetTemplateAsset
-     * @request GET:/template-preview/{templateName}/game/template/{path}
+     * @tags Manage Template
+     * @name ManageTemplateControllerOutputTemplate
+     * @summary Output Template
+     * @request POST:/api/manageTemplate/outputTemplate
      */
-    templatePreviewControllerGetTemplateAsset: (
-      path: string,
-      templateName: string,
+    manageTemplateControllerOutputTemplate: (
+      data: OutputTemplateDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
-        path: `/template-preview/${templateName}/game/template/${path}`,
-        method: "GET",
+      this.request<boolean, void>({
+        path: `/api/manageTemplate/outputTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerImportTemplate
+     * @summary Import Template
+     * @request POST:/api/manageTemplate/importTemplate
+     */
+    manageTemplateControllerImportTemplate: (
+      data: ImportTemplateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<boolean, void>({
+        path: `/api/manageTemplate/importTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.FormData,
+        format: "json",
         ...params,
       }),
   };

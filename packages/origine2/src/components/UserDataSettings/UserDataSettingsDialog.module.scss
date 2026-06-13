@@ -1,0 +1,79 @@
+.dialogSurface {
+  width: min(880px, calc(100vw - 32px));
+  max-width: min(880px, calc(100vw - 32px));
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: min(72vh, 680px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: var(--border-md);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+}
+
+.sectionTitle {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.pathValue {
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  border: var(--border-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: Consolas, 'Courier New', monospace;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.message {
+  color: var(--text-sub);
+  line-height: 1.5;
+}
+
+.danger {
+  color: var(--danger);
+}
+
+@media (max-width: 720px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

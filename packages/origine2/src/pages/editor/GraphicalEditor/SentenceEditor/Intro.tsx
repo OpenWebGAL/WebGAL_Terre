@@ -14,6 +14,21 @@ import useEditorStore from "@/store/useEditorStore";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString } from "@/utils/combineSubmitString";
+import ChooseFile from "../../ChooseFile/ChooseFile";
+import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import {
+  Add20Filled,
+  Add20Regular,
+  bundleIcon,
+  Delete20Filled,
+  Delete20Regular,
+  Settings20Filled,
+  Settings20Regular,
+} from "@fluentui/react-icons";
+
+const AddIcon = bundleIcon(Add20Filled, Add20Regular);
+const DeleteIcon = bundleIcon(Delete20Filled, Delete20Regular);
+const SettingsIcon = bundleIcon(Settings20Filled, Settings20Regular);
 
 type FontSize = "small" | "medium" | "large";
 type Animation = "fadeIn" | "slideIn" | "typingEffect" | "pixelateEffect" | "revealAnimation";
@@ -150,6 +165,7 @@ export default function Intro(props: ISentenceEditorProps) {
   };
 
   const backgroundColor = useValue(getBackgroundColor());
+  const backgroundImage = useValue(getArgByKey(props.sentence, "backgroundImage").toString() ?? "");
   const fontColor = useValue(getFontColor());
   const fontSize = useValue(getInitialFontSize());
   const animation = useValue(getInitialAnimation());
@@ -182,6 +198,7 @@ export default function Intro(props: ISentenceEditorProps) {
       props.sentence.args,
       [
         {key: "fontSize", value: fontSize.value},
+        {key: "backgroundImage", value: backgroundImage.value},
         {key: "backgroundColor", value: backgroundRgbaColor},
         {key: "fontColor", value: fontRgbaColor},
         {key: "animation", value: animation.value},
@@ -195,18 +212,19 @@ export default function Intro(props: ISentenceEditorProps) {
   };
 
   const introCompList = introTextList.value.map((text, index) => {
-    return <div key={index} style={{ display: "flex" }}>
+    return <div key={index} className={styles.introTextItem}>
       <Button
+        appearance="subtle"
+        icon={<DeleteIcon />}
+        title={t`删除`}
+        aria-label={t`删除`}
         onClick={() => {
           const newList = cloneDeep(introTextList.value);
           newList.splice(index, 1);
           introTextList.set(newList);
           submit();
         }}
-      >
-        {t`删除`}
-      </Button>
-      <div style={{ padding: '0 0 0 4px' }} />
+      />
       <input value={text}
         onChange={(ev) => {
           const newValue = ev.target.value;
@@ -215,26 +233,37 @@ export default function Intro(props: ISentenceEditorProps) {
           introTextList.set(newList);
         }}
         onBlur={submit}
-        className={styles.sayInput}
+        className={`${styles.sayInput} ${styles.introTextInput}`}
         placeholder={t`Intro 文本`}
-        style={{ width: "100%" }}
       />
     </div>;
   });
 
-  return <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+  return <div className={styles.sentenceEditorContent}>
+    <div className={styles.introTextList}>
       {introCompList}
     </div>
-    <Button onClick={() => {
-      const newList = cloneDeep(introTextList.value);
-      newList.push('');
-      introTextList.set(newList);
-      submit();
-    }}>{t`添加新行`}</Button>
-    <Button onClick={() => updateExpand(props.index)}>
-      {t`效果选项`}
-    </Button>
+    <div className={styles.introTextActionRow}>
+      <Button
+        appearance="subtle"
+        icon={<AddIcon />}
+        title={t`添加新行`}
+        aria-label={t`添加新行`}
+        onClick={() => {
+          const newList = cloneDeep(introTextList.value);
+          newList.push('');
+          introTextList.set(newList);
+          submit();
+        }}
+      />
+      <Button
+        appearance="subtle"
+        icon={<SettingsIcon />}
+        title={t`效果选项`}
+        aria-label={t`效果选项`}
+        onClick={() => updateExpand(props.index)}
+      />
+    </div>
     <TerrePanel sentenceIndex={props.index} title={t`效果选项`}>
       <div style={{ width: '100%' }}>
         <div style={{ display: 'flex' }}>
@@ -248,6 +277,21 @@ export default function Intro(props: ISentenceEditorProps) {
               }}
               style={{ minWidth: 0 }}
             />
+          </CommonOptions>
+          <CommonOptions title={t`背景图片`}>
+            <>
+              {backgroundImage.value}{"\u00a0"}
+              <ChooseFile
+                title={t`选择背景图片`}
+                basePath={['background']}
+                selectedFilePath={backgroundImage.value}
+                onChange={(fileDesc) => {
+                  backgroundImage.set(fileDesc?.name ?? "");
+                  submit();
+                }}
+                extNames={extNameMap.get('image')}
+              />
+            </>
           </CommonOptions>
           <CommonOptions title={t`动画`}>
             <WheelDropdown

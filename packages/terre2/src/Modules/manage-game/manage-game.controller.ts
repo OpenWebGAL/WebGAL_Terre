@@ -39,7 +39,9 @@ import {
   UploadFilesDto,
   SetFlowchartDto,
   UpdateAnimationTableDto,
+  TrashDto,
 } from './manage-game.dto';
+import { UserDataService } from '../user-data/user-data.service';
 
 @Controller('api/manageGame')
 @ApiTags('Manage Game')
@@ -100,14 +102,9 @@ export class ManageGameController {
       'Returns a list of directories representing available derivative engines.',
   }) // <-- Describe the response and status code of this endpoint
   async getDerivativeEngines() {
-    const path = this.webgalFs.getPathFromRoot(
-      '/assets/templates/Derivative_Engine/',
-    );
+    const path = UserDataService.getDerivativeEngineRoot();
     if (!(await this.webgalFs.existsDir(path))) {
-      await this.webgalFs.mkdir(
-        this.webgalFs.getPathFromRoot('/assets/templates'),
-        'Derivative_Engine',
-      );
+      await this.webgalFs.mkdir(path, '');
     }
     const readDirResult = await this.webgalFs.getDirInfo(path);
     return readDirResult.filter((e) => e.isDir).map((e) => e.name);
@@ -385,6 +382,22 @@ export class ManageGameController {
         `public/games/${fileOperationDto.gameName}`,
       ),
       fileOperationDto.newName,
+    );
+  }
+
+  @Post('trash')
+  @ApiOperation({ summary: 'Trash File or Directory' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully trashed the file or directory.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to trash the file or directory.',
+  })
+  async trash(@Body() trashDto: TrashDto) {
+    return this.webgalFs.trashFileOrDirectory(
+      this.webgalFs.getPathFromRoot(`public/games/${trashDto.gameName}`),
     );
   }
 

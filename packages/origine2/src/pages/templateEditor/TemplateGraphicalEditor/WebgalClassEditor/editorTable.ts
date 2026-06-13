@@ -55,7 +55,7 @@ export function getEditorTable(): IWebGALStylePropertyEditItem[] {
     {propName: 'bottom', propLable: t`偏移底部距离（定位用）`, editor: WGCommonLengthEditor, initialValue: '5px'},
     {propName: 'cursor', propLable: t`鼠标指针`, editor: WGCursor, initialValue: 'pointer'},
     {propName: 'z-index', propLable: t`层级顺序`, editor: WGCommonNumberEditor, initialValue: '1'},
-    {propName: 'font-family', propLable: t`字体`, editor: WGFontFamily, initialValue: `"思源宋体", "LXGW", WebgalUI`},
+    {propName: 'font-family', propLable: t`字体`, editor: WGFontFamily, initialValue: `"资源圆体", "思源宋体", WebgalUI`},
     {propName: 'border-radius', propLable: t`圆角`, editor: WGCommonLengthEditor4Values, initialValue: `10px 10px 10px 10px`},
     {propName: 'text-align', propLable: t`文本对齐`, editor: WGTextAlignEditor, initialValue: `left`},
     {propName: 'text-shadow', propLable: t`文本阴影`, editor: WGTextShadowEditor, initialValue: `10px 10px 10px white`},

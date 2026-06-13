@@ -19,13 +19,15 @@ import {I18nProvider} from "@lingui/react";
 import {messages as enMessages} from "./locales/en";
 import {messages as zhCnMessages} from "./locales/zhCn";
 import {messages as jaMessages} from "./locales/ja";
+import {messages as koMessages} from "./locales/ko";
 import useEditorStore from "./store/useEditorStore";
 import { useEffect } from "react";
 
 i18n.load({
   en: enMessages,
   zhCn: zhCnMessages,
-  ja: jaMessages
+  ja: jaMessages,
+  ko: koMessages
 });
 
 export async function i18nActivate(locale: string) {
@@ -64,7 +66,7 @@ darkTheme.colorBrandForeground1 = terre[110];
 darkTheme.colorBrandForeground2 = terre[120];
 initializeIcons();
 
-i18n.activate('zhCn');
+i18n.activate(useEditorStore.getState().language);
 
 function Main() {
   const isDarkMode = useEditorStore.use.isDarkMode();

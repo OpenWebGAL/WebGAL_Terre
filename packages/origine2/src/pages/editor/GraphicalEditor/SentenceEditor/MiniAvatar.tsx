@@ -24,7 +24,7 @@ export default function MiniAvatar(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`关闭小头像`}>
+      <CommonOptions key="isNoDialog" title={t`小头像显示状态`}>
         <TerreToggle title="" onChange={(newValue) => {
           if(!newValue){
             fileName.set(t`选择小头像`);

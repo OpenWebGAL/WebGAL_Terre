@@ -10,6 +10,7 @@ import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
+import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
@@ -28,6 +29,8 @@ export default function SetAnimation(props: ISentenceEditorProps) {
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
+  const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
+  const ignoreDefault = useValue(getArgByKey(props.sentence, 'ignoreDefault') === true);
   
   const submit = () => {
     const submitString = combineSubmitString(
@@ -38,6 +41,8 @@ export default function SetAnimation(props: ISentenceEditorProps) {
         {key: "target", value: target.value},
         {key: "writeDefault", value: writeDefault.value},
         {key: "keep", value: keep.value},
+        {key: "parallel", value: parallel.value},
+        {key: "ignoreDefault", value: ignoreDefault.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -97,12 +102,25 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           submit();
         }} onText={t`开启`} offText={t`关闭`} isChecked={keep.value} />
       </CommonOptions>
+      <CommonOptions key="7" title={t`并行动画`}>
+        <TerreToggle title="" onChange={(newValue) => {
+          parallel.set(newValue);
+          submit();
+        }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
+      </CommonOptions>
+      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
+        ignoreDefault.set(value);
+        submit();
+      }} />
+    </div>
+    <div className={styles.commonArgItem}>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);
           submit();
         }} onText={t`本句执行后执行下一句`} offText={t`本句执行后等待`} isChecked={isGoNext.value} />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

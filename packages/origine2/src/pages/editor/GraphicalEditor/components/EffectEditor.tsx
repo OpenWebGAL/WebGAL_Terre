@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { ColorPicker, IColor } from '@fluentui/react';
-import { Button, Checkbox, Input, Slider } from '@fluentui/react-components';
+import { Button, Checkbox, Input, Slider, Switch } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import { debounce } from 'lodash';
 import { useValue } from '@/hooks/useValue';
@@ -9,10 +9,19 @@ import { OptionCategory } from '@/pages/editor/GraphicalEditor/components/Option
 import CommonOptions from '@/pages/editor/GraphicalEditor/components/CommonOption';
 import styles from './effectEditor.module.scss';
 import { useEffectEditorConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
-import type { EffectKey, EffectFields, EffectSliderConfig } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import type {
+  EffectKey,
+  EffectFields,
+  EffectSliderConfig,
+} from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
 import useEditorStore from '@/store/useEditorStore';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
+import { eventBus } from '@/utils/eventBus';
+import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
+import { createPortal } from 'react-dom';
+import TransformableBox from '@/pages/editor/TransformableBox/TransformableBox';
 
 /**
  * 根据对象路径获取值（支持嵌套路径，如"position.x"）
@@ -97,6 +106,9 @@ const EffectInputField = memo(
     const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
     let [innerVal, setInnerVal] = useState((val ?? '').toString());
+    useEffect(() => {
+      setInnerVal((val ?? '').toString());
+    }, [val]);
     const config = effectConfig[fieldKey];
     const handleChange = useCallback(
       (value: string) => {
@@ -112,17 +124,20 @@ const EffectInputField = memo(
       },
       [fieldKey, updateField],
     );
-    const toFixedNumber = useCallback((value: number | undefined) => {
-      if (typeof value !== 'number') {
-        return 0;
-      } else {
-        if (!slider?.toFixed) {
-          return value;
+    const toFixedNumber = useCallback(
+      (value: number | undefined) => {
+        if (typeof value !== 'number') {
+          return 0;
         } else {
-          return Number(value.toFixed(slider.toFixed));
+          if (!slider?.toFixed) {
+            return value;
+          } else {
+            return Number(value.toFixed(slider.toFixed));
+          }
         }
-      }
-    }, [slider]);
+      },
+      [slider],
+    );
     return (
       <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
         <Input
@@ -218,11 +233,7 @@ const EffectDropdownField = memo(
     );
     return (
       <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
-        <WheelDropdown
-          options={options}
-          value={(val ?? '').toString()}
-          onValueChange={handleChange}
-        />
+        <WheelDropdown options={options} value={(val ?? '').toString()} onValueChange={handleChange} />
       </CommonOptions>
     );
   },
@@ -283,7 +294,14 @@ const EffectField = memo(
 /**
  * 效果编辑器
  */
-export function EffectEditor(props: { json: string; onChange: (newJson: string) => void; onUpdate?: (transform: any) => void }) {
+export function EffectEditor(props: {
+  json: string;
+  onChange: (newJson: string) => void;
+  onUpdate?: (transform: any) => void;
+  sentence: ISentence;
+  index: number;
+  targetPath: string;
+}) {
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
    * 解析初始JSON字符串，生成效果参数的初始状态
@@ -320,9 +338,12 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
    * @param key 参数键（EffectKey）
    * @param value 新值（数值或undefined）
    */
-  const updateField = useCallback((key: EffectKey, value: number | undefined) => {
-    effectFields.set({ ...effectFields.value, [key]: value });
-  }, [effectFields.value]);
+  const updateField = useCallback(
+    (key: EffectKey, value: number | undefined) => {
+      effectFields.set({ ...effectFields.value, [key]: value });
+    },
+    [effectFields.value],
+  );
   /** 颜色选择器的当前颜色（基于colorRed/colorGreen/colorBlue） */
   const color = useMemo(
     () => rgbToColor(effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue),
@@ -409,8 +430,109 @@ export function EffectEditor(props: { json: string; onChange: (newJson: string) 
     }, 10),
     [getUpdatedObject],
   );
+
+  const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
+  const updateIsWindowAdjustment = useEditorStore.use.updateIsWindowAdjustment();
+  const [isDragSupported, setIsDragSupported] = useState(false);
+
+  // 将 sentence 对象转换回原始命令行字符串
+  const sentenceToRawLine = useCallback((sentence: ISentence): string => {
+    let base = sentence.commandRaw;
+    if (sentence.content) {
+      base += ':' + sentence.content;
+    }
+    if (sentence.args && sentence.args.length > 0) {
+      for (const arg of sentence.args) {
+        let value = arg.value;
+        if (typeof value === 'object') {
+          value = JSON.stringify(value);
+        }
+        base += ` -${arg.key}=${value}`;
+      }
+    }
+    return base;
+  }, []);
+
+  // 挂载时关闭拖拽框，卸载时也关闭
+  useEffect(() => {
+    updateIsWindowAdjustment(false);
+    return () => {
+      updateIsWindowAdjustment(false);
+    };
+  }, []);
+
+  // 当 sentence 变化时，同步拖拽框状态
+  useEffect(() => {
+    const lineContent = sentenceToRawLine(props.sentence);
+    if (lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform')) {
+      EditorPreviewClient.sendSyncScene({
+        scenePath: props.targetPath,
+        lineNumber: props.index,
+        lineCommandString: lineContent,
+      });
+      eventBus.emit('editor:pixi-sync-command', {
+        targetPath: props.targetPath,
+        lineNumber: props.index,
+        lineContent,
+        lineSentence: props.sentence,
+      });
+    }
+  }, [props.sentence, props.index, props.targetPath]);
+  // // 当立绘变换改变时，同步拖拽框与 input
+  useEffect(() => {
+    eventBus.emit('editor:sync-dragger', {
+      x: effectFields.value.x ?? 0,
+      y: effectFields.value.y ?? 0,
+      scaleX: effectFields.value.scaleX ?? 1,
+      scaleY: effectFields.value.scaleY ?? 1,
+      rotation: effectFields.value.rotation ?? 0,
+    });
+  }, [
+    effectFields.value.x,
+    effectFields.value.y,
+    effectFields.value.scaleX,
+    effectFields.value.scaleY,
+    effectFields.value.rotation,
+  ]);
+  const previewControl = document.getElementById('gamePreviewControl');
   return (
     <>
+      <Switch
+        checked={isWindowAdjustment}
+        disabled={!isDragSupported}
+        onChange={(_, checked) => {
+          updateIsWindowAdjustment(checked.checked);
+        }}
+        label={t`拖拽调整变换（建议打开快速预览效果）`}
+      />
+      {previewControl && createPortal(
+        <TransformableBox
+          parent={previewControl}
+          sentenceInfo={{
+            scenePath: props.targetPath,
+            lineNumber: props.index,
+            lineContent: sentenceToRawLine(props.sentence),
+            lineSentence: props.sentence,
+            transform: props.json,
+          }}
+          onSupportChange={(supported) => {
+            setIsDragSupported(supported);
+            if (!supported) updateIsWindowAdjustment(false);
+          }}
+          onDragging={(transform) => {
+            updateField('x', transform.position?.x);
+            updateField('y', transform.position?.y);
+            updateField('scaleX', transform.scale?.x);
+            updateField('scaleY', transform.scale?.y);
+            updateField('rotation', transform.rotation);
+            update();
+          }}
+          onDragEnd={() => {
+            submit();
+          }}
+        />,
+        previewControl,
+      )}
       {fieldGroups.map((group, index) => (
         <OptionCategory key={index + 1} title={group.title}>
           {index === 2 || index === 4 ? ( // 有拾色器的组

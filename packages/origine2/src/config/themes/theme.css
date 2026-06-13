@@ -32,6 +32,7 @@
     --primary-90pct: rgba(0, 92, 175, 0.9);
     --success: rgb(16, 124, 16);
     --warning: rgb(247, 99, 12);
+    --warning-75pct: rgba(247, 99, 12, 0.75);
     --danger: rgb(197, 15, 31);
     --text: rgb(51, 51, 51);
     --text-sub: rgb(102, 102, 102);
@@ -117,13 +118,16 @@
     width: 8px;
     background: var(--bg-scrollbar);
 }
+
 :root.dark ::-webkit-scrollbar-thumb {
     background: var(--bg-scrollbar-thumb);
     border-radius: 4px;
 }
+
 :root.dark ::-webkit-scrollbar-thumb:hover {
     background: var(--bg-scrollbar-thumb-hover);
 }
+
 :root.dark ::-webkit-scrollbar-corner {
     background: var(--bg-scrollbar);
 }
