@@ -650,6 +650,9 @@ msgstr "Enable video skipping"
 msgid "唇形同步与眨眼"
 msgstr "Lip sync and blinking"
 
+msgid "回收站"
+msgstr "Trash"
+
 msgid "固定弹窗"
 msgstr "Pin popup"
 
@@ -890,11 +893,17 @@ msgstr "Left align"
 msgid "已创建"
 msgstr "Created"
 
+msgid "已启用，删除操作会移动到回收站"
+msgstr "Enabled. Delete actions move files to Trash."
+
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "File or folder already exists {0}, please enter another name"
 
 msgid "已快进行数"
 msgstr "Fast-forwarded lines"
+
+msgid "已禁用，删除操作会永久删除"
+msgstr "Disabled. Delete actions permanently delete files."
 
 msgid "已读文本"
 msgstr "Read text"

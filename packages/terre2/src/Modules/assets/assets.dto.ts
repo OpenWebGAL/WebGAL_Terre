@@ -42,6 +42,13 @@ export class RenameFileDto {
   newName: string;
 }
 
+export class TrashFileOrDirDto {
+  @ApiProperty({
+    description: 'The source path of the file or directory to be thrashed',
+  })
+  source: string;
+}
+
 export class CopyFileWithIncrementDto {
   @ApiProperty({ description: 'The source path of the file to be copied' })
   source: string;

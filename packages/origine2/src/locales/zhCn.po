@@ -650,6 +650,9 @@ msgstr "启用视频跳过"
 msgid "唇形同步与眨眼"
 msgstr "唇形同步与眨眼"
 
+msgid "回收站"
+msgstr "回收站"
+
 msgid "固定弹窗"
 msgstr "固定弹窗"
 
@@ -890,11 +893,17 @@ msgstr "左对齐"
 msgid "已创建"
 msgstr "已创建"
 
+msgid "已启用，删除操作会移动到回收站"
+msgstr "已启用，删除操作会移动到回收站"
+
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
 
 msgid "已快进行数"
 msgstr "已快进行数"
+
+msgid "已禁用，删除操作会永久删除"
+msgstr "已禁用，删除操作会永久删除"
 
 msgid "已读文本"
 msgstr "已读文本"
