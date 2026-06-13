@@ -644,14 +644,14 @@ msgstr "활성"
 msgid "启用 when 条件"
 msgstr "when 조건 활성화"
 
-msgid "启用回收站"
-msgstr "휴지통을 사용합니다"
-
 msgid "启用视频跳过"
 msgstr "비디오 건너뛰기 활성화"
 
 msgid "唇形同步与眨眼"
 msgstr "립싱크 및 눈 깜박임"
+
+msgid "回收站"
+msgstr "휴지통"
 
 msgid "固定弹窗"
 msgstr "고정 팝업"
@@ -893,11 +893,17 @@ msgstr "좌측 정렬"
 msgid "已创建"
 msgstr "생성됨"
 
+msgid "已启用，删除操作会移动到回收站"
+msgstr "활성화됨: 삭제 작업은 파일을 휴지통으로 이동합니다"
+
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "{0} 파일 또는 폴더가 이미 존재합니다. 다른 이름을 입력해주세요"
 
 msgid "已快进行数"
 msgstr "빨리 감기한 줄 수"
+
+msgid "已禁用，删除操作会永久删除"
+msgstr "비활성화됨: 삭제 작업은 파일을 영구 삭제합니다"
 
 msgid "已读文本"
 msgstr "읽은 텍스트"
@@ -1036,9 +1042,6 @@ msgstr "설정 열기"
 
 msgid "打开配置目录"
 msgstr "설정 디렉터리 열기"
-
-msgid "执行删除操作文件会被移动到回收站"
-msgstr "삭제 작업을 실행하면 파일이이 악성성 폐기물함으로 이동합니다."
 
 msgid "执行到此句"
 msgstr "이 문장까지 실행"
@@ -1699,9 +1702,6 @@ msgstr "비디오 스킵 금지"
 
 msgid "禁用"
 msgstr "비활성화"
-
-msgid "禁用回收站"
-msgstr "휴지통 사용을을 금지합니다"
 
 msgid "立即注视"
 msgstr "즉시 주시"

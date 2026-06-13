@@ -163,8 +163,8 @@ export class AssetsController {
     status: 400,
     description: 'Failed to trash the file or directory.',
   })
-  async TrashFileOrDir(@Body() fileOperationDto: TrashFileOrDirDto) {
-    return this.webgalFs.TrashFileOrDirectory(
+  async trashFileOrDir(@Body() fileOperationDto: TrashFileOrDirDto) {
+    return this.webgalFs.trashFileOrDirectory(
       this.webgalFs.getPathFromRoot(`public/${fileOperationDto.source}`),
     );
   }

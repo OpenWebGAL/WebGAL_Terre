@@ -342,15 +342,15 @@ export default function Assets({
     } else {
       updateSortBy(field);
       switch (field) {
-        case 'name':
-          updateSortOrder('asc');
-          break;
-        case 'size':
-          updateSortOrder('desc');
-          break;
-        case 'lastModified':
-          updateSortOrder('desc');
-          break;
+      case 'name':
+        updateSortOrder('asc');
+        break;
+      case 'size':
+        updateSortOrder('desc');
+        break;
+      case 'lastModified':
+        updateSortOrder('desc');
+        break;
       }
     }
   };

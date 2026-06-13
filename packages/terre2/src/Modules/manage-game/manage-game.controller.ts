@@ -395,7 +395,7 @@ export class ManageGameController {
     description: 'Failed to trash the file or directory.',
   })
   async trash(@Body() trashDto: TrashDto) {
-    return this.webgalFs.TrashFileOrDirectory(
+    return this.webgalFs.trashFileOrDirectory(
       this.webgalFs.getPathFromRoot(`public/games/${trashDto.gameName}`),
     );
   }

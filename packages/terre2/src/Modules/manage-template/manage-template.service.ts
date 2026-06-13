@@ -222,7 +222,7 @@ export class ManageTemplateService {
       return false;
     }
     if (isTrash) {
-      return this.webgalFs.TrashFileOrDirectory(templatePath);
+      return this.webgalFs.trashFileOrDirectory(templatePath);
     }
     return this.webgalFs.deleteFileOrDirectory(templatePath);
   }

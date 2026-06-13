@@ -271,7 +271,7 @@ export class WebgalFsService {
    * 丢弃文件或目录(回收站)
    * @param path
    */
-  async TrashFileOrDirectory(_path: string): Promise<boolean> {
+  async trashFileOrDirectory(_path: string): Promise<boolean> {
     try {
       const path = decodeURI(_path);
 
@@ -282,7 +282,7 @@ export class WebgalFsService {
       } else {
         this.logger.log(`丢弃文件: ${path}`);
       }
-      await trash(path);
+      await trash(path, { glob: false });
       return true;
     } catch (error) {
       this.logger.error(`丢弃失败: ${decodeURI(_path)}, ${String(error)}`);

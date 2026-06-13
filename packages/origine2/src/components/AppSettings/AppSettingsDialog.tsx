@@ -101,13 +101,13 @@ export function AppSettingsButton({ appearance = 'subtle', label = t`设置`, cl
           className
             ? undefined
             : {
-                fontWeight: 'normal',
-                fontSize: '14px',
-                paddingLeft: '4px',
-                paddingRight: '4px',
-                minWidth: 0,
-                textWrap: 'nowrap',
-              }
+              fontWeight: 'normal',
+              fontSize: '14px',
+              paddingLeft: '4px',
+              paddingRight: '4px',
+              minWidth: 0,
+              textWrap: 'nowrap',
+            }
         }
       >
         {label}
@@ -217,8 +217,8 @@ export function SettingsShortcutGrid({ onOpenSettings }: { onOpenSettings?: () =
       />
       <SettingTile
         icon={isTrash ? <ArchiveFilled /> : <ArchiveRegular />}
-        title={isTrash ? t`禁用回收站` : t`启用回收站`}
-        description={t`执行删除操作文件会被移动到回收站`}
+        title={t`回收站`}
+        description={isTrash ? t`已启用，删除操作会移动到回收站` : t`已禁用，删除操作会永久删除`}
         active={isTrash}
         onClick={() => updateIsTrash(!isTrash)}
       />
