@@ -101,13 +101,13 @@ export function AppSettingsButton({ appearance = 'subtle', label = t`设置`, cl
           className
             ? undefined
             : {
-              fontWeight: 'normal',
-              fontSize: '14px',
-              paddingLeft: '4px',
-              paddingRight: '4px',
-              minWidth: 0,
-              textWrap: 'nowrap',
-            }
+                fontWeight: 'normal',
+                fontSize: '14px',
+                paddingLeft: '4px',
+                paddingRight: '4px',
+                minWidth: 0,
+                textWrap: 'nowrap',
+              }
         }
       >
         {label}
@@ -135,7 +135,7 @@ export function SettingsShortcutGrid({ onOpenSettings }: { onOpenSettings?: () =
   const updateIsCascaderDelimitersCustomizable = useEditorStore.use.updateIsCascaderDelimitersCustomizable();
   const updateCascaderDelimiters = useEditorStore.use.updateCascaderDelimiters();
   const isTrash = useEditorStore.use.isTrash();
-  const updateTrashAssets = useEditorStore.use.updateIsTrash();
+  const updateIsTrash = useEditorStore.use.updateIsTrash();
 
   return (
     <div className={styles.grid}>
@@ -220,7 +220,7 @@ export function SettingsShortcutGrid({ onOpenSettings }: { onOpenSettings?: () =
         title={isTrash ? t`禁用回收站` : t`启用回收站`}
         description={t`执行删除操作文件会被移动到回收站`}
         active={isTrash}
-        onClick={() => updateTrashAssets(!isTrash)}
+        onClick={() => updateIsTrash(!isTrash)}
       />
     </div>
   );

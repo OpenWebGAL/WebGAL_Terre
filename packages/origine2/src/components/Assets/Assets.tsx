@@ -87,7 +87,6 @@ export interface IFileFunction {
   backup?: (source: string) => Promise<void>;
   rename?: (source: string, newName: string) => Promise<void>;
   delete?: (source: string) => Promise<void>;
-  trash?: (source: string) => Promise<void>;
 }
 
 export type IViewType = 'list' | 'grid';
@@ -134,7 +133,7 @@ export default function Assets({
   const updateSortBy = useEditorStore.use.updateSortBy();
   const sortOrder = useEditorStore.use.sortOrder();
   const updateSortOrder = useEditorStore.use.updateSortOrder();
-  const isTrashAssets = useEditorStore.use.isTrashAssets();
+  const isTrash = useEditorStore.use.isTrash();
 
   const currentPath = useValue([...basePath, ...selectedFilePath.slice(0, -1)]);
   const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
@@ -309,13 +308,12 @@ export default function Assets({
   };
 
   const handleDeleteFile = async (source: string) => {
-    if (isTrashAssets) {
+    if (isTrash) {
       await api.assetsControllerTrashFileOrDir({ source });
-      fileFunction?.trash && (await fileFunction.trash(source));
     } else {
       await api.assetsControllerDeleteFileOrDir({ source });
-      fileFunction?.delete && (await fileFunction.delete(source));
     }
+    fileFunction?.delete && (await fileFunction.delete(source));
     handleRefresh();
   };
 
@@ -344,15 +342,15 @@ export default function Assets({
     } else {
       updateSortBy(field);
       switch (field) {
-      case 'name':
-        updateSortOrder('asc');
-        break;
-      case 'size':
-        updateSortOrder('desc');
-        break;
-      case 'lastModified':
-        updateSortOrder('desc');
-        break;
+        case 'name':
+          updateSortOrder('asc');
+          break;
+        case 'size':
+          updateSortOrder('desc');
+          break;
+        case 'lastModified':
+          updateSortOrder('desc');
+          break;
       }
     }
   };
