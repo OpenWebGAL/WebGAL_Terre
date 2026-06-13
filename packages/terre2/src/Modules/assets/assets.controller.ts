@@ -23,6 +23,7 @@ import {
   EditTextFileDto,
   ImageDimensionsResponseDto,
   CopyFileWithIncrementDto,
+  TrashFileOrDirDto,
 } from './assets.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { _open } from '../../util/open';
@@ -149,6 +150,22 @@ export class AssetsController {
     return this.webgalFs.renameFile(
       this.webgalFs.getPathFromRoot(`public/${fileOperationDto.source}`),
       fileOperationDto.newName,
+    );
+  }
+
+  @Post('trash')
+  @ApiOperation({ summary: 'trash File or Directory' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully trash the file or directory.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to trash the file or directory.',
+  })
+  async TrashFileOrDir(@Body() fileOperationDto: TrashFileOrDirDto) {
+    return this.webgalFs.TrashFileOrDirectory(
+      this.webgalFs.getPathFromRoot(`public/${fileOperationDto.source}`),
     );
   }
 

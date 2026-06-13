@@ -644,6 +644,9 @@ msgstr "활성"
 msgid "启用 when 条件"
 msgstr "when 조건 활성화"
 
+msgid "启用回收站"
+msgstr "휴지통을 사용합니다"
+
 msgid "启用视频跳过"
 msgstr "비디오 건너뛰기 활성화"
 
@@ -1033,6 +1036,9 @@ msgstr "설정 열기"
 
 msgid "打开配置目录"
 msgstr "설정 디렉터리 열기"
+
+msgid "执行删除操作文件会被移动到回收站"
+msgstr "삭제 작업을 실행하면 파일이이 악성성 폐기물함으로 이동합니다."
 
 msgid "执行到此句"
 msgstr "이 문장까지 실행"
@@ -1693,6 +1699,9 @@ msgstr "비디오 스킵 금지"
 
 msgid "禁用"
 msgstr "비활성화"
+
+msgid "禁用回收站"
+msgstr "휴지통 사용을을 금지합니다"
 
 msgid "立即注视"
 msgstr "즉시 주시"

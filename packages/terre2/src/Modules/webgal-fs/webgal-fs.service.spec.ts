@@ -71,9 +71,9 @@ describe('WebgalFsService', () => {
     await fs.mkdir(sourceDir, { recursive: true });
     await fs.writeFile(join(sourceDir, 'template.json'), '{}');
 
-    await expect(
-      service.compressedDirectory(sourceDir, zipPath),
-    ).resolves.toBe(true);
+    await expect(service.compressedDirectory(sourceDir, zipPath)).resolves.toBe(
+      true,
+    );
     expect((await fs.stat(zipPath)).isFile()).toBe(true);
   });
 

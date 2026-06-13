@@ -2,14 +2,9 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import archiver = require('archiver');
 import AdmZip = require('adm-zip');
-import {
-  basename,
-  dirname,
-  extname,
-  isAbsolute,
-  join,
-} from 'path';
+import { basename, dirname, extname, isAbsolute, join } from 'path';
 import { UserDataService } from '../user-data/user-data.service';
+import trash from 'trash';
 
 export interface IFileInfo {
   name: string;
@@ -268,6 +263,29 @@ export class WebgalFsService {
       return true;
     } catch (error) {
       this.logger.error(`重命名失败: ${decodeURI(_path)}, ${String(error)}`);
+      return false;
+    }
+  }
+
+  /**
+   * 丢弃文件或目录(回收站)
+   * @param path
+   */
+  async TrashFileOrDirectory(_path: string): Promise<boolean> {
+    try {
+      const path = decodeURI(_path);
+
+      const stat = await fs.stat(path);
+
+      if (stat.isDirectory()) {
+        this.logger.log(`丢弃目录: ${path}`);
+      } else {
+        this.logger.log(`丢弃文件: ${path}`);
+      }
+      await trash(path);
+      return true;
+    } catch (error) {
+      this.logger.error(`丢弃失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;
     }
   }

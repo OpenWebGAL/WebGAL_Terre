@@ -644,6 +644,9 @@ msgstr "启用"
 msgid "启用 when 条件"
 msgstr "启用 when 条件"
 
+msgid "启用回收站"
+msgstr "启用回收站"
+
 msgid "启用视频跳过"
 msgstr "启用视频跳过"
 
@@ -1033,6 +1036,9 @@ msgstr "打开设置"
 
 msgid "打开配置目录"
 msgstr "打开配置目录"
+
+msgid "执行删除操作文件会被移动到回收站"
+msgstr "执行删除操作文件会被移动到回收站"
 
 msgid "执行到此句"
 msgstr "执行到此句"
@@ -1693,6 +1699,9 @@ msgstr "禁止跳过视频"
 
 msgid "禁用"
 msgstr "禁用"
+
+msgid "禁用回收站"
+msgstr "禁用回收站"
 
 msgid "立即注视"
 msgstr "立即注视"

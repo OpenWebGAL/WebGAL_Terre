@@ -207,6 +207,35 @@ export class ManageTemplateController {
     }
   }
 
+  @Delete('trash/:templateDir')
+  @ApiOperation({ summary: 'Delete Template' })
+  @ApiResponse({ status: 204, description: 'Template trashed successfully.' })
+  @ApiResponse({ status: 404, description: 'Template not found.' })
+  @ApiResponse({ status: 500, description: 'Internal server error.' })
+  async trashTemplate(@Param('templateDir') templateDir: string) {
+    try {
+      const trashResult = await this.manageTemplate.deleteTemplate(
+        templateDir,
+        true,
+      );
+
+      if (!trashResult) {
+        throw new HttpException(
+          { status: 'error', message: 'Template not found.' },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return;
+    } catch (error) {
+      console.error('Error trashing template:', error);
+      throw new HttpException(
+        { status: 'error', message: 'Internal server error.' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Post('applyTemplateToGame')
   @ApiOperation({ summary: 'Apply template to a game' })
   @ApiResponse({

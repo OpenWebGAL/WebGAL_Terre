@@ -38,6 +38,7 @@ import {
   RenameDto,
   UploadFilesDto,
   UpdateAnimationTableDto,
+  TrashDto,
 } from './manage-game.dto';
 import { UserDataService } from '../user-data/user-data.service';
 
@@ -380,6 +381,22 @@ export class ManageGameController {
         `public/games/${fileOperationDto.gameName}`,
       ),
       fileOperationDto.newName,
+    );
+  }
+
+  @Post('trash')
+  @ApiOperation({ summary: 'Trash File or Directory' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully trashed the file or directory.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to trash the file or directory.',
+  })
+  async trash(@Body() trashDto: TrashDto) {
+    return this.webgalFs.TrashFileOrDirectory(
+      this.webgalFs.getPathFromRoot(`public/games/${trashDto.gameName}`),
     );
   }
 

@@ -644,6 +644,9 @@ msgstr "Enabled"
 msgid "启用 when 条件"
 msgstr "Enable when condition"
 
+msgid "启用回收站"
+msgstr "Enable the Recycle Bin"
+
 msgid "启用视频跳过"
 msgstr "Enable video skipping"
 
@@ -1033,6 +1036,9 @@ msgstr "Open settings"
 
 msgid "打开配置目录"
 msgstr "Open config directory"
+
+msgid "执行删除操作文件会被移动到回收站"
+msgstr "When the deletion operation is performed, the file will be moved to the Recycle Bin."
 
 msgid "执行到此句"
 msgstr "Execute to this sentence"
@@ -1693,6 +1699,9 @@ msgstr "Disable skipping video"
 
 msgid "禁用"
 msgstr "Disabled"
+
+msgid "禁用回收站"
+msgstr "Disable the Recycle Bin"
 
 msgid "立即注视"
 msgstr "Focus instantly"

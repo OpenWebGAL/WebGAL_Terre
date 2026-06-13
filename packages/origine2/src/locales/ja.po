@@ -644,6 +644,9 @@ msgstr "有効化"
 msgid "启用 when 条件"
 msgstr "when 条件を有効化"
 
+msgid "启用回收站"
+msgstr "リサイクルボックスを有有効にする"
+
 msgid "启用视频跳过"
 msgstr "動画のスキップを有効にする"
 
@@ -1033,6 +1036,9 @@ msgstr "設定を開く"
 
 msgid "打开配置目录"
 msgstr "設定ディレクトリを開く"
+
+msgid "执行删除操作文件会被移动到回收站"
+msgstr "削除操作を実行すると、ファイルはリサイクルボックスに移動します。"
 
 msgid "执行到此句"
 msgstr "この文まで実行"
@@ -1693,6 +1699,9 @@ msgstr "動画のスキップを無効にする"
 
 msgid "禁用"
 msgstr "無効化"
+
+msgid "禁用回收站"
+msgstr "リサイクルステーションを無効にします"
 
 msgid "立即注视"
 msgstr "即座に注視"

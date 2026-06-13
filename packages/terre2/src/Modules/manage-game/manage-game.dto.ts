@@ -131,6 +131,13 @@ export class RenameDto {
   newName: string;
 }
 
+export class TrashDto {
+  @ApiProperty({
+    description: 'The source path of the file or directory to be trashed',
+  })
+  gameName: string;
+}
+
 export type Platform = 'web' | 'electron' | 'android';
 
 export const platforms: Platform[] = ['web', 'electron', 'android'];

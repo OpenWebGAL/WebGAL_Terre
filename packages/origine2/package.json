@@ -12,7 +12,8 @@
     "lint": "eslint src/** --fix",
     "openapi": "tsx openapi.ts",
     "exact-i18n": "lingui extract --clean",
-    "compile-i18n": "lingui compile --typescript"
+    "compile-i18n": "lingui compile --typescript",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@codingame/monaco-vscode-all-default-extensions": "~4.3.2",
