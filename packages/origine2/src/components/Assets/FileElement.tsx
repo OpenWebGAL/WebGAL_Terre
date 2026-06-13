@@ -25,7 +25,6 @@ import { useValue } from '../../hooks/useValue';
 import IconWrapper from '../iconWrapper/IconWrapper';
 import { IFile, IViewType } from './Assets';
 import styles from './FileElement.module.scss';
-import useEditorStore from '@/store/useEditorStore';
 
 const SaveCopyIcon = bundleIcon(SaveCopyFilled, SaveCopyRegular);
 const RenameIcon = bundleIcon(RenameFilled, RenameRegular);
@@ -56,7 +55,6 @@ export default function FileElement({
   handleDeleteFile: (source: string) => Promise<void>;
   checkHasFile: (fileNmae: string) => boolean;
 }) {
-  const isTrashAssets = useEditorStore.use.isTrashAssets();
   const newFileName = useValue(file.name);
   const FileItemSelfRef = useRef(null);
   const showTooltip = useValue(false);
