@@ -9,7 +9,7 @@
     "build": "yarn run sync:editor-preview-protocol && lingui extract --clean && lingui compile --typescript && tsc && vite build --base=./",
     "build-lowram": "yarn run sync:editor-preview-protocol && lingui extract --clean && lingui compile --typescript && tsc && node --max_old_space_size=512000 ./node_modules/bin/vite build --base=./",
     "preview": "vite preview",
-    "lint": "eslint src/** --fix",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix --quiet",
     "openapi": "tsx openapi.ts",
     "exact-i18n": "lingui extract --clean",
     "compile-i18n": "lingui compile --typescript"

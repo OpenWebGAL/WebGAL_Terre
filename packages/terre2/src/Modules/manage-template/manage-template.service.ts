@@ -44,13 +44,14 @@ export class ManageTemplateService {
   async getTemplateList(): Promise<TemplateInfoDto[]> {
     await this.webgalFs.mkdir(UserDataService.getUserTemplateRoot(), '');
     const userTemplateRoot = UserDataService.getUserTemplateRoot();
-    const installTemplateRoot = UserDataService.getInstallPath(
-      'public/templates',
-    );
+    const installTemplateRoot =
+      UserDataService.getInstallPath('public/templates');
     const userTemplates = (await this.webgalFs.existsDir(userTemplateRoot))
       ? await this.webgalFs.getDirInfo(userTemplateRoot)
       : [];
-    const installTemplates = (await this.webgalFs.existsDir(installTemplateRoot))
+    const installTemplates = (await this.webgalFs.existsDir(
+      installTemplateRoot,
+    ))
       ? await this.webgalFs.getDirInfo(installTemplateRoot)
       : [];
     const userTemplateNames = new Set(

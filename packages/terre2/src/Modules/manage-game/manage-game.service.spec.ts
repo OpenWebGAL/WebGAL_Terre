@@ -10,7 +10,10 @@ describe('ManageGameService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ManageGameService,
-        { provide: ConsoleLogger, useValue: { log: jest.fn(), error: jest.fn() } },
+        {
+          provide: ConsoleLogger,
+          useValue: { log: jest.fn(), error: jest.fn() },
+        },
         { provide: WebgalFsService, useValue: {} },
       ],
     }).compile();

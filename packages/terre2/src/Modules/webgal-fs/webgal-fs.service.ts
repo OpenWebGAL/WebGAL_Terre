@@ -2,13 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import archiver = require('archiver');
 import AdmZip = require('adm-zip');
-import {
-  basename,
-  dirname,
-  extname,
-  isAbsolute,
-  join,
-} from 'path';
+import { basename, dirname, extname, isAbsolute, join } from 'path';
 import { UserDataService } from '../user-data/user-data.service';
 
 export interface IFileInfo {
