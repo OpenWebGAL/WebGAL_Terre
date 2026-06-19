@@ -27,16 +27,16 @@ object Assets {
                 prefix = "data/data/com.termux/files/"
             )
             markExtracted(context, key)
-            LogStore.addLog("TERRE", "Node runtime extracted successfully")
+            LogStore.addLog("TERRE", "Extracted node runtime")
         }
     }
 
     fun extractAssets(context: Context, nodeDir: String) {
         if (shouldExtract(context, "project")) {
-            LogStore.addLog("TERRE", "Start extracting assets")
+            LogStore.addLog("TERRE", "Extracting assets: terre.tar.xz")
             ArchiveUtils.unTarXz(context, "terre.tar.xz", nodeDir)
             markExtracted(context, "project")
-            LogStore.addLog("TERRE", "Extracting assets successful")
+            LogStore.addLog("TERRE", "Extracted assets")
         }
     }
 

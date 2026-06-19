@@ -19,6 +19,9 @@ object ArchiveUtils {
                 var entry = tis.nextTarEntry
                 while (entry != null) {
                     val destPath = File(toPath, entry.name)
+                    if (!destPath.canonicalPath.startsWith(File(toPath).canonicalPath)) {
+                        throw IOException("Path traversal detected: ${entry.name}")
+                    }
                     if (entry.isDirectory) {
                         destPath.mkdirs()
                     } else {
@@ -65,6 +68,9 @@ object ArchiveUtils {
                         }
 
                         val destFile = File(toPath, relativePath)
+                        if (!destFile.canonicalPath.startsWith(File(toPath).canonicalPath)) {
+                            throw IOException("Path traversal detected: $name")
+                        }
 
                         when {
                             entry.isDirectory -> {
@@ -77,8 +83,7 @@ object ArchiveUtils {
                                     val targetName = entry.linkName
                                     if (targetName.isNotEmpty()) {
                                         if (destFile.exists()) destFile.delete()
-                                        val targetPath = File(destFile.parentFile, targetName).path
-                                        Os.symlink(targetPath, destFile.absolutePath)
+                                        Os.symlink(targetName, destFile.absolutePath)
                                     }
                                 } catch (e: Exception) {
                                     println("Failed symlink: ${entry.name} -> ${entry.linkName}: ${e.message}")

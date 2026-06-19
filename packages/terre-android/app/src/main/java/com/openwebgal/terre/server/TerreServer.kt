@@ -11,6 +11,7 @@ class TerreServer(private val applicationContext: Context) {
     var isRunning: Boolean = false
         private set
 
+    @Volatile
     private var nodeProcess: Process? = null
 
     fun start() {
@@ -38,6 +39,7 @@ class TerreServer(private val applicationContext: Context) {
                     nodeDir
                 ).apply {
                     directory(File(nodeDir))
+                    redirectErrorStream(true)
 
                     val env = environment()
                     env["HOME"] = homeDir.absolutePath
@@ -60,6 +62,7 @@ class TerreServer(private val applicationContext: Context) {
                 process.waitFor()
                 isRunning = false
             }
+            executor.shutdown()
         } catch (e: Exception) {
             e.printStackTrace()
             isRunning = false

@@ -31,7 +31,19 @@ abstract class DownloadNodejsTask : DefaultTask() {
 
         if (!assetsDir.exists()) assetsDir.mkdirs()
 
-        val sha256Content = fetch("$baseUrl/sha256.txt")
+        val sha256Content = try {
+            fetch("$baseUrl/sha256.txt")
+        } catch (e: Exception) {
+            val allExist = targetArchitectures.all { archKey ->
+                val abi = architectureMap[archKey]!!
+                File(libnodeRoot, "$abi/libnode.so").exists()
+            }
+            if (allExist) {
+                println("Offline mode: Node.js binaries already exist, skipping download.")
+                return
+            }
+            throw GradleException("Failed to fetch SHA256 and local binaries are missing: ${e.message}", e)
+        }
         val expectedHashes = parseSha256Content(sha256Content, targetArchitectures)
 
         for (archKey in targetArchitectures) {
@@ -104,12 +116,18 @@ abstract class DownloadNodejsTask : DefaultTask() {
 
     private fun fetch(url: String): String {
         println("Fetching: $url")
-        return URI.create(url).toURL().openStream().bufferedReader().use { it.readText() }
+        val connection = URI.create(url).toURL().openConnection()
+        connection.connectTimeout = 15000
+        connection.readTimeout = 15000
+        return connection.getInputStream().bufferedReader().use { it.readText() }
     }
 
     private fun downloadFile(url: String, target: File) {
         println("Downloading: $url")
-        URI.create(url).toURL().openStream().use { input ->
+        val connection = URI.create(url).toURL().openConnection()
+        connection.connectTimeout = 15000
+        connection.readTimeout = 15000
+        connection.getInputStream().use { input ->
             target.outputStream().use { output -> input.copyTo(output) }
         }
     }
@@ -127,7 +145,18 @@ abstract class DownloadNodejsTask : DefaultTask() {
         return hashes
     }
 
-    private fun calculateSha256(file: File): String = calculateSha256(file.readBytes())
+    private fun calculateSha256(file: File): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        file.inputStream().use { fis ->
+            val buffer = ByteArray(8192)
+            var bytesRead = fis.read(buffer)
+            while (bytesRead != -1) {
+                digest.update(buffer, 0, bytesRead)
+                bytesRead = fis.read(buffer)
+            }
+        }
+        return digest.digest().joinToString("") { "%02x".format(it) }
+    }
 
     private fun calculateSha256(data: ByteArray): String {
         val digest = MessageDigest.getInstance("SHA-256")

@@ -17,15 +17,16 @@ class TerreViewModel : ViewModel() {
 
     fun startExtraction(context: Context) {
         if (TerreStore.isExtracting.value) return
+        val appContext = context.applicationContext
 
         viewModelScope.launch {
             TerreStore.updateIsExtracting(true)
             try {
-                val nodeDir = context.getExternalFilesDir(null)?.absolutePath
+                val nodeDir = appContext.getExternalFilesDir(null)?.absolutePath
                 if (nodeDir != null) {
                     withContext(Dispatchers.IO) {
-                        Assets.ensureNodeRuntime(context)
-                        Assets.extractAssets(context, nodeDir)
+                        Assets.ensureNodeRuntime(appContext)
+                        Assets.extractAssets(appContext, nodeDir)
                     }
                 }
             } catch (e: Exception) {
@@ -35,11 +36,11 @@ class TerreViewModel : ViewModel() {
             }
             TerreStore.updateIsExtracting(false)
 
-            val intent = Intent(context, TerreService::class.java)
+            val intent = Intent(appContext, TerreService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
+                appContext.startForegroundService(intent)
             } else {
-                context.startService(intent)
+                appContext.startService(intent)
             }
         }
     }
