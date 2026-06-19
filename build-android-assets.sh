@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # 安装依赖
 yarn install --frozen-lockfile --network-timeout=300000
 
@@ -46,6 +48,6 @@ rm -rf assets/templates/WebGAL_Android_Template/app/src/main/java/com
 cd ../
 
 # 压缩文件
-rm -rf packages/terre-android/app/src/main/assets/
-mkdir packages/terre-android/app/src/main/assets/
-tar -cvf packages/terre-android/app/src/main/assets/terre.tar -C release .
+mkdir -p packages/terre-android/app/src/main/assets/
+rm -f packages/terre-android/app/src/main/assets/terre.tar.xz
+tar -cJf packages/terre-android/app/src/main/assets/terre.tar.xz -C release .

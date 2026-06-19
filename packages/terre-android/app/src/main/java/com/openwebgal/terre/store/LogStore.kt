@@ -1,5 +1,6 @@
 package com.openwebgal.terre.store
 
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +12,8 @@ object LogStore {
 
     val logs: StateFlow<List<String>> = _logs.asStateFlow()
 
-    fun addLog(message: String) {
+    fun addLog(tag: String, message: String) {
+        Log.i(tag, message)
         _logs.value = (_logs.value + message).takeLast(MAX_LOG_LINES)
     }
 

@@ -1,51 +1,75 @@
 package com.openwebgal.terre.server
 
 import android.content.Context
-import android.util.Log
-import com.openwebgal.terre.utils.Assets.extractAssets
+import com.openwebgal.terre.store.LogStore
+import java.io.File
 import java.util.concurrent.Executors
 
 class TerreServer(private val applicationContext: Context) {
-
-    private external fun startNodeWithArguments(arguments: Array<String>): Int
-    private external fun stopNode(): Int
 
     @Volatile
     var isRunning: Boolean = false
         private set
 
+    private var nodeProcess: Process? = null
+
     fun start() {
         isRunning = true
         try {
-            applicationContext.getExternalFilesDir(null) // May return null, call to create directory
+            applicationContext.getExternalFilesDir(null)
             val externalFilesDir = applicationContext.getExternalFilesDir(null)
-            Log.i("ASSETS", externalFilesDir?.absolutePath.toString())
-            if (externalFilesDir != null) {
-                val nodeDir = externalFilesDir.absolutePath
-                val executor = Executors.newSingleThreadExecutor()
-                executor.submit {
-                    extractAssets(applicationContext, nodeDir)
-                    startNodeWithArguments(
-                        arrayOf(
-                            "node",
-                            "$nodeDir/main.js",
-                            "--cwd",
-                            nodeDir
-                        )
-                    )
+            if (externalFilesDir == null) {
+                LogStore.addLog("TERRE-NODE", "External files directory is unavailable")
+                return
+            }
+
+            val nodeDir = externalFilesDir.absolutePath
+            val filesDir = applicationContext.filesDir.absolutePath
+            val nativeLibraryDir = applicationContext.applicationInfo.nativeLibraryDir
+
+            val executor = Executors.newSingleThreadExecutor()
+            executor.submit {
+                val homeDir = File(filesDir, "home")
+
+                val process = ProcessBuilder(
+                    "$nativeLibraryDir/libnode.so",
+                    "$nodeDir/main.js",
+                    "--cwd",
+                    nodeDir
+                ).apply {
+                    directory(File(nodeDir))
+
+                    val env = environment()
+                    env["HOME"] = homeDir.absolutePath
+                    env["PREFIX"] = "$filesDir/usr"
+                    env["PATH"] = "$filesDir/usr/bin"
+                    env["LD_LIBRARY_PATH"] = "$filesDir/usr/lib:$nativeLibraryDir"
+                    env["NODE_PATH"] = "$filesDir/usr/lib/node_modules"
+                    env["TMPDIR"] = applicationContext.cacheDir.absolutePath
+                }.start()
+
+                nodeProcess = process
+
+                process.inputStream.bufferedReader().forEachLine { raw ->
+                    if (isRunning) {
+                        val line = raw.replace(Regex("\u001B\\[[;\\d]*m"), "")
+                        LogStore.addLog("TERRE-NODE", line)
+                    }
                 }
-            } else {
-                Log.e("StorageError", "External files directory is unavailable")
+
+                process.waitFor()
+                isRunning = false
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            isRunning = false
         }
     }
 
     fun stop() {
         isRunning = false
         try {
-            stopNode()
+            nodeProcess?.destroy()
         } catch (e: Exception) {
             e.printStackTrace()
         }
