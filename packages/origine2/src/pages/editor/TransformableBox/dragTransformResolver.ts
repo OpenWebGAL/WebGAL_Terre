@@ -77,14 +77,42 @@ export function mergeDragTransforms(
   return result;
 }
 
+export function mergeEffectTransforms(
+  base: Transform | undefined,
+  override: Transform | undefined,
+): Transform {
+  const result: Transform = { ...base };
+
+  if (base?.position || override?.position) {
+    result.position = {
+      ...base?.position,
+      ...override?.position,
+    };
+  }
+  if (base?.scale || override?.scale) {
+    result.scale = {
+      ...base?.scale,
+      ...override?.scale,
+    };
+  }
+
+  for (const [key, value] of Object.entries(override ?? {})) {
+    if (key !== 'position' && key !== 'scale' && typeof value === 'number') {
+      result[key as keyof Transform] = value;
+    }
+  }
+
+  return result;
+}
+
 export function createResolvedDragTransform({
   explicitTransform,
   baseTransform,
   inheritedTransform,
 }: CreateResolvedDragTransformInput): ResolvedDragTransform {
   const baselineTransform = inheritedTransform
-    ? mergeDragTransforms(baseTransform, inheritedTransform)
-    : pickDragTransformFields(baseTransform);
+    ? mergeEffectTransforms(baseTransform, inheritedTransform)
+    : mergeEffectTransforms(undefined, baseTransform);
   const baselineSource = inheritedTransform
     ? 'protocol'
     : baseTransform
@@ -96,7 +124,7 @@ export function createResolvedDragTransform({
     baselineTransform:
       baselineSource === 'unknown' ? undefined : baselineTransform,
     baselineSource,
-    displayTransform: mergeDragTransforms(baselineTransform, explicitTransform),
+    displayTransform: mergeEffectTransforms(baselineTransform, explicitTransform),
     touchedPaths: new Set<DragTransformPath>(),
   };
 }
