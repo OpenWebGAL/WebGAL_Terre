@@ -148,6 +148,12 @@ interface LegacyFastPreviewTimeoutPayload {
   maxDurationMs: number;
 }
 
+type LegacySyncMessage = 'Sync' | 'exp';
+
+type SyncScenePayloadWithLegacyMessage = SyncScenePayload & {
+  legacySyncMessage?: LegacySyncMessage;
+};
+
 function parseRequestedProtocols(request: IncomingMessage): string[] {
   const headerValue = request.headers['sec-websocket-protocol'];
   if (Array.isArray(headerValue)) {
@@ -269,6 +275,12 @@ function parseLegacyFastPreviewTimeoutPayload(
   }
 }
 
+function getLegacySyncMessage(payload: SyncScenePayload): string {
+  return (
+    (payload as SyncScenePayloadWithLegacyMessage).legacySyncMessage ?? 'Sync'
+  );
+}
+
 function translatePreviewCommandToLegacyEnvelope(
   envelope: PreviewCommandRequestEnvelope,
 ): LegacyDebugEnvelope {
@@ -277,7 +289,7 @@ function translatePreviewCommandToLegacyEnvelope(
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.JUMP, {
         scene: envelope.payload.sceneName,
         sentence: envelope.payload.sentenceId,
-        message: 'Sync',
+        message: getLegacySyncMessage(envelope.payload),
       });
     case 'preview.command.run-snippet':
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.EXE_COMMAND, {
