@@ -104,6 +104,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     width: parent.clientWidth,
     height: parent.clientHeight,
   }), [parent]);
+  const hasFrameSource = () => Boolean(querySessionRef.current || infoRef.current);
   // 计算出拖拽框的位置并更新
   const updateFrame = useCallback(() => {
     const querySession = querySessionRef.current;
@@ -121,27 +122,32 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       return;
     }
 
-    const position = infoRef.current?.transformObj.position
+    const info = infoRef.current;
+    if (!info) {
+      return;
+    }
+
+    const position = info.transformObj.position
       ? convertPreviewToControl({
-        x: infoRef.current.transformObj.position.x ?? 0,
-        y: infoRef.current.transformObj.position.y ?? 0,
+        x: info.transformObj.position.x ?? 0,
+        y: info.transformObj.position.y ?? 0,
       }, parent)
       : { x: 0, y: 0 };
 
     const scaledSize = calculateScaledImageSize(
-      infoRef.current?.figure.width ?? 0,
-      infoRef.current?.figure.height ?? 0,
+      info.figure.width,
+      info.figure.height,
     );
     const size = convertPreviewToControl({ x: scaledSize.width, y: scaledSize.height }, parent);
 
     frameState.set({
       ...frameState.value,
       translate: [
-        position.x + ToXOffset(infoRef.current!.figure.direction ?? '', parent, size.x ?? frameState.value.width),
+        position.x + ToXOffset(info.figure.direction ?? '', parent, size.x ?? frameState.value.width),
         position.y,
       ],
-      scale: [infoRef.current!.transformObj.scale?.x ?? 1, infoRef.current!.transformObj.scale?.y ?? 1],
-      rotate: radiansToDegrees(infoRef.current!.transformObj.rotation ?? 0),
+      scale: [info.transformObj.scale?.x ?? 1, info.transformObj.scale?.y ?? 1],
+      rotate: radiansToDegrees(info.transformObj.rotation ?? 0),
       width: size.x,
       height: size.y,
     });
@@ -320,12 +326,18 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   }, []);
 
   useEffect(() => {
-    if (isWindowAdjustment) {
+    const { shouldUpdateFrame } = resolveTransformableBoxVisibility({
+      hasFrameSource: hasFrameSource(),
+      isReady,
+      isWindowAdjustment,
+      isFrameCommitted: false,
+    });
+    if (shouldUpdateFrame) {
       setIsFrameCommitted(false);
       updateFrame();
       setRemountKey((prev) => prev + 1); // 强制重新挂载 Moveable 以适应新的窗口调整
     }
-  }, [isWindowAdjustment]);
+  }, [isWindowAdjustment, isReady]);
 
   useLayoutEffect(() => {
     if (!isReady || !isWindowAdjustment) {
@@ -450,6 +462,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   }, []);
 
   const { shouldRenderFrame, shouldRenderMoveable } = resolveTransformableBoxVisibility({
+    hasFrameSource: hasFrameSource(),
     isReady,
     isWindowAdjustment,
     isFrameCommitted,
