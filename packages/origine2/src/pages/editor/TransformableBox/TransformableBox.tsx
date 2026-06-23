@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import Moveable from 'react-moveable';
 import { eventBus } from '@/utils/eventBus';
 import { api } from '@/api';
@@ -32,6 +32,7 @@ import {
   resolveTransformTarget,
   type TransformFrame,
 } from './referenceBoxGeometry';
+import { resolveTransformableBoxVisibility } from './transformableBoxVisibility';
 
 interface TransformableBoxProps {
   parent: HTMLElement;
@@ -86,6 +87,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   const targetRef = useRef<HTMLDivElement | null>(null);
   const [keepRatio, setKeepRatio] = useState(true); // 是否保持宽高比
   const [isReady, setIsReady] = useState(false);
+  const [isFrameCommitted, setIsFrameCommitted] = useState(false);
   const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
   const lastParentSize = useRef<{ width: number; height: number } | null>(null); // 记录这个，当父元素宽度变化时使用
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
@@ -289,6 +291,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       return;
     }
     setIsReady(false);
+    setIsFrameCommitted(false);
     onBaselineChange?.(undefined);
     const capabilityState = EditorPreviewClient.getPreviewQueryCapabilityState();
     if (capabilityState === 'unsupported') {
@@ -318,10 +321,39 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
 
   useEffect(() => {
     if (isWindowAdjustment) {
+      setIsFrameCommitted(false);
       updateFrame();
       setRemountKey((prev) => prev + 1); // 强制重新挂载 Moveable 以适应新的窗口调整
     }
   }, [isWindowAdjustment]);
+
+  useLayoutEffect(() => {
+    if (!isReady || !isWindowAdjustment) {
+      setIsFrameCommitted(false);
+      return;
+    }
+
+    setIsFrameCommitted(false);
+    const animationFrameId = window.requestAnimationFrame(() => {
+      setIsFrameCommitted(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [
+    isReady,
+    isWindowAdjustment,
+    remountKey,
+  ]);
+
+  useLayoutEffect(() => {
+    if (!isFrameCommitted) {
+      return;
+    }
+
+    moveableRef.current?.updateRect();
+  }, [isFrameCommitted, remountKey]);
 
   // 拖拽框移动
   useEffect(() => {
@@ -417,7 +449,13 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     return () => resizeObserver.disconnect();
   }, []);
 
-  if (!isReady) return null;
+  const { shouldRenderFrame, shouldRenderMoveable } = resolveTransformableBoxVisibility({
+    isReady,
+    isWindowAdjustment,
+    isFrameCommitted,
+  });
+
+  if (!shouldRenderFrame) return null;
 
   const getCurrentTransform = (frame: TransformFrame, touchedPath: DragTransformPath): Transform => {
     const querySession = querySessionRef.current;
@@ -446,8 +484,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   return (
     <div
       style={{
-        display: isWindowAdjustment ? 'block' : 'none',
-        pointerEvents: isWindowAdjustment ? 'auto' : 'none',
+        pointerEvents: shouldRenderMoveable ? 'auto' : 'none',
       }}
     >
       {/* 占位的div */}
@@ -461,50 +498,52 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       >
         <div />
       </div>
-      <Moveable
-        ref={moveableRef}
-        key={remountKey}
-        target={targetRef}
-        origin={false}
-        draggable={true}
-        scalable={true}
-        rotatable={true}
-        throttleDrag={0}
-        throttleScale={0}
-        throttleRotate={0}
-        keepRatio={keepRatio}
-        rotationPosition="right"
-        // 拖拽事件
-        onDrag={({ beforeTranslate }) => {
-          const translate = [beforeTranslate[0], beforeTranslate[1]] as [number, number];
-          const nextFrame = { ...tempState.value, translate };
-          tempState.set(nextFrame);
-          onDragging?.(getCurrentTransform(nextFrame, 'position'));
-        }}
-        // 缩放开始时，根据拖动方向动态设置 keepRatio
-        onScaleStart={({ direction }) => {
-          const isCorner = Math.abs(direction[0]) === 1 && Math.abs(direction[1]) === 1;
-          setKeepRatio(isCorner);
-        }}
-        onScale={({ scale, drag }) => {
-          const translate = drag.beforeTranslate as [number, number];
-          const scaleArray = [scale[0], scale[1]] as [number, number];
-          const nextFrame = { ...tempState.value, scale: scaleArray, translate };
-          tempState.set(nextFrame);
-          onDragging?.(getCurrentTransform(nextFrame, 'scale'));
-        }}
-        // 旋转事件 - 同步旋转时的位置变化
-        onRotate={({ beforeRotation, drag }) => {
-          const translate = drag.beforeTranslate as [number, number];
-          const nextFrame = { ...tempState.value, rotate: beforeRotation, translate };
-          tempState.set(nextFrame);
-          onDragging?.(getCurrentTransform(nextFrame, 'rotation'));
-        }}
-        // 渲染结束事件
-        onRenderEnd={() => {
-          onDragEnd?.();
-        }}
-      />
+      {shouldRenderMoveable && (
+        <Moveable
+          ref={moveableRef}
+          key={remountKey}
+          target={targetRef}
+          origin={false}
+          draggable={true}
+          scalable={true}
+          rotatable={true}
+          throttleDrag={0}
+          throttleScale={0}
+          throttleRotate={0}
+          keepRatio={keepRatio}
+          rotationPosition="right"
+          // 拖拽事件
+          onDrag={({ beforeTranslate }) => {
+            const translate = [beforeTranslate[0], beforeTranslate[1]] as [number, number];
+            const nextFrame = { ...tempState.value, translate };
+            tempState.set(nextFrame);
+            onDragging?.(getCurrentTransform(nextFrame, 'position'));
+          }}
+          // 缩放开始时，根据拖动方向动态设置 keepRatio
+          onScaleStart={({ direction }) => {
+            const isCorner = Math.abs(direction[0]) === 1 && Math.abs(direction[1]) === 1;
+            setKeepRatio(isCorner);
+          }}
+          onScale={({ scale, drag }) => {
+            const translate = drag.beforeTranslate as [number, number];
+            const scaleArray = [scale[0], scale[1]] as [number, number];
+            const nextFrame = { ...tempState.value, scale: scaleArray, translate };
+            tempState.set(nextFrame);
+            onDragging?.(getCurrentTransform(nextFrame, 'scale'));
+          }}
+          // 旋转事件 - 同步旋转时的位置变化
+          onRotate={({ beforeRotation, drag }) => {
+            const translate = drag.beforeTranslate as [number, number];
+            const nextFrame = { ...tempState.value, rotate: beforeRotation, translate };
+            tempState.set(nextFrame);
+            onDragging?.(getCurrentTransform(nextFrame, 'rotation'));
+          }}
+          // 渲染结束事件
+          onRenderEnd={() => {
+            onDragEnd?.();
+          }}
+        />
+      )}
     </div>
   );
 };
