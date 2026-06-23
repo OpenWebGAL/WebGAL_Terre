@@ -15,6 +15,23 @@ import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 import { useValue } from '@/hooks/useValue';
 import { ToXOffset } from './baseUtils';
 import useEditorStore from '@/store/useEditorStore';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
+import { createId } from '@/utils/createId';
+import type { ReferenceBox, Transform } from '@webgal/editor-preview-protocol';
+import {
+  createResolvedDragTransform,
+  createSparseTransformFromTouchedPaths,
+  mergeDragTransforms,
+  type DragTransformPath,
+  type ResolvedDragTransform,
+} from './dragTransformResolver';
+import {
+  createFrameFromReferenceBox,
+  createTransformFromReferenceFrame,
+  isWriteDefaultDisabled,
+  resolveTransformTarget,
+  type TransformFrame,
+} from './referenceBoxGeometry';
 
 interface TransformableBoxProps {
   parent: HTMLElement;
@@ -38,6 +55,7 @@ interface TransformableBoxProps {
     rotation?: number;
   }) => void;
   onDragEnd?: () => void;
+  onBaselineChange?: (transform: Transform | undefined) => void;
 }
 
 const TransformableBox: React.FC<TransformableBoxProps> = ({
@@ -46,6 +64,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   onSupportChange,
   onDragging,
   onDragEnd,
+  onBaselineChange,
 }) => {
   const moveableRef = useRef<Moveable>(null);
   // 拖拽框状态
@@ -70,17 +89,36 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   const [remountKey, setRemountKey] = useState(0); // 用于强制重新挂载 Moveable,一个刷新的作用。
   const lastParentSize = useRef<{ width: number; height: number } | null>(null); // 记录这个，当父元素宽度变化时使用
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
+  const querySessionRef = useRef<{
+    referenceBox: ReferenceBox;
+    resolvedTransform: ResolvedDragTransform;
+  } | null>(null);
   const infoRef = useRef<{
     sentence: { scenePath: string; lineNumber: number; lineContent: string; lineSentence: ISentence | null };
-    transformObj: {
-      position?: { x?: number; y?: number };
-      rotation?: number;
-      scale?: { x?: number; y?: number };
-    };
+    transformObj: Transform;
     figure: { fileName: string; type: string; direction: string; width: number; height: number };
   } | null>(null);
+  const getParentSize = useCallback(() => ({
+    width: parent.clientWidth,
+    height: parent.clientHeight,
+  }), [parent]);
   // 计算出拖拽框的位置并更新
   const updateFrame = useCallback(() => {
+    const querySession = querySessionRef.current;
+    if (querySession) {
+      const nextFrame = createFrameFromReferenceBox(
+        querySession.referenceBox,
+        querySession.resolvedTransform.displayTransform,
+        getParentSize(),
+      );
+      frameState.set({
+        ...frameState.value,
+        ...nextFrame,
+      });
+      tempState.set(nextFrame);
+      return;
+    }
+
     const position = infoRef.current?.transformObj.position
       ? convertPreviewToControl({
         x: infoRef.current.transformObj.position.x ?? 0,
@@ -108,15 +146,18 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     tempState.set(frameState.value);
   }, []);
 
-  // 信息录入与初始位置设置
-  useEffect(() => {
-    let transformObj;
-    try {
-      transformObj = JSON.parse(sentenceInfo.transform || '{}');
-      if (!transformObj || typeof transformObj !== 'object' || Array.isArray(transformObj)) throw new Error();
-    } catch {
-      onSupportChange?.(false);
-      return;
+  const fallbackToLegacy = useCallback((transformObj: Transform) => {
+    querySessionRef.current = null;
+    onBaselineChange?.(undefined);
+    if (
+      sentenceInfo.lineContent.startsWith('changeFigure') ||
+      sentenceInfo.lineContent.startsWith('setTransform')
+    ) {
+      EditorPreviewClient.sendSyncScene({
+        scenePath: sentenceInfo.scenePath,
+        lineNumber: sentenceInfo.lineNumber,
+        lineCommandString: sentenceInfo.lineContent,
+      });
     }
     infoRef.current = {
       sentence: sentenceInfo,
@@ -132,7 +173,10 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     getFileNameAndDirection(sentenceInfo)
       .then(({ fileName, direction, directory }) => {
         return getSize(directory, fileName, sentenceInfo.scenePath).then(([width, height]) => {
-          infoRef.current!.figure = {
+          if (!infoRef.current) {
+            return;
+          }
+          infoRef.current.figure = {
             fileName,
             type: fileName.endsWith('.json') ? 'json' : 'image',
             direction,
@@ -147,6 +191,123 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       .catch(() => {
         onSupportChange?.(false);
       });
+  }, [sentenceInfo, updateFrame, onSupportChange, onBaselineChange]);
+
+  const initializeQuerySession = useCallback(async (
+    explicitTransform: Transform,
+    isSessionActive: () => boolean,
+  ) => {
+    const target = resolveTransformTarget(sentenceInfo);
+    if (!target) {
+      return false;
+    }
+
+    try {
+      const baseTransform = await EditorPreviewClient.queryBaseTransform();
+      let inheritedTransform: Transform | undefined;
+      if (
+        sentenceInfo.lineContent.startsWith('setTransform') &&
+        isWriteDefaultDisabled(sentenceInfo.lineSentence)
+      ) {
+        const transformBaselineRevision = createId();
+        EditorPreviewClient.sendSyncScene({
+          scenePath: sentenceInfo.scenePath,
+          lineNumber: sentenceInfo.lineNumber,
+          lineCommandString: sentenceInfo.lineContent,
+          force: true,
+          settleMode: 'immediate',
+          transformBaselineRevision,
+        });
+        const baseline = await EditorPreviewClient.queryTransformBaseline(
+          target,
+          transformBaselineRevision,
+        );
+        if (!isSessionActive()) {
+          return true;
+        }
+        if (baseline.status === 'ready') {
+          inheritedTransform = baseline.transform;
+        }
+      } else {
+        EditorPreviewClient.sendSyncScene({
+          scenePath: sentenceInfo.scenePath,
+          lineNumber: sentenceInfo.lineNumber,
+          lineCommandString: sentenceInfo.lineContent,
+          force: true,
+          settleMode: 'immediate',
+        });
+      }
+
+      const referenceBox = await EditorPreviewClient.queryReferenceBox(target);
+      if (!isSessionActive()) {
+        return true;
+      }
+      if (referenceBox.status !== 'ready') {
+        return false;
+      }
+
+      const resolvedTransform = createResolvedDragTransform({
+        explicitTransform,
+        baseTransform: baseTransform.baseTransform,
+        inheritedTransform,
+      });
+      onBaselineChange?.(resolvedTransform.baselineTransform);
+      querySessionRef.current = {
+        referenceBox: referenceBox.box,
+        resolvedTransform,
+      };
+      infoRef.current = {
+        sentence: sentenceInfo,
+        transformObj: resolvedTransform.displayTransform,
+        figure: {
+          fileName: '',
+          type: '',
+          direction: '',
+          width: referenceBox.box.width,
+          height: referenceBox.box.height,
+        },
+      };
+      updateFrame();
+      setIsReady(true);
+      onSupportChange?.(true);
+      return true;
+    } catch {
+      querySessionRef.current = null;
+      onBaselineChange?.(undefined);
+      return false;
+    }
+  }, [sentenceInfo, updateFrame, onSupportChange, onBaselineChange]);
+
+  // 信息录入与初始位置设置
+  useEffect(() => {
+    let transformObj: Transform;
+    try {
+      transformObj = JSON.parse(sentenceInfo.transform || '{}');
+      if (!transformObj || typeof transformObj !== 'object' || Array.isArray(transformObj)) throw new Error();
+    } catch {
+      onSupportChange?.(false);
+      return;
+    }
+    setIsReady(false);
+    onBaselineChange?.(undefined);
+    const capabilityState = EditorPreviewClient.getPreviewQueryCapabilityState();
+    if (capabilityState === 'unsupported') {
+      fallbackToLegacy(transformObj);
+      return;
+    }
+
+    let isStale = false;
+    initializeQuerySession(transformObj, () => !isStale).then((initialized) => {
+      if (isStale || initialized) {
+        return;
+      }
+
+      fallbackToLegacy(transformObj);
+    });
+
+    return () => {
+      isStale = true;
+    };
   }, []);
   // 刷新
   const refresh = useCallback(() => {
@@ -165,25 +326,52 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   // 拖拽框移动
   useEffect(() => {
     const handleSyncDragger = (transform: {
-      x: number;
-      y: number;
-      scaleX: number;
-      scaleY: number;
-      rotation: number;
+      x?: number;
+      y?: number;
+      scaleX?: number;
+      scaleY?: number;
+      rotation?: number;
     }) => {
       if (!infoRef.current) {
         return;
       }
+      if (querySessionRef.current) {
+        const nextExplicitTransform = mergeDragTransforms(
+          querySessionRef.current.resolvedTransform.explicitTransform,
+          {
+            position: {
+              ...(typeof transform.x === 'number' ? { x: transform.x } : {}),
+              ...(typeof transform.y === 'number' ? { y: transform.y } : {}),
+            },
+            scale: {
+              ...(typeof transform.scaleX === 'number' ? { x: transform.scaleX } : {}),
+              ...(typeof transform.scaleY === 'number' ? { y: transform.scaleY } : {}),
+            },
+            ...(typeof transform.rotation === 'number'
+              ? { rotation: transform.rotation }
+              : {}),
+          },
+        );
+        querySessionRef.current.resolvedTransform.explicitTransform = nextExplicitTransform;
+        querySessionRef.current.resolvedTransform.displayTransform = mergeDragTransforms(
+          querySessionRef.current.resolvedTransform.baselineTransform,
+          nextExplicitTransform,
+        );
+        updateFrame();
+        refresh();
+        return;
+      }
+      querySessionRef.current = null;
       infoRef.current.transformObj = {
         position: {
-          x: transform.x,
-          y: transform.y,
+          x: transform.x ?? 0,
+          y: transform.y ?? 0,
         },
         scale: {
-          x: transform.scaleX,
-          y: transform.scaleY,
+          x: transform.scaleX ?? 1,
+          y: transform.scaleY ?? 1,
         },
-        rotation: transform.rotation,
+        rotation: transform.rotation ?? 0,
       };
       updateFrame();
       refresh();
@@ -199,6 +387,13 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     const resizeObserver = new ResizeObserver(() => {
       const prev = lastParentSize.current;
       const newSize = { width: parent.clientWidth, height: parent.clientHeight };
+
+      if (querySessionRef.current) {
+        updateFrame();
+        refresh();
+        lastParentSize.current = newSize;
+        return;
+      }
 
       if (prev && prev.width > 0 && prev.height > 0) {
         const scaleX = newSize.width / prev.width;
@@ -223,6 +418,30 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   }, []);
 
   if (!isReady) return null;
+
+  const getCurrentTransform = (frame: TransformFrame, touchedPath: DragTransformPath): Transform => {
+    const querySession = querySessionRef.current;
+    if (!querySession) {
+      const legacyTransform = getFigureTransformFromFrameInfo(infoRef.current?.figure.direction ?? '', frame, parent);
+      return {
+        position: legacyTransform.position,
+        scale: legacyTransform.scale,
+        rotation: legacyTransform.rotation,
+      };
+    }
+
+    querySession.resolvedTransform.touchedPaths.add(touchedPath);
+    const nextTransform = createTransformFromReferenceFrame(
+      querySession.referenceBox,
+      frame,
+      getParentSize(),
+    );
+    querySession.resolvedTransform.displayTransform = nextTransform;
+    return createSparseTransformFromTouchedPaths(
+      nextTransform,
+      querySession.resolvedTransform.touchedPaths,
+    );
+  };
 
   return (
     <div
@@ -258,10 +477,9 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         // 拖拽事件
         onDrag={({ beforeTranslate }) => {
           const translate = [beforeTranslate[0], beforeTranslate[1]] as [number, number];
-          tempState.set({ ...tempState.value, translate });
-          onDragging?.(
-            getFigureTransformFromFrameInfo(infoRef.current?.figure.direction ?? '', tempState.value, parent),
-          );
+          const nextFrame = { ...tempState.value, translate };
+          tempState.set(nextFrame);
+          onDragging?.(getCurrentTransform(nextFrame, 'position'));
         }}
         // 缩放开始时，根据拖动方向动态设置 keepRatio
         onScaleStart={({ direction }) => {
@@ -271,18 +489,16 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         onScale={({ scale, drag }) => {
           const translate = drag.beforeTranslate as [number, number];
           const scaleArray = [scale[0], scale[1]] as [number, number];
-          tempState.set({ ...tempState.value, scale: scaleArray, translate });
-          onDragging?.(
-            getFigureTransformFromFrameInfo(infoRef.current?.figure.direction ?? '', tempState.value, parent),
-          );
+          const nextFrame = { ...tempState.value, scale: scaleArray, translate };
+          tempState.set(nextFrame);
+          onDragging?.(getCurrentTransform(nextFrame, 'scale'));
         }}
         // 旋转事件 - 同步旋转时的位置变化
         onRotate={({ beforeRotation, drag }) => {
           const translate = drag.beforeTranslate as [number, number];
-          tempState.set({ ...tempState.value, rotate: beforeRotation, translate });
-          onDragging?.(
-            getFigureTransformFromFrameInfo(infoRef.current?.figure.direction ?? '', tempState.value, parent),
-          );
+          const nextFrame = { ...tempState.value, rotate: beforeRotation, translate };
+          tempState.set(nextFrame);
+          onDragging?.(getCurrentTransform(nextFrame, 'rotation'));
         }}
         // 渲染结束事件
         onRenderEnd={() => {

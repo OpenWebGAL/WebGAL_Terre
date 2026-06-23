@@ -14,81 +14,18 @@ import type {
   EffectFields,
   EffectSliderConfig,
 } from '@/pages/editor/GraphicalEditor/utils/useEffectEditorConfig';
+import {
+  createEffectFieldsFromObject,
+  createEffectObjectFromFields,
+  mergeVisibleEffectFields,
+} from '@/pages/editor/GraphicalEditor/utils/effectEditorFields';
 import { rgbToColor } from '@/pages/editor/GraphicalEditor/utils/rgbToColor';
 import WheelDropdown from './WheelDropdown';
 import useEditorStore from '@/store/useEditorStore';
-import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import { eventBus } from '@/utils/eventBus';
 import { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 import { createPortal } from 'react-dom';
 import TransformableBox from '@/pages/editor/TransformableBox/TransformableBox';
-
-/**
- * 根据对象路径获取值（支持嵌套路径，如"position.x"）
- * @param obj 目标对象
- * @param path 路径字符串（如"a.b.c"）
- * @returns 路径对应的 value，若路径不存在则返回undefined
- */
-const getValueByPath = (obj: Record<string, any>, path: string) => {
-  let value = obj;
-  const pathArray = path.split('.'); // 拆分路径为数组（如["position", "x"]）
-  for (let key of pathArray) {
-    if (value === undefined) return undefined; // 路径不存在时终止
-    value = value[key];
-  }
-  return value;
-};
-/**
- * 根据对象路径设置值
- * @param obj 目标对象
- * @param path 路径字符串
- * @param value 路径要设置的的 value
- */
-const setValueByPath = (obj: Record<string, any>, path: string, value: any) => {
-  if (!path.trim()) return;
-  let p = obj;
-  const pathArray = path.split('.').filter(Boolean);
-  if (pathArray.length === 0) return;
-  for (let i = 0; i < pathArray.length - 1; i++) {
-    const key = pathArray[i];
-    if (typeof p[key] !== 'object' || p[key] === null) {
-      p[key] = {};
-    }
-    p = p[key];
-  }
-  p[pathArray[pathArray.length - 1]] = value;
-};
-/**
- * 递归处理对象，将全undefined子属性的父属性置为undefined
- */
-const deepUndefined = <T extends Record<string, any>>(obj: T): T => {
-  // 判断对象所有属性值是否为undefined
-  const allUndefined = (o: Record<string, any>) => Object.values(o).every((v) => v === undefined);
-
-  // 递归处理函数（带根节点标记）
-  const process = (target: any, isRoot = false): any => {
-    // 非对象类型直接返回
-    if (typeof target !== 'object' || target === null) return target;
-
-    // 处理数组类型
-    if (Array.isArray(target)) {
-      return target.map((item) => process(item, false));
-    }
-
-    // 处理普通对象
-    const processed: Record<string, any> = {};
-    for (const key in target) {
-      if (target.hasOwnProperty(key)) {
-        processed[key] = process(target[key], false);
-      }
-    }
-
-    // 非根节点且全属性为undefined时返回undefined
-    return !isRoot && allUndefined(processed) ? undefined : processed;
-  };
-
-  return process(obj, true);
-};
 
 /**
  * 效果输入框字段
@@ -317,22 +254,25 @@ export function EffectEditor(props: {
     } catch (e) {
       logger.error('EffectEditor JSON.parse error', e);
     }
-    let effectFields = {} as any;
     try {
-      for (const key of Object.keys(effectConfig)) {
-        effectFields[key] = getValueByPath(effectObject, effectConfig[key as EffectKey].path);
-      }
+      return createEffectFieldsFromObject(effectObject, effectConfig);
     } catch (e) {
       logger.error('EffectEditor getEffectFields error', e);
     }
-    return effectFields as EffectFields;
-  }, []);
-  // 状态：存储所有效果参数的当前值（键为EffectKey，值为数值或undefined）
-  const effectFields = useValue<EffectFields>(getInitialFields(props.json));
+    const emptyFields: EffectFields = {};
+    return emptyFields;
+  }, [effectConfig]);
+  // 状态：存储当前语句显式写出的效果参数。继承值只用于显示，不参与写回。
+  const explicitEffectFields = useValue<EffectFields>(getInitialFields(props.json));
+  const baselineEffectFields = useValue<Partial<EffectFields>>({});
+  const visibleEffectFields = useMemo(
+    () => mergeVisibleEffectFields(explicitEffectFields.value, baselineEffectFields.value),
+    [explicitEffectFields.value, baselineEffectFields.value],
+  );
   // 当父组件传递的 json 变化时，重新初始化状态
   useEffect(() => {
-    effectFields.value = getInitialFields(props.json);
-  }, [props.json]);
+    explicitEffectFields.value = getInitialFields(props.json);
+  }, [props.json, getInitialFields]);
   /**
    * 更新单个效果参数的值
    * @param key 参数键（EffectKey）
@@ -340,14 +280,14 @@ export function EffectEditor(props: {
    */
   const updateField = useCallback(
     (key: EffectKey, value: number | undefined) => {
-      effectFields.set({ ...effectFields.value, [key]: value });
+      explicitEffectFields.set({ ...explicitEffectFields.value, [key]: value });
     },
-    [effectFields.value],
+    [explicitEffectFields.value],
   );
   /** 颜色选择器的当前颜色（基于colorRed/colorGreen/colorBlue） */
   const color = useMemo(
-    () => rgbToColor(effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue),
-    [effectFields.value.colorRed, effectFields.value.colorGreen, effectFields.value.colorBlue],
+    () => rgbToColor(visibleEffectFields.colorRed, visibleEffectFields.colorGreen, visibleEffectFields.colorBlue),
+    [visibleEffectFields.colorRed, visibleEffectFields.colorGreen, visibleEffectFields.colorBlue],
   );
   /**
    * 颜色选择器变化时的回调
@@ -355,33 +295,33 @@ export function EffectEditor(props: {
    */
   const handleLocalColorChange = useCallback(
     debounce((_ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-      effectFields.set({
-        ...effectFields.value,
+      explicitEffectFields.set({
+        ...explicitEffectFields.value,
         colorRed: newColor.r,
         colorGreen: newColor.g,
         colorBlue: newColor.b,
       });
       update();
     }, 10),
-    [effectFields.value],
+    [explicitEffectFields.value],
   );
   /** 倒角颜色选择器的当前颜色（基于bevelRed/bevelGreen/bevelBlue） */
   const bevelColor = useMemo(
-    () => rgbToColor(effectFields.value.bevelRed, effectFields.value.bevelGreen, effectFields.value.bevelBlue),
-    [effectFields.value.bevelRed, effectFields.value.bevelGreen, effectFields.value.bevelBlue],
+    () => rgbToColor(visibleEffectFields.bevelRed, visibleEffectFields.bevelGreen, visibleEffectFields.bevelBlue),
+    [visibleEffectFields.bevelRed, visibleEffectFields.bevelGreen, visibleEffectFields.bevelBlue],
   );
   /** 倒角颜色选择器变化时的回调 */
   const handleLocalBevelColorChange = useCallback(
     debounce((_ev: React.SyntheticEvent<HTMLElement>, newColor: IColor) => {
-      effectFields.set({
-        ...effectFields.value,
+      explicitEffectFields.set({
+        ...explicitEffectFields.value,
         bevelRed: newColor.r,
         bevelGreen: newColor.g,
         bevelBlue: newColor.b,
       });
       update();
     }, 10),
-    [effectFields.value],
+    [explicitEffectFields.value],
   );
   /**
    * 切换选项
@@ -400,12 +340,8 @@ export function EffectEditor(props: {
    * @returns 结构化的结果对象
    */
   const getUpdatedObject = useCallback(() => {
-    const result: any = {};
-    for (const key of Object.keys(effectFields.value) as EffectKey[]) {
-      setValueByPath(result, effectConfig[key].path, effectFields.value[key]);
-    }
-    return deepUndefined(result);
-  }, [effectFields.value]);
+    return createEffectObjectFromFields(explicitEffectFields.value, effectConfig);
+  }, [explicitEffectFields.value]);
   /**
    * 提交更新
    * 将最终结果对象转换为JSON字符串，通过onChange通知父组件
@@ -465,11 +401,6 @@ export function EffectEditor(props: {
   useEffect(() => {
     const lineContent = sentenceToRawLine(props.sentence);
     if (lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform')) {
-      EditorPreviewClient.sendSyncScene({
-        scenePath: props.targetPath,
-        lineNumber: props.index,
-        lineCommandString: lineContent,
-      });
       eventBus.emit('editor:pixi-sync-command', {
         targetPath: props.targetPath,
         lineNumber: props.index,
@@ -481,18 +412,18 @@ export function EffectEditor(props: {
   // // 当立绘变换改变时，同步拖拽框与 input
   useEffect(() => {
     eventBus.emit('editor:sync-dragger', {
-      x: effectFields.value.x ?? 0,
-      y: effectFields.value.y ?? 0,
-      scaleX: effectFields.value.scaleX ?? 1,
-      scaleY: effectFields.value.scaleY ?? 1,
-      rotation: effectFields.value.rotation ?? 0,
+      x: explicitEffectFields.value.x,
+      y: explicitEffectFields.value.y,
+      scaleX: explicitEffectFields.value.scaleX,
+      scaleY: explicitEffectFields.value.scaleY,
+      rotation: explicitEffectFields.value.rotation,
     });
   }, [
-    effectFields.value.x,
-    effectFields.value.y,
-    effectFields.value.scaleX,
-    effectFields.value.scaleY,
-    effectFields.value.rotation,
+    explicitEffectFields.value.x,
+    explicitEffectFields.value.y,
+    explicitEffectFields.value.scaleX,
+    explicitEffectFields.value.scaleY,
+    explicitEffectFields.value.rotation,
   ]);
   const previewControl = document.getElementById('gamePreviewControl');
   return (
@@ -520,15 +451,24 @@ export function EffectEditor(props: {
             if (!supported) updateIsWindowAdjustment(false);
           }}
           onDragging={(transform) => {
-            updateField('x', transform.position?.x);
-            updateField('y', transform.position?.y);
-            updateField('scaleX', transform.scale?.x);
-            updateField('scaleY', transform.scale?.y);
-            updateField('rotation', transform.rotation);
+            if (Object.hasOwn(transform, 'position')) {
+              updateField('x', transform.position?.x);
+              updateField('y', transform.position?.y);
+            }
+            if (Object.hasOwn(transform, 'scale')) {
+              updateField('scaleX', transform.scale?.x);
+              updateField('scaleY', transform.scale?.y);
+            }
+            if (Object.hasOwn(transform, 'rotation')) {
+              updateField('rotation', transform.rotation);
+            }
             update();
           }}
           onDragEnd={() => {
             submit();
+          }}
+          onBaselineChange={(transform) => {
+            baselineEffectFields.set(createEffectFieldsFromObject(transform ?? {}, effectConfig));
           }}
         />,
         previewControl,
@@ -548,7 +488,7 @@ export function EffectEditor(props: {
                     type={effectConfig[key].type}
                     key={key}
                     fieldKey={key}
-                    effectFields={effectFields.value}
+                    effectFields={visibleEffectFields}
                     updateField={updateField}
                     submit={submit}
                     slider={effectConfig[key].slider}
@@ -568,7 +508,7 @@ export function EffectEditor(props: {
                 type={effectConfig[key].type}
                 key={key}
                 fieldKey={key}
-                effectFields={effectFields.value}
+                effectFields={visibleEffectFields}
                 updateField={updateField}
                 submit={submit}
                 options={toggleOptions}
@@ -583,7 +523,7 @@ export function EffectEditor(props: {
                 type={effectConfig[key].type}
                 key={key}
                 fieldKey={key}
-                effectFields={effectFields.value}
+                effectFields={visibleEffectFields}
                 updateField={updateField}
                 submit={submit}
                 slider={effectConfig[key].slider}

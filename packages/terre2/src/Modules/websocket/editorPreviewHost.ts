@@ -1,12 +1,18 @@
 import type { IncomingMessage } from 'http';
 import {
   createEventEnvelope,
+  createRequestErrorEnvelope,
   createResponseEnvelope,
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
   isPreviewCommandRequestEnvelope,
-  isProtocolEnvelope,
+  isKnownPreviewRequestErrorEnvelope,
+  isKnownProtocolEnvelope,
+  isPreviewRequestEnvelope,
+  isPreviewResponseEnvelope,
   type EventEnvelope,
   type FastPreviewTimeoutPayload,
+  type PreviewQueryType,
+  type PreviewRequestErrorEnvelope,
   type ProtocolEnvelope,
   type PreviewReadyUpdatedPayload,
   type RegisterPreviewRequestPayload,
@@ -14,6 +20,8 @@ import {
   type RunSceneContentPayload,
   type RunSnippetPayload,
   type RequestEnvelope,
+  type RequestEnvelopeByType,
+  type ResponseEnvelopeByType,
   type SetComponentVisibilityPayload,
   type SetEffectPayload,
   type SetFontOptimizationPayload,
@@ -81,6 +89,18 @@ type PreviewCommandRequestEnvelope =
       SetTextReadModePayload,
       'preview.command.set-text-read-mode'
     >;
+
+type PreviewQueryRequestEnvelope = RequestEnvelopeByType<PreviewQueryType>;
+
+type PreviewQueryResponseEnvelope = ResponseEnvelopeByType<PreviewQueryType>;
+
+type PreviewQueryErrorEnvelope = PreviewRequestErrorEnvelope<PreviewQueryType>;
+
+interface PendingPreviewQuery {
+  type: PreviewQueryType;
+  editorSocket: WebSocket;
+  previewSocket: WebSocket;
+}
 
 const LEGACY_DEBUG_COMMAND = {
   JUMP: 0,
@@ -157,6 +177,33 @@ function isForwardedPreviewEvent(
   return FORWARDED_EVENT_TYPES.has(envelope.type);
 }
 
+function isPreviewQueryRequestEnvelope(
+  envelope: ProtocolEnvelope,
+): envelope is PreviewQueryRequestEnvelope {
+  return (
+    isPreviewRequestEnvelope(envelope) &&
+    !isPreviewCommandRequestEnvelope(envelope)
+  );
+}
+
+function isPreviewQueryResponseEnvelope(
+  envelope: ProtocolEnvelope,
+): envelope is PreviewQueryResponseEnvelope {
+  return (
+    isPreviewResponseEnvelope(envelope) &&
+    envelope.type.startsWith('preview.query.')
+  );
+}
+
+function isPreviewQueryErrorEnvelope(
+  envelope: ProtocolEnvelope,
+): envelope is PreviewQueryErrorEnvelope {
+  return (
+    isKnownPreviewRequestErrorEnvelope(envelope) &&
+    envelope.type.startsWith('preview.query.')
+  );
+}
+
 function isRegisterPreviewRequest(
   envelope: ProtocolEnvelope,
 ): envelope is RegisterPreviewRequestEnvelope {
@@ -230,7 +277,7 @@ function translatePreviewCommandToLegacyEnvelope(
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.JUMP, {
         scene: envelope.payload.sceneName,
         sentence: envelope.payload.sentenceId,
-        message: envelope.payload.syncMode === 'fast' ? 'exp' : 'Sync',
+        message: 'Sync',
       });
     case 'preview.command.run-snippet':
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.EXE_COMMAND, {
@@ -288,6 +335,11 @@ export class EditorPreviewHost {
 
   private readonly v1Connections = new Map<WebSocket, V1ConnectionState>();
 
+  private readonly pendingPreviewQueries = new Map<
+    string,
+    PendingPreviewQuery
+  >();
+
   private activeEmbeddedPreview: WebSocket | null = null;
 
   private activeGameId: string | undefined;
@@ -317,6 +369,7 @@ export class EditorPreviewHost {
     }
 
     this.v1Connections.delete(client);
+    this.rejectPendingQueriesForDisconnectedSocket(client);
     if (this.activeEmbeddedPreview === client) {
       this.activeEmbeddedPreview = null;
       this.activeGameId = undefined;
@@ -346,7 +399,7 @@ export class EditorPreviewHost {
       return;
     }
 
-    if (!isProtocolEnvelope(parsedMessage)) {
+    if (!isKnownProtocolEnvelope(parsedMessage)) {
       return;
     }
 
@@ -358,6 +411,21 @@ export class EditorPreviewHost {
 
     if (isPreviewCommandRequestEnvelope(envelope)) {
       this.handlePreviewCommandRequest(client, connectionState, envelope);
+      return;
+    }
+
+    if (isPreviewQueryRequestEnvelope(envelope)) {
+      this.handlePreviewQueryRequest(client, connectionState, envelope);
+      return;
+    }
+
+    if (isPreviewQueryResponseEnvelope(envelope)) {
+      this.handlePreviewQueryResult(client, envelope);
+      return;
+    }
+
+    if (isPreviewQueryErrorEnvelope(envelope)) {
+      this.handlePreviewQueryResult(client, envelope);
       return;
     }
 
@@ -408,6 +476,76 @@ export class EditorPreviewHost {
       client,
       createResponseEnvelope(envelope.type, envelope.requestId, {}),
     );
+  }
+
+  private handlePreviewQueryRequest(
+    client: WebSocket,
+    connectionState: V1ConnectionState,
+    envelope: PreviewQueryRequestEnvelope,
+  ) {
+    connectionState.role = 'editor';
+
+    const previewSocket = this.activeEmbeddedPreview;
+    const previewState = previewSocket
+      ? this.v1Connections.get(previewSocket)
+      : undefined;
+
+    if (!previewSocket || previewState?.role !== 'preview') {
+      sendEnvelope(
+        client,
+        createRequestErrorEnvelope(envelope.type, envelope.requestId, {
+          code: 'unsupported-request-type',
+          message: 'No active embedded preview can answer preview queries.',
+        }),
+      );
+      return;
+    }
+
+    this.pendingPreviewQueries.set(envelope.requestId, {
+      type: envelope.type,
+      editorSocket: client,
+      previewSocket,
+    });
+    sendEnvelope(previewSocket, envelope);
+  }
+
+  private handlePreviewQueryResult(
+    client: WebSocket,
+    envelope: PreviewQueryResponseEnvelope | PreviewQueryErrorEnvelope,
+  ) {
+    const pending = this.pendingPreviewQueries.get(envelope.requestId);
+    if (
+      !pending ||
+      pending.type !== envelope.type ||
+      pending.previewSocket !== client
+    ) {
+      return;
+    }
+
+    this.pendingPreviewQueries.delete(envelope.requestId);
+    sendEnvelope(pending.editorSocket, envelope);
+  }
+
+  private rejectPendingQueriesForDisconnectedSocket(client: WebSocket) {
+    for (const [requestId, pending] of this.pendingPreviewQueries) {
+      if (pending.editorSocket === client) {
+        this.pendingPreviewQueries.delete(requestId);
+        continue;
+      }
+
+      if (pending.previewSocket !== client) {
+        continue;
+      }
+
+      this.pendingPreviewQueries.delete(requestId);
+      sendEnvelope(
+        pending.editorSocket,
+        createRequestErrorEnvelope(pending.type, requestId, {
+          code: 'internal-error',
+          message: 'Preview disconnected before answering preview query.',
+        }),
+      );
+    }
   }
 
   private handlePreviewEvent(
