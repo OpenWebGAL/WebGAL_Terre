@@ -109,10 +109,6 @@ export class EditorPreviewRequestOwner {
     }
   }
 
-  public getPendingCount(): number {
-    return this.pendingRequests.size;
-  }
-
   private resolveResponse(envelope: ReturnType<typeof createRequestEnvelope> | unknown): boolean {
     if (!isPreviewResponseEnvelope(envelope)) {
       return false;

@@ -6,7 +6,6 @@ import { getWsUrl } from '@/utils/getWsUrl';
 import { logger } from '@/utils/logger';
 import { createEditorPreviewTransport, type EditorPreviewTransport } from '@/utils/editorPreviewTransport';
 import { EditorPreviewRequestOwner } from '@/utils/editorPreviewRequestOwner';
-import { createSyncScenePayload } from '@/utils/editorPreviewSyncPayload';
 import {
   createRequestEnvelope,
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
@@ -300,16 +299,20 @@ export class EditorPreviewClient {
       return false;
     }
 
+    const payload: RequestPayloadByType['preview.command.sync-scene'] & {
+      legacySyncMessage: 'Sync' | 'exp';
+    } = {
+      sceneName: normalizeSceneName(scenePath),
+      sentenceId: lineNumber,
+      legacySyncMessage: editorState.isUseExpFastSync ? 'exp' : 'Sync',
+      ...(settleMode !== undefined ? { settleMode } : {}),
+      ...(transformBaselineRevision !== undefined ? { transformBaselineRevision } : {}),
+      debugVariables: getDebugVariablesPayload(),
+    };
+
     return sendPreviewCommand(
       'preview.command.sync-scene',
-      createSyncScenePayload({
-        sceneName: normalizeSceneName(scenePath),
-        sentenceId: lineNumber,
-        isUseExpFastSync: editorState.isUseExpFastSync,
-        settleMode,
-        transformBaselineRevision,
-        debugVariables: getDebugVariablesPayload(),
-      }),
+      payload,
     );
   }
 

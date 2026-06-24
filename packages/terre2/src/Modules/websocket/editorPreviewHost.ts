@@ -4,30 +4,26 @@ import {
   createRequestErrorEnvelope,
   createResponseEnvelope,
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+  SESSION_REGISTER_PREVIEW_TYPE,
   isPreviewCommandRequestEnvelope,
   isKnownPreviewRequestErrorEnvelope,
   isKnownProtocolEnvelope,
   isPreviewRequestEnvelope,
   isPreviewResponseEnvelope,
+  type EventEnvelopeByType,
   type EventEnvelope,
   type FastPreviewTimeoutPayload,
+  type HostEventType,
+  type PreviewCommandType,
   type PreviewQueryType,
   type PreviewRequestErrorEnvelope,
   type ProtocolEnvelope,
-  type PreviewReadyUpdatedPayload,
   type RegisterPreviewRequestPayload,
-  type ReloadTemplatesPayload,
-  type RunSceneContentPayload,
-  type RunSnippetPayload,
   type RequestEnvelope,
   type RequestEnvelopeByType,
   type ResponseEnvelopeByType,
-  type SetComponentVisibilityPayload,
-  type SetEffectPayload,
-  type SetFontOptimizationPayload,
-  type SetTextReadModePayload,
-  type SyncScenePayload,
   type StageSnapshotUpdatedPayload,
+  type SyncScenePayload,
 } from '@webgal/editor-preview-protocol';
 import type WebSocket from 'ws';
 
@@ -51,44 +47,20 @@ interface V1ConnectionState {
   embeddedLaunchId?: string;
 }
 
-const REGISTER_PREVIEW_TYPE = 'session.register-preview';
 const FORWARDED_EVENT_TYPES = new Set([
   'preview.ready.updated',
   'stage.snapshot.updated',
   'preview.event.fast-preview-timeout',
 ]);
 
-type ForwardedHostEventEnvelope =
-  | EventEnvelope<PreviewReadyUpdatedPayload, 'preview.ready.updated'>
-  | EventEnvelope<StageSnapshotUpdatedPayload, 'stage.snapshot.updated'>
-  | EventEnvelope<
-      FastPreviewTimeoutPayload,
-      'preview.event.fast-preview-timeout'
-    >;
+type ForwardedHostEventEnvelope = EventEnvelopeByType<HostEventType>;
 
 type RegisterPreviewRequestEnvelope = RequestEnvelope<
   RegisterPreviewRequestPayload,
-  typeof REGISTER_PREVIEW_TYPE
+  typeof SESSION_REGISTER_PREVIEW_TYPE
 >;
 
-type PreviewCommandRequestEnvelope =
-  | RequestEnvelope<SyncScenePayload, 'preview.command.sync-scene'>
-  | RequestEnvelope<RunSceneContentPayload, 'preview.command.run-scene-content'>
-  | RequestEnvelope<RunSnippetPayload, 'preview.command.run-snippet'>
-  | RequestEnvelope<ReloadTemplatesPayload, 'preview.command.reload-templates'>
-  | RequestEnvelope<SetEffectPayload, 'preview.command.set-effect'>
-  | RequestEnvelope<
-      SetComponentVisibilityPayload,
-      'preview.command.set-component-visibility'
-    >
-  | RequestEnvelope<
-      SetFontOptimizationPayload,
-      'preview.command.set-font-optimization'
-    >
-  | RequestEnvelope<
-      SetTextReadModePayload,
-      'preview.command.set-text-read-mode'
-    >;
+type PreviewCommandRequestEnvelope = RequestEnvelopeByType<PreviewCommandType>;
 
 type PreviewQueryRequestEnvelope = RequestEnvelopeByType<PreviewQueryType>;
 
@@ -213,7 +185,10 @@ function isPreviewQueryErrorEnvelope(
 function isRegisterPreviewRequest(
   envelope: ProtocolEnvelope,
 ): envelope is RegisterPreviewRequestEnvelope {
-  return envelope.kind === 'request' && envelope.type === REGISTER_PREVIEW_TYPE;
+  return (
+    envelope.kind === 'request' &&
+    envelope.type === SESSION_REGISTER_PREVIEW_TYPE
+  );
 }
 
 function sendEnvelope(socket: WebSocket, envelope: unknown) {
@@ -463,7 +438,11 @@ export class EditorPreviewHost {
 
     sendEnvelope(
       client,
-      createResponseEnvelope(REGISTER_PREVIEW_TYPE, envelope.requestId, {}),
+      createResponseEnvelope(
+        SESSION_REGISTER_PREVIEW_TYPE,
+        envelope.requestId,
+        {},
+      ),
     );
   }
 
@@ -699,20 +678,6 @@ export class LegacyEditorPreviewAdapter {
   private isLegacyEnvelope(value: unknown): value is LegacyRawEnvelope {
     return (
       isRecord(value) && typeof value.event === 'string' && 'data' in value
-    );
-  }
-
-  private isLegacyStageSyncEnvelope(
-    value: LegacyRawEnvelope,
-  ): value is LegacyDebugEnvelope {
-    return (
-      isRecord(value.data) &&
-      typeof value.data.command === 'number' &&
-      isRecord(value.data.sceneMsg) &&
-      typeof value.data.sceneMsg.scene === 'string' &&
-      typeof value.data.sceneMsg.sentence === 'number' &&
-      typeof value.data.message === 'string' &&
-      isRecord(value.data.stageSyncMsg)
     );
   }
 

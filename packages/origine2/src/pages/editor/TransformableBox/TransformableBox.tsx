@@ -32,7 +32,6 @@ import {
   resolveTransformTarget,
   type TransformFrame,
 } from './referenceBoxGeometry';
-import { resolveTransformableBoxVisibility } from './transformableBoxVisibility';
 
 interface TransformableBoxProps {
   parent: HTMLElement;
@@ -326,13 +325,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
   }, []);
 
   useEffect(() => {
-    const { shouldUpdateFrame } = resolveTransformableBoxVisibility({
-      hasFrameSource: hasFrameSource(),
-      isReady,
-      isWindowAdjustment,
-      isFrameCommitted: false,
-    });
-    if (shouldUpdateFrame) {
+    if (hasFrameSource() && isWindowAdjustment) {
       setIsFrameCommitted(false);
       updateFrame();
       setRemountKey((prev) => prev + 1); // 强制重新挂载 Moveable 以适应新的窗口调整
@@ -461,12 +454,8 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
     return () => resizeObserver.disconnect();
   }, []);
 
-  const { shouldRenderFrame, shouldRenderMoveable } = resolveTransformableBoxVisibility({
-    hasFrameSource: hasFrameSource(),
-    isReady,
-    isWindowAdjustment,
-    isFrameCommitted,
-  });
+  const shouldRenderFrame = hasFrameSource() && isReady && isWindowAdjustment;
+  const shouldRenderMoveable = shouldRenderFrame && isFrameCommitted;
 
   if (!shouldRenderFrame) return null;
 

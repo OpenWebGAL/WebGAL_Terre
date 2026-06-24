@@ -430,11 +430,17 @@ describe('LegacyEditorPreviewAdapter', () => {
 
     adapter.addConnection(legacySocket as never);
 
+    const fastSyncScenePayload = {
+      sceneName: 'start.txt',
+      sentenceId: 12,
+      legacySyncMessage: 'exp' as const,
+    };
     adapter.forwardPreviewCommand(
-      createRequestEnvelope('preview.command.sync-scene', 'req-sync-scene', {
-        sceneName: 'start.txt',
-        sentenceId: 12,
-      }),
+      createRequestEnvelope(
+        'preview.command.sync-scene',
+        'req-sync-scene',
+        fastSyncScenePayload,
+      ),
     );
     adapter.forwardPreviewCommand(
       createRequestEnvelope('preview.command.run-snippet', 'req-run-snippet', {
@@ -506,7 +512,7 @@ describe('LegacyEditorPreviewAdapter', () => {
             sentence: 12,
           },
           stageSyncMsg: {},
-          message: 'Sync',
+          message: 'exp',
         },
       }),
       JSON.stringify({
