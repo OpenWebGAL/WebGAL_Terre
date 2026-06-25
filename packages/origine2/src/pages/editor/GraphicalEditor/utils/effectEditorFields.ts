@@ -7,7 +7,7 @@ import type {
 function getValueByPath(obj: Record<string, any>, path: string) {
   let value = obj;
   for (const key of path.split('.')) {
-    if (value === undefined) {
+    if (value === undefined || value === null) {
       return undefined;
     }
     value = value[key];
