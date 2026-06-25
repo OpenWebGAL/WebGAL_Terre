@@ -271,7 +271,7 @@ export function EffectEditor(props: {
   );
   // 当父组件传递的 json 变化时，重新初始化状态
   useEffect(() => {
-    explicitEffectFields.value = getInitialFields(props.json);
+    explicitEffectFields.set(getInitialFields(props.json));
   }, [props.json, getInitialFields]);
   /**
    * 更新单个效果参数的值
