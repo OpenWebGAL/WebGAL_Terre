@@ -388,6 +388,11 @@ export function EffectEditor(props: {
     }
     return base;
   }, []);
+  const lineContent = useMemo(() => sentenceToRawLine(props.sentence), [props.sentence, sentenceToRawLine]);
+  const transformableBoxKey = useMemo(
+    () => [props.targetPath, props.index, lineContent, props.json].join('\n'),
+    [props.targetPath, props.index, lineContent, props.json],
+  );
 
   // 挂载时关闭拖拽框，卸载时也关闭
   useEffect(() => {
@@ -399,7 +404,6 @@ export function EffectEditor(props: {
 
   // 当 sentence 变化时，同步拖拽框状态
   useEffect(() => {
-    const lineContent = sentenceToRawLine(props.sentence);
     if (lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform')) {
       eventBus.emit('editor:pixi-sync-command', {
         targetPath: props.targetPath,
@@ -408,7 +412,7 @@ export function EffectEditor(props: {
         lineSentence: props.sentence,
       });
     }
-  }, [props.sentence, props.index, props.targetPath]);
+  }, [lineContent, props.sentence, props.index, props.targetPath]);
   // // 当立绘变换改变时，同步拖拽框与 input
   useEffect(() => {
     eventBus.emit('editor:sync-dragger', {
@@ -438,11 +442,12 @@ export function EffectEditor(props: {
       />
       {previewControl && createPortal(
         <TransformableBox
+          key={transformableBoxKey}
           parent={previewControl}
           sentenceInfo={{
             scenePath: props.targetPath,
             lineNumber: props.index,
-            lineContent: sentenceToRawLine(props.sentence),
+            lineContent,
             lineSentence: props.sentence,
             transform: props.json,
           }}
