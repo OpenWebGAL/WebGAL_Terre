@@ -66,7 +66,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       json.set(event.value);
       submit();
     } else if (event.action === 'preview') {
-      EditorPreviewClient.setEffect({ target: 'bg-main', transform: event.value });
+      EditorPreviewClient.setEffect({ target: 'bg-main', transform: event.value, phase: 'preview' });
     } else {
       const values = { enterAnimation, exitAnimation, duration, enterDuration, exitDuration, ease };
       if (event.key in values) values[event.key as keyof typeof values].set(event.value as never);

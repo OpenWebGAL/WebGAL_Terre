@@ -118,9 +118,12 @@ export interface RunSnippetPayload {
 
 export type ReloadTemplatesPayload = EmptyObject;
 
+export type SetEffectPhase = 'preview' | 'commit';
+
 export interface SetEffectPayload {
   target: string;
   transform?: Transform;
+  phase?: SetEffectPhase;
 }
 
 export interface SetFontOptimizationPayload {
