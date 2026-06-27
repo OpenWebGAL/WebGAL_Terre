@@ -1,7 +1,5 @@
 # WebGAL Terre Android
 
-Running with [nodejs-mobile](https://github.com/nodejs-mobile/nodejs-mobile)
-
 ## Building
 
 Open `packages/terre-android/` folder on Android studio, select  `build` -> `Generate Signed Bundle or APK` -> `APK`, create a `keystore.jks` file on `packages/terre-android/` folder.
