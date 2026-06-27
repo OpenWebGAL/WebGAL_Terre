@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Welcome to build WebGAL Terre, the editor of WebGAL platform."
 
 sh build-android-assets.sh
