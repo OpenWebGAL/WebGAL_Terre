@@ -509,13 +509,15 @@ function FlowchartEditorContent() {
             onChange={(_, data) => updateIsAutoSaveFlowchart(data.checked)}
             style={{ marginBottom: '10px' }}
           />
-          <Button
-            icon={<SaveIcon />}
-            onClick={saveFlowchart}
-            style={{ width: '100%' }}
-          >
-            {t`保存流程图`}
-          </Button>
+          {!isAutoSaveFlowchart && (
+            <Button
+              icon={<SaveIcon />}
+              onClick={saveFlowchart}
+              style={{ width: '100%' }}
+            >
+              {t`保存流程图`}
+            </Button>
+          )}
         </div>
 
         <div className={styles.info}>
@@ -525,7 +527,7 @@ function FlowchartEditorContent() {
             <li>{t`每个流程图只能有一个根节点`}</li>
             <li>{t`双击节点名称可编辑`}</li>
             <li>{t`点击节点选择场景文件`}</li>
-            <li>{t`选中连线后按退格键可删除`}</li>
+            <li>{t`选中节点或连线后按退格键或 Delete 键可删除`}</li>
             <li>{t`不能创建循环连接`}</li>
           </ul>
         </div>
@@ -538,7 +540,7 @@ function FlowchartEditorContent() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
-          deleteKeyCode="Backspace"
+          deleteKeyCode={['Backspace', 'Delete']}
           fitView
           fitViewOptions={{ padding: 0.2, maxZoom: 1, minZoom: 0.1 }}
           defaultViewport={{ x: 100, y: 100, zoom: 0.8 }}

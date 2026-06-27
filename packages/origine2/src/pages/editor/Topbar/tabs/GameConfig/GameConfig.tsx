@@ -287,9 +287,23 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
             ]}
             onChange={(e: string) => updateGameConfigSimpleByKey('Enable_flowchart', e)}/>
           {getConfigContentAsString('Enable_flowchart') === 'true' && (
-            <Button onClick={() => eventBus.emit('openFlowchartEditor')}>
-              {t`编辑流程图`}
-            </Button>
+            <>
+              <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                <span>{t`展示未解锁节点`}</span>
+                <GameConfigEditorWithSelector
+                  key="flowchartLockedNodeVisibility"
+                  value={getConfigContentAsString('Flowchart_Locked_Node_Visibility') || 'node'}
+                  selectItems={[
+                    {key: 'all', text: t`全部展示`},
+                    {key: 'node', text: t`只展示节点，不展示名称`},
+                    {key: 'none', text: t`全部不展示`}
+                  ]}
+                  onChange={(e: string) => updateGameConfigSimpleByKey('Flowchart_Locked_Node_Visibility', e)}/>
+              </div>
+              <Button onClick={() => eventBus.emit('openFlowchartEditor')}>
+                {t`编辑流程图`}
+              </Button>
+            </>
           )}
         </div>,
       )}
