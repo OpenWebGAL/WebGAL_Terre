@@ -240,7 +240,7 @@ msgid "不显示角色名"
 msgstr "캐릭터 이름 숨기기"
 
 msgid "不能创建循环连接"
-msgstr ""
+msgstr "순환 연결을 만들 수 없습니다"
 
 msgid "不设定"
 msgstr "설정 안 함"
@@ -276,7 +276,7 @@ msgid "为立绘或背景图片调用动画效果"
 msgstr "스탠딩 또는 배경 이미지에 애니메이션 불러오기 이펙트를 적용"
 
 msgid "主线流程图不可删除"
-msgstr ""
+msgstr "메인 플로차트는 삭제할 수 없습니다"
 
 msgid "主要样式"
 msgstr "메인 스타일"
@@ -369,7 +369,7 @@ msgid "保存模板配置失败，请稍后重试"
 msgstr "템플릿 구성 저장에 실패했습니다. 잠시후 다시 시도해 주세요"
 
 msgid "保存流程图"
-msgstr ""
+msgstr "플로차트 저장"
 
 msgid "保持闭眼(毫秒)"
 msgstr "눈 감기 유지(밀리초)"
@@ -433,6 +433,12 @@ msgstr "전체 화면 텍스트"
 
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "전체 화면에 텍스트를 표시합니다. 독백이나 장면 도입부에 사용됩니다."
+
+msgid "全部不展示"
+msgstr "모두 숨기기"
+
+msgid "全部展示"
+msgstr "모두 표시"
 
 msgid "关于"
 msgstr "About"
@@ -597,7 +603,7 @@ msgid "参数值"
 msgstr "파라미터 값"
 
 msgid "双击节点名称可编辑"
-msgstr ""
+msgstr "노드 이름을 두 번 클릭하면 편집할 수 있습니다"
 
 msgid "反射电影滤镜"
 msgstr "반사 영화 필터"
@@ -622,6 +628,9 @@ msgstr "변수명"
 
 msgid "变量表达式"
 msgstr "변수 표현식"
+
+msgid "只展示节点，不展示名称"
+msgstr "노드만 표시하고 이름은 표시하지 않음"
 
 msgid "可用 $0 表示当前输入"
 msgstr "$0를 사용하여 현재 입력 표시 가능"
@@ -890,6 +899,9 @@ msgstr "가운데 맞춤"
 msgid "展示小头像"
 msgstr "미니 프로필 표시"
 
+msgid "展示未解锁节点"
+msgstr "잠금 해제되지 않은 노드 표시"
+
 msgid "属性"
 msgstr "속성"
 
@@ -963,7 +975,7 @@ msgid "开启"
 msgstr "켜기"
 
 msgid "开始"
-msgstr ""
+msgstr "시작"
 
 msgid "开始迁移"
 msgstr "이동 시작"
@@ -1098,7 +1110,7 @@ msgid "提示"
 msgstr "힌트"
 
 msgid "提示："
-msgstr ""
+msgstr "힌트:"
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "힌트: 스탠딩/배경을 먼저 설정한 후 애니메이션을 적용하세요. 아니면 대상을 찾을 수 없습니다."
@@ -1248,7 +1260,7 @@ msgid "新建模板"
 msgstr "새 템플릿"
 
 msgid "新建流程图"
-msgstr ""
+msgstr "새 플로차트"
 
 msgid "新建游戏"
 msgstr "새 게임"
@@ -1440,7 +1452,7 @@ msgid "根文本长度 (rem)"
 msgstr "루트 텍스트 길이 (rem)"
 
 msgid "根节点"
-msgstr ""
+msgstr "루트 노드"
 
 msgid "检测到需要迁移的内容：{0}。"
 msgstr "이동이 필요한 내용 감지됨: {0}."
@@ -1500,7 +1512,7 @@ msgid "此指令将结束游戏"
 msgstr "이 명령어는 게임을 종료시킵니다."
 
 msgid "每个流程图只能有一个根节点"
-msgstr ""
+msgstr "각 플로차트에는 루트 노드를 하나만 둘 수 있습니다"
 
 msgid "永不换行"
 msgstr "줄바꿈 안 함"
@@ -1527,13 +1539,13 @@ msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "주석은 편집창에만 보이며, 게임 화면에 실행되지 않습니다"
 
 msgid "流程图列表"
-msgstr ""
+msgstr "플로차트 목록"
 
 msgid "流程图功能"
-msgstr ""
+msgstr "플로차트 기능"
 
 msgid "流程图编辑器"
-msgstr ""
+msgstr "플로차트 편집기"
 
 msgid "浅色"
 msgstr "밝은 색"
@@ -1578,13 +1590,13 @@ msgid "添加新行"
 msgstr "새 줄 추가"
 
 msgid "添加根节点"
-msgstr ""
+msgstr "루트 노드 추가"
 
 msgid "添加自定义属性"
 msgstr "커스텀 속성 추가"
 
 msgid "添加节点"
-msgstr ""
+msgstr "노드 추가"
 
 msgid "添加语句"
 msgstr "문장 추가"
@@ -1641,7 +1653,7 @@ msgid "点击或拖拽文件至此上传"
 msgstr "파일을 클릭하거나 여기로 드래그하여 업로드"
 
 msgid "点击节点选择场景文件"
-msgstr ""
+msgstr "노드를 클릭하여 장면 파일 선택"
 
 msgid "点状电影滤镜"
 msgstr "점박이 영화 필터"
@@ -1860,7 +1872,7 @@ msgid "编辑模板"
 msgstr "템플릿 편집"
 
 msgid "编辑流程图"
-msgstr ""
+msgstr "플로차트 편집"
 
 msgid "编辑游戏"
 msgstr "게임 편집"
@@ -1950,7 +1962,7 @@ msgid "舞台画面"
 msgstr "스테이지 화면"
 
 msgid "节点操作"
-msgstr ""
+msgstr "노드 작업"
 
 msgid "英语"
 msgstr "영어"
@@ -2189,8 +2201,8 @@ msgstr "연속 실행"
 msgid "退场时长（单位为毫秒）"
 msgstr "퇴장 시간(단위: 밀리초)"
 
-msgid "选中连线后按退格键可删除"
-msgstr "연결선을 선택한 뒤 Backspace 키를 누르면 삭제할 수 있습니다"
+msgid "选中节点或连线后按退格键或 Delete 键可删除"
+msgstr "노드나 연결선을 선택한 뒤 Backspace 또는 Delete 키를 누르면 삭제할 수 있습니다"
 
 msgid "选择"
 msgstr "선택"
