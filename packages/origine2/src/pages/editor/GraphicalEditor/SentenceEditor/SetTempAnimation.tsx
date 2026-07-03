@@ -119,7 +119,7 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
       updateFrame(index, { ...animationFrameArray.value[index], transform: event.value || "{}" });
       submit();
     } else if (event.action === 'preview') {
-      EditorPreviewClient.setEffect({ target: target.value, transform: event.value });
+      EditorPreviewClient.setEffect({ target: target.value, transform: event.value, phase: 'preview' });
     }
   });
 

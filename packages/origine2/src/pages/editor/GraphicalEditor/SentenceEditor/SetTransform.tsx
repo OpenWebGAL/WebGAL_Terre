@@ -64,7 +64,7 @@ export default function SetTransform(props: ISentenceEditorProps) {
       transform.set(event.value);
       submit();
     } else if (event.action === 'preview') {
-      EditorPreviewClient.setEffect({ target: target.value, transform: event.value });
+      EditorPreviewClient.setEffect({ target: target.value, transform: event.value, phase: 'preview' });
     }
   });
 

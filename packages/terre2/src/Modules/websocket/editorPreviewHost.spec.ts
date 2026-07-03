@@ -1,5 +1,6 @@
 import {
   createEventEnvelope,
+  createRequestErrorEnvelope,
   createRequestEnvelope,
   createResponseEnvelope,
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
@@ -142,7 +143,6 @@ describe('EditorPreviewHost', () => {
         createRequestEnvelope('preview.command.sync-scene', 'req-sync-scene', {
           sceneName: 'scene/start.txt',
           sentenceId: 12,
-          syncMode: 'fast',
         }),
       ),
     );
@@ -151,7 +151,6 @@ describe('EditorPreviewHost', () => {
       createRequestEnvelope('preview.command.sync-scene', 'req-sync-scene', {
         sceneName: 'scene/start.txt',
         sentenceId: 12,
-        syncMode: 'fast',
       }),
     );
     expect(embeddedPreviewSocket.sentMessages).toEqual([
@@ -167,6 +166,213 @@ describe('EditorPreviewHost', () => {
           'req-sync-scene',
           {},
         ),
+      ),
+    ]);
+  });
+
+  it('routes preview queries only to the active embedded preview and returns its response to the editor', () => {
+    const forwardedPreviewCommands: unknown[] = [];
+    const host = new EditorPreviewHost({
+      forwardPreviewCommandToLegacy: (envelope) => {
+        forwardedPreviewCommands.push(envelope);
+      },
+    });
+    const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);
+    const embeddedPreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+    const externalPreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+
+    connectV1Client(host, editorSocket);
+    connectV1Client(host, embeddedPreviewSocket);
+    connectV1Client(host, externalPreviewSocket);
+
+    registerPreview(host, embeddedPreviewSocket, {
+      gameId: 'game-key-1',
+      embeddedLaunchId: 'embedded-launch-1',
+    });
+    registerPreview(host, externalPreviewSocket, {
+      gameId: 'game-key-1',
+    });
+    clearSentMessages(
+      editorSocket,
+      embeddedPreviewSocket,
+      externalPreviewSocket,
+    );
+
+    const queryRequest = createRequestEnvelope(
+      'preview.query.reference-box',
+      'req-reference-box',
+      {
+        target: 'fig-center',
+      },
+    );
+    host.handleMessage(editorSocket as never, JSON.stringify(queryRequest));
+
+    expect(embeddedPreviewSocket.sentMessages).toEqual([
+      JSON.stringify(queryRequest),
+    ]);
+    expect(externalPreviewSocket.sentMessages).toHaveLength(0);
+    expect(editorSocket.sentMessages).toHaveLength(0);
+    expect(forwardedPreviewCommands).toHaveLength(0);
+
+    const queryResponse = createResponseEnvelope(
+      'preview.query.reference-box',
+      'req-reference-box',
+      {
+        target: 'fig-center',
+        status: 'ready',
+        box: {
+          originX: 1280,
+          originY: 720,
+          width: 500,
+          height: 900,
+          anchorX: 0.5,
+          anchorY: 0.5,
+          stageWidth: 2560,
+          stageHeight: 1440,
+        },
+      },
+    );
+    host.handleMessage(
+      embeddedPreviewSocket as never,
+      JSON.stringify(queryResponse),
+    );
+
+    expect(editorSocket.sentMessages).toEqual([JSON.stringify(queryResponse)]);
+  });
+
+  it('times out preview queries that never receive a runtime response', () => {
+    jest.useFakeTimers();
+    try {
+      const host = new EditorPreviewHost({
+        previewQueryTimeoutMs: 5,
+      });
+      const editorSocket = new MockSocket(
+        EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+      );
+      const embeddedPreviewSocket = new MockSocket(
+        EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+      );
+
+      connectV1Client(host, editorSocket);
+      connectV1Client(host, embeddedPreviewSocket);
+      registerPreview(host, embeddedPreviewSocket, {
+        gameId: 'game-key-1',
+        embeddedLaunchId: 'embedded-launch-1',
+      });
+      clearSentMessages(editorSocket, embeddedPreviewSocket);
+
+      const queryRequest = createRequestEnvelope(
+        'preview.query.base-transform',
+        'req-base',
+        {},
+      );
+      host.handleMessage(editorSocket as never, JSON.stringify(queryRequest));
+
+      expect(embeddedPreviewSocket.sentMessages).toEqual([
+        JSON.stringify(queryRequest),
+      ]);
+      expect(editorSocket.sentMessages).toHaveLength(0);
+
+      jest.advanceTimersByTime(5);
+
+      expect(editorSocket.sentMessages).toEqual([
+        JSON.stringify(
+          createRequestErrorEnvelope(
+            'preview.query.base-transform',
+            'req-base',
+            {
+              code: 'internal-error',
+              message: 'Preview query timed out before runtime answered.',
+            },
+          ),
+        ),
+      ]);
+
+      host.handleMessage(
+        embeddedPreviewSocket as never,
+        JSON.stringify(
+          createResponseEnvelope('preview.query.base-transform', 'req-base', {
+            baseTransform: {},
+          }),
+        ),
+      );
+
+      expect(editorSocket.sentMessages).toHaveLength(1);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  it('routes preview query errors back to the original editor', () => {
+    const host = new EditorPreviewHost();
+    const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);
+    const embeddedPreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+
+    connectV1Client(host, editorSocket);
+    connectV1Client(host, embeddedPreviewSocket);
+    registerPreview(host, embeddedPreviewSocket, {
+      gameId: 'game-key-1',
+      embeddedLaunchId: 'embedded-launch-1',
+    });
+    clearSentMessages(editorSocket, embeddedPreviewSocket);
+
+    host.handleMessage(
+      editorSocket as never,
+      JSON.stringify(
+        createRequestEnvelope('preview.query.base-transform', 'req-base', {}),
+      ),
+    );
+
+    const queryError = createRequestErrorEnvelope(
+      'preview.query.base-transform',
+      'req-base',
+      {
+        code: 'internal-error',
+        message: 'Query failed.',
+      },
+    );
+    host.handleMessage(
+      embeddedPreviewSocket as never,
+      JSON.stringify(queryError),
+    );
+
+    expect(editorSocket.sentMessages).toEqual([JSON.stringify(queryError)]);
+  });
+
+  it('rejects preview queries when no active embedded preview is registered', () => {
+    const host = new EditorPreviewHost();
+    const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);
+    const externalPreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+
+    connectV1Client(host, editorSocket);
+    connectV1Client(host, externalPreviewSocket);
+    registerPreview(host, externalPreviewSocket, {
+      gameId: 'game-key-1',
+    });
+    clearSentMessages(editorSocket, externalPreviewSocket);
+
+    host.handleMessage(
+      editorSocket as never,
+      JSON.stringify(
+        createRequestEnvelope('preview.query.base-transform', 'req-base', {}),
+      ),
+    );
+
+    expect(externalPreviewSocket.sentMessages).toHaveLength(0);
+    expect(editorSocket.sentMessages).toEqual([
+      JSON.stringify(
+        createRequestErrorEnvelope('preview.query.base-transform', 'req-base', {
+          code: 'unsupported-request-type',
+          message: 'No active embedded preview can answer preview queries.',
+        }),
       ),
     ]);
   });
@@ -287,12 +493,17 @@ describe('LegacyEditorPreviewAdapter', () => {
 
     adapter.addConnection(legacySocket as never);
 
+    const fastSyncScenePayload = {
+      sceneName: 'start.txt',
+      sentenceId: 12,
+      legacySyncMessage: 'exp' as const,
+    };
     adapter.forwardPreviewCommand(
-      createRequestEnvelope('preview.command.sync-scene', 'req-sync-scene', {
-        sceneName: 'start.txt',
-        sentenceId: 12,
-        syncMode: 'fast',
-      }),
+      createRequestEnvelope(
+        'preview.command.sync-scene',
+        'req-sync-scene',
+        fastSyncScenePayload,
+      ),
     );
     adapter.forwardPreviewCommand(
       createRequestEnvelope('preview.command.run-snippet', 'req-run-snippet', {
