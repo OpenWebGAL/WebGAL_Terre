@@ -6,17 +6,17 @@ import kotlinx.coroutines.flow.asStateFlow
 
 object TerreStore {
 
-    private val _isInitialized = MutableStateFlow<Boolean>(false)
     private val _isRunning = MutableStateFlow<Boolean>(false)
-
-    val isInitialized: StateFlow<Boolean> = _isInitialized.asStateFlow()
     val isRunning: StateFlow<Boolean> = _isRunning.asStateFlow()
+
+    private val _isExtracting = MutableStateFlow(false)
+    val isExtracting: StateFlow<Boolean> = _isExtracting.asStateFlow()
 
     fun updateIsRunning(value: Boolean) {
         _isRunning.value = value
     }
 
-    fun updateIsInitialized(value: Boolean) {
-        _isInitialized.value = value
+    fun updateIsExtracting(value: Boolean) {
+        _isExtracting.value = value
     }
 }
