@@ -244,6 +244,69 @@ describe('EditorPreviewHost', () => {
     expect(editorSocket.sentMessages).toEqual([JSON.stringify(queryResponse)]);
   });
 
+  it('times out preview queries that never receive a runtime response', () => {
+    jest.useFakeTimers();
+    try {
+      const host = new EditorPreviewHost({
+        previewQueryTimeoutMs: 5,
+      });
+      const editorSocket = new MockSocket(
+        EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+      );
+      const embeddedPreviewSocket = new MockSocket(
+        EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+      );
+
+      connectV1Client(host, editorSocket);
+      connectV1Client(host, embeddedPreviewSocket);
+      registerPreview(host, embeddedPreviewSocket, {
+        gameId: 'game-key-1',
+        embeddedLaunchId: 'embedded-launch-1',
+      });
+      clearSentMessages(editorSocket, embeddedPreviewSocket);
+
+      const queryRequest = createRequestEnvelope(
+        'preview.query.base-transform',
+        'req-base',
+        {},
+      );
+      host.handleMessage(editorSocket as never, JSON.stringify(queryRequest));
+
+      expect(embeddedPreviewSocket.sentMessages).toEqual([
+        JSON.stringify(queryRequest),
+      ]);
+      expect(editorSocket.sentMessages).toHaveLength(0);
+
+      jest.advanceTimersByTime(5);
+
+      expect(editorSocket.sentMessages).toEqual([
+        JSON.stringify(
+          createRequestErrorEnvelope(
+            'preview.query.base-transform',
+            'req-base',
+            {
+              code: 'internal-error',
+              message: 'Preview query timed out before runtime answered.',
+            },
+          ),
+        ),
+      ]);
+
+      host.handleMessage(
+        embeddedPreviewSocket as never,
+        JSON.stringify(
+          createResponseEnvelope('preview.query.base-transform', 'req-base', {
+            baseTransform: {},
+          }),
+        ),
+      );
+
+      expect(editorSocket.sentMessages).toHaveLength(1);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   it('routes preview query errors back to the original editor', () => {
     const host = new EditorPreviewHost();
     const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);

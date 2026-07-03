@@ -33,6 +33,7 @@ interface EditorPreviewHostOptions {
   forwardPreviewCommandToLegacy?: (
     envelope: PreviewCommandRequestEnvelope,
   ) => void;
+  previewQueryTimeoutMs?: number;
 }
 
 interface LegacyEditorPreviewAdapterOptions {
@@ -72,7 +73,10 @@ interface PendingPreviewQuery {
   type: PreviewQueryType;
   editorSocket: WebSocket;
   previewSocket: WebSocket;
+  timeout: ReturnType<typeof setTimeout>;
 }
+
+const DEFAULT_PREVIEW_QUERY_TIMEOUT_MS = 10_000;
 
 const LEGACY_DEBUG_COMMAND = {
   JUMP: 0,
@@ -492,10 +496,33 @@ export class EditorPreviewHost {
       return;
     }
 
+    const timeout = setTimeout(() => {
+      const pending = this.pendingPreviewQueries.get(envelope.requestId);
+      if (
+        !pending ||
+        pending.type !== envelope.type ||
+        pending.editorSocket !== client ||
+        pending.previewSocket !== previewSocket
+      ) {
+        return;
+      }
+
+      this.clearPendingPreviewQuery(envelope.requestId);
+      sendEnvelope(
+        client,
+        createRequestErrorEnvelope(envelope.type, envelope.requestId, {
+          code: 'internal-error',
+          message: 'Preview query timed out before runtime answered.',
+        }),
+      );
+    }, this.options.previewQueryTimeoutMs ?? DEFAULT_PREVIEW_QUERY_TIMEOUT_MS);
+
+    this.clearPendingPreviewQuery(envelope.requestId);
     this.pendingPreviewQueries.set(envelope.requestId, {
       type: envelope.type,
       editorSocket: client,
       previewSocket,
+      timeout,
     });
     sendEnvelope(previewSocket, envelope);
   }
@@ -513,14 +540,24 @@ export class EditorPreviewHost {
       return;
     }
 
-    this.pendingPreviewQueries.delete(envelope.requestId);
+    this.clearPendingPreviewQuery(envelope.requestId);
     sendEnvelope(pending.editorSocket, envelope);
+  }
+
+  private clearPendingPreviewQuery(requestId: string) {
+    const pending = this.pendingPreviewQueries.get(requestId);
+    if (!pending) {
+      return;
+    }
+
+    clearTimeout(pending.timeout);
+    this.pendingPreviewQueries.delete(requestId);
   }
 
   private rejectPendingQueriesForDisconnectedSocket(client: WebSocket) {
     for (const [requestId, pending] of this.pendingPreviewQueries) {
       if (pending.editorSocket === client) {
-        this.pendingPreviewQueries.delete(requestId);
+        this.clearPendingPreviewQuery(requestId);
         continue;
       }
 
@@ -528,7 +565,7 @@ export class EditorPreviewHost {
         continue;
       }
 
-      this.pendingPreviewQueries.delete(requestId);
+      this.clearPendingPreviewQuery(requestId);
       sendEnvelope(
         pending.editorSocket,
         createRequestErrorEnvelope(pending.type, requestId, {

@@ -232,9 +232,10 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
         if (!isSessionActive()) {
           return true;
         }
-        if (baseline.status === 'ready') {
-          inheritedTransform = baseline.transform;
+        if (baseline.status !== 'ready') {
+          return false;
         }
+        inheritedTransform = baseline.transform;
       } else {
         EditorPreviewClient.sendSyncScene({
           scenePath: sentenceInfo.scenePath,
