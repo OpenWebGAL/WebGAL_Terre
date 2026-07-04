@@ -77,6 +77,7 @@ VIProductVersion "${PRODUCT_VERSION}"
 !insertmacro MUI_UNPAGE_FINISH
 
 Section -Install
+    SetShellVarContext current
     SetOutPath $INSTDIR
 
     ; 可覆写情况
@@ -105,6 +106,7 @@ SectionEnd
 
 
 Section -Uninstall
+    SetShellVarContext current
     RMDir /r "$INSTDIR\"
 
     ; 删除桌面快捷方式

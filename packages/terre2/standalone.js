@@ -46,6 +46,7 @@ module.exports = {
     extensions: ['.js', '.ts', '.json'],
   },
   plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
     // 需要进行忽略的插件
     new webpack.IgnorePlugin({
       checkResource(resource) {

@@ -4,7 +4,13 @@ import * as path from 'path';
 
 const distDir = path.join(process.cwd(), 'dist');
 if (!fs.existsSync(distDir)) {
-  console.error('dist folder not found. Run build first.');
+  console.error('dist folder not found. Run build-standalone first.');
+  process.exit(1);
+}
+
+const entrypoint = 'main.js';
+if (!fs.existsSync(path.join(distDir, entrypoint))) {
+  console.error('dist/main.js not found. Run build-standalone first.');
   process.exit(1);
 }
 
@@ -39,7 +45,7 @@ const target =
   process.env.PKG_TARGET ?? `${nodeVersion}-${mappedPlatform}-${mappedArch}`;
 
 const pkgBin = process.platform === 'win32' ? 'pkg.cmd' : 'pkg';
-const pkgArgs = ['src/main.js', '-o', 'WebGAL_Terre', '-t', target];
+const pkgArgs = [entrypoint, '-o', 'WebGAL_Terre', '-t', target];
 const extraArgs = process.argv.slice(2);
 
 const result = spawnSync(pkgBin, [...pkgArgs, ...extraArgs], {

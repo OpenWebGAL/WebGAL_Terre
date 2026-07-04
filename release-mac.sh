@@ -9,7 +9,7 @@ mkdir release
 
 # 进入 Terre 目录
 cd packages/terre2
-yarn run build
+yarn run build-standalone
 yarn run pkg
 cd dist
 cp -r WebGAL_Terre  ../../../release
