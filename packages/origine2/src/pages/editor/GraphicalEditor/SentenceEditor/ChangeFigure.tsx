@@ -301,7 +301,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       submit();
     } else if (event.action === 'preview') {
       const target = id.value || `fig-${figurePosition.value || 'center'}`;
-      EditorPreviewClient.setEffect({ target, transform: event.value });
+      EditorPreviewClient.setEffect({ target, transform: event.value, phase: 'preview' });
     } else {
       const values = { enterAnimation, exitAnimation, duration, enterDuration, exitDuration, ease, blendMode };
       values[event.key].set(event.value as never);
