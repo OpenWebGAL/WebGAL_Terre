@@ -1541,8 +1541,8 @@ msgstr "注释仅在编辑时可见，游戏中不会执行"
 msgid "流程图列表"
 msgstr "流程图列表"
 
-msgid "流程图功能"
-msgstr "流程图功能"
+msgid "流程图功能（实验性）"
+msgstr "流程图功能（实验性）"
 
 msgid "流程图编辑器"
 msgstr "流程图编辑器"

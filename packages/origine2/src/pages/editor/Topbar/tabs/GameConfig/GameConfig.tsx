@@ -276,7 +276,7 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>,
       )}
-      {renderConfigItem(t`流程图功能`,
+      {renderConfigItem(t`流程图功能（实验性）`,
         <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
           <GameConfigEditorWithSelector
             key="enableFlowchart"

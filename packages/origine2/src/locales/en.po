@@ -1541,8 +1541,8 @@ msgstr "Comments are only visible when editing and will not be executed in the g
 msgid "流程图列表"
 msgstr "Flowchart list"
 
-msgid "流程图功能"
-msgstr "Flowchart"
+msgid "流程图功能（实验性）"
+msgstr "Flowchart (experimental)"
 
 msgid "流程图编辑器"
 msgstr "Flowchart editor"
