@@ -452,9 +452,6 @@ msgstr "Hide the avatar"
 msgid "关闭效果音"
 msgstr "Stop the sound effect"
 
-msgid "关闭立绘"
-msgstr "Hide the figure"
-
 msgid "关闭背景"
 msgstr "Hide the background"
 
@@ -1607,6 +1604,9 @@ msgstr "Clear tip"
 msgid "清除特效"
 msgstr "Clear effects"
 
+msgid "清除立绘"
+msgstr "Clear figure"
+
 msgid "游戏"
 msgstr "Games"
 
@@ -1777,9 +1777,6 @@ msgstr "ID of figure illustration"
 
 msgid "立绘文件"
 msgstr "Figure file"
-
-msgid "立绘显示状态"
-msgstr "Figure display status"
 
 msgid "立绘清除参数"
 msgstr "Figure clear parameter"

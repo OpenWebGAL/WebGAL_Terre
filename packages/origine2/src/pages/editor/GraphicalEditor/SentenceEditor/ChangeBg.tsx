@@ -15,7 +15,7 @@ import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
-  const isNoFile = props.sentence.content === "";
+  const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const bgFile = useValue(props.sentence.content);
   const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");

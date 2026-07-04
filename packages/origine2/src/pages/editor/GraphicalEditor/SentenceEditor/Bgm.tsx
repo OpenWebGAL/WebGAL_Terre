@@ -11,7 +11,7 @@ import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function Bgm(props: ISentenceEditorProps) {
   const bgmFile = useValue(props.sentence.content);
-  const isNoFile = props.sentence.content === "";
+  const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
   const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const enter = useValue(getArgByKey(props.sentence, "enter").toString() ?? "");
   const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");

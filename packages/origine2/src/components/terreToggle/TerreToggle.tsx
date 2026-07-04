@@ -9,8 +9,9 @@ interface ITerreToggle{
 }
 
 export default function TerreToggle(props:ITerreToggle){
+  const text = props.isChecked ? props.onText : props.offText;
   return (
-    <Tooltip content={props.onText} relationship="label" positioning="below">
+    <Tooltip content={text} relationship="label" positioning="below">
       <Switch checked={props.isChecked} onChange={(_, data) => props.onChange(data.checked)} />
     </Tooltip>
   );

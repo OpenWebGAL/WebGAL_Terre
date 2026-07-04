@@ -452,9 +452,6 @@ msgstr "关闭小头像"
 msgid "关闭效果音"
 msgstr "关闭效果音"
 
-msgid "关闭立绘"
-msgstr "关闭立绘"
-
 msgid "关闭背景"
 msgstr "关闭背景"
 
@@ -1607,6 +1604,9 @@ msgstr "清除提示"
 msgid "清除特效"
 msgstr "清除特效"
 
+msgid "清除立绘"
+msgstr "清除立绘"
+
 msgid "游戏"
 msgstr "游戏"
 
@@ -1777,9 +1777,6 @@ msgstr "立绘插图的ID"
 
 msgid "立绘文件"
 msgstr "立绘文件"
-
-msgid "立绘显示状态"
-msgstr "立绘显示状态"
 
 msgid "立绘清除参数"
 msgstr "立绘清除参数"

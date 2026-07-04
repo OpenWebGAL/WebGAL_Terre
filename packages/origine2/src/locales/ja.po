@@ -452,9 +452,6 @@ msgstr "アバターを非表示"
 msgid "关闭效果音"
 msgstr "効果音を停止"
 
-msgid "关闭立绘"
-msgstr "立ち絵を非表示"
-
 msgid "关闭背景"
 msgstr "背景画像を非表示"
 
@@ -1607,6 +1604,9 @@ msgstr "チップをクリア"
 msgid "清除特效"
 msgstr "特殊効果をクリア"
 
+msgid "清除立绘"
+msgstr "立ち絵をクリア"
+
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1777,9 +1777,6 @@ msgstr "関連する立ち絵のID"
 
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
-
-msgid "立绘显示状态"
-msgstr "立ち絵表示状態"
 
 msgid "立绘清除参数"
 msgstr "立ち絵クリアパラメータ"

@@ -35,7 +35,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const figureFile = useValue(props.sentence.content);
   const isHaveSpineArg = figureFile.value.includes('?type=spine');
   const figurePosition = useValue<FigurePosition>("");
-  const isNoFile = props.sentence.content === "";
+  const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
   const clear = useValue(getArgByKey(props.sentence, "clear") === true);
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
@@ -522,14 +522,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <CommonOptions key="isNoDialog" title={t`立绘显示状态`}>
+      <CommonOptions key="isNoDialog" title={t`清除立绘`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
             figureFile.set(t`选择立绘文件`);
           } else
             figureFile.set("none");
           submit();
-        }} onText={t`关闭立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
+        }} onText={t`清除立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
       </CommonOptions>
       <CommonOptions key="clearFigure" title={t`立绘清除参数`}>
         <TerreToggle title="" onChange={(newValue) => {

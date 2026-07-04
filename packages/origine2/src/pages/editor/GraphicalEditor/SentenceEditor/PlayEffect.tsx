@@ -11,7 +11,7 @@ import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function PlayEffect(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
-  const isNoFile = props.sentence.content === "";
+  const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const volume = useValue(getArgByKey(props.sentence, "volume").toString() ?? "");
   const submit = () => {

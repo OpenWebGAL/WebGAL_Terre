@@ -10,7 +10,7 @@ import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
 export default function MiniAvatar(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
-  const isNoFile = props.sentence.content === "";
+  const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
   const submit = () => {
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
