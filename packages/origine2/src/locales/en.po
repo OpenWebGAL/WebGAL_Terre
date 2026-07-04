@@ -239,6 +239,9 @@ msgstr "No concat with previous text"
 msgid "不显示角色名"
 msgstr "Hide the role name"
 
+msgid "不能创建循环连接"
+msgstr "Cannot create a circular connection"
+
 msgid "不设定"
 msgstr "Not set"
 
@@ -271,6 +274,9 @@ msgstr "Set multiple animations for figure or background"
 
 msgid "为立绘或背景图片调用动画效果"
 msgstr "Call animation for figure or background"
+
+msgid "主线流程图不可删除"
+msgstr "The main flowchart cannot be deleted"
 
 msgid "主要样式"
 msgstr "Main Style"
@@ -362,6 +368,9 @@ msgstr "Saving..."
 msgid "保存模板配置失败，请稍后重试"
 msgstr "Failed to save template configuration, please try again later"
 
+msgid "保存流程图"
+msgstr "Save flowchart"
+
 msgid "保持闭眼(毫秒)"
 msgstr "Closed duration (ms)"
 
@@ -424,6 +433,12 @@ msgstr "Full-screen text"
 
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "Show some texts on Full-screen"
+
+msgid "全部不展示"
+msgstr "Hide all"
+
+msgid "全部展示"
+msgstr "Show all"
 
 msgid "关于"
 msgstr "About"
@@ -587,6 +602,9 @@ msgstr "Original style->new style, separate multiple entries with commas"
 msgid "参数值"
 msgstr "Parameter Value"
 
+msgid "双击节点名称可编辑"
+msgstr "Double-click a node name to edit it"
+
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
 
@@ -610,6 +628,9 @@ msgstr "Variable name"
 
 msgid "变量表达式"
 msgstr "Variable expression"
+
+msgid "只展示节点，不展示名称"
+msgstr "Only show nodes, not names"
 
 msgid "可用 $0 表示当前输入"
 msgstr "Use $0 for the current input"
@@ -878,6 +899,9 @@ msgstr "Center Align"
 msgid "展示小头像"
 msgstr "Show avatar"
 
+msgid "展示未解锁节点"
+msgstr "Show locked nodes"
+
 msgid "属性"
 msgstr "Property"
 
@@ -949,6 +973,9 @@ msgstr "Delay time (seconds)"
 
 msgid "开启"
 msgstr "On"
+
+msgid "开始"
+msgstr "Start"
 
 msgid "开始迁移"
 msgstr "Start migration"
@@ -1081,6 +1108,9 @@ msgstr "Submit changes"
 
 msgid "提示"
 msgstr "Tip"
+
+msgid "提示："
+msgstr "Tip:"
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "Tip: Set the figure/background first, then apply the animation, otherwise the target cannot be found."
@@ -1228,6 +1258,9 @@ msgstr "Create new folder"
 
 msgid "新建模板"
 msgstr "Create new template"
+
+msgid "新建流程图"
+msgstr "New flowchart"
 
 msgid "新建游戏"
 msgstr "Create new game"
@@ -1418,6 +1451,9 @@ msgstr "Style replacement"
 msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
+msgid "根节点"
+msgstr "Root node"
+
 msgid "检测到需要迁移的内容：{0}。"
 msgstr "Detected content to migrate: {0}."
 
@@ -1475,6 +1511,9 @@ msgstr "Multiply"
 msgid "此指令将结束游戏"
 msgstr "This command will end the game"
 
+msgid "每个流程图只能有一个根节点"
+msgstr "Each flowchart can only have one root node"
+
 msgid "永不换行"
 msgstr "Never wrap"
 
@@ -1498,6 +1537,15 @@ msgstr "Comment"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "Comments are only visible when editing and will not be executed in the game"
+
+msgid "流程图列表"
+msgstr "Flowchart list"
+
+msgid "流程图功能（实验性）"
+msgstr "Flowchart (experimental)"
+
+msgid "流程图编辑器"
+msgstr "Flowchart editor"
 
 msgid "浅色"
 msgstr "Light"
@@ -1541,8 +1589,14 @@ msgstr "Add or switch the figure at the specified position"
 msgid "添加新行"
 msgstr "Add new line"
 
+msgid "添加根节点"
+msgstr "Add root node"
+
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
+
+msgid "添加节点"
+msgstr "Add node"
 
 msgid "添加语句"
 msgstr "Add statement"
@@ -1597,6 +1651,9 @@ msgstr "Filter"
 
 msgid "点击或拖拽文件至此上传"
 msgstr "Click or drag file to this area to upload"
+
+msgid "点击节点选择场景文件"
+msgstr "Click a node to select a scene file"
 
 msgid "点状电影滤镜"
 msgstr "Dot film filter"
@@ -1814,6 +1871,9 @@ msgstr "Edit more options"
 msgid "编辑模板"
 msgstr "Edit template"
 
+msgid "编辑流程图"
+msgstr "Edit flowchart"
+
 msgid "编辑游戏"
 msgstr "Edit game"
 
@@ -1868,6 +1928,9 @@ msgstr "Script editor"
 msgid "自动"
 msgstr "Auto"
 
+msgid "自动保存流程图"
+msgstr "Auto-save flowchart"
+
 msgid "自动换行"
 msgstr "Auto wrap"
 
@@ -1897,6 +1960,9 @@ msgstr "Stage object control"
 
 msgid "舞台画面"
 msgstr "Stage"
+
+msgid "节点操作"
+msgstr "Node actions"
 
 msgid "英语"
 msgstr "English"
@@ -2134,6 +2200,9 @@ msgstr "Execute Continuously"
 
 msgid "退场时长（单位为毫秒）"
 msgstr "Exit duration (milliseconds)"
+
+msgid "选中节点或连线后按退格键或 Delete 键可删除"
+msgstr "Select a node or edge and press Backspace or Delete to delete it"
 
 msgid "选择"
 msgstr "Choose"

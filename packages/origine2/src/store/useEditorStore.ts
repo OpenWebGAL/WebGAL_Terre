@@ -27,6 +27,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isShowPreview: true,
       isEnableLivePreview: false,
       isAutoWarp: false,
+      isAutoSaveFlowchart: false,
       isUseExpFastSync: false,
       isWindowAdjustment: false, // 表示预览窗口调整功能是否开启
       isUseFontOptimization: false,
@@ -70,6 +71,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateIsShowPreview: (isShowPreview) => set({ isShowPreview }),
       updateIsEnableLivePreview: (isEnableLivePreview) => set({ isEnableLivePreview }),
       updateIsAutoWarp: (isAutoWarp) => set({ isAutoWarp }),
+      updateIsAutoSaveFlowchart: (isAutoSaveFlowchart) => set({ isAutoSaveFlowchart }),
       updateIsUseExpFastSync: (isUseExpFastSync) => set({ isUseExpFastSync }),
       updateIsUseFontOptimization: (isUseFontOptimization) => set({ isUseFontOptimization }),
       updateIgnoreVersion: (ignoreVersion) => set({ ignoreVersion }),
