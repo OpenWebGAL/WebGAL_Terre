@@ -71,7 +71,7 @@ export default function GameElement(props: IGameElementProps) {
   const isShowRenameDialog = useValue(false);
   const newGameName = useValue(props.gameInfo.dir);
   const deleteChecked = useValue(false);
-  const isTrash = useEditorStore.use.isTrash();
+  const isTrash = false;
 
   const openInFileExplorer = () => {
     api.manageGameControllerOpenGameDict(props.gameInfo.dir);

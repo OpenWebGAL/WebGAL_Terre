@@ -133,7 +133,7 @@ export default function Assets({
   const updateSortBy = useEditorStore.use.updateSortBy();
   const sortOrder = useEditorStore.use.sortOrder();
   const updateSortOrder = useEditorStore.use.updateSortOrder();
-  const isTrash = useEditorStore.use.isTrash();
+  const isTrash = false;
 
   const currentPath = useValue([...basePath, ...selectedFilePath.slice(0, -1)]);
   const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
