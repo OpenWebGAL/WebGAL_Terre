@@ -236,9 +236,6 @@ msgstr "テンプレートを適用しない"
 msgid "不拼接先前文本框内的语句"
 msgstr "前のテキストボックス内の文を結合しない"
 
-msgid "不显示角色名"
-msgstr "キャラクター名は設定不可"
-
 msgid "不能创建循环连接"
 msgstr "循環接続は作成できません"
 
@@ -1748,8 +1745,8 @@ msgstr "Video"
 msgid "视频文件"
 msgstr "動画ファイル"
 
-msgid "视频选项"
-msgstr "動画のオプション"
+msgid "视频跳过"
+msgstr "動画スキップ"
 
 msgid "禁止跳过"
 msgstr "スキップを禁止"
@@ -2383,6 +2380,9 @@ msgstr "サイドバーを隠す"
 
 msgid "隐藏文本框"
 msgstr "テキストボックスを非表示"
+
+msgid "隐藏角色名"
+msgstr "キャラクター名を非表示"
 
 msgid "雨"
 msgstr "雨"

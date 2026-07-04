@@ -37,7 +37,7 @@ export default function PlayVideo(props: ISentenceEditorProps) {
           extNames={extNameMap.get('video')} />
         </>
       </CommonOptions>
-      <CommonOptions key="2" title={t`视频选项`}>
+      <CommonOptions key="2" title={t`视频跳过`}>
         <TerreToggle title="" onChange={(newValue) => {
           isSkipOff.set(newValue);
           submit();

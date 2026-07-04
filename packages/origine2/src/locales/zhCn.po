@@ -236,9 +236,6 @@ msgstr "不应用模板"
 msgid "不拼接先前文本框内的语句"
 msgstr "不拼接先前文本框内的语句"
 
-msgid "不显示角色名"
-msgstr "不显示角色名"
-
 msgid "不能创建循环连接"
 msgstr "不能创建循环连接"
 
@@ -1748,8 +1745,8 @@ msgstr "视频"
 msgid "视频文件"
 msgstr "视频文件"
 
-msgid "视频选项"
-msgstr "视频选项"
+msgid "视频跳过"
+msgstr "视频跳过"
 
 msgid "禁止跳过"
 msgstr "禁止跳过"
@@ -2383,6 +2380,9 @@ msgstr "隐藏侧边栏"
 
 msgid "隐藏文本框"
 msgstr "隐藏文本框"
+
+msgid "隐藏角色名"
+msgstr "隐藏角色名"
 
 msgid "雨"
 msgstr "雨"

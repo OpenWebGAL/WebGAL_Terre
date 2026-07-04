@@ -236,9 +236,6 @@ msgstr "Do not apply template"
 msgid "不拼接先前文本框内的语句"
 msgstr "No concat with previous text"
 
-msgid "不显示角色名"
-msgstr "Hide the role name"
-
 msgid "不能创建循环连接"
 msgstr "Cannot create a circular connection"
 
@@ -1748,8 +1745,8 @@ msgstr "Video"
 msgid "视频文件"
 msgstr "Video file"
 
-msgid "视频选项"
-msgstr "Video options"
+msgid "视频跳过"
+msgstr "Video skipping"
 
 msgid "禁止跳过"
 msgstr "Disable skipping"
@@ -2383,6 +2380,9 @@ msgstr "Hide Sidebar"
 
 msgid "隐藏文本框"
 msgstr "Hide Text Box"
+
+msgid "隐藏角色名"
+msgstr "Hide character name"
 
 msgid "雨"
 msgstr "Rain"

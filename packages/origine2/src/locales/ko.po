@@ -236,9 +236,6 @@ msgstr "템플릿을 적용하지 않음"
 msgid "不拼接先前文本框内的语句"
 msgstr "이전 텍스트 창의 문장과 이어지지 않음"
 
-msgid "不显示角色名"
-msgstr "캐릭터 이름 숨기기"
-
 msgid "不能创建循环连接"
 msgstr "순환 연결을 만들 수 없습니다"
 
@@ -1748,8 +1745,8 @@ msgstr "비디오"
 msgid "视频文件"
 msgstr "비디오 파일"
 
-msgid "视频选项"
-msgstr "비디오 옵션"
+msgid "视频跳过"
+msgstr "비디오 스킵"
 
 msgid "禁止跳过"
 msgstr "스킵 금지"
@@ -2383,6 +2380,9 @@ msgstr "사이드바 숨기기"
 
 msgid "隐藏文本框"
 msgstr "대화창 숨기기"
+
+msgid "隐藏角色名"
+msgstr "캐릭터 이름 숨기기"
 
 msgid "雨"
 msgstr "비"

@@ -213,7 +213,7 @@ export default function Say(props: ISentenceEditorProps) {
               isNoSpeaker.set(newValue);
               submit();
             }}
-            onText={t`不显示角色名`}
+            onText={t`隐藏角色名`}
             offText={t`显示角色名`}
             isChecked={isNoSpeaker.value}
           />
