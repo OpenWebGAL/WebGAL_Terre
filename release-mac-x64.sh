@@ -19,6 +19,10 @@ mkdir Exported_Games
 cp -r public assets Exported_Games ../../release
 cd ../../
 
+# 复制 trash 库的原生二进制
+mkdir release/lib
+cp node_modules/trash/lib/macos-trash release/lib
+
 # 进入 Origine 目录
 cd packages/origine2
 #npm install esbuild-darwin-arm64
