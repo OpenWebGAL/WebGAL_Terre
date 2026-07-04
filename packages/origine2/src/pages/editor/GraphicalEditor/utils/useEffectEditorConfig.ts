@@ -63,8 +63,8 @@ export interface EffectConfig {
   slider?: EffectSliderConfig;
 }
 
-/** 所有效果参数的键值对类型，值为数值或undefined */
-export type EffectFields = Record<EffectKey, number | undefined>;
+/** 效果参数字段集合；当前语句和 runtime baseline 都可能只包含部分字段。 */
+export type EffectFields = Partial<Record<EffectKey, number | undefined>>;
 
 export const useEffectEditorConfig = () => {
   return useMemo(() => {

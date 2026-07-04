@@ -44,13 +44,14 @@ export class ManageTemplateService {
   async getTemplateList(): Promise<TemplateInfoDto[]> {
     await this.webgalFs.mkdir(UserDataService.getUserTemplateRoot(), '');
     const userTemplateRoot = UserDataService.getUserTemplateRoot();
-    const installTemplateRoot = UserDataService.getInstallPath(
-      'public/templates',
-    );
+    const installTemplateRoot =
+      UserDataService.getInstallPath('public/templates');
     const userTemplates = (await this.webgalFs.existsDir(userTemplateRoot))
       ? await this.webgalFs.getDirInfo(userTemplateRoot)
       : [];
-    const installTemplates = (await this.webgalFs.existsDir(installTemplateRoot))
+    const installTemplates = (await this.webgalFs.existsDir(
+      installTemplateRoot,
+    ))
       ? await this.webgalFs.getDirInfo(installTemplateRoot)
       : [];
     const userTemplateNames = new Set(
@@ -211,13 +212,17 @@ export class ManageTemplateService {
   /**
    * 删除模板
    * @param templateDir 模板名称
+   * @param isTrash 是否移动到回收站
    */
-  async deleteTemplate(templateDir: string): Promise<boolean> {
+  async deleteTemplate(templateDir: string, isTrash = false): Promise<boolean> {
     const templatePath = this.webgalFs.getPathFromRoot(
       `/public/templates/${templateDir}`,
     );
     if (templatePath !== UserDataService.getUserTemplateRoot(templateDir)) {
       return false;
+    }
+    if (isTrash) {
+      return this.webgalFs.trashFileOrDirectory(templatePath);
     }
     return this.webgalFs.deleteFileOrDirectory(templatePath);
   }

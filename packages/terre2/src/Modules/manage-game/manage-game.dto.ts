@@ -131,6 +131,13 @@ export class RenameDto {
   newName: string;
 }
 
+export class TrashDto {
+  @ApiProperty({
+    description: 'The source path of the file or directory to be trashed',
+  })
+  gameName: string;
+}
+
 export type Platform = 'web' | 'electron' | 'android';
 
 export const platforms: Platform[] = ['web', 'electron', 'android'];
@@ -138,4 +145,9 @@ export const platforms: Platform[] = ['web', 'electron', 'android'];
 export class IconsDto {
   @ApiProperty({ description: 'The icons of the game' })
   platforms: Platform[];
+}
+
+export class SetFlowchartDto {
+  @ApiProperty({ description: 'The flowchart content in JSON format' })
+  flowchartContent: string;
 }

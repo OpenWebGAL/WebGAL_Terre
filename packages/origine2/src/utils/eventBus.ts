@@ -63,7 +63,7 @@ type EditorEvents = {
   };
   'editor:sync-current-line': null;
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
-  'editor:sync-dragger': { x: number; y: number; scaleX: number; scaleY: number; rotation: number };
+  'editor:sync-dragger': { x?: number; y?: number; scaleX?: number; scaleY?: number; rotation?: number };
 };
 
 interface EditorPreviewEvents {

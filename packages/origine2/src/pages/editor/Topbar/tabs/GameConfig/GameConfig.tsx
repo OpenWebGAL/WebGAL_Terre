@@ -39,6 +39,7 @@ import {t, Trans} from "@lingui/macro";
 import useSWR from "swr";
 import axios from "axios";
 import {EditorPreviewClient} from "@/utils/editorPreviewClient";
+import {eventBus} from "@/utils/eventBus";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
@@ -274,6 +275,37 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
             {key: 'false', text: t`禁用`}
           ]}
           onChange={(e: string) => updateGameConfigSimpleByKey('Enable_Appreciation', e)}/>,
+      )}
+      {renderConfigItem(t`流程图功能（实验性）`,
+        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+          <GameConfigEditorWithSelector
+            key="enableFlowchart"
+            value={getConfigContentAsString('Enable_flowchart') ? getConfigContentAsString('Enable_flowchart') : 'false'}
+            selectItems={[
+              {key: 'true', text: t`启用`},
+              {key: 'false', text: t`禁用`}
+            ]}
+            onChange={(e: string) => updateGameConfigSimpleByKey('Enable_flowchart', e)}/>
+          {getConfigContentAsString('Enable_flowchart') === 'true' && (
+            <>
+              <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                <span>{t`展示未解锁节点`}</span>
+                <GameConfigEditorWithSelector
+                  key="flowchartLockedNodeVisibility"
+                  value={getConfigContentAsString('Flowchart_Locked_Node_Visibility') || 'node'}
+                  selectItems={[
+                    {key: 'all', text: t`全部展示`},
+                    {key: 'node', text: t`只展示节点，不展示名称`},
+                    {key: 'none', text: t`全部不展示`}
+                  ]}
+                  onChange={(e: string) => updateGameConfigSimpleByKey('Flowchart_Locked_Node_Visibility', e)}/>
+              </div>
+              <Button onClick={() => eventBus.emit('openFlowchartEditor')}>
+                {t`编辑流程图`}
+              </Button>
+            </>
+          )}
+        </div>,
       )}
       {renderConfigItem(t`继续游戏按钮`,
         <GameConfigEditorWithSelector

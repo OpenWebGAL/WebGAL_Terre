@@ -37,7 +37,9 @@ import {
   MkDirDto,
   RenameDto,
   UploadFilesDto,
+  SetFlowchartDto,
   UpdateAnimationTableDto,
+  TrashDto,
 } from './manage-game.dto';
 import { UserDataService } from '../user-data/user-data.service';
 
@@ -383,6 +385,22 @@ export class ManageGameController {
     );
   }
 
+  @Post('trash')
+  @ApiOperation({ summary: 'Trash File or Directory' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully trashed the file or directory.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to trash the file or directory.',
+  })
+  async trash(@Body() trashDto: TrashDto) {
+    return this.webgalFs.trashFileOrDirectory(
+      this.webgalFs.getPathFromRoot(`public/games/${trashDto.gameName}`),
+    );
+  }
+
   @Get('getIcons/:gameDir')
   @ApiOperation({ summary: 'Get Game Icons' })
   @ApiResponse({
@@ -393,5 +411,53 @@ export class ManageGameController {
   @ApiResponse({ status: 400, description: 'Failed to get the game icons.' })
   async getIcons(@Param('gameDir') gameDir: string): Promise<IconsDto> {
     return this.manageGame.getIcons(gameDir);
+  }
+
+  @Get('getFlowchart/:gameName')
+  @ApiOperation({ summary: 'Get Game Flowchart' })
+  @ApiResponse({ status: 200, description: 'Returned game flowchart.' })
+  @ApiResponse({
+    status: 404,
+    description: 'Flowchart file not found.',
+  })
+  async getFlowchart(@Param('gameName') gameName: string) {
+    const flowchartPath = this.webgalFs.getPathFromRoot(
+      `/public/games/${decodeURI(gameName)}/game/flowchart.json`,
+    );
+    if (await this.webgalFs.exists(flowchartPath)) {
+      const content = await this.webgalFs.readTextFile(flowchartPath);
+      return content;
+    } else {
+      // Return default empty flowchart structure
+      return JSON.stringify({ flowcharts: [] }, null, 2);
+    }
+  }
+
+  @Post('setFlowchart/:gameName')
+  @ApiOperation({ summary: 'Set Game Flowchart' })
+  @ApiParam({
+    name: 'gameName',
+    type: String,
+    description: 'Name of the game.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Game flowchart saved successfully.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to save the game flowchart.',
+  })
+  async setFlowchart(
+    @Param('gameName') gameName: string,
+    @Body() flowchartData: SetFlowchartDto,
+  ) {
+    const flowchartPath = this.webgalFs.getPathFromRoot(
+      `/public/games/${decodeURI(gameName)}/game/flowchart.json`,
+    );
+    return this.webgalFs.updateTextFile(
+      flowchartPath,
+      flowchartData.flowchartContent,
+    );
   }
 }

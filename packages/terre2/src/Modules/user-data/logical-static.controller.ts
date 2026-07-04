@@ -154,12 +154,18 @@ export class LogicalStaticController {
       return this.sendFile(targetPath, res);
     }
 
-    return this.sendFile(UserDataService.getEngineTemplateRoot(requestPath), res);
+    return this.sendFile(
+      UserDataService.getEngineTemplateRoot(requestPath),
+      res,
+    );
   }
 
   private async sendPublicFile(rawFilePath: string, res: Response) {
     const filePath = this.normalizeRequestPath(rawFilePath);
-    return this.sendFile(UserDataService.getInstallPath(`public/${filePath}`), res);
+    return this.sendFile(
+      UserDataService.getInstallPath(`public/${filePath}`),
+      res,
+    );
   }
 
   private async sendFirstExistingFile(candidates: string[], res: Response) {
@@ -205,7 +211,9 @@ export class LogicalStaticController {
   }
 
   private normalizeRequestPath(rawPath: string) {
-    return decodeURI(rawPath ?? '').replace(/\\/g, '/').replace(/^\/+/, '');
+    return decodeURI(rawPath ?? '')
+      .replace(/\\/g, '/')
+      .replace(/^\/+/, '');
   }
 
   private isGameProjectFile(requestPath: string) {

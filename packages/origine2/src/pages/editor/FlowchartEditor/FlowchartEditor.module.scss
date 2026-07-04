@@ -1,0 +1,110 @@
+.flowchartEditor {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #f5f5f5;
+}
+
+.sidebar {
+  width: 300px;
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  .section {
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  .flowchartList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .flowchartItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+
+    &.active {
+      background: #e3f2fd;
+      border: 1px solid #2196f3;
+    }
+
+    .flowchartInfo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+
+      .flowchartType {
+        font-size: 11px;
+        color: #666;
+        font-weight: 500;
+      }
+
+      .flowchartName {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 13px;
+      }
+    }
+
+    .flowchartActions {
+      display: flex;
+      gap: 4px;
+    }
+  }
+
+  .info {
+    margin: 16px;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-size: 12px;
+
+    p {
+      margin: 0 0 8px 0;
+      font-weight: 500;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 16px;
+
+      li {
+        margin: 4px 0;
+        color: #666;
+      }
+    }
+  }
+}
+
+.canvas {
+  flex: 1;
+  height: 100%;
+  position: relative;
+}

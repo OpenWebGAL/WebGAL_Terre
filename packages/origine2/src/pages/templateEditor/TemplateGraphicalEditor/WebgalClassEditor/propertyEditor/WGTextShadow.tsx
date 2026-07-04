@@ -6,9 +6,9 @@ import {IPropertyEditorProps} from '@/pages/templateEditor/TemplateGraphicalEdit
 
 export default function WGTextShadowEditor(props: IPropertyEditorProps) {
   const initialValue = props.prop.propValue || '0px 0px 0px rgba(0,0,0,0)'; // 默认值为无阴影
-  const [hOffset, setHOffset] = useState((initialValue.match(/(-?\d+)px/) || [, '0'])[1]);
-  const [vOffset, setVOffset] = useState((initialValue.match(/-?\d+px\s+(-?\d+)px/) || [, '0'])[1]);
-  const [blurRadius, setBlurRadius] = useState((initialValue.match(/(-?\d+)px\s+rgba/) || [, '0'])[1]);
+  const [hOffset, setHOffset] = useState((initialValue.match(/(-?\d+)px/) || ['', '0'])[1]);
+  const [vOffset, setVOffset] = useState((initialValue.match(/-?\d+px\s+(-?\d+)px/) || ['', '0'])[1]);
+  const [blurRadius, setBlurRadius] = useState((initialValue.match(/(-?\d+)px\s+rgba/) || ['', '0'])[1]);
   const [color, setColor] = useState((initialValue.match(/rgba\(.+\)/) || ['rgba(0,0,0,0)'])[0]);
 
   const submit = () => {

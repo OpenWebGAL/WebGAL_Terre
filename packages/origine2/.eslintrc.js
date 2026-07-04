@@ -15,6 +15,11 @@ module.exports = {
     //
     // myGlobal: false
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     // 自定义你的规则
     // 最大圈复杂度

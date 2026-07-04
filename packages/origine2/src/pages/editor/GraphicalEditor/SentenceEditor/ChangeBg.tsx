@@ -15,7 +15,7 @@ import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
 export default function ChangeBg(props: ISentenceEditorProps) {
-  const isNoFile = props.sentence.content === "";
+  const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const bgFile = useValue(props.sentence.content);
   const unlockName = useValue(getArgByKey(props.sentence, "unlockname").toString() ?? "");
@@ -66,7 +66,7 @@ export default function ChangeBg(props: ISentenceEditorProps) {
       json.set(event.value);
       submit();
     } else if (event.action === 'preview') {
-      EditorPreviewClient.setEffect({ target: 'bg-main', transform: event.value });
+      EditorPreviewClient.setEffect({ target: 'bg-main', transform: event.value, phase: 'preview' });
     } else {
       const values = { enterAnimation, exitAnimation, duration, enterDuration, exitDuration, ease };
       if (event.key in values) values[event.key as keyof typeof values].set(event.value as never);

@@ -236,8 +236,8 @@ msgstr "不应用模板"
 msgid "不拼接先前文本框内的语句"
 msgstr "不拼接先前文本框内的语句"
 
-msgid "不显示角色名"
-msgstr "不显示角色名"
+msgid "不能创建循环连接"
+msgstr "不能创建循环连接"
 
 msgid "不设定"
 msgstr "不设定"
@@ -271,6 +271,9 @@ msgstr "为立绘或背景图片设置多段动画效果"
 
 msgid "为立绘或背景图片调用动画效果"
 msgstr "为立绘或背景图片调用动画效果"
+
+msgid "主线流程图不可删除"
+msgstr "主线流程图不可删除"
 
 msgid "主要样式"
 msgstr "主要样式"
@@ -362,6 +365,9 @@ msgstr "保存中..."
 msgid "保存模板配置失败，请稍后重试"
 msgstr "保存模板配置失败，请稍后重试"
 
+msgid "保存流程图"
+msgstr "保存流程图"
+
 msgid "保持闭眼(毫秒)"
 msgstr "保持闭眼(毫秒)"
 
@@ -425,6 +431,12 @@ msgstr "全屏文字"
 msgid "全屏显示一段文字，用于独白或引出场景"
 msgstr "全屏显示一段文字，用于独白或引出场景"
 
+msgid "全部不展示"
+msgstr "全部不展示"
+
+msgid "全部展示"
+msgstr "全部展示"
+
 msgid "关于"
 msgstr "关于"
 
@@ -439,9 +451,6 @@ msgstr "关闭小头像"
 
 msgid "关闭效果音"
 msgstr "关闭效果音"
-
-msgid "关闭立绘"
-msgstr "关闭立绘"
 
 msgid "关闭背景"
 msgstr "关闭背景"
@@ -587,6 +596,9 @@ msgstr "原样式->新样式，多个用逗号分隔"
 msgid "参数值"
 msgstr "参数值"
 
+msgid "双击节点名称可编辑"
+msgstr "双击节点名称可编辑"
+
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
 
@@ -610,6 +622,9 @@ msgstr "变量名"
 
 msgid "变量表达式"
 msgstr "变量表达式"
+
+msgid "只展示节点，不展示名称"
+msgstr "只展示节点，不展示名称"
 
 msgid "可用 $0 表示当前输入"
 msgstr "可用 $0 表示当前输入"
@@ -649,6 +664,9 @@ msgstr "启用视频跳过"
 
 msgid "唇形同步与眨眼"
 msgstr "唇形同步与眨眼"
+
+msgid "回收站"
+msgstr "回收站"
 
 msgid "固定弹窗"
 msgstr "固定弹窗"
@@ -875,6 +893,9 @@ msgstr "居中对齐"
 msgid "展示小头像"
 msgstr "展示小头像"
 
+msgid "展示未解锁节点"
+msgstr "展示未解锁节点"
+
 msgid "属性"
 msgstr "属性"
 
@@ -890,11 +911,17 @@ msgstr "左对齐"
 msgid "已创建"
 msgstr "已创建"
 
+msgid "已启用，删除操作会移动到回收站"
+msgstr "已启用，删除操作会移动到回收站"
+
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
 
 msgid "已快进行数"
 msgstr "已快进行数"
+
+msgid "已禁用，删除操作会永久删除"
+msgstr "已禁用，删除操作会永久删除"
 
 msgid "已读文本"
 msgstr "已读文本"
@@ -940,6 +967,9 @@ msgstr "延迟时间（秒）"
 
 msgid "开启"
 msgstr "开启"
+
+msgid "开始"
+msgstr "开始"
 
 msgid "开始迁移"
 msgstr "开始迁移"
@@ -1072,6 +1102,9 @@ msgstr "提交修改"
 
 msgid "提示"
 msgstr "提示"
+
+msgid "提示："
+msgstr "提示："
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -1219,6 +1252,9 @@ msgstr "新建文件夹"
 
 msgid "新建模板"
 msgstr "新建模板"
+
+msgid "新建流程图"
+msgstr "新建流程图"
 
 msgid "新建游戏"
 msgstr "新建游戏"
@@ -1409,6 +1445,9 @@ msgstr "样式替换"
 msgid "根文本长度 (rem)"
 msgstr "根文本长度 (rem)"
 
+msgid "根节点"
+msgstr "根节点"
+
 msgid "检测到需要迁移的内容：{0}。"
 msgstr "检测到需要迁移的内容：{0}。"
 
@@ -1466,6 +1505,9 @@ msgstr "正片叠底"
 msgid "此指令将结束游戏"
 msgstr "此指令将结束游戏"
 
+msgid "每个流程图只能有一个根节点"
+msgstr "每个流程图只能有一个根节点"
+
 msgid "永不换行"
 msgstr "永不换行"
 
@@ -1489,6 +1531,15 @@ msgstr "注释"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "注释仅在编辑时可见，游戏中不会执行"
+
+msgid "流程图列表"
+msgstr "流程图列表"
+
+msgid "流程图功能（实验性）"
+msgstr "流程图功能（实验性）"
+
+msgid "流程图编辑器"
+msgstr "流程图编辑器"
 
 msgid "浅色"
 msgstr "浅色"
@@ -1532,8 +1583,14 @@ msgstr "添加或切换指定位置的立绘"
 msgid "添加新行"
 msgstr "添加新行"
 
+msgid "添加根节点"
+msgstr "添加根节点"
+
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
+
+msgid "添加节点"
+msgstr "添加节点"
 
 msgid "添加语句"
 msgstr "添加语句"
@@ -1546,6 +1603,9 @@ msgstr "清除提示"
 
 msgid "清除特效"
 msgstr "清除特效"
+
+msgid "清除立绘"
+msgstr "清除立绘"
 
 msgid "游戏"
 msgstr "游戏"
@@ -1588,6 +1648,9 @@ msgstr "滤镜"
 
 msgid "点击或拖拽文件至此上传"
 msgstr "点击或拖拽文件至此上传"
+
+msgid "点击节点选择场景文件"
+msgstr "点击节点选择场景文件"
 
 msgid "点状电影滤镜"
 msgstr "点状电影滤镜"
@@ -1682,8 +1745,8 @@ msgstr "视频"
 msgid "视频文件"
 msgstr "视频文件"
 
-msgid "视频选项"
-msgstr "视频选项"
+msgid "视频跳过"
+msgstr "视频跳过"
 
 msgid "禁止跳过"
 msgstr "禁止跳过"
@@ -1714,9 +1777,6 @@ msgstr "立绘插图的ID"
 
 msgid "立绘文件"
 msgstr "立绘文件"
-
-msgid "立绘显示状态"
-msgstr "立绘显示状态"
 
 msgid "立绘清除参数"
 msgstr "立绘清除参数"
@@ -1805,6 +1865,9 @@ msgstr "编辑更多选项"
 msgid "编辑模板"
 msgstr "编辑模板"
 
+msgid "编辑流程图"
+msgstr "编辑流程图"
+
 msgid "编辑游戏"
 msgstr "编辑游戏"
 
@@ -1859,6 +1922,9 @@ msgstr "脚本编辑器"
 msgid "自动"
 msgstr "自动"
 
+msgid "自动保存流程图"
+msgstr "自动保存流程图"
+
 msgid "自动换行"
 msgstr "自动换行"
 
@@ -1888,6 +1954,9 @@ msgstr "舞台对象控制"
 
 msgid "舞台画面"
 msgstr "舞台画面"
+
+msgid "节点操作"
+msgstr "节点操作"
 
 msgid "英语"
 msgstr "英语"
@@ -2126,6 +2195,9 @@ msgstr "连续执行"
 msgid "退场时长（单位为毫秒）"
 msgstr "退场时长（单位为毫秒）"
 
+msgid "选中节点或连线后按退格键或 Delete 键可删除"
+msgstr "选中节点或连线后按退格键或 Delete 键可删除"
+
 msgid "选择"
 msgstr "选择"
 
@@ -2305,6 +2377,9 @@ msgstr "隐藏侧边栏"
 
 msgid "隐藏文本框"
 msgstr "隐藏文本框"
+
+msgid "隐藏角色名"
+msgstr "隐藏角色名"
 
 msgid "雨"
 msgstr "雨"

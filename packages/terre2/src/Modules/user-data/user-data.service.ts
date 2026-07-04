@@ -88,7 +88,8 @@ export class UserDataService {
 
     const userPath = this.safeResolve(userRoot, templateName);
     if (preferUser) return userPath;
-    if (templateName === DEFAULT_TEMPLATE_DIR) return this.getDefaultTemplateRoot();
+    if (templateName === DEFAULT_TEMPLATE_DIR)
+      return this.getDefaultTemplateRoot();
 
     const installPath = this.safeResolve(
       this.getInstallPath('public/templates'),
@@ -112,7 +113,10 @@ export class UserDataService {
   }
 
   static getExportRoot(gameName?: string) {
-    const base = path.join(this.getState().activeUserDataRoot, 'Exported_Games');
+    const base = path.join(
+      this.getState().activeUserDataRoot,
+      'Exported_Games',
+    );
     return gameName ? this.safeResolve(base, gameName) : base;
   }
 
@@ -172,7 +176,10 @@ export class UserDataService {
       );
     }
 
-    if (normalizedPath === 'public/templates' || normalizedPath === 'templates') {
+    if (
+      normalizedPath === 'public/templates' ||
+      normalizedPath === 'templates'
+    ) {
       return this.getUserTemplateRoot();
     }
     if (normalizedPath.startsWith('public/templates/')) {
@@ -203,16 +210,16 @@ export class UserDataService {
       normalizedPath === 'Exported_Games' ||
       normalizedPath.startsWith('Exported_Games/')
     ) {
-      return this.safeResolve(
-        state.activeUserDataRoot,
-        normalizedPath,
-      );
+      return this.safeResolve(state.activeUserDataRoot, normalizedPath);
     }
 
     return this.safeResolve(process.cwd(), normalizedPath);
   }
 
-  static async resolveReadableTemplateFile(templateName: string, filePath = '') {
+  static async resolveReadableTemplateFile(
+    templateName: string,
+    filePath = '',
+  ) {
     if (templateName === DEFAULT_TEMPLATE_DIR) {
       return this.safeResolve(this.getDefaultTemplateRoot(), filePath);
     }
@@ -274,12 +281,16 @@ export class UserDataService {
     const result = await UserDataService.migrateLegacyData();
     return this.toOperationResult(
       result.conflicts.length === 0,
-      result.conflicts.length === 0 ? 'Legacy data migrated.' : 'Migration has conflicts.',
+      result.conflicts.length === 0
+        ? 'Legacy data migrated.'
+        : 'Migration has conflicts.',
       result.conflicts,
     );
   }
 
-  async setUserDataPath(userDataPath: string): Promise<UserDataOperationResultDto> {
+  async setUserDataPath(
+    userDataPath: string,
+  ): Promise<UserDataOperationResultDto> {
     const state = UserDataService.getState();
     await UserDataService.getStatus();
     if (state.isPortable) {
@@ -303,7 +314,10 @@ export class UserDataService {
       );
     }
 
-    const moveResult = await UserDataService.moveDataRoot(currentPath, targetPath);
+    const moveResult = await UserDataService.moveDataRoot(
+      currentPath,
+      targetPath,
+    );
     if (moveResult.conflicts.length > 0) {
       return this.toOperationResult(
         false,
@@ -316,7 +330,8 @@ export class UserDataService {
       path.resolve(targetPath) === path.resolve(state.defaultUserDataRoot)
         ? undefined
         : targetPath;
-    state.configuredUserDataRoot = state.config.userDataPath ?? state.defaultUserDataRoot;
+    state.configuredUserDataRoot =
+      state.config.userDataPath ?? state.defaultUserDataRoot;
     state.activeUserDataRoot = state.configuredUserDataRoot;
     await UserDataService.saveConfig(state.config);
     await UserDataService.ensureStateDirectories();
@@ -327,7 +342,9 @@ export class UserDataService {
     return this.setUserDataPath(UserDataService.getState().defaultUserDataRoot);
   }
 
-  async setPortableMode(portable: boolean): Promise<UserDataOperationResultDto> {
+  async setPortableMode(
+    portable: boolean,
+  ): Promise<UserDataOperationResultDto> {
     const state = UserDataService.getState();
     await UserDataService.getStatus();
     if (portable === state.isPortable) {
@@ -409,7 +426,9 @@ export class UserDataService {
       configPath,
       defaultUserDataRoot,
       configuredUserDataRoot,
-      activeUserDataRoot: isPortable ? portableDataRoot : configuredUserDataRoot,
+      activeUserDataRoot: isPortable
+        ? portableDataRoot
+        : configuredUserDataRoot,
       portableDataRoot,
       isPortable,
       hasPortableDataDir,
@@ -481,14 +500,21 @@ export class UserDataService {
   }
 
   private static async getLegacyMigrationStatus(): Promise<UserDataLegacyMigrationStatusDto> {
-    const [legacyGames, legacyTemplates, legacyDerivatives, dataGames, dataTemplates] =
-      await Promise.all([
-        this.hasVisibleChildren(this.getInstallPath('public/games')),
-        this.hasLegacyCustomTemplates(),
-        this.hasVisibleChildren(this.getInstallPath('assets/templates/Derivative_Engine')),
-        this.hasVisibleChildren(this.getGameRoot()),
-        this.hasVisibleChildren(this.getUserTemplateRoot()),
-      ]);
+    const [
+      legacyGames,
+      legacyTemplates,
+      legacyDerivatives,
+      dataGames,
+      dataTemplates,
+    ] = await Promise.all([
+      this.hasVisibleChildren(this.getInstallPath('public/games')),
+      this.hasLegacyCustomTemplates(),
+      this.hasVisibleChildren(
+        this.getInstallPath('assets/templates/Derivative_Engine'),
+      ),
+      this.hasVisibleChildren(this.getGameRoot()),
+      this.hasVisibleChildren(this.getUserTemplateRoot()),
+    ]);
     return {
       hasLegacyGames: legacyGames,
       hasLegacyCustomTemplates: legacyTemplates,
@@ -652,7 +678,10 @@ export class UserDataService {
   }
 
   private static isPathInside(root: string, pathToCheck: string) {
-    const relativePath = path.relative(path.resolve(root), path.resolve(pathToCheck));
+    const relativePath = path.relative(
+      path.resolve(root),
+      path.resolve(pathToCheck),
+    );
     return (
       relativePath === '' ||
       (!relativePath.startsWith('..') && !path.isAbsolute(relativePath))

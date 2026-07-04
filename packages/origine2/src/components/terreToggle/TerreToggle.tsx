@@ -1,4 +1,4 @@
-import { Dropdown, Option } from "@fluentui/react-components";
+import { Switch, Tooltip } from "@fluentui/react-components";
 
 interface ITerreToggle{
   title:string,
@@ -9,16 +9,10 @@ interface ITerreToggle{
 }
 
 export default function TerreToggle(props:ITerreToggle){
-  const value = props.isChecked ? "true" : "false";
+  const text = props.isChecked ? props.onText : props.offText;
   return (
-    <Dropdown
-      value={props.isChecked ? props.onText : props.offText}
-      selectedOptions={[value]}
-      onOptionSelect={(_, data) => data.optionValue && props.onChange(data.optionValue === "true")}
-      style={{ minWidth: "140px" }}
-    >
-      <Option value="true">{props.onText}</Option>
-      <Option value="false">{props.offText}</Option>
-    </Dropdown>
+    <Tooltip content={text} relationship="label" positioning="below">
+      <Switch checked={props.isChecked} onChange={(_, data) => props.onChange(data.checked)} />
+    </Tooltip>
   );
 }

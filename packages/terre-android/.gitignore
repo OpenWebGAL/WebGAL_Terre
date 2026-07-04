@@ -14,10 +14,8 @@
 .cxx
 .kotlin
 local.properties
-app/libnode/bin
-app/libnode/include
-app/libnode/nodejs-mobile-*
 app/src/main/assets/*
+app/src/main/jniLibs
 
 # key
 key.properties

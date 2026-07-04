@@ -349,6 +349,34 @@
         ]
       }
     },
+    "/api/assets/trash": {
+      "post": {
+        "operationId": "AssetsController_trashFileOrDir",
+        "summary": "trash File or Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrashFileOrDirDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully trash the file or directory."
+          },
+          "400": {
+            "description": "Failed to trash the file or directory."
+          }
+        },
+        "tags": [
+          "Assets"
+        ]
+      }
+    },
     "/api/assets/editTextFile": {
       "post": {
         "operationId": "AssetsController_editTextFile",
@@ -1003,6 +1031,34 @@
         ]
       }
     },
+    "/api/manageGame/trash": {
+      "post": {
+        "operationId": "ManageGameController_trash",
+        "summary": "Trash File or Directory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrashDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully trashed the file or directory."
+          },
+          "400": {
+            "description": "Failed to trash the file or directory."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
     "/api/manageGame/getIcons/{gameDir}": {
       "get": {
         "operationId": "ManageGameController_getIcons",
@@ -1030,6 +1086,71 @@
           },
           "400": {
             "description": "Failed to get the game icons."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/getFlowchart/{gameName}": {
+      "get": {
+        "operationId": "ManageGameController_getFlowchart",
+        "summary": "Get Game Flowchart",
+        "parameters": [
+          {
+            "name": "gameName",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned game flowchart."
+          },
+          "404": {
+            "description": "Flowchart file not found."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/setFlowchart/{gameName}": {
+      "post": {
+        "operationId": "ManageGameController_setFlowchart",
+        "summary": "Set Game Flowchart",
+        "parameters": [
+          {
+            "name": "gameName",
+            "required": true,
+            "in": "path",
+            "description": "Name of the game.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetFlowchartDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Game flowchart saved successfully."
+          },
+          "400": {
+            "description": "Failed to save the game flowchart."
           }
         },
         "tags": [
@@ -1185,6 +1306,36 @@
         "responses": {
           "204": {
             "description": "Template deleted successfully."
+          },
+          "404": {
+            "description": "Template not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        },
+        "tags": [
+          "Manage Template"
+        ]
+      }
+    },
+    "/api/manageTemplate/trash/{templateDir}": {
+      "delete": {
+        "operationId": "ManageTemplateController_trashTemplate",
+        "summary": "Delete Template",
+        "parameters": [
+          {
+            "name": "templateDir",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Template trashed successfully."
           },
           "404": {
             "description": "Template not found."
@@ -1585,6 +1736,18 @@
           "newName"
         ]
       },
+      "TrashFileOrDirDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "The source path of the file or directory to be thrashed"
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
       "EditTextFileDto": {
         "type": "object",
         "properties": {
@@ -1899,6 +2062,18 @@
           "newName"
         ]
       },
+      "TrashDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The source path of the file or directory to be trashed"
+          }
+        },
+        "required": [
+          "gameName"
+        ]
+      },
       "IconsDto": {
         "type": "object",
         "properties": {
@@ -1912,6 +2087,18 @@
         },
         "required": [
           "platforms"
+        ]
+      },
+      "SetFlowchartDto": {
+        "type": "object",
+        "properties": {
+          "flowchartContent": {
+            "type": "string",
+            "description": "The flowchart content in JSON format"
+          }
+        },
+        "required": [
+          "flowchartContent"
         ]
       },
       "TemplateInfoDto": {

@@ -101,6 +101,11 @@ export interface RenameFileDto {
   newName: string;
 }
 
+export interface TrashFileOrDirDto {
+  /** The source path of the file or directory to be thrashed */
+  source: string;
+}
+
 export interface EditTextFileDto {
   /** The path of textfile */
   path: string;
@@ -234,9 +239,19 @@ export interface RenameDto {
   newName: string;
 }
 
+export interface TrashDto {
+  /** The source path of the file or directory to be trashed */
+  gameName: string;
+}
+
 export interface IconsDto {
   /** The icons of the game */
   platforms: string[];
+}
+
+export interface SetFlowchartDto {
+  /** The flowchart content in JSON format */
+  flowchartContent: string;
 }
 
 export interface TemplateInfoDto {
@@ -733,6 +748,26 @@ export class Api<
      * No description
      *
      * @tags Assets
+     * @name AssetsControllerTrashFileOrDir
+     * @summary trash File or Directory
+     * @request POST:/api/assets/trash
+     */
+    assetsControllerTrashFileOrDir: (
+      data: TrashFileOrDirDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/assets/trash`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Assets
      * @name AssetsControllerEditTextFile
      * @summary Edit Text File
      * @request POST:/api/assets/editTextFile
@@ -1184,6 +1219,23 @@ export class Api<
      * No description
      *
      * @tags Manage Game
+     * @name ManageGameControllerTrash
+     * @summary Trash File or Directory
+     * @request POST:/api/manageGame/trash
+     */
+    manageGameControllerTrash: (data: TrashDto, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/manageGame/trash`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
      * @name ManageGameControllerGetIcons
      * @summary Get Game Icons
      * @request GET:/api/manageGame/getIcons/{gameDir}
@@ -1196,6 +1248,45 @@ export class Api<
         path: `/api/manageGame/getIcons/${gameDir}`,
         method: "GET",
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerGetFlowchart
+     * @summary Get Game Flowchart
+     * @request GET:/api/manageGame/getFlowchart/{gameName}
+     */
+    manageGameControllerGetFlowchart: (
+      gameName: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/getFlowchart/${gameName}`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerSetFlowchart
+     * @summary Set Game Flowchart
+     * @request POST:/api/manageGame/setFlowchart/{gameName}
+     */
+    manageGameControllerSetFlowchart: (
+      gameName: string,
+      data: SetFlowchartDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/setFlowchart/${gameName}`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -1288,6 +1379,24 @@ export class Api<
     ) =>
       this.request<void, void>({
         path: `/api/manageTemplate/delete/${templateDir}`,
+        method: "DELETE",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerTrashTemplate
+     * @summary Delete Template
+     * @request DELETE:/api/manageTemplate/trash/{templateDir}
+     */
+    manageTemplateControllerTrashTemplate: (
+      templateDir: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageTemplate/trash/${templateDir}`,
         method: "DELETE",
         ...params,
       }),
