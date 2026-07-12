@@ -278,7 +278,6 @@ export class WebgalFsService {
   async trashFileOrDirectory(_path: string): Promise<boolean> {
     try {
       const path = decodeURI(_path);
-
       const stat = await fs.stat(path);
 
       if (stat.isDirectory()) {
@@ -287,28 +286,23 @@ export class WebgalFsService {
         this.logger.log(`丢弃文件: ${path}`);
       }
 
-      try {
-        const binnaryMap = {
-          darwin: 'macos-trash',
-          win32: 'windows-trash',
-        };
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const isPackaged = typeof process.pkg !== 'undefined';
-        if (isPackaged && Object.keys(binnaryMap).includes(process.platform)) {
-          const windowsTrashExe = join(
-            dirname(process.execPath),
-            'lib',
-            binnaryMap[process.platform],
-          );
-          await pExecFile(windowsTrashExe, [path]);
-          return true;
-        }
-        await trash(path, { glob: false });
-      } catch (trashError: any) {
-        throw trashError;
+      const binaryMap = {
+        darwin: 'macos-trash',
+        win32: 'windows-trash.exe',
+      };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const isPackaged = typeof process.pkg !== 'undefined';
+      if (isPackaged && Object.keys(binaryMap).includes(process.platform)) {
+        const trashBinaryPath = join(
+          dirname(process.execPath),
+          'lib',
+          binaryMap[process.platform],
+        );
+        await pExecFile(trashBinaryPath, [path]);
+        return true;
       }
-      return true;
+      await trash(path, { glob: false });
     } catch (error) {
       this.logger.error(`丢弃失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;
