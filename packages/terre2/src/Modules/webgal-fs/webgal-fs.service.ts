@@ -3,8 +3,12 @@ import * as fs from 'fs/promises';
 import archiver = require('archiver');
 import AdmZip = require('adm-zip');
 import { basename, dirname, extname, isAbsolute, join } from 'path';
+import { execFile } from 'child_process';
+import { promisify } from 'util';
 import { UserDataService } from '../user-data/user-data.service';
 import trash from 'trash';
+
+const pExecFile = promisify(execFile);
 
 export interface IFileInfo {
   name: string;
@@ -274,7 +278,6 @@ export class WebgalFsService {
   async trashFileOrDirectory(_path: string): Promise<boolean> {
     try {
       const path = decodeURI(_path);
-
       const stat = await fs.stat(path);
 
       if (stat.isDirectory()) {
@@ -282,8 +285,24 @@ export class WebgalFsService {
       } else {
         this.logger.log(`丢弃文件: ${path}`);
       }
+
+      const binaryMap = {
+        darwin: 'macos-trash',
+        win32: 'windows-trash.exe',
+      };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const isPackaged = typeof process.pkg !== 'undefined';
+      if (isPackaged && Object.keys(binaryMap).includes(process.platform)) {
+        const trashBinaryPath = join(
+          dirname(process.execPath),
+          'lib',
+          binaryMap[process.platform],
+        );
+        await pExecFile(trashBinaryPath, [path]);
+        return true;
+      }
       await trash(path, { glob: false });
-      return true;
     } catch (error) {
       this.logger.error(`丢弃失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;

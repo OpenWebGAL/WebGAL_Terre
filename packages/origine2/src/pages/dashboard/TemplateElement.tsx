@@ -72,7 +72,7 @@ export default function TemplateElement(props: ITemplateElementProps) {
   const isShowDeleteDialog = useValue(false);
   const isShowRenameDialog = useValue(false);
   const newTemplateName = useValue(props.templateInfo.dir);
-  const isTrash = false;
+  const isTrash = useEditorStore.use.isTrash();
 
   const openInFileExplorer = () => {
     api.assetsControllerOpenDict(`templates/${props.templateInfo.dir}`);

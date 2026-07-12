@@ -36,6 +36,8 @@ import {
   NavigationFilled,
   NavigationRegular,
   Settings20Regular,
+  ArchiveFilled,
+  ArchiveRegular,
 } from '@fluentui/react-icons';
 import { Platte } from '@icon-park/react';
 import { ReactNode, useEffect, useState } from 'react';
@@ -132,6 +134,8 @@ export function SettingsShortcutGrid({ onOpenSettings }: { onOpenSettings?: () =
   const isCascaderDelimitersCustomizable = useEditorStore.use.isCascaderDelimitersCustomizable();
   const updateIsCascaderDelimitersCustomizable = useEditorStore.use.updateIsCascaderDelimitersCustomizable();
   const updateCascaderDelimiters = useEditorStore.use.updateCascaderDelimiters();
+  const isTrash = useEditorStore.use.isTrash();
+  const updateIsTrash = useEditorStore.use.updateIsTrash();
 
   return (
     <div className={styles.grid}>
@@ -210,6 +214,13 @@ export function SettingsShortcutGrid({ onOpenSettings }: { onOpenSettings?: () =
           updateIsCascaderDelimitersCustomizable(next);
           if (!next) updateCascaderDelimiters(['/']);
         }}
+      />
+      <SettingTile
+        icon={isTrash ? <ArchiveFilled /> : <ArchiveRegular />}
+        title={t`回收站`}
+        description={isTrash ? t`已启用，删除操作会移动到回收站` : t`已禁用，删除操作会永久删除`}
+        active={isTrash}
+        onClick={() => updateIsTrash(!isTrash)}
       />
     </div>
   );
