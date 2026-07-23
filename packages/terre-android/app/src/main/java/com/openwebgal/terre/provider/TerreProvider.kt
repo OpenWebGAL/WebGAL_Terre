@@ -78,6 +78,7 @@ class TerreProvider : DocumentsProvider() {
                     "mp3" -> "audio/mpeg"
                     "wav" -> "audio/wav"
                     "ogg" -> "audio/ogg"
+                    "opus" -> "audio/ogg"
                     "m4a" -> "audio/mp4"
                     "flac" -> "audio/flac"
                     "mp4" -> "video/mp4"
