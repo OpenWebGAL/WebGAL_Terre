@@ -641,6 +641,18 @@ msgstr "선택 가능 항목"
 msgid "右侧"
 msgstr "우측"
 
+msgid "右侧 1/3"
+msgstr "우측 1/3"
+
+msgid "右侧 1/3 立绘"
+msgstr "우측 1/3 스탠딩"
+
+msgid "右侧 1/4"
+msgstr "우측 1/4"
+
+msgid "右侧 1/4 立绘"
+msgstr "우측 1/4 스탠딩"
+
 msgid "右侧立绘"
 msgstr "우측 스탠딩"
 
@@ -904,6 +916,18 @@ msgstr "속성"
 
 msgid "左侧"
 msgstr "왼쪽"
+
+msgid "左侧 1/3"
+msgstr "좌측 1/3"
+
+msgid "左侧 1/3 立绘"
+msgstr "좌측 1/3 스탠딩"
+
+msgid "左侧 1/4"
+msgstr "좌측 1/4"
+
+msgid "左侧 1/4 立绘"
+msgstr "좌측 1/4 스탠딩"
 
 msgid "左侧立绘"
 msgstr "좌측 스탠딩"
