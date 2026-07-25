@@ -39,6 +39,7 @@ import { t } from '@lingui/macro';
 import { localStorageRename } from '@/utils/localStorageRename';
 import { TemplateInfoDto } from '@/api/Api';
 import useEditorStore from '@/store/useEditorStore';
+import useTrashFailedToast from '@/hooks/useTrashFailedToast';
 
 interface ITemplateElementProps {
   templateInfo: TemplateInfoDto;
@@ -73,6 +74,7 @@ export default function TemplateElement(props: ITemplateElementProps) {
   const isShowRenameDialog = useValue(false);
   const newTemplateName = useValue(props.templateInfo.dir);
   const isTrash = useEditorStore.use.isTrash();
+  const toastTrashFailed = useTrashFailedToast();
 
   const openInFileExplorer = () => {
     api.assetsControllerOpenDict(`templates/${props.templateInfo.dir}`);
@@ -92,7 +94,12 @@ export default function TemplateElement(props: ITemplateElementProps) {
 
   const deleteThisTemplate = async (templateName: string, isTrash = false) => {
     if (isTrash) {
-      await api.manageTemplateControllerTrashTemplate(templateName);
+      try {
+        await api.manageTemplateControllerTrashTemplate(templateName);
+      } catch {
+        toastTrashFailed();
+        return;
+      }
     } else {
       await api.manageTemplateControllerDeleteTemplate(templateName);
     }

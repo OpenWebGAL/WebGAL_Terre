@@ -286,23 +286,27 @@ export class WebgalFsService {
         this.logger.log(`丢弃文件: ${path}`);
       }
 
-      const binaryMap = {
+      // 打包后 trash 库定位不到随包分发的原生二进制，改用可执行文件同级 lib 目录下的副本
+      const trashBinary = {
         darwin: 'macos-trash',
         win32: 'windows-trash.exe',
-      };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const isPackaged = typeof process.pkg !== 'undefined';
-      if (isPackaged && Object.keys(binaryMap).includes(process.platform)) {
-        const trashBinaryPath = join(
-          dirname(process.execPath),
-          'lib',
-          binaryMap[process.platform],
-        );
-        await pExecFile(trashBinaryPath, [path]);
-        return true;
+      }[process.platform];
+      const trashBinaryPath =
+        trashBinary && join(dirname(process.execPath), 'lib', trashBinary);
+
+      if (trashBinaryPath && (await this.exists(trashBinaryPath))) {
+        try {
+          await pExecFile(trashBinaryPath, [path]);
+          return true;
+        } catch (error) {
+          // macOS 上二进制可能因执行位丢失或 Gatekeeper 隔离而无法运行, 回退到库实现
+          this.logger.warn(`回收站二进制不可用, 回退: ${String(error)}`);
+        }
       }
+
       await trash(path, { glob: false });
+
+      return true;
     } catch (error) {
       this.logger.error(`丢弃失败: ${decodeURI(_path)}, ${String(error)}`);
       return false;

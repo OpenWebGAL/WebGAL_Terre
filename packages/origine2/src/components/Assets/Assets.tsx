@@ -57,6 +57,7 @@ import { t } from '@lingui/macro';
 import Upload from './Upload';
 import naturalCompare from 'natural-compare-lite';
 import useEditorStore from '@/store/useEditorStore';
+import useTrashFailedToast from '@/hooks/useTrashFailedToast';
 
 export interface IFile {
   extName: string;
@@ -134,6 +135,7 @@ export default function Assets({
   const sortOrder = useEditorStore.use.sortOrder();
   const updateSortOrder = useEditorStore.use.updateSortOrder();
   const isTrash = useEditorStore.use.isTrash();
+  const toastTrashFailed = useTrashFailedToast();
 
   const currentPath = useValue([...basePath, ...selectedFilePath.slice(0, -1)]);
   const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
@@ -309,7 +311,12 @@ export default function Assets({
 
   const handleDeleteFile = async (source: string) => {
     if (isTrash) {
-      await api.assetsControllerTrashFileOrDir({ source });
+      try {
+        await api.assetsControllerTrashFileOrDir({ source });
+      } catch {
+        toastTrashFailed();
+        return;
+      }
     } else {
       await api.assetsControllerDeleteFileOrDir({ source });
     }

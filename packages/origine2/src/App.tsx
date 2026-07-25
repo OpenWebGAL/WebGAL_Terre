@@ -7,6 +7,7 @@ import useEditorStore from './store/useEditorStore';
 import useLanguage from './hooks/useLanguage';
 import { initMonaco } from '@/utils/initMonaco';
 import { useHashRouter, RouterPage } from '@/router';
+import { TrashToaster } from '@/hooks/useTrashFailedToast';
 
 function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
   return (
     <div className="App" key={appKeyLang}>
       <RouterPage page={page} />
+      <TrashToaster />
     </div>
   );
 }

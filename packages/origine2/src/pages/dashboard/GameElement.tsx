@@ -37,6 +37,7 @@ import { routes } from '@/router';
 import { t } from '@lingui/macro';
 import { GameInfoDto } from '@/api/Api';
 import useEditorStore from '@/store/useEditorStore';
+import useTrashFailedToast from '@/hooks/useTrashFailedToast';
 
 interface IGameElementProps {
   gameInfo: GameInfoDto;
@@ -72,6 +73,7 @@ export default function GameElement(props: IGameElementProps) {
   const newGameName = useValue(props.gameInfo.dir);
   const deleteChecked = useValue(false);
   const isTrash = useEditorStore.use.isTrash();
+  const toastTrashFailed = useTrashFailedToast();
 
   const openInFileExplorer = () => {
     api.manageGameControllerOpenGameDict(props.gameInfo.dir);
@@ -90,7 +92,12 @@ export default function GameElement(props: IGameElementProps) {
 
   const deleteThisGame = async () => {
     if (isTrash) {
-      await api.manageGameControllerTrash({ gameName: props.gameInfo.dir });
+      try {
+        await api.manageGameControllerTrash({ gameName: props.gameInfo.dir });
+      } catch {
+        toastTrashFailed();
+        return;
+      }
     } else {
       await api.manageGameControllerDelete({ gameName: props.gameInfo.dir });
     }
