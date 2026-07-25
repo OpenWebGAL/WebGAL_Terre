@@ -164,9 +164,13 @@ export class AssetsController {
     description: 'Failed to trash the file or directory.',
   })
   async trashFileOrDir(@Body() fileOperationDto: TrashFileOrDirDto) {
-    return this.webgalFs.trashFileOrDirectory(
+    const result = await this.webgalFs.trashFileOrDirectory(
       this.webgalFs.getPathFromRoot(`public/${fileOperationDto.source}`),
     );
+    if (!result) {
+      throw new BadRequestException('Failed to trash the file or directory.');
+    }
+    return result;
   }
 
   @Post('editTextFile')

@@ -24,6 +24,9 @@ cd ../../
 mkdir release/lib
 curl -L https://github.com/electron/rcedit/releases/latest/download/rcedit-x64.exe -o release/lib/rcedit-x64.exe
 
+# 复制 trash 库的原生二进制
+cp node_modules/trash/lib/windows-trash.exe release/lib
+
 # 进入 Origine 目录
 cd packages/origine2
 yarn run build

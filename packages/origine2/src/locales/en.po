@@ -626,6 +626,9 @@ msgstr "Variable expression"
 msgid "只展示节点，不展示名称"
 msgstr "Only show nodes, not names"
 
+msgid "可在设置中关闭回收站功能后重试，此时删除将不可恢复"
+msgstr "You can disable Trash in settings and try again, but deletion will then be permanent."
+
 msgid "可用 $0 表示当前输入"
 msgstr "Use $0 for the current input"
 
@@ -1756,6 +1759,9 @@ msgstr "Disable skipping video"
 
 msgid "禁用"
 msgstr "Disabled"
+
+msgid "移动到回收站失败"
+msgstr "Failed to move to Trash"
 
 msgid "立即注视"
 msgstr "Focus instantly"
