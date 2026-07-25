@@ -21,6 +21,7 @@ export function getArgsKey(
         leftSayKey,
         rightSayKey,
         centerSayKey,
+        ...centeredPositionSayKeys,
       ];
     }
     case commandType.changeBg: {
@@ -51,6 +52,7 @@ export function getArgsKey(
         idFigureKey,
         leftKey,
         rightKey,
+        ...centeredPositionKeys,
         transformKey,
         zIndexKey,
         motionKey,
@@ -404,6 +406,48 @@ changeFigure:k2.png -next;
 \`\`\`
   `),
 };
+
+/**
+ * 除左右靠边定位以外的立绘位置，均以立绘中心为基准定位
+ */
+const centeredFigurePositions: Array<[string, string]> = [
+  ['left13', '左侧 1/3'],
+  ['right13', '右侧 1/3'],
+  ['left14', '左侧 1/4'],
+  ['right14', '右侧 1/4'],
+];
+
+const centeredPositionKeys: CompletionItem[] = centeredFigurePositions.map(
+  ([position, name]) => ({
+    kind: CompletionItemKind.Constant,
+    label: position,
+    insertText: position,
+    detail: `将立绘置于${name}处`,
+    documentation: markdown(`
+将立绘放置在舞台${name}处，以立绘的中心为基准定位
+
+\`\`\`
+changeFigure:testFigure03.png -${position};
+\`\`\`
+  `),
+  }),
+);
+
+const centeredPositionSayKeys: CompletionItem[] = centeredFigurePositions.map(
+  ([position, name]) => ({
+    kind: CompletionItemKind.Constant,
+    label: position,
+    insertText: position,
+    detail: `对话属于${name}处的立绘`,
+    documentation: markdown(`
+指定该对话所属的立绘为${name}处的立绘
+
+\`\`\`
+WebGAL:这是${name}处立绘的对话 -${position};
+\`\`\`
+  `),
+  }),
+);
 
 const leftSayKey: CompletionItem = {
   kind: CompletionItemKind.Constant,

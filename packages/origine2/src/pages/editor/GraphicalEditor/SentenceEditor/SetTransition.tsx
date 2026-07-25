@@ -11,21 +11,15 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
-
-type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main";
+import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
 
 export default function SetTransition(props: ISentenceEditorProps) {
   const enterFileName = useValue(getArgByKey(props.sentence, 'enter'));
   const exitFileName = useValue(getArgByKey(props.sentence, 'exit'));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const ignoreDefault = useValue(getArgByKey(props.sentence, "ignoreDefault") === true);
-  const presetTargets = new Map<PresetTarget, string>([
-    [ "fig-left", t`左侧立绘` ],
-    [ "fig-center", t`中间立绘` ],
-    [ "fig-right", t`右侧立绘` ],
-    [ "bg-main", t`背景图片` ],
-  ]);
-  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
+  const presetTargets = usePresetTargetOptions(false);
+  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value);
   const isUsePreset = useValue(isPresetTarget);
   const submit = () => {
     const submitString = combineSubmitString(

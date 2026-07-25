@@ -9,16 +9,7 @@ import { useValue } from "@/hooks/useValue";
 import { getArgByKey } from "../utils/getArgByKey";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { t } from "@lingui/macro";
-
-type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
-
-const presetTargets = () => new Map<PresetTarget, string>([
-  ["fig-left", t`左侧立绘`],
-  ["fig-center", t`中间立绘`],
-  ["fig-right", t`右侧立绘`],
-  ["bg-main", t`背景图片`],
-  ["stage-main", t`舞台画面`],
-]);
+import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
 
 function TextInput(props: {
   title: string;
@@ -151,8 +142,8 @@ function SetComplexAnimationCommand(props: ISentenceEditorProps) {
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const duration = useValue(getArgByKey(props.sentence, "duration")?.toString() ?? "");
   const isGoNext = useValue(getArgByKey(props.sentence, "next") === true);
-  const targets = presetTargets();
-  const isUsePreset = useValue(Array.from(targets.keys()).includes(target.value as PresetTarget));
+  const targets = usePresetTargetOptions();
+  const isUsePreset = useValue(Array.from(targets.keys()).includes(target.value));
 
   const submit = () => {
     props.onSubmit(combineSubmitString(

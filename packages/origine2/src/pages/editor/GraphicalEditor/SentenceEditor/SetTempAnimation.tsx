@@ -14,8 +14,7 @@ import { CloseSmall, Down, More, Plus, Up } from "@icon-park/react";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { useRef } from "react";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
-
-type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
+import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
 
 interface IAnimationFrame {
   transform: string;
@@ -27,14 +26,8 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
   const content = useValue(props.sentence.content);
   const animationFrameArray = useValue<IAnimationFrame[]>(initTransformArray(content.value));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
-  const presetTargets = new Map<PresetTarget, string>([
-    [ "fig-left", t`左侧立绘` ],
-    [ "fig-center", t`中间立绘` ],
-    [ "fig-right", t`右侧立绘` ],
-    [ "bg-main", t`背景图片` ],
-    [ "stage-main", t`舞台画面` ],
-  ]);
-  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
+  const presetTargets = usePresetTargetOptions();
+  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value);
   const isUsePreset = useValue(isPresetTarget);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);

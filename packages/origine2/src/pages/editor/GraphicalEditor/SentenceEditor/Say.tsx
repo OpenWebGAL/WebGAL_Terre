@@ -14,7 +14,7 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 
-type FigurePosition = "" | "left" | "right" | "center" | "id";
+type FigurePosition = "" | "left" | "left14" | "left13" | "center" | "right13" | "right14" | "right" | "id";
 type FontSize = "default" | "small" | "medium" | "large";
 
 export default function Say(props: ISentenceEditorProps) {
@@ -29,7 +29,11 @@ export default function Say(props: ISentenceEditorProps) {
   const figurePositions = new Map<FigurePosition, string>([
     [ "", t`未指定` ],
     [ "left", t`左侧立绘` ],
+    [ "left14", t`左侧 1/4 立绘` ],
+    [ "left13", t`左侧 1/3 立绘` ],
     [ "center", t`中间立绘` ],
+    [ "right13", t`右侧 1/3 立绘` ],
+    [ "right14", t`右侧 1/4 立绘` ],
     [ "right", t`右侧立绘` ],
     [ "id",  t`使用立绘ID` ],
   ]);
@@ -41,18 +45,11 @@ export default function Say(props: ISentenceEditorProps) {
     /**
      * 初始化立绘位置
      */
-    if (getArgByKey(props.sentence, "left")) {
-      figurePosition.set("left");
-    }
-    if (getArgByKey(props.sentence, "right")) {
-      figurePosition.set("right");
-    }
-    if (getArgByKey(props.sentence, "center")) {
-      figurePosition.set("center");
-    }
-    if (getArgByKey(props.sentence, "id")) {
-      figurePosition.set("id");
-    }
+    figurePositions.forEach((_, position) => {
+      if (position !== "" && getArgByKey(props.sentence, position)) {
+        figurePosition.set(position);
+      }
+    });
   }, []);
 
   const fontSizes = new Map<FontSize, string>([
@@ -100,10 +97,9 @@ export default function Say(props: ISentenceEditorProps) {
         {key: "notend", value: isNotend.value},
         {key: "clear", value: isClearSpeaker.value},
         {key: "fontSize", value: (fontSize.value !== "default" ? fontSize.value : "")},
-        {key: "left", value: figurePosition.value === "left"},
-        {key: "right", value: figurePosition.value === "right"},
-        {key: "center", value: figurePosition.value === "center"},
-        {key: "id", value: figurePosition.value === "id"},
+        ...Array.from(figurePositions.keys())
+          .filter((position) => position !== "")
+          .map((position) => ({key: position, value: figurePosition.value === position})),
         {key: "figureId", value: (figurePosition.value === "id" ? figureId.value : "")},
       ],
       props.sentence.inlineComment,

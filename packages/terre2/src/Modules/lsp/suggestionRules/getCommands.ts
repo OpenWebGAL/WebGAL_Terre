@@ -45,7 +45,7 @@ changeBg:<fileName> [-next] [-enter=animationName] [-exit=animationName];
       `\`\`\`
 changeFigure:testFigure03.png -left -next;
 changeFigure:testFigure03.png -left -enter=fadeIn -exit=fadeOut;
-changeFigure:<fileName> [-left] [-right] [id=figureId] [-next] [-enter=animationName] [-exit=animationName];
+changeFigure:<fileName> [-left] [-right] [-left13] [-right13] [-left14] [-right14] [id=figureId] [-next] [-enter=animationName] [-exit=animationName];
 \`\`\``,
     ),
   },

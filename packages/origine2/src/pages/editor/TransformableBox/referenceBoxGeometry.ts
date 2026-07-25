@@ -31,14 +31,15 @@ function getArgValue(
   return lineSentence?.args?.find((arg) => arg.key === key)?.value;
 }
 
-function readDirection(input: ResolveTargetInput): 'left' | 'center' | 'right' {
-  if (getArgValue(input.lineSentence, 'left') === true || /(?:^|\s)-left(?:\s|;|$)/.test(input.lineContent)) {
-    return 'left';
-  }
-  if (getArgValue(input.lineSentence, 'right') === true || /(?:^|\s)-right(?:\s|;|$)/.test(input.lineContent)) {
-    return 'right';
-  }
-  return 'center';
+const FIGURE_DIRECTIONS = ['left', 'right', 'left13', 'right13', 'left14', 'right14'] as const;
+
+function readDirection(input: ResolveTargetInput): string {
+  const direction = FIGURE_DIRECTIONS.find(
+    (item) =>
+      getArgValue(input.lineSentence, item) === true ||
+      new RegExp(`(?:^|\\s)-${item}(?:\\s|;|$)`).test(input.lineContent),
+  );
+  return direction ?? 'center';
 }
 
 export function resolveTransformTarget(input: ResolveTargetInput): string | undefined {

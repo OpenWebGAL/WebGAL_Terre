@@ -22,7 +22,7 @@ import { AssetPreview } from "../components/AssetPreview";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 
-type FigurePosition = "" | "left" | "right";
+type FigurePosition = "" | "left" | "left14" | "left13" | "right13" | "right14" | "right";
 type AnimationFlag = "" | "on";
 type PanelType = "effect" | "moreOptions";
 
@@ -69,8 +69,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const currentSkin = useValue(getArgByKey(props.sentence, "skin").toString() ?? "");
 
   const figurePositions = new Map<FigurePosition, string>([
-    ["", t`中间`],
     ["left", t`左侧`],
+    ["left14", t`左侧 1/4`],
+    ["left13", t`左侧 1/3`],
+    ["", t`中间`],
+    ["right13", t`右侧 1/3`],
+    ["right14", t`右侧 1/4`],
     ["right", t`右侧`]
   ]);
 
@@ -230,12 +234,11 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     /**
      * 初始化立绘位置
      */
-    if (getArgByKey(props.sentence, "left")) {
-      figurePosition.set("left");
-    }
-    if (getArgByKey(props.sentence, "right")) {
-      figurePosition.set("right");
-    }
+    figurePositions.forEach((_, position) => {
+      if (position !== "" && getArgByKey(props.sentence, position)) {
+        figurePosition.set(position);
+      }
+    });
   }, []);
   useEffect(() => {
     if (animationFlag.value === "on") {
@@ -253,8 +256,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       contentWithType,
       props.sentence.args,
       [
-        {key: "left", value: figurePosition.value === "left"},
-        {key: "right", value: figurePosition.value === "right"},
+        ...Array.from(figurePositions.keys())
+          .filter((position) => position !== "")
+          .map((position) => ({key: position, value: figurePosition.value === position})),
         {key: "clear", value: clear.value},
         {key: "id", value: id.value},
         {key: "transform", value: json.value},
