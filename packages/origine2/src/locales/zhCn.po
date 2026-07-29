@@ -641,6 +641,18 @@ msgstr "可选项"
 msgid "右侧"
 msgstr "右侧"
 
+msgid "右侧 1/3"
+msgstr "右侧 1/3"
+
+msgid "右侧 1/3 立绘"
+msgstr "右侧 1/3 立绘"
+
+msgid "右侧 1/4"
+msgstr "右侧 1/4"
+
+msgid "右侧 1/4 立绘"
+msgstr "右侧 1/4 立绘"
+
 msgid "右侧立绘"
 msgstr "右侧立绘"
 
@@ -904,6 +916,18 @@ msgstr "属性"
 
 msgid "左侧"
 msgstr "左侧"
+
+msgid "左侧 1/3"
+msgstr "左侧 1/3"
+
+msgid "左侧 1/3 立绘"
+msgstr "左侧 1/3 立绘"
+
+msgid "左侧 1/4"
+msgstr "左侧 1/4"
+
+msgid "左侧 1/4 立绘"
+msgstr "左侧 1/4 立绘"
 
 msgid "左侧立绘"
 msgstr "左侧立绘"
