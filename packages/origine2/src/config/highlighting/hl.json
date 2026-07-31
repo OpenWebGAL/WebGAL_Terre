@@ -245,8 +245,62 @@
         }
       }
     },
+    "continuation-arguments": {
+      "comment": "多行语句的参数续行，ie `  -kwarg0=val0 -kwarg1`。行首空白提供了 argument-list 需要的分隔空格",
+      "match": "^(\\s+\\-(?:\\\\.|[^\\n;])*)($|(?<!\\\\);.*?$)",
+      "captures": {
+        "1": {
+          "patterns": [
+            {
+              "include": "#argument-list"
+            }
+          ]
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#comment-line"
+            }
+          ]
+        }
+      }
+    },
+    "continuation-text": {
+      "comment": "多行语句的文本续行，ie `  |第二段文字 -hold`",
+      "match": "^\\s+(\\|)((?:\\\\.|[^\\n;])*)($|(?<!\\\\);.*?$)",
+      "captures": {
+        "1": {
+          "patterns": [
+            {
+              "include": "#operator"
+            }
+          ]
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#utterance"
+            }
+          ]
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#comment-line"
+            }
+          ]
+        }
+      }
+    },
     "statement": {
       "patterns": [
+        {
+          "comment": "续行必须排在普通语句之前，否则会被当成对白正文",
+          "include": "#continuation-arguments"
+        },
+        {
+          "include": "#continuation-text"
+        },
         {
           "include": "#character-colon"
         },

@@ -13437,10 +13437,10 @@ webgal-engine@4.6.2:
     uuid "^9.0.0"
     vite-plugin-package-version "^1.0.2"
 
-webgal-parser@4.6.2:
-  version "4.6.2"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.6.2.tgz#6bdae1423e16223f3ca7e9cda36e8e38d1b5b391"
-  integrity sha512-GGTrama9fUUrXmgpvxwMzk9m7CQZtm38ueZQdXzR8cJaGge0bjmMQZQBmy2Cu6/Mz7wdwg8QPyZ4KOlE1s8+WA==
+webgal-parser@4.6.3-beta.2:
+  version "4.6.3-beta.2"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.6.3-beta.2.tgz#306e02fad9e48061292fa60d0140b18b945993c5"
+  integrity sha512-44TXG7HqhUjIwdfF5HCYUFGBCNb2XSzQl5wU1NxgbXiG2HgPXGJ4NrWER+ncWrfC9iXxybZCf4RvJARytxaA4g==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

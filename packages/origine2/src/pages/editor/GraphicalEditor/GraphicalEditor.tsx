@@ -3,7 +3,8 @@ import axios from "axios";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { EditorPreviewClient } from "../../../utils/editorPreviewClient";
-import { mergeToString, splitToArray } from "./utils/sceneTextProcessor";
+import { mergeToString, replaceLineRange, splitToArray } from "./utils/sceneTextProcessor";
+import { sceneTextPreProcess } from "webgal-parser";
 import styles from "./graphicalEditor.module.scss";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { sentenceEditorConfig, sentenceEditorDefault } from "./SentenceEditor";
@@ -26,6 +27,7 @@ interface IGraphicalEditorProps {
   targetName: string;
 }
 
+/** 脚本文件的一行 */
 interface SentenceItem {
   id: string;
   content: string;
@@ -35,16 +37,25 @@ interface SentenceItem {
 interface SentenceRowProps {
   sentence: ISentence;
   sentenceItem: SentenceItem;
+  /** 语句在图形编辑器中的序号；一条多行语句只占一行，因此它不等于文件行号 */
   index: number;
+  /** 语句首行在文件中的行号（0-based），用于显示与定位 */
+  startLine: number;
+  /** 折叠后的单行语句文本，供按文本改写参数的编辑器使用 */
+  foldedSentence: string;
   linkedWithPrevious: boolean;
   targetPath: string;
   sceneLabels: string[];
-  onAddBefore: (titleText: string, insertIndex: number) => void;
+  onAddBefore: (titleText: string, insertLine: number) => void;
   onDelete: (index: number) => void;
   onSync: (index: number) => void;
   onToggleShow: (index: number) => void;
   onUpdate: (newContent: string, updateIndex: number) => void;
 }
+
+/** 找到覆盖指定文件行（0-based）的语句 */
+const findSentenceByLine = (sentences: ISentence[], line: number) =>
+  sentences.find(sentence => line >= sentence.startLine && line <= sentence.endLine);
 
 interface SentenceRowContentProps extends SentenceRowProps {
   provided: DraggableProvided;
@@ -66,7 +77,7 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [addSentenceDialog, setAddSentenceDialog] = useState<{
     titleText: string;
-    insertIndex: number;
+    insertLine: number;
   } | null>(null);
 
   const updateSentenceData = useCallback((newSentences: SentenceItem[]) => {
@@ -126,20 +137,47 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     };
   }, [fetchScene]);
 
-  const submitScene = useCallback((newSentences: SentenceItem[], index: number) => {
+  const mergedSceneText = useMemo(() => mergeToString(sentenceData.map(item => item.content)), [sentenceData]);
+
+  const parsedScene = useMemo(
+    () => mergedSceneText === "" ? { sentenceList: [] } : parseScene(mergedSceneText),
+    [mergedSceneText]
+  );
+
+  /**
+   * 图形编辑器展示的语句列表。多行语句的续行在解析结果里只是补齐行数的占位，
+   * 不单独成行；它们所占的行由所属语句的 startLine / endLine 描述。
+   */
+  const sentences = useMemo(
+    () => parsedScene.sentenceList.filter(sentence => !sentence.isLineBreakHolder),
+    [parsedScene]
+  );
+
+  /**
+   * 预处理后的行：多行语句的内容全部折叠到它的首行。
+   * 按文本改写参数的编辑器（如 SentenceArgOption）拿到的是这份折叠后的单行。
+   */
+  const foldedLines = useMemo(() => splitToArray(sceneTextPreProcess(mergedSceneText)), [mergedSceneText]);
+
+  /**
+   * 写回场景，并让预览执行到刚编辑的语句。
+   *
+   * lineNumber 的语义是「执行完目标语句后的停止指针」，所以取语句末行 + 1，
+   * 这样多行语句的续行占位也会被一并跨过。
+   */
+  const submitScene = useCallback((newSentences: SentenceItem[], startLine: number, endLine: number) => {
     const newScene = mergeToString(newSentences.map(item => item.content));
-    const updateIndex = index + 1;
-    editorLineHolder.recordSceneEditingLine(props.targetPath, updateIndex);
+    const lineNumber = endLine + 1;
+    editorLineHolder.recordSceneEditingLine(props.targetPath, lineNumber);
 
     api.assetsControllerEditTextFile({
       textFile: newScene,
       path: props.targetPath
     }).then(() => {
-      const targetValue = newSentences[index]?.content ?? "";
       EditorPreviewClient.sendSyncScene({
         scenePath: props.targetPath,
-        lineNumber: updateIndex,
-        lineCommandString: targetValue,
+        lineNumber,
+        lineCommandString: mergeToString(newSentences.slice(startLine, endLine + 1).map(item => item.content)),
       });
       eventBus.emit('editor:update-scene', { scene: newScene });
     }).catch(() => {
@@ -148,51 +186,70 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }, [fetchScene, props.targetPath]);
 
   const updateSentenceByIndex = useCallback((newContent: string, updateIndex: number) => {
-    const newSentences = [...sentenceDataRef.current];
-    newSentences[updateIndex] = { ...newSentences[updateIndex], content: newContent };
+    const target = sentences[updateIndex];
+    if (!target) return;
+    const newLines = splitToArray(newContent).map(generateSentenceItem);
+    const newSentences = replaceLineRange(sentenceDataRef.current, target, newLines);
     updateSentenceData(newSentences);
-    submitScene(newSentences, updateIndex);
-  }, [submitScene, updateSentenceData]);
+    submitScene(newSentences, target.startLine, target.startLine + newLines.length - 1);
+  }, [generateSentenceItem, sentences, submitScene, updateSentenceData]);
 
   // 判断是否为空 (识别含唯一空行的文件)
-  function isEmpty(sentences: SentenceItem[]): boolean {
-    return !sentences || (sentences.length === 1 && sentences[0].content === "");
+  function isEmpty(lines: SentenceItem[]): boolean {
+    return !lines || (lines.length === 1 && lines[0].content === "");
   }
 
-  const addOneSentence = useCallback((newContent: string, insertIndex: number) => {
-    const newSentence = generateSentenceItem(newContent);
-    const newSentences = [...sentenceDataRef.current];
-    const shouldReplaceEmptyLine = isEmpty(newSentences);
-    const targetInsertIndex = shouldReplaceEmptyLine ? 0 : insertIndex;
-    const deleteCount = shouldReplaceEmptyLine ? 1 : 0;
+  /** insertLine 是插入位置的文件行号（0-based） */
+  const addOneSentence = useCallback((newContent: string, insertLine: number) => {
+    const newLines = splitToArray(newContent).map(generateSentenceItem);
+    const lines = sentenceDataRef.current;
+    // 整个文件只有一个空行时，新语句直接顶替这一行，而不是插在它前面
+    const shouldReplaceEmptyLine = isEmpty(lines);
+    const startLine = shouldReplaceEmptyLine ? 0 : insertLine;
+    const endLine = shouldReplaceEmptyLine ? 0 : insertLine - 1; // 纯插入不覆盖任何已有行
 
-    newSentences.splice(targetInsertIndex, deleteCount, newSentence);
-
+    const newSentences = replaceLineRange(lines, { startLine, endLine }, newLines);
     updateSentenceData(newSentences);
-    submitScene(newSentences, targetInsertIndex);
+    submitScene(newSentences, startLine, startLine + newLines.length - 1);
   }, [generateSentenceItem, submitScene, updateSentenceData]);
 
   const deleteOneSentence = useCallback((index: number) => {
-    const newSentences = [...sentenceDataRef.current];
-    newSentences.splice(index, 1);
+    const target = sentences[index];
+    if (!target) return;
+    const newSentences = replaceLineRange(sentenceDataRef.current, target, []);
     updateSentenceData(newSentences);
-    submitScene(newSentences, Math.min(index, newSentences.length - 1));
-  }, [submitScene, updateSentenceData]);
+    // 删除后原位置落到了下一条语句，同步到那里即可
+    const focusLine = Math.min(target.startLine, newSentences.length - 1);
+    submitScene(newSentences, focusLine, focusLine);
+  }, [sentences, submitScene, updateSentenceData]);
 
   const changeShowSentence = useCallback((index: number) => {
+    const target = sentences[index];
     const newSentences = [...sentenceDataRef.current];
-    newSentences[index] = { ...newSentences[index], show: !newSentences[index].show };
+    // 折叠状态记在语句的首行上
+    const head = target && newSentences[target.startLine];
+    if (!target || !head) return;
+    newSentences[target.startLine] = { ...head, show: !head.show };
     updateSentenceData(newSentences);
-  }, [updateSentenceData]);
+  }, [sentences, updateSentenceData]);
 
-  // 重新记录数组顺序
-  const reorder = useCallback((startIndex: number, endIndex: number) => {
-    const newSentences = [...sentenceDataRef.current];
-    const [removed] = newSentences.splice(startIndex, 1);
-    newSentences.splice(endIndex, 0, removed);
+  // 重新记录数组顺序。拖拽以语句为单位，多行语句要整块搬走。
+  const reorder = useCallback((sourceIndex: number, destinationIndex: number) => {
+    const source = sentences[sourceIndex];
+    const destination = sentences[destinationIndex];
+    if (!source || !destination) return;
+
+    const movedLines = sentenceDataRef.current.slice(source.startLine, source.endLine + 1);
+    const restLines = replaceLineRange(sentenceDataRef.current, source, []);
+    // 往后拖时，目标位置的行号要减去已被移走的行数
+    const insertLine = destination.startLine > source.startLine
+      ? destination.endLine + 1 - movedLines.length
+      : destination.startLine;
+
+    const newSentences = replaceLineRange(restLines, { startLine: insertLine, endLine: insertLine - 1 }, movedLines);
     updateSentenceData(newSentences);
-    submitScene(newSentences, endIndex);
-  }, [submitScene, updateSentenceData]);
+    submitScene(newSentences, insertLine, insertLine + movedLines.length - 1);
+  }, [sentences, submitScene, updateSentenceData]);
 
   const onDragStart = useCallback((start: DragStart) => {
     setDraggingId(start.draggableId);
@@ -203,22 +260,29 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     if (!result.destination) {
       return;
     }
-    editorLineHolder.recordSceneEditingLine(props.targetPath, result.destination.index);
     reorder(
       result.source.index,
       result.destination.index
     );
-  }, [props.targetPath, reorder]);
+  }, [reorder]);
 
-  const syncToIndex = useCallback((index: number) => {
-    const targetValue = sentenceDataRef.current[index]?.content || "";
+  /** 让预览执行到某条语句。行范围是文件行号（0-based，含首尾） */
+  const syncToLineRange = useCallback((startLine: number, endLine: number) => {
     EditorPreviewClient.sendSyncScene({
       scenePath: props.targetPath,
-      lineNumber: index + 1,
-      lineCommandString: targetValue,
+      lineNumber: endLine + 1,
+      lineCommandString: mergeToString(
+        sentenceDataRef.current.slice(startLine, endLine + 1).map(item => item.content)
+      ),
       force: true,
     });
-    editorLineHolder.recordSceneEditingLine(props.targetPath, index + 1);
+    editorLineHolder.recordSceneEditingLine(props.targetPath, endLine + 1);
+  }, [props.targetPath]);
+
+  const syncToIndex = useCallback((index: number) => {
+    const target = sentences[index];
+    if (!target) return;
+    syncToLineRange(target.startLine, target.endLine);
     // 传递假消息，为了在不使用此功能的时候清除拖拽框
     eventBus.emit('editor:pixi-sync-command', {
       targetPath: '',
@@ -226,17 +290,14 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
       lineContent: "",
       lineSentence: null,
     });
-  }, [props.targetPath]);
+  }, [sentences, syncToLineRange]);
 
   const syncCurrentLine = useCallback(() => {
-    const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || 1;
-    EditorPreviewClient.sendSyncScene({
-      scenePath: props.targetPath,
-      lineNumber,
-      lineCommandString: sentenceDataRef.current[lineNumber - 1]?.content || "",
-      force: true,
-    });
-  }, [props.targetPath]);
+    // 记录的是「停止指针」，它指向的语句在上一行
+    const recordedLine = (editorLineHolder.getSceneLine(props.targetPath) || 1) - 1;
+    const target = findSentenceByLine(sentences, recordedLine);
+    syncToLineRange(target?.startLine ?? recordedLine, target?.endLine ?? recordedLine);
+  }, [props.targetPath, sentences, syncToLineRange]);
 
   useEffect(() => {
     eventBus.on('editor:sync-current-line', syncCurrentLine);
@@ -260,46 +321,43 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     };
   }, [handleAdd]);
 
-  const openAddSentenceDialog = useCallback((titleText: string, insertIndex: number) => {
-    setAddSentenceDialog({ titleText, insertIndex });
+  const openAddSentenceDialog = useCallback((titleText: string, insertLine: number) => {
+    setAddSentenceDialog({ titleText, insertLine });
   }, []);
 
   const handleChooseSentence = useCallback((newSentence: string) => {
     if (!addSentenceDialog) {
       return;
     }
-    addOneSentence(newSentence, addSentenceDialog.insertIndex);
+    addOneSentence(newSentence, addSentenceDialog.insertLine);
     setAddSentenceDialog(null);
   }, [addOneSentence, addSentenceDialog]);
 
-  const mergedSceneText = useMemo(() => mergeToString(sentenceData.map(item => item.content)), [sentenceData]);
-
-  const parsedScene = useMemo(
-    () => mergedSceneText === "" ? { sentenceList: [] } : parseScene(mergedSceneText),
-    [mergedSceneText]
-  );
   const sceneLabels = useMemo(
-    () => parsedScene.sentenceList
+    () => sentences
       .filter(sentence => sentence.command === commandType.label)
       .map(sentence => sentence.content.trim())
       .filter(Boolean),
-    [parsedScene]
+    [sentences]
   );
   const rowVirtualizer = useVirtualizer<HTMLDivElement, HTMLDivElement>({
-    count: parsedScene.sentenceList.length,
+    count: sentences.length,
     getScrollElement: () => scrollElementRef.current,
-    estimateSize: (index) => sentenceData[index]?.show ? 120 : 48,
-    getItemKey: (index) => sentenceData[index]?.id ?? index,
+    estimateSize: (index) => sentenceData[sentences[index]?.startLine]?.show ? 120 : 48,
+    getItemKey: (index) => sentenceData[sentences[index]?.startLine]?.id ?? index,
     overscan: 8,
   });
   const virtualRows = rowVirtualizer.getVirtualItems();
 
+  // 语句条数变化（打开场景、增删语句）后，把上次编辑的位置滚回视野
   useEffect(() => {
     const targetLine = editorLineHolder.getSceneLine(props.targetPath);
-    if (targetLine > 3 && targetLine <= parsedScene.sentenceList.length) {
-      rowVirtualizer.scrollToIndex(targetLine - 1, { align: 'start' });
+    const rowIndex = sentences.findIndex(sentence => targetLine - 1 <= sentence.endLine);
+    if (targetLine > 3 && rowIndex >= 0) {
+      rowVirtualizer.scrollToIndex(rowIndex, { align: 'start' });
     }
-  }, [parsedScene.sentenceList.length, props.targetPath, rowVirtualizer]);
+    // sentences 每次解析都是新数组，这里只依赖条数，避免编辑时反复滚动
+  }, [sentences.length, props.targetPath, rowVirtualizer]);
 
   useEffect(() => {
     const handleDragUpdate = (data: any) => {
@@ -317,14 +375,17 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
   }, [fetchScene]);
 
   const getSentenceRowProps = (i: number): SentenceRowProps | null => {
-    const sentence = parsedScene.sentenceList[i];
-    const sentenceItem = sentenceData[i];
+    const sentence = sentences[i];
+    // 语句的 id 与折叠状态都记在它的首行上
+    const sentenceItem = sentence && sentenceData[sentence.startLine];
     if (!sentence || !sentenceItem) return null;
     return {
       sentence,
       sentenceItem,
       index: i,
-      linkedWithPrevious: i > 0 && getArgByKey(parsedScene.sentenceList[i - 1], "next") === true,
+      startLine: sentence.startLine,
+      foldedSentence: foldedLines[sentence.startLine] ?? sentenceItem.content,
+      linkedWithPrevious: i > 0 && getArgByKey(sentences[i - 1], "next") === true,
       targetPath: props.targetPath,
       sceneLabels,
       onAddBefore: openAddSentenceDialog,
@@ -398,13 +459,15 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
 const StableGlobalTerrePanel = memo(GlobalTerrePanel);
 
 const SentenceRowContent = (props: SentenceRowContentProps) => {
-  const { provided, sentence, sentenceItem, index: i, linkedWithPrevious, targetPath, sceneLabels } = props;
+  const { provided, sentence, sentenceItem, index: i, startLine, linkedWithPrevious, targetPath, sceneLabels } = props;
+  // index 只作为面板展开状态的标识，展示给用户的是语句首行在文件中的行号
   const index = i + 1;
+  const lineNumber = startLine + 1;
   const sentenceConfig = sentenceEditorConfig.find((e) => e.type === sentence.command) ?? sentenceEditorDefault;
   const SentenceEditor = sentenceConfig.component;
   const argOption = sentenceConfig !== sentenceEditorDefault && sentence.command !== commandType.comment && <SentenceArgOption
     sentence={sentence}
-    rawSentence={sentenceItem.content}
+    rawSentence={props.foldedSentence}
     argKey="when"
     title={t`条件执行`}
     enabledText={t`启用 when 条件`}
@@ -415,7 +478,7 @@ const SentenceRowContent = (props: SentenceRowContentProps) => {
   />;
   const inlineArgOption = inlineArgOptionCommands.has(sentence.command);
 
-  return <div className={`${styles.sentenceEditorWrapper} sentence-block-${index}`}
+  return <div className={`${styles.sentenceEditorWrapper} sentence-block-${lineNumber}`}
     ref={provided.innerRef}
     {...provided.draggableProps}
   >
@@ -426,13 +489,13 @@ const SentenceRowContent = (props: SentenceRowContentProps) => {
           <AddSentenceButton
             titleText={t`本句前插入句子`}
             type={addSentenceType.forward}
-            onClick={() => props.onAddBefore(t`本句前插入句子`, i)}
+            onClick={() => props.onAddBefore(t`本句前插入句子`, startLine)}
           />
         </div>
       </div>
     </div>
     <div className={styles.sentenceEditorContent}>
-      <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{index}</span>
+      <div className={styles.lineNumber}><span style={{ padding: "0 6px 0 0" }}>{lineNumber}</span>
         <Sort {...provided.dragHandleProps} style={{ padding: "5px 0 0 0" }} theme="outline" size="22"
           strokeWidth={3} />
       </div>
@@ -487,6 +550,8 @@ const SentenceRow = memo((props: SentenceRowProps) => {
   prev.sentence === next.sentence &&
   prev.sentenceItem === next.sentenceItem &&
   prev.index === next.index &&
+  prev.startLine === next.startLine &&
+  prev.foldedSentence === next.foldedSentence &&
   prev.linkedWithPrevious === next.linkedWithPrevious &&
   prev.targetPath === next.targetPath &&
   prev.sceneLabels === next.sceneLabels

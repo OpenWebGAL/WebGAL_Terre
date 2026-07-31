@@ -63,7 +63,7 @@
     "sass": "^1.51.0",
     "swr": "^2.2.4",
     "uuid": "^13.0.0",
-    "webgal-parser": "4.6.2",
+    "webgal-parser": "4.6.3-beta.2",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

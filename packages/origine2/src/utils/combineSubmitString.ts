@@ -26,7 +26,12 @@ export function combineSubmitString (
       if (nArg.value === "") {
         nArg.value = false;
       }
-      argStrings.push(argToSimplifiedString(nArg.key, nArg.value));
+      const simplified = argToSimplifiedString(nArg.key, nArg.value);
+      // 关闭的布尔参数会得到空串。它并不是一个参数，必须丢掉：
+      // 单行输出时它只是被 join 吞掉，但多行输出会让它白白占据一行。
+      if (simplified !== "") {
+        argStrings.push(simplified);
+      }
     } else {
       argStrings.push(argToString(nArg.key, nArg.value));
     }
@@ -37,17 +42,63 @@ export function combineSubmitString (
     argStrings.push(argToString(k, v));
   });
 
-  let combinedString = "";
-  if (commandStr !== undefined) {
-    combinedString += `${commandStr}:`;
-  }
-  combinedString += `${content}${argStrings.join("")};`;
+  const head = commandStr === undefined ? content : `${commandStr}:${content}`;
+  const tail = inlineComment && inlineComment.trim().length > 0 ? `; ${inlineComment.trim()}` : ";";
 
-  if (inlineComment && inlineComment.trim().length > 0) {
-    combinedString += ` ${inlineComment.trim()}`;
+  const singleLine = `${head}${argStrings.join("")}${tail}`;
+  if (displayWidth(singleLine) <= MULTILINE_THRESHOLD) {
+    return singleLine;
   }
 
-  return combinedString;
+  return foldToMultiline(commandStr, head, argStrings, tail) ?? singleLine;
+}
+
+/** 合成结果超过这个显示宽度就折成多行，短语句保持单行以免产生大量两行语句 */
+const MULTILINE_THRESHOLD = 80;
+
+/** 全角字符（CJK、假名、全角标点等），在等宽字体下占两列 */
+const FULL_WIDTH_CHAR = /[ᄀ-ᅟ⺀-꓏가-힣豈-﫿︰-﹯＀-｠￠-￦]/;
+
+/**
+ * 按显示宽度而非字符数衡量长度。
+ * WebGAL 的对白多是中日文，按字符数算的话一行中文要写到 80 字才会折行，实际早已过长。
+ */
+const displayWidth = (text: string) =>
+  [...text].reduce((width, char) => width + (FULL_WIDTH_CHAR.test(char) ? 2 : 1), 0);
+
+/** 续行的缩进。解析器要求续行以空白开头，且首字符为 `-` 或 `|` */
+const CONTINUATION_INDENT = "  ";
+
+/**
+ * 把过长的语句折成多行：首行放「命令 + 内容」，其后每个参数缩进独占一行。
+ *
+ * 分号与行内注释只能留在最后一行 —— 写在首行会把后面的续行吞进注释里。
+ * 含 `-concat` 的语句不折行，因为解析器遇到 `-concat` 会关闭多行折叠。
+ *
+ * @returns 折行后的语句；无法安全折行时返回 undefined，调用方回退到单行
+ */
+// eslint-disable-next-line max-params
+function foldToMultiline(
+  commandStr: string | undefined,
+  head: string,
+  argStrings: string[],
+  tail: string,
+): string | undefined {
+  if (argStrings.some(argString => argString.startsWith(" -concat")) || head.includes("\n")) {
+    return undefined;
+  }
+
+  // intro 的内容用 `|` 分隔多段文字，是最容易超长的命令，一并拆开（转义过的 `\|` 不算分隔符）
+  const contentSegments = commandStr === "intro" ? head.split(/(?<!\\)\|/) : [head];
+  const lines = [contentSegments[0]];
+  contentSegments.slice(1).forEach(segment => lines.push(`${CONTINUATION_INDENT}|${segment}`));
+  argStrings.forEach(argString => lines.push(`${CONTINUATION_INDENT}${argString.trim()}`));
+
+  if (lines.length === 1) {
+    return undefined; // 没有可以拆到续行的部分
+  }
+
+  return lines.join("\n") + tail;
 }
 
 /**
