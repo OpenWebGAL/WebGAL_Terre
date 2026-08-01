@@ -202,27 +202,27 @@ export default function Say(props: ISentenceEditorProps) {
         }}>{t`添加新行`}</Button>
       )}
       <div className={styles.editItem}>
-        <CommonOptions key="isNoDialog" title={t`角色名显示`}>
+        <CommonOptions key="isNoDialog" title={t`旁白模式`}>
           <TerreToggle
             title=""
             onChange={(newValue) => {
               isNoSpeaker.set(newValue);
               submit();
             }}
-            onText={t`隐藏角色名`}
-            offText={t`显示角色名`}
+            onText={t`旁白模式，不显示角色名`}
+            offText={t`普通对话，显示角色名`}
             isChecked={isNoSpeaker.value}
           />
         </CommonOptions>
-        <CommonOptions key="clearSpeaker" title={t`角色名处理`}>
+        <CommonOptions key="clearSpeaker" title={t`执行后清除角色名`}>
           <TerreToggle
             title=""
             onChange={(newValue) => {
               isClearSpeaker.set(newValue);
               submit();
             }}
-            onText={t`执行后清除角色名`}
-            offText={t`保留角色名`}
+            onText={t`清除角色名，留空角色名的语句不再显示角色名`}
+            offText={t`保留角色名，留空角色名的语句沿用上句的角色名`}
             isChecked={isClearSpeaker.value}
           />
         </CommonOptions>
