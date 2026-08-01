@@ -9,11 +9,10 @@ import { Button } from "@fluentui/react-components";
 import { t } from "@lingui/macro";
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
+import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
-
-type PresetTarget = "fig-left" | "fig-center" | "fig-right" | "bg-main" | "stage-main";
 
 export default function SetTransform(props: ISentenceEditorProps) {
   // const t = useTrans('editor.graphical.components.template.');
@@ -24,14 +23,8 @@ export default function SetTransform(props: ISentenceEditorProps) {
   const duration = useValue((durationFromArgs ?? 0) as number);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
-  const presetTargets = new Map<PresetTarget, string>([
-    [ "fig-left", t`左侧立绘` ],
-    [ "fig-center", t`中间立绘` ],
-    [ "fig-right", t`右侧立绘` ],
-    [ "bg-main", t`背景图片` ],
-    [ "stage-main", t`舞台画面` ],
-  ]);
-  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value as PresetTarget);
+  const presetTargets = usePresetTargetOptions();
+  const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value);
   const isUsePreset = useValue(isPresetTarget);
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
   const easeTypeOptions = useEaseTypeOptions();
@@ -164,8 +157,6 @@ export default function SetTransform(props: ISentenceEditorProps) {
         ignoreDefault.set(value);
         submit();
       }} />
-    </div>
-    <div className={styles.commonArgItem}>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);

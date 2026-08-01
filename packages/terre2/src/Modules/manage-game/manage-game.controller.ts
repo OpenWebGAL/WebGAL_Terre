@@ -396,9 +396,13 @@ export class ManageGameController {
     description: 'Failed to trash the file or directory.',
   })
   async trash(@Body() trashDto: TrashDto) {
-    return this.webgalFs.trashFileOrDirectory(
+    const result = await this.webgalFs.trashFileOrDirectory(
       this.webgalFs.getPathFromRoot(`public/games/${trashDto.gameName}`),
     );
+    if (!result) {
+      throw new BadRequestException('Failed to trash the file or directory.');
+    }
+    return result;
   }
 
   @Get('getIcons/:gameDir')

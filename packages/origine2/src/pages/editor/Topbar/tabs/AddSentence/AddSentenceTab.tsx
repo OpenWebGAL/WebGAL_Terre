@@ -34,7 +34,7 @@ export function AddSentenceTab() {
   const btsSpecial = pickSentenceType([commandType.pixi, commandType.pixiInit, commandType.intro]);
   const btsSpecial2 = pickSentenceType([commandType.miniAvatar, commandType.setTextbox, commandType.filmMode]);
   const btsBranch = pickSentenceType([commandType.callScene, commandType.changeScene, commandType.choose]);
-  const btsBranch2 = pickSentenceType([commandType.label, commandType.jumpLabel]);
+  const btsBranch2 = pickSentenceType([commandType.label, commandType.jumpLabel, commandType.return]);
   const btsExtra = pickSentenceType([commandType.unlockCg, commandType.unlockBgm]);
   const btsSystem = pickSentenceType([commandType.getUserInput, commandType.setVar, commandType.showVars]);
   const btsSystem2 = pickSentenceType([commandType.wait, commandType.applyStyle, commandType.callSteam]);

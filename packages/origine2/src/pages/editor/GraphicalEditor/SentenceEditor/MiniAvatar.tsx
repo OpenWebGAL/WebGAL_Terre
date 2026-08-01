@@ -43,6 +43,7 @@ export default function MiniAvatar(props: ISentenceEditorProps) {
           extNames={extNameMap.get('image')?.filter(item => item !== '.jpg')} />
         </>
       </CommonOptions>}
+      {props.extraOptions}
     </div>
   </div>;
 }

@@ -65,6 +65,7 @@ export default function CallSteam(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

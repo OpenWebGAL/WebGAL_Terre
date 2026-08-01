@@ -71,6 +71,7 @@ export default function PixiPerform(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
+      {props.extraOptions}
     </div>
   </div>;
 }

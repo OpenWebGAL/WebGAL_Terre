@@ -106,6 +106,7 @@ export default function UnlockExtra(props: ISentenceEditorProps) {
           placeholder={t`默认值0`}
         />
       </CommonOptions>}
+      {props.extraOptions}
     </div>
   </div>;
 }

@@ -17,7 +17,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import styles from './FlowchartEditor.module.scss';
 import { t } from '@lingui/macro';
-import { Button, Input, Dropdown, Option, Switch } from '@fluentui/react-components';
+import { Button, Input, Dropdown, Option, Switch, Toast, Toaster, ToastTitle, useToastController } from '@fluentui/react-components';
 import {
   AddFilled,
   AddRegular,
@@ -43,6 +43,8 @@ const nodeTypes = {
   custom: CustomNode,
 };
 
+const flowchartToasterId = 'flowchart-toaster';
+
 function FlowchartEditorContent() {
   const gameDir = useEditorStore.use.subPage();
   const isAutoSaveFlowchart = useEditorStore.use.isAutoSaveFlowchart();
@@ -59,6 +61,12 @@ function FlowchartEditorContent() {
   const skipAutoSaveRef = useRef(true);
 
   const reactFlowInstance = useReactFlow();
+
+  const { dispatchToast } = useToastController(flowchartToasterId);
+  /** 操作被规则拒绝时的提示，说明为什么这一步没有生效 */
+  const warn = useCallback((message: string) => {
+    dispatchToast(<Toast><ToastTitle>{message}</ToastTitle></Toast>, { intent: 'warning' });
+  }, [dispatchToast]);
 
   // 当前流程图
   const currentFlowchart = flowcharts.find(f => f.id === currentFlowchartId);
@@ -302,11 +310,9 @@ function FlowchartEditorContent() {
   // 添加新节点
   const addNode = useCallback((isRoot = false) => {
     // 检查是否已有根节点
-    if (isRoot) {
-      const hasRoot = nodes.some(n => (n.data as any).isRoot);
-      if (hasRoot) {
-        return;
-      }
+    if (isRoot && nodes.some(n => n.data.isRoot)) {
+      warn(t`每个流程图只能有一个根节点`);
+      return;
     }
 
     const newNode: Node<IFlowchartNodeData> = {
@@ -334,7 +340,7 @@ function FlowchartEditorContent() {
     }
 
     setNextNodeId(nextNodeId + 1);
-  }, [nodes, nextNodeId]);
+  }, [nodes, nextNodeId, warn]);
 
   // 检查是否会形成环
   const wouldCreateCycle = (source: string, target: string, currentEdges: Edge[]): boolean => {
@@ -362,6 +368,7 @@ function FlowchartEditorContent() {
 
     // 检查是否会形成环
     if (wouldCreateCycle(params.source, params.target, edges)) {
+      warn(t`不能创建循环连接`);
       return;
     }
 
@@ -371,7 +378,7 @@ function FlowchartEditorContent() {
       target: params.target,
     };
     setEdges((eds) => addEdge(newEdge, eds));
-  }, [edges]);
+  }, [edges, warn]);
 
   // 更新节点数据
   const updateNodeData = useCallback((nodeId: string, newData: any) => {
@@ -519,18 +526,6 @@ function FlowchartEditorContent() {
             </Button>
           )}
         </div>
-
-        <div className={styles.info}>
-          <p>{t`提示：`}</p>
-          <ul>
-            <li>{t`主线流程图不可删除`}</li>
-            <li>{t`每个流程图只能有一个根节点`}</li>
-            <li>{t`双击节点名称可编辑`}</li>
-            <li>{t`点击节点选择场景文件`}</li>
-            <li>{t`选中节点或连线后按退格键或 Delete 键可删除`}</li>
-            <li>{t`不能创建循环连接`}</li>
-          </ul>
-        </div>
       </div>
       <div className={styles.canvas}>
         <ReactFlow
@@ -550,6 +545,7 @@ function FlowchartEditorContent() {
           <MiniMap />
         </ReactFlow>
       </div>
+      <Toaster toasterId={flowchartToasterId} />
     </div>
   );
 }

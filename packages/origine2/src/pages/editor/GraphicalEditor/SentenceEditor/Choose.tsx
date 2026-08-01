@@ -239,5 +239,8 @@ export default function Choose(props: ISentenceEditorProps) {
         }}
       />
     </div>
+    <div className={styles.editItem}>
+      {props.extraOptions}
+    </div>
   </div>;
 }

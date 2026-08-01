@@ -12,10 +12,6 @@ package-lock.json
 /steam/depot_build_*.vdf
 !/steam/app_build_TEMPLATE.vdf
 !/steam/depot_build_TEMPLATE.vdf
-packages/origine2/src/locales/en.js
-packages/origine2/src/locales/ja.js
-packages/origine2/src/locales/zhCn.js
-packages/origine2/src/locales/en.ts
-packages/origine2/src/locales/ja.ts
-packages/origine2/src/locales/zhCn.ts
+packages/origine2/src/locales/*.js
+packages/origine2/src/locales/*.ts
 .claude

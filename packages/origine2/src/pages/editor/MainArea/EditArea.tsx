@@ -66,7 +66,7 @@ export default function EditArea() {
 
 const imageTypes = ["png", "jpg", "jpeg", "gif", "webp"];
 const videoTypes = ["mp4", "webm", "ogg"];
-const audioTypes = ["mp3", "wav", "aac"];
+const audioTypes = ["mp3", "wav", "aac", "opus"];
 const animationTypes = ["json"];
 
 function getFileType(path: string): ResourceType | null {

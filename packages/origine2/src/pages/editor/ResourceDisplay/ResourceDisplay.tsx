@@ -31,7 +31,7 @@ function getComponent(resourceType: ResourceType, resourceUrl: string) {
   case ResourceType.Audio:
     return () => (
       <audio controls>
-        <source src={url} type="audio/mpeg"/>
+        <source src={url} type={url.toLowerCase().endsWith(".opus") ? "audio/ogg" : "audio/mpeg"}/>
           Your browser does not support the audio tag.
       </audio>
     );

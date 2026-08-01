@@ -21,6 +21,7 @@ export function getArgsKey(
         leftSayKey,
         rightSayKey,
         centerSayKey,
+        ...centeredPositionSayKeys,
       ];
     }
     case commandType.changeBg: {
@@ -51,6 +52,7 @@ export function getArgsKey(
         idFigureKey,
         leftKey,
         rightKey,
+        ...centeredPositionKeys,
         transformKey,
         zIndexKey,
         motionKey,
@@ -125,9 +127,12 @@ export function getArgsKey(
       return [];
     }
     case commandType.setVar: {
-      return [whenKey, globalKey];
+      return [whenKey, globalKey, localKey];
     }
     case commandType.callScene: {
+      return [whenKey, writeReturnToKey];
+    }
+    case commandType.return: {
       return [whenKey];
     }
     case commandType.showVars: {
@@ -404,6 +409,48 @@ changeFigure:k2.png -next;
 \`\`\`
   `),
 };
+
+/**
+ * 除左右靠边定位以外的立绘位置，均以立绘中心为基准定位
+ */
+const centeredFigurePositions: Array<[string, string]> = [
+  ['left13', '左侧 1/3'],
+  ['right13', '右侧 1/3'],
+  ['left14', '左侧 1/4'],
+  ['right14', '右侧 1/4'],
+];
+
+const centeredPositionKeys: CompletionItem[] = centeredFigurePositions.map(
+  ([position, name]) => ({
+    kind: CompletionItemKind.Constant,
+    label: position,
+    insertText: position,
+    detail: `将立绘置于${name}处`,
+    documentation: markdown(`
+将立绘放置在舞台${name}处，以立绘的中心为基准定位
+
+\`\`\`
+changeFigure:testFigure03.png -${position};
+\`\`\`
+  `),
+  }),
+);
+
+const centeredPositionSayKeys: CompletionItem[] = centeredFigurePositions.map(
+  ([position, name]) => ({
+    kind: CompletionItemKind.Constant,
+    label: position,
+    insertText: position,
+    detail: `对话属于${name}处的立绘`,
+    documentation: markdown(`
+指定该对话所属的立绘为${name}处的立绘
+
+\`\`\`
+WebGAL:这是${name}处立绘的对话 -${position};
+\`\`\`
+  `),
+  }),
+);
 
 const leftSayKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
@@ -871,6 +918,43 @@ label:turn-2;
 二周目;
 changeScene:二周目剧情.txt;
 \`\`\`
+  `),
+};
+
+const localKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'local',
+  insertText: 'local',
+  detail: '局部变量',
+  documentation: markdown(`
+写入当前场景的局部变量，也就是 \`callScene\` 传进来的参数所在的那个命名空间。局部变量随场景调用结束而消失，不会影响调用方的同名变量。
+
+\`\`\`ws
+; battle.txt，由 callScene:battle.txt -hp=100 调用
+setVar:hp=hp-30 -local;
+旁白:受到攻击，剩余血量 {hp}。;
+\`\`\`
+
+不加 \`-local\` 写的是普通变量，而读取时局部变量优先，这次写入将读不出来。要改传进来的参数，必须加 \`-local\`。
+
+\`-local\` 与 \`-global\` 互斥，同时写时按 \`-global\` 处理。
+  `),
+};
+
+const writeReturnToKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'writeReturnTo',
+  insertText: 'writeReturnTo=',
+  detail: '返回值写回的变量',
+  documentation: markdown(`
+指定被调用场景的返回值写回调用方的哪个变量，写入方式与不带参数的 \`setVar\` 相同。
+
+\`\`\`ws
+callScene:battle.txt -enemy=史莱姆 -writeReturnTo=result;
+旁白:战斗结果是 {result}。;
+\`\`\`
+
+被调用的场景没有执行 \`return\` 而自然结束时，写回的是空字符串。
   `),
 };
 

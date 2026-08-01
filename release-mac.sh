@@ -19,6 +19,11 @@ mkdir Exported_Games
 cp -r public assets Exported_Games ../../release
 cd ../../
 
+# 复制 trash 库的原生二进制
+mkdir release/lib
+cp node_modules/trash/lib/macos-trash release/lib
+chmod +x release/lib/macos-trash
+
 # 进入 Origine 目录
 cd packages/origine2
 #npm install esbuild-darwin-arm64
@@ -78,6 +83,9 @@ cd release
 # 写脚本
 echo 'cd "$(dirname "$0")"' >> run-webgal-on-mac.command
 echo 'cd WebGAL' >> run-webgal-on-mac.command
+# 压缩包不保留执行权限，且下载后会被 Gatekeeper 隔离，启动时修复回收站二进制
+echo 'chmod +x lib/macos-trash 2>/dev/null' >> run-webgal-on-mac.command
+echo 'xattr -c lib/macos-trash 2>/dev/null' >> run-webgal-on-mac.command
 echo './WebGAL_Terre' >> run-webgal-on-mac.command
 chmod +x run-webgal-on-mac.command
 chmod +x WebGAL/WebGAL_Terre

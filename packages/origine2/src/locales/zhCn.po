@@ -128,6 +128,9 @@ msgstr "playVideo:选择视频文件;"
 msgid "Portable 模式"
 msgstr "Portable 模式"
 
+msgid "return:;"
+msgstr "return:;"
+
 msgid "RGB电影滤镜"
 msgstr "RGB电影滤镜"
 
@@ -272,9 +275,6 @@ msgstr "为立绘或背景图片设置多段动画效果"
 msgid "为立绘或背景图片调用动画效果"
 msgstr "为立绘或背景图片调用动画效果"
 
-msgid "主线流程图不可删除"
-msgstr "主线流程图不可删除"
-
 msgid "主要样式"
 msgstr "主要样式"
 
@@ -295,6 +295,9 @@ msgstr "代码编辑器"
 
 msgid "以下目标路径已存在，未覆盖："
 msgstr "以下目标路径已存在，未覆盖："
+
+msgid "传入的参数会成为被调用场景的局部变量，在那边用花括号插值取用，场景结束后即消失。"
+msgstr "传入的参数会成为被调用场景的局部变量，在那边用花括号插值取用，场景结束后即消失。"
 
 msgid "伽马值"
 msgstr "伽马值"
@@ -371,8 +374,8 @@ msgstr "保存流程图"
 msgid "保持闭眼(毫秒)"
 msgstr "保持闭眼(毫秒)"
 
-msgid "保留角色名"
-msgstr "保留角色名"
+msgid "保留角色名，留空角色名的语句沿用上句的角色名"
+msgstr "保留角色名，留空角色名的语句沿用上句的角色名"
 
 msgid "修改时间"
 msgstr "修改时间"
@@ -482,14 +485,11 @@ msgstr "最小高度"
 msgid "最新版本"
 msgstr "最新版本"
 
-msgid "写入全局变量"
-msgstr "写入全局变量"
-
 msgid "写入变量"
 msgstr "写入变量"
 
-msgid "写入当前存档变量"
-msgstr "写入当前存档变量"
+msgid "写入哪里"
+msgstr "写入哪里"
 
 msgid "分支选择"
 msgstr "分支选择"
@@ -532,6 +532,9 @@ msgstr "创建新游戏"
 
 msgid "删除"
 msgstr "删除"
+
+msgid "删除参数"
+msgstr "删除参数"
 
 msgid "删除属性"
 msgstr "删除属性"
@@ -596,8 +599,11 @@ msgstr "原样式->新样式，多个用逗号分隔"
 msgid "参数值"
 msgstr "参数值"
 
-msgid "双击节点名称可编辑"
-msgstr "双击节点名称可编辑"
+msgid "参数值，用花括号插值可取调用方的变量"
+msgstr "参数值，用花括号插值可取调用方的变量"
+
+msgid "参数名"
+msgstr "参数名"
 
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
@@ -626,6 +632,9 @@ msgstr "变量表达式"
 msgid "只展示节点，不展示名称"
 msgstr "只展示节点，不展示名称"
 
+msgid "可在设置中关闭回收站功能后重试，此时删除将不可恢复"
+msgstr "可在设置中关闭回收站功能后重试，此时删除将不可恢复"
+
 msgid "可用 $0 表示当前输入"
 msgstr "可用 $0 表示当前输入"
 
@@ -637,6 +646,18 @@ msgstr "可选项"
 
 msgid "右侧"
 msgstr "右侧"
+
+msgid "右侧 1/3"
+msgstr "右侧 1/3"
+
+msgid "右侧 1/3 立绘"
+msgstr "右侧 1/3 立绘"
+
+msgid "右侧 1/4"
+msgstr "右侧 1/4"
+
+msgid "右侧 1/4 立绘"
+msgstr "右侧 1/4 立绘"
 
 msgid "右侧立绘"
 msgstr "右侧立绘"
@@ -728,6 +749,9 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
+msgid "场景返回"
+msgstr "场景返回"
+
 msgid "填写参数值"
 msgstr "填写参数值"
 
@@ -784,6 +808,9 @@ msgstr "字母间距"
 
 msgid "字重"
 msgstr "字重"
+
+msgid "存档变量"
+msgstr "存档变量"
 
 msgid "定位方式"
 msgstr "定位方式"
@@ -881,6 +908,12 @@ msgstr "尚未添加任何字体"
 msgid "尚未配置任何字体"
 msgstr "尚未配置任何字体"
 
+msgid "局部变量"
+msgstr "局部变量"
+
+msgid "局部变量即 callScene 传入的参数，随场景调用结束而消失。要改传进来的参数，必须选择局部变量。"
+msgstr "局部变量即 callScene 传入的参数，随场景调用结束而消失。要改传进来的参数，必须选择局部变量。"
+
 msgid "层级顺序"
 msgstr "层级顺序"
 
@@ -901,6 +934,18 @@ msgstr "属性"
 
 msgid "左侧"
 msgstr "左侧"
+
+msgid "左侧 1/3"
+msgstr "左侧 1/3"
+
+msgid "左侧 1/3 立绘"
+msgstr "左侧 1/3 立绘"
+
+msgid "左侧 1/4"
+msgstr "左侧 1/4"
+
+msgid "左侧 1/4 立绘"
+msgstr "左侧 1/4 立绘"
 
 msgid "左侧立绘"
 msgstr "左侧立绘"
@@ -1100,11 +1145,14 @@ msgstr "提交"
 msgid "提交修改"
 msgstr "提交修改"
 
+msgid "提前结束当前被调用的场景并回到调用处。返回值会写入调用方 callScene 指定的变量。"
+msgstr "提前结束当前被调用的场景并回到调用处。返回值会写入调用方 callScene 指定的变量。"
+
+msgid "提前结束被调用的场景并回到调用处，可带回一个返回值"
+msgstr "提前结束被调用的场景并回到调用处，可带回一个返回值"
+
 msgid "提示"
 msgstr "提示"
-
-msgid "提示："
-msgstr "提示："
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -1277,6 +1325,12 @@ msgstr "新的游戏"
 msgid "方形"
 msgstr "方形"
 
+msgid "旁白模式"
+msgstr "旁白模式"
+
+msgid "旁白模式，不显示角色名"
+msgstr "旁白模式，不显示角色名"
+
 msgid "旁白模式，无角色名"
 msgstr "旁白模式，无角色名"
 
@@ -1334,14 +1388,14 @@ msgstr "显示立绘"
 msgid "显示背景"
 msgstr "显示背景"
 
-msgid "显示角色名"
-msgstr "显示角色名"
-
 msgid "显示预览窗口"
 msgstr "显示预览窗口"
 
 msgid "普通对话"
 msgstr "普通对话"
+
+msgid "普通对话，显示角色名"
+msgstr "普通对话，显示角色名"
 
 msgid "暂无变量快照"
 msgstr "暂无变量快照"
@@ -1405,6 +1459,9 @@ msgstr "标签"
 
 msgid "标签名"
 msgstr "标签名"
+
+msgid "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
+msgstr "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
 
 msgid "标题"
 msgstr "标题"
@@ -1574,6 +1631,9 @@ msgstr "添加一首音乐到音乐鉴赏界面"
 msgid "添加动画帧"
 msgstr "添加动画帧"
 
+msgid "添加参数"
+msgstr "添加参数"
+
 msgid "添加属性"
 msgstr "添加属性"
 
@@ -1606,6 +1666,9 @@ msgstr "清除特效"
 
 msgid "清除立绘"
 msgstr "清除立绘"
+
+msgid "清除角色名，留空角色名的语句不再显示角色名"
+msgstr "清除角色名，留空角色名的语句不再显示角色名"
 
 msgid "游戏"
 msgstr "游戏"
@@ -1649,9 +1712,6 @@ msgstr "滤镜"
 msgid "点击或拖拽文件至此上传"
 msgstr "点击或拖拽文件至此上传"
 
-msgid "点击节点选择场景文件"
-msgstr "点击节点选择场景文件"
-
 msgid "点状电影滤镜"
 msgstr "点状电影滤镜"
 
@@ -1690,6 +1750,9 @@ msgstr "电影模式值"
 
 msgid "留空使用默认值"
 msgstr "留空使用默认值"
+
+msgid "留空表示不返回值。可填数字、true/false、字符串或表达式"
+msgstr "留空表示不返回值。可填数字、true/false、字符串或表达式"
 
 msgid "百分比。 0-100 有效"
 msgstr "百分比。 0-100 有效"
@@ -1756,6 +1819,9 @@ msgstr "禁止跳过视频"
 
 msgid "禁用"
 msgstr "禁用"
+
+msgid "移动到回收站失败"
+msgstr "移动到回收站失败"
 
 msgid "立即注视"
 msgstr "立即注视"
@@ -1985,6 +2051,9 @@ msgstr "补充默认值"
 msgid "表达式"
 msgstr "表达式"
 
+msgid "被调用场景 return 的值写入哪个变量，留空则丢弃"
+msgstr "被调用场景 return 的值写入哪个变量，留空则丢弃"
+
 msgid "裁剪形状"
 msgstr "裁剪形状"
 
@@ -2003,9 +2072,6 @@ msgstr "角色名，留空以继承上句:对话;"
 msgid "角色名内层文本"
 msgstr "角色名内层文本"
 
-msgid "角色名处理"
-msgstr "角色名处理"
-
 msgid "角色名外层文本"
 msgstr "角色名外层文本"
 
@@ -2017,9 +2083,6 @@ msgstr "角色名文本框"
 
 msgid "角色名文本框背景"
 msgstr "角色名文本框背景"
-
-msgid "角色名显示"
-msgstr "角色名显示"
 
 msgid "角落头像"
 msgstr "角落头像"
@@ -2186,6 +2249,12 @@ msgstr "运行平台"
 msgid "返回"
 msgstr "返回"
 
+msgid "返回值"
+msgstr "返回值"
+
+msgid "返回值写入"
+msgstr "返回值写入"
+
 msgid "进出场动画"
 msgstr "进出场动画"
 
@@ -2194,9 +2263,6 @@ msgstr "连续执行"
 
 msgid "退场时长（单位为毫秒）"
 msgstr "退场时长（单位为毫秒）"
-
-msgid "选中节点或连线后按退格键或 Delete 键可删除"
-msgstr "选中节点或连线后按退格键或 Delete 键可删除"
 
 msgid "选择"
 msgstr "选择"
@@ -2377,9 +2443,6 @@ msgstr "隐藏侧边栏"
 
 msgid "隐藏文本框"
 msgstr "隐藏文本框"
-
-msgid "隐藏角色名"
-msgstr "隐藏角色名"
 
 msgid "雨"
 msgstr "雨"

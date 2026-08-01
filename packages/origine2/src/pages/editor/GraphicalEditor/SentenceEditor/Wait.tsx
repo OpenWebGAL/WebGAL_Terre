@@ -47,6 +47,7 @@ export default function Wait(props: ISentenceEditorProps) {
           isChecked={nobreak.value}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }
