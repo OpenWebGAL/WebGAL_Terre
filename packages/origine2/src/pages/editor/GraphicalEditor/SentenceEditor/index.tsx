@@ -171,6 +171,14 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     descText: () => t`调用一段场景文件，在结束后返回父场景`
   },
   {
+    type: commandType.return,
+    title: () => t`场景返回`,
+    initialText: () => t`return:;`,
+    component: BasicCommands,
+    icon: <Logout theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`提前结束被调用的场景并回到调用处，可带回一个返回值`
+  },
+  {
     type: commandType.changeScene,
     title: () => t`切换场景`,
     initialText: () => t`changeScene:选择场景文件;`,

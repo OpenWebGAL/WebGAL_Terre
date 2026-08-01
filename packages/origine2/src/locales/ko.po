@@ -128,6 +128,9 @@ msgstr "playVideo:영상 파일 선택;"
 msgid "Portable 模式"
 msgstr "Portable 모드"
 
+msgid "return:;"
+msgstr "return:;"
+
 msgid "RGB电影滤镜"
 msgstr "RGB 영화 필터"
 
@@ -295,6 +298,9 @@ msgstr "코드 에디터"
 
 msgid "以下目标路径已存在，未覆盖："
 msgstr "다음 대상의 경로가 이미 존재하므로 덮어쓰지 않았습니다:"
+
+msgid "传入的参数会成为被调用场景的局部变量，在那边用花括号插值取用，场景结束后即消失。"
+msgstr "전달한 인자는 호출된 씬의 지역 변수가 됩니다. 그쪽에서는 중괄호 보간으로 사용하며, 씬이 끝나면 사라집니다."
 
 msgid "伽马值"
 msgstr "감마값"
@@ -482,14 +488,11 @@ msgstr "최소 높이"
 msgid "最新版本"
 msgstr "최신 버전"
 
-msgid "写入全局变量"
-msgstr "전역 변수 저장하기"
-
 msgid "写入变量"
 msgstr "변수에 저장하기"
 
-msgid "写入当前存档变量"
-msgstr "현재 세이브 변수에 저장하기"
+msgid "写入哪里"
+msgstr "기록 위치"
 
 msgid "分支选择"
 msgstr "분기 선택"
@@ -532,6 +535,9 @@ msgstr "새 게임 생성"
 
 msgid "删除"
 msgstr "삭제"
+
+msgid "删除参数"
+msgstr "인자 삭제"
 
 msgid "删除属性"
 msgstr "속성 삭제"
@@ -595,6 +601,12 @@ msgstr "기존 스타일->새 스타일, 여러 개는 쉼표로 구분"
 
 msgid "参数值"
 msgstr "파라미터 값"
+
+msgid "参数值，用花括号插值可取调用方的变量"
+msgstr "인자 값. 중괄호 보간으로 호출한 쪽의 변수를 사용할 수 있습니다"
+
+msgid "参数名"
+msgstr "인자 이름"
 
 msgid "双击节点名称可编辑"
 msgstr "노드 이름을 두 번 클릭하면 편집할 수 있습니다"
@@ -743,6 +755,9 @@ msgstr "장면 및 분기"
 msgid "场景文件"
 msgstr "장면 파일"
 
+msgid "场景返回"
+msgstr "씬 반환"
+
 msgid "填写参数值"
 msgstr "파라미터 값 작성"
 
@@ -799,6 +814,9 @@ msgstr "글자 간격"
 
 msgid "字重"
 msgstr "글꼴 두께"
+
+msgid "存档变量"
+msgstr "세이브 변수"
 
 msgid "定位方式"
 msgstr "위치 지정 방식"
@@ -895,6 +913,12 @@ msgstr "아직 폰트가 추가되지 않았습니다"
 
 msgid "尚未配置任何字体"
 msgstr "아직 구성된 폰트가 없습니다"
+
+msgid "局部变量"
+msgstr "지역 변수"
+
+msgid "局部变量即 callScene 传入的参数，随场景调用结束而消失。要改传进来的参数，必须选择局部变量。"
+msgstr "지역 변수는 callScene으로 전달된 인자이며, 씬 호출이 끝나면 사라집니다. 전달된 인자를 수정하려면 \"지역 변수\"를 선택해야 합니다."
 
 msgid "层级顺序"
 msgstr "계층 순서"
@@ -1126,6 +1150,12 @@ msgstr "제출"
 
 msgid "提交修改"
 msgstr "수정 제출"
+
+msgid "提前结束当前被调用的场景并回到调用处。返回值会写入调用方 callScene 指定的变量。"
+msgstr "호출된 씬을 미리 끝내고 호출 지점으로 돌아갑니다. 반환값은 호출한 쪽의 callScene이 지정한 변수에 기록됩니다."
+
+msgid "提前结束被调用的场景并回到调用处，可带回一个返回值"
+msgstr "호출된 씬을 미리 끝내고 호출 지점으로 돌아가며, 반환값을 가져올 수 있습니다"
 
 msgid "提示"
 msgstr "힌트"
@@ -1433,6 +1463,9 @@ msgstr "태그"
 msgid "标签名"
 msgstr "태그명"
 
+msgid "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
+msgstr "빨간색 인자 이름은 엔진이 예약한 공통 매개변수 이름입니다. 지역 변수로 호출된 씬에 전달되지 않으니 다른 이름으로 바꿔 주세요."
+
 msgid "标题"
 msgstr "타이틀"
 
@@ -1601,6 +1634,9 @@ msgstr "음악 감상 인터페이스에 음악 한 곡 추가"
 msgid "添加动画帧"
 msgstr "애니메이션 프레임 추가"
 
+msgid "添加参数"
+msgstr "인자 추가"
+
 msgid "添加属性"
 msgstr "속성 추가"
 
@@ -1717,6 +1753,9 @@ msgstr "시네마틱 모드"
 
 msgid "留空使用默认值"
 msgstr "비워두면 기본값 사용"
+
+msgid "留空表示不返回值。可填数字、true/false、字符串或表达式"
+msgstr "비워 두면 반환값이 없습니다. 숫자, true/false, 문자열, 식을 사용할 수 있습니다"
 
 msgid "百分比。 0-100 有效"
 msgstr "백분율. 0-100 유효"
@@ -2015,6 +2054,9 @@ msgstr "기본값 보충"
 msgid "表达式"
 msgstr "표현식"
 
+msgid "被调用场景 return 的值写入哪个变量，留空则丢弃"
+msgstr "호출된 씬의 반환값을 기록할 변수. 비워 두면 버립니다"
+
 msgid "裁剪形状"
 msgstr "자르기 모양"
 
@@ -2215,6 +2257,12 @@ msgstr "실행 플랫폼"
 
 msgid "返回"
 msgstr "뒤로"
+
+msgid "返回值"
+msgstr "반환값"
+
+msgid "返回值写入"
+msgstr "반환값 기록 대상"
 
 msgid "进出场动画"
 msgstr "입/퇴장 애니메이션"

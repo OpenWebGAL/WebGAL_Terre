@@ -19,6 +19,7 @@ import {
   tokenTypeMap,
 } from './semanticToken';
 import { complete, checkTriggerCompletion } from './completion';
+import { collectDiagnostics } from './diagnostics';
 
 export function createWsConnection(
   reader: MessageReader,
@@ -201,7 +202,7 @@ export function createWsConnection(
   // when the text document first opened or when its content has changed.
   documents.onDidChangeContent(async (change) => {
     // TODO: Errors (e.g., variable undefined) & linting (e.g., ending`;`)
-    // await validateTextDocument(change.document);
+    await validateTextDocument(change.document);
   });
 
   async function validateTextDocument(
@@ -211,7 +212,10 @@ export function createWsConnection(
     const settings = await getDocumentSettings(textDocument.uri);
     // connection.console.log(JSON.stringify(settings));
 
-    const diagnostics: Diagnostic[] = [];
+    const diagnostics: Diagnostic[] = collectDiagnostics(
+      textDocument.getText(),
+      textDocument.uri,
+    );
 
     // Send the computed diagnostics to VS Code.
     connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });

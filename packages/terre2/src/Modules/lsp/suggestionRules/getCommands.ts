@@ -247,9 +247,28 @@ setVar:<expression>;
     detail: `场景调用`,
     documentation: markdown(
       `如果你需要在执行完调用的场景后回到先前的场景（即父场景），你可以使用 callScene 来调用场景
+
+\`-参数名=值\` 会成为被调用场景的局部变量，\`-writeReturnTo\` 指定返回值写回调用方的哪个变量
 \`\`\`
 callScene:Chapter-2.txt;
-callScene:<newSceneFileName>;
+callScene:battle.txt -enemy=史莱姆 -hp=100 -writeReturnTo=result;
+callScene:<newSceneFileName> [-参数名=值] [-writeReturnTo=variableName];
+\`\`\``,
+    ),
+  },
+  {
+    kind: CompletionItemKind.Function,
+    label: 'return',
+    insertText: makeInsertText('return'),
+    detail: `从调用的场景返回`,
+    documentation: markdown(
+      `提前结束当前被 callScene 调用的场景，回到调用位置继续执行。冒号后是返回值，求值规则同 setVar
+
+被调用的场景执行到末尾时会自动返回，只有需要提前返回时才用得上 return
+\`\`\`
+return;
+return:胜利;
+return:{hp}>0;
 \`\`\``,
     ),
   },

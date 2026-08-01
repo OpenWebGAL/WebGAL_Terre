@@ -106,6 +106,42 @@
   max-width: 440px;
 }
 
+.sceneArgItem {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.sceneArgAddRow {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+  padding: 4px 0;
+}
+
+.sceneArgInput {
+  width: 30%;
+  min-width: 160px;
+  max-width: 320px;
+}
+
+.sceneArgInputInvalid {
+  border: var(--border-danger-md);
+}
+
+.sceneArgEqual {
+  color: var(--text-sub);
+  flex: 0 0 auto;
+}
+
 .chooseTargetArrow {
   color: var(--text-sub);
   display: inline-flex;

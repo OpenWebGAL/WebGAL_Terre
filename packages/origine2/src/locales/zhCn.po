@@ -128,6 +128,9 @@ msgstr "playVideo:选择视频文件;"
 msgid "Portable 模式"
 msgstr "Portable 模式"
 
+msgid "return:;"
+msgstr "return:;"
+
 msgid "RGB电影滤镜"
 msgstr "RGB电影滤镜"
 
@@ -295,6 +298,9 @@ msgstr "代码编辑器"
 
 msgid "以下目标路径已存在，未覆盖："
 msgstr "以下目标路径已存在，未覆盖："
+
+msgid "传入的参数会成为被调用场景的局部变量，在那边用花括号插值取用，场景结束后即消失。"
+msgstr "传入的参数会成为被调用场景的局部变量，在那边用花括号插值取用，场景结束后即消失。"
 
 msgid "伽马值"
 msgstr "伽马值"
@@ -482,14 +488,11 @@ msgstr "最小高度"
 msgid "最新版本"
 msgstr "最新版本"
 
-msgid "写入全局变量"
-msgstr "写入全局变量"
-
 msgid "写入变量"
 msgstr "写入变量"
 
-msgid "写入当前存档变量"
-msgstr "写入当前存档变量"
+msgid "写入哪里"
+msgstr "写入哪里"
 
 msgid "分支选择"
 msgstr "分支选择"
@@ -532,6 +535,9 @@ msgstr "创建新游戏"
 
 msgid "删除"
 msgstr "删除"
+
+msgid "删除参数"
+msgstr "删除参数"
 
 msgid "删除属性"
 msgstr "删除属性"
@@ -595,6 +601,12 @@ msgstr "原样式->新样式，多个用逗号分隔"
 
 msgid "参数值"
 msgstr "参数值"
+
+msgid "参数值，用花括号插值可取调用方的变量"
+msgstr "参数值，用花括号插值可取调用方的变量"
+
+msgid "参数名"
+msgstr "参数名"
 
 msgid "双击节点名称可编辑"
 msgstr "双击节点名称可编辑"
@@ -743,6 +755,9 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
+msgid "场景返回"
+msgstr "场景返回"
+
 msgid "填写参数值"
 msgstr "填写参数值"
 
@@ -799,6 +814,9 @@ msgstr "字母间距"
 
 msgid "字重"
 msgstr "字重"
+
+msgid "存档变量"
+msgstr "存档变量"
 
 msgid "定位方式"
 msgstr "定位方式"
@@ -895,6 +913,12 @@ msgstr "尚未添加任何字体"
 
 msgid "尚未配置任何字体"
 msgstr "尚未配置任何字体"
+
+msgid "局部变量"
+msgstr "局部变量"
+
+msgid "局部变量即 callScene 传入的参数，随场景调用结束而消失。要改传进来的参数，必须选择局部变量。"
+msgstr "局部变量即 callScene 传入的参数，随场景调用结束而消失。要改传进来的参数，必须选择局部变量。"
 
 msgid "层级顺序"
 msgstr "层级顺序"
@@ -1126,6 +1150,12 @@ msgstr "提交"
 
 msgid "提交修改"
 msgstr "提交修改"
+
+msgid "提前结束当前被调用的场景并回到调用处。返回值会写入调用方 callScene 指定的变量。"
+msgstr "提前结束当前被调用的场景并回到调用处。返回值会写入调用方 callScene 指定的变量。"
+
+msgid "提前结束被调用的场景并回到调用处，可带回一个返回值"
+msgstr "提前结束被调用的场景并回到调用处，可带回一个返回值"
 
 msgid "提示"
 msgstr "提示"
@@ -1433,6 +1463,9 @@ msgstr "标签"
 msgid "标签名"
 msgstr "标签名"
 
+msgid "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
+msgstr "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
+
 msgid "标题"
 msgstr "标题"
 
@@ -1601,6 +1634,9 @@ msgstr "添加一首音乐到音乐鉴赏界面"
 msgid "添加动画帧"
 msgstr "添加动画帧"
 
+msgid "添加参数"
+msgstr "添加参数"
+
 msgid "添加属性"
 msgstr "添加属性"
 
@@ -1717,6 +1753,9 @@ msgstr "电影模式值"
 
 msgid "留空使用默认值"
 msgstr "留空使用默认值"
+
+msgid "留空表示不返回值。可填数字、true/false、字符串或表达式"
+msgstr "留空表示不返回值。可填数字、true/false、字符串或表达式"
 
 msgid "百分比。 0-100 有效"
 msgstr "百分比。 0-100 有效"
@@ -2015,6 +2054,9 @@ msgstr "补充默认值"
 msgid "表达式"
 msgstr "表达式"
 
+msgid "被调用场景 return 的值写入哪个变量，留空则丢弃"
+msgstr "被调用场景 return 的值写入哪个变量，留空则丢弃"
+
 msgid "裁剪形状"
 msgstr "裁剪形状"
 
@@ -2215,6 +2257,12 @@ msgstr "运行平台"
 
 msgid "返回"
 msgstr "返回"
+
+msgid "返回值"
+msgstr "返回值"
+
+msgid "返回值写入"
+msgstr "返回值写入"
 
 msgid "进出场动画"
 msgstr "进出场动画"

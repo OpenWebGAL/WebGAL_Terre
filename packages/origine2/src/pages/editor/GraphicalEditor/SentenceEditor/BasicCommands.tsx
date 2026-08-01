@@ -99,20 +99,38 @@ function JumpLabelCommand(props: ISentenceEditorProps) {
   </div>;
 }
 
+/** 三种作用域互斥，用一个下拉框而不是两个开关，避免出现同时勾选的无效状态 */
+type VarScope = "stage" | "global" | "local";
+
+const getVarScope = (props: ISentenceEditorProps): VarScope => {
+  if (getArgByKey(props.sentence, "global") === true) return "global";
+  return getArgByKey(props.sentence, "local") === true ? "local" : "stage";
+};
+
 function SetVarCommand(props: ISentenceEditorProps) {
   const expression = useValue(props.sentence.content);
-  const isGlobal = useValue(getArgByKey(props.sentence, "global") === true);
+  const scope = useValue<VarScope>(getVarScope(props));
+  const scopeOptions = new Map<string, string>([
+    ["stage", t`存档变量`],
+    ["global", t`全局变量`],
+    ["local", t`局部变量`],
+  ]);
   const submit = () => {
     props.onSubmit(combineSubmitString(
       props.sentence.commandRaw,
       expression.value,
       props.sentence.args,
-      [{ key: "global", value: isGlobal.value }],
+      [
+        { key: "global", value: scope.value === "global" },
+        { key: "local", value: scope.value === "local" },
+      ],
       props.sentence.inlineComment,
     ));
   };
 
   return <div className={styles.sentenceEditorContent}>
+    {scope.value === "local"
+      && <CommonTips text={t`局部变量即 callScene 传入的参数，随场景调用结束而消失。要改传进来的参数，必须选择局部变量。`} />}
     <div className={styles.editItem}>
       <TextInput
         title={t`变量表达式`}
@@ -121,18 +139,44 @@ function SetVarCommand(props: ISentenceEditorProps) {
         onBlur={submit}
         placeholder={t`例如：a=1 或 name=WebGAL`}
       />
-      <CommonOptions title={t`全局变量`}>
-        <TerreToggle
-          title=""
-          onChange={(newValue) => {
-            isGlobal.set(newValue);
+      <CommonOptions title={t`写入哪里`}>
+        <WheelDropdown
+          options={scopeOptions}
+          value={scope.value}
+          onValueChange={(newValue) => {
+            scope.set((newValue?.toString() ?? "stage") as VarScope);
             submit();
           }}
-          onText={t`写入全局变量`}
-          offText={t`写入当前存档变量`}
-          isChecked={isGlobal.value}
         />
       </CommonOptions>
+    </div>
+  </div>;
+}
+
+function ReturnCommand(props: ISentenceEditorProps) {
+  // 不写冒号时（`return;`）解析器会把整条命令留在 content 里，此时视为没有返回值
+  const isEmptyReturn = props.sentence.content === props.sentence.commandRaw;
+  const returnValue = useValue(isEmptyReturn ? "" : props.sentence.content);
+  const submit = () => {
+    props.onSubmit(combineSubmitString(
+      props.sentence.commandRaw,
+      returnValue.value,
+      props.sentence.args,
+      [],
+      props.sentence.inlineComment,
+    ));
+  };
+
+  return <div className={styles.sentenceEditorContent}>
+    <CommonTips text={t`提前结束当前被调用的场景并回到调用处。返回值会写入调用方 callScene 指定的变量。`} />
+    <div className={styles.editItem}>
+      <TextInput
+        title={t`返回值`}
+        value={returnValue.value}
+        onChange={(value) => returnValue.set(value)}
+        onBlur={submit}
+        placeholder={t`留空表示不返回值。可填数字、true/false、字符串或表达式`}
+      />
     </div>
   </div>;
 }
@@ -268,6 +312,8 @@ export default function BasicCommands(props: ISentenceEditorProps) {
     return <JumpLabelCommand {...props} />;
   case commandType.setVar:
     return <SetVarCommand {...props} />;
+  case commandType.return:
+    return <ReturnCommand {...props} />;
   case commandType.setComplexAnimation:
     return <SetComplexAnimationCommand {...props} />;
   default:

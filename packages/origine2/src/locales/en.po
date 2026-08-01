@@ -128,6 +128,9 @@ msgstr "playVideo: Choose a video file;"
 msgid "Portable 模式"
 msgstr "Portable mode"
 
+msgid "return:;"
+msgstr "return:;"
+
 msgid "RGB电影滤镜"
 msgstr "RGB film"
 
@@ -295,6 +298,9 @@ msgstr "Code Editor"
 
 msgid "以下目标路径已存在，未覆盖："
 msgstr "The following target paths already exist and were not overwritten:"
+
+msgid "传入的参数会成为被调用场景的局部变量，在那边用花括号插值取用，场景结束后即消失。"
+msgstr "Arguments passed here become local variables of the called scene. Read them there with curly-brace interpolation; they disappear when the scene ends."
 
 msgid "伽马值"
 msgstr "Gamma"
@@ -482,14 +488,11 @@ msgstr "Min Height"
 msgid "最新版本"
 msgstr "Latest Version"
 
-msgid "写入全局变量"
-msgstr "Write to global variables"
-
 msgid "写入变量"
 msgstr "Write Variable"
 
-msgid "写入当前存档变量"
-msgstr "Write to current save variables"
+msgid "写入哪里"
+msgstr "Write to"
 
 msgid "分支选择"
 msgstr "Choose branch"
@@ -532,6 +535,9 @@ msgstr "Create new game"
 
 msgid "删除"
 msgstr "Delete"
+
+msgid "删除参数"
+msgstr "Delete argument"
 
 msgid "删除属性"
 msgstr "Delete Property"
@@ -595,6 +601,12 @@ msgstr "Original style->new style, separate multiple entries with commas"
 
 msgid "参数值"
 msgstr "Parameter Value"
+
+msgid "参数值，用花括号插值可取调用方的变量"
+msgstr "Argument value. Use curly-brace interpolation to read a variable of the caller"
+
+msgid "参数名"
+msgstr "Argument name"
 
 msgid "双击节点名称可编辑"
 msgstr "Double-click a node name to edit it"
@@ -743,6 +755,9 @@ msgstr "Scenes and branches"
 msgid "场景文件"
 msgstr "Scene file"
 
+msgid "场景返回"
+msgstr "Return from scene"
+
 msgid "填写参数值"
 msgstr "Fill in parameter value"
 
@@ -799,6 +814,9 @@ msgstr "Letter spacing"
 
 msgid "字重"
 msgstr "Font Weight"
+
+msgid "存档变量"
+msgstr "Save-data variable"
 
 msgid "定位方式"
 msgstr "Positioning"
@@ -895,6 +913,12 @@ msgstr "No fonts added yet"
 
 msgid "尚未配置任何字体"
 msgstr "No fonts configured yet"
+
+msgid "局部变量"
+msgstr "Local variable"
+
+msgid "局部变量即 callScene 传入的参数，随场景调用结束而消失。要改传进来的参数，必须选择局部变量。"
+msgstr "Local variables are the arguments passed in by callScene, and they vanish when the scene call ends. To modify an argument that was passed in, you must choose \"Local variable\"."
 
 msgid "层级顺序"
 msgstr "Z Index"
@@ -1126,6 +1150,12 @@ msgstr "Submit"
 
 msgid "提交修改"
 msgstr "Submit changes"
+
+msgid "提前结束当前被调用的场景并回到调用处。返回值会写入调用方 callScene 指定的变量。"
+msgstr "Ends the current called scene early and goes back to the call site. The return value is written into the variable specified by the caller's callScene."
+
+msgid "提前结束被调用的场景并回到调用处，可带回一个返回值"
+msgstr "End the called scene early and go back to the call site, optionally carrying a return value"
 
 msgid "提示"
 msgstr "Tip"
@@ -1433,6 +1463,9 @@ msgstr "Label"
 msgid "标签名"
 msgstr "Label name"
 
+msgid "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
+msgstr "The argument names in red are generic argument names reserved by the engine. They are not passed into the called scene as local variables, so please rename them."
+
 msgid "标题"
 msgstr "Title"
 
@@ -1601,6 +1634,9 @@ msgstr "Add a music to music appreciation gallery"
 msgid "添加动画帧"
 msgstr "Add animation frame"
 
+msgid "添加参数"
+msgstr "Add argument"
+
 msgid "添加属性"
 msgstr "Add Property"
 
@@ -1717,6 +1753,9 @@ msgstr "Film mode value"
 
 msgid "留空使用默认值"
 msgstr "Leave empty to use default"
+
+msgid "留空表示不返回值。可填数字、true/false、字符串或表达式"
+msgstr "Leave empty to return nothing. Accepts a number, true/false, a string or an expression"
 
 msgid "百分比。 0-100 有效"
 msgstr "Percentage. 0-100 valid"
@@ -2015,6 +2054,9 @@ msgstr "Write default"
 msgid "表达式"
 msgstr "Expression"
 
+msgid "被调用场景 return 的值写入哪个变量，留空则丢弃"
+msgstr "Which variable receives the value returned by the called scene. Leave empty to discard it"
+
 msgid "裁剪形状"
 msgstr "Clip Shape"
 
@@ -2215,6 +2257,12 @@ msgstr "Platform"
 
 msgid "返回"
 msgstr "Return"
+
+msgid "返回值"
+msgstr "Return value"
+
+msgid "返回值写入"
+msgstr "Return value goes to"
 
 msgid "进出场动画"
 msgstr "Entry and exit animation"
