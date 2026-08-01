@@ -377,8 +377,8 @@ msgstr "保存流程图"
 msgid "保持闭眼(毫秒)"
 msgstr "保持闭眼(毫秒)"
 
-msgid "保留角色名"
-msgstr "保留角色名"
+msgid "保留角色名，留空角色名的语句沿用上句的角色名"
+msgstr "保留角色名，留空角色名的语句沿用上句的角色名"
 
 msgid "修改时间"
 msgstr "修改时间"
@@ -1334,6 +1334,12 @@ msgstr "新的游戏"
 msgid "方形"
 msgstr "方形"
 
+msgid "旁白模式"
+msgstr "旁白模式"
+
+msgid "旁白模式，不显示角色名"
+msgstr "旁白模式，不显示角色名"
+
 msgid "旁白模式，无角色名"
 msgstr "旁白模式，无角色名"
 
@@ -1391,14 +1397,14 @@ msgstr "显示立绘"
 msgid "显示背景"
 msgstr "显示背景"
 
-msgid "显示角色名"
-msgstr "显示角色名"
-
 msgid "显示预览窗口"
 msgstr "显示预览窗口"
 
 msgid "普通对话"
 msgstr "普通对话"
+
+msgid "普通对话，显示角色名"
+msgstr "普通对话，显示角色名"
 
 msgid "暂无变量快照"
 msgstr "暂无变量快照"
@@ -1669,6 +1675,9 @@ msgstr "清除特效"
 
 msgid "清除立绘"
 msgstr "清除立绘"
+
+msgid "清除角色名，留空角色名的语句不再显示角色名"
+msgstr "清除角色名，留空角色名的语句不再显示角色名"
 
 msgid "游戏"
 msgstr "游戏"
@@ -2075,9 +2084,6 @@ msgstr "角色名，留空以继承上句:对话;"
 msgid "角色名内层文本"
 msgstr "角色名内层文本"
 
-msgid "角色名处理"
-msgstr "角色名处理"
-
 msgid "角色名外层文本"
 msgstr "角色名外层文本"
 
@@ -2089,9 +2095,6 @@ msgstr "角色名文本框"
 
 msgid "角色名文本框背景"
 msgstr "角色名文本框背景"
-
-msgid "角色名显示"
-msgstr "角色名显示"
 
 msgid "角落头像"
 msgstr "角落头像"
@@ -2455,9 +2458,6 @@ msgstr "隐藏侧边栏"
 
 msgid "隐藏文本框"
 msgstr "隐藏文本框"
-
-msgid "隐藏角色名"
-msgstr "隐藏角色名"
 
 msgid "雨"
 msgstr "雨"

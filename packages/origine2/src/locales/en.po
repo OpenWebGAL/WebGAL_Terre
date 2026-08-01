@@ -377,8 +377,8 @@ msgstr "Save flowchart"
 msgid "保持闭眼(毫秒)"
 msgstr "Closed duration (ms)"
 
-msgid "保留角色名"
-msgstr "Keep role name"
+msgid "保留角色名，留空角色名的语句沿用上句的角色名"
+msgstr "Keep the role name; lines that leave the role name blank inherit it from the previous line"
 
 msgid "修改时间"
 msgstr "Last modified"
@@ -1334,6 +1334,12 @@ msgstr "New game"
 msgid "方形"
 msgstr "Square"
 
+msgid "旁白模式"
+msgstr "Narration mode"
+
+msgid "旁白模式，不显示角色名"
+msgstr "Narration mode, no role name shown"
+
 msgid "旁白模式，无角色名"
 msgstr "Voiceover mode, no role name"
 
@@ -1391,14 +1397,14 @@ msgstr "Show figure"
 msgid "显示背景"
 msgstr "Show background"
 
-msgid "显示角色名"
-msgstr "Show role name"
-
 msgid "显示预览窗口"
 msgstr "Show preview window"
 
 msgid "普通对话"
 msgstr "General dialogue"
+
+msgid "普通对话，显示角色名"
+msgstr "Normal dialogue, role name shown"
 
 msgid "暂无变量快照"
 msgstr "No variable snapshot"
@@ -1669,6 +1675,9 @@ msgstr "Clear effects"
 
 msgid "清除立绘"
 msgstr "Clear figure"
+
+msgid "清除角色名，留空角色名的语句不再显示角色名"
+msgstr "Clear the role name; lines that leave the role name blank no longer show one"
 
 msgid "游戏"
 msgstr "Games"
@@ -2075,9 +2084,6 @@ msgstr "Role name, leave blank to inherit from previous sentence: Dialogue;"
 msgid "角色名内层文本"
 msgstr "Role Name Inner Text"
 
-msgid "角色名处理"
-msgstr "Role name handling"
-
 msgid "角色名外层文本"
 msgstr "Role Name Outer Text"
 
@@ -2089,9 +2095,6 @@ msgstr "Role Name Text Box"
 
 msgid "角色名文本框背景"
 msgstr "Role Name Text Box Background"
-
-msgid "角色名显示"
-msgstr "Role name display"
 
 msgid "角落头像"
 msgstr "Corner avatar"
@@ -2455,9 +2458,6 @@ msgstr "Hide Sidebar"
 
 msgid "隐藏文本框"
 msgstr "Hide Text Box"
-
-msgid "隐藏角色名"
-msgstr "Hide character name"
 
 msgid "雨"
 msgstr "Rain"

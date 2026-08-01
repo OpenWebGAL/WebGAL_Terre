@@ -377,8 +377,8 @@ msgstr "플로차트 저장"
 msgid "保持闭眼(毫秒)"
 msgstr "눈 감기 유지(밀리초)"
 
-msgid "保留角色名"
-msgstr "캐릭터 이름 유지"
+msgid "保留角色名，留空角色名的语句沿用上句的角色名"
+msgstr "캐릭터 이름을 유지하며, 캐릭터 이름을 비워 둔 문장은 이전 문장의 캐릭터 이름을 이어받음"
 
 msgid "修改时间"
 msgstr "수정 시간"
@@ -1334,6 +1334,12 @@ msgstr "새로운 게임"
 msgid "方形"
 msgstr "사각형"
 
+msgid "旁白模式"
+msgstr "나레이션 모드"
+
+msgid "旁白模式，不显示角色名"
+msgstr "나레이션 모드, 캐릭터 이름을 표시하지 않음"
+
 msgid "旁白模式，无角色名"
 msgstr "내레이션 모드, 캐릭터 이름 없음"
 
@@ -1391,14 +1397,14 @@ msgstr "스탠딩 표시"
 msgid "显示背景"
 msgstr "배경 표시"
 
-msgid "显示角色名"
-msgstr "캐릭터 이름 표시"
-
 msgid "显示预览窗口"
 msgstr "미리보기 창 표시"
 
 msgid "普通对话"
 msgstr "일반 대화"
+
+msgid "普通对话，显示角色名"
+msgstr "일반 대화, 캐릭터 이름 표시"
 
 msgid "暂无变量快照"
 msgstr "변수 스냅샷 없음"
@@ -1669,6 +1675,9 @@ msgstr "특수 효과 초기화"
 
 msgid "清除立绘"
 msgstr "스탠딩 초기화"
+
+msgid "清除角色名，留空角色名的语句不再显示角色名"
+msgstr "캐릭터 이름을 초기화하며, 캐릭터 이름을 비워 둔 문장에는 캐릭터 이름이 표시되지 않음"
 
 msgid "游戏"
 msgstr "게임"
@@ -2075,9 +2084,6 @@ msgstr "캐릭터 이름, 이전 문장과 이으려면 빈칸:대화;"
 msgid "角色名内层文本"
 msgstr "캐릭터 이름 내부 텍스트"
 
-msgid "角色名处理"
-msgstr "캐릭터 이름 처리"
-
 msgid "角色名外层文本"
 msgstr "캐릭터 이름 외부 텍스트"
 
@@ -2089,9 +2095,6 @@ msgstr "캐릭터 이름 텍스트 창"
 
 msgid "角色名文本框背景"
 msgstr "캐릭터 이름 텍스트 창 배경"
-
-msgid "角色名显示"
-msgstr "캐릭터 이름 표시"
 
 msgid "角落头像"
 msgstr "구석 미니 프로필"
@@ -2455,9 +2458,6 @@ msgstr "사이드바 숨기기"
 
 msgid "隐藏文本框"
 msgstr "대화창 숨기기"
-
-msgid "隐藏角色名"
-msgstr "캐릭터 이름 숨기기"
 
 msgid "雨"
 msgstr "비"
