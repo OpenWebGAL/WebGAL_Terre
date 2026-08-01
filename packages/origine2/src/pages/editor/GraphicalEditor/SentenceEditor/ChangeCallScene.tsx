@@ -128,6 +128,7 @@ export default function ChangeCallScene(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
+      {props.extraOptions}
     </div>
     {isCallScene.value && <>
       <CommonTips text={t`传入的参数会成为被调用场景的局部变量，在那边用花括号插值取用，场景结束后即消失。`} />

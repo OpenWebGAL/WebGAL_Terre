@@ -88,6 +88,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
         ignoreDefault.set(value);
         submit();
       }} />
+      {props.extraOptions}
     </div>
   </div>;
 }

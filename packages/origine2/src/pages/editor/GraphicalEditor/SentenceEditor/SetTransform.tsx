@@ -157,8 +157,6 @@ export default function SetTransform(props: ISentenceEditorProps) {
         ignoreDefault.set(value);
         submit();
       }} />
-    </div>
-    <div className={styles.commonArgItem}>
       <CommonOptions key="20" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);

@@ -15,7 +15,6 @@ interface ISentenceArgOptionProps {
   disabledText: string;
   placeholder: string;
   onSubmit: (newSentence: string) => void;
-  inline?: boolean;
 }
 
 function isEscaped(text: string, index: number) {
@@ -99,7 +98,8 @@ export default function SentenceArgOption(props: ISentenceArgOptionProps) {
     }));
   };
 
-  const content = <>
+  // 直接作为选项渲染在语句自己的选项行里，不额外套容器，避免被挤到单独一行
+  return <>
     <CommonOptions title={props.title} key="toggle">
       <TerreToggle
         title=""
@@ -127,6 +127,4 @@ export default function SentenceArgOption(props: ISentenceArgOptionProps) {
       />
     </CommonOptions>}
   </>;
-
-  return props.inline ? content : <div className={styles.commonArgItem}>{content}</div>;
 }

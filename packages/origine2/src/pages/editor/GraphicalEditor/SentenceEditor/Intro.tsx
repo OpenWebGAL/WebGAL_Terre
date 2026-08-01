@@ -264,6 +264,9 @@ export default function Intro(props: ISentenceEditorProps) {
         onClick={() => updateExpand(props.index)}
       />
     </div>
+    <div className={styles.editItem}>
+      {props.extraOptions}
+    </div>
     <TerrePanel sentenceIndex={props.index} title={t`效果选项`}>
       <div style={{ width: '100%' }}>
         <div style={{ display: 'flex' }}>

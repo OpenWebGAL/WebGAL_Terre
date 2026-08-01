@@ -157,8 +157,6 @@ export default function ChangeBg(props: ISentenceEditorProps) {
         ignoreDefault.set(value);
         submit();
       }} />
-    </div>
-    <div className={styles.commonArgItem}>
       <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);

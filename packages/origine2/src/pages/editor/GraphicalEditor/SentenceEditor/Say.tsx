@@ -320,6 +320,7 @@ export default function Say(props: ISentenceEditorProps) {
             }}
           />
         </CommonOptions>
+        {props.extraOptions}
       </div>
     </div>
   );

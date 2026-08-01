@@ -7,5 +7,8 @@ export default function End(props: ISentenceEditorProps) {
 
   return <div className={styles.sentenceEditorContent}>
     <CommonTips text={t`此指令将结束游戏`} />
+    <div className={styles.editItem}>
+      {props.extraOptions}
+    </div>
   </div>;
 }

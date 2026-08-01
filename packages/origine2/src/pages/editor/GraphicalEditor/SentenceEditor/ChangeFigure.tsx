@@ -652,8 +652,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       >
         {renderMoreOptions()}
       </TerrePanel>}
-    </div>
-    <div className={styles.commonArgItem}>
       <CommonOptions key="2" title={t`连续执行`}>
         <TerreToggle
           title=""

@@ -136,6 +136,7 @@ export default function GetUserInput(props: ISentenceEditorProps) {
           style={{width: "100%"}}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

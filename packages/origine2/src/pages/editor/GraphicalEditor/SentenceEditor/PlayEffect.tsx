@@ -73,6 +73,7 @@ export default function PlayEffect(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

@@ -27,6 +27,7 @@ export default function SetTextbox(props: ISentenceEditorProps) {
           submit();
         }} onText={t`隐藏文本框`} offText={t`显示文本框`} isChecked={isHideTextbox.value} />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

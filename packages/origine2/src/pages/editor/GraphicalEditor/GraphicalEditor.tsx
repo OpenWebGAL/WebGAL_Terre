@@ -61,15 +61,6 @@ interface SentenceRowContentProps extends SentenceRowProps {
   provided: DraggableProvided;
 }
 
-const inlineArgOptionCommands = new Set<commandType>([
-  commandType.changeBg,
-  commandType.changeFigure,
-  commandType.setAnimation,
-  commandType.setComplexAnimation,
-  commandType.setTransform,
-  commandType.setTempAnimation,
-]);
-
 export default function GraphicalEditor(props: IGraphicalEditorProps) {
   const [sentenceData, setSentenceData] = useState<SentenceItem[]>([]);
   const sentenceDataRef = useRef<SentenceItem[]>([]);
@@ -474,9 +465,7 @@ const SentenceRowContent = (props: SentenceRowContentProps) => {
     disabledText={t`不使用 when 条件`}
     placeholder={t`例如：a>0 && flag==true`}
     onSubmit={(newSentence) => props.onUpdate(newSentence, i)}
-    inline={inlineArgOptionCommands.has(sentence.command)}
   />;
-  const inlineArgOption = inlineArgOptionCommands.has(sentence.command);
 
   return <div className={`${styles.sentenceEditorWrapper} sentence-block-${lineNumber}`}
     ref={provided.innerRef}
@@ -534,8 +523,7 @@ const SentenceRowContent = (props: SentenceRowContentProps) => {
         {sentenceItem.show && <div className={styles.sentenceEditBody}>
           <SentenceEditor sentence={sentence} index={index} onSubmit={(newSentence) => {
             props.onUpdate(newSentence, i);
-          }} targetPath={targetPath} sceneLabels={sceneLabels} extraOptions={inlineArgOption ? argOption : undefined} />
-          {!inlineArgOption && argOption}
+          }} targetPath={targetPath} sceneLabels={sceneLabels} extraOptions={argOption} />
         </div>}
       </div>
     </div>

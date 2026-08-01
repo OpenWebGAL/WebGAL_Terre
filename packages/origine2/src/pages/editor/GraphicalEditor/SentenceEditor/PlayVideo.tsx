@@ -43,6 +43,7 @@ export default function PlayVideo(props: ISentenceEditorProps) {
           submit();
         }} onText={t`禁止跳过视频`} offText={t`启用视频跳过`} isChecked={isSkipOff.value} />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }

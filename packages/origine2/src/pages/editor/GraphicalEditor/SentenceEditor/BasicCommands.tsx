@@ -59,6 +59,7 @@ function LabelCommand(props: ISentenceEditorProps) {
         onBlur={submit}
         placeholder={t`本场景内唯一的 label 名称`}
       />
+      {props.extraOptions}
     </div>
   </div>;
 }
@@ -95,6 +96,7 @@ function JumpLabelCommand(props: ISentenceEditorProps) {
           }}
         />
       </CommonOptions>}
+      {props.extraOptions}
     </div>
   </div>;
 }
@@ -149,6 +151,7 @@ function SetVarCommand(props: ISentenceEditorProps) {
           }}
         />
       </CommonOptions>
+      {props.extraOptions}
     </div>
   </div>;
 }
@@ -177,6 +180,7 @@ function ReturnCommand(props: ISentenceEditorProps) {
         onBlur={submit}
         placeholder={t`留空表示不返回值。可填数字、true/false、字符串或表达式`}
       />
+      {props.extraOptions}
     </div>
   </div>;
 }
@@ -245,8 +249,6 @@ function SetComplexAnimationCommand(props: ISentenceEditorProps) {
         onBlur={submit}
         placeholder={t`留空使用默认值`}
       />
-    </div>
-    <div className={styles.commonArgItem}>
       <CommonOptions title={t`连续执行`}>
         <TerreToggle
           title=""
@@ -300,6 +302,7 @@ function SimpleContentCommand(props: ISentenceEditorProps) {
         placeholder={meta.placeholder}
         multiline={meta.multiline}
       />
+      {props.extraOptions}
     </div>
   </div>;
 }

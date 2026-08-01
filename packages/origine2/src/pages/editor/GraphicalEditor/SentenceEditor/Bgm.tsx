@@ -107,6 +107,7 @@ export default function Bgm(props: ISentenceEditorProps) {
           placeholder={t`默认 default`}
         />
       </CommonOptions>}
+      {props.extraOptions}
     </div>
   </div>;
 }
