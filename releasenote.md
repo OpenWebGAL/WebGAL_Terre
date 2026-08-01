@@ -4,27 +4,29 @@
 
 #### 新功能
 
-新增实验性流程图功能，可在游戏配置中启用，创建主线和支线流程图，并为节点关联场景文件。
+较长的语句会自动分成多行显示，脚本编辑中的高亮和补全同样支持。
 
-流程图编辑器支持新增、重命名、删除流程图和节点，支持拖拽连接节点，并可自动保存。
+新增场景调用传值。可以为调用的场景传入数据，并指定把返回的结果保存到哪个变量，新增用于提前结束被调用场景的返回语句。
+
+设置变量时可以选择只在当前场景内有效，场景结束后自动消失。
+
+立绘位置新增左侧 1/4、左侧 1/3、右侧 1/3 和右侧 1/4，立绘、对话和预览调整框均已支持。
 
 新增回收站设置，删除游戏、模板或素材文件时可选择移动到系统回收站，降低误删风险。
 
-优化 Android 版运行方式，启动时会自动准备运行环境，提供更明确的启动、停止和文件入口。
+支持 opus 格式的音频。
 
-优化预览窗口拖拽调整体验，立绘和变换目标的定位、缩放和旋转结果更贴近实时预览中的实际显示。
+脚本编辑新增检查提示，调用场景时使用了引擎已占用的名称会给出提醒。
+
+优化图形编辑块的排版，连续执行和条件判断不再单独占一行。
+
+优化对话编辑器的选项说明。
+
+精简流程图编辑器的界面，移除侧边栏中多余的说明文字。
 
 #### 修复
 
-修复预览窗口拖拽调整在部分素材、预设目标或特殊 ID 下可能取得错误尺寸或位置的问题。
-
-修复拖拽调整时继承的变换参数可能被写入为默认值，导致效果配置被意外改变的问题。
-
-修复启用实验性快速同步时，实时预览可能未按预期同步的问题。
-
-修复默认模板文字在部分环境下可能出现颜色显示异常的问题。
-
-修复 Android 版在准备内置资源时可能启动失败的问题。
+修复流程图编辑器中重复添加根节点或连出循环时没有提示的问题。
 
 <!-- English Translation -->
 ## Release Notes
@@ -33,27 +35,29 @@
 
 #### New Features
 
-Added an experimental flowchart feature that can be enabled in game settings, with support for main and branch flowcharts linked to scene files.
+Longer statements are now split across several lines automatically, and script editing highlights and completes them as well.
 
-The flowchart editor now supports creating, renaming, and deleting flowcharts and nodes, connecting nodes by dragging, and auto-saving changes.
+Added value passing for scene calls. Data can be passed into a called scene, the returned result can be stored in a chosen variable, and a new return statement ends a called scene early.
+
+Variables can now be set to be valid only inside the current scene and disappear when the scene ends.
+
+Added four figure positions: left 1/4, left 1/3, right 1/3, and right 1/4, supported by figures, dialogue, and the preview adjustment box.
 
 Added a Recycle Bin setting so deleted games, templates, and asset files can be moved to the system recycle bin instead of being removed permanently.
 
-Improved the Android runtime flow. The app now prepares its runtime environment automatically on startup and provides clearer start, stop, and file entry points.
+Added support for opus audio.
 
-Improved preview drag adjustments so figure and transform target position, scale, and rotation better match the actual live preview display.
+Script editing now warns when a scene call uses a name already taken by the engine.
+
+Improved the layout of graphical editing blocks so continuous execution and conditions no longer take up a line of their own.
+
+Improved the option descriptions in the dialogue editor.
+
+Simplified the flowchart editor by removing the extra explanatory text from the sidebar.
 
 #### Fixes
 
-Fixed preview drag adjustment boxes possibly using the wrong size or position for some assets, preset targets, or special IDs.
-
-Fixed inherited transform values possibly being written as default values during drag adjustment and unexpectedly changing effect settings.
-
-Fixed live preview possibly not using the expected sync mode when experimental fast sync was enabled.
-
-Fixed default template text color possibly displaying incorrectly in some environments.
-
-Fixed Android startup possibly failing while preparing bundled resources.
+Fixed adding a duplicate root node or drawing a loop in the flowchart editor giving no feedback.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -62,24 +66,26 @@ Fixed Android startup possibly failing while preparing bundled resources.
 
 #### 新機能
 
-実験的なフローチャート機能を追加し、ゲーム設定から有効化して、メインとサブのフローチャートを作成し、ノードにシーンファイルを関連付けられるようにしました。
+長い文が自動的に複数行に分かれて表示されるようになりました。スクリプト編集でのハイライトと補完にも対応しています。
 
-フローチャートエディターでは、フローチャートとノードの追加、名前変更、削除、ドラッグによるノード接続、自動保存に対応しました。
+シーン呼び出しの値の受け渡しを追加しました。呼び出すシーンにデータを渡し、返ってきた結果を保存する変数を指定できます。呼び出したシーンを途中で終了する戻り文も追加しました。
+
+変数を設定するときに、現在のシーンの中だけで有効にする選択肢を追加しました。シーンが終わると自動的に消えます。
+
+立ち絵の位置に左 1/4、左 1/3、右 1/3、右 1/4 を追加しました。立ち絵、会話、プレビューの調整枠のいずれも対応しています。
 
 ごみ箱設定を追加し、ゲーム、テンプレート、素材ファイルの削除時にシステムのごみ箱へ移動できるようにしました。
 
-Android 版の実行フローを改善し、起動時に実行環境を自動で準備し、開始、停止、ファイル操作の入口を分かりやすくしました。
+opus 形式の音声に対応しました。
 
-プレビュー画面でのドラッグ調整を改善し、立ち絵や変形対象の位置、拡大率、回転がリアルタイムプレビューの表示により近くなるようにしました。
+スクリプト編集にチェック機能を追加し、シーンの呼び出しでエンジンが使用済みの名前を使っている場合に知らせるようにしました。
+
+グラフィカル編集ブロックのレイアウトを改善し、連続実行と条件判断が単独で 1 行を占めないようにしました。
+
+会話エディターの選択肢の説明を改善しました。
+
+フローチャートエディターの画面を整理し、サイドバーの余分な説明文を削除しました。
 
 #### 修正
 
-一部の素材、プリセットターゲット、特殊 ID で、ドラッグ調整枠のサイズや位置が誤って取得されることがある問題を修正しました。
-
-ドラッグ調整時に継承された変形値がデフォルト値として書き込まれ、エフェクト設定が意図せず変わることがある問題を修正しました。
-
-実験的な高速同期を使用している場合に、リアルタイムプレビューが期待した同期方式で動作しないことがある問題を修正しました。
-
-一部の環境でデフォルトテンプレートの文字色が正しく表示されないことがある問題を修正しました。
-
-Android 版で同梱リソースの準備中に起動が失敗することがある問題を修正しました。
+フローチャートエディターでルートノードを重ねて追加したり、循環する接続を作ろうとしても何も反応がない問題を修正しました。
