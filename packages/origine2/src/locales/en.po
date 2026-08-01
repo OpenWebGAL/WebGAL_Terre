@@ -275,9 +275,6 @@ msgstr "Set multiple animations for figure or background"
 msgid "为立绘或背景图片调用动画效果"
 msgstr "Call animation for figure or background"
 
-msgid "主线流程图不可删除"
-msgstr "The main flowchart cannot be deleted"
-
 msgid "主要样式"
 msgstr "Main Style"
 
@@ -607,9 +604,6 @@ msgstr "Argument value. Use curly-brace interpolation to read a variable of the 
 
 msgid "参数名"
 msgstr "Argument name"
-
-msgid "双击节点名称可编辑"
-msgstr "Double-click a node name to edit it"
 
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
@@ -1159,9 +1153,6 @@ msgstr "End the called scene early and go back to the call site, optionally carr
 
 msgid "提示"
 msgstr "Tip"
-
-msgid "提示："
-msgstr "Tip:"
 
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
 msgstr "Tip: Set the figure/background first, then apply the animation, otherwise the target cannot be found."
@@ -1721,9 +1712,6 @@ msgstr "Filter"
 msgid "点击或拖拽文件至此上传"
 msgstr "Click or drag file to this area to upload"
 
-msgid "点击节点选择场景文件"
-msgstr "Click a node to select a scene file"
-
 msgid "点状电影滤镜"
 msgstr "Dot film filter"
 
@@ -2275,9 +2263,6 @@ msgstr "Execute Continuously"
 
 msgid "退场时长（单位为毫秒）"
 msgstr "Exit duration (milliseconds)"
-
-msgid "选中节点或连线后按退格键或 Delete 键可删除"
-msgstr "Select a node or edge and press Backspace or Delete to delete it"
 
 msgid "选择"
 msgstr "Choose"
