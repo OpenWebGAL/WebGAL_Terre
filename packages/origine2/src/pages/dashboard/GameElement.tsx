@@ -38,6 +38,7 @@ import { t } from '@lingui/macro';
 import { GameInfoDto } from '@/api/Api';
 import useEditorStore from '@/store/useEditorStore';
 import useTrashFailedToast from '@/hooks/useTrashFailedToast';
+import { isLocalBrowserHost } from '@/utils/isLocalBrowserHost';
 
 interface IGameElementProps {
   gameInfo: GameInfoDto;
@@ -74,6 +75,7 @@ export default function GameElement(props: IGameElementProps) {
   const deleteChecked = useValue(false);
   const isTrash = useEditorStore.use.isTrash();
   const toastTrashFailed = useTrashFailedToast();
+  const canOpenLocalFolder = isLocalBrowserHost();
 
   const openInFileExplorer = () => {
     api.manageGameControllerOpenGameDict(props.gameInfo.dir);
@@ -130,10 +132,12 @@ export default function GameElement(props: IGameElementProps) {
               </MenuTrigger>
               <MenuPopover>
                 <MenuList>
-                  <MenuItem
-                    icon={<FolderOpenIcon />}
-                    onClick={() => openInFileExplorer()}
-                  >{t`在文件管理器中打开`}</MenuItem>
+                  {canOpenLocalFolder && (
+                    <MenuItem
+                      icon={<FolderOpenIcon />}
+                      onClick={() => openInFileExplorer()}
+                    >{t`在文件管理器中打开`}</MenuItem>
+                  )}
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
                   <MenuItem
                     icon={<RenameIcon />}
