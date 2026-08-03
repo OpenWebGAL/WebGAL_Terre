@@ -467,6 +467,9 @@ msgstr "内容"
 msgid "内层文本"
 msgstr "内层文本"
 
+msgid "内置语言服务"
+msgstr "内置语言服务"
+
 msgid "内边距"
 msgstr "内边距"
 
@@ -2131,6 +2134,9 @@ msgstr "该文件类型不支持预览"
 
 msgid "语言"
 msgstr "语言"
+
+msgid "语言服务"
+msgstr "语言服务"
 
 msgid "语音"
 msgstr "语音"

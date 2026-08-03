@@ -467,6 +467,9 @@ msgstr "내용"
 msgid "内层文本"
 msgstr "내부 텍스트"
 
+msgid "内置语言服务"
+msgstr ""
+
 msgid "内边距"
 msgstr "안쪽 여백"
 
@@ -2131,6 +2134,9 @@ msgstr "이 파일 유형은 미리보기를 지원하지 않습니다"
 
 msgid "语言"
 msgstr "언어"
+
+msgid "语言服务"
+msgstr ""
 
 msgid "语音"
 msgstr "음성"

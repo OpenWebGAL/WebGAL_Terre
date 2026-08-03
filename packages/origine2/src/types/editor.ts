@@ -26,6 +26,7 @@ export interface IEditorState {
   isUseRealtimeEffect: boolean; // 是否使用实时效果
   isWindowAdjustment: boolean; // 预览窗口调整功能是否开启
   isTrash: boolean; // 是否启用回收站功能
+  activeLanguageServer: string;
   debugVariables: IDebugVariable[];
 }
 
@@ -62,5 +63,6 @@ export interface IEditorAction {
   updateIsUseRealtimeEffect: (isUseRealtimeEffect: IEditorState['isUseRealtimeEffect']) => void;
   updateIsWindowAdjustment: (isWindowAdjustment: IEditorState['isWindowAdjustment']) => void;
   updateIsTrash: (isTrash: IEditorState['isTrash']) => void;
+  updateActiveLanguageServer: (activeLanguageServer: IEditorState['activeLanguageServer']) => void;
   updateDebugVariables: (debugVariables: IEditorState['debugVariables']) => void;
 }

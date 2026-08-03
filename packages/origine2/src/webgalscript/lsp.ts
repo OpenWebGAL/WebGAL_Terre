@@ -24,54 +24,64 @@ import { getWsUrl } from '@/utils/getWsUrl';
 import useEditorStore, { registerSubPageChangedCallback } from '@/store/useEditorStore';
 
 let initialized = false;
+let clientPromise: Promise<void> | null = null;
+let languageClientInstance: MonacoLanguageClient | null = null;
 
 export const configureMonacoWorkers = async () => {
   useWorkerFactory();
 };
 
 export const runClient = async () => {
-  if (initialized) {
-    return Promise.resolve();
+  if (clientPromise) {
+    return clientPromise;
   }
-  initialized = true;
 
-  await initServices({
-    serviceConfig: {
-      userServices: {
-        ...getThemeServiceOverride(),
-        ...getTextmateServiceOverride(),
-        ...getConfigurationServiceOverride(),
+  clientPromise = (async () => {
+    if (initialized) {
+      return;
+    }
+    initialized = true;
+
+    await initServices({
+      serviceConfig: {
+        userServices: {
+          ...getThemeServiceOverride(),
+          ...getTextmateServiceOverride(),
+          ...getConfigurationServiceOverride(),
+        },
+        debugLogging: true,
       },
-      debugLogging: true,
-    },
-  });
+    });
 
-  const applyEditorConfig = () => {
-    const isDarkMode = useEditorStore.getState().isDarkMode;
-    updateUserConfiguration(`{
+    const applyEditorConfig = () => {
+      const isDarkMode = useEditorStore.getState().isDarkMode;
+      updateUserConfiguration(`{
       "workbench.colorTheme": "${isDarkMode ? "WebGAL Black" : "WebGAL White"}",
       "editor.semanticHighlighting.enabled": "configuredByTheme",
       "editor.fontFamily": "${useEditorStore.getState().editorFontFamily}",
       "editor.fontSize": ${useEditorStore.getState().editorFontSize}
     }`);
-  };
+    };
 
-  // 初始调用
-  applyEditorConfig();
-
-  // 监听 isDarkMode 变化
-  useEditorStore.subscribe((state) => {
+    // 初始调用
     applyEditorConfig();
-  });
 
-  monaco.languages.register({
-    id: 'webgal',
-    extensions: ['.txt'],
-    aliases: ['WebGAL', 'WebGAL Script'],
-    mimetypes: ['application/webgalscript'],
-  });
+    // 监听 isDarkMode 变化
+    useEditorStore.subscribe((state) => {
+      applyEditorConfig();
+    });
 
-  initWebSocketAndStartClient(getWsUrl('api/lsp2'));
+    monaco.languages.register({
+      id: 'webgal',
+      extensions: ['.txt'],
+      aliases: ['WebGAL', 'WebGAL Script'],
+      mimetypes: ['application/webgalscript'],
+    });
+
+    initWebSocketAndStartClient(getWsUrl('api/lsp2'));
+  })();
+
+  return clientPromise;
 };
 
 const sendBasePathToLSP = (client: MonacoLanguageClient, gameName: string) => {
@@ -90,6 +100,7 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
       reader, // @ts-ignore
       writer,
     });
+    languageClientInstance = languageClient;
     languageClient.onRequest('textDocument/completion', () => {
       console.log('received completion request from server');
       vscode.commands.executeCommand('editor.action.triggerSuggest', { auto: true });
@@ -97,12 +108,47 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
     registerSubPageChangedCallback((subPage) => {
       sendBasePathToLSP(languageClient, subPage);
     });
-    reader.onClose(() => languageClient.stop());
+    reader.onClose(() => {
+      if (languageClientInstance === languageClient) {
+        languageClientInstance = null;
+      }
+      languageClient.stop();
+    });
     languageClient.start();
 
     sendBasePathToLSP(languageClient, useEditorStore.getState().subPage);
+    setActiveLanguageServer(useEditorStore.getState().activeLanguageServer);
   };
   return webSocket;
+};
+
+export const scanLanguageServers = async (): Promise<Array<{ id: string; name: string }>> => {
+  if (!languageClientInstance) {
+    return [];
+  }
+  const response = await languageClientInstance.sendRequest<{
+    servers: Array<{ id: string; name: string }>;
+  }>('$\/scanLanguageServers');
+  return response?.servers ?? [];
+};
+
+export const getActiveLanguageServer = async () => {
+  if (!languageClientInstance) {
+    return { mode: 'native', activeId: 'native' };
+  }
+  return languageClientInstance.sendRequest<{
+    mode: string;
+    activeId: string | null;
+  }>('$/getActiveLanguageServer');
+};
+
+export const setActiveLanguageServer = async (id?: string) => {
+  if (!languageClientInstance) {
+    return;
+  }
+  const targetId = id ?? 'native';
+  useEditorStore.getState().updateActiveLanguageServer(targetId);
+  await languageClientInstance.sendRequest('$/setActiveLanguageServer', { id: targetId });
 };
 
 export const createLanguageClient = (transports: MessageTransports): MonacoLanguageClient => {
