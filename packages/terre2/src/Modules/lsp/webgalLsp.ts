@@ -22,7 +22,10 @@ import { complete, checkTriggerCompletion } from './completion';
 import { collectDiagnostics } from './diagnostics';
 import { ScannerService } from './third-party/scanner.service';
 import { UserDataService } from '../user-data/user-data.service';
+import { webgalParser } from '../../util/webgal-parser';
+import * as path from 'path';
 import * as fs from 'fs';
+import { pathToFileURL } from 'url';
 
 export function createWsConnection(
   reader: MessageReader,
@@ -40,9 +43,14 @@ export function createWsConnection(
   let activeConnection: any = null;
 
   let basePath = '';
+  let currentWorkspaceUri: string | null = null;
 
-  const log = (msg: string) => connection.console.log(`[LSP] ${msg}`);
-  const logError = (msg: string) => connection.console.error(`[LSP] ${msg}`);
+  const uriMap = new Map<string, string>(); // original -> file
+  const reverseUriMap = new Map<string, string>(); // file -> original
+
+  const logError = (msg: string) => {
+    connection.console.error(`[LSP] ${msg}`);
+  };
 
   const CONTROL_METHODS = [
     'textDocument/setBasePath',
@@ -57,27 +65,76 @@ export function createWsConnection(
 
   const stripFileProtocol = (uriPath: string): string => {
     if (!uriPath) return '';
-    const withoutProtocol = uriPath.replace(/^file:\/\/\/?/, '');
-    return withoutProtocol.replace(/\//g, '\\');
+    let pathWithoutScheme = uriPath.replace(/^file:\/\/\/?/, '');
+    try {
+      pathWithoutScheme = decodeURI(pathWithoutScheme);
+    } catch {
+      // ignore
+    }
+    if (process.platform === 'win32') {
+      pathWithoutScheme = pathWithoutScheme.replace(/\//g, '\\');
+    }
+    return pathWithoutScheme;
+  };
+
+  const normalizeUri = (originalUri: string): string => {
+    if (originalUri.startsWith('file://')) {
+      const pathPart = originalUri.replace(/^file:\/\/\/?/, '');
+      if (/^[A-Za-z]:[\\/]/i.test(pathPart) || pathPart.startsWith('/')) {
+        try {
+          const decoded = decodeURI(pathPart);
+          if (/^[A-Za-z]:[\\/]/i.test(decoded) || decoded.startsWith('/')) {
+            return originalUri;
+          }
+        } catch { }
+      }
+    }
+
+    const state = UserDataService.getState();
+    let relativePath = originalUri.replace(/^file:\/\/\/?/, '').replace(/^\/+/, '');
+    if (originalUri.includes('://') && !originalUri.startsWith('file://')) {
+      relativePath = originalUri.split('://')[1] || '';
+    }
+    if (!relativePath) {
+      return originalUri;
+    }
+    let decodedRelativePath = relativePath;
+    try {
+      decodedRelativePath = decodeURI(relativePath);
+    } catch { }
+    const absolutePath = path.resolve(state.activeUserDataRoot, decodedRelativePath);
+    const fileUri = pathToFileURL(absolutePath).toString();
+    return fileUri;
+  };
+
+  const getFileUri = (originalUri: string): string => {
+    let fileUri = uriMap.get(originalUri);
+    if (!fileUri) {
+      fileUri = normalizeUri(originalUri);
+      if (fileUri !== originalUri) {
+        uriMap.set(originalUri, fileUri);
+        reverseUriMap.set(fileUri, originalUri);
+      }
+    }
+    return fileUri;
   };
 
   const stopThirdPartyServer = async (): Promise<void> => {
     if (activeLauncher) {
       try {
         await activeLauncher.stop?.();
-      } catch (e) {
-        // ignore
-      }
+      } catch { }
     }
     try {
       activeConnection?.dispose?.();
-    } catch {
-      // ignore
-    }
+    } catch { }
     activeConnection = null;
     activeLauncher = null;
     activeLauncherId = null;
     currentMode = 'native';
+    currentWorkspaceUri = null;
+    uriMap.clear();
+    reverseUriMap.clear();
   };
 
   const forwardToThirdParty = (method: string, params: any, token?: any) => {
@@ -87,6 +144,13 @@ export function createWsConnection(
 
   const notifyThirdParty = (method: string, params?: any) => {
     if (!isThirdPartyActive()) return;
+    if (params && params.textDocument && params.textDocument.uri) {
+      const originalUri = params.textDocument.uri;
+      const fileUri = getFileUri(originalUri);
+      if (fileUri !== originalUri) {
+        (params.textDocument as any).uri = fileUri;
+      }
+    }
     activeConnection.sendNotification(method, params);
   };
 
@@ -96,11 +160,11 @@ export function createWsConnection(
     activeConnection.onRequest(async (method: string, params: any, token: any) => {
       if (method.startsWith('workspace/fs/')) {
         try {
-          const normalizedPath = stripFileProtocol(params.path);
+          const rawPath = params.path;
+          const normalizedPath = stripFileProtocol(rawPath);
           if (!normalizedPath) {
             throw new Error('Empty path after stripping file protocol');
           }
-
           let result: any;
           switch (method) {
             case 'workspace/fs/readFile':
@@ -138,6 +202,11 @@ export function createWsConnection(
     activeConnection.onNotification(
       'textDocument/publishDiagnostics',
       (params: any) => {
+        const fileUri = params.uri;
+        const originalUri = reverseUriMap.get(fileUri) || fileUri;
+        if (originalUri !== fileUri) {
+          (params as any).uri = originalUri;
+        }
         connection.sendDiagnostics(params);
       },
     );
@@ -145,66 +214,50 @@ export function createWsConnection(
     activeConnection.onRequest(
       'window/showMessageRequest',
       (params: any, token: any) => {
-        return connection.sendRequest(
-          'window/showMessageRequest',
-          params,
-          token,
-        );
+        return connection.sendRequest('window/showMessageRequest', params, token);
       },
     );
-
     activeConnection.onRequest(
       'window/showDocument',
       (params: any, token: any) => {
         return connection.sendRequest('window/showDocument', params, token);
       },
     );
-
     activeConnection.onRequest(
       'workspace/applyEdit',
       (params: any, token: any) => {
         return connection.sendRequest('workspace/applyEdit', params, token);
       },
     );
-
     activeConnection.onRequest(
       'workspace/configuration',
       (params: any, token: any) => {
         return connection.sendRequest('workspace/configuration', params, token);
       },
     );
-
     activeConnection.onNotification('window/showMessage', (params: any) => {
       connection.sendNotification('window/showMessage', params);
-    });
-
-    activeConnection.onUnhandledNotification((message: any) => {
-      if (message.method === 'textDocument/publishDiagnostics') return;
-      connection.sendNotification(message.method, message.params);
     });
   };
 
   const startThirdPartyServer = async (id: string): Promise<void> => {
-    log(`Starting third-party server: ${id}`);
     await stopThirdPartyServer();
 
     const launcher = scanner.getLauncherById(id);
     if (!launcher) {
-      logError(`Launcher not found: ${id}`);
       throw new Error(`Third-party language server not found: ${id}`);
     }
 
     const { reader, writer } = await launcher.start();
     const thirdPartyConnection = createConnection(reader, writer);
-
     thirdPartyConnection.listen();
 
     const state = UserDataService.getState();
-    const rootUri = 'file:///' + state.activeUserDataRoot.replace(/\\/g, '/');
+    const defaultRootUri = pathToFileURL(state.activeUserDataRoot).toString();
     const initParams: InitializeParams = {
       processId: process.pid,
-      rootUri,
-      workspaceFolders: [{ uri: rootUri, name: 'Terre Workspace' }],
+      rootUri: defaultRootUri,
+      workspaceFolders: [],
       capabilities: {},
     };
 
@@ -220,14 +273,12 @@ export function createWsConnection(
           await new Promise(resolve => setTimeout(resolve, 100));
           continue;
         }
-        logError(`Initialize failed: ${err}`);
         await stopThirdPartyServer();
         throw err;
       }
     }
 
     thirdPartyConnection.sendNotification('initialized', {});
-    log(`Initialized successfully`);
 
     activeConnection = thirdPartyConnection;
     activeLauncher = launcher;
@@ -236,17 +287,48 @@ export function createWsConnection(
 
     attachThirdPartyEvents();
 
+    if (basePath) {
+      updateWorkspaceFolders(basePath);
+    }
+
     for (const document of documents.all()) {
+      const fileUri = getFileUri(document.uri);
       thirdPartyConnection.sendNotification('textDocument/didOpen', {
         textDocument: {
-          uri: document.uri,
+          uri: fileUri,
           languageId: document.languageId,
           version: document.version,
           text: document.getText(),
         },
       });
     }
-    log(`Server started, ${documents.all().length} documents synced`);
+  };
+
+  const updateWorkspaceFolders = (newBasePath: string) => {
+    if (!isThirdPartyActive()) return;
+    try {
+      const state = UserDataService.getState();
+      let newWorkspaceUri: string | null = null;
+      if (newBasePath && newBasePath.trim() !== '') {
+        const absolutePath = path.resolve(state.activeUserDataRoot, newBasePath);
+        newWorkspaceUri = pathToFileURL(absolutePath).toString();
+      }
+      if (newWorkspaceUri === currentWorkspaceUri) return;
+      const added: any[] = [];
+      const removed: any[] = [];
+      if (newWorkspaceUri) {
+        added.push({ uri: newWorkspaceUri, name: path.basename(newWorkspaceUri) });
+      }
+      if (currentWorkspaceUri) {
+        removed.push({ uri: currentWorkspaceUri, name: path.basename(currentWorkspaceUri) });
+      }
+      activeConnection.sendNotification('workspace/didChangeWorkspaceFolders', {
+        event: { added, removed },
+      });
+      currentWorkspaceUri = newWorkspaceUri;
+    } catch (err) {
+      logError(`updateWorkspaceFolders error: ${err}`);
+    }
   };
 
   process.on('exit', async () => {
@@ -260,6 +342,13 @@ export function createWsConnection(
 
   const tryForwardRequest = (method: string, params: any, token?: any) => {
     if (!isThirdPartyActive()) return undefined;
+    if (params && params.textDocument && params.textDocument.uri) {
+      const originalUri = params.textDocument.uri;
+      const fileUri = getFileUri(originalUri);
+      if (fileUri !== originalUri) {
+        (params.textDocument as any).uri = fileUri;
+      }
+    }
     return forwardToThirdParty(method, params, token);
   };
 
@@ -357,16 +446,19 @@ export function createWsConnection(
   connection.onInitialized(() => {
     if (isThirdPartyActive()) {
       activeConnection.sendNotification('initialized');
-      return;
     }
   });
 
   connection.onRequest(
     'textDocument/setBasePath',
     (params: { basePath: string }) => {
-      basePath = params.basePath;
-      if (isThirdPartyActive()) {
-        activeConnection.sendNotification('textDocument/setBasePath', { basePath });
+      const newBasePath = params.basePath;
+      if (newBasePath !== basePath) {
+        basePath = newBasePath;
+        if (isThirdPartyActive()) {
+          updateWorkspaceFolders(basePath);
+          activeConnection.sendNotification('textDocument/setBasePath', { basePath });
+        }
       }
     },
   );
@@ -405,6 +497,11 @@ export function createWsConnection(
     'textDocument/semanticTokens/full',
     async (params: SemanticTokensParams): Promise<SemanticTokens> => {
       if (isThirdPartyActive()) {
+        const originalUri = params.textDocument.uri;
+        const fileUri = getFileUri(originalUri);
+        if (fileUri !== originalUri) {
+          (params.textDocument as any).uri = fileUri;
+        }
         return await activeConnection.sendRequest(
           'textDocument/semanticTokens/full',
           params,
@@ -455,33 +552,32 @@ export function createWsConnection(
   connection.onDidCloseTextDocument((params) => {
     documentSettings.delete(params.textDocument.uri);
     if (isThirdPartyActive()) {
+      const fileUri = getFileUri(params.textDocument.uri);
       notifyThirdParty('textDocument/didClose', {
-        textDocument: { uri: params.textDocument.uri },
+        textDocument: { uri: fileUri },
       });
     }
   });
 
   documents.onDidChangeContent(async (change) => {
     if (isThirdPartyActive()) {
+      const fileUri = getFileUri(change.document.uri);
       notifyThirdParty('textDocument/didChange', {
         textDocument: {
-          uri: change.document.uri,
+          uri: fileUri,
           version: change.document.version,
         },
         contentChanges: [{ text: change.document.getText() }],
       });
       return;
     }
-
     await validateTextDocument(change.document);
   });
 
   async function validateTextDocument(
     textDocument: TextDocument,
   ): Promise<void> {
-    if (isThirdPartyActive()) {
-      return;
-    }
+    if (isThirdPartyActive()) return;
     const settings = await getDocumentSettings(textDocument.uri);
     const diagnostics: Diagnostic[] = collectDiagnostics(
       textDocument.getText(),
@@ -499,10 +595,17 @@ export function createWsConnection(
   connection.onCompletion(
     async (params: CompletionParams): Promise<CompletionItem[]> => {
       if (isThirdPartyActive()) {
-        return await activeConnection.sendRequest(
-          'textDocument/completion',
-          params,
-        );
+        const fileUri = getFileUri(params.textDocument.uri);
+        (params.textDocument as any).uri = fileUri;
+        try {
+          return await activeConnection.sendRequest(
+            'textDocument/completion',
+            params,
+          );
+        } catch (err) {
+          logError(`Third-party completion failed: ${err}`);
+          return [];
+        }
       }
       const document = documents.get(params.textDocument.uri);
       return await complete(params, document, basePath);
@@ -515,9 +618,10 @@ export function createWsConnection(
 
   documents.onDidOpen((event) => {
     if (!isThirdPartyActive()) return;
+    const fileUri = getFileUri(event.document.uri);
     notifyThirdParty('textDocument/didOpen', {
       textDocument: {
-        uri: event.document.uri,
+        uri: fileUri,
         languageId: event.document.languageId,
         version: event.document.version,
         text: event.document.getText(),
@@ -527,10 +631,9 @@ export function createWsConnection(
 
   documents.onDidClose((event) => {
     if (!isThirdPartyActive()) return;
+    const fileUri = getFileUri(event.document.uri);
     notifyThirdParty('textDocument/didClose', {
-      textDocument: {
-        uri: event.document.uri,
-      },
+      textDocument: { uri: fileUri },
     });
   });
 

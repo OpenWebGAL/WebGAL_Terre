@@ -6,7 +6,6 @@ import axios from 'axios';
 import { logger } from '../../../utils/logger';
 import debounce from 'lodash/debounce';
 
-// 语法高亮文件
 import { editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME } from '../../../runtime/WG_ORIGINE_RUNTIME';
 import { EditorPreviewClient } from '../../../utils/editorPreviewClient';
 import { eventBus } from '@/utils/eventBus';
@@ -26,17 +25,10 @@ export default function TextEditor(props: ITextEditorProps) {
   const currentText = useRef('Loading Scene Data......');
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
-  const isEditorReady = useValue(false); // 读取完脚本才能算准备就绪
+  const isEditorReady = useValue(false);
 
-  // 准备获取 Monaco
-  // 建立 Ref
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
-  /**
-   * 处理挂载事件
-   * @param {any} editor
-   * @param {any} monaco
-   */
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     logger.debug('脚本编辑器挂载');
     lspSceneName.value = sceneName;
@@ -59,8 +51,6 @@ export default function TextEditor(props: ITextEditorProps) {
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
     }));
-    // 由于 monaco 接收拖拽进来的文字时, 会在末尾添加 $0
-    // 这里手动实现接收拖拽进来的文字, 以避开这个问题
     const domNode = editor.getContainerDomNode();
     const dropHandler = (e: DragEvent) => {
       e.preventDefault();
@@ -107,20 +97,12 @@ export default function TextEditor(props: ITextEditorProps) {
     editorRef?.current?.updateOptions?.({ wordWrap: isAutoWarp ? 'on' : 'off' });
   }, [isAutoWarp]);
 
-  /**
-   * handle monaco change
-   * @param {string} value
-   * @param {any} ev
-   */
   const submitChange = useMemo(() => debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     logger.debug('编辑器提交更新');
-    // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
-    // const lineNumber = ev.changes[0].range.startLineNumber;
-    // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value || value === '') currentText.current = value;
     eventBus.emit('editor:update-scene', { scene: currentText.current });
-    api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
+    api.assetsControllerEditTextFile({ textFile: currentText.current, path: props.targetPath }).then((res) => {
       const targetValue = currentText.current.split('\n')[lineNumber - 1];
       EditorPreviewClient.sendSyncScene({
         scenePath: target?.path ?? '',
@@ -211,6 +193,7 @@ export default function TextEditor(props: ITextEditorProps) {
         onChange={handleChange}
         defaultLanguage="webgal"
         language="webgal"
+        path={props.targetPath}
         defaultValue={currentText.current}
       />
     </div>

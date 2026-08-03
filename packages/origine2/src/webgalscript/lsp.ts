@@ -63,10 +63,8 @@ export const runClient = async () => {
     }`);
     };
 
-    // 初始调用
     applyEditorConfig();
 
-    // 监听 isDarkMode 变化
     useEditorStore.subscribe((state) => {
       applyEditorConfig();
     });
@@ -85,7 +83,11 @@ export const runClient = async () => {
 };
 
 const sendBasePathToLSP = (client: MonacoLanguageClient, gameName: string) => {
-  client.sendRequest('textDocument/setBasePath', { basePath: `games/${gameName}/game/` });
+  if (!gameName || gameName.trim() === '') {
+    return;
+  }
+  client.sendRequest('textDocument/setBasePath', { basePath: `games/${gameName}/game/` })
+    .catch(err => console.error('[LSP] setBasePath request FAILED:', err));
 };
 
 /** parameterized version , support all languageId */
@@ -102,7 +104,6 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
     });
     languageClientInstance = languageClient;
     languageClient.onRequest('textDocument/completion', () => {
-      console.log('received completion request from server');
       vscode.commands.executeCommand('editor.action.triggerSuggest', { auto: true });
     });
     registerSubPageChangedCallback((subPage) => {
@@ -116,7 +117,11 @@ export const initWebSocketAndStartClient = (url: string): WebSocket => {
     });
     languageClient.start();
 
-    sendBasePathToLSP(languageClient, useEditorStore.getState().subPage);
+    const currentSubPage = useEditorStore.getState().subPage;
+    if (currentSubPage && currentSubPage.trim() !== '') {
+      sendBasePathToLSP(languageClient, currentSubPage);
+    }
+
     setActiveLanguageServer(useEditorStore.getState().activeLanguageServer);
   };
   return webSocket;
@@ -149,21 +154,23 @@ export const setActiveLanguageServer = async (id?: string) => {
   const targetId = id ?? 'native';
   useEditorStore.getState().updateActiveLanguageServer(targetId);
   await languageClientInstance.sendRequest('$/setActiveLanguageServer', { id: targetId });
+
+  const subPage = useEditorStore.getState().subPage;
+  if (subPage && subPage.trim() !== '') {
+    sendBasePathToLSP(languageClientInstance, subPage);
+  }
 };
 
 export const createLanguageClient = (transports: MessageTransports): MonacoLanguageClient => {
   return new MonacoLanguageClient({
     name: 'Sample Language Client',
     clientOptions: {
-      // use a language id as a document selector
       documentSelector: ['webgal'],
-      // disable the default error handler
       errorHandler: {
         error: () => ({ action: ErrorAction.Continue }),
         closed: () => ({ action: CloseAction.Restart }),
       },
     },
-    // create a language client connection from the JSON RPC connection on demand
     connectionProvider: {
       get: () => {
         return Promise.resolve(transports);
