@@ -1,4 +1,4 @@
-/* ----------------------------------------------------------------------------
+﻿/* ----------------------------------------------------------------------------
  * Copyright (c) 2024 OpenWebGAL
  * Modified from https://github.com/TypeFox/monaco-languageclient/blob/main/
  * packages/examples/src/bare/client.ts
@@ -23,25 +23,38 @@ import './extension';
 import { getWsUrl } from '@/utils/getWsUrl';
 import useEditorStore, { registerSubPageChangedCallback } from '@/store/useEditorStore';
 
+// ----- 存储工具：持久化当前选择的 LSP ID -----
+const STORAGE_KEY = 'webgal-active-lsp-id';
+
+export const saveActiveLspId = (id: string) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, id);
+  } catch {
+    // ignore
+  }
+};
+
+export const loadActiveLspId = (): string => {
+  try {
+    return localStorage.getItem(STORAGE_KEY) ?? 'native';
+  } catch {
+    return 'native';
+  }
+};
+// ------------------------------------------
+
 let initialized = false;
-let clientPromise: Promise<void> | null = null;
+let startPromise: Promise<void> | null = null;
 let languageClientInstance: MonacoLanguageClient | null = null;
+let currentSocket: WebSocket | null = null;
+let currentLanguageServerId = 'native';
 
 export const configureMonacoWorkers = async () => {
   useWorkerFactory();
 };
 
-export const runClient = async () => {
-  if (clientPromise) {
-    return clientPromise;
-  }
-
-  clientPromise = (async () => {
-    if (initialized) {
-      return;
-    }
-    initialized = true;
-
+export const runClient = async (languageServerId?: string) => {
+  if (!initialized) {
     await initServices({
       serviceConfig: {
         userServices: {
@@ -56,7 +69,7 @@ export const runClient = async () => {
     const applyEditorConfig = () => {
       const isDarkMode = useEditorStore.getState().isDarkMode;
       updateUserConfiguration(`{
-      "workbench.colorTheme": "${isDarkMode ? "WebGAL Black" : "WebGAL White"}",
+      "workbench.colorTheme": "${isDarkMode ? 'WebGAL Black' : 'WebGAL White'}",
       "editor.semanticHighlighting.enabled": "configuredByTheme",
       "editor.fontFamily": "${useEditorStore.getState().editorFontFamily}",
       "editor.fontSize": ${useEditorStore.getState().editorFontSize}
@@ -65,7 +78,7 @@ export const runClient = async () => {
 
     applyEditorConfig();
 
-    useEditorStore.subscribe((state) => {
+    useEditorStore.subscribe(() => {
       applyEditorConfig();
     });
 
@@ -76,10 +89,60 @@ export const runClient = async () => {
       mimetypes: ['application/webgalscript'],
     });
 
-    initWebSocketAndStartClient(getWsUrl('api/lsp2'));
+    initialized = true;
+  }
+
+  // 优先使用传入的 ID，否则从存储加载
+  const targetId = languageServerId ?? loadActiveLspId();
+  // 同步 store（便于 UI 展示）
+  useEditorStore.getState().updateActiveLanguageServer(targetId);
+  return restartClient(targetId);
+};
+
+const stopClient = async () => {
+  if (languageClientInstance) {
+    try {
+      await languageClientInstance.stop();
+    } catch {
+      // ignore shutdown errors
+    }
+    languageClientInstance = null;
+  }
+
+  if (currentSocket) {
+    try {
+      currentSocket.close();
+    } catch {
+      // ignore
+    }
+    currentSocket = null;
+  }
+};
+
+const restartClient = async (languageServerId: string) => {
+  if (languageClientInstance && currentLanguageServerId === languageServerId) {
+    return;
+  }
+  if (startPromise) {
+    return startPromise;
+  }
+
+  startPromise = (async () => {
+    await stopClient();
+    currentLanguageServerId = languageServerId;
+    const { webSocket, startPromise: wsStart } = initWebSocketAndStartClient(
+      getWsUrl('api/lsp2'),
+      languageServerId,
+    );
+    currentSocket = webSocket;
+    await wsStart;
   })();
 
-  return clientPromise;
+  startPromise.finally(() => {
+    startPromise = null;
+  });
+
+  return startPromise;
 };
 
 const sendBasePathToLSP = (client: MonacoLanguageClient, gameName: string) => {
@@ -90,41 +153,69 @@ const sendBasePathToLSP = (client: MonacoLanguageClient, gameName: string) => {
     .catch(err => console.error('[LSP] setBasePath request FAILED:', err));
 };
 
-/** parameterized version , support all languageId */
-export const initWebSocketAndStartClient = (url: string): WebSocket => {
+export const initWebSocketAndStartClient = (url: string, languageServerId: string): { webSocket: WebSocket; startPromise: Promise<void> } => {
   const webSocket = new WebSocket(url);
+
+  let resolveStart: () => void;
+  let rejectStart: (err: any) => void;
+  const startPromise = new Promise<void>((resolve, reject) => {
+    resolveStart = resolve;
+    rejectStart = reject;
+  });
+
   webSocket.onopen = () => {
     const socket = toSocket(webSocket);
     const reader = new WebSocketMessageReader(socket);
     const writer = new WebSocketMessageWriter(socket);
-    const languageClient = createLanguageClient({
-      // @ts-ignore
-      reader, // @ts-ignore
-      writer,
-    });
+    const languageClient = createLanguageClient(
+      {
+        // @ts-ignore
+        reader,
+        // @ts-ignore
+        writer,
+      },
+      languageServerId,
+    );
+
     languageClientInstance = languageClient;
+
     languageClient.onRequest('textDocument/completion', () => {
       vscode.commands.executeCommand('editor.action.triggerSuggest', { auto: true });
     });
+
+    // 注册子页面变化回调，用于发送 basePath（切换项目时使用，不刷新页面）
     registerSubPageChangedCallback((subPage) => {
       sendBasePathToLSP(languageClient, subPage);
     });
+
     reader.onClose(() => {
       if (languageClientInstance === languageClient) {
         languageClientInstance = null;
       }
       languageClient.stop();
     });
+
     languageClient.start();
 
+    const ready = (languageClient as any).onReady?.();
+    if (ready instanceof Promise) {
+      ready.then(resolveStart).catch(rejectStart);
+    } else {
+      resolveStart();
+    }
+
+    // 初次连接时，如果当前有打开的项目，发送 basePath
     const currentSubPage = useEditorStore.getState().subPage;
     if (currentSubPage && currentSubPage.trim() !== '') {
       sendBasePathToLSP(languageClient, currentSubPage);
     }
-
-    setActiveLanguageServer(useEditorStore.getState().activeLanguageServer);
   };
-  return webSocket;
+
+  webSocket.onerror = (event) => {
+    rejectStart(new Error(`LSP websocket error: ${event}`));
+  };
+
+  return { webSocket, startPromise };
 };
 
 export const scanLanguageServers = async (): Promise<Array<{ id: string; name: string }>> => {
@@ -133,7 +224,7 @@ export const scanLanguageServers = async (): Promise<Array<{ id: string; name: s
   }
   const response = await languageClientInstance.sendRequest<{
     servers: Array<{ id: string; name: string }>;
-  }>('$\/scanLanguageServers');
+  }>('$/scanLanguageServers');
   return response?.servers ?? [];
 };
 
@@ -148,24 +239,23 @@ export const getActiveLanguageServer = async () => {
 };
 
 export const setActiveLanguageServer = async (id?: string) => {
-  if (!languageClientInstance) {
-    return;
-  }
   const targetId = id ?? 'native';
+  // 保存到 localStorage
+  saveActiveLspId(targetId);
+  // 更新 store（UI 立即响应）
   useEditorStore.getState().updateActiveLanguageServer(targetId);
-  await languageClientInstance.sendRequest('$/setActiveLanguageServer', { id: targetId });
-
-  const subPage = useEditorStore.getState().subPage;
-  if (subPage && subPage.trim() !== '') {
-    sendBasePathToLSP(languageClientInstance, subPage);
-  }
+  // 刷新页面，重新初始化整个应用，使用新 LSP
+  window.location.reload();
 };
 
-export const createLanguageClient = (transports: MessageTransports): MonacoLanguageClient => {
+export const createLanguageClient = (transports: MessageTransports, languageServerId: string): MonacoLanguageClient => {
   return new MonacoLanguageClient({
     name: 'Sample Language Client',
     clientOptions: {
       documentSelector: ['webgal'],
+      initializationOptions: {
+        languageServerId,
+      },
       errorHandler: {
         error: () => ({ action: ErrorAction.Continue }),
         closed: () => ({ action: CloseAction.Restart }),
