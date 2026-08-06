@@ -468,7 +468,7 @@ msgid "内层文本"
 msgstr "내부 텍스트"
 
 msgid "内置语言服务"
-msgstr ""
+msgstr "내장 언어 서비스"
 
 msgid "内边距"
 msgstr "안쪽 여백"
@@ -2136,7 +2136,7 @@ msgid "语言"
 msgstr "언어"
 
 msgid "语言服务"
-msgstr ""
+msgstr "언어 서비스"
 
 msgid "语音"
 msgstr "음성"
