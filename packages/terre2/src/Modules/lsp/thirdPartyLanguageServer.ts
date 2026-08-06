@@ -4,6 +4,10 @@ import {
   InitializeParams,
   InitializeResult,
   TextDocuments,
+  TextEdit,
+  ApplyWorkspaceEditParams,
+  ApplyWorkspaceEditResult,
+  WorkspaceEdit,
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { pathToFileURL } from 'url';
@@ -30,11 +34,7 @@ export class ThirdPartyLanguageServer {
 
   private fileWatchers = new Map<
     string,
-    {
-      watcher: chokidar.FSWatcher;
-      globPatterns: string[];
-      kind?: number;
-    }
+    { watcher: chokidar.FSWatcher; globPatterns: string[]; kind?: number }
   >();
 
   private pendingWatcherRegistrations: {
@@ -96,6 +96,7 @@ export class ThirdPartyLanguageServer {
       return this.tryForwardRequest(method, params, token);
     });
 
+    // 文档事件转发
     this.documents.onDidClose((event) => {
       const fileUri = this.getFileUri(event.document.uri);
       this.notifyThirdParty('textDocument/didClose', { textDocument: { uri: fileUri } });
@@ -116,11 +117,15 @@ export class ThirdPartyLanguageServer {
     this.documents.onDidChangeContent(async (change) => {
       const fileUri = this.getFileUri(change.document.uri);
       this.notifyThirdParty('textDocument/didChange', {
-        textDocument: {
-          uri: fileUri,
-          version: change.document.version,
-        },
+        textDocument: { uri: fileUri, version: change.document.version },
         contentChanges: [{ text: change.document.getText() }],
+      });
+    });
+
+    this.documents.onDidSave((event) => {
+      const fileUri = this.getFileUri(event.document.uri);
+      this.notifyThirdParty('textDocument/didSave', {
+        textDocument: { uri: fileUri },
       });
     });
 
@@ -129,7 +134,7 @@ export class ThirdPartyLanguageServer {
       this.notifyThirdParty('textDocument/didClose', { textDocument: { uri: fileUri } });
     });
 
-    // 如果第三方 LSP 已启动且工作区存在，立刻同步
+    // 若第三方 LSP 已启动且工作区存在，立即同步
     if (this.activeConnection && this.currentWorkspaceUri) {
       this.activeConnection.sendNotification('workspace/didChangeWorkspaceFolders', {
         event: {
@@ -140,6 +145,68 @@ export class ThirdPartyLanguageServer {
       this.reinitializeFileWatchers();
       this.processPendingRegistrations();
     }
+  }
+
+  // ========== 外部可调用的代理触发方法 ==========
+
+  /**
+   * 后端文件保存后调用，通知 LSP 文件已保存
+   */
+  async notifyDidSave(uri: string, text?: string): Promise<void> {
+    const fileUri = this.getFileUri(uri);
+    this.notifyThirdParty('textDocument/didSave', {
+      textDocument: { uri: fileUri },
+      text, // 可选，LSP 可能需要
+    });
+  }
+
+  /**
+   * 配置变更时调用，通知 LSP 更新配置
+   */
+  updateConfiguration(settings: any): void {
+    this.activeConnection?.sendNotification('workspace/didChangeConfiguration', { settings });
+  }
+
+  /**
+   * 处理文件重命名请求（由后端发起）
+   * 向 LSP 询问重命名影响，执行实际文件操作与编辑
+   */
+  async requestWillRenameFiles(
+    files: { oldUri: string; newUri: string }[]
+  ): Promise<void> {
+    if (!this.activeConnection) throw new Error('No active third-party LSP');
+
+    const params = {
+      files: files.map((f) => ({
+        oldUri: this.getFileUri(f.oldUri),
+        newUri: this.getFileUri(f.newUri),
+      })),
+    };
+
+    const result = await this.activeConnection.sendRequest<WorkspaceEdit | null>(
+      'workspace/willRenameFiles',
+      params
+    );
+
+    if (result) {
+      await this.applyWorkspaceEdit(result);
+    }
+
+    // 执行实际文件系统重命名
+    for (const { oldUri, newUri } of files) {
+      const oldPath = this.stripFileProtocol(this.getFileUri(oldUri));
+      const newPath = this.stripFileProtocol(this.getFileUri(newUri));
+      try {
+        await fs.promises.rename(oldPath, newPath);
+      } catch (err) {
+        this.logError(`Failed to rename ${oldPath} -> ${newPath}: ${err}`);
+      }
+    }
+
+    // 通知客户端重命名完成
+    this.connection?.sendNotification('workspace/didRenameFiles', {
+      files: params.files,
+    });
   }
 
   // ========== 生命周期 ==========
@@ -200,7 +267,6 @@ export class ThirdPartyLanguageServer {
       try { await this.activeLauncher.stop?.(); } catch { }
     }
     try { this.activeConnection?.dispose?.(); } catch { }
-
     this.activeConnection = null;
     this.activeLauncher = null;
     this.currentWorkspaceUri = null;
@@ -285,6 +351,7 @@ export class ThirdPartyLanguageServer {
 
   // ========== 第三方 LSP 事件处理 ==========
   private attachThirdPartyEvents(activeConnection: Connection) {
+    // 注册/取消注册文件监视器
     activeConnection.onRequest('client/registerCapability', async (params: any) => {
       for (const reg of params?.registrations ?? []) {
         if (reg.method === 'workspace/didChangeWatchedFiles') {
@@ -324,6 +391,7 @@ export class ThirdPartyLanguageServer {
       return undefined;
     });
 
+    // 文件系统访问
     activeConnection.onRequest(async (method: string, params: any, token: any) => {
       if (method.startsWith('workspace/fs/')) {
         try {
@@ -353,6 +421,18 @@ export class ThirdPartyLanguageServer {
       return this.connection?.sendRequest(method, params, token);
     });
 
+    // 服务端执行 workspace/applyEdit
+    activeConnection.onRequest('workspace/applyEdit', async (params: ApplyWorkspaceEditParams) => {
+      try {
+        const success = await this.applyWorkspaceEdit(params.edit);
+        return { applied: success } as ApplyWorkspaceEditResult;
+      } catch (err) {
+        this.logError(`workspace/applyEdit error: ${err}`);
+        return { applied: false, failureReason: String(err) };
+      }
+    });
+
+    // 诊断回传
     activeConnection.onNotification('textDocument/publishDiagnostics', (params: any) => {
       const originalUri = this.reverseUriMap.get(params.uri) || params.uri;
       if (originalUri !== params.uri) (params as any).uri = originalUri;
@@ -362,9 +442,107 @@ export class ThirdPartyLanguageServer {
     // 常用请求转发
     activeConnection.onRequest('window/showMessageRequest', (p, t) => this.connection?.sendRequest('window/showMessageRequest', p, t));
     activeConnection.onRequest('window/showDocument', (p, t) => this.connection?.sendRequest('window/showDocument', p, t));
-    activeConnection.onRequest('workspace/applyEdit', (p, t) => this.connection?.sendRequest('workspace/applyEdit', p, t));
     activeConnection.onRequest('workspace/configuration', (p, t) => this.connection?.sendRequest('workspace/configuration', p, t));
     activeConnection.onNotification('window/showMessage', (p) => this.connection?.sendNotification('window/showMessage', p));
+  }
+
+  // ========== 服务端应用编辑 ==========
+  private async applyWorkspaceEdit(edit: WorkspaceEdit): Promise<boolean> {
+    if (!edit.changes && !edit.documentChanges) return false;
+
+    // 处理简单变更 { uri: TextEdit[] }
+    if (edit.changes) {
+      for (const [uri, edits] of Object.entries(edit.changes)) {
+        const filePath = this.stripFileProtocol(uri);
+        try {
+          let content = await fs.promises.readFile(filePath, 'utf8');
+          content = this.applyTextEdits(content, edits);
+          await fs.promises.writeFile(filePath, content, 'utf8');
+          // 通知客户端文档变更
+          this.connection?.sendNotification('textDocument/didChange', {
+            textDocument: { uri, version: Date.now() }, // 简化版本
+            contentChanges: [{ text: content }],
+          });
+        } catch (err) {
+          this.logError(`Failed to apply edit on ${filePath}: ${err}`);
+          return false;
+        }
+      }
+    }
+
+    // 处理 documentChanges（支持 TextDocumentEdit, CreateFile, RenameFile, DeleteFile）
+    if (edit.documentChanges) {
+      for (const change of edit.documentChanges) {
+        if ('textDocument' in change) {
+          // TextDocumentEdit
+          const { uri, version } = change.textDocument;
+          const filePath = this.stripFileProtocol(uri);
+          try {
+            let content = await fs.promises.readFile(filePath, 'utf8');
+            content = this.applyTextEdits(content, change.edits);
+            await fs.promises.writeFile(filePath, content, 'utf8');
+            this.connection?.sendNotification('textDocument/didChange', {
+              textDocument: { uri, version: (version ?? 0) + 1 },
+              contentChanges: [{ text: content }],
+            });
+          } catch (err) {
+            this.logError(`Failed to apply text edit on ${filePath}: ${err}`);
+            return false;
+          }
+        } else if ('kind' in change) {
+          // CreateFile, RenameFile, DeleteFile – 简化处理，直接执行
+          const kind = (change as any).kind;
+          const uri = (change as any).uri;
+          const filePath = this.stripFileProtocol(uri);
+          try {
+            if (kind === 'create') {
+              await fs.promises.writeFile(filePath, '', 'utf8');
+            } else if (kind === 'delete') {
+              await fs.promises.unlink(filePath);
+            } else if (kind === 'rename') {
+              const newUri = (change as any).newUri;
+              const newPath = this.stripFileProtocol(newUri);
+              await fs.promises.rename(filePath, newPath);
+            }
+            // 通知客户端相应变化（可通过 didChangeWatchedFiles）
+            this.connection?.sendNotification('workspace/didChangeWatchedFiles', {
+              changes: [{ uri, type: kind === 'delete' ? 3 : kind === 'create' ? 1 : 3 }],
+            });
+          } catch (err) {
+            this.logError(`Failed to apply file operation ${kind} on ${filePath}: ${err}`);
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+
+  private applyTextEdits(original: string, edits: TextEdit[]): string {
+    // 简单实现：按位置从后往前应用，避免偏移
+    let result = original;
+    const sorted = [...edits].sort((a, b) => {
+      const aStart = a.range.start.line * 100000 + a.range.start.character;
+      const bStart = b.range.start.line * 100000 + b.range.start.character;
+      return bStart - aStart;
+    });
+
+    for (const edit of sorted) {
+      const startOffset = this.offsetAt(result, edit.range.start);
+      const endOffset = this.offsetAt(result, edit.range.end);
+      result = result.substring(0, startOffset) + edit.newText + result.substring(endOffset);
+    }
+    return result;
+  }
+
+  private offsetAt(text: string, position: { line: number; character: number }): number {
+    const lines = text.split('\n');
+    let offset = 0;
+    for (let i = 0; i < position.line && i < lines.length; i++) {
+      offset += lines[i].length + 1; // +1 for newline
+    }
+    return offset + position.character;
   }
 
   // ========== 文件监视器 ==========
@@ -392,20 +570,14 @@ export class ThirdPartyLanguageServer {
         interval: 300,
       });
 
-      watcher.on('ready', () => {
-        this.logInfo('File watcher ready');
-      });
-
       const onChange = (eventType: 'add' | 'change' | 'unlink', filePath: string) => {
         if (kind !== undefined) {
-          let eventKind = eventType === 'add' ? 1 : eventType === 'change' ? 2 : 4;
+          const eventKind = eventType === 'add' ? 1 : eventType === 'change' ? 2 : 4;
           if ((kind & eventKind) === 0) return;
         }
-
         const absolutePath = path.join(rootPath, filePath);
         const fileUri = pathToFileURL(absolutePath).toString();
         const type = eventType === 'add' ? 1 : eventType === 'change' ? 2 : 3;
-
         this.notifyThirdParty('workspace/didChangeWatchedFiles', {
           changes: [{ uri: fileUri, type }],
         });
@@ -431,7 +603,6 @@ export class ThirdPartyLanguageServer {
       globPatterns: reg.globPatterns,
       kind: reg.kind,
     }));
-
     for (const [, reg] of this.fileWatchers) {
       try { await reg.watcher.close(); } catch { }
     }
@@ -470,10 +641,10 @@ export class ThirdPartyLanguageServer {
       if (newWorkspaceUri === this.currentWorkspaceUri) return;
 
       if (this.activeConnection) {
-        const added: any[] = newWorkspaceUri
+        const added = newWorkspaceUri
           ? [{ uri: newWorkspaceUri, name: path.basename(newWorkspaceUri) }]
           : [];
-        const removed: any[] = this.currentWorkspaceUri
+        const removed = this.currentWorkspaceUri
           ? [{ uri: this.currentWorkspaceUri, name: path.basename(this.currentWorkspaceUri) }]
           : [];
         this.activeConnection.sendNotification('workspace/didChangeWorkspaceFolders', {
@@ -486,7 +657,7 @@ export class ThirdPartyLanguageServer {
     }
   }
 
-  // ========== 轻量日志工具 ==========
+  // ========== 日志 ==========
   private logInfo(msg: string) {
     console.info(msg);
     this.connection?.console.info(msg);
