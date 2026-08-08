@@ -43,6 +43,7 @@ import { Platte } from '@icon-park/react';
 import { ReactNode, useEffect, useState } from 'react';
 import { t } from '@lingui/macro';
 import useEditorStore from '@/store/useEditorStore';
+import { scanLanguageServers, setActiveLanguageServer } from '@/webgalscript/lsp';
 import TagInputPicker from '@/pages/editor/GraphicalEditor/components/TagInputPicker';
 import { candidateFontSizes } from '@/pages/editor/Topbar/tabs/Settings/constants';
 import { UserDataSettingsPanel } from '@/components/UserDataSettings/UserDataSettingsDialog';
@@ -234,7 +235,11 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
   const isCascaderDelimitersCustomizable = useEditorStore.use.isCascaderDelimitersCustomizable();
   const cascaderDelimiters = useEditorStore.use.cascaderDelimiters();
   const updateCascaderDelimiters = useEditorStore.use.updateCascaderDelimiters();
+  const activeLanguageServer = useEditorStore.use.activeLanguageServer();
+  const updateActiveLanguageServer = useEditorStore.use.updateActiveLanguageServer();
   const [tempFontSize, setTempFontSize] = useState(editorFontSize.toString());
+  const [availableLanguageServers, setAvailableLanguageServers] = useState<Array<{ id: string; name: string }>>([]);
+  const [isScanningLanguageServers, setIsScanningLanguageServers] = useState(false);
 
   useEffect(() => {
     setTempFontSize(editorFontSize.toString());
@@ -246,6 +251,42 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
       updateEditorFontSize(testValue);
     }
   }, [tempFontSize]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const refreshServers = async () => {
+      setIsScanningLanguageServers(true);
+      try {
+        for (let attempt = 0; attempt < 4; attempt += 1) {
+          const servers = await scanLanguageServers();
+          if (servers.length > 0) {
+            setAvailableLanguageServers(servers);
+            return;
+          }
+          await new Promise((resolve) => setTimeout(resolve, 250));
+        }
+        setAvailableLanguageServers([]);
+      } finally {
+        setIsScanningLanguageServers(false);
+      }
+    };
+
+    refreshServers();
+  }, [open]);
+
+  const serverOptions = [
+    { id: 'native', name: t`内置语言服务` },
+    ...availableLanguageServers,
+  ];
+  const selectedServerLabel = serverOptions.find((server) => server.id === activeLanguageServer)?.name ?? t`内置语言服务`;
+
+  const handleLanguageServerChange = async (serverId: string) => {
+    updateActiveLanguageServer(serverId);
+    await setActiveLanguageServer(serverId);
+  };
 
   return (
     <Dialog open={open} onOpenChange={(_, data) => onOpenChange(data.open)}>
@@ -286,6 +327,23 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
                     >
                       {candidateFontSizes.map((option) => (
                         <Option key={option}>{option.toString()}</Option>
+                      ))}
+                    </Combobox>
+                  </label>
+                  <label className={styles.field}>
+                    <span className={styles.fieldLabel}>{t`语言服务`}</span>
+                    <Combobox
+                      value={selectedServerLabel}
+                      disabled={isScanningLanguageServers}
+                      onOptionSelect={(_, data) => {
+                        const serverId = data.optionValue ?? 'native';
+                        handleLanguageServerChange(serverId);
+                      }}
+                    >
+                      {serverOptions.map((server) => (
+                        <Option key={server.id} value={server.id}>
+                          {server.name}
+                        </Option>
                       ))}
                     </Combobox>
                   </label>
