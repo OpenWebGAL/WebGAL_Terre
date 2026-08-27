@@ -356,15 +356,21 @@ export function EffectEditor(props: {
   );
   /**
    * 实时更新, 将最终结果对象通过onUpdate通知父组件
+   *
+   * 预览发的是「继承值 + 本句显式值」的完整效果，而不是写回语句用的稀疏对象：
+   * 引擎侧的继承基线只在拖拽框初始化那次同步里建立，之后每次写回场景都会让它失效，
+   * 从那以后只发显式字段，预览就会拿默认值补齐，表现为立绘在拖拽过程中丢掉缩放和滤镜。
    */
   const isUseRealtimeEffect = useEditorStore.use.isUseRealtimeEffect();
   const update = useCallback(
     debounce(() => {
       if (!isUseRealtimeEffect) return;
-      const updatedObject = getUpdatedObject();
-      props.onUpdate?.(updatedObject);
+      // 拖拽时 updateField 与 update 在同一次事件里连续调用，组件尚未重新渲染，
+      // 所以这里读 useValue 的实时值，而不是 useMemo 出来的 visibleEffectFields。
+      const previewFields = mergeVisibleEffectFields(explicitEffectFields.value, baselineEffectFields.value);
+      props.onUpdate?.(createEffectObjectFromFields(previewFields, effectConfig));
     }, 10),
-    [getUpdatedObject],
+    [explicitEffectFields.value, baselineEffectFields.value, isUseRealtimeEffect],
   );
 
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
