@@ -53,7 +53,7 @@ const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
 const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
 
 export default function GameElement(props: IGameElementProps) {
-  const soureBase = 'background';
+  const sourceBase = 'background';
 
   let className = styles.gameElement_main;
   if (props.checked) {
@@ -111,7 +111,7 @@ export default function GameElement(props: IGameElementProps) {
     <>
       <div onClick={props.onClick} className={className} id={props.gameInfo.dir}>
         <img
-          src={`/games/${props.gameInfo.dir}/game/${soureBase}/${props.gameInfo.cover}`}
+          src={`/games/${props.gameInfo.dir}/game/${sourceBase}/${props.gameInfo.cover.trim()}`}
           alt={props.gameInfo.name}
           className={styles.gameElement_cover}
         />
