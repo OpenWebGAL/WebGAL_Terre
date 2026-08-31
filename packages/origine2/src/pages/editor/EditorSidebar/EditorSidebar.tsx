@@ -1,20 +1,27 @@
-import styles from "./editorSidebar.module.scss";
-import Assets, { IFileConfig, IFileFunction } from "@/components/Assets/Assets";
-import React, { useEffect, useRef } from "react";
-import { eventBus } from "@/utils/eventBus";
-import { Button, Switch, Tab, TabList } from "@fluentui/react-components";
-import useEditorStore from "@/store/useEditorStore";
-import { useGameEditorContext } from "@/store/useGameEditorStore";
-import { IGameEditorSidebarTabs, ITag } from "@/types/gameEditor";
-import { t } from "@lingui/macro";
-import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled, LiveOffRegular, LiveRegular, OpenFilled, OpenRegular, bundleIcon } from "@fluentui/react-icons";
-import { EditorPreviewClient } from "@/utils/editorPreviewClient";
-import { createPreviewBootstrapProvide, isPreviewBootstrapRequest } from "@/utils/editorPreviewBootstrap";
+import styles from './editorSidebar.module.scss';
+import Assets, { IFileConfig, IFileFunction } from '@/components/Assets/Assets';
+import SplitPane from '@/components/SplitPane/SplitPane';
+import React, { useEffect, useRef } from 'react';
+import { eventBus } from '@/utils/eventBus';
+import { Button, Switch, Tab, TabList } from '@fluentui/react-components';
+import useEditorStore from '@/store/useEditorStore';
+import { useGameEditorContext } from '@/store/useGameEditorStore';
+import { IGameEditorSidebarTabs, ITag } from '@/types/gameEditor';
+import { t } from '@lingui/macro';
+import {
+  ArrowClockwiseFilled,
+  ArrowClockwiseRegular,
+  LiveFilled,
+  LiveOffFilled,
+  LiveOffRegular,
+  LiveRegular,
+  OpenFilled,
+  OpenRegular,
+  bundleIcon,
+} from '@fluentui/react-icons';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
+import { createPreviewBootstrapProvide, isPreviewBootstrapRequest } from '@/utils/editorPreviewBootstrap';
 import { createId } from '@/utils/createId';
-
-let startX = 0;
-let prevXvalue = 0;
-let isMouseDown = false;
 
 const ArrowClockwiseIcon = bundleIcon(ArrowClockwiseFilled, ArrowClockwiseRegular);
 const OpenIcon = bundleIcon(OpenFilled, OpenRegular);
@@ -36,6 +43,9 @@ export default function EditorSideBar() {
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
   const PreviewControlRef = useRef(null);
+
+  // 预览区初始高度：按侧栏默认宽度（35% 视口）的 16:9 高度 + 顶部按钮行高度估算
+  const defaultPreviewHeight = Math.round(window.innerWidth * 0.35 * (9 / 16)) + 40;
 
   const ifRef = useRef<HTMLIFrameElement | null>(null);
   const embeddedLaunchIdRef = useRef(createId());
@@ -106,57 +116,6 @@ export default function EditorSideBar() {
     EditorPreviewClient.setFontOptimization(isUseFontOptimization);
   }, [isUseFontOptimization]);
 
-  useEffect(() => {
-    const storeWidth = localStorage.getItem('sidebar-width');
-    if (!storeWidth) {
-      const initWidth = window.innerWidth * 0.35;
-      localStorage.setItem('sidebar-width', initWidth.toString());
-      document.body.style.setProperty("--sidebar-width", `${initWidth}px`);
-    } else {
-      document.body.style.setProperty("--sidebar-width", `${storeWidth}px`);
-    }
-  }, []);
-
-  const handleDragStart = (event: React.MouseEvent<HTMLDivElement>) => {
-    startX = event.clientX;
-    const prevX = document.body.style.getPropertyValue("--sidebar-width");
-    prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
-    isMouseDown = true;
-    const previewFrame = document.getElementById("gamePreviewIframe");
-    if (previewFrame)
-      previewFrame.style.pointerEvents = 'none';
-  };
-
-  const handleDrag = (event: MouseEvent) => {
-    if (isMouseDown) {
-      const deltaX = event.clientX - (startX);
-      const newValue = prevXvalue + deltaX;
-      document.body.style.setProperty("--sidebar-width", `${(newValue < 240) ? 240 : newValue}px`);
-    }
-
-  };
-
-  const handleDragEnd = (_event: MouseEvent) => {
-    setTimeout(() => {
-      const prevX = document.body.style.getPropertyValue("--sidebar-width");
-      prevXvalue = parseInt(prevX.substring(0, prevX.length - 2), 10);
-      localStorage.setItem('sidebar-width', prevXvalue.toString());
-    }, 10);
-    isMouseDown = false;
-    const previewFrame = document.getElementById("gamePreviewIframe");
-    if (previewFrame)
-      previewFrame.style.pointerEvents = 'auto';
-  };
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleDrag);
-    window.addEventListener('mouseup', handleDragEnd);
-    return () => {
-      window.removeEventListener('mousemove', handleDrag);
-      window.removeEventListener('mouseup', handleDragEnd);
-    };
-  }, []);
-
   const refreshGame = () => {
     embeddedLaunchIdRef.current = createId();
     ifRef.current?.contentWindow?.location.reload();
@@ -221,7 +180,10 @@ export default function EditorSideBar() {
   };
 
   const assetsTabs = (
-    <TabList style={{ padding: '0 3px 0 4px' }} size="small" selectedValue={currentSidebarTab}
+    <TabList
+      style={{ padding: '0 3px 0 4px' }}
+      size="small"
+      selectedValue={currentSidebarTab}
       onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
     >
       <Tab value="asset" style={{ padding: '2px 2px 3.5px 2px' }}>{t`资源`}</Tab>
@@ -229,90 +191,90 @@ export default function EditorSideBar() {
     </TabList>
   );
 
-  return <>
-    {isShowSidebar &&
-      <div className={styles.editor_sidebar}>
-        <div className={styles.preview_container} id="gamePreview">
-          <div className={styles.gamePreviewButons}>
-            <Switch
-              label={t`预览窗口`}
-              labelPosition="before"
-              checked={isShowPreview}
-              onChange={() => updateIsShowPreview(!isShowPreview)}
-            />
-            <div style={{ flexGrow: 1 }} />
-            <Button
-              appearance="transparent"
-              icon={<ArrowClockwiseIcon />}
-              title={t`刷新游戏`}
-              onClick={refreshGame}
-            />
-            <Button
-              appearance="subtle"
-              icon={<OpenIcon />}
-              title={t`在新标签页中预览`}
-              onClick={() => window.open(`/games/${gameDir}`, "_blank")}
-            />
-            <Button
-              appearance="subtle"
-              icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
-              title={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
-              onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
-            />
-          </div>
-          <div
-            ref={PreviewControlRef}
-            id="gamePreviewControl"
-            className={styles.previewWindow}
-            style={{
-              position: 'absolute',
-              left: 0,
-              bottom: 0,
-              overflow: 'hidden',
-              pointerEvents: 'none',
-              display: isShowPreview ? 'block' : 'none',
-            }}
-          />
-          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          {isShowPreview && <iframe
-            ref={ifRef}
-            id="gamePreviewIframe"
-            frameBorder="0"
-            className={styles.previewWindow}
-            src={`/games/${gameDir}`}
-          />}
+  return (
+    <>
+      {isShowSidebar && (
+        <div className={styles.editor_sidebar}>
+          <SplitPane
+            direction="vertical"
+            defaultSize={defaultPreviewHeight}
+            minSize={96}
+            persistKey="editor-preview-height"
+            fixedPanel="first"
+            disablePointerOn="#gamePreviewIframe"
+          >
+            <div className={styles.preview_container} id="gamePreview">
+              <div className={styles.gamePreviewButons}>
+                <Switch
+                  label={t`预览窗口`}
+                  labelPosition="before"
+                  checked={isShowPreview}
+                  onChange={() => updateIsShowPreview(!isShowPreview)}
+                />
+                <div style={{ flexGrow: 1 }} />
+                <Button
+                  appearance="transparent"
+                  icon={<ArrowClockwiseIcon />}
+                  title={t`刷新游戏`}
+                  onClick={refreshGame}
+                />
+                <Button
+                  appearance="subtle"
+                  icon={<OpenIcon />}
+                  title={t`在新标签页中预览`}
+                  onClick={() => window.open(`/games/${gameDir}`, '_blank')}
+                />
+                <Button
+                  appearance="subtle"
+                  icon={isEnableLivePreview ? <LiveIcon /> : <LiveOffIcon />}
+                  title={isEnableLivePreview ? t`实时预览打开` : t`实时预览关闭`}
+                  onClick={() => updateIsEnableLivePreview(!isEnableLivePreview)}
+                />
+              </div>
+              <div className={styles.previewArea}>
+                {/* 16:9 舞台：同时作为变换调整覆盖层（TransformableBox）的定位基准 */}
+                <div
+                  ref={PreviewControlRef}
+                  id="gamePreviewControl"
+                  className={styles.previewControl}
+                  style={{ display: isShowPreview ? 'block' : 'none' }}
+                >
+                  {isShowPreview && (
+                    // eslint-disable-next-line react/iframe-missing-sandbox
+                    <iframe
+                      ref={ifRef}
+                      id="gamePreviewIframe"
+                      frameBorder="0"
+                      className={styles.previewWindow}
+                      src={`/games/${gameDir}`}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.sidebarContent}>
+              {currentSidebarTab === 'asset' && (
+                <Assets
+                  rootPath={['games', gameDir, 'game']}
+                  leading={assetsTabs}
+                  fileConfig={fileConfig}
+                  fileFunction={fileFunction}
+                />
+              )}
+              {currentSidebarTab === 'scene' && (
+                <Assets
+                  rootPath={['games', gameDir, 'game']}
+                  basePath={['scene']}
+                  leading={assetsTabs}
+                  fileConfig={fileConfig}
+                  fileFunction={fileFunction}
+                />
+              )}
+            </div>
+          </SplitPane>
         </div>
-
-        <div className={styles.sidebarContent}>
-          {
-            currentSidebarTab === 'asset' &&
-            <Assets
-              rootPath={['games', gameDir, 'game']}
-              leading={assetsTabs}
-              fileConfig={fileConfig}
-              fileFunction={fileFunction}
-            />
-          }
-          {
-            currentSidebarTab === 'scene' &&
-            <Assets
-              rootPath={['games', gameDir, 'game']}
-              basePath={['scene']}
-              leading={assetsTabs}
-              fileConfig={fileConfig}
-              fileFunction={fileFunction}
-            />
-          }
-        </div>
-
-        <div
-          className={styles.divider}
-          onMouseDown={handleDragStart}
-        // onMouseUp={handleDragEnd}
-        // onMouseLeave={handleDragEnd}
-        />
-
-      </div >
-    }
-  </>;
+      )}
+    </>
+  );
 }

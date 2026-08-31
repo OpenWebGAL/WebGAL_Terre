@@ -2,6 +2,7 @@ import TopBar from "./Topbar/Topbar";
 import styles from "./editor.module.scss";
 import EditorSideBar from "./EditorSidebar/EditorSidebar";
 import MainArea from "./MainArea/MainArea";
+import SplitPane from "@/components/SplitPane/SplitPane";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import FastPreviewTimeoutDialog from "./FastPreviewTimeoutDialog";
@@ -17,8 +18,17 @@ export default function Editor() {
       <FastPreviewTimeoutDialog />
       <TopBar />
       <div className={styles.container} onClick={()=>handleMainAreaClick()}>
-        <EditorSideBar />
-        <MainArea />
+        <SplitPane
+          direction="horizontal"
+          defaultSize={window.innerWidth * 0.35}
+          minSize={240}
+          fixedPanel="first"
+          persistKey="editor-sidebar-width"
+          disablePointerOn="#gamePreviewIframe"
+        >
+          <EditorSideBar />
+          <MainArea />
+        </SplitPane>
       </div>
     </div>
   );
