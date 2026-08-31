@@ -1,40 +1,5 @@
 .editor {
   width: 100vw;
   height: 100vh;
-  display: flex;
-}
-
-.divider {
-  width: 4px;
-  height: 100%;
   overflow: hidden;
-  -webkit-user-select: none;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  cursor: ew-resize;
-  text-align: center;
-  padding: 44px 0.75px 8px 0.75px;
-
-  & .dividerLine {
-    visibility: hidden;
-    height: 100%;
-    width: 100%;
-    background: var(--primary);
-    border-radius: var(--radius-md);
-  }
-}
-
-.divider:hover {
-
-  & .dividerLine {
-    visibility: visible;
-  }
-}
-
-.dividerActive {
-
-  & .dividerLine {
-    visibility: visible;
-  }
 }

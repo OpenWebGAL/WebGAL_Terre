@@ -1,38 +1,59 @@
-import React, {useEffect, useRef, useState} from 'react';
-import Assets, {IFileFunction} from '@/components/Assets/Assets';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import Assets, { IFileFunction } from '@/components/Assets/Assets';
 import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
 import useEditorStore from '@/store/useEditorStore';
-import {Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger} from '@fluentui/react-components';
-import {useTemplateEditorContext} from '@/store/useTemplateEditorStore';
-import {ITab} from '@/types/templateEditor';
-import {t} from "@lingui/macro";
-import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogSurface,
+  DialogTitle,
+  DialogTrigger,
+} from '@fluentui/react-components';
+import {
+  useTemplateEditorContext,
+  TEMPLATE_SIDEBAR_HEIGHTS_KEY_PREFIX,
+  readTemplateSidebarHeights,
+} from '@/store/useTemplateEditorStore';
+import { ITab } from '@/types/templateEditor';
+import { t } from '@lingui/macro';
+import BackDashboardButton from '@/pages/editor/Topbar/components/BackDashboardButton';
 import { goTo } from '@/router';
-import CommonTips from "@/pages/editor/GraphicalEditor/components/CommonTips";
+import CommonTips from '@/pages/editor/GraphicalEditor/components/CommonTips';
 import { api } from '@/api';
 import { GameInfoDto, TemplateConfigDto } from '@/api/Api';
-import { List, ListItem } from "@fluentui/react-list-preview";
+import { List, ListItem } from '@fluentui/react-list-preview';
 import useSWR, { mutate } from 'swr';
 import TemplateConfigDialog from './TemplateConfigDialog';
-import {PlugConnected20Regular, Settings20Regular, Textbox20Regular, TextboxCheckmark20Regular} from "@fluentui/react-icons";
+import {
+  PlugConnected20Regular,
+  Settings20Regular,
+  Textbox20Regular,
+  TextboxCheckmark20Regular,
+} from '@fluentui/react-icons';
 import { createId } from '@/utils/createId';
 import { AppSettingsButton } from '@/components/AppSettings/AppSettingsDialog';
 import { EditorPreviewClient } from '@/utils/editorPreviewClient';
+import MultiSplitPane from '@/components/MultiSplitPane/MultiSplitPane';
 
 export default function TemplateEditorSidebar() {
   const templateDir = useEditorStore.use.subPage();
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
-  const templateActionsHeight = useTemplateEditorContext((state) => state.templateActionsHeight);
-  const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
+  // 初始高度：优先新持久化 key，缺失时从旧 zustand 数据迁移（幂等）
+  const initialHeights = useMemo(() => readTemplateSidebarHeights(templateDir), [templateDir]);
+  const [templateActionsHeight, setTemplateActionsHeight] = useState(initialHeights[0]);
+  const [componentTreeHeight, setComponentTreeHeight] = useState(initialHeights[1]);
 
   const tabs = useTemplateEditorContext((state) => state.tabs);
   const updateTabs = useTemplateEditorContext((state) => state.updateTabs);
   const updateCurrentTab = useTemplateEditorContext((state) => state.updateCurrentTab);
 
-  const {data: templateConfig, mutate: mutateTemplateConfig} = useSWR(
+  const { data: templateConfig, mutate: mutateTemplateConfig } = useSWR(
     `/templateConfig/${templateDir}`,
-    async () => (await api.manageTemplateControllerGetTemplateConfig(templateDir)).data
+    async () => (await api.manageTemplateControllerGetTemplateConfig(templateDir)).data,
   );
 
   const handleOpen: IFileFunction['open'] = async (file, type) => {
@@ -40,7 +61,7 @@ export default function TemplateEditorSidebar() {
       name: file.name,
       path: file.path,
     };
-    if (!tabs.some(tab => tab.path === newTab.path && tab.class === newTab.class)) {
+    if (!tabs.some((tab) => tab.path === newTab.path && tab.class === newTab.class)) {
       updateTabs([...tabs, newTab]);
     }
     updateCurrentTab(newTab);
@@ -55,40 +76,49 @@ export default function TemplateEditorSidebar() {
         ...templateConfig,
         id: createId(),
       };
-      api.manageTemplateControllerUpdateTemplateConfig({templateDir, newTemplateConfig});
+      api.manageTemplateControllerUpdateTemplateConfig({ templateDir, newTemplateConfig });
       mutate(`/templateConfig/${templateDir}`);
     }
-  },[templateConfig]);
+  }, [templateConfig]);
 
   return (
-    <div className={styles.sidebar} style={{width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px`}}>
+    <div className={styles.sidebar} style={{ width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px` }}>
       <div className={styles.toolbar}>
-        <BackDashboardButton onClick={backToDashboard}/>
+        <BackDashboardButton onClick={backToDashboard} />
         {/* <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button> */}
-        <span className={styles.title}>
-          {templateConfig ? templateConfig.name : templateDir}
-        </span>
+        <span className={styles.title}>{templateConfig ? templateConfig.name : templateDir}</span>
       </div>
-      <div className={styles.actionsBlock} style={{height: `${templateActionsHeight}px`}}>
-        <TemplateActions
-          templateConfig={templateConfig}
-          onTemplateConfigUpdated={async () => {
-            await mutateTemplateConfig();
+      <div className={styles.multiWrap}>
+        <MultiSplitPane
+          direction="vertical"
+          sizes={[templateActionsHeight, componentTreeHeight, 'flex']}
+          minSizes={[42, 0]}
+          persistKey={`${TEMPLATE_SIDEBAR_HEIGHTS_KEY_PREFIX}${templateDir}`}
+          onSizesChange={([a, b]) => {
+            setTemplateActionsHeight(a);
+            setComponentTreeHeight(b);
           }}
-        />
-      </div>
-      <TemplateActionsReSizer/>
-      <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
-        <ComponentTree/>
-      </div>
-      <ComponentTreeReSizer/>
-      <div className={styles.assets}>
-        <CommonTips style={{margin:4}} text={t`提示：样式中用到的资源放在 assets 目录下`}/>
-        <Assets
-          rootPath={['templates', templateDir]}
-          // isProtected
-          fileFunction={{open: handleOpen}}
-        />
+        >
+          <div className={styles.actionsBlock}>
+            <TemplateActions
+              templateConfig={templateConfig}
+              onTemplateConfigUpdated={async () => {
+                await mutateTemplateConfig();
+              }}
+            />
+          </div>
+          <div className={styles.componentTree}>
+            <ComponentTree />
+          </div>
+          <div className={styles.assets}>
+            <CommonTips style={{ margin: 4 }} text={t`提示：样式中用到的资源放在 assets 目录下`} />
+            <Assets
+              rootPath={['templates', templateDir]}
+              // isProtected
+              fileFunction={{ open: handleOpen }}
+            />
+          </div>
+        </MultiSplitPane>
       </div>
     </div>
   );
@@ -127,7 +157,9 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
   const getGameTemplateName = (game: GameInfoDto) => game.template?.name ?? t`无`;
 
   const applyTemplate = async () => {
-    const apply = selectedGameDirs.map(async (gameDir) => await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir}));
+    const apply = selectedGameDirs.map(
+      async (gameDir) => await api.manageTemplateControllerApplyTemplateToGame({ gameDir, templateDir }),
+    );
     await Promise.all(apply);
     setApplyTemplateDialogIsOpen(false);
   };
@@ -144,7 +176,7 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
         <AppSettingsButton appearance="transparent" className={styles.actionButton} />
         <Button
           className={styles.actionButton}
-          appearance='transparent'
+          appearance="transparent"
           icon={<Settings20Regular />}
           aria-label={t`配置模板`}
           title={t`配置模板`}
@@ -154,7 +186,7 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
         </Button>
         <Button
           className={styles.actionButton}
-          appearance='transparent'
+          appearance="transparent"
           aria-pressed={isTextReadMode}
           icon={isTextReadMode ? <TextboxCheckmark20Regular /> : <Textbox20Regular />}
           aria-label={isTextReadMode ? t`将文本框文本设置为未读` : t`将文本框文本设置为已读`}
@@ -165,7 +197,7 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
         </Button>
         <Button
           className={styles.actionButton}
-          appearance='transparent'
+          appearance="transparent"
           icon={<PlugConnected20Regular />}
           aria-label={t`将当前模板应用到选定的游戏`}
           title={t`将当前模板应用到选定的游戏`}
@@ -190,41 +222,39 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
         <DialogSurface>
           <DialogBody>
             <DialogTitle>{t`将当前模板应用到选定的游戏`}</DialogTitle>
-            <DialogContent style={{padding: '0.5rem 0'}}>
+            <DialogContent style={{ padding: '0.5rem 0' }}>
               <List
                 selectionMode="multiselect"
                 selectedItems={selectedGameDirs}
                 onSelectionChange={(_, data) => setSelectedGameDirs(data.selectedItems as string[])}
               >
-                {
-                  gameList.map((game) => (
-                    <ListItem
-                      key={game.dir}
-                      value={game.dir}
-                      aria-label={game.dir}
-                      checkmark={{"value": game.dir}}
-                      style={{userSelect: 'none'}}
-                    >
-                      <div style={{padding: '0.25rem 0.5rem'}}>
-                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>
-                          <div style={{width: '4rem', aspectRatio: '16 / 9', overflow: 'hidden'}}>
-                            <img
-                              src={`/games/${game.dir}/game/background/${game.cover}`}
-                              alt={game.name}
-                              style={{width: '100%', height: '100%', objectFit: 'cover'}}
-                            />
-                          </div>
-                          <div>
-                            <div>{game.name}</div>
-                            <div style={{fontSize: '90%', color: 'var(--text-sub)'}}>
-                              {t`使用中的模板：` + getGameTemplateName(game)}
-                            </div>
+                {gameList.map((game) => (
+                  <ListItem
+                    key={game.dir}
+                    value={game.dir}
+                    aria-label={game.dir}
+                    checkmark={{ value: game.dir }}
+                    style={{ userSelect: 'none' }}
+                  >
+                    <div style={{ padding: '0.25rem 0.5rem' }}>
+                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
+                        <div style={{ width: '4rem', aspectRatio: '16 / 9', overflow: 'hidden' }}>
+                          <img
+                            src={`/games/${game.dir}/game/background/${game.cover}`}
+                            alt={game.name}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        </div>
+                        <div>
+                          <div>{game.name}</div>
+                          <div style={{ fontSize: '90%', color: 'var(--text-sub)' }}>
+                            {t`使用中的模板：` + getGameTemplateName(game)}
                           </div>
                         </div>
                       </div>
-                    </ListItem>
-                  ))
-                }
+                    </div>
+                  </ListItem>
+                ))}
               </List>
             </DialogContent>
             <DialogActions>
@@ -239,98 +269,3 @@ const TemplateActions = ({ templateConfig, onTemplateConfigUpdated }: TemplateAc
     </>
   );
 };
-
-function TemplateActionsReSizer() {
-  const templateActionsHeight = useTemplateEditorContext((state) => state.templateActionsHeight);
-  const updateTemplateActionsHeight = useTemplateEditorContext((state) => state.updateTemplateActionsHeight);
-
-  return (
-    <SidebarBlockResizer
-      height={templateActionsHeight}
-      minHeight={42}
-      onResize={updateTemplateActionsHeight}
-    />
-  );
-}
-
-function ComponentTreeReSizer() {
-  const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
-  const updateComponentTreeHeight = useTemplateEditorContext((state) => state.updateComponentTreeHeight);
-
-  return (
-    <SidebarBlockResizer
-      height={componentTreeHeight}
-      minHeight={0}
-      onResize={updateComponentTreeHeight}
-    />
-  );
-}
-
-interface SidebarBlockResizerProps {
-  height: number;
-  minHeight: number;
-  onResize: (height: number) => void;
-}
-
-function SidebarBlockResizer({height, minHeight, onResize}: SidebarBlockResizerProps) {
-  const [isDragging, setIsDragging] = useState(false);
-  const lastYRef = useRef(0);
-  const heightRef = useRef(height);
-
-  useEffect(() => {
-    if (!isDragging) {
-      heightRef.current = height;
-    }
-  }, [height, isDragging]);
-
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    heightRef.current = height;
-    lastYRef.current = event.clientY;
-    setIsDragging(true);
-  };
-
-  useEffect(
-    () => {
-      if (!isDragging) return;
-
-      const previousCursor = document.body.style.cursor;
-      const previousUserSelect = document.body.style.userSelect;
-      document.body.style.cursor = 'ns-resize';
-      document.body.style.userSelect = 'none';
-
-      const moveHandler = (event: MouseEvent) => {
-        if (!isDragging) return;
-        event.preventDefault();
-        const deltaY = event.clientY - lastYRef.current;
-        const newHeight = Math.max(minHeight, heightRef.current + deltaY);
-        heightRef.current = newHeight;
-        lastYRef.current = event.clientY;
-        onResize(newHeight);
-      };
-
-      const upHandler = () => {
-        setIsDragging(false);
-      };
-
-      document.addEventListener("mousemove", moveHandler);
-      document.addEventListener("mouseup", upHandler);
-
-      return () => {
-        document.body.style.cursor = previousCursor;
-        document.body.style.userSelect = previousUserSelect;
-        document.removeEventListener("mousemove", moveHandler);
-        document.removeEventListener("mouseup", upHandler);
-      };
-    },
-    [isDragging, minHeight, onResize]
-  );
-
-  return (
-    <div
-      className={`${styles.divider} ${isDragging ? styles.dividerActive : ''}`}
-      onMouseDown={handleMouseDown}>
-      <div className={styles.dividerLine}/>
-    </div>
-  );
-}
