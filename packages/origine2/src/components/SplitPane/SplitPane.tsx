@@ -9,6 +9,8 @@ interface SplitPaneProps {
   persistKey?: string;
   /** 是否持久化尺寸（默认 true；仅在提供 persistKey 时生效） */
   persist?: boolean;
+  /** 折叠：固定面板尺寸强制为 0 并隐藏分隔条；取消折叠后恢复记忆尺寸（受控/非受控均可用） */
+  collapsed?: boolean;
   /** 受控模式：由外部控制固定面板尺寸（传入 value 时启用，此时默认忽略 defaultSize/persistKey） */
   value?: number;
   /** 受控模式下拖拽尺寸变化回调 */
@@ -44,6 +46,7 @@ export default function SplitPane({
   maxSize = Infinity,
   persistKey,
   persist = true,
+  collapsed,
   value,
   onChange,
   disablePointerOn,
@@ -115,8 +118,8 @@ export default function SplitPane({
     if (clamped !== value) onChange?.(clamped);
   }, [isControlled, value, containerSize, minSize, effectiveMax, onChange]);
 
-  // 当前生效的尺寸：受控时用 value，非受控时用内部 size
-  const currentSize = isControlled ? value : size;
+  // 当前生效的尺寸：折叠时强制为 0（隐藏分隔条）；否则受控用 value，非受控用内部 size
+  const currentSize = collapsed ? 0 : isControlled ? value : size;
   // 折叠状态：固定面板尺寸为 0 时，隐藏分隔条
   const isCollapsed = currentSize === 0;
 
