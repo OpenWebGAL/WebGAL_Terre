@@ -176,14 +176,27 @@ export default function GraphicalEditor(props: IGraphicalEditorProps) {
     });
   }, [fetchScene, props.targetPath]);
 
+  /**
+   * 改写语句时按位置复用它原来的行对象，只换 content。
+   *
+   * 行 id 是虚拟列表与拖拽的 key，重新生成 id 会让整条语句的编辑器被卸载重建，
+   * 正在输入的文本、焦点、弹窗与折叠状态都会跟着丢失。只有语句变长时新增的行才需要新 id。
+   */
+  const rewriteLines = useCallback((target: { startLine: number; endLine: number }, contents: string[]) =>
+    contents.map((content, i) => {
+      const lineNumber = target.startLine + i;
+      const existing = lineNumber <= target.endLine ? sentenceDataRef.current[lineNumber] : undefined;
+      return existing ? { ...existing, content } : generateSentenceItem(content);
+    }), [generateSentenceItem]);
+
   const updateSentenceByIndex = useCallback((newContent: string, updateIndex: number) => {
     const target = sentences[updateIndex];
     if (!target) return;
-    const newLines = splitToArray(newContent).map(generateSentenceItem);
+    const newLines = rewriteLines(target, splitToArray(newContent));
     const newSentences = replaceLineRange(sentenceDataRef.current, target, newLines);
     updateSentenceData(newSentences);
     submitScene(newSentences, target.startLine, target.startLine + newLines.length - 1);
-  }, [generateSentenceItem, sentences, submitScene, updateSentenceData]);
+  }, [rewriteLines, sentences, submitScene, updateSentenceData]);
 
   // 判断是否为空 (识别含唯一空行的文件)
   function isEmpty(lines: SentenceItem[]): boolean {
