@@ -2,7 +2,7 @@ node_modules
 .idea
 /release/
 /bundle/
-yarn.lock
+
 package-lock.json
 .DS_Store
 /terre-electron/
@@ -12,6 +12,8 @@ package-lock.json
 /steam/depot_build_*.vdf
 !/steam/app_build_TEMPLATE.vdf
 !/steam/depot_build_TEMPLATE.vdf
-packages/origine2/src/locales/*.js
-packages/origine2/src/locales/*.ts
+
 .claude
+
+.vscode/*
+!.vscode/extensions.json
