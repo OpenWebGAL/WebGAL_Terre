@@ -1,0 +1,27 @@
+.cornerHandle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+.cornerHandleDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.cornerHandle:hover .cornerHandleDot,
+.cornerHandleActive .cornerHandleDot {
+  opacity: 1;
+}

@@ -8,7 +8,19 @@ import TextEditor from '@/pages/templateEditor/TextEditor/TextEditor';
 import useEditorStore from '@/store/useEditorStore';
 import SplitPane from '@/components/SplitPane/SplitPane';
 
-export default function TemplateMainAria() {
+interface TemplateMainAriaProps {
+  previewHeight: number;
+  onPreviewHeightChange: (height: number) => void;
+  maxPreviewHeight: number;
+  onPreviewHeightResizeEnd?: (height: number) => void;
+}
+
+export default function TemplateMainAria({
+  previewHeight,
+  onPreviewHeightChange,
+  maxPreviewHeight,
+  onPreviewHeightResizeEnd,
+}: TemplateMainAriaProps) {
   const templateDir = useEditorStore.use.subPage();
   const currentTab = useTemplateEditorContext((state) => state.currentTab);
   const isClass = currentTab?.class && currentTab?.class?.length > 0;
@@ -27,11 +39,13 @@ export default function TemplateMainAria() {
     <div className={styles.mainAria}>
       <SplitPane
         direction="vertical"
-        defaultSize={280}
+        value={previewHeight}
+        onChange={onPreviewHeightChange}
         minSize={36}
-        persistKey="template-preview-height"
+        maxSize={maxPreviewHeight}
         fixedPanel="first"
         disablePointerOn="#templatePreviewIframe"
+        onResize={onPreviewHeightResizeEnd}
       >
         <TemplatePreview />
         <div className={styles.editor} id="templateEditorAria">

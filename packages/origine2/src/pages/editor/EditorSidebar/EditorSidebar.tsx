@@ -1,7 +1,7 @@
 import styles from './editorSidebar.module.scss';
 import Assets, { IFileConfig, IFileFunction } from '@/components/Assets/Assets';
 import SplitPane from '@/components/SplitPane/SplitPane';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { eventBus } from '@/utils/eventBus';
 import { Button, Switch, Tab, TabList } from '@fluentui/react-components';
 import useEditorStore from '@/store/useEditorStore';
@@ -23,12 +23,24 @@ import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import { createPreviewBootstrapProvide, isPreviewBootstrapRequest } from '@/utils/editorPreviewBootstrap';
 import { createId } from '@/utils/createId';
 
+interface EditorSideBarProps {
+  previewHeight: number;
+  onPreviewHeightChange: (height: number) => void;
+  maxPreviewHeight: number;
+  onPreviewHeightResizeEnd?: (height: number) => void;
+}
+
 const ArrowClockwiseIcon = bundleIcon(ArrowClockwiseFilled, ArrowClockwiseRegular);
 const OpenIcon = bundleIcon(OpenFilled, OpenRegular);
 const LiveIcon = bundleIcon(LiveFilled, LiveRegular);
 const LiveOffIcon = bundleIcon(LiveOffFilled, LiveOffRegular);
 
-export default function EditorSideBar() {
+export default function EditorSideBar({
+  previewHeight,
+  onPreviewHeightChange,
+  maxPreviewHeight,
+  onPreviewHeightResizeEnd,
+}: EditorSideBarProps) {
   const gameDir = useEditorStore.use.subPage();
   const isEnableLivePreview = useEditorStore.use.isEnableLivePreview();
   const updateIsEnableLivePreview = useEditorStore.use.updateIsEnableLivePreview();
@@ -43,9 +55,6 @@ export default function EditorSideBar() {
   const addTag = useGameEditorContext((state) => state.addTag);
   const updateCurrentTag = useGameEditorContext((state) => state.updateCurrentTag);
   const PreviewControlRef = useRef(null);
-
-  // 预览区初始高度：按侧栏默认宽度（35% 视口）的 16:9 高度 + 顶部按钮行高度估算
-  const defaultPreviewHeight = Math.round(window.innerWidth * 0.35 * (9 / 16)) + 40;
 
   const ifRef = useRef<HTMLIFrameElement | null>(null);
   const embeddedLaunchIdRef = useRef(createId());
@@ -197,11 +206,13 @@ export default function EditorSideBar() {
         <div className={styles.editor_sidebar}>
           <SplitPane
             direction="vertical"
-            defaultSize={defaultPreviewHeight}
+            value={previewHeight}
+            onChange={onPreviewHeightChange}
             minSize={96}
-            persistKey="editor-preview-height"
+            maxSize={maxPreviewHeight}
             fixedPanel="first"
             disablePointerOn="#gamePreviewIframe"
+            onResize={onPreviewHeightResizeEnd}
           >
             <div className={styles.preview_container} id="gamePreview">
               <div className={styles.gamePreviewButons}>

@@ -10,7 +10,6 @@ export interface ITemplateEditorState {
   expandNode: string[];
   isCodeMode: boolean;
   isShowDebugger: boolean;
-  sidebarWidth: number;
 }
 
 export interface ITemplateEditorAction {
@@ -19,5 +18,4 @@ export interface ITemplateEditorAction {
   updateExpandNode: (expandNode: ITemplateEditorState['expandNode']) => void;
   updateIsCodeMode: (isCodeMode: ITemplateEditorState['isCodeMode']) => void;
   updateIsShowDebugger: (isShowDebugger: ITemplateEditorState['isShowDebugger']) => void;
-  updateSidebarWidth: (sidebarWidth: ITemplateEditorState['sidebarWidth']) => void;
 }

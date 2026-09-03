@@ -39,9 +39,12 @@ import { AppSettingsButton } from '@/components/AppSettings/AppSettingsDialog';
 import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import MultiSplitPane from '@/components/MultiSplitPane/MultiSplitPane';
 
-export default function TemplateEditorSidebar() {
+interface TemplateEditorSidebarProps {
+  sidebarWidth: number;
+}
+
+export default function TemplateEditorSidebar({ sidebarWidth }: TemplateEditorSidebarProps) {
   const templateDir = useEditorStore.use.subPage();
-  const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
   // 初始高度：优先新持久化 key，缺失时从旧 zustand 数据迁移（幂等）
   const initialHeights = useMemo(() => readTemplateSidebarHeights(templateDir), [templateDir]);
   const [templateActionsHeight, setTemplateActionsHeight] = useState(initialHeights[0]);

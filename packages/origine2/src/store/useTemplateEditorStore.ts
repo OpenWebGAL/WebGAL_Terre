@@ -9,7 +9,6 @@ const initState: ITemplateEditorState = {
   expandNode: [],
   isCodeMode: false,
   isShowDebugger: false,
-  sidebarWidth: 280,
 };
 
 export const createTemplateEditorStore = (templateName: string) =>
@@ -22,7 +21,6 @@ export const createTemplateEditorStore = (templateName: string) =>
         updateExpandNode: (expandNode) => set({ expandNode }),
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
-        updateSidebarWidth: (sidebarWidth) => set({ sidebarWidth }),
       }),
       {
         name: `template-editor-storage-${templateName}`,
@@ -34,7 +32,6 @@ export const createTemplateEditorStore = (templateName: string) =>
           expandNode: state.expandNode,
           isCodeMode: state.isCodeMode,
           isShowDebugger: state.isShowDebugger,
-          sidebarWidth: state.sidebarWidth,
         }),
       },
     ),
