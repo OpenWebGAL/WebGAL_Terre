@@ -13,7 +13,7 @@
 .externalNativeBuild
 .cxx
 .kotlin
-local.properties
+
 app/src/main/assets/*
 app/src/main/jniLibs
 
