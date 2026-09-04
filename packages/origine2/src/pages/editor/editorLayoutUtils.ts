@@ -1,6 +1,4 @@
 export const DIVIDER_SIZE = 4;
-export const SIDEBAR_MIN = 240;
-export const PREVIEW_MIN = 96;
 
 export const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
