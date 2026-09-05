@@ -20,18 +20,35 @@ import { getArgsKey } from '../suggestionRules/getArgsKey';
 import { findSentenceByLine, parseSentences } from '../sentenceLocator';
 
 /**
- * Cache the last document lines
+ * 上一次同步后的文档行内容，用于找出刚发生变化的那一行。
+ * 首次同步为 null，此时只建立基线、不触发补全。
  */
-let lastDocumentLines = [];
+let lastDocumentLines: string[] | null = null;
 const variableList: Map<string, number> = new Map<string, number>();
 
 export function checkTriggerCompletion(
   params: TextDocumentChangeEvent<TextDocument>,
   triggerCompletionCallback: () => void,
 ) {
-  const currentDocumentLines: string[] = [];
-  let changedLine = -1;
+  const lines = readLines(params.document);
+  refreshVariables(lines);
 
+  const previous = lastDocumentLines;
+  lastDocumentLines = lines;
+
+  if (!previous) return;
+
+  const changedLine = lines.findIndex((line, i) => line !== previous[i]);
+  if (changedLine >= 0 && lines[changedLine].trimEnd().endsWith(':')) {
+    triggerCompletionCallback();
+  }
+}
+
+function readLines(document: TextDocument): string[] {
+  return document.getText().split(/\r\n|\r|\n/);
+}
+
+function refreshVariables(lines: string[]): void {
   variableList.clear();
   variableList.set('Game_name', -1);
   variableList.set('Game_key', -1);
@@ -39,21 +56,7 @@ export function checkTriggerCompletion(
   variableList.set('Title_bgm', -1);
   variableList.set('Game_Logo', -1);
 
-  for (let i = 0; i < params.document.lineCount; i++) {
-    const line = params.document
-      .getText({
-        start: { line: i, character: 0 },
-        end: { line: i + 1, character: 0 },
-      })
-      .replace('\n', '');
-
-    currentDocumentLines[i] = line;
-
-    if (lastDocumentLines && lastDocumentLines[i] !== line) {
-      lastDocumentLines[i] = line;
-      changedLine = i;
-    }
-
+  lines.forEach((line, i) => {
     const variable = line.match('(?<=setVar:\\s*)\\w*');
     if (variable) {
       variableList.set(variable[0], i);
@@ -63,17 +66,7 @@ export function checkTriggerCompletion(
     if (userInput) {
       variableList.set(userInput[0], i);
     }
-  }
-  if (!lastDocumentLines) {
-    lastDocumentLines = currentDocumentLines;
-  }
-
-  if (changedLine > 0) {
-    const line = currentDocumentLines[changedLine];
-    if (line.trimEnd().endsWith(':')) {
-      triggerCompletionCallback();
-    }
-  }
+  });
 }
 
 function suggestVariables(params: CompletionParams) {

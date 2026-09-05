@@ -5,29 +5,22 @@ import {
   WebSocketMessageWriter,
 } from 'vscode-ws-jsonrpc-webgal';
 import { createWsConnection } from './webgalLsp';
-import { pprintJSON } from '../../util/strings';
 
 function toIWebSocket(ws: WebSocket): any {
   return {
     send: (content) => {
-      const log = pprintJSON(content);
-      if (!log.includes('data')) {
-        // console.log(`<- ${log}`);
-      }
       ws.send(content);
     },
     onMessage: (cb) =>
-      (ws.onmessage = (event) => {
-        const log = pprintJSON(event.data);
-        // console.log(`-> ${log}`);
-        cb(event.data);
-      }),
+    (ws.onmessage = (event) => {
+      cb(event.data);
+    }),
     onError: (cb) =>
-      (ws.onerror = (event) => {
-        if ('message' in event) {
-          cb((event as any).message);
-        }
-      }),
+    (ws.onerror = (event) => {
+      if ('message' in event) {
+        cb((event as any).message);
+      }
+    }),
     onClose: (cb) => (ws.onclose = (event) => cb(event.code, event.reason)),
     dispose: () => ws.close(),
   };
