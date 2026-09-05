@@ -9,6 +9,7 @@ import FastPreviewTimeoutDialog from './FastPreviewTimeoutDialog';
 
 export default function Editor() {
   const isAutoHideToolbar = useEditorStore.use.isAutoHideToolbar();
+  const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const updateCurrentTopbarTab = useGameEditorContext((state) => state.updateCurrentTopbarTab);
 
   const handleMainAreaClick = () => isAutoHideToolbar && updateCurrentTopbarTab(null);
@@ -24,6 +25,7 @@ export default function Editor() {
           minSize={240}
           fixedPanel="first"
           persistKey="editor-sidebar-width"
+          collapsed={!isShowSidebar}
           disablePointerOn="#gamePreviewIframe"
         >
           <EditorSideBar />
