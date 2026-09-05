@@ -1,11 +1,11 @@
 import {
   Connection,
+  CompletionItem,
+  CompletionParams,
   Diagnostic,
   InitializeParams,
   InitializeResult,
   SemanticTokensParams,
-  CompletionParams,
-  CompletionItem,
   TextDocuments,
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -14,19 +14,19 @@ import {
   tokenModifierMap,
   tokenTypeMap,
 } from './semanticToken';
-import { complete, checkTriggerCompletion } from './completion';
+import { checkTriggerCompletion, complete } from './completion';
 import { collectDiagnostics } from './diagnostics';
-import { ScannerService } from './third-party/scanner.service';
+import { BaseLanguageServer } from './baseLanguageServer';
 
 interface ExampleSettings {
   maxNumberOfProblems: number;
 }
 
-export class NativeLanguageServer {
-  private connection: Connection | null = null;
-  private readonly documents: TextDocuments<TextDocument>;
-  private readonly scanner = new ScannerService();
-  private basePath = '';
+/**
+ * WebGAL 内建语言服务器：直接解析脚本，提供补全、诊断与语义着色。
+ * 控制类请求（扫描第三方服务器、切换等）由基类统一处理。
+ */
+export class NativeLanguageServer extends BaseLanguageServer {
   private hasWorkspaceFolderCapability = false;
   private hasDiagnosticRelatedInformationCapability = false;
   private hasConfigurationCapability = false;
@@ -34,47 +34,19 @@ export class NativeLanguageServer {
   private documentSettings = new Map<string, Thenable<ExampleSettings>>();
 
   constructor(documents: TextDocuments<TextDocument>) {
-    this.documents = documents;
+    super(documents);
   }
 
   attach(connection: Connection): void {
-    this.connection = connection;
-
-    connection.onRequest('textDocument/setBasePath', (params: { basePath: string }) => {
-      const newBasePath = params.basePath;
-      if (newBasePath !== this.basePath) {
-        this.basePath = newBasePath;
-      }
-      return { success: true };
-    });
-
-    connection.onRequest('$/scanLanguageServers', async () => {
-      try {
-        const result = await this.scanner.scanServers();
-        return { servers: result.servers };
-      } catch (error) {
-        connection.console.error(`Scanning language servers failed: ${error}`);
-        return { servers: [] };
-      }
-    });
-
-    connection.onRequest('$/getActiveLanguageServer', async () => ({
-      mode: 'native',
-      activeId: 'native',
-    }));
-
-    connection.onRequest('$/setActiveLanguageServer', async () => ({
-      success: true,
-    }));
+    super.attach(connection);
 
     connection.onRequest(
       'textDocument/semanticTokens/full',
-      async (params: SemanticTokensParams) => {
-        return makeSemanticTokensFullResponse(
+      async (params: SemanticTokensParams) =>
+        makeSemanticTokensFullResponse(
           params,
           this.documents.get(params.textDocument.uri),
-        );
-      },
+        ),
     );
 
     connection.onDidChangeConfiguration((change) => {
@@ -115,8 +87,7 @@ export class NativeLanguageServer {
   async initialize(params: InitializeParams): Promise<InitializeResult> {
     const clientCapabilities = params.capabilities;
     this.hasWorkspaceFolderCapability = !!(
-      clientCapabilities.workspace &&
-      !!clientCapabilities.workspace.workspaceFolders
+      clientCapabilities.workspace && !!clientCapabilities.workspace.workspaceFolders
     );
     this.hasDiagnosticRelatedInformationCapability = !!(
       clientCapabilities.textDocument &&
@@ -124,8 +95,7 @@ export class NativeLanguageServer {
       clientCapabilities.textDocument.publishDiagnostics.relatedInformation
     );
     this.hasConfigurationCapability = !!(
-      clientCapabilities.workspace &&
-      !!clientCapabilities.workspace.configuration
+      clientCapabilities.workspace && !!clientCapabilities.workspace.configuration
     );
 
     const serverCapabilities: InitializeResult = {
@@ -159,11 +129,11 @@ export class NativeLanguageServer {
   }
 
   initialized(): void {
-    // no-op for native mode
+    // 内建实现无需额外动作。
   }
 
   async dispose(): Promise<void> {
-    // no special cleanup for native mode
+    // 内建实现没有需要显式释放的资源。
   }
 
   getMode() {
