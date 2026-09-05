@@ -1,4 +1,4 @@
-﻿/* ----------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------
  * Copyright (c) 2024 OpenWebGAL
  * Modified from https://github.com/TypeFox/monaco-languageclient/blob/main/
  * packages/examples/src/bare/client.ts
@@ -44,6 +44,7 @@ export const loadActiveLspId = (): string => {
 // ------------------------------------------
 
 let initialized = false;
+let servicesInitPromise: Promise<void> | null = null;
 let startPromise: Promise<void> | null = null;
 let languageClientInstance: MonacoLanguageClient | null = null;
 let currentSocket: WebSocket | null = null;
@@ -53,44 +54,65 @@ export const configureMonacoWorkers = async () => {
   useWorkerFactory();
 };
 
-export const runClient = async (languageServerId?: string) => {
-  if (!initialized) {
-    await initServices({
-      serviceConfig: {
-        userServices: {
-          ...getThemeServiceOverride(),
-          ...getTextmateServiceOverride(),
-          ...getConfigurationServiceOverride(),
-        },
-        debugLogging: true,
+/**
+ * 把当前主题/字体等配置写入 vscode 配置服务。
+ * 编辑器挂载、页面从后台恢复等时机都需要重新调用，避免主题被覆盖或丢失。
+ */
+export const applyEditorConfig = () => {
+  const isDarkMode = useEditorStore.getState().isDarkMode;
+  updateUserConfiguration(`{
+    "workbench.colorTheme": "${isDarkMode ? 'WebGAL Black' : 'WebGAL White'}",
+    "editor.semanticHighlighting.enabled": "configuredByTheme",
+    "editor.fontFamily": "${useEditorStore.getState().editorFontFamily}",
+    "editor.fontSize": ${useEditorStore.getState().editorFontSize}
+  }`);
+};
+
+const initMonacoServices = async () => {
+  await initServices({
+    serviceConfig: {
+      userServices: {
+        ...getThemeServiceOverride(),
+        ...getTextmateServiceOverride(),
+        ...getConfigurationServiceOverride(),
       },
-    });
+      debugLogging: true,
+    },
+  });
 
-    const applyEditorConfig = () => {
-      const isDarkMode = useEditorStore.getState().isDarkMode;
-      updateUserConfiguration(`{
-      "workbench.colorTheme": "${isDarkMode ? 'WebGAL Black' : 'WebGAL White'}",
-      "editor.semanticHighlighting.enabled": "configuredByTheme",
-      "editor.fontFamily": "${useEditorStore.getState().editorFontFamily}",
-      "editor.fontSize": ${useEditorStore.getState().editorFontSize}
-    }`);
-    };
+  applyEditorConfig();
 
+  useEditorStore.subscribe(() => {
     applyEditorConfig();
+  });
 
-    useEditorStore.subscribe(() => {
-      applyEditorConfig();
+  monaco.languages.register({
+    id: 'webgal',
+    extensions: ['.txt'],
+    aliases: ['WebGAL', 'WebGAL Script'],
+    mimetypes: ['application/webgalscript'],
+  });
+
+  initialized = true;
+};
+
+/**
+ * 保证 vscode 服务（主题、textmate 高亮等）已初始化。
+ * 幂等：多次调用共享同一个 Promise，编辑器挂载前 await 它即可。
+ */
+export const ensureMonacoServices = (): Promise<void> => {
+  if (!servicesInitPromise) {
+    servicesInitPromise = initMonacoServices().catch((err) => {
+      // 初始化失败时清掉缓存，允许下次重试。
+      servicesInitPromise = null;
+      throw err;
     });
-
-    monaco.languages.register({
-      id: 'webgal',
-      extensions: ['.txt'],
-      aliases: ['WebGAL', 'WebGAL Script'],
-      mimetypes: ['application/webgalscript'],
-    });
-
-    initialized = true;
   }
+  return servicesInitPromise;
+};
+
+export const runClient = async (languageServerId?: string) => {
+  await ensureMonacoServices();
 
   // 优先使用传入的 ID，否则从存储加载
   const targetId = languageServerId ?? loadActiveLspId();

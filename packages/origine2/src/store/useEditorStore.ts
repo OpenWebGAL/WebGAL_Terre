@@ -50,7 +50,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontFamily: (editorFontFamily) => {
         set({ editorFontFamily });
         updateUserConfiguration(`{
-          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Black' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},
@@ -59,7 +59,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontSize: (editorFontSize) => {
         set({ editorFontSize });
         updateUserConfiguration(`{
-          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Black' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},

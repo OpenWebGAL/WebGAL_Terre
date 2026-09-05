@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
 import { logger } from '../../../utils/logger';
@@ -13,6 +13,8 @@ import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
 import { useValue } from "@/hooks/useValue";
+import { applyEditorConfig } from '@/webgalscript/lsp';
+import { getMonacoReady } from '@/utils/initMonaco';
 
 interface ITextEditorProps {
   targetPath: string;
@@ -26,8 +28,24 @@ export default function TextEditor(props: ITextEditorProps) {
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
   const isEditorReady = useValue(false);
+  const [isMonacoReady, setIsMonacoReady] = useState(false);
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    getMonacoReady()
+      .then(() => {
+        if (!cancelled) setIsMonacoReady(true);
+      })
+      .catch(() => {
+        // 即使初始化失败也照常挂载编辑器，避免编辑器永远不出现。
+        if (!cancelled) setIsMonacoReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     logger.debug('脚本编辑器挂载');
@@ -35,6 +53,10 @@ export default function TextEditor(props: ITextEditorProps) {
     editorRef.current = editor;
 
     configureMonaco(editor, monaco);
+
+    // @monaco-editor/react 在挂载时会用默认的 light 主题覆盖 vscode 主题，
+    // 这里重新下发一次配置，把 WebGAL 主题和高亮恢复回来。
+    applyEditorConfig();
 
     editor.onDidChangeCursorPosition(debounce((event: monaco.editor.ICursorPositionChangedEvent) => {
       const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
@@ -169,6 +191,8 @@ export default function TextEditor(props: ITextEditorProps) {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         updateEditData();
+        // 长时间后台休眠后，主题/高亮可能丢失，恢复可见时重新应用一次。
+        applyEditorConfig();
       }
     };
 
@@ -186,16 +210,18 @@ export default function TextEditor(props: ITextEditorProps) {
       style={{ display: props.isHide ? 'none' : 'block', zIndex: 999, overflow: 'auto' }}
       className={styles.textEditor_main}
     >
-      <Editor
-        height="100%"
-        width="100%"
-        onMount={handleEditorDidMount}
-        onChange={handleChange}
-        defaultLanguage="webgal"
-        language="webgal"
-        path={props.targetPath}
-        defaultValue={currentText.current}
-      />
+      {isMonacoReady && (
+        <Editor
+          height="100%"
+          width="100%"
+          onMount={handleEditorDidMount}
+          onChange={handleChange}
+          defaultLanguage="webgal"
+          language="webgal"
+          path={props.targetPath}
+          defaultValue={currentText.current}
+        />
+      )}
     </div>
   );
 }
