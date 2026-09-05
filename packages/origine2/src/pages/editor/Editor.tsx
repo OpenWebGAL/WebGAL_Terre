@@ -1,13 +1,15 @@
-import TopBar from "./Topbar/Topbar";
-import styles from "./editor.module.scss";
-import EditorSideBar from "./EditorSidebar/EditorSidebar";
-import MainArea from "./MainArea/MainArea";
-import useEditorStore from "@/store/useEditorStore";
-import { useGameEditorContext } from "@/store/useGameEditorStore";
-import FastPreviewTimeoutDialog from "./FastPreviewTimeoutDialog";
+import TopBar from './Topbar/Topbar';
+import styles from './editor.module.scss';
+import EditorSideBar from './EditorSidebar/EditorSidebar';
+import MainArea from './MainArea/MainArea';
+import SplitPane from '@/components/SplitPane/SplitPane';
+import useEditorStore from '@/store/useEditorStore';
+import { useGameEditorContext } from '@/store/useGameEditorStore';
+import FastPreviewTimeoutDialog from './FastPreviewTimeoutDialog';
 
 export default function Editor() {
   const isAutoHideToolbar = useEditorStore.use.isAutoHideToolbar();
+  const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
   const updateCurrentTopbarTab = useGameEditorContext((state) => state.updateCurrentTopbarTab);
 
   const handleMainAreaClick = () => isAutoHideToolbar && updateCurrentTopbarTab(null);
@@ -16,9 +18,19 @@ export default function Editor() {
     <div className={styles.editor}>
       <FastPreviewTimeoutDialog />
       <TopBar />
-      <div className={styles.container} onClick={()=>handleMainAreaClick()}>
-        <EditorSideBar />
-        <MainArea />
+      <div className={styles.container} onClick={() => handleMainAreaClick()}>
+        <SplitPane
+          direction="horizontal"
+          defaultSize={window.innerWidth * 0.35}
+          minSize={240}
+          fixedPanel="first"
+          persistKey="editor-sidebar-width"
+          collapsed={!isShowSidebar}
+          disablePointerOn="#gamePreviewIframe"
+        >
+          <EditorSideBar />
+          <MainArea />
+        </SplitPane>
       </div>
     </div>
   );

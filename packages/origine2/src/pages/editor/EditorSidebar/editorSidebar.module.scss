@@ -1,6 +1,6 @@
 .editor_sidebar {
   padding: 0 4px 4px 4px;
-  width: var(--sidebar-width);
+  width: 100%;
   text-align: left;
   display: flex;
   flex-flow: column;
@@ -9,12 +9,8 @@
   min-height: 100%;
   position: relative;
   gap: 4px;
-}
-
-.preview_title {
-  font-weight: bold;
-  font-size: 115%;
-  color: var(--primary);
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .preview_container {
@@ -24,15 +20,16 @@
   flex-direction: column;
   flex-shrink: 0;
   position: relative;
-  // width: calc(var(--sidebar-width) - 8px);
-  // height: calc(calc(var(--sidebar-width) - 8px) / 16 * 9);
+}
+
+.gamePreviewButons {
+  display: flex;
 }
 
 .previewWindow {
   flex: 1;
   flex-shrink: 0;
   width: 100%;
-  //margin: 4px 0 4px 0;
   border-radius: var(--radius-md);
   border: var(--border-md);
   aspect-ratio: 16 / 9;
@@ -43,49 +40,10 @@
   border-top-right-radius: 0;
 }
 
-.gamePreviewButons {
-  display: flex;
-}
-
-.preview_top_title_container {
-  display: flex;
-  align-items: center;
-}
-
 .sidebarContent {
   flex: 1;
   overflow: auto;
   background: var(--bg-card);
   border-radius: var(--radius-md);
   border: var(--border-md);
-}
-
-.divider {
-  height: calc(100% - 12px);
-  width: 2.5px;
-  background-color: transparent;
-  position: absolute;
-  top: 4px;
-  cursor: ew-resize;
-  right: 0.75px;
-  transition: width 0.33s, background-color 0.33s;
-  border-radius: var(--radius-md);
-  background: transparent;
-}
-
-.divider:hover {
-  background: var(--primary);
-}
-
-.divider:active {
-  background: var(--primary);
-}
-
-.divider:active+.preview_container {
-  pointer-events: none;
-}
-
-.editor_sidebar {
-  -webkit-user-select: none;
-  user-select: none;
 }

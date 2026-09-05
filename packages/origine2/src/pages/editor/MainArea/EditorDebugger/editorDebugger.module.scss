@@ -1,36 +1,11 @@
 .main {
   width: 100%;
+  height: 100%;
   text-align: left;
-  min-height: 96px;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   flex-flow: column;
-  flex-shrink: 0;
-}
-
-.resizeHandle {
-  width: 100%;
-  height: 6px;
-  flex: 0 0 6px;
-  overflow: hidden;
-  -webkit-user-select: none;
-  user-select: none;
-  display: flex;
-  align-items: flex-start;
-  padding: 0 4px;
-  box-sizing: border-box;
-  cursor: ns-resize;
-}
-
-.resizeHandleLine {
-  height: 1px;
-  width: 100%;
-  background: var(--black-10pct);
-}
-
-.resizeHandle:hover .resizeHandleLine,
-.resizeHandleActive .resizeHandleLine {
-  background: var(--primary);
 }
 
 .root {
