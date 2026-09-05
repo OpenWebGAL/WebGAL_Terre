@@ -18,21 +18,11 @@ import { checkTriggerCompletion, complete } from './completion';
 import { collectDiagnostics } from './diagnostics';
 import { BaseLanguageServer } from './baseLanguageServer';
 
-interface ExampleSettings {
-  maxNumberOfProblems: number;
-}
-
 /**
  * WebGAL 内建语言服务器：直接解析脚本，提供补全、诊断与语义着色。
  * 控制类请求（扫描第三方服务器、切换等）由基类统一处理。
  */
 export class NativeLanguageServer extends BaseLanguageServer {
-  private hasWorkspaceFolderCapability = false;
-  private hasDiagnosticRelatedInformationCapability = false;
-  private hasConfigurationCapability = false;
-  private globalSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
-  private documentSettings = new Map<string, Thenable<ExampleSettings>>();
-
   constructor(documents: TextDocuments<TextDocument>) {
     super(documents);
   }
@@ -49,27 +39,9 @@ export class NativeLanguageServer extends BaseLanguageServer {
         ),
     );
 
-    connection.onDidChangeConfiguration((change) => {
-      if (this.hasConfigurationCapability) {
-        this.documentSettings.clear();
-      } else {
-        this.globalSettings = <ExampleSettings>(
-          (change.settings.languageServerExample || this.globalSettings)
-        );
-      }
-      this.documents.all().forEach(this.validateTextDocument.bind(this));
-    });
-
-    connection.onDidCloseTextDocument((params) => {
-      this.documentSettings.delete(params.textDocument.uri);
-    });
-
-    this.documents.onDidChangeContent(async (change) => {
-      await this.validateTextDocument(change.document);
-    });
-
-    this.documents.onDidChangeContent(async (params) => {
-      checkTriggerCompletion(params, () => {
+    this.documents.onDidChangeContent((change) => {
+      this.validateTextDocument(change.document);
+      checkTriggerCompletion(change, () => {
         connection.sendRequest('textDocument/completion');
       });
     });
@@ -85,20 +57,11 @@ export class NativeLanguageServer extends BaseLanguageServer {
   }
 
   async initialize(params: InitializeParams): Promise<InitializeResult> {
-    const clientCapabilities = params.capabilities;
-    this.hasWorkspaceFolderCapability = !!(
-      clientCapabilities.workspace && !!clientCapabilities.workspace.workspaceFolders
-    );
-    this.hasDiagnosticRelatedInformationCapability = !!(
-      clientCapabilities.textDocument &&
-      clientCapabilities.textDocument.publishDiagnostics &&
-      clientCapabilities.textDocument.publishDiagnostics.relatedInformation
-    );
-    this.hasConfigurationCapability = !!(
-      clientCapabilities.workspace && !!clientCapabilities.workspace.configuration
+    const hasWorkspaceFolderCapability = Boolean(
+      params.capabilities.workspace?.workspaceFolders,
     );
 
-    const serverCapabilities: InitializeResult = {
+    const capabilities: InitializeResult = {
       capabilities: {
         textDocumentSync: 1,
         completionProvider: {
@@ -117,15 +80,13 @@ export class NativeLanguageServer extends BaseLanguageServer {
       },
     };
 
-    if (this.hasWorkspaceFolderCapability) {
-      serverCapabilities.capabilities.workspace = {
-        workspaceFolders: {
-          supported: true,
-        },
+    if (hasWorkspaceFolderCapability) {
+      capabilities.capabilities.workspace = {
+        workspaceFolders: { supported: true },
       };
     }
 
-    return serverCapabilities;
+    return capabilities;
   }
 
   initialized(): void {
@@ -144,23 +105,7 @@ export class NativeLanguageServer extends BaseLanguageServer {
     return 'native';
   }
 
-  private getDocumentSettings(resource: string): Thenable<ExampleSettings> {
-    if (!this.hasConfigurationCapability) {
-      return Promise.resolve(this.globalSettings);
-    }
-    let result = this.documentSettings.get(resource);
-    if (!result && this.connection) {
-      result = this.connection.workspace.getConfiguration({
-        scopeUri: resource,
-        section: 'languageServerExample',
-      });
-      this.documentSettings.set(resource, result);
-    }
-    return result ?? Promise.resolve(this.globalSettings);
-  }
-
-  private async validateTextDocument(textDocument: TextDocument): Promise<void> {
-    const settings = await this.getDocumentSettings(textDocument.uri);
+  private validateTextDocument(textDocument: TextDocument): void {
     const diagnostics: Diagnostic[] = collectDiagnostics(
       textDocument.getText(),
       textDocument.uri,

@@ -18,6 +18,7 @@ import {
   WatchedFileChange,
 } from './fileWatcherRegistry';
 import { WorkspaceEditApplier } from './workspaceEdit';
+import { LspLauncher } from './third-party/types';
 
 /** 本代理进程直接处理、不再转发给第三方 LSP 的请求。 */
 const CONTROL_METHODS = [
@@ -41,7 +42,7 @@ export class ThirdPartyLanguageServer extends BaseLanguageServer {
   private readonly fileWatchers: FileWatcherRegistry;
   private readonly workspaceEditApplier: WorkspaceEditApplier;
 
-  private activeLauncher: any = null;
+  private activeLauncher: LspLauncher | null = null;
   private activeConnection: Connection | null = null;
   private currentWorkspaceUri: string | null = null;
 
@@ -86,23 +87,6 @@ export class ThirdPartyLanguageServer extends BaseLanguageServer {
     });
 
     this.registerDocumentEvents();
-
-    // 若第三方 LSP 已启动且工作区已建立，立即同步。
-    if (this.activeConnection && this.currentWorkspaceUri) {
-      this.activeConnection.sendNotification('workspace/didChangeWorkspaceFolders', {
-        event: {
-          added: [
-            {
-              uri: this.currentWorkspaceUri,
-              name: path.basename(this.currentWorkspaceUri),
-            },
-          ],
-          removed: [],
-        },
-      });
-      this.fileWatchers.reinitialize();
-      this.fileWatchers.processPending();
-    }
   }
 
   protected onBasePathChanged(basePath: string): void {

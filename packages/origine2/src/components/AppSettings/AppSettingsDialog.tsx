@@ -7,6 +7,7 @@ import {
   DialogSurface,
   DialogTitle,
   DialogTrigger,
+  Dropdown,
   Input,
   Menu,
   MenuItem,
@@ -282,6 +283,9 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
     ...availableLanguageServers,
   ];
   const selectedServerLabel = serverOptions.find((server) => server.id === activeLanguageServer)?.name ?? t`内置语言服务`;
+  const selectedServerId = serverOptions.some((server) => server.id === activeLanguageServer)
+    ? activeLanguageServer
+    : 'native';
 
   const handleLanguageServerChange = async (serverId: string) => {
     updateActiveLanguageServer(serverId);
@@ -332,8 +336,9 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
                   </label>
                   <label className={styles.field}>
                     <span className={styles.fieldLabel}>{t`语言服务`}</span>
-                    <Combobox
+                    <Dropdown
                       value={selectedServerLabel}
+                      selectedOptions={[selectedServerId]}
                       disabled={isScanningLanguageServers}
                       onOptionSelect={(_, data) => {
                         const serverId = data.optionValue ?? 'native';
@@ -345,7 +350,7 @@ export function AppSettingsDialog({ open, onOpenChange }: AppSettingsDialogProps
                           {server.name}
                         </Option>
                       ))}
-                    </Combobox>
+                    </Dropdown>
                   </label>
                 </div>
               </section>

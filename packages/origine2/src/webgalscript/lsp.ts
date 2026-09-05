@@ -189,15 +189,7 @@ export const initWebSocketAndStartClient = (url: string, languageServerId: strin
     const socket = toSocket(webSocket);
     const reader = new WebSocketMessageReader(socket);
     const writer = new WebSocketMessageWriter(socket);
-    const languageClient = createLanguageClient(
-      {
-        // @ts-ignore
-        reader,
-        // @ts-ignore
-        writer,
-      },
-      languageServerId,
-    );
+    const languageClient = createLanguageClient({ reader, writer }, languageServerId);
 
     languageClientInstance = languageClient;
 

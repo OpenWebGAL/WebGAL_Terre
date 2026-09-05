@@ -52,9 +52,11 @@ export class ScannerService {
         const resolved = requireFromStart.resolve(startPath);
         delete requireFromStart.cache[resolved];
 
-        // 加载模块
-        const launcherModule = requireFromStart(startPath);
-        const launcher = launcherModule.default || launcherModule;
+        // 加载模块（兼容 CommonJS 与 ESM 转译后的 default 导出两种形态）
+        const launcherModule = requireFromStart(startPath) as {
+          default?: LspLauncher;
+        };
+        const launcher = (launcherModule.default ?? launcherModule) as LspLauncher;
 
         if (!launcher || typeof launcher.start !== 'function') {
           this.logger.warn(`Invalid launcher in ${startPath}: missing start function.`);

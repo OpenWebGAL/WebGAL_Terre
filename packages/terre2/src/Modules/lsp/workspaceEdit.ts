@@ -54,24 +54,35 @@ export class WorkspaceEditApplier {
             return false;
           }
         } else if ('kind' in change) {
-          const kind = (change as any).kind;
-          const uri = (change as any).uri;
-          const filePath = this.stripFileProtocol(uri);
+          const fileChange = change as any;
           try {
-            if (kind === 'create') {
-              await fs.promises.writeFile(filePath, '', 'utf8');
-            } else if (kind === 'delete') {
-              await fs.promises.unlink(filePath);
-            } else if (kind === 'rename') {
-              const newPath = this.stripFileProtocol((change as any).newUri);
-              await fs.promises.rename(filePath, newPath);
+            if (fileChange.kind === 'create') {
+              await fs.promises.writeFile(
+                this.stripFileProtocol(fileChange.uri),
+                '',
+                'utf8',
+              );
+              this.callbacks.sendDidChangeWatchedFiles([
+                { uri: fileChange.uri, type: 1 },
+              ]);
+            } else if (fileChange.kind === 'delete') {
+              await fs.promises.unlink(this.stripFileProtocol(fileChange.uri));
+              this.callbacks.sendDidChangeWatchedFiles([
+                { uri: fileChange.uri, type: 3 },
+              ]);
+            } else if (fileChange.kind === 'rename') {
+              await fs.promises.rename(
+                this.stripFileProtocol(fileChange.oldUri),
+                this.stripFileProtocol(fileChange.newUri),
+              );
+              this.callbacks.sendDidChangeWatchedFiles([
+                { uri: fileChange.oldUri, type: 3 },
+                { uri: fileChange.newUri, type: 1 },
+              ]);
             }
-            this.callbacks.sendDidChangeWatchedFiles([
-              { uri, type: kind === 'delete' ? 3 : kind === 'create' ? 1 : 3 },
-            ]);
           } catch (err) {
             this.callbacks.logError(
-              `Failed to apply file operation ${kind} on ${filePath}: ${err}`,
+              `Failed to apply file operation ${fileChange.kind} on ${fileChange.uri ?? fileChange.oldUri}: ${err}`,
             );
             return false;
           }
