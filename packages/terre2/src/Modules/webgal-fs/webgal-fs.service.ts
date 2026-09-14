@@ -5,10 +5,12 @@ import AdmZip = require('adm-zip');
 import { basename, dirname, extname, isAbsolute, join } from 'path';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { gzip, Z_BEST_COMPRESSION } from 'zlib';
 import { UserDataService } from '../user-data/user-data.service';
 import trash from 'trash';
 
 const pExecFile = promisify(execFile);
+const pGzip = promisify(gzip);
 
 export interface IFileInfo {
   name: string;
@@ -504,6 +506,54 @@ export class WebgalFsService {
     await fs.copyFile(filePath, newPath);
     this.logger.log(`复制文件: ${filePath} -> ${newPath}`);
     return newPath;
+  }
+
+  /**
+   * 为目录中指定扩展名的文件生成 gzip 预压缩副本（<原文件名>.gz）
+   * 供静态服务器按预压缩文件分发，避免请求时实时压缩
+   * @param dirPath 目录路径
+   * @param extensions 需要预压缩的扩展名，如 ['.js', '.css', '.ttf']
+   */
+  async gzipFiles(dirPath: string, extensions: string[]): Promise<boolean> {
+    try {
+      const dir = this.normalizeFsPath(dirPath);
+      const count = await this.gzipFilesInDir(dir, extensions);
+      this.logger.log(`生成 gzip 预压缩文件: ${dir}, 共 ${count} 个`);
+      return true;
+    } catch (error) {
+      this.logger.error(
+        `生成 gzip 预压缩文件失败: ${decodeURI(dirPath)}, ${String(error)}`,
+      );
+      return false;
+    }
+  }
+
+  /**
+   * 递归为目录中指定扩展名的文件生成 gzip 预压缩副本，返回生成的文件数
+   */
+  private async gzipFilesInDir(
+    dir: string,
+    extensions: string[],
+  ): Promise<number> {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    const counts = await Promise.all(
+      entries.map(async (entry) => {
+        const entryPath = join(dir, entry.name);
+        if (entry.isDirectory()) {
+          return await this.gzipFilesInDir(entryPath, extensions);
+        }
+        if (!entry.isFile() || !extensions.includes(extname(entry.name))) {
+          return 0;
+        }
+        const content = await fs.readFile(entryPath);
+        await fs.writeFile(
+          `${entryPath}.gz`,
+          await pGzip(content, { level: Z_BEST_COMPRESSION }),
+        );
+        return 1;
+      }),
+    );
+    return counts.reduce((total, count) => total + count, 0);
   }
 
   /**

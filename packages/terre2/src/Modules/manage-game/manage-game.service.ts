@@ -15,6 +15,9 @@ import { promisify } from 'util';
 import { execFile } from 'child_process';
 import { join } from 'path';
 
+// WebGAL 构建期压缩的引擎资源类型，构建产物不再自带 gz，导出 Web 时由 Terre 补齐
+const ENGINE_ASSET_EXTENSIONS = ['.js', '.css', '.ttf'];
+
 @Injectable()
 export class ManageGameService {
   constructor(
@@ -695,6 +698,11 @@ export class ManageGameService {
         // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
         await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
         await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
+        // 生成 gz 预压缩文件，供静态服务器按预压缩文件分发
+        await this.webgalFs.gzipFiles(
+          `${webExportDir}/assets`,
+          ENGINE_ASSET_EXTENSIONS,
+        );
         await _open(webExportDir);
       }
 
