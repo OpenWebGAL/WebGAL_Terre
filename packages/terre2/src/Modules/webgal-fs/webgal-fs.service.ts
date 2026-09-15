@@ -5,10 +5,12 @@ import AdmZip = require('adm-zip');
 import { basename, dirname, extname, isAbsolute, join } from 'path';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { gzip, Z_BEST_COMPRESSION } from 'zlib';
 import { UserDataService } from '../user-data/user-data.service';
 import trash from 'trash';
 
 const pExecFile = promisify(execFile);
+const pGzip = promisify(gzip);
 
 export interface IFileInfo {
   name: string;
@@ -504,6 +506,36 @@ export class WebgalFsService {
     await fs.copyFile(filePath, newPath);
     this.logger.log(`复制文件: ${filePath} -> ${newPath}`);
     return newPath;
+  }
+
+  /**
+   * 为目录中指定扩展名的文件生成 gzip 预压缩副本（<原文件名>.gz）
+   * 供静态服务器按预压缩文件分发，避免请求时实时压缩
+   * @param dirPath 目录路径
+   * @param extensions 需要预压缩的扩展名，如 ['.js', '.css', '.ttf']
+   */
+  async gzipFiles(dirPath: string, extensions: string[]): Promise<void> {
+    const dir = this.normalizeFsPath(dirPath);
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    const targetPaths = entries
+      .filter(
+        (entry) => entry.isFile() && extensions.includes(extname(entry.name)),
+      )
+      .map((entry) => join(dir, entry.name));
+
+    await Promise.all(
+      targetPaths.map(async (filePath) => {
+        await fs.writeFile(
+          `${filePath}.gz`,
+          await pGzip(await fs.readFile(filePath), {
+            level: Z_BEST_COMPRESSION,
+          }),
+        );
+      }),
+    );
+    this.logger.log(
+      `生成 gzip 预压缩文件: ${dir}, 共 ${targetPaths.length} 个`,
+    );
   }
 
   /**

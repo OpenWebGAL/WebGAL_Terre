@@ -695,6 +695,12 @@ export class ManageGameService {
         // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
         await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
         await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
+        // 引擎构建产物不再自带 gz，导出 Web 时补齐，供静态服务器按预压缩文件分发
+        await this.webgalFs.gzipFiles(`${webExportDir}/assets`, [
+          '.js',
+          '.css',
+          '.ttf',
+        ]);
         await _open(webExportDir);
       }
 
