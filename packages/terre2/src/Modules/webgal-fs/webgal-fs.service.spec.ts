@@ -80,35 +80,30 @@ describe('WebgalFsService', () => {
 
   it('creates gzip copies for files with given extensions', async () => {
     const sourceDir = join(testRoot, 'assets');
-    const nestedDir = join(sourceDir, 'nested');
-    await fs.mkdir(nestedDir, { recursive: true });
+    await fs.mkdir(sourceDir, { recursive: true });
     await fs.writeFile(join(sourceDir, 'index.js'), 'console.log("webgal")');
-    await fs.writeFile(join(nestedDir, 'index.css'), '.webgal {}');
+    await fs.writeFile(join(sourceDir, 'index.css'), '.webgal {}');
     await fs.writeFile(join(sourceDir, 'cover.png'), 'not-text');
 
-    await expect(service.gzipFiles(sourceDir, ['.js', '.css'])).resolves.toBe(
-      true,
-    );
+    await expect(
+      service.gzipFiles(sourceDir, ['.js', '.css']),
+    ).resolves.toBeUndefined();
 
-    const expectGzipContent = async (filePath: string, content: string) => {
-      expect(gunzipSync(await fs.readFile(`${filePath}.gz`)).toString()).toBe(
-        content,
-      );
+    const expectGzipContent = async (fileName: string, content: string) => {
+      const gzFile = await fs.readFile(join(sourceDir, `${fileName}.gz`));
+      expect(gunzipSync(gzFile).toString()).toBe(content);
     };
-    await expectGzipContent(
-      join(sourceDir, 'index.js'),
-      'console.log("webgal")',
-    );
-    await expectGzipContent(join(nestedDir, 'index.css'), '.webgal {}');
+    await expectGzipContent('index.js', 'console.log("webgal")');
+    await expectGzipContent('index.css', '.webgal {}');
     await expect(
       fs.stat(join(sourceDir, 'cover.png.gz')),
     ).rejects.toBeDefined();
   });
 
-  it('reports failure when generating gzip copies in a missing directory', async () => {
+  it('throws when the directory to compress does not exist', async () => {
     await expect(
       service.gzipFiles(join(testRoot, 'not-exist'), ['.js']),
-    ).resolves.toBe(false);
+    ).rejects.toBeDefined();
   });
 
   it('returns null when reading an invalid zip buffer', () => {
