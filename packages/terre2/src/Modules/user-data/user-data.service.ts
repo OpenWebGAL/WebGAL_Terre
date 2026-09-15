@@ -44,6 +44,7 @@ const MANAGED_DATA_DIRS = [
   'templates',
   'derivative-engines',
   'Exported_Games',
+  'third-party-ls',
 ];
 
 @Injectable()

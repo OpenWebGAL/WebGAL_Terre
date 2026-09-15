@@ -1,12 +1,11 @@
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './textEditor.module.scss';
 import axios from 'axios';
 import { logger } from '../../../utils/logger';
 import debounce from 'lodash/debounce';
 
-// 语法高亮文件
 import { editorLineHolder, lspSceneName, WG_ORIGINE_RUNTIME } from '../../../runtime/WG_ORIGINE_RUNTIME';
 import { EditorPreviewClient } from '../../../utils/editorPreviewClient';
 import { eventBus } from '@/utils/eventBus';
@@ -14,6 +13,8 @@ import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
 import { useValue } from "@/hooks/useValue";
+import { applyEditorConfig } from '@/webgalscript/lsp';
+import { getMonacoReady } from '@/utils/initMonaco';
 
 interface ITextEditorProps {
   targetPath: string;
@@ -26,23 +27,36 @@ export default function TextEditor(props: ITextEditorProps) {
   const currentText = useRef('Loading Scene Data......');
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
-  const isEditorReady = useValue(false); // 读取完脚本才能算准备就绪
+  const isEditorReady = useValue(false);
+  const [isMonacoReady, setIsMonacoReady] = useState(false);
 
-  // 准备获取 Monaco
-  // 建立 Ref
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
-  /**
-   * 处理挂载事件
-   * @param {any} editor
-   * @param {any} monaco
-   */
+  useEffect(() => {
+    let cancelled = false;
+    getMonacoReady()
+      .then(() => {
+        if (!cancelled) setIsMonacoReady(true);
+      })
+      .catch(() => {
+        // 即使初始化失败也照常挂载编辑器，避免编辑器永远不出现。
+        if (!cancelled) setIsMonacoReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     logger.debug('脚本编辑器挂载');
     lspSceneName.value = sceneName;
     editorRef.current = editor;
 
     configureMonaco(editor, monaco);
+
+    // @monaco-editor/react 在挂载时会用默认的 light 主题覆盖 vscode 主题，
+    // 这里重新下发一次配置，把 WebGAL 主题和高亮恢复回来。
+    applyEditorConfig();
 
     editor.onDidChangeCursorPosition(debounce((event: monaco.editor.ICursorPositionChangedEvent) => {
       const previousCursorPosition = editorLineHolder.getScenePosition(props.targetPath);
@@ -59,8 +73,6 @@ export default function TextEditor(props: ITextEditorProps) {
       }
       editorLineHolder.recordSceneEditingPosition(props.targetPath, event.position);
     }));
-    // 由于 monaco 接收拖拽进来的文字时, 会在末尾添加 $0
-    // 这里手动实现接收拖拽进来的文字, 以避开这个问题
     const domNode = editor.getContainerDomNode();
     const dropHandler = (e: DragEvent) => {
       e.preventDefault();
@@ -107,20 +119,12 @@ export default function TextEditor(props: ITextEditorProps) {
     editorRef?.current?.updateOptions?.({ wordWrap: isAutoWarp ? 'on' : 'off' });
   }, [isAutoWarp]);
 
-  /**
-   * handle monaco change
-   * @param {string} value
-   * @param {any} ev
-   */
   const submitChange = useMemo(() => debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
     logger.debug('编辑器提交更新');
-    // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
-    // const lineNumber = ev.changes[0].range.startLineNumber;
-    // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
     if (value || value === '') currentText.current = value;
     eventBus.emit('editor:update-scene', { scene: currentText.current });
-    api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
+    api.assetsControllerEditTextFile({ textFile: currentText.current, path: props.targetPath }).then((res) => {
       const targetValue = currentText.current.split('\n')[lineNumber - 1];
       EditorPreviewClient.sendSyncScene({
         scenePath: target?.path ?? '',
@@ -187,6 +191,8 @@ export default function TextEditor(props: ITextEditorProps) {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         updateEditData();
+        // 长时间后台休眠后，主题/高亮可能丢失，恢复可见时重新应用一次。
+        applyEditorConfig();
       }
     };
 
@@ -204,15 +210,18 @@ export default function TextEditor(props: ITextEditorProps) {
       style={{ display: props.isHide ? 'none' : 'block', zIndex: 999, overflow: 'auto' }}
       className={styles.textEditor_main}
     >
-      <Editor
-        height="100%"
-        width="100%"
-        onMount={handleEditorDidMount}
-        onChange={handleChange}
-        defaultLanguage="webgal"
-        language="webgal"
-        defaultValue={currentText.current}
-      />
+      {isMonacoReady && (
+        <Editor
+          height="100%"
+          width="100%"
+          onMount={handleEditorDidMount}
+          onChange={handleChange}
+          defaultLanguage="webgal"
+          language="webgal"
+          path={props.targetPath}
+          defaultValue={currentText.current}
+        />
+      )}
     </div>
   );
 }

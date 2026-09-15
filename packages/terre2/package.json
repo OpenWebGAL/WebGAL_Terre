@@ -45,6 +45,7 @@
     "@yao-pkg/pkg": "6.4.1",
     "adm-zip": "^0.5.16",
     "archiver": "^7.0.1",
+    "chokidar": "^3.6.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "date-time-format-timezone": "^1.0.22",
@@ -108,7 +109,7 @@
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.ts$": "ts-jest"
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"

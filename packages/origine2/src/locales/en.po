@@ -467,6 +467,9 @@ msgstr "Content"
 msgid "内层文本"
 msgstr "Inner Text"
 
+msgid "内置语言服务"
+msgstr "Built-in Language Service"
+
 msgid "内边距"
 msgstr "Padding"
 
@@ -2131,6 +2134,9 @@ msgstr "This file type does not support preview"
 
 msgid "语言"
 msgstr "Language"
+
+msgid "语言服务"
+msgstr "Language Service"
 
 msgid "语音"
 msgstr "Voice"

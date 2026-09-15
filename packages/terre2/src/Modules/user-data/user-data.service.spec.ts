@@ -57,6 +57,9 @@ describe('UserDataService', () => {
     await expect(
       fs.stat(path.join(activeUserDataRoot, 'Exported_Games')),
     ).resolves.toBeDefined();
+    await expect(
+      fs.stat(path.join(activeUserDataRoot, 'third-party-ls')),
+    ).resolves.toBeDefined();
   });
 
   it('normalizes config version to the current Terre version', async () => {

@@ -36,6 +36,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       cascaderDelimiters: ['/'],
       isDarkMode: false,
       isUseRealtimeEffect: true,
+      activeLanguageServer: 'native',
       debugVariables: [],
       isTrash: false,
       updateIsWindowAdjustment: (isWindowAdjustment) => set({ isWindowAdjustment }),
@@ -49,7 +50,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontFamily: (editorFontFamily) => {
         set({ editorFontFamily });
         updateUserConfiguration(`{
-          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Black' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},
@@ -58,7 +59,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateEditorFontSize: (editorFontSize) => {
         set({ editorFontSize });
         updateUserConfiguration(`{
-          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Dark' : 'WebGAL White'}",
+          "workbench.colorTheme": "${get().isDarkMode ? 'WebGAL Black' : 'WebGAL White'}",
           "editor.semanticHighlighting.enabled": "configuredByTheme",
           "editor.fontFamily": "${get().editorFontFamily}",
           "editor.fontSize": ${get().editorFontSize},
@@ -80,6 +81,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateCascaderDelimiters: (cascaderDelimiters) => set({ cascaderDelimiters }),
       updateIsDarkMode: (isDarkMode) => set({ isDarkMode }),
       updateIsUseRealtimeEffect: (isUseRealtimeEffect) => set({ isUseRealtimeEffect }),
+      updateActiveLanguageServer: (activeLanguageServer) => set({ activeLanguageServer }),
       updateDebugVariables: (debugVariables) => set({ debugVariables }),
       updateIsTrash: (isTrash) => set({ isTrash }),
     }),
