@@ -65,6 +65,9 @@ msgstr "changeBg: 背景画像を選択;"
 msgid "changeFigure:选择立绘文件;"
 msgstr "changeFigure: 立ち絵ファイルを選択;"
 
+msgid "changeFigureDiff:选择立绘文件;"
+msgstr ""
+
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene: シーンファイルを選択;"
 
@@ -508,6 +511,9 @@ msgstr "表示言語を切り替える"
 
 msgid "切换立绘"
 msgstr "立ち絵の切り替え"
+
+msgid "切换立绘差分"
+msgstr ""
 
 msgid "切换背景"
 msgstr "背景の切り替え"
@@ -988,6 +994,9 @@ msgstr "よく使う設定"
 
 msgid "常规演出"
 msgstr "通常演出"
+
+msgid "平滑切换指定位置的立绘差分"
+msgstr ""
 
 msgid "平铺"
 msgstr "タイリング"

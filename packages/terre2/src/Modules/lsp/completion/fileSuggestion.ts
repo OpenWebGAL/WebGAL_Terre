@@ -107,7 +107,10 @@ export async function handleFileSuggestions(
   if (sentence.command === commandType.unlockCg) {
     dirPath = getPathFromSubdir(basePath, 'background', getPath(line));
   }
-  if (sentence.command === commandType.changeFigure) {
+  if (
+    sentence.command === commandType.changeFigure ||
+    sentence.command === commandType.changeFigureDiff
+  ) {
     dirPath = getPathFromSubdir(basePath, 'figure', getPath(line));
   }
   if (sentence.command === commandType.miniAvatar) {

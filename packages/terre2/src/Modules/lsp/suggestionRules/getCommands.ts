@@ -51,6 +51,19 @@ changeFigure:<fileName> [-left] [-right] [-left13] [-right13] [-left14] [-right1
   },
   {
     kind: CompletionItemKind.Function,
+    label: 'changeFigureDiff',
+    insertText: makeInsertText('changeFigureDiff'),
+    detail: `立绘差分切换`,
+    documentation: markdown(
+      `\`\`\`
+changeFigureDiff:smile.png -id=hero;
+changeFigureDiff:smile.png -left;
+changeFigureDiff:<fileName> [-left] [-right] [-left13] [-right13] [-left14] [-right14] [-id=figureId] [-next];
+\`\`\``,
+    ),
+  },
+  {
+    kind: CompletionItemKind.Function,
     label: 'bgm',
     insertText: makeInsertText('bgm'),
     detail: `背景音乐（BGM）`,

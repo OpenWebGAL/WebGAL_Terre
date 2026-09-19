@@ -73,6 +73,17 @@ export function getArgsKey(
         blendModeKey,
       ];
     }
+    case commandType.changeFigureDiff: {
+      return [
+        whenKey,
+        nextKey,
+        continueKey,
+        idFigureKey,
+        leftKey,
+        rightKey,
+        ...centeredPositionKeys,
+      ];
+    }
     case commandType.bgm: {
       return [whenKey, volumeKey, enterBgmKey, unlocknameKey, seriesKey];
     }

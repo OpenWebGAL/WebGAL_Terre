@@ -65,6 +65,9 @@ msgstr "changeBg: Choose a background;"
 msgid "changeFigure:选择立绘文件;"
 msgstr "changeFigure: Choose a file of figure;"
 
+msgid "changeFigureDiff:选择立绘文件;"
+msgstr ""
+
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene: Choose a file of scene;"
 
@@ -508,6 +511,9 @@ msgstr "Switch interface language"
 
 msgid "切换立绘"
 msgstr "Change figure"
+
+msgid "切换立绘差分"
+msgstr ""
 
 msgid "切换背景"
 msgstr "Change background"
@@ -988,6 +994,9 @@ msgstr "Common settings"
 
 msgid "常规演出"
 msgstr "Regular performance"
+
+msgid "平滑切换指定位置的立绘差分"
+msgstr ""
 
 msgid "平铺"
 msgstr "Tiling"
