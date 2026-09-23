@@ -27,7 +27,7 @@ function convertSentenceToNode(sentence: ISentenceEditorConfig) {
 
 export function AddSentenceTab() {
 
-  const btsCommon1 = pickSentenceType([commandType.say, commandType.changeBg, commandType.changeFigure]);
+  const btsCommon1 = pickSentenceType([commandType.say, commandType.changeBg, commandType.changeFigure, commandType.changeFigureDiff]);
   const btsCommon2 = pickSentenceType([commandType.bgm, commandType.video, commandType.playEffect]);
   const btsControl = pickSentenceType([commandType.setAnimation, commandType.setComplexAnimation, commandType.setTransform]);
   const btsControl2 = pickSentenceType([commandType.setTempAnimation, commandType.setTransition]);

@@ -73,6 +73,24 @@ export function getArgsKey(
         blendModeKey,
       ];
     }
+    case commandType.changeFigureDiff: {
+      // 差分只换图片；口型眨眼图与表情配套，随差分一起替换
+      return [
+        whenKey,
+        nextKey,
+        continueKey,
+        idFigureKey,
+        leftKey,
+        rightKey,
+        ...centeredPositionKeys,
+        animationFlagKey,
+        eyesOpenKey,
+        eyesCloseKey,
+        mouthOpenKey,
+        mouthHalfOpenKey,
+        mouthCloseKey,
+      ];
+    }
     case commandType.bgm: {
       return [whenKey, volumeKey, enterBgmKey, unlocknameKey, seriesKey];
     }

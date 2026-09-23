@@ -15,6 +15,7 @@ import {
   Effects,
   EnterTheKeyboard,
   Erase,
+  Exchange,
   ListCheckbox,
   Logout,
   GameHandle,
@@ -29,6 +30,7 @@ import {
 } from "@icon-park/react";
 import ChangeBg from "./ChangeBg";
 import ChangeFigure from "./ChangeFigure";
+import ChangeFigureDiff from "./ChangeFigureDiff";
 import Bgm from "./Bgm";
 import PlayVideo from "./PlayVideo";
 import Unrecognized from "./Unrecognized";
@@ -105,6 +107,14 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component: ChangeFigure,
     icon: <People theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`添加或切换指定位置的立绘`
+  },
+  {
+    type: commandType.changeFigureDiff,
+    title: () => t`切换立绘差分`,
+    initialText: () => t`changeFigureDiff:选择立绘文件;`,
+    component: ChangeFigureDiff,
+    icon: <Exchange theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`平滑切换指定位置的立绘差分`
   },
   {
     type: commandType.setAnimation,
