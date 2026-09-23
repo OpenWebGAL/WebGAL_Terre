@@ -74,6 +74,7 @@ export function getArgsKey(
       ];
     }
     case commandType.changeFigureDiff: {
+      // 差分只换图片；口型眨眼图与表情配套，随差分一起替换
       return [
         whenKey,
         nextKey,
@@ -82,6 +83,12 @@ export function getArgsKey(
         leftKey,
         rightKey,
         ...centeredPositionKeys,
+        animationFlagKey,
+        eyesOpenKey,
+        eyesCloseKey,
+        mouthOpenKey,
+        mouthHalfOpenKey,
+        mouthCloseKey,
       ];
     }
     case commandType.bgm: {

@@ -58,8 +58,11 @@ changeFigure:<fileName> [-left] [-right] [-left13] [-right13] [-left14] [-right1
       `\`\`\`
 changeFigureDiff:smile.png -id=hero;
 changeFigureDiff:smile.png -left;
-changeFigureDiff:<fileName> [-left] [-right] [-left13] [-right13] [-left14] [-right14] [-id=figureId] [-next];
-\`\`\``,
+changeFigureDiff:smile.png -id=hero -animationFlag=on -mouthOpen=smile_open.png -mouthClose=smile.png;
+changeFigureDiff:<fileName> [-left] [-right] [-left13] [-right13] [-left14] [-right14] [-id=figureId] [-next] [-animationFlag=on -mouthOpen=... -mouthHalfOpen=... -mouthClose=... -eyesOpen=... -eyesClose=...];
+\`\`\`
+
+同一立绘的差分替换（如换表情）：只换图片，保留变换、层级等状态；口型眨眼图随本句整体替换。不适用于 Live2D 与 Spine。`,
     ),
   },
   {

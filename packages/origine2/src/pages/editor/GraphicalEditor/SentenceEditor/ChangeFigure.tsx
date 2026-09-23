@@ -21,9 +21,12 @@ import { OptionCategory } from "../components/OptionCategory";
 import { AssetPreview } from "../components/AssetPreview";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
+import {
+  FigureAssociatedAnimationOptions,
+  useFigureAssociatedAnimation,
+} from "../components/FigureAssociatedAnimationOptions";
 
 type FigurePosition = "" | "left" | "left14" | "left13" | "right13" | "right14" | "right";
-type AnimationFlag = "" | "on";
 type PanelType = "effect" | "moreOptions";
 
 // eslint-disable-next-line complexity
@@ -44,12 +47,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const exitDuration = useValue<number | string>(getArgByKey(props.sentence, 'exitDuration') as number);
   const enterAnimation = useValue(getArgByKey(props.sentence, "enter").toString() ?? "");
   const exitAnimation = useValue(getArgByKey(props.sentence, "exit").toString() ?? "");
-  const mouthOpen = useValue(getArgByKey(props.sentence, "mouthOpen").toString() ?? "");
-  const mouthHalfOpen = useValue(getArgByKey(props.sentence, "mouthHalfOpen").toString() ?? "");
-  const mouthClose = useValue(getArgByKey(props.sentence, "mouthClose").toString() ?? "");
-  const eyesOpen = useValue(getArgByKey(props.sentence, "eyesOpen").toString() ?? "");
-  const eyesClose = useValue(getArgByKey(props.sentence, "eyesClose").toString() ?? "");
-  const animationFlag = useValue(getArgByKey(props.sentence, "animationFlag").toString() ?? "");
+  const associatedAnimation = useFigureAssociatedAnimation(props.sentence);
   const bounds = useValue(getArgByKey(props.sentence, "bounds").toString() ?? "");
   const zIndex = useValue(String(getArgByKey(props.sentence, 'zIndex') ?? ''));
   const blink = useValue<string>(getArgByKey(props.sentence, "blink").toString() ?? "");
@@ -76,11 +74,6 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     ["right13", t`右侧 1/3`],
     ["right14", t`右侧 1/4`],
     ["right", t`右侧`]
-  ]);
-
-  const animationFlags = new Map<AnimationFlag, string>([
-    ["", "OFF"],
-    ["on", "ON"],
   ]);
 
   const ease = useValue(getArgByKey(props.sentence, 'ease').toString() ?? '');
@@ -241,12 +234,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     });
   }, []);
   useEffect(() => {
-    if (animationFlag.value === "on") {
+    if (associatedAnimation.animationFlag.value === "on") {
       setIsAccordionOpen(true);
     } else {
       setIsAccordionOpen(false);
     }
-  }, [animationFlag.value]);
+  }, [associatedAnimation.animationFlag.value]);
   const submit = () => {
     const contentWithType = isSpineJsonFormat && !isHaveSpineArg
       ? `${figureFile.value}?type=spine`
@@ -267,21 +260,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         {key: "exitDuration", value: exitDuration.value},
         {key: "enter", value: enterAnimation.value},
         {key: "exit", value: exitAnimation.value},
-        ...(animationFlag.value !== "" ? [
-          { key: "animationFlag", value: animationFlag.value },
-          { key: "eyesOpen", value: eyesOpen.value },
-          { key: "eyesClose", value: eyesClose.value },
-          { key: "mouthOpen", value: mouthOpen.value },
-          { key: "mouthHalfOpen", value: mouthHalfOpen.value },
-          { key: "mouthClose", value: mouthClose.value },
-        ] : [
-          { key: "animationFlag", value: "" },
-          { key: "eyesOpen", value: "" },
-          { key: "eyesClose", value: "" },
-          { key: "mouthOpen", value: "" },
-          { key: "mouthHalfOpen", value: "" },
-          { key: "mouthClose", value: "" },
-        ]),
+        ...associatedAnimation.submitArgs(),
         {key: "motion", value: currentMotion.value},
         {key: "expression", value: currentExpression.value},
         {key: "skin", value: currentSkin.value},
@@ -353,72 +332,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     return <>
       {/* 图片立绘 */}
       {!figureFile.value.includes('.json') && (
-        <OptionCategory key="animationFlagOptionGroup" title={t`图片差分`}>
-          <CommonOptions title={t`唇形同步与眨眼`} key="animationFlagOption">
-            <WheelDropdown
-              options={animationFlags}
-              value={animationFlag.value}
-              onValueChange={(newValue) => {
-                animationFlag.set(newValue?.toString() ?? "");
-                submit();
-              }}
-            />
-          </CommonOptions>
-          {animationFlag.value === "on" && (
-            <>
-              <CommonOptions key="mouthOpenOption" title={t`张开嘴`}>
-                <>
-                  {mouthOpen.value + "\u00a0\u00a0"}
-                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthOpen.value} onChange={(fileDesc) => {
-                    mouthOpen.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extNames={extNameMap.get('image')}/>
-                </>
-              </CommonOptions>
-              <CommonOptions key="mouthHalfOpenOption" title={t`半张嘴`}>
-                <>
-                  {mouthHalfOpen.value + "\u00a0\u00a0"}
-                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthHalfOpen.value} onChange={(fileDesc) => {
-                    mouthHalfOpen.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extNames={extNameMap.get('image')}/>
-                </>
-              </CommonOptions>
-              <CommonOptions key="mouthCloseOption" title={t`闭上嘴`}>
-                <>
-                  {mouthClose.value + "\u00a0\u00a0"}
-                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={mouthClose.value} onChange={(fileDesc) => {
-                    mouthClose.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extNames={extNameMap.get('image')}/>
-                </>
-              </CommonOptions>
-              <CommonOptions key="eyesOpenOption" title={t`睁开眼睛`}>
-                <>
-                  {eyesOpen.value + "\u00a0\u00a0"}
-                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesOpen.value} onChange={(fileDesc) => {
-                    eyesOpen.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extNames={extNameMap.get('image')}/>
-                </>
-              </CommonOptions>
-              <CommonOptions key="eyesCloseOption" title={t`闭上眼睛`}>
-                <>
-                  {eyesClose.value + "\u00a0\u00a0"}
-                  <ChooseFile title={t`选择立绘文件`} basePath={['figure']} selectedFilePath={eyesClose.value} onChange={(fileDesc) => {
-                    eyesClose.set(fileDesc?.name ?? "");
-                    submit();
-                  }}
-                  extNames={extNameMap.get('image')}/>
-                </>
-              </CommonOptions>
-            </>
-          )}
-        </OptionCategory>
+        <FigureAssociatedAnimationOptions state={associatedAnimation} onSubmit={submit} />
       )}
       {/* Live2D 立绘 */}
       {figureFile.value.includes('.json') && !isSpineJsonFormat && (

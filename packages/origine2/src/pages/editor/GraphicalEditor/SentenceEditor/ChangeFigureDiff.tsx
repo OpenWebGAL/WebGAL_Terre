@@ -11,12 +11,17 @@ import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdo
 import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import { AssetPreview } from "../components/AssetPreview";
+import {
+  FigureAssociatedAnimationOptions,
+  useFigureAssociatedAnimation,
+} from "../components/FigureAssociatedAnimationOptions";
 
 type FigurePosition = "" | "left" | "left14" | "left13" | "right13" | "right14" | "right";
 
 /**
  * 立绘差分切换编辑器组件
- * 用于 changeFigureDiff 指令：专门针对等尺寸静态立绘进行 200ms 互补 RGBA 混合平滑过渡
+ * 用于 changeFigureDiff 指令：同一立绘换表情等差分，只换图片，保留变换、层级等状态。
+ * 口型眨眼图与表情配套，随本句整体替换；Live2D、Spine 不适用，只提供图片文件。
  */
 export default function ChangeFigureDiff(props: ISentenceEditorProps) {
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
@@ -24,6 +29,7 @@ export default function ChangeFigureDiff(props: ISentenceEditorProps) {
   const figurePosition = useValue<FigurePosition>("");
   const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
+  const associatedAnimation = useFigureAssociatedAnimation(props.sentence);
 
   const figurePositions = new Map<FigurePosition, string>([
     ["left", t`左侧`],
@@ -56,6 +62,7 @@ export default function ChangeFigureDiff(props: ISentenceEditorProps) {
           .filter((position) => position !== "")
           .map((position) => ({ key: position, value: figurePosition.value === position })),
         { key: "id", value: id.value },
+        ...associatedAnimation.submitArgs(),
         { key: "next", value: isGoNext.value },
       ],
       props.sentence.inlineComment,
@@ -135,6 +142,7 @@ export default function ChangeFigureDiff(props: ISentenceEditorProps) {
             isChecked={isGoNext.value}
           />
         </CommonOptions>
+        {!isNoFile && <FigureAssociatedAnimationOptions state={associatedAnimation} onSubmit={submit} />}
         {props.extraOptions}
       </div>
     </div>
