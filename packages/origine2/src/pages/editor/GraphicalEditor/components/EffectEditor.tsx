@@ -395,6 +395,10 @@ export function EffectEditor(props: {
     return base;
   }, []);
   const lineContent = useMemo(() => sentenceToRawLine(props.sentence), [props.sentence, sentenceToRawLine]);
+  // 预览同步用的停止指针：目标语句末行（0-based）+ 1，与 GraphicalEditor 的 submitScene / syncToLineRange 一致。
+  // 不能用 props.index：它是图形编辑器里的语句序号，多行语句只占一行，前面有多行语句时会与文件行号错开，
+  // 导致拖拽框的基线 sync 停错语句，且与保存时的 sync 指针不同，使预览端的基线被误判失效。
+  const previewLineNumber = props.sentence.endLine + 1;
   const transformableBoxKey = useMemo(
     () => [props.targetPath, props.index, lineContent, props.json].join('\n'),
     [props.targetPath, props.index, lineContent, props.json],
@@ -413,12 +417,12 @@ export function EffectEditor(props: {
     if (lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform')) {
       eventBus.emit('editor:pixi-sync-command', {
         targetPath: props.targetPath,
-        lineNumber: props.index,
+        lineNumber: previewLineNumber,
         lineContent,
         lineSentence: props.sentence,
       });
     }
-  }, [lineContent, props.sentence, props.index, props.targetPath]);
+  }, [lineContent, props.sentence, previewLineNumber, props.targetPath]);
   // // 当立绘变换改变时，同步拖拽框与 input
   useEffect(() => {
     eventBus.emit('editor:sync-dragger', {
@@ -452,7 +456,7 @@ export function EffectEditor(props: {
           parent={previewControl}
           sentenceInfo={{
             scenePath: props.targetPath,
-            lineNumber: props.index,
+            lineNumber: previewLineNumber,
             lineContent,
             lineSentence: props.sentence,
             transform: props.json,
