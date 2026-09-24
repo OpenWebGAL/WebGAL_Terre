@@ -194,7 +194,10 @@ export class ManageGameService {
         .filter((commandText) => commandText !== '')
         .map((commandText) => {
           const i = commandText.indexOf(':');
-          const arr = [commandText.slice(0, i), commandText.slice(i + 1)];
+          const arr = [
+            commandText.slice(0, i).trim(),
+            commandText.slice(i + 1).trim(),
+          ];
           config[arr[0]] = arr[1];
         });
     }
@@ -623,13 +626,19 @@ export class ManageGameService {
         );
         await this.webgalFs.mkdir(
           // eslint-disable-next-line prettier/prettier
-          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}`,
+          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(
+            /\./g,
+            '/',
+          )}`,
           '',
         );
         await this.webgalFs.copy(
           `${androidExportDir}/app/src/main/java/MainActivity.kt`,
           // eslint-disable-next-line prettier/prettier
-          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(/\./g, '/')}/MainActivity.kt`
+          `${androidExportDir}/app/src/main/java/${gameConfig.Package_name.replace(
+            /\./g,
+            '/',
+          )}/MainActivity.kt`,
         );
         await this.webgalFs.deleteFileOrDirectory(
           `${androidExportDir}/app/src/main/java/MainActivity.kt`,
@@ -686,6 +695,12 @@ export class ManageGameService {
         // 复制游戏前尝试删除文件夹，防止游戏素材更改后有多余文件
         await this.webgalFs.deleteFileOrDirectory(`${webExportDir}/game/`);
         await this.webgalFs.copy(gameDir, `${webExportDir}/game/`);
+        // 引擎构建产物不再自带 gz，导出 Web 时补齐，供静态服务器按预压缩文件分发
+        await this.webgalFs.gzipFiles(`${webExportDir}/assets`, [
+          '.js',
+          '.css',
+          '.ttf',
+        ]);
         await _open(webExportDir);
       }
 

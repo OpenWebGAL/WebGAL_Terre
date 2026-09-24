@@ -1,6 +1,7 @@
 import { ConsoleLogger } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import { join, resolve } from 'path';
+import { gunzipSync } from 'zlib';
 import AdmZip = require('adm-zip');
 import { WebgalFsService } from './webgal-fs.service';
 
@@ -75,6 +76,34 @@ describe('WebgalFsService', () => {
       true,
     );
     expect((await fs.stat(zipPath)).isFile()).toBe(true);
+  });
+
+  it('creates gzip copies for files with given extensions', async () => {
+    const sourceDir = join(testRoot, 'assets');
+    await fs.mkdir(sourceDir, { recursive: true });
+    await fs.writeFile(join(sourceDir, 'index.js'), 'console.log("webgal")');
+    await fs.writeFile(join(sourceDir, 'index.css'), '.webgal {}');
+    await fs.writeFile(join(sourceDir, 'cover.png'), 'not-text');
+
+    await expect(
+      service.gzipFiles(sourceDir, ['.js', '.css']),
+    ).resolves.toBeUndefined();
+
+    const expectGzipContent = async (fileName: string, content: string) => {
+      const gzFile = await fs.readFile(join(sourceDir, `${fileName}.gz`));
+      expect(gunzipSync(gzFile).toString()).toBe(content);
+    };
+    await expectGzipContent('index.js', 'console.log("webgal")');
+    await expectGzipContent('index.css', '.webgal {}');
+    await expect(
+      fs.stat(join(sourceDir, 'cover.png.gz')),
+    ).rejects.toBeDefined();
+  });
+
+  it('throws when the directory to compress does not exist', async () => {
+    await expect(
+      service.gzipFiles(join(testRoot, 'not-exist'), ['.js']),
+    ).rejects.toBeDefined();
   });
 
   it('returns null when reading an invalid zip buffer', () => {

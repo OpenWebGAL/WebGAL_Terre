@@ -356,15 +356,21 @@ export function EffectEditor(props: {
   );
   /**
    * 实时更新, 将最终结果对象通过onUpdate通知父组件
+   *
+   * 预览发的是「继承值 + 本句显式值」的完整效果，而不是写回语句用的稀疏对象：
+   * 引擎侧的继承基线只在拖拽框初始化那次同步里建立，之后每次写回场景都会让它失效，
+   * 从那以后只发显式字段，预览就会拿默认值补齐，表现为立绘在拖拽过程中丢掉缩放和滤镜。
    */
   const isUseRealtimeEffect = useEditorStore.use.isUseRealtimeEffect();
   const update = useCallback(
     debounce(() => {
       if (!isUseRealtimeEffect) return;
-      const updatedObject = getUpdatedObject();
-      props.onUpdate?.(updatedObject);
+      // 拖拽时 updateField 与 update 在同一次事件里连续调用，组件尚未重新渲染，
+      // 所以这里读 useValue 的实时值，而不是 useMemo 出来的 visibleEffectFields。
+      const previewFields = mergeVisibleEffectFields(explicitEffectFields.value, baselineEffectFields.value);
+      props.onUpdate?.(createEffectObjectFromFields(previewFields, effectConfig));
     }, 10),
-    [getUpdatedObject],
+    [explicitEffectFields.value, baselineEffectFields.value, isUseRealtimeEffect],
   );
 
   const isWindowAdjustment = useEditorStore.use.isWindowAdjustment();
@@ -389,6 +395,10 @@ export function EffectEditor(props: {
     return base;
   }, []);
   const lineContent = useMemo(() => sentenceToRawLine(props.sentence), [props.sentence, sentenceToRawLine]);
+  // 预览同步用的停止指针：目标语句末行（0-based）+ 1，与 GraphicalEditor 的 submitScene / syncToLineRange 一致。
+  // 不能用 props.index：它是图形编辑器里的语句序号，多行语句只占一行，前面有多行语句时会与文件行号错开，
+  // 导致拖拽框的基线 sync 停错语句，且与保存时的 sync 指针不同，使预览端的基线被误判失效。
+  const previewLineNumber = props.sentence.endLine + 1;
   const transformableBoxKey = useMemo(
     () => [props.targetPath, props.index, lineContent, props.json].join('\n'),
     [props.targetPath, props.index, lineContent, props.json],
@@ -407,12 +417,12 @@ export function EffectEditor(props: {
     if (lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform')) {
       eventBus.emit('editor:pixi-sync-command', {
         targetPath: props.targetPath,
-        lineNumber: props.index,
+        lineNumber: previewLineNumber,
         lineContent,
         lineSentence: props.sentence,
       });
     }
-  }, [lineContent, props.sentence, props.index, props.targetPath]);
+  }, [lineContent, props.sentence, previewLineNumber, props.targetPath]);
   // // 当立绘变换改变时，同步拖拽框与 input
   useEffect(() => {
     eventBus.emit('editor:sync-dragger', {
@@ -446,7 +456,7 @@ export function EffectEditor(props: {
           parent={previewControl}
           sentenceInfo={{
             scenePath: props.targetPath,
-            lineNumber: props.index,
+            lineNumber: previewLineNumber,
             lineContent,
             lineSentence: props.sentence,
             transform: props.json,

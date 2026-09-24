@@ -4412,6 +4412,18 @@
   resolved "https://registry.yarnpkg.com/@pixi/app/-/app-6.5.10.tgz#4877929bd53595484c1d334e4cda43bb9d27eca1"
   integrity sha512-VsNHLajZ5Dbc/Zrj7iWmIl3eu6Fec+afjW/NXXezD8Sp3nTDF0bv5F+GDgN/zSc2gqIvPHyundImT7hQGBDghg==
 
+"@pixi/assets@6.5.10":
+  version "6.5.10"
+  resolved "https://registry.yarnpkg.com/@pixi/assets/-/assets-6.5.10.tgz#502c93fbf752389cf4864c072715c548e6882c99"
+  integrity sha512-K8QQRkLauFw7UtJkF2Yy3gvq8Hh1EKeAT1T64wGSEVOco/yyvbPAh4b4YKyol2wZcqaM6FECroKCPXuJtShKQg==
+  dependencies:
+    "@types/css-font-loading-module" "^0.0.7"
+
+"@pixi/basis@6.5.10":
+  version "6.5.10"
+  resolved "https://registry.yarnpkg.com/@pixi/basis/-/basis-6.5.10.tgz#17955c2b3c34bf9e143ca13d69fc1618f6e7c027"
+  integrity sha512-FPhp93S/v8mrebosS1lleEkVCgaQDKMn0ml5jKofoW5wqYF2dLst0evUhMYQ/oZiauxaGrBpULv55d5kPFYoBQ==
+
 "@pixi/compressed-textures@6.5.10":
   version "6.5.10"
   resolved "https://registry.yarnpkg.com/@pixi/compressed-textures/-/compressed-textures-6.5.10.tgz#3d2f8973f504af1f8db5c2a1338028d9b9f84ece"
@@ -4980,6 +4992,11 @@
   integrity sha512-mFNylyeyqN93lfe/9CSxOGREz8cpzAhH+E93xJ4xWQf62V8sQ/24reV2nyzUWM6H6Xji+GGHpkbLe7pVoUEskg==
   dependencies:
     "@types/node" "*"
+
+"@types/css-font-loading-module@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.7.tgz#2f98ede46acc0975de85c0b7b0ebe06041d24601"
+  integrity sha512-nl09VhutdjINdWyXxHWN/w9zlNCfr60JUqJbd24YXUuCwgeL0TpFSdElCwb6cxfB6ybE19Gjj4g0jsgkXxKv1Q==
 
 "@types/d3-color@*":
   version "3.1.3"
@@ -13408,13 +13425,15 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-engine@4.6.4:
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.6.4.tgz#6cbfb4a82234bd51b4579d4603f4389b50429538"
-  integrity sha512-45PG6wacZWYDCKZofnfVshEveSnenCJxiXm0kgrijrQhAM9WiqbuBcz4DlvzPWxc1qnqLNTATA6cadICOeUxnQ==
+webgal-engine@4.6.5:
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.6.5.tgz#2f79065813441f39fcfd900443fa682a25090c36"
+  integrity sha512-l8e4KMEeSbq7XK2TP+0rv/Z6LXiO7I/R850c5h23jSl5MfBY+lQURHdi2RVkCzpyLVcuINznbqMYE6sBKStpbg==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"
+    "@pixi/assets" "6.5.10"
+    "@pixi/basis" "6.5.10"
     "@reduxjs/toolkit" "^1.8.1"
     angular-expressions "^1.4.3"
     axios "^1.13.5"
@@ -13437,10 +13456,10 @@ webgal-engine@4.6.4:
     uuid "^9.0.0"
     vite-plugin-package-version "^1.0.2"
 
-webgal-parser@4.6.3:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.6.3.tgz#f15d2af02e22c799e13928fb7fd883c8574d0ef7"
-  integrity sha512-edfz2pROjUEtZXQqqTS/2RIFocU5Att8Ei82Dl2Gl0FBQAhvmyP1v+aWOhQIW55nTy0IZ54L5tR3BXopM9SC9w==
+webgal-parser@4.6.5:
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.6.5.tgz#2b869a73b5647f517864078a0a6401c2f4c52c1f"
+  integrity sha512-e/cimA4uUA4tY3cJc7yGTosS2MuhgVc8zVGo6lBBOXDrz4z8a4oq4kYOpj0FMJalWQ/0rFoa5bf+OibT3VliBQ==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

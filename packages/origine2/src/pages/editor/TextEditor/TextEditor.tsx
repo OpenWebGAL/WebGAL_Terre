@@ -15,6 +15,9 @@ import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
 import { useValue } from "@/hooks/useValue";
 
+// 最近一次通过点击光标同步到引擎的场景，所有文本编辑器标签页共享
+let lastClickSyncedScenePath = '';
+
 interface ITextEditorProps {
   targetPath: string;
   isHide: boolean;
@@ -49,9 +52,13 @@ export default function TextEditor(props: ITextEditorProps) {
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
-        if (event.position.lineNumber !== previousCursorPosition.lineNumber) {
+        const scenePath = target?.path ?? '';
+        // 切换标签页后引擎仍停留在其他场景，此时即使点击的是已记录的同一行也需要同步
+        const isSceneChanged = scenePath !== lastClickSyncedScenePath;
+        if (event.position.lineNumber !== previousCursorPosition.lineNumber || isSceneChanged) {
+          lastClickSyncedScenePath = scenePath;
           EditorPreviewClient.sendSyncScene({
-            scenePath: target?.path ?? '',
+            scenePath,
             lineNumber: event.position.lineNumber,
             lineCommandString: targetValue,
           });

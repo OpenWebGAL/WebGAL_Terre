@@ -65,6 +65,9 @@ msgstr "changeBg: Choose a background;"
 msgid "changeFigure:选择立绘文件;"
 msgstr "changeFigure: Choose a file of figure;"
 
+msgid "changeFigureDiff:选择立绘文件;"
+msgstr "changeFigureDiff: Choose a file of figure;"
+
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene: Choose a file of scene;"
 
@@ -287,8 +290,14 @@ msgstr "Theme"
 msgid "亮度"
 msgstr "Brightness"
 
+msgid "从当前状态开始"
+msgstr "Start from current state"
+
 msgid "从本场景选择"
 msgstr "Choose from current scene"
+
+msgid "从默认状态开始"
+msgstr "Start from default state"
 
 msgid "代码编辑器"
 msgstr "Code Editor"
@@ -509,6 +518,9 @@ msgstr "Switch interface language"
 msgid "切换立绘"
 msgstr "Change figure"
 
+msgid "切换立绘差分"
+msgstr "Change figure variant"
+
 msgid "切换背景"
 msgstr "Change background"
 
@@ -622,6 +634,9 @@ msgstr "Unpin"
 
 msgid "变换"
 msgstr "Transform"
+
+msgid "变换起点"
+msgstr "Transform starting point"
 
 msgid "变量名"
 msgstr "Variable name"
@@ -988,6 +1003,9 @@ msgstr "Common settings"
 
 msgid "常规演出"
 msgstr "Regular performance"
+
+msgid "平滑切换指定位置的立绘差分"
+msgstr "Smoothly change the figure variant at the specified position"
 
 msgid "平铺"
 msgstr "Tiling"
@@ -1898,12 +1916,6 @@ msgstr "End game"
 msgid "绝对"
 msgstr "Absolutely"
 
-msgid "继承现有效果"
-msgstr "Inherit current effect"
-
-msgid "继承默认效果"
-msgstr "Inherit default effect"
-
 msgid "继续游戏按钮"
 msgstr "Continue button"
 
@@ -2044,9 +2056,6 @@ msgstr "Line of script"
 
 msgid "补充"
 msgstr "Fill in"
-
-msgid "补充默认值"
-msgstr "Write default"
 
 msgid "表达式"
 msgstr "Expression"

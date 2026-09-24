@@ -28,7 +28,7 @@ import {
 import {
   createFrameFromReferenceBox,
   createTransformFromReferenceFrame,
-  isWriteDefaultDisabled,
+  isTransformFromCurrent,
   resolveTransformTarget,
   type TransformFrame,
 } from './referenceBoxGeometry';
@@ -214,7 +214,7 @@ const TransformableBox: React.FC<TransformableBoxProps> = ({
       let inheritedTransform: Transform | undefined;
       if (
         sentenceInfo.lineContent.startsWith('setTransform') &&
-        isWriteDefaultDisabled(sentenceInfo.lineSentence)
+        isTransformFromCurrent(sentenceInfo.lineSentence)
       ) {
         const transformBaselineRevision = createId();
         EditorPreviewClient.sendSyncScene({

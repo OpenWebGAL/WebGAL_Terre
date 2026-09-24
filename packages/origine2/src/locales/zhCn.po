@@ -65,6 +65,9 @@ msgstr "changeBg: 选择背景图片;"
 msgid "changeFigure:选择立绘文件;"
 msgstr "changeFigure:选择立绘文件;"
 
+msgid "changeFigureDiff:选择立绘文件;"
+msgstr "changeFigureDiff:选择立绘文件;"
+
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene:选择场景文件;"
 
@@ -287,8 +290,14 @@ msgstr "主题"
 msgid "亮度"
 msgstr "亮度"
 
+msgid "从当前状态开始"
+msgstr "从当前状态开始"
+
 msgid "从本场景选择"
 msgstr "从本场景选择"
+
+msgid "从默认状态开始"
+msgstr "从默认状态开始"
 
 msgid "代码编辑器"
 msgstr "代码编辑器"
@@ -509,6 +518,9 @@ msgstr "切换界面语言"
 msgid "切换立绘"
 msgstr "切换立绘"
 
+msgid "切换立绘差分"
+msgstr "切换立绘差分"
+
 msgid "切换背景"
 msgstr "切换背景"
 
@@ -622,6 +634,9 @@ msgstr "取消固定"
 
 msgid "变换"
 msgstr "变换"
+
+msgid "变换起点"
+msgstr "变换起点"
 
 msgid "变量名"
 msgstr "变量名"
@@ -988,6 +1003,9 @@ msgstr "常用设置"
 
 msgid "常规演出"
 msgstr "常规演出"
+
+msgid "平滑切换指定位置的立绘差分"
+msgstr "平滑切换指定位置的立绘差分"
 
 msgid "平铺"
 msgstr "平铺"
@@ -1898,12 +1916,6 @@ msgstr "结束游戏"
 msgid "绝对"
 msgstr "绝对"
 
-msgid "继承现有效果"
-msgstr "继承现有效果"
-
-msgid "继承默认效果"
-msgstr "继承默认效果"
-
 msgid "继续游戏按钮"
 msgstr "继续游戏按钮"
 
@@ -2044,9 +2056,6 @@ msgstr "行脚本"
 
 msgid "补充"
 msgstr "补充"
-
-msgid "补充默认值"
-msgstr "补充默认值"
 
 msgid "表达式"
 msgstr "表达式"
