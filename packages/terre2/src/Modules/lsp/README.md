@@ -133,6 +133,95 @@ sequenceDiagram
 `UriMapper.toFileUri` 把客户端 URI（如 `games/demo/game/scene.txt`）转换为
 `file://` 绝对路径；第三方回传的诊断等再经 `toClientUri` 还原。
 
+### 3.4 workspace/fs 扩展协议
+
+代理为第三方语言服务器提供三个反向文件系统请求。三个请求均由宿主主动响应，
+第三方语言服务器作为请求方；所有资源标识必须是规范 URI，参数中不再使用裸路径。
+当前 Terre 支持 `file:` URI，例如：
+
+```text
+file:///C:/games/demo/scene/start.txt
+```
+
+不接受 `C:\games\demo\scene\start.txt`、相对路径或业务相对路径。Terre 使用
+`UriMapper.toLocalPath` 将 `file:` URI 转成本地路径，URI 中的空格、非 ASCII 字符、
+`#`、`?` 和 `%` 会按 URI 规则解码。暂不支持的 URI scheme 会返回 JSON-RPC 错误。
+
+#### `workspace/fs/stat`
+
+请求：
+
+```json
+{ "uri": "file:///C:/games/demo/scene/start.txt" }
+```
+
+成功时返回：
+
+```json
+{
+  "type": "file",
+  "size": 1234,
+  "mtime": 1727000000000,
+  "ctime": 1726000000000
+}
+```
+
+`type` 可为 `file`、`directory`、`symbolicLink` 或 `unknown`。资源不存在时返回
+`null`；权限错误、无效 URI 和其他 IO 错误不会伪装成不存在，而是作为 JSON-RPC
+错误返回。
+
+#### `workspace/fs/readDirectory`
+
+请求目录的直接子项，不递归：
+
+```json
+{ "uri": "file:///C:/games/demo/scene" }
+```
+
+响应：
+
+```json
+[
+  {
+    "uri": "file:///C:/games/demo/scene/start.txt",
+    "name": "start.txt",
+    "type": "file"
+  },
+  {
+    "uri": "file:///C:/games/demo/scene/common",
+    "name": "common",
+    "type": "directory"
+  }
+]
+```
+
+每个目录项都包含完整 URI，客户端不应自行拼接 URI。`name` 是目录项名称，
+`type` 的取值与 `stat` 相同。
+
+#### `workspace/fs/readFile`
+
+请求：
+
+```json
+{
+  "uri": "file:///C:/games/demo/config.json",
+  "encoding": "utf-8"
+}
+```
+
+`encoding` 当前支持 `utf-8` 和 `base64`。响应始终是对象：
+
+```json
+{
+  "content": "{ ... }",
+  "encoding": "utf-8"
+}
+```
+
+当 `encoding` 为 `base64` 时，`content` 是文件原始字节的 Base64 编码。读取失败
+会返回 JSON-RPC 错误。文件修改继续使用标准 LSP 的 `workspace/applyEdit`，不通过
+`workspace/fs/readFile` 扩展协议执行写入。
+
 ## 4. 第三方 LSP 接入契约
 
 在 `~/.webgal_terre/third-party-ls/<服务器名称>/start.js` 放置启动脚本，导出：

@@ -11,6 +11,7 @@ import {
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import * as path from 'path';
 import * as fs from 'fs';
+import { pathToFileURL } from 'url';
 import { BaseLanguageServer } from './baseLanguageServer';
 import { resolveWorkspaceUri, UriMapper } from './uriMapper';
 import {
@@ -329,28 +330,56 @@ export class ThirdPartyLanguageServer extends BaseLanguageServer {
         return this.connection?.sendRequest(method, params, token);
       }
       try {
-        const normalizedPath = this.uriMapper.stripFileProtocol(params.path);
-        if (!normalizedPath) throw new Error('Empty path');
+        const uri = params?.uri;
+        if (typeof uri !== 'string' || !uri) throw new Error('Missing filesystem URI');
+        const normalizedPath = this.uriMapper.toLocalPath(uri);
 
         switch (method) {
+          case 'workspace/fs/stat': {
+            try {
+              const s = await fs.promises.lstat(normalizedPath);
+              return {
+                type: s.isDirectory()
+                  ? 'directory'
+                  : s.isSymbolicLink()
+                    ? 'symbolicLink'
+                    : s.isFile()
+                      ? 'file'
+                      : 'unknown',
+                size: s.size,
+                mtime: s.mtimeMs,
+                ctime: s.ctimeMs,
+              };
+            } catch (err: any) {
+              if (err?.code === 'ENOENT' || err?.code === 'ENOTDIR') return null;
+              throw err;
+            }
+          }
           case 'workspace/fs/readFile':
-            return await fs.promises.readFile(normalizedPath, 'utf8');
+            if (params.encoding === 'base64') {
+              const data = await fs.promises.readFile(normalizedPath);
+              return { content: data.toString('base64'), encoding: 'base64' };
+            }
+            return {
+              content: await fs.promises.readFile(normalizedPath, 'utf8'),
+              encoding: 'utf-8',
+            };
           case 'workspace/fs/readDirectory': {
             const entries = await fs.promises.readdir(normalizedPath, {
               withFileTypes: true,
             });
             return entries.map((e) => ({
+              uri: pathToFileURL(path.join(normalizedPath, e.name)).toString(),
               name: e.name,
-              isDirectory: e.isDirectory(),
+              type: e.isDirectory()
+                ? 'directory'
+                : e.isSymbolicLink()
+                  ? 'symbolicLink'
+                  : e.isFile()
+                    ? 'file'
+                    : 'unknown',
             }));
           }
-          case 'workspace/fs/exists':
-            try {
-              const s = await fs.promises.stat(normalizedPath);
-              return { exists: true, isDirectory: s.isDirectory() };
-            } catch {
-              return { exists: false, isDirectory: false };
-            }
           default:
             throw new Error(`Unsupported workspace/fs method: ${method}`);
         }

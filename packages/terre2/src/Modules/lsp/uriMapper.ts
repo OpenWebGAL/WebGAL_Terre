@@ -1,4 +1,4 @@
-import { pathToFileURL } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import * as path from 'path';
 import { UserDataService } from '../user-data/user-data.service';
 
@@ -44,6 +44,14 @@ export class UriMapper {
       p = p.replace(/\//g, '\\');
     }
     return p;
+  }
+
+  /** 将协议中的标准 file URI 严格转换为本地路径。 */
+  toLocalPath(uri: string): string {
+    if (!uri.startsWith('file:')) {
+      throw new Error(`Unsupported filesystem URI scheme: ${uri}`);
+    }
+    return fileURLToPath(new URL(uri));
   }
 
   clear(): void {
