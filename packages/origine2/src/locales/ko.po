@@ -290,8 +290,14 @@ msgstr "테마"
 msgid "亮度"
 msgstr "밝기"
 
+msgid "从当前状态开始"
+msgstr "현재 상태에서 시작"
+
 msgid "从本场景选择"
 msgstr "현재 장면에서 선택"
+
+msgid "从默认状态开始"
+msgstr "기본 상태에서 시작"
 
 msgid "代码编辑器"
 msgstr "코드 에디터"
@@ -628,6 +634,9 @@ msgstr "고정 해제"
 
 msgid "变换"
 msgstr "변형"
+
+msgid "变换起点"
+msgstr "변환 시작 상태"
 
 msgid "变量名"
 msgstr "변수명"
@@ -1907,12 +1916,6 @@ msgstr "게임 종료"
 msgid "绝对"
 msgstr "절대적"
 
-msgid "继承现有效果"
-msgstr "기존 이펙트 유지"
-
-msgid "继承默认效果"
-msgstr "기본 이펙트 유지"
-
 msgid "继续游戏按钮"
 msgstr "이어하기 버튼"
 
@@ -2053,9 +2056,6 @@ msgstr "줄 스크립트"
 
 msgid "补充"
 msgstr "보완"
-
-msgid "补充默认值"
-msgstr "기본값 보충"
 
 msgid "表达式"
 msgstr "표현식"

@@ -69,9 +69,17 @@ export function resolveTransformTarget(input: ResolveTargetInput): string | unde
   return undefined;
 }
 
-export function isWriteDefaultDisabled(
+/**
+ * 变换是否从目标的当前状态开始，规则与引擎的 resolveTransformArgs 一致：
+ * 优先看 transformFrom，没有时兼容旧参数 writeDefault，都没有则从当前状态开始
+ */
+export function isTransformFromCurrent(
   lineSentence: ResolveTargetInput['lineSentence'],
 ): boolean {
+  const transformFrom = getArgValue(lineSentence, 'transformFrom');
+  if (typeof transformFrom === 'string' && transformFrom !== '') {
+    return transformFrom !== 'default';
+  }
   return getArgValue(lineSentence, 'writeDefault') !== true;
 }
 

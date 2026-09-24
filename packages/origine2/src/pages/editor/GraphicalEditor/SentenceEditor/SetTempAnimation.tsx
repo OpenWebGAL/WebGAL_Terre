@@ -13,7 +13,7 @@ import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
 import { CloseSmall, Down, More, Plus, Up } from "@icon-park/react";
 import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
 import { useRef } from "react";
-import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
+import { getTransformFromArgs, isTransformFromDefault, TransformFromOption } from "../components/TransformFromOption";
 import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
 
 interface IAnimationFrame {
@@ -30,10 +30,9 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value);
   const isUsePreset = useValue(isPresetTarget);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
-  const writeDefault = useValue(getArgByKey(props.sentence, 'writeDefault') === true);
+  const isFromDefault = useValue(isTransformFromDefault(props.sentence));
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
   const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
-  const ignoreDefault = useValue(getArgByKey(props.sentence, 'ignoreDefault') === true);
   const easeTypeOptions = useEaseTypeOptions();
 
   const submit = () => {
@@ -43,10 +42,9 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
       props.sentence.args,
       [
         {key: "target", value: target.value},
-        {key: "writeDefault", value: writeDefault.value},
+        ...getTransformFromArgs(isFromDefault.value),
         {key: "keep", value: keep.value},
         {key: "parallel", value: parallel.value},
-        {key: "ignoreDefault", value: ignoreDefault.value},
         {key: "next", value: isGoNext.value},
       ],
       props.sentence.inlineComment,
@@ -258,12 +256,10 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
           style={{ width: "100%" }}
         />
       </CommonOptions>}
-      <CommonOptions key="writeDefault" title={t`补充默认值`}>
-        <TerreToggle title="" onChange={(newValue) => {
-          writeDefault.set(newValue);
-          submit();
-        }} onText={t`继承默认效果`} offText={t`继承现有效果`} isChecked={writeDefault.value} />
-      </CommonOptions>
+      <TransformFromOption value={isFromDefault.value} onChange={(value) => {
+        isFromDefault.set(value);
+        submit();
+      }} />
       <CommonOptions key="keep" title={t`跨语句动画`}>
         <TerreToggle title="" onChange={(newValue) => {
           keep.set(newValue);
@@ -276,10 +272,6 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
           submit();
         }} onText={t`与同目标动画并行`} offText={t`替换同目标动画`} isChecked={parallel.value} />
       </CommonOptions>
-      <IgnoreDefaultOption value={ignoreDefault.value} onChange={(value) => {
-        ignoreDefault.set(value);
-        submit();
-      }} />
       <CommonOptions key="isGoNext" title={t`连续执行`}>
         <TerreToggle title="" onChange={(newValue) => {
           isGoNext.set(newValue);

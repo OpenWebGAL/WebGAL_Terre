@@ -290,8 +290,14 @@ msgstr "Theme"
 msgid "亮度"
 msgstr "Brightness"
 
+msgid "从当前状态开始"
+msgstr "Start from current state"
+
 msgid "从本场景选择"
 msgstr "Choose from current scene"
+
+msgid "从默认状态开始"
+msgstr "Start from default state"
 
 msgid "代码编辑器"
 msgstr "Code Editor"
@@ -628,6 +634,9 @@ msgstr "Unpin"
 
 msgid "变换"
 msgstr "Transform"
+
+msgid "变换起点"
+msgstr "Transform starting point"
 
 msgid "变量名"
 msgstr "Variable name"
@@ -1907,12 +1916,6 @@ msgstr "End game"
 msgid "绝对"
 msgstr "Absolutely"
 
-msgid "继承现有效果"
-msgstr "Inherit current effect"
-
-msgid "继承默认效果"
-msgstr "Inherit default effect"
-
 msgid "继续游戏按钮"
 msgstr "Continue button"
 
@@ -2053,9 +2056,6 @@ msgstr "Line of script"
 
 msgid "补充"
 msgstr "Fill in"
-
-msgid "补充默认值"
-msgstr "Write default"
 
 msgid "表达式"
 msgstr "Expression"

@@ -290,8 +290,14 @@ msgstr "テーマ"
 msgid "亮度"
 msgstr "輝度"
 
+msgid "从当前状态开始"
+msgstr "現在の状態から開始"
+
 msgid "从本场景选择"
 msgstr "このシーンから選択"
+
+msgid "从默认状态开始"
+msgstr "デフォルトの状態から開始"
 
 msgid "代码编辑器"
 msgstr "コードエディタ"
@@ -628,6 +634,9 @@ msgstr "ピン留めを解除"
 
 msgid "变换"
 msgstr "トランスフォーム"
+
+msgid "变换起点"
+msgstr "変換の開始状態"
 
 msgid "变量名"
 msgstr "変数名"
@@ -1907,12 +1916,6 @@ msgstr "ゲーム終了"
 msgid "绝对"
 msgstr "絶対"
 
-msgid "继承现有效果"
-msgstr "現在の効果を継承する"
-
-msgid "继承默认效果"
-msgstr "デフォルトの効果を継承する"
-
 msgid "继续游戏按钮"
 msgstr "「続きから」ボタン"
 
@@ -2053,9 +2056,6 @@ msgstr " スクリプトの行、"
 
 msgid "补充"
 msgstr "補完"
-
-msgid "补充默认值"
-msgstr "デフォルト値を補う"
 
 msgid "表达式"
 msgstr "式"

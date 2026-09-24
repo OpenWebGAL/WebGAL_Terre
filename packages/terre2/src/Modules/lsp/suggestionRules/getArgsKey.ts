@@ -174,7 +174,7 @@ export function getArgsKey(
         nextKey,
         continueKey,
         targetKey,
-        writeDefaultKey,
+        transformFromKey,
         keepKey,
         parallelKey,
       ];
@@ -188,7 +188,7 @@ export function getArgsKey(
         nextKey,
         continueKey,
         targetKey,
-        writeDefaultKey,
+        transformFromKey,
         keepKey,
         parallelKey,
       ];
@@ -200,7 +200,7 @@ export function getArgsKey(
         continueKey,
         targetKey,
         easeKey,
-        writeDefaultKey,
+        transformFromKey,
         keepKey,
         parallelKey,
         durationKey,
@@ -876,13 +876,15 @@ const easeKey: CompletionItem = {
   `),
 };
 
-const writeDefaultKey: CompletionItem = {
+const transformFromKey: CompletionItem = {
   kind: CompletionItemKind.Constant,
-  label: 'writeDefault',
-  insertText: 'writeDefault',
-  detail: '补充默认值',
+  label: 'transformFrom',
+  insertText: 'transformFrom=',
+  detail: '变换起点',
   documentation: markdown(`
-若变换与效果中有未填写的属性时, 补充默认值, 否则继承现有的值
+变换与效果从哪个状态开始
+- current: 从目标当前的状态开始 (默认值)
+- default: 从默认状态开始, 未填写的属性使用默认值
   `),
 };
 
