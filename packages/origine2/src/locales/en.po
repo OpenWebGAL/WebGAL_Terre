@@ -66,7 +66,7 @@ msgid "changeFigure:选择立绘文件;"
 msgstr "changeFigure: Choose a file of figure;"
 
 msgid "changeFigureDiff:选择立绘文件;"
-msgstr ""
+msgstr "changeFigureDiff: Choose a file of figure;"
 
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene: Choose a file of scene;"
@@ -519,7 +519,7 @@ msgid "切换立绘"
 msgstr "Change figure"
 
 msgid "切换立绘差分"
-msgstr ""
+msgstr "Change figure variant"
 
 msgid "切换背景"
 msgstr "Change background"
@@ -1005,7 +1005,7 @@ msgid "常规演出"
 msgstr "Regular performance"
 
 msgid "平滑切换指定位置的立绘差分"
-msgstr ""
+msgstr "Smoothly change the figure variant at the specified position"
 
 msgid "平铺"
 msgstr "Tiling"

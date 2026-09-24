@@ -66,7 +66,7 @@ msgid "changeFigure:选择立绘文件;"
 msgstr "changeFigure:스탠딩 파일 선택;"
 
 msgid "changeFigureDiff:选择立绘文件;"
-msgstr ""
+msgstr "changeFigureDiff:스탠딩 파일 선택;"
 
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene:장면 파일 선택;"
@@ -519,7 +519,7 @@ msgid "切换立绘"
 msgstr "스탠딩 전환"
 
 msgid "切换立绘差分"
-msgstr ""
+msgstr "스탠딩 차분 전환"
 
 msgid "切换背景"
 msgstr "배경 전환"
@@ -1005,7 +1005,7 @@ msgid "常规演出"
 msgstr "기본 연출"
 
 msgid "平滑切换指定位置的立绘差分"
-msgstr ""
+msgstr "지정 위치의 스탠딩 차분을 부드럽게 전환"
 
 msgid "平铺"
 msgstr "타일 배열"
