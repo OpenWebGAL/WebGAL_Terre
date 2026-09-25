@@ -58,6 +58,7 @@ import Upload from './Upload';
 import naturalCompare from 'natural-compare-lite';
 import useEditorStore from '@/store/useEditorStore';
 import useTrashFailedToast from '@/hooks/useTrashFailedToast';
+import { isLocalBrowserHost } from '@/utils/isLocalBrowserHost';
 
 export interface IFile {
   extName: string;
@@ -136,6 +137,7 @@ export default function Assets({
   const updateSortOrder = useEditorStore.use.updateSortOrder();
   const isTrash = useEditorStore.use.isTrash();
   const toastTrashFailed = useTrashFailedToast();
+  const canOpenLocalFolder = isLocalBrowserHost();
 
   const currentPath = useValue([...basePath, ...selectedFilePath.slice(0, -1)]);
   const currentFullPath = useMemo(() => [...rootPath, ...currentPath.value], [currentPath.value]);
@@ -589,7 +591,9 @@ export default function Assets({
             <MenuPopover>
               <MenuList>
                 <MenuItem icon={<ArrowSyncIcon />} onClick={handleRefresh}>{t`刷新`}</MenuItem>
-                <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder}>{t`在文件管理器中打开`}</MenuItem>
+                {canOpenLocalFolder && (
+                  <MenuItem icon={<FolderOpenIcon />} onClick={handleOpenFolder}>{t`在文件管理器中打开`}</MenuItem>
+                )}
                 <Menu>
                   <MenuTrigger>
                     <MenuItem icon={<ArrowSortIcon />}>{t`排序方式`}</MenuItem>

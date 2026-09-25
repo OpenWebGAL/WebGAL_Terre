@@ -40,6 +40,7 @@ import { localStorageRename } from '@/utils/localStorageRename';
 import { TemplateInfoDto } from '@/api/Api';
 import useEditorStore from '@/store/useEditorStore';
 import useTrashFailedToast from '@/hooks/useTrashFailedToast';
+import { isLocalBrowserHost } from '@/utils/isLocalBrowserHost';
 
 interface ITemplateElementProps {
   templateInfo: TemplateInfoDto;
@@ -75,6 +76,7 @@ export default function TemplateElement(props: ITemplateElementProps) {
   const newTemplateName = useValue(props.templateInfo.dir);
   const isTrash = useEditorStore.use.isTrash();
   const toastTrashFailed = useTrashFailedToast();
+  const canOpenLocalFolder = isLocalBrowserHost();
 
   const openInFileExplorer = () => {
     api.assetsControllerOpenDict(`templates/${props.templateInfo.dir}`);
@@ -146,10 +148,12 @@ export default function TemplateElement(props: ITemplateElementProps) {
               </MenuTrigger>
               <MenuPopover>
                 <MenuList>
-                  <MenuItem
-                    icon={<FolderOpenIcon />}
-                    onClick={() => openInFileExplorer()}
-                  >{t`在文件管理器中打开`}</MenuItem>
+                  {canOpenLocalFolder && (
+                    <MenuItem
+                      icon={<FolderOpenIcon />}
+                      onClick={() => openInFileExplorer()}
+                    >{t`在文件管理器中打开`}</MenuItem>
+                  )}
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
                   <MenuItem
                     disabled={isBuiltIn}
