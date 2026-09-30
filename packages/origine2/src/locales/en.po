@@ -761,8 +761,14 @@ msgstr "Scene"
 msgid "场景与分支"
 msgstr "Scenes and branches"
 
+msgid "场景保存失败，请重试"
+msgstr "Failed to save the scene. Please retry."
+
 msgid "场景文件"
 msgstr "Scene file"
+
+msgid "场景读取失败，请检查文件是否存在后重试"
+msgstr "Failed to load the scene. Check that the file exists and retry."
 
 msgid "场景返回"
 msgstr "Return from scene"
@@ -1564,6 +1570,9 @@ msgstr "Uploading"
 
 msgid "正在加载模板配置"
 msgstr "Loading template configuration"
+
+msgid "正在读取场景…"
+msgstr "Loading scene…"
 
 msgid "正在读取用户数据设置"
 msgstr "Reading user data settings"
@@ -2404,6 +2413,9 @@ msgstr "Rename template directory"
 
 msgid "重命名游戏目录"
 msgstr "Rename game directory"
+
+msgid "重试"
+msgstr "Retry"
 
 msgid "鉴赏"
 msgstr "Appreciation"

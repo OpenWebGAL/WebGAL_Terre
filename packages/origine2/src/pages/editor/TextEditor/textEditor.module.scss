@@ -1,4 +1,18 @@
 .textEditor_main{
+  position: relative;
   height: 100%;
   width: 100%;
+}
+
+.textEditor_status{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  color: var(--colorNeutralForeground1);
+  background: var(--colorNeutralBackground1);
 }
