@@ -270,7 +270,7 @@ export default function TextEditor(props: ITextEditorProps) {
       />
       {(!isEditorReady.value || loadError.value) && <div className={styles.textEditor_status} role={loadError.value ? 'alert' : 'status'}>
         {loadError.value ?? t`正在读取场景…`}
-        {loadError.value && <Button appearance="secondary" onClick={() => {
+        {loadError.value && <Button appearance="secondary" size="small" onClick={() => {
           if (editVersion.current !== savedVersion.current) {
             loadError.set(null);
             submitChange(currentText.current, editVersion.current);
