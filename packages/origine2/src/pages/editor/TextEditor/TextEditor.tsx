@@ -206,6 +206,8 @@ export default function TextEditor(props: ITextEditorProps) {
       .then((data) => {
         if (controller.signal.aborted || sequence !== requestSequence.current || version !== editVersion.current || editorRef.current?.getModel() !== model) return;
         if (typeof data !== 'string') throw new Error('Invalid scene text response');
+        // 已加载且磁盘内容未变时直接返回，保留用户的选区与滚动位置。
+        if (loadedPath.current === path && model.getValue() === data) return;
         applyingRemoteText.current = true;
         try {
           if (model.getValue() !== data) {
