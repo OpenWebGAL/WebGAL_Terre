@@ -1,4 +1,24 @@
 .textEditor_main{
+  position: relative;
   height: 100%;
   width: 100%;
+}
+
+// 顶部居中的 toast 浮层，样式参考 components/message
+.textEditor_status{
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  max-width: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  color: var(--colorNeutralForeground1);
+  background: var(--bg-card);
+  border: var(--border-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
 }

@@ -761,8 +761,14 @@ msgstr "场景"
 msgid "场景与分支"
 msgstr "场景与分支"
 
+msgid "场景保存失败，请重试"
+msgstr "场景保存失败，请重试"
+
 msgid "场景文件"
 msgstr "场景文件"
+
+msgid "场景读取失败，请检查文件是否存在后重试"
+msgstr "场景读取失败，请检查文件是否存在后重试"
 
 msgid "场景返回"
 msgstr "场景返回"
@@ -1564,6 +1570,9 @@ msgstr "正在上传"
 
 msgid "正在加载模板配置"
 msgstr "正在加载模板配置"
+
+msgid "正在读取场景…"
+msgstr "正在读取场景…"
 
 msgid "正在读取用户数据设置"
 msgstr "正在读取用户数据设置"
@@ -2404,6 +2413,9 @@ msgstr "重命名模板目录"
 
 msgid "重命名游戏目录"
 msgstr "重命名游戏目录"
+
+msgid "重试"
+msgstr "重试"
 
 msgid "鉴赏"
 msgstr "鉴赏"

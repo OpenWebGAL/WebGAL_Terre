@@ -13,7 +13,9 @@ import { eventBus } from '@/utils/eventBus';
 import useEditorStore from '@/store/useEditorStore';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import { api } from '@/api';
-import { useValue } from "@/hooks/useValue";
+import { t } from '@lingui/macro';
+import { useValue } from '@/hooks/useValue';
+import { Button } from '@fluentui/react-components';
 
 // 最近一次通过点击光标同步到引擎的场景，所有文本编辑器标签页共享
 let lastClickSyncedScenePath = '';
@@ -26,10 +28,19 @@ interface ITextEditorProps {
 export default function TextEditor(props: ITextEditorProps) {
   const target = useGameEditorContext((state) => state.currentTag);
   const tags = useGameEditorContext((state) => state.tags);
-  const currentText = useRef('Loading Scene Data......');
+  // 加载状态只在界面展示，不能作为场景文本进入保存流程。
+  const currentText = useRef('');
   const sceneName = tags.find((e) => e.path === target?.path)!.name;
   const isAutoWarp = useEditorStore.use.isAutoWarp();
-  const isEditorReady = useValue(false); // 读取完脚本才能算准备就绪
+  const isEditorReady = useValue(false);
+  const loadError = useValue<string | null>(null);
+  const loadedPath = useRef<string | null>(null);
+  const applyingRemoteText = useRef(false);
+  const request = useRef<AbortController | null>(null);
+  const requestSequence = useRef(0);
+  const editVersion = useRef(0);
+  const savedVersion = useRef(0);
+  const saveQueue = useRef<Promise<void>>(Promise.resolve());
 
   // 准备获取 Monaco
   // 建立 Ref
@@ -52,6 +63,7 @@ export default function TextEditor(props: ITextEditorProps) {
       const editorValue = editor.getValue();
       const targetValue = editorValue.split('\n')[event.position.lineNumber - 1];
       if (event.reason === monaco.editor.CursorChangeReason.Explicit) {
+        if (loadedPath.current !== props.targetPath) return;
         const scenePath = target?.path ?? '';
         // 切换标签页后引擎仍停留在其他场景，此时即使点击的是已记录的同一行也需要同步
         const isSceneChanged = scenePath !== lastClickSyncedScenePath;
@@ -119,27 +131,35 @@ export default function TextEditor(props: ITextEditorProps) {
    * @param {string} value
    * @param {any} ev
    */
-  const submitChange = useMemo(() => debounce((value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+  const submitChange = useMemo(() => debounce((value: string, version: number) => {
     logger.debug('编辑器提交更新');
     // 这里直接使用临时储存的行数, 一般来说光标位置就在改变的行
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath);
-    // const lineNumber = ev.changes[0].range.startLineNumber;
-    // const trueLineNumber = getTrueLinenumber(lineNumber, value ?? "");
-    if (value || value === '') currentText.current = value;
-    eventBus.emit('editor:update-scene', { scene: currentText.current });
-    api.assetsControllerEditTextFile({textFile: currentText.current, path: props.targetPath}).then((res) => {
-      const targetValue = currentText.current.split('\n')[lineNumber - 1];
+    eventBus.emit('editor:update-scene', { scene: value });
+    // 按修改顺序保存，避免较早的请求后完成并覆盖较新的内容。
+    saveQueue.current = saveQueue.current.then(() => api.assetsControllerEditTextFile({textFile: value, path: props.targetPath})).then((res) => {
+      // 后端写入失败时仍返回成功状态码，需同时检查写入结果。
+      if ((res.data as unknown) !== 'Updated.') throw new Error('Scene save failed');
+      if (loadedPath.current !== props.targetPath) return;
+      savedVersion.current = Math.max(savedVersion.current, version);
+      if (version === editVersion.current) loadError.set(null);
+      const targetValue = value.split('\n')[lineNumber - 1];
       EditorPreviewClient.sendSyncScene({
         scenePath: target?.path ?? '',
         lineNumber,
         lineCommandString: targetValue,
       });
+    }).catch(() => {
+      if (loadedPath.current !== props.targetPath) return;
+      loadError.set(t`场景保存失败，请重试`);
     });
   }, 500), [props.targetPath, target?.path]);
 
-  const handleChange = (value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
-    if (!isEditorReady.value) return;
-    submitChange(value, ev);
+  const handleChange = (value: string | undefined) => {
+    if (loadedPath.current !== props.targetPath || applyingRemoteText.current || value === undefined) return;
+    currentText.current = value;
+    editVersion.current += 1;
+    submitChange(value, editVersion.current);
   };
 
   useEffect(() => {
@@ -147,6 +167,7 @@ export default function TextEditor(props: ITextEditorProps) {
   }, [submitChange]);
 
   const syncCurrentLine = useCallback(() => {
+    if (loadedPath.current !== props.targetPath) return;
     const lineNumber = editorLineHolder.getSceneLine(props.targetPath) || editorRef.current?.getPosition()?.lineNumber || 1;
     EditorPreviewClient.sendSyncScene({
       scenePath: target?.path ?? '',
@@ -163,34 +184,57 @@ export default function TextEditor(props: ITextEditorProps) {
     };
   }, [syncCurrentLine]);
 
-  function updateEditData() {
+  const updateEditData = useCallback(() => {
     const path = props.targetPath;
+    const model = editorRef.current?.getModel();
+    // 焦点事件可能早于 Monaco 挂载，尚未保存的修改也不能被磁盘内容覆盖。
+    if (!model || editVersion.current !== savedVersion.current) return;
+    request.current?.abort();
+    const controller = new AbortController();
+    request.current = controller;
+    const sequence = ++requestSequence.current;
+    const version = editVersion.current;
+    loadError.set(null);
     axios
-      .get(path)
+      .get<string>(path, {
+        signal: controller.signal,
+        timeout: 15000,
+        responseType: 'text',
+        transformResponse: [(data) => data],
+      })
       .then((res) => res.data)
       .then((data) => {
-        const dataStr = data.toString();
-        if (dataStr === currentText.current) {
-          return;
-        }
-        currentText.current = dataStr;
-        eventBus.emit('editor:update-scene', { scene: dataStr });
-        const model = editorRef.current?.getModel();
-        model?.applyEdits([
-          {
-            range: model.getFullModelRange(),
-            text: currentText.current,
-            forceMoveMarkers: true
+        if (controller.signal.aborted || sequence !== requestSequence.current || version !== editVersion.current || editorRef.current?.getModel() !== model) return;
+        if (typeof data !== 'string') throw new Error('Invalid scene text response');
+        // 已加载且磁盘内容未变时直接返回，保留用户的选区与滚动位置。
+        if (loadedPath.current === path && model.getValue() === data) return;
+        applyingRemoteText.current = true;
+        try {
+          if (model.getValue() !== data) {
+            model.applyEdits([{ range: model.getFullModelRange(), text: data, forceMoveMarkers: true }]);
           }
-        ]);
+        } finally {
+          applyingRemoteText.current = false;
+        }
+        currentText.current = data;
+        loadedPath.current = path;
         isEditorReady.value = true;
+        eventBus.emit('editor:update-scene', { scene: data });
         const targetPosition = editorLineHolder.getScenePosition(props.targetPath);
         editorRef?.current?.setPosition(targetPosition);
         editorRef?.current?.revealPositionInCenterIfOutsideViewport(targetPosition, monaco.editor.ScrollType.Immediate);
+      }).catch(() => {
+        if (controller.signal.aborted || sequence !== requestSequence.current || version !== editVersion.current) return;
+        loadError.set(t`场景读取失败，请检查文件是否存在后重试`);
       });
-  }
+  }, [props.targetPath]);
 
   useEffect(() => {
+    loadedPath.current = null;
+    isEditorReady.value = false;
+    editVersion.current = 0;
+    savedVersion.current = 0;
+    updateEditData();
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         updateEditData();
@@ -201,10 +245,13 @@ export default function TextEditor(props: ITextEditorProps) {
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
+      request.current?.abort();
+      requestSequence.current += 1;
+      loadedPath.current = null;
       window.removeEventListener('focus', handleVisibilityChange);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [updateEditData]);
 
   return (
     <div
@@ -219,7 +266,17 @@ export default function TextEditor(props: ITextEditorProps) {
         defaultLanguage="webgal"
         language="webgal"
         defaultValue={currentText.current}
+        options={{ readOnly: !isEditorReady.value }}
       />
+      {(!isEditorReady.value || loadError.value) && <div className={styles.textEditor_status} role={loadError.value ? 'alert' : 'status'}>
+        {loadError.value ?? t`正在读取场景…`}
+        {loadError.value && <Button appearance="secondary" size="small" onClick={() => {
+          if (editVersion.current !== savedVersion.current) {
+            loadError.set(null);
+            submitChange(currentText.current, editVersion.current);
+          } else updateEditData();
+        }}>{t`重试`}</Button>}
+      </div>}
     </div>
   );
 }
