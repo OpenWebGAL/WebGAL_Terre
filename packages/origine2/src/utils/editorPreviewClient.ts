@@ -19,6 +19,7 @@ import {
   type ReferenceBoxQueryResultPayload,
   type PreviewReadyUpdatedPayload,
   type RequestPayloadByType,
+  type SeekAnimationPayload,
   type SetComponentVisibilityPayload,
   type SetEffectPayload,
   type SyncSceneSettleMode,
@@ -360,6 +361,10 @@ export class EditorPreviewClient {
 
   public static setEffect(payload: SetEffectPayload) {
     return sendPreviewCommand('preview.command.set-effect', payload);
+  }
+
+  public static seekAnimation(payload: SeekAnimationPayload) {
+    return sendPreviewCommand('preview.command.seek-animation', payload);
   }
 
   public static setComponentVisibility(

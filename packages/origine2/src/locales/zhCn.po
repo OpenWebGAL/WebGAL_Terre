@@ -143,9 +143,6 @@ msgstr "setAnimation:选择动画文件;"
 msgid "setComplexAnimation:universalSoftIn -target=fig-center;"
 msgstr "setComplexAnimation:universalSoftIn -target=fig-center;"
 
-msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -595,6 +592,9 @@ msgstr "动画名"
 
 msgid "动画帧控制"
 msgstr "动画帧控制"
+
+msgid "动画编辑器"
+msgstr "动画编辑器"
 
 msgid "半张嘴"
 msgstr "半张嘴"
@@ -1147,6 +1147,9 @@ msgstr "手动触发下一句"
 
 msgid "手动输入 ID"
 msgstr "手动输入 ID"
+
+msgid "打开动画编辑器"
+msgstr "打开动画编辑器"
 
 msgid "打开安装目录"
 msgstr "打开安装目录"

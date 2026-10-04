@@ -143,9 +143,6 @@ msgstr "setAnimation:애니메이션 파일 선택;"
 msgid "setComplexAnimation:universalSoftIn -target=fig-center;"
 msgstr "setComplexAnimation:universalSoftIn -target=fig-center;"
 
-msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -595,6 +592,9 @@ msgstr "애니메이션 이름"
 
 msgid "动画帧控制"
 msgstr "애니메이션 프레임 제어"
+
+msgid "动画编辑器"
+msgstr "애니메이션 에디터"
 
 msgid "半张嘴"
 msgstr "반쯤 벌린 입"
@@ -1147,6 +1147,9 @@ msgstr "수동으로 다음 문장을 표시"
 
 msgid "手动输入 ID"
 msgstr "ID 수동 입력"
+
+msgid "打开动画编辑器"
+msgstr "애니메이션 에디터 열기"
 
 msgid "打开安装目录"
 msgstr "다운로드 목록을 열기"

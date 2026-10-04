@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import type { JsonValue } from '@webgal/editor-preview-protocol';
 import { ResizableSplit } from './components/ResizableSplit';
 import { toAnimationObject } from './model/animationDocument';
-import { useAnimationDocument } from './model/useAnimationDocument';
+import { useAnimationFileDocument } from './model/useAnimationDocument';
 import { AnimationPreview } from './preview/AnimationPreview';
 import { usePreviewSettings } from './preview/previewSettings';
 import { AnimationSettingsPanel } from './settings/AnimationSettingsPanel';
@@ -18,7 +18,7 @@ interface IAnimationEditorProps {
  * 上半部分左为预览、右为与时间轴无关的设置，下半部分为时间轴，区域之间的分割线可拖动
  */
 export function AnimationEditor({ url, initialText }: IAnimationEditorProps) {
-  const { doc, updateTracks, updateFields } = useAnimationDocument(url, initialText);
+  const { doc, updateTracks, updateFields } = useAnimationFileDocument(url, initialText);
   const [previewSettings, updatePreviewSettings] = usePreviewSettings();
   /** 播放头时刻（毫秒） */
   const [time, setTime] = useState(0);

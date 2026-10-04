@@ -11,23 +11,18 @@ import styles from './animationSettingsPanel.module.scss';
 interface IAnimationSettingsPanelProps {
   fields: Record<string, unknown>;
   updateFields: (update: (fields: Record<string, unknown>) => Record<string, unknown>) => void;
-  preview: IPreviewSettings;
-  onPreviewChange: (patch: Partial<IPreviewSettings>) => void;
+  /** 不传时不显示预览设置，例如在场景中编辑多段动画时，直接用游戏预览 */
+  preview?: IPreviewSettings;
+  onPreviewChange?: (patch: Partial<IPreviewSettings>) => void;
 }
 
 /**
- * 与时间轴无关的设置：上半部分写入动画文件，下半部分只用于预览。
- * 预览初始状态在抽屉中编辑，开启时自动打开
+ * 与时间轴无关的设置：上半部分写入动画文件，下半部分只用于预览
  */
 // 播放时每帧都会重新渲染编辑器，这里的内容与播放头无关，用 memo 跳过
 export const AnimationSettingsPanel = memo(SettingsPanel);
 
-function SettingsPanel(props: IAnimationSettingsPanelProps) {
-  const { fields, updateFields, preview, onPreviewChange } = props;
-  const targetLabels: Record<PreviewTarget, string> = { figure: t`立绘`, background: t`背景` };
-  const positionLabels: Record<FigurePosition, string> = { left: t`左`, center: t`中`, right: t`右` };
-  const [isInitialStateDrawerOpen, setIsInitialStateDrawerOpen] = useState(false);
-
+function SettingsPanel({ fields, updateFields, preview, onPreviewChange }: IAnimationSettingsPanelProps) {
   return (
     <div className={styles.panel}>
       <Section title={t`动画`}>
@@ -50,6 +45,22 @@ function SettingsPanel(props: IAnimationSettingsPanelProps) {
           />
         </SettingRow>
       </Section>
+      {preview && onPreviewChange && <PreviewSection preview={preview} onPreviewChange={onPreviewChange} />}
+    </div>
+  );
+}
+
+/**
+ * 预览设置。预览初始状态在抽屉中编辑，开启时自动打开
+ */
+function PreviewSection(props: Required<Pick<IAnimationSettingsPanelProps, 'preview' | 'onPreviewChange'>>) {
+  const { preview, onPreviewChange } = props;
+  const targetLabels: Record<PreviewTarget, string> = { figure: t`立绘`, background: t`背景` };
+  const positionLabels: Record<FigurePosition, string> = { left: t`左`, center: t`中`, right: t`右` };
+  const [isInitialStateDrawerOpen, setIsInitialStateDrawerOpen] = useState(false);
+
+  return (
+    <>
       <Section title={t`预览`} info={t`仅用于预览，不会写入动画文件`}>
         <SettingRow label={t`预览对象`}>
           <Dropdown
@@ -104,7 +115,7 @@ function SettingsPanel(props: IAnimationSettingsPanelProps) {
         json={preview.initialTransform}
         onChange={(initialTransform) => onPreviewChange({ initialTransform })}
       />
-    </div>
+    </>
   );
 }
 

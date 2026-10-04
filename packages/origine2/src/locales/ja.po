@@ -143,9 +143,6 @@ msgstr "setAnimation: アニメーションを選択;"
 msgid "setComplexAnimation:universalSoftIn -target=fig-center;"
 msgstr "setComplexAnimation:universalSoftIn -target=fig-center;"
 
-msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -595,6 +592,9 @@ msgstr "アニメーション名"
 
 msgid "动画帧控制"
 msgstr "フレームコントロール"
+
+msgid "动画编辑器"
+msgstr "アニメーションエディタ"
 
 msgid "半张嘴"
 msgstr "半分開いた口"
@@ -1147,6 +1147,9 @@ msgstr "手動で次の行を表示"
 
 msgid "手动输入 ID"
 msgstr "IDを手動で設定"
+
+msgid "打开动画编辑器"
+msgstr "アニメーションエディタを開く"
 
 msgid "打开安装目录"
 msgstr "インストールディレクトリを開く"
