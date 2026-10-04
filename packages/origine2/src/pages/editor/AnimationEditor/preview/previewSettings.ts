@@ -3,6 +3,7 @@
  * 只用于预览，不写入动画文件，按游戏保存在 localStorage 中
  */
 import { useCallback, useState } from 'react';
+import type { Transform } from '@webgal/editor-preview-protocol';
 import useEditorStore from '@/store/useEditorStore';
 
 export type PreviewTarget = 'figure' | 'background';
@@ -53,25 +54,31 @@ export function usePreviewSettings() {
 }
 
 /**
- * 搭建预览舞台的场景：立即显示背景和立绘，不播放入场动画。
- * 设置了初始状态时写到预览对象上，相对动画以它为基准
+ * 搭建预览舞台的场景：立即显示背景和立绘，不播放入场动画
  */
 export function buildPreviewScene(settings: IPreviewSettings): string {
-  const transformArg =
-    settings.isInitialStateEnabled && settings.initialTransform ? ` -transform=${settings.initialTransform}` : '';
   const lines: string[] = [];
   if (settings.background) {
-    const bgTransformArg = settings.target === 'background' ? transformArg : '';
-    lines.push(`changeBg:${settings.background}${bgTransformArg} -duration=0 -next;`);
+    lines.push(`changeBg:${settings.background} -duration=0 -next;`);
   }
   if (settings.figure) {
     const positionArg = settings.figurePosition === 'center' ? '' : ` -${settings.figurePosition}`;
-    const figureTransformArg = settings.target === 'figure' ? transformArg : '';
-    lines.push(
-      `changeFigure:${settings.figure} -id=${PREVIEW_FIGURE_ID}${positionArg}${figureTransformArg} -duration=0 -next;`,
-    );
+    lines.push(`changeFigure:${settings.figure} -id=${PREVIEW_FIGURE_ID}${positionArg} -duration=0 -next;`);
   }
   return lines.join('\n');
+}
+
+/**
+ * 预览对象在动画开始前的状态，作为相对动画的基准；未开启或未设置时为 undefined，由预览取对象当前的变换。
+ * 不写进搭建舞台的场景，而是随每次 seek 发给预览：修改时不必重建舞台，也不依赖入场动画何时结算
+ */
+export function getInitialTransform(settings: IPreviewSettings): Transform | undefined {
+  if (!settings.isInitialStateEnabled || !settings.initialTransform) return undefined;
+  try {
+    return JSON.parse(settings.initialTransform);
+  } catch {
+    return undefined;
+  }
 }
 
 export function getPreviewTarget(settings: IPreviewSettings): string {

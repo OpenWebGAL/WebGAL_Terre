@@ -42,7 +42,7 @@ function SettingsPanel(props: IAnimationSettingsPanelProps) {
         </SettingRow>
         <SettingRow
           label={t`帧继承`}
-          info={t`开启时，每个属性只在自己的关键帧之间过渡；关闭时，关键帧中没有设置的属性会回到对象当前的状态。`}
+          info={t`开启时，每个属性只在自己的关键帧之间过渡；关闭时，关键帧中没有设置的属性会回到对象当前的状态。关闭时时间轴左侧显示的数值仍按开启时计算，可能与预览不一致，请以预览为准。`}
         >
           <Switch
             checked={isInherit(fields)}
