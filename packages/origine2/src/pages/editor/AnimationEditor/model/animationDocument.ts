@@ -1,8 +1,8 @@
 /**
  * @file 动画文件（Animation v2）与编辑器模型之间的转换。
  *
- * 文件中的关键帧是一个数组，每帧的 duration 是距上一帧的时长，一帧可以同时指定多个属性；
- * 编辑器按属性拆成轨道，每个关键点记录距动画开始的绝对时间，便于在时间轴上逐属性编辑。
+ * 文件中的关键帧是一个数组，每帧的 time 是该帧在动画中的时间，一帧可以同时指定多个属性；
+ * 编辑器按属性拆成轨道，便于在时间轴上逐属性编辑。
  * 格式说明见 WebGAL 仓库的 dev-docs/Animation v2.md
  */
 import set from 'lodash/set';
@@ -84,18 +84,19 @@ function tryParse(text: string): AnimationObject | null {
 
 function framesToTracks(keyframes: unknown[]): ITrack[] {
   const tracks = new Map<string, IKeyPoint[]>();
-  let time = 0;
   for (const frame of keyframes) {
     if (typeof frame !== 'object' || frame === null) continue;
-    const { duration, ease, ...values } = frame as Record<string, unknown>;
-    time += typeof duration === 'number' && duration >= 0 ? duration : 0;
+    const { time: rawTime, ease, ...values } = frame as Record<string, unknown>;
+    // 与引擎一致：time 缺省或非法时按 0 处理
+    const time = typeof rawTime === 'number' && rawTime >= 0 ? rawTime : 0;
     for (const [path, value] of collectNumericValues(values)) {
       const points = tracks.get(path) ?? [];
       points.push({ id: createId(), time, value, ease: typeof ease === 'string' ? ease : DEFAULT_EASE });
       tracks.set(path, points);
     }
   }
-  return [...tracks].map(([path, points]) => ({ path, points }));
+  // 文件中的关键帧不一定按时间排列；sort 是稳定的，同一时刻的关键点（跳变）保持文件中的先后
+  return [...tracks].map(([path, points]) => ({ path, points: points.sort((a, b) => a.time - b.time) }));
 }
 
 /**
@@ -128,10 +129,5 @@ function tracksToFrames(tracks: ITrack[]): Record<string, unknown>[] {
   }
 
   const sortedGroups = [...groups.values()].sort((a, b) => a.time - b.time || a.order - b.order);
-  let lastTime = 0;
-  return sortedGroups.map(({ time, ease, values }) => {
-    const frame = { duration: time - lastTime, ...values, ...(ease === DEFAULT_EASE ? {} : { ease }) };
-    lastTime = time;
-    return frame;
-  });
+  return sortedGroups.map(({ time, ease, values }) => ({ time, ...values, ...(ease === DEFAULT_EASE ? {} : { ease }) }));
 }
