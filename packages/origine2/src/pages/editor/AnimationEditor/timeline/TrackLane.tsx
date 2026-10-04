@@ -1,18 +1,7 @@
 import { PointerEvent, useRef } from 'react';
-import {
-  Menu,
-  MenuGroup,
-  MenuGroupHeader,
-  MenuItem,
-  MenuItemRadio,
-  MenuList,
-  MenuPopover,
-  MenuTrigger,
-} from '@fluentui/react-components';
-import { DeleteRegular } from '@fluentui/react-icons';
-import { t } from '@lingui/macro';
 import { useEaseTypeOptions } from '@/hooks/useEaseTypeOptions';
 import { IKeyPoint } from '../model/animationDocument';
+import { KeyframeMarker } from './KeyframeMarker';
 import { snapTime, timeToX, xToTime } from './timelineLayout';
 import styles from './timeline.module.scss';
 
@@ -75,43 +64,22 @@ export function TrackLane(props: ITrackLaneProps) {
         />
       )}
       {points.map((point) => (
-        <Menu key={point.id} openOnContext>
-          <MenuTrigger disableButtonEnhancement>
-            <div
-              className={`${styles.keyframe} ${point.id === selectedId ? styles.selected : ''}`}
-              style={{ left: timeToX(point.time, pxPerMs) }}
-              title={`${point.time} ms`}
-              onPointerDown={(event) => handleKeyframePointerDown(event, point)}
-              onPointerMove={(event) => handleKeyframePointerMove(event, point)}
-              onPointerUp={() => {
-                dragRef.current = null;
-              }}
-            />
-          </MenuTrigger>
-          <MenuPopover>
-            <MenuList>
-              <Menu>
-                <MenuTrigger disableButtonEnhancement>
-                  <MenuItem secondaryContent={easeLabels.get(point.ease) ?? point.ease}>{t`缓动`}</MenuItem>
-                </MenuTrigger>
-                <MenuPopover>
-                  <MenuList
-                    checkedValues={{ ease: [point.ease] }}
-                    onCheckedValueChange={(_, data) => props.onPointChange(point.id, { ease: data.checkedItems[0] })}
-                  >
-                    <MenuGroup>
-                      <MenuGroupHeader>{t`从上一关键帧到此帧`}</MenuGroupHeader>
-                      {[...easeLabels].map(([value, label]) => (
-                        <MenuItemRadio key={value} name="ease" value={value}>{label}</MenuItemRadio>
-                      ))}
-                    </MenuGroup>
-                  </MenuList>
-                </MenuPopover>
-              </Menu>
-              <MenuItem icon={<DeleteRegular />} onClick={() => props.onDeletePoint(point.id)}>{t`删除关键帧`}</MenuItem>
-            </MenuList>
-          </MenuPopover>
-        </Menu>
+        <KeyframeMarker
+          key={point.id}
+          point={point}
+          left={timeToX(point.time, pxPerMs)}
+          isSelected={point.id === selectedId}
+          easeLabels={easeLabels}
+          dragHandlers={{
+            onPointerDown: (event) => handleKeyframePointerDown(event, point),
+            onPointerMove: (event) => handleKeyframePointerMove(event, point),
+            onPointerUp: () => {
+              dragRef.current = null;
+            },
+          }}
+          onChange={(patch) => props.onPointChange(point.id, patch)}
+          onDelete={() => props.onDeletePoint(point.id)}
+        />
       ))}
     </div>
   );

@@ -1,10 +1,11 @@
-import { memo, ReactNode } from 'react';
-import { Dropdown, Option, Switch } from '@fluentui/react-components';
+import { memo, ReactNode, useState } from 'react';
+import { Button, Dropdown, Option, Switch } from '@fluentui/react-components';
 import { t } from '@lingui/macro';
 import { InfoTip } from '../components/InfoTip';
 import { isInherit, isRelative } from '../model/animationSettings';
 import { FigurePosition, IPreviewSettings, PreviewTarget } from '../preview/previewSettings';
 import { FileSetting } from './FileSetting';
+import { InitialStateDrawer } from './InitialStateDrawer';
 import styles from './animationSettingsPanel.module.scss';
 
 interface IAnimationSettingsPanelProps {
@@ -15,7 +16,8 @@ interface IAnimationSettingsPanelProps {
 }
 
 /**
- * 与时间轴无关的设置：上半部分写入动画文件，下半部分只用于预览
+ * 与时间轴无关的设置：上半部分写入动画文件，下半部分只用于预览。
+ * 预览初始状态在抽屉中编辑，开启时自动打开
  */
 // 播放时每帧都会重新渲染编辑器，这里的内容与播放头无关，用 memo 跳过
 export const AnimationSettingsPanel = memo(SettingsPanel);
@@ -24,6 +26,7 @@ function SettingsPanel(props: IAnimationSettingsPanelProps) {
   const { fields, updateFields, preview, onPreviewChange } = props;
   const targetLabels: Record<PreviewTarget, string> = { figure: t`立绘`, background: t`背景` };
   const positionLabels: Record<FigurePosition, string> = { left: t`左`, center: t`中`, right: t`右` };
+  const [isInitialStateDrawerOpen, setIsInitialStateDrawerOpen] = useState(false);
 
   return (
     <div className={styles.panel}>
@@ -80,7 +83,27 @@ function SettingsPanel(props: IAnimationSettingsPanelProps) {
             onChange={(background) => onPreviewChange({ background })}
           />
         </SettingRow>
+        <SettingRow label={t`设置预览初始状态`} info={t`设置预览对象在动画开始前的状态，相对动画以此为基准`}>
+          <Switch
+            checked={preview.isInitialStateEnabled}
+            onChange={(_, data) => {
+              onPreviewChange({ isInitialStateEnabled: data.checked });
+              setIsInitialStateDrawerOpen(data.checked);
+            }}
+          />
+          {preview.isInitialStateEnabled && (
+            <Button size="small" onClick={() => setIsInitialStateDrawerOpen(true)}>
+              {t`编辑`}
+            </Button>
+          )}
+        </SettingRow>
       </Section>
+      <InitialStateDrawer
+        open={isInitialStateDrawerOpen}
+        onOpenChange={setIsInitialStateDrawerOpen}
+        json={preview.initialTransform}
+        onChange={(initialTransform) => onPreviewChange({ initialTransform })}
+      />
     </div>
   );
 }

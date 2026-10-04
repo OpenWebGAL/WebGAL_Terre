@@ -12,8 +12,10 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import { IgnoreDefaultOption } from "../components/IgnoreDefaultOption";
 import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
+import { useHiddenAnimationFiles } from "@/hooks/useHiddenAnimationFiles";
 
 export default function SetTransition(props: ISentenceEditorProps) {
+  const hiddenAnimationFiles = useHiddenAnimationFiles();
   const enterFileName = useValue(getArgByKey(props.sentence, 'enter'));
   const exitFileName = useValue(getArgByKey(props.sentence, 'exit'));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
@@ -44,7 +46,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
           <ChooseFile title={t`选择进入动画文件`} basePath={['animation']} selectedFilePath={`${enterFileName.value}.json`} onChange={(file) => {
             enterFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extNames={extNameMap.get('json')} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('json')} hiddenFiles={hiddenAnimationFiles} />
         </>
       </CommonOptions>
       <CommonOptions key="1.1" title={t`选择退出动画`}>
@@ -53,7 +55,7 @@ export default function SetTransition(props: ISentenceEditorProps) {
           <ChooseFile title={t`选择退出动画文件`} basePath={['animation']} selectedFilePath={`${exitFileName.value}.json`} onChange={(file) => {
             exitFileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extNames={extNameMap.get('json')} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('json')} hiddenFiles={hiddenAnimationFiles} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>

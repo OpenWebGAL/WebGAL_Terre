@@ -113,12 +113,10 @@ export function AnimationTimeline({ doc, updateTracks, updateFields, time, onTim
           }}
         >
           {rows.map(({ path, header }) => <TrackHeader key={path} {...header} />)}
-          <div className={styles.header}>
-            <AddPropertyMenu
-              shownPaths={doc.tracks.map((track) => track.path)}
-              onAdd={(path) => updateTracks((tracks) => addTrack(tracks, path))}
-            />
-          </div>
+          <AddPropertyMenu
+            shownPaths={doc.tracks.map((track) => track.path)}
+            onAdd={(path) => updateTracks((tracks) => addTrack(tracks, path))}
+          />
         </div>
         <div ref={lanesRef} className={styles.lanes} onScroll={syncScroll}>
           <div className={styles.lanesContent} style={{ width: laneWidth }}>

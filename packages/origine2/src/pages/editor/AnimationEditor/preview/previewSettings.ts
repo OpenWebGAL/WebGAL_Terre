@@ -15,9 +15,20 @@ export interface IPreviewSettings {
   figurePosition: FigurePosition;
   /** 相对于 background 目录的文件名，空字符串表示不显示 */
   background: string;
+  /** 是否设置预览对象在动画开始前的状态 */
+  isInitialStateEnabled: boolean;
+  /** 预览对象在动画开始前的变换，格式同 -transform 参数的 JSON，空字符串表示默认状态 */
+  initialTransform: string;
 }
 
-const DEFAULT_SETTINGS: IPreviewSettings = { target: 'figure', figure: '', figurePosition: 'center', background: '' };
+const DEFAULT_SETTINGS: IPreviewSettings = {
+  target: 'figure',
+  figure: '',
+  figurePosition: 'center',
+  background: '',
+  isInitialStateEnabled: false,
+  initialTransform: '',
+};
 
 /** 预览立绘的 id，也是动画作用在立绘上时的目标 */
 const PREVIEW_FIGURE_ID = 'animation-preview';
@@ -42,16 +53,23 @@ export function usePreviewSettings() {
 }
 
 /**
- * 搭建预览舞台的场景：立即显示背景和立绘，不播放入场动画
+ * 搭建预览舞台的场景：立即显示背景和立绘，不播放入场动画。
+ * 设置了初始状态时写到预览对象上，相对动画以它为基准
  */
 export function buildPreviewScene(settings: IPreviewSettings): string {
+  const transformArg =
+    settings.isInitialStateEnabled && settings.initialTransform ? ` -transform=${settings.initialTransform}` : '';
   const lines: string[] = [];
   if (settings.background) {
-    lines.push(`changeBg:${settings.background} -duration=0 -next;`);
+    const bgTransformArg = settings.target === 'background' ? transformArg : '';
+    lines.push(`changeBg:${settings.background}${bgTransformArg} -duration=0 -next;`);
   }
   if (settings.figure) {
     const positionArg = settings.figurePosition === 'center' ? '' : ` -${settings.figurePosition}`;
-    lines.push(`changeFigure:${settings.figure} -id=${PREVIEW_FIGURE_ID}${positionArg} -duration=0 -next;`);
+    const figureTransformArg = settings.target === 'figure' ? transformArg : '';
+    lines.push(
+      `changeFigure:${settings.figure} -id=${PREVIEW_FIGURE_ID}${positionArg}${figureTransformArg} -duration=0 -next;`,
+    );
   }
   return lines.join('\n');
 }

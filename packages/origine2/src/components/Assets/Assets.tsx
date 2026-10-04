@@ -68,7 +68,7 @@ export interface IFile {
   lastModified?: number;
 }
 
-interface IAssetsReadResponse {
+export interface IAssetsReadResponse {
   dirInfo?: IFile[];
 }
 

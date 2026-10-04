@@ -32,7 +32,11 @@ $ruler-height: 24px;
   margin-left: auto;
   display: flex;
   align-items: center;
-  color: var(--text-weak);
+}
+
+.zoomSlider {
+  width: 120px;
+  min-width: 0;
 }
 
 // 左上角空白、刻度尺、属性栏、轨道区域四块。只有轨道区域滚动，其余随它同步
@@ -153,6 +157,11 @@ $ruler-height: 24px;
   color: var(--primary);
 }
 
+// 与轨道中的关键帧大小相近，不至于比属性名还显眼
+.keyframeIcon {
+  font-size: 12px;
+}
+
 // 不常用的操作，悬停在这一行时才显示
 .moreButton {
   opacity: 0;
@@ -218,6 +227,33 @@ $ruler-height: 24px;
   width: 1px;
   background: var(--primary);
   pointer-events: none;
+}
+
+// 整行作为按钮，底色带一点主题色表示它与属性行不同，文字与图标同属性名；左内边距沿用 .header，图标与属性名对齐
+.addPropertyRow {
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--primary-5pct);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--primary-10pct);
+  }
+
+  &[aria-disabled='true'] {
+    color: var(--text-weak);
+    background: none;
+    cursor: default;
+  }
+}
+
+.addPropertyIcon {
+  flex: none;
+  font-size: 14px;
 }
 
 .addPropertyPopover {

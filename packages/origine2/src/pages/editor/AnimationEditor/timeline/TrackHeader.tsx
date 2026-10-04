@@ -10,6 +10,7 @@ import {
   MenuPopover,
   MenuTrigger,
   SpinButton,
+  Tooltip,
 } from '@fluentui/react-components';
 import { DeleteRegular, DiamondFilled, DiamondRegular, MoreHorizontalRegular } from '@fluentui/react-icons';
 import { t } from '@lingui/macro';
@@ -62,14 +63,23 @@ export function TrackHeader(props: ITrackHeaderProps) {
           if (Number.isFinite(next)) props.onValueChange(next);
         }}
       />
-      <Button
-        className={hasKeyframe ? styles.keyframeOn : undefined}
-        size="small"
-        appearance="transparent"
-        icon={hasKeyframe ? <DiamondFilled /> : <DiamondRegular />}
-        title={hasKeyframe ? t`删除此处的关键帧` : t`在此处添加关键帧`}
-        onClick={props.onToggleKeyframe}
-      />
+      <Tooltip
+        content={
+          hasKeyframe
+            ? t`删除播放头处的关键帧`
+            : t`在播放头处添加关键帧，直接修改左侧的数值也会添加。添加后可在轨道上拖动关键帧调整时间，右键设置缓动或删除`
+        }
+        relationship="label"
+        positioning="above"
+      >
+        <Button
+          className={hasKeyframe ? styles.keyframeOn : undefined}
+          size="small"
+          appearance="transparent"
+          icon={hasKeyframe ? <DiamondFilled className={styles.keyframeIcon} /> : <DiamondRegular className={styles.keyframeIcon} />}
+          onClick={props.onToggleKeyframe}
+        />
+      </Tooltip>
       <Menu>
         <MenuTrigger disableButtonEnhancement>
           <Button

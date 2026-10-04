@@ -47,6 +47,21 @@ function getAnimationArgInput(line: string): string | null {
   return result ? result[1] : null;
 }
 
+/**
+ * v1 动画（顶层为关键帧数组）只为兼容旧脚本保留，补全时不再推荐
+ */
+async function isV1Animation(file: IFileInfo): Promise<boolean> {
+  if (file.isDir || !file.name.endsWith('.json')) {
+    return false;
+  }
+  try {
+    const content = await fsService.readTextFile(file.path);
+    return Array.isArray(JSON.parse(String(content)));
+  } catch {
+    return false;
+  }
+}
+
 export async function handleAnimationFileSuggestions(
   basePath: string,
   line: string,
@@ -64,9 +79,11 @@ export async function handleAnimationFileSuggestions(
   const dirPath = getPathFromSubdir(basePath, 'animation', subDir);
   const dirInfo = await fsService.getDirInfo(dirPath);
 
-  const visibleFiles = filterFiles(dirInfo).filter(
+  const candidateFiles = filterFiles(dirInfo).filter(
     (file) => file.name !== 'animationTable.json',
   );
+  const isV1List = await Promise.all(candidateFiles.map(isV1Animation));
+  const visibleFiles = candidateFiles.filter((_, index) => !isV1List[index]);
 
   return visibleFiles
     .filter((file) => file.name.startsWith(keyword))
