@@ -18,6 +18,15 @@ export function addTrack(tracks: ITrack[], path: string): ITrack[] {
   return [...tracks, { path, points: [] }];
 }
 
+/**
+ * 在 afterPath 对应的轨道之后插入一条空轨道；afterPath 不存在时加到末尾
+ */
+export function insertTrackAfter(tracks: ITrack[], path: string, afterPath: string | undefined): ITrack[] {
+  const index = tracks.findIndex((track) => track.path === afterPath);
+  if (index < 0) return addTrack(tracks, path);
+  return [...tracks.slice(0, index + 1), { path, points: [] }, ...tracks.slice(index + 1)];
+}
+
 export function removeTrack(tracks: ITrack[], path: string): ITrack[] {
   return tracks.filter((track) => track.path !== path);
 }

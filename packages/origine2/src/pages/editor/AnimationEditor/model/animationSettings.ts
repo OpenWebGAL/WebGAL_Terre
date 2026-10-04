@@ -65,6 +65,13 @@ export function setRelativeCalc(
 }
 
 /**
+ * 帧中的值是否为绝对值：非相对动画，或该属性的计算方式为绝对值
+ */
+export function isAbsoluteValue(fields: Record<string, unknown>, path: string): boolean {
+  return !isRelative(fields) || (getRelativeCalcOverride(fields, path) ?? getDefaultRelativeCalc(path)) === 'absolute';
+}
+
+/**
  * 当前基准状态在帧值中的表示：相加时为 0，相乘时为 1，绝对值时为属性的默认值。
  * 用于显示第一个关键帧之前以及没有关键帧的属性的值
  */

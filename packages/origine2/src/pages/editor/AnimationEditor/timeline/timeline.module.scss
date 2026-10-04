@@ -153,6 +153,27 @@ $ruler-height: 24px;
   min-width: 0;
 }
 
+.colorSwatch {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-right: 2px;
+  padding: 0;
+  border: 1px solid var(--black-15pct);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toggleInput {
+  display: flex;
+  align-items: center;
+
+  // 去掉开关自带的外边距：上下的会撑高这一行，左边的会让它与数值框错开
+  :global(.fui-Switch__indicator) {
+    margin: 0;
+  }
+}
+
 .keyframeOn {
   color: var(--primary);
 }

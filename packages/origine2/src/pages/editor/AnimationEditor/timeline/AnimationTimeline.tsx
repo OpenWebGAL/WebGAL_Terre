@@ -55,6 +55,7 @@ export function AnimationTimeline({ doc, updateTracks, updateFields, time, onTim
     path: track.path,
     ...buildTrackRow(track, {
       fields: doc.fields,
+      tracks: doc.tracks,
       time,
       pxPerMs,
       laneWidth,

@@ -10,12 +10,15 @@ import {
   MenuPopover,
   MenuTrigger,
   SpinButton,
+  Switch,
   Tooltip,
 } from '@fluentui/react-components';
 import { DeleteRegular, DiamondFilled, DiamondRegular, MoreHorizontalRegular } from '@fluentui/react-icons';
 import { t } from '@lingui/macro';
 import { IAnimationProperty } from '../model/useAnimationProperties';
 import { RELATIVE_CALCS, RelativeCalc } from '../model/animationSettings';
+import { Rgb } from '../model/colorChannels';
+import { ColorSwatch } from './ColorSwatch';
 import { formatValue } from './timelineLayout';
 import styles from './timeline.module.scss';
 
@@ -23,6 +26,8 @@ export interface ITrackHeaderProps {
   property: IAnimationProperty;
   /** 播放头处的值 */
   value: number;
+  /** 颜色通道的拾色器，修改时在播放头处为三个通道设置关键帧；其他属性没有 */
+  color?: { rgb: Rgb; onChange: (rgb: Rgb) => void };
   /** 播放头处是否有关键帧 */
   hasKeyframe: boolean;
   onValueChange: (value: number) => void;
@@ -51,18 +56,30 @@ export function TrackHeader(props: ITrackHeaderProps) {
   return (
     <div className={styles.header}>
       <span className={styles.trackLabel} title={property.path}>{property.label}</span>
-      <SpinButton
-        className={styles.valueInput}
-        size="small"
-        appearance="filled-darker"
-        value={value}
-        displayValue={formatValue(value, property.precision)}
-        step={property.step}
-        onChange={(_, data) => {
-          const next = data.value ?? parseFloat(data.displayValue ?? '');
-          if (Number.isFinite(next)) props.onValueChange(next);
-        }}
-      />
+      {props.color && <ColorSwatch rgb={props.color.rgb} onChange={props.color.onChange} />}
+      {property.isToggle ? (
+        // 与数值框同宽，保持各行的关键帧按钮对齐
+        <div className={`${styles.valueInput} ${styles.toggleInput}`}>
+          <Switch
+            size="small"
+            checked={value !== 0}
+            onChange={(_, data) => props.onValueChange(data.checked ? 1 : 0)}
+          />
+        </div>
+      ) : (
+        <SpinButton
+          className={styles.valueInput}
+          size="small"
+          appearance="filled-darker"
+          value={value}
+          displayValue={formatValue(value, property.precision)}
+          step={property.step}
+          onChange={(_, data) => {
+            const next = data.value ?? parseFloat(data.displayValue ?? '');
+            if (Number.isFinite(next)) props.onValueChange(next);
+          }}
+        />
+      )}
       <Tooltip
         content={
           hasKeyframe

@@ -12,6 +12,8 @@ export interface IAnimationProperty {
   step: number;
   /** 显示时保留的小数位数 */
   precision: number;
+  /** 开关类属性（如各种电影滤镜），0 为关闭，非 0 为开启 */
+  isToggle: boolean;
 }
 
 export interface IPropertyGroup {
@@ -52,6 +54,8 @@ export function useAnimationProperties() {
             defaultValue: config.slider?.defaultValue ?? 0,
             step: precision === 0 ? 1 : 0.01,
             precision,
+            // 效果编辑器中用下拉框、复选框编辑的属性都是开关
+            isToggle: config.type === 'dropdown' || config.type === 'checkbox',
           };
         }),
       };
@@ -60,7 +64,7 @@ export function useAnimationProperties() {
 
     /** 文件里可能有这里不认识的属性（如 shockwaveFilter），按路径原样显示 */
     const getProperty = (path: string): IAnimationProperty =>
-      propertyMap.get(path) ?? { path, label: path, shortLabel: path, defaultValue: 0, step: 0.01, precision: 3 };
+      propertyMap.get(path) ?? { path, label: path, shortLabel: path, defaultValue: 0, step: 0.01, precision: 3, isToggle: false };
 
     return { groups, getProperty };
   }, [effectConfig, fieldGroups]);
