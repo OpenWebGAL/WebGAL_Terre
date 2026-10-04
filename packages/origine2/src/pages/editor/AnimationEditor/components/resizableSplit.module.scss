@@ -1,0 +1,64 @@
+.split {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.pane {
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.rest {
+  flex: 1;
+}
+
+// 看上去是一条细线，可拖动的范围更宽一些
+.divider {
+  position: relative;
+  flex: none;
+  background: var(--bg-divider);
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+  }
+
+  &:hover,
+  &.dragging {
+    background: var(--primary);
+  }
+}
+
+// 热区只在拖动方向上加宽，另一方向不能超出分割线，否则会撑出外层的滚动条
+.horizontal > .divider {
+  width: 1px;
+  cursor: col-resize;
+
+  &::before {
+    inset: 0 -3px;
+  }
+}
+
+.vertical > .divider {
+  height: 1px;
+  cursor: row-resize;
+
+  &::before {
+    inset: -3px 0;
+  }
+}

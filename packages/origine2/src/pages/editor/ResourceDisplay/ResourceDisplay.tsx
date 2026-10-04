@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./resourceDisplay.module.scss";
-import {JsonResourceDisplay} from "@/pages/editor/ResourceDisplay/JsonResourceDisplay/JsonResourceDisplay";
+import {AnimationFileEditor} from "@/pages/editor/AnimationEditor/AnimationFileEditor";
 
 export enum ResourceType {
   Image = "image",
@@ -36,7 +36,7 @@ function getComponent(resourceType: ResourceType, resourceUrl: string) {
       </audio>
     );
   case ResourceType.Animation:
-    return () => <JsonResourceDisplay url={url} />;
+    return () => <AnimationFileEditor url={url} />;
   default:
     return () => <div>Invalid resource type</div>;
   }

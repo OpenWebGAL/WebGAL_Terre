@@ -170,6 +170,89 @@ describe('EditorPreviewHost', () => {
     ]);
   });
 
+  it('keeps dedicated previews out of broadcasts and routes targeted commands and events by launch id', () => {
+    const forwardedPreviewCommands: unknown[] = [];
+    const host = new EditorPreviewHost({
+      forwardPreviewCommandToLegacy: (envelope) => {
+        forwardedPreviewCommands.push(envelope);
+      },
+    });
+    const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);
+    const embeddedPreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+    const dedicatedPreviewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+    const dedicatedLaunchId = 'dedicated:animation-1';
+
+    connectV1Client(host, editorSocket);
+    connectV1Client(host, embeddedPreviewSocket);
+    connectV1Client(host, dedicatedPreviewSocket);
+    registerPreview(host, embeddedPreviewSocket, {
+      gameId: 'game-key-1',
+      embeddedLaunchId: 'embedded-launch-1',
+    });
+    registerPreview(host, dedicatedPreviewSocket, {
+      gameId: 'game-key-1',
+      embeddedLaunchId: dedicatedLaunchId,
+    });
+    clearSentMessages(
+      editorSocket,
+      embeddedPreviewSocket,
+      dedicatedPreviewSocket,
+    );
+
+    const broadcastRequest = createRequestEnvelope(
+      'preview.command.run-snippet',
+      'req-broadcast',
+      { snippet: 'wait:1;' },
+    );
+    host.handleMessage(editorSocket as never, JSON.stringify(broadcastRequest));
+    expect(embeddedPreviewSocket.sentMessages).toEqual([
+      JSON.stringify(broadcastRequest),
+    ]);
+    expect(dedicatedPreviewSocket.sentMessages).toHaveLength(0);
+
+    clearSentMessages(editorSocket, embeddedPreviewSocket);
+    forwardedPreviewCommands.length = 0;
+    const targetedRequest = {
+      ...createRequestEnvelope('preview.command.seek-animation', 'req-seek', {
+        target: 'fig-center',
+        animation: [],
+        time: 0,
+      }),
+      embeddedLaunchId: dedicatedLaunchId,
+    };
+    host.handleMessage(editorSocket as never, JSON.stringify(targetedRequest));
+    expect(dedicatedPreviewSocket.sentMessages).toEqual([
+      JSON.stringify(targetedRequest),
+    ]);
+    expect(embeddedPreviewSocket.sentMessages).toHaveLength(0);
+    expect(forwardedPreviewCommands).toHaveLength(0);
+    expect(editorSocket.sentMessages).toEqual([
+      JSON.stringify(
+        createResponseEnvelope(
+          'preview.command.seek-animation',
+          'req-seek',
+          {},
+        ),
+      ),
+    ]);
+
+    clearSentMessages(editorSocket);
+    const readyEvent = createEventEnvelope('preview.ready.updated', {
+      ready: true,
+    });
+    host.handleMessage(
+      dedicatedPreviewSocket as never,
+      JSON.stringify(readyEvent),
+    );
+    expect(editorSocket.sentMessages).toEqual([
+      JSON.stringify({ ...readyEvent, embeddedLaunchId: dedicatedLaunchId }),
+    ]);
+  });
+
   it('routes preview queries only to the active embedded preview and returns its response to the editor', () => {
     const forwardedPreviewCommands: unknown[] = [];
     const host = new EditorPreviewHost({

@@ -1,0 +1,226 @@
+// 左侧属性栏的宽度
+$header-width: 248px;
+$row-height: 28px;
+$ruler-height: 24px;
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-card);
+  outline: none;
+}
+
+.toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  padding: 0 8px;
+  border-bottom: var(--border-sm);
+}
+
+.time {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--text-sub);
+  font-variant-numeric: tabular-nums;
+}
+
+.zoom {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  color: var(--text-weak);
+}
+
+// 左上角空白、刻度尺、属性栏、轨道区域四块。只有轨道区域滚动，其余随它同步
+.body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: $header-width minmax(0, 1fr);
+  grid-template-rows: $ruler-height minmax(0, 1fr);
+}
+
+.corner {
+  border-right: var(--border-sm);
+  border-bottom: var(--border-sm);
+}
+
+// 与轨道区域保留同样宽的滚动条槽，两边横向滚动到底时才能对齐
+.rulerViewport,
+.lanes {
+  scrollbar-gutter: stable;
+}
+
+.rulerViewport {
+  overflow: hidden;
+  border-bottom: var(--border-sm);
+}
+
+.headers {
+  overflow: hidden;
+  border-right: var(--border-sm);
+
+  // 轨道区域底部有横向滚动条，属性栏多留一段，纵向滚动到底时才能对齐
+  &::after {
+    content: '';
+    display: block;
+    height: 20px;
+  }
+}
+
+.lanes {
+  overflow: auto;
+}
+
+.lanesContent {
+  position: relative;
+  min-height: 100%;
+}
+
+.ruler {
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+}
+
+// 刻度是立在刻度尺底边上的短线，数字在它正上方
+.tick {
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+  border-left: 1px solid var(--black-35pct);
+}
+
+.tickLabel {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  transform: translateX(-50%);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--text-weak);
+  white-space: nowrap;
+}
+
+// 播放头的头部尖端落在刻度尺底边上，与轨道区域中的播放头竖线相接
+.playheadHandle {
+  position: absolute;
+  bottom: 0;
+  width: 11px;
+  height: 12px;
+  margin-left: -5px;
+  background: var(--primary);
+  clip-path: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: $row-height;
+  padding: 0 4px 0 12px;
+}
+
+.header:hover,
+.lane:hover {
+  background: var(--black-5pct);
+}
+
+.trackLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.valueInput {
+  flex: none;
+  width: 80px;
+  min-width: 0;
+}
+
+.keyframeOn {
+  color: var(--primary);
+}
+
+// 不常用的操作，悬停在这一行时才显示
+.moreButton {
+  opacity: 0;
+
+  .header:hover &,
+  &:focus-visible,
+  &[aria-expanded='true'] {
+    opacity: 1;
+  }
+}
+
+.lane {
+  position: relative;
+  height: $row-height;
+}
+
+.laneSpacer {
+  height: $row-height;
+}
+
+// 第一个到最后一个关键帧之间的连线，表示这个属性在变化
+.span {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 1px;
+  background: var(--black-10pct);
+}
+
+.keyframe {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  background: var(--text-sub);
+  cursor: ew-resize;
+
+  // 扩大点击范围
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+  }
+
+  &:hover {
+    background: var(--text);
+  }
+
+  &.selected {
+    background: var(--primary);
+  }
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 1px;
+  background: var(--primary);
+  pointer-events: none;
+}
+
+.addPropertyPopover {
+  max-height: 360px;
+  overflow-y: auto;
+}

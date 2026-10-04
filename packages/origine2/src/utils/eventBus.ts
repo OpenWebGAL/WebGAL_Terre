@@ -1,7 +1,9 @@
 import mitt from 'mitt';
 import type { ReactNode } from 'react';
 import type {
+  EventEnvelopeByType,
   FastPreviewTimeoutPayload,
+  HostEventType,
   PreviewReadyUpdatedPayload,
   StageSnapshotUpdatedPayload,
 } from '@webgal/editor-preview-protocol';
@@ -70,6 +72,8 @@ interface EditorPreviewEvents {
   'editor-preview:ready': PreviewReadyUpdatedPayload;
   'editor-preview:stage-snapshot': { snapshot: StageSnapshotUpdatedPayload };
   'editor-preview:fast-preview-timeout': { payload: FastPreviewTimeoutPayload };
+  /** 独占预览发出的事件，embeddedLaunchId 标明来源 */
+  'editor-preview:dedicated-event': EventEnvelopeByType<HostEventType>;
 }
 
 type Events = Record<PropertyKey, unknown> & IframeEvents & EditorEvents & EditorPreviewEvents;
