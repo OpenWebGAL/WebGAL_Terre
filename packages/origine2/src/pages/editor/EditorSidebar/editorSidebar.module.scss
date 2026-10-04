@@ -38,6 +38,17 @@
   aspect-ratio: 16 / 9;
 }
 
+.previewHiddenTip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 16px;
+  text-align: center;
+  color: var(--text-weak);
+  background: var(--bg-card);
+}
+
 .preview_container:hover .previewWindow {
   border-radius: var(--radius-md);
   border-top-right-radius: 0;

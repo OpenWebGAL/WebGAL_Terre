@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { JsonValue } from '@webgal/editor-preview-protocol';
+import useEditorStore from '@/store/useEditorStore';
 import { ResizableSplit } from './components/ResizableSplit';
 import { toAnimationObject } from './model/animationDocument';
 import { useAnimationFileDocument } from './model/useAnimationDocument';
@@ -24,6 +25,13 @@ export function AnimationEditor({ url, initialText }: IAnimationEditorProps) {
   const [time, setTime] = useState(0);
   // 动画对象由 JSON 解析而来，必定可以序列化
   const animation = useMemo(() => toAnimationObject(doc) as JsonValue, [doc]);
+  const updateIsAnimationEditorOpen = useEditorStore.use.updateIsAnimationEditorOpen();
+
+  // 编辑器自带预览，打开期间隐藏左侧的游戏预览，避免把两个预览混淆；只有当前标签页会挂载编辑器
+  useEffect(() => {
+    updateIsAnimationEditorOpen(true);
+    return () => updateIsAnimationEditorOpen(false);
+  }, [updateIsAnimationEditorOpen]);
 
   const preview = <AnimationPreview animation={animation} time={time} settings={previewSettings} />;
   const settings = (

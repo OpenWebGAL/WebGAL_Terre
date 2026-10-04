@@ -1625,6 +1625,9 @@ msgstr "Regex flags"
 msgid "正在上传"
 msgstr "Uploading"
 
+msgid "正在使用动画编辑器，游戏预览暂时隐藏"
+msgstr "The animation editor is in use. Game preview is temporarily hidden"
+
 msgid "正在加载模板配置"
 msgstr "Loading template configuration"
 
