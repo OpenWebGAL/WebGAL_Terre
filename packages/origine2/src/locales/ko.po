@@ -143,9 +143,6 @@ msgstr "setAnimation:애니메이션 파일 선택;"
 msgid "setComplexAnimation:universalSoftIn -target=fig-center;"
 msgstr "setComplexAnimation:universalSoftIn -target=fig-center;"
 
-msgid "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-msgstr "setTempAnimation:[{\"duration\":0},{\"duration\":500}];"
-
 msgid "setTextbox:hide;"
 msgstr "setTextbox:hide;"
 
@@ -289,6 +286,12 @@ msgstr "테마"
 
 msgid "亮度"
 msgstr "밝기"
+
+msgid "仅用于预览，不会写入动画文件"
+msgstr "미리보기 전용이며 애니메이션 파일에 저장되지 않습니다"
+
+msgid "从上一关键帧到此帧"
+msgstr "이전 키프레임에서 이 키프레임까지"
 
 msgid "从当前状态开始"
 msgstr "현재 상태에서 시작"
@@ -545,11 +548,17 @@ msgstr "새 게임 생성"
 msgid "删除"
 msgstr "삭제"
 
+msgid "删除关键帧"
+msgstr "키프레임 삭제"
+
 msgid "删除参数"
 msgstr "인자 삭제"
 
 msgid "删除属性"
 msgstr "속성 삭제"
+
+msgid "删除播放头处的关键帧"
+msgstr "재생 헤드 위치의 키프레임 삭제"
 
 msgid "删除本句"
 msgstr "현재 문장 삭제"
@@ -583,6 +592,9 @@ msgstr "애니메이션 이름"
 
 msgid "动画帧控制"
 msgstr "애니메이션 프레임 제어"
+
+msgid "动画编辑器"
+msgstr "애니메이션 에디터"
 
 msgid "半张嘴"
 msgstr "반쯤 벌린 입"
@@ -659,6 +671,9 @@ msgstr "스크립트 간에 무한 루프가 있거나 대상 줄 이전에 빨�
 msgid "可选项"
 msgstr "선택 가능 항목"
 
+msgid "右"
+msgstr "오른쪽"
+
 msgid "右侧"
 msgstr "우측"
 
@@ -701,6 +716,9 @@ msgstr "비디오 건너뛰기 활성화"
 msgid "唇形同步与眨眼"
 msgstr "립싱크 및 눈 깜박임"
 
+msgid "回到开头"
+msgstr "처음으로"
+
 msgid "回收站"
 msgstr "휴지통"
 
@@ -742,6 +760,9 @@ msgstr "대화창 좌측 하단에 미니 프로필 표시"
 
 msgid "在当前场景内创建跳转标签"
 msgstr "현재 장면 내에 이동 태그 생성"
+
+msgid "在播放头处添加关键帧，直接修改左侧的数值也会添加。添加后可在轨道上拖动关键帧调整时间，右键设置缓动或删除"
+msgstr "재생 헤드 위치에 키프레임을 추가합니다. 왼쪽 값을 직접 수정해도 추가됩니다. 추가한 뒤 트랙에서 드래그해 시간을 조정하고, 우클릭으로 이징을 설정하거나 삭제할 수 있습니다"
 
 msgid "在文件管理器中打开"
 msgstr "파일 탐색기에서 열기"
@@ -953,6 +974,9 @@ msgstr "잠금 해제되지 않은 노드 표시"
 msgid "属性"
 msgstr "속성"
 
+msgid "左"
+msgstr "왼쪽"
+
 msgid "左侧"
 msgstr "왼쪽"
 
@@ -998,6 +1022,9 @@ msgstr "읽은 텍스트 내부"
 msgid "已读文本外层"
 msgstr "읽은 텍스트 외부"
 
+msgid "帧继承"
+msgstr "키프레임 상속"
+
 msgid "帮助"
 msgstr "도움말"
 
@@ -1037,6 +1064,12 @@ msgstr "지연 시간(초)"
 msgid "开启"
 msgstr "켜기"
 
+msgid "开启时，关键帧中的值基于对象当前的状态计算，例如位置、旋转为相加，缩放为相乘；关闭时均为绝对值。可在属性的菜单中修改计算方式。"
+msgstr "켜면 키프레임 값이 오브젝트의 현재 상태를 기준으로 계산됩니다(위치·회전은 더하기, 스케일은 곱하기 등). 끄면 모두 절대값입니다. 계산 방식은 각 속성의 메뉴에서 바꿀 수 있습니다."
+
+msgid "开启时，每个属性只在自己的关键帧之间过渡；关闭时，关键帧中没有设置的属性会回到对象当前的状态。关闭时时间轴左侧显示的数值仍按开启时计算，可能与预览不一致，请以预览为准。"
+msgstr "켜면 각 속성은 자신의 키프레임 사이에서만 보간됩니다. 끄면 키프레임에 설정되지 않은 속성은 오브젝트의 현재 상태로 돌아갑니다. 끈 상태에서도 타임라인 왼쪽에 표시되는 값은 켠 상태로 계산되므로 미리보기와 다를 수 있습니다. 미리보기를 기준으로 확인하세요."
+
 msgid "开始"
 msgstr "시작"
 
@@ -1072,6 +1105,9 @@ msgstr "현재 환경은 시스템 파일 탐색기를 지원하지 않습니다
 
 msgid "当前预览变量"
 msgstr "현재 미리보기 변수"
+
+msgid "循环播放"
+msgstr "반복 재생"
 
 msgid "德语"
 msgstr "독일어"
@@ -1112,6 +1148,9 @@ msgstr "수동으로 다음 문장을 표시"
 msgid "手动输入 ID"
 msgstr "ID 수동 입력"
 
+msgid "打开动画编辑器"
+msgstr "애니메이션 에디터 열기"
+
 msgid "打开安装目录"
 msgstr "다운로드 목록을 열기"
 
@@ -1141,6 +1180,9 @@ msgstr "실행 후 캐릭터 이름 초기화"
 
 msgid "扩展名"
 msgstr "확장명"
+
+msgid "拖动调整时间，右键设置缓动或删除"
+msgstr "드래그해 시간 조정, 우클릭으로 이징 설정 또는 삭제"
 
 msgid "拖拽调整变换（建议打开快速预览效果）"
 msgstr "드래그하여 변형 조정(빠른 미리보기 효과를 켜는 것을 권장합니다)"
@@ -1202,6 +1244,9 @@ msgstr "힌트 버튼 텍스트"
 msgid "搜索选项"
 msgstr "옵션 검색"
 
+msgid "播放"
+msgstr "재생"
+
 msgid "播放一小段视频"
 msgstr "비디오 클립 재생"
 
@@ -1219,6 +1264,9 @@ msgstr "조작"
 
 msgid "操作失败"
 msgstr "조작 실패"
+
+msgid "放大"
+msgstr "확대"
 
 msgid "故障电影滤镜"
 msgstr "글리치 영화 필터"
@@ -1252,6 +1300,9 @@ msgstr "효과음 재생 상태"
 
 msgid "效果音文件"
 msgstr "효과음 파일"
+
+msgid "文件内容不是有效的 v2 动画，请在脚本编辑器中修改"
+msgstr "파일 내용이 올바른 v2 애니메이션이 아닙니다. 스크립트 편집기에서 수정하세요"
 
 msgid "文件名"
 msgstr "파일 이름"
@@ -1421,11 +1472,17 @@ msgstr "일반 대화"
 msgid "普通对话，显示角色名"
 msgstr "일반 대화, 캐릭터 이름 표시"
 
+msgid "暂停"
+msgstr "일시정지"
+
 msgid "暂无变量快照"
 msgstr "변수 스냅샷 없음"
 
 msgid "暂无调试变量，点击“新增变量”创建。"
 msgstr "디버그 변수가 없습니다. “변수 추가”를 클릭하여 생성하세요."
+
+msgid "更多"
+msgstr "더 보기"
 
 msgid "更多设置"
 msgstr "추가 설정"
@@ -1568,6 +1625,9 @@ msgstr "정규식 태그"
 msgid "正在上传"
 msgstr "업로드 중"
 
+msgid "正在使用动画编辑器，游戏预览暂时隐藏"
+msgstr "애니메이션 에디터를 사용 중이므로 게임 미리보기를 잠시 숨겼습니다"
+
 msgid "正在加载模板配置"
 msgstr "템플릿 구성을 불러오는 중"
 
@@ -1681,6 +1741,9 @@ msgstr "노드 추가"
 
 msgid "添加语句"
 msgstr "문장 추가"
+
+msgid "清除"
+msgstr "지우기"
 
 msgid "清除当前舞台的特殊效果"
 msgstr "현재 스테이지의 이펙트 초기화"
@@ -1796,8 +1859,20 @@ msgstr "대상 ID"
 msgid "目标行"
 msgstr "대상 줄"
 
+msgid "相乘"
+msgstr "곱하기"
+
+msgid "相乘（基准为 0 时视为 1）"
+msgstr "곱하기 (기준이 0이면 1로 간주)"
+
+msgid "相加"
+msgstr "더하기"
+
 msgid "相对"
 msgstr "상대적"
+
+msgid "相对动画"
+msgstr "상대 애니메이션"
 
 msgid "眨眼"
 msgstr "눈 깜박임"
@@ -1849,6 +1924,9 @@ msgstr "비활성화"
 
 msgid "移动到回收站失败"
 msgstr "휴지통으로 이동하지 못했습니다"
+
+msgid "移除属性"
+msgstr "속성 제거"
 
 msgid "立即注视"
 msgstr "즉시 주시"
@@ -1925,6 +2003,9 @@ msgstr "게임 종료"
 msgid "绝对"
 msgstr "절대적"
 
+msgid "绝对值"
+msgstr "절대값"
+
 msgid "继续游戏按钮"
 msgstr "이어하기 버튼"
 
@@ -1940,8 +2021,14 @@ msgstr "이즈 인 아웃"
 msgid "缓出"
 msgstr "이즈 아웃"
 
+msgid "缓动"
+msgstr "이징"
+
 msgid "缓动类型"
 msgstr "이징 유형"
+
+msgid "编辑"
+msgstr "편집"
 
 msgid "编辑图标"
 msgstr "아이콘 편집"
@@ -1964,8 +2051,14 @@ msgstr "편집 위젯"
 msgid "繁体中文"
 msgstr "중국어 번체"
 
+msgid "缩小"
+msgstr "축소"
+
 msgid "缩放"
 msgstr "축소/확대"
+
+msgid "缩放（Ctrl + 滚轮）"
+msgstr "확대/축소 (Ctrl + 휠)"
 
 msgid "网格视图"
 msgstr "그리드 보기"
@@ -2123,6 +2216,9 @@ msgstr "해금된 CG 또는 BGM 이름"
 msgid "解锁鉴赏类型"
 msgstr "해금 갤러리 유형"
 
+msgid "计算方式"
+msgstr "계산 방식"
+
 msgid "设置"
 msgstr "설정"
 
@@ -2137,6 +2233,12 @@ msgstr "스탠딩 또는 배경의 입/퇴장 애니메이션 설정"
 
 msgid "设置自定义级联选择器分隔符（输入后按回车键确认）"
 msgstr "커스텀 캐스케이드 선택기 구분 기호 설정 (입력 후 Enter 키를 눌러 확인)"
+
+msgid "设置预览初始状态"
+msgstr "미리보기 초기 상태 설정"
+
+msgid "设置预览对象在动画开始前的状态，相对动画以此为基准"
+msgstr "애니메이션 시작 전 미리보기 대상의 상태를 설정합니다. 상대 애니메이션은 이를 기준으로 합니다"
 
 msgid "该指令会在文本框显示当前变量。"
 msgstr "이 명령어는 텍스트 창에 현재 변수를 표시합니다."
@@ -2504,8 +2606,14 @@ msgstr "사전 설정 템플릿은 설치 디렉터리에 저장됩니다. 편�
 msgid "预览"
 msgstr "미리보기"
 
+msgid "预览初始状态"
+msgstr "미리보기 초기 상태"
+
 msgid "预览图标"
 msgstr "미리보기 아이콘"
+
+msgid "预览对象"
+msgstr "미리보기 대상"
 
 msgid "预览窗口"
 msgstr "미리보기 창"
@@ -2530,6 +2638,9 @@ msgstr "기본값"
 
 msgid "默认 default"
 msgstr "기본값 default"
+
+msgid "默认（{0}）"
+msgstr "기본값 ({0})"
 
 msgid "默认值"
 msgstr "기본값"

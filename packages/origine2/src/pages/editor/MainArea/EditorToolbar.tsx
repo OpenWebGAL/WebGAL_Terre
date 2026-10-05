@@ -5,7 +5,10 @@ import {eventBus} from "@/utils/eventBus";
 import {useGameEditorContext} from '@/store/useGameEditorStore';
 import { t } from '@lingui/macro';
 
-export default function EditorToolbar() {
+/**
+ * @param showSceneInfo 是否显示调试器与字数统计，编辑场景以外的文件时不需要
+ */
+export default function EditorToolbar({ showSceneInfo = true }: { showSceneInfo?: boolean }) {
   const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
   const isShowDebugger = useGameEditorContext((state)=> state.isShowDebugger);
   const updateIsCodeMode = useGameEditorContext((state)=> state.updateIsCodeMode);
@@ -44,14 +47,16 @@ export default function EditorToolbar() {
   };
 
   return <div className={s.toolbar}>
-    <div className={s.toolbar_button+ ' ' + (isShowDebugger  ? s.toolbar_button_active : '')} onClick={()=>switchDebugger()}>
-      <Terminal theme="outline" size="20" fill={isShowDebugger ? 'var(--primary)' : "var(--text)"} strokeWidth={3}/>
-      DEBUGGER
-    </div>
-    <div className={s.toolbar_button}>
-      <DataSheet theme="outline" size="20" fill="var(--text)" strokeWidth={3}/>
-      {lineNumString} {t`行脚本`}, {textNumString} {t`个字`}
-    </div>
+    {showSceneInfo && <>
+      <div className={s.toolbar_button+ ' ' + (isShowDebugger  ? s.toolbar_button_active : '')} onClick={()=>switchDebugger()}>
+        <Terminal theme="outline" size="20" fill={isShowDebugger ? 'var(--primary)' : "var(--text)"} strokeWidth={3}/>
+        DEBUGGER
+      </div>
+      <div className={s.toolbar_button}>
+        <DataSheet theme="outline" size="20" fill="var(--text)" strokeWidth={3}/>
+        {lineNumString} {t`行脚本`}, {textNumString} {t`个字`}
+      </div>
+    </>}
     <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode ? s.toolbar_button_active : '')}
       style={{marginLeft: 'auto'}}>
       <FileCodeOne theme="outline" size="20" fill={isCodeMode ? 'var(--primary)' : "var(--text)"} strokeWidth={3}/>

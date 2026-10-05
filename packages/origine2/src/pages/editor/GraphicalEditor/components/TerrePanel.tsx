@@ -11,6 +11,7 @@ import ChooseFile from "../../ChooseFile/ChooseFile";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import WheelDropdown from "./WheelDropdown";
 import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
+import { useHiddenAnimationFiles } from "@/hooks/useHiddenAnimationFiles";
 import { t } from "@lingui/macro";
 
 export function TerrePanel(props: {
@@ -150,6 +151,7 @@ function EffectEditorOptions({ panel, setPanel }: {
     width?: number;
   } | null>>;
 }) {
+  const hiddenAnimationFiles = useHiddenAnimationFiles();
   const easeOptions = useEaseTypeOptions();
   const blendModeOptions = useMemo(() => new Map([
     ['', t`默认`],
@@ -171,7 +173,7 @@ function EffectEditorOptions({ panel, setPanel }: {
         selectedFilePath={options[key] ? `${String(options[key])}.json` : ''}
         onChange={(file) => update(key, file?.name.replace(/\.json$/i, '') ?? '', true)}
         extNames={extNameMap.get('json')}
-        hiddenFiles={['animationTable.json']}
+        hiddenFiles={hiddenAnimationFiles}
       /></>
     </CommonOptions>
   );

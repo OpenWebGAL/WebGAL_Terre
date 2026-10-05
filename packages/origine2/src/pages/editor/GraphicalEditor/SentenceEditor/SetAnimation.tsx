@@ -12,11 +12,13 @@ import { combineSubmitString } from "@/utils/combineSubmitString";
 import { extNameMap } from "../../ChooseFile/chooseFileConfig";
 import { getTransformFromArgs, isTransformFromDefault, TransformFromOption } from "../components/TransformFromOption";
 import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
+import { useHiddenAnimationFiles } from "@/hooks/useHiddenAnimationFiles";
 
 export default function SetAnimation(props: ISentenceEditorProps) {
   const fileName = useValue(props.sentence.content);
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const presetTargets = usePresetTargetOptions();
+  const hiddenAnimationFiles = useHiddenAnimationFiles();
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value);
   const isUsePreset = useValue(isPresetTarget);
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
@@ -50,7 +52,7 @@ export default function SetAnimation(props: ISentenceEditorProps) {
           <ChooseFile title={t`选择动画文件`} basePath={['animation']} selectedFilePath={`${fileName.value}.json`} onChange={(file) => {
             fileName.set((file?.name ?? "").replaceAll(".json", ""));
             submit();
-          }} extNames={extNameMap.get('json')} hiddenFiles={['animationTable.json']} />
+          }} extNames={extNameMap.get('json')} hiddenFiles={hiddenAnimationFiles} />
         </>
       </CommonOptions>
       <CommonOptions key="2" title={t`使用预设目标`}>

@@ -1,0 +1,68 @@
+.panel {
+  height: 100%;
+  overflow: auto;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  background: var(--bg-card);
+}
+
+.section + .section {
+  margin-top: 16px;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  color: var(--text-weak);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  // 较长的名称（如“设置预览初始状态”）不换行，向右撑开
+  min-width: 88px;
+  white-space: nowrap;
+  color: var(--text-sub);
+}
+
+.control {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown {
+  min-width: 0;
+  width: 120px;
+}
+
+.file {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+// 文件名只占自身宽度，清除、选择按钮紧跟在后面
+.fileName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}

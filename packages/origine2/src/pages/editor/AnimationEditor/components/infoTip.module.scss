@@ -1,0 +1,13 @@
+.infoTip {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-weak);
+  font-size: 14px;
+  cursor: help;
+  outline: none;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--primary);
+  }
+}

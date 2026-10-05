@@ -38,6 +38,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       isUseRealtimeEffect: true,
       debugVariables: [],
       isTrash: false,
+      isAnimationEditorOpen: false,
       updateIsWindowAdjustment: (isWindowAdjustment) => set({ isWindowAdjustment }),
       updatePage: (page) => set({ page }),
       updateSubPage: (subPage) => {
@@ -69,6 +70,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       updateSortOrder: (sortOrder) => set({ sortOrder }),
       updateIisAutoHideToolbar: (isAutoHideToolbar) => set({ isAutoHideToolbar }),
       updateIsShowPreview: (isShowPreview) => set({ isShowPreview }),
+      updateIsAnimationEditorOpen: (isAnimationEditorOpen) => set({ isAnimationEditorOpen }),
       updateIsEnableLivePreview: (isEnableLivePreview) => set({ isEnableLivePreview }),
       updateIsAutoWarp: (isAutoWarp) => set({ isAutoWarp }),
       updateIsAutoSaveFlowchart: (isAutoSaveFlowchart) => set({ isAutoSaveFlowchart }),
@@ -87,7 +89,7 @@ const useEditorStoreBase = create<IEditorState & IEditorAction>()(
       name: 'editor-storage',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) =>
-        Object.fromEntries(Object.entries(state).filter(([key]) => !['page', 'subPage', 'expand'].includes(key))),
+        Object.fromEntries(Object.entries(state).filter(([key]) => !['page', 'subPage', 'expand', 'isAnimationEditorOpen'].includes(key))),
     },
   ),
 );

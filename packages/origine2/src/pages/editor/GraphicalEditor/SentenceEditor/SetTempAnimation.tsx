@@ -7,24 +7,17 @@ import TerreToggle from "../../../../components/terreToggle/TerreToggle";
 import { t } from "@lingui/macro";
 import WheelDropdown from "@/pages/editor/GraphicalEditor/components/WheelDropdown";
 import { combineSubmitString } from "@/utils/combineSubmitString";
-import { EditorPreviewClient } from "@/utils/editorPreviewClient";
-import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Text } from "@fluentui/react-components";
-import { useEaseTypeOptions } from "@/hooks/useEaseTypeOptions";
-import { CloseSmall, Down, More, Plus, Up } from "@icon-park/react";
-import { useGlobalEffectEditor } from "@/hooks/useGlobalEffectEditor";
-import { useRef } from "react";
+import { Button } from "@fluentui/react-components";
 import { getTransformFromArgs, isTransformFromDefault, TransformFromOption } from "../components/TransformFromOption";
 import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
-
-interface IAnimationFrame {
-  transform: string;
-  duration: number;
-  ease?: string;
-}
+import useEditorStore from "@/store/useEditorStore";
+import { TerrePanel } from "../components/TerrePanel";
+import { LegacyTempAnimationFrames } from "../components/LegacyTempAnimationFrames";
+import { isEditableAnimation } from "@/pages/editor/AnimationEditor/model/animationDocument";
+import { SceneAnimationEditor } from "@/pages/editor/AnimationEditor/SceneAnimationEditor";
 
 export default function SetTempAnimation(props: ISentenceEditorProps) {
   const content = useValue(props.sentence.content);
-  const animationFrameArray = useValue<IAnimationFrame[]>(initTransformArray(content.value));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const presetTargets = usePresetTargetOptions();
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value);
@@ -33,199 +26,40 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
   const isFromDefault = useValue(isTransformFromDefault(props.sentence));
   const keep = useValue(getArgByKey(props.sentence, 'keep') === true);
   const parallel = useValue(getArgByKey(props.sentence, 'parallel') === true);
-  const easeTypeOptions = useEaseTypeOptions();
+  const updateExpand = useEditorStore.use.updateExpand();
+  // 新建的多段动画使用 Animation v2；v1 关键帧数组（以及无法解析的内容）只为兼容旧脚本，沿用原来的编辑方式
+  const isLegacy = !isEditableAnimation(content.value, true);
+
+  const buildSentence = () => combineSubmitString(
+    props.sentence.commandRaw,
+    content.value,
+    props.sentence.args,
+    [
+      {key: "target", value: target.value},
+      ...getTransformFromArgs(isFromDefault.value),
+      {key: "keep", value: keep.value},
+      {key: "parallel", value: parallel.value},
+      {key: "next", value: isGoNext.value},
+    ],
+    props.sentence.inlineComment,
+  );
 
   const submit = () => {
-    const submitString = combineSubmitString(
-      props.sentence.commandRaw,
-      content.value,
-      props.sentence.args,
-      [
-        {key: "target", value: target.value},
-        ...getTransformFromArgs(isFromDefault.value),
-        {key: "keep", value: keep.value},
-        {key: "parallel", value: parallel.value},
-        {key: "next", value: isGoNext.value},
-      ],
-      props.sentence.inlineComment,
-    );
-    props.onSubmit(submitString);
+    props.onSubmit(buildSentence());
   };
-
-  const joinFrameString = () => {
-    content.set(`[${animationFrameArray.value.map(frame => {
-      try {
-        const transformObj = JSON.parse(frame.transform) as any;
-        const frameObj = { ...transformObj, duration: frame.duration, ease: frame.ease };
-        return JSON.stringify(frameObj);
-      } catch {
-        return `{"duration":0}`;
-      }
-    }).join(",")}]`);
-  };
-
-  const addFrame = (index: number, frame: IAnimationFrame) => {
-    if (index < 0 || index > animationFrameArray.value.length) {
-      return;
-    }
-    const newArray = [...animationFrameArray.value];
-    newArray.splice(index, 0, frame);
-    animationFrameArray.set(newArray);
-    joinFrameString();
-  };
-
-  const deleteFrame = (index: number) => {
-    if (index < 0 || index >= animationFrameArray.value.length) {
-      return;
-    }
-    const newArray = animationFrameArray.value.filter((_, i) => i !== index);
-    animationFrameArray.set(newArray);
-    joinFrameString();
-  };
-
-  const moveFrame = (fromIndex: number, toIndex: number) => {
-    if (toIndex < 0 || toIndex >= animationFrameArray.value.length) {
-      return;
-    }
-    const newArray = [...animationFrameArray.value];
-    const [movedItem] = newArray.splice(fromIndex, 1);
-    newArray.splice(toIndex, 0, movedItem);
-    animationFrameArray.set(newArray);
-    joinFrameString();
-  };
-
-  const updateFrame = (index: number, newFrame: IAnimationFrame) => {
-    if (index < 0 || index >= animationFrameArray.value.length) {
-      return;
-    }
-    const newArray = [...animationFrameArray.value];
-    newArray[index] = newFrame;
-    animationFrameArray.set(newArray);
-    joinFrameString();
-  };
-  const effectFrameIndex = useRef(-1);
-  const openEffectEditor = useGlobalEffectEditor((event) => {
-    const index = effectFrameIndex.current;
-    if (event.action === 'change' && animationFrameArray.value[index]) {
-      updateFrame(index, { ...animationFrameArray.value[index], transform: event.value || "{}" });
-      submit();
-    } else if (event.action === 'preview') {
-      EditorPreviewClient.setEffect({ target: target.value, transform: event.value, phase: 'preview' });
-    }
-  });
-
-  const animationFrameElement = (index: number) => {
-    if (index < 0 || index >= animationFrameArray.value.length) {
-      return null;
-    }
-    const frame = animationFrameArray.value[index];
-    return <div key={`animation-frame-${index}`}>
-      <Text style={{ color: "var(--text-weak)", wordBreak: "break-word" }}>{`${index} ${frame.transform}`}</Text>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", width: "100%" }}>
-        <CommonOptions key={`frame-control-${index}`} title={t`动画帧控制`}>
-          <Button
-            icon={<Up />}
-            appearance="subtle"
-            aria-label={t`上移`}
-            title={t`上移`}
-            disabled={index === 0}
-            onClick={() => {
-              moveFrame(index, index - 1);
-              submit();
-            }}
-          />
-          <Button
-            icon={<Down />}
-            appearance="subtle"
-            aria-label={t`下移`}
-            title={t`下移`}
-            disabled={index === animationFrameArray.value.length - 1}
-            onClick={() => {
-              moveFrame(index, index + 1);
-              submit();
-            }}
-          />
-          <Menu>
-            <MenuTrigger>
-              <Button icon={<More/>} appearance="subtle" aria-label={t`操作`} title={t`操作`} />
-            </MenuTrigger>
-            <MenuPopover>
-              <MenuList>
-                <MenuItem icon={<Plus/>} onClick={() => {
-                  addFrame(index, { transform: "{}", duration: 0 });
-                  submit();
-                }}>
-                  {t`向上添加`}
-                </MenuItem>
-                <MenuItem icon={<CloseSmall/>} onClick={() => {
-                  deleteFrame(index);
-                  submit();
-                }}>
-                  {t`删除`}
-                </MenuItem>
-              </MenuList>
-            </MenuPopover>
-          </Menu>
-        </CommonOptions>
-        <CommonOptions key={`effect-button-${index}`} title={t`效果编辑`}>
-          <Button onClick={() => {
-            effectFrameIndex.current = index;
-            openEffectEditor({
-              title: t`效果编辑器`,
-              json: animationFrameArray.value[index]?.transform ?? "{}",
-              sentence: props.sentence,
-              index: props.index,
-              targetPath: props.targetPath,
-            });
-          }}>
-            {t`打开效果编辑器`}
-          </Button>
-        </CommonOptions>
-        <CommonOptions key={`duration-${index}`} title={t`过渡时间（单位为毫秒）`}>
-          <input
-            placeholder={t`过渡时间（单位为毫秒）`}
-            value={frame.duration.toString()}
-            className={styles.sayInput}
-            style={{ width: "100%" }}
-            onChange={(ev) => {
-              let duration = Number(ev.target.value);
-              const newDuration = Number(ev.target.value);
-              if (isNaN(newDuration))
-                duration = 0;
-              else
-                duration = newDuration;
-              updateFrame(index, { ...frame, duration: duration });
-            }}
-            onBlur={submit}
-          />
-        </CommonOptions>
-        <CommonOptions key={`easeType-${index}`} title={t`缓动类型`}>
-          <WheelDropdown
-            options={easeTypeOptions}
-            value={frame.ease ?? ""}
-            onValueChange={(newValue) => {
-              const newEase = newValue?.toString() ?? "";
-              updateFrame(index, { ...frame, ease: newEase === "" ? undefined : newEase });
-              submit();
-            }}
-          />
-        </CommonOptions>
-      </div>
-    </div>;
-  };
-
 
   return <div className={styles.sentenceEditorContent}>
     <div className={styles.editItem}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "4px", width: "100%" }}>
-        {animationFrameArray.value.map((_, index) => animationFrameElement(index))}
-      </div>
-      <Button onClick={() => {
-        addFrame(animationFrameArray.value.length, { transform: "{}", duration: 0 });
-        submit();
-      }}>
-        {t`添加动画帧`}
-      </Button>
+      {isLegacy
+        ? <LegacyTempAnimationFrames
+          content={content}
+          submit={submit}
+          target={target.value}
+          sentence={props.sentence}
+          index={props.index}
+          targetPath={props.targetPath}
+        />
+        : <Button onClick={() => updateExpand(props.index)}>{t`打开动画编辑器`}</Button>}
     </div>
     <div className={styles.editItem}>
       <CommonOptions key="usePresetTarget" title={t`使用预设目标`}>
@@ -280,33 +114,21 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
       </CommonOptions>
       {props.extraOptions}
     </div>
+    {!isLegacy && <TerrePanel sentenceIndex={props.index} title={t`动画编辑器`}>
+      <SceneAnimationEditor
+        initialText={content.value}
+        onChange={(text) => {
+          content.set(text);
+          submit();
+        }}
+        sentence={{
+          scenePath: props.targetPath,
+          lineNumber: props.sentence.endLine + 1,
+          lineContent: buildSentence(),
+          target: target.value,
+          isFromDefault: isFromDefault.value,
+        }}
+      />
+    </TerrePanel>}
   </div>;
-}
-
-function initTransformArray(transformArrayStr: string): IAnimationFrame[] {
-  const trimStr = transformArrayStr.trim();
-  if (trimStr.length === 0) {
-    return [];
-  }
-
-  try {
-    const frames = JSON.parse(trimStr);
-    if (!Array.isArray(frames)) {
-      return [];
-    }
-
-    return frames.map((obj: any) => {
-      if (typeof obj !== 'object' || obj === null) {
-        return { transform: '{}', duration: 0, ease: undefined };
-      }
-      const { duration, ease, ...transform } = obj;
-      return {
-        transform: JSON.stringify(transform),
-        duration: duration ?? 0,
-        ease: ease,
-      };
-    });
-  } catch (e) {
-    return [];
-  }
 }
