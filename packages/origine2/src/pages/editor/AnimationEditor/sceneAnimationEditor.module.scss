@@ -1,0 +1,14 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.settings {
+  flex: none;
+}
+
+.timeline {
+  flex: 1;
+  min-height: 240px;
+}

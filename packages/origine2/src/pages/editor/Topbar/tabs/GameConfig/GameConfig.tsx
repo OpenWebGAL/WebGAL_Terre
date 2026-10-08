@@ -187,6 +187,12 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
           compact={compact}
           onChange={(e: string) => updateGameConfigSimpleByKey('Steam_AppID', e)}/>,
       )}
+      {/* 引擎为 Live2D（Cubism）预先分配的内存，单位 MB，不填时引擎默认 32 */}
+      {mode === 'full' && renderConfigItem(t`Live2D 预留内存（MB）`,
+        <GameConfigEditor key="cubismMemoryReservedSize" value={getConfigContentAsString('Cubism_Memory_Reserved_Size_MB')}
+          compact={compact}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Cubism_Memory_Reserved_Size_MB', e)}/>,
+      )}
       {/* <TabItem title={t`文本框主题`}> */}
       {/*  <GameConfigEditorWithSelector key="packageName" value={getConfigContentAsString('Textbox_theme')} */}
       {/*    onChange={(e: string) => updateGameConfigSimpleByKey('Textbox_theme', e)} */}

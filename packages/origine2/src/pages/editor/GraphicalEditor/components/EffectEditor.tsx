@@ -230,14 +230,17 @@ const EffectField = memo(
 
 /**
  * 效果编辑器
+ *
+ * 编辑场景语句时传入 sentence、index、targetPath，会提供拖拽调整变换并与预览同步；
+ * 不传时只编辑效果参数（如动画编辑器中预览对象的初始状态）
  */
 export function EffectEditor(props: {
   json: string;
   onChange: (newJson: string) => void;
   onUpdate?: (transform: any) => void;
-  sentence: ISentence;
-  index: number;
-  targetPath: string;
+  sentence?: ISentence;
+  index?: number;
+  targetPath?: string;
 }) {
   const { effectConfig, fieldGroups } = useEffectEditorConfig();
   /**
@@ -394,11 +397,14 @@ export function EffectEditor(props: {
     }
     return base;
   }, []);
-  const lineContent = useMemo(() => sentenceToRawLine(props.sentence), [props.sentence, sentenceToRawLine]);
+  const lineContent = useMemo(
+    () => (props.sentence ? sentenceToRawLine(props.sentence) : ''),
+    [props.sentence, sentenceToRawLine],
+  );
   // 预览同步用的停止指针：目标语句末行（0-based）+ 1，与 GraphicalEditor 的 submitScene / syncToLineRange 一致。
   // 不能用 props.index：它是图形编辑器里的语句序号，多行语句只占一行，前面有多行语句时会与文件行号错开，
   // 导致拖拽框的基线 sync 停错语句，且与保存时的 sync 指针不同，使预览端的基线被误判失效。
-  const previewLineNumber = props.sentence.endLine + 1;
+  const previewLineNumber = (props.sentence?.endLine ?? 0) + 1;
   const transformableBoxKey = useMemo(
     () => [props.targetPath, props.index, lineContent, props.json].join('\n'),
     [props.targetPath, props.index, lineContent, props.json],
@@ -414,7 +420,8 @@ export function EffectEditor(props: {
 
   // 当 sentence 变化时，同步拖拽框状态
   useEffect(() => {
-    if (lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform')) {
+    const isTransformCommand = lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform');
+    if (props.sentence && props.targetPath && isTransformCommand) {
       eventBus.emit('editor:pixi-sync-command', {
         targetPath: props.targetPath,
         lineNumber: previewLineNumber,
@@ -425,6 +432,7 @@ export function EffectEditor(props: {
   }, [lineContent, props.sentence, previewLineNumber, props.targetPath]);
   // // 当立绘变换改变时，同步拖拽框与 input
   useEffect(() => {
+    if (!props.sentence) return;
     eventBus.emit('editor:sync-dragger', {
       x: explicitEffectFields.value.x,
       y: explicitEffectFields.value.y,
@@ -442,15 +450,15 @@ export function EffectEditor(props: {
   const previewControl = document.getElementById('gamePreviewControl');
   return (
     <>
-      <Switch
+      {props.sentence && <Switch
         checked={isWindowAdjustment}
         disabled={!isDragSupported}
         onChange={(_, checked) => {
           updateIsWindowAdjustment(checked.checked);
         }}
         label={t`拖拽调整变换（建议打开快速预览效果）`}
-      />
-      {previewControl && createPortal(
+      />}
+      {props.sentence && props.targetPath && previewControl && createPortal(
         <TransformableBox
           key={transformableBoxKey}
           parent={previewControl}

@@ -4,21 +4,17 @@
 
 #### 新功能
 
-新增立绘差分切换，用于为立绘更换表情等差分。切换时位置、效果和层级都保持不变，尺寸相同的图片之间会平滑过渡。
+新增动画编辑器。打开动画文件或编辑多段动画时，可以在时间轴上添加和拖动关键帧、为关键帧设置缓动，并实时预览动画效果。
 
-设置变换与动画时，可以选择从立绘当前的状态开始，还是从默认状态开始。原有的“补充默认值”和“默认变换和效果”两个选项合并为“变换起点”。
+支持新版动画格式。开启“相对动画”后，动画会基于立绘或背景的当前状态进行变换；开启“帧继承”后，关键帧中没有设置的属性会沿用之前关键帧的值。模板中新增一组以 -v2 结尾的内置动画。
+
+游戏配置中新增 Live2D 预留内存设置，可以调整 Live2D 预先分配的内存大小。
 
 #### 修复
 
-修复在图形编辑器中调整效果时，实时预览中的立绘可能丢失缩放、滤镜等效果的问题。
+修复在脚本编辑中打开场景时，如果场景读取缓慢或失败，场景文件可能被错误内容覆盖的问题。现在读取完成前无法编辑，读取或保存失败时会提示并可以重试。
 
-修复场景中有多行语句时，调整效果的实时预览可能停在错误语句上的问题。
-
-修复在脚本编辑中切换到另一个场景后，点击光标所在的行时实时预览不会跳转的问题。
-
-修复文件名中含有多个点的素材无法预览的问题。
-
-修复游戏列表中部分游戏的封面图无法显示的问题。
+修复在脚本编辑中切回窗口时，尚未保存的修改可能被覆盖的问题。
 
 <!-- English Translation -->
 ## Release Notes
@@ -27,21 +23,17 @@
 
 #### New Features
 
-Added figure variant switching, which changes a figure's variant, such as its expression. The figure's position, effects, and layer stay the same, and images of the same size blend smoothly.
+Added an animation editor. When opening an animation file or editing multiple animations, you can add and drag keyframes on a timeline, set easing for each keyframe, and preview the animation in real time.
 
-When setting transforms and animations, you can now choose whether to start from the figure's current state or from the default state. The former "Write default" and "Default transforms and effects" options have been merged into "Transform starting point".
+Added support for the new animation format. With "Relative animation" on, animations transform figures or backgrounds from their current state. With "Keyframe inheritance" on, properties not set in a keyframe carry over values from previous keyframes. Templates now include a set of built-in animations ending in -v2.
+
+Added a Live2D reserved memory setting to the game configuration, which adjusts how much memory Live2D allocates in advance.
 
 #### Fixes
 
-Fixed figures in the graphical editor's live preview possibly losing effects such as scale and filters while adjusting effects.
+Fixed scene files possibly being overwritten with incorrect content when a scene loaded slowly or failed to load in script editing. Editing is now disabled until the scene has loaded, and a message with a retry option appears if loading or saving fails.
 
-Fixed the live preview possibly stopping at the wrong statement while adjusting effects in a scene that contains multi-line statements.
-
-Fixed the live preview not jumping when clicking the line where the cursor already is, after switching to another scene in script editing.
-
-Fixed assets whose file names contain more than one dot failing to preview.
-
-Fixed the cover images of some games not showing in the game list.
+Fixed unsaved changes possibly being overwritten when switching back to the window in script editing.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -50,18 +42,14 @@ Fixed the cover images of some games not showing in the game list.
 
 #### 新機能
 
-立ち絵の差分切り替えを追加しました。立ち絵の表情などの差分を変更するためのものです。切り替えても位置、エフェクト、レイヤーはそのまま保持され、同じサイズの画像同士はなめらかに切り替わります。
+アニメーションエディタを追加しました。アニメーションファイルを開いたときや複数のアニメーションを編集するときに、タイムライン上でキーフレームを追加・ドラッグしたり、キーフレームごとにイージングを設定したりでき、アニメーションをリアルタイムでプレビューできます。
 
-変換やアニメーションを設定するときに、立ち絵の現在の状態から始めるか、デフォルトの状態から始めるかを選べるようになりました。従来の「デフォルト値を補う」と「デフォルトの変換と効果」の 2 つの選択肢は「変換の開始状態」にまとめられました。
+新しいアニメーション形式に対応しました。「相対アニメーション」をオンにすると、立ち絵や背景の現在の状態を基準に変換します。「キーフレーム継承」をオンにすると、キーフレームで設定されていないプロパティは前のキーフレームの値を引き継ぎます。テンプレートに -v2 で終わる組み込みアニメーションを追加しました。
+
+ゲーム構成に Live2D の予約メモリ設定を追加しました。Live2D があらかじめ確保するメモリの大きさを調整できます。
 
 #### 修正
 
-グラフィカルエディターでエフェクトを調整する際、リアルタイムプレビューの立ち絵から拡大縮小やフィルターなどのエフェクトが失われることがある問題を修正しました。
+スクリプト編集でシーンを開く際、シーンの読み込みが遅い、または失敗した場合に、シーンファイルが誤った内容で上書きされることがある問題を修正しました。読み込みが完了するまでは編集できず、読み込みや保存に失敗した場合はメッセージが表示され、再試行できます。
 
-複数行の文を含むシーンでエフェクトを調整する際、リアルタイムプレビューが違う文で止まることがある問題を修正しました。
-
-スクリプト編集で別のシーンに切り替えたあと、カーソルのある行をクリックしてもリアルタイムプレビューが移動しない問題を修正しました。
-
-ファイル名にドットが複数含まれる素材をプレビューできない問題を修正しました。
-
-ゲーム一覧で一部のゲームのカバー画像が表示されない問題を修正しました。
+スクリプト編集でウィンドウに戻ったときに、未保存の変更が上書きされることがある問題を修正しました。

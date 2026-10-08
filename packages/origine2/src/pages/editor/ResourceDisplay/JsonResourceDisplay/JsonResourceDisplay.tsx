@@ -4,12 +4,19 @@ import axios from 'axios';
 import { api } from '@/api';
 import useEditorStore from '@/store/useEditorStore';
 
-export function JsonResourceDisplay(props: { url: string }) {
-  const { url } = props;
-  const fileResp = useSWR(`json-${url}`, async () => {
+/**
+ * 以文本形式读取 JSON 文件，代码编辑器与动画编辑器共用同一份缓存
+ */
+export function useJsonFileText(url: string) {
+  return useSWR(`json-${url}`, async () => {
     const resp = await axios.get(url, { responseType: 'text', transformResponse: [(data) => data] });
     return resp.data as string;
   });
+}
+
+export function JsonResourceDisplay(props: { url: string }) {
+  const { url } = props;
+  const fileResp = useJsonFileText(url);
 
   const isDarkMode = useEditorStore.use.isDarkMode();
 

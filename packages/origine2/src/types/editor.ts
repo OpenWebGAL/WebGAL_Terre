@@ -26,6 +26,7 @@ export interface IEditorState {
   isUseRealtimeEffect: boolean; // 是否使用实时效果
   isWindowAdjustment: boolean; // 预览窗口调整功能是否开启
   isTrash: boolean; // 是否启用回收站功能
+  isAnimationEditorOpen: boolean; // 当前标签页是否为动画编辑器（自带预览，此时隐藏游戏预览），不持久化
   debugVariables: IDebugVariable[];
 }
 
@@ -48,6 +49,7 @@ export interface IEditorAction {
   updateSortOrder: (sortOrder: IEditorState['sortOrder']) => void;
   updateIisAutoHideToolbar: (isAutoHideToolbar: IEditorState['isAutoHideToolbar']) => void;
   updateIsShowPreview: (isShowPreview: IEditorState['isShowPreview']) => void;
+  updateIsAnimationEditorOpen: (isAnimationEditorOpen: IEditorState['isAnimationEditorOpen']) => void;
   updateIsEnableLivePreview: (isEnableLivePreview: IEditorState['isEnableLivePreview']) => void;
   updateIsAutoWarp: (isAutoWarp: IEditorState['isAutoWarp']) => void;
   updateIsAutoSaveFlowchart: (isAutoSaveFlowchart: IEditorState['isAutoSaveFlowchart']) => void;

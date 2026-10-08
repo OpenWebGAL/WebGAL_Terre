@@ -126,6 +126,21 @@ export interface SetEffectPayload {
   phase?: SetEffectPhase;
 }
 
+/**
+ * 把动画在 time 时刻的状态写入目标，仅用于预览，不写入舞台状态。
+ * animation 为动画 JSON（v1 关键帧数组或 v2 对象）
+ */
+export interface SeekAnimationPayload {
+  target: string;
+  animation: JsonValue;
+  time: number;
+  /**
+   * 动画开始前目标的状态，与默认变换合并后作为当前基准状态。
+   * 缺省时取带 transformBaselineRevision 的 sync-scene 记录的目标语句执行前的变换，再缺省时取演算状态中的变换
+   */
+  baseTransform?: Transform;
+}
+
 export interface SetFontOptimizationPayload {
   enabled: boolean;
 }
@@ -193,6 +208,7 @@ export const PREVIEW_COMMAND_PAYLOADS = definePayloadMap({
   'preview.command.set-component-visibility': payload<SetComponentVisibilityPayload>(),
   'preview.command.set-font-optimization': payload<SetFontOptimizationPayload>(),
   'preview.command.set-text-read-mode': payload<SetTextReadModePayload>(),
+  'preview.command.seek-animation': payload<SeekAnimationPayload>(),
 });
 
 export type PreviewCommandPayloadByType = typeof PREVIEW_COMMAND_PAYLOADS;
@@ -256,6 +272,16 @@ export const HOST_EVENT_TYPES = messageTypes(HOST_EVENT_PAYLOADS);
 export interface RegisterPreviewRequestPayload {
   gameId?: string;
   embeddedLaunchId?: string;
+}
+
+/**
+ * 独占预览：embeddedLaunchId 带有此前缀的嵌入式预览只听从指定了它的命令（见 RequestEnvelope.embeddedLaunchId），
+ * 不接收广播，它发出的事件转发给编辑器时会带上 embeddedLaunchId。用于动画编辑器等自带预览窗口的场合
+ */
+export const DEDICATED_PREVIEW_LAUNCH_ID_PREFIX = 'dedicated:';
+
+export function isDedicatedPreviewLaunchId(embeddedLaunchId: string | undefined): boolean {
+  return embeddedLaunchId?.startsWith(DEDICATED_PREVIEW_LAUNCH_ID_PREFIX) ?? false;
 }
 
 export const SESSION_REQUEST_PAYLOADS = definePayloadMap({
@@ -325,6 +351,8 @@ export interface EventEnvelope<TPayload = unknown, TType extends string = string
   kind: 'event';
   type: TType;
   payload: TPayload;
+  /** 事件来自哪个独占预览；来自普通预览时缺省 */
+  embeddedLaunchId?: string;
 }
 
 export interface RequestEnvelope<TPayload = unknown, TType extends string = string> {
@@ -332,6 +360,8 @@ export interface RequestEnvelope<TPayload = unknown, TType extends string = stri
   type: TType;
   requestId: string;
   payload: TPayload;
+  /** 只发给这个独占预览；缺省时广播给普通预览 */
+  embeddedLaunchId?: string;
 }
 
 export interface ResponseEnvelope<TPayload = unknown, TType extends string = string> {

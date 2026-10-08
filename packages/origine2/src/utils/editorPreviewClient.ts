@@ -19,6 +19,7 @@ import {
   type ReferenceBoxQueryResultPayload,
   type PreviewReadyUpdatedPayload,
   type RequestPayloadByType,
+  type SeekAnimationPayload,
   type SetComponentVisibilityPayload,
   type SetEffectPayload,
   type SyncSceneSettleMode,
@@ -138,9 +139,17 @@ function handleIncomingMessage(rawData: unknown) {
     return;
   }
 
-  if (isHostEventEnvelope(envelope)) {
-    consumeHostEvent(envelope);
+  if (!isHostEventEnvelope(envelope)) {
+    return;
   }
+
+  // 独占预览的事件只交给持有它的编辑器组件，不影响主预览的状态
+  if (envelope.embeddedLaunchId) {
+    eventBus.emit('editor-preview:dedicated-event', envelope);
+    return;
+  }
+
+  consumeHostEvent(envelope);
 }
 
 function bindLifecycleEvents() {
@@ -259,9 +268,13 @@ function ensureEditorPreviewClientStarted() {
   editorPreviewTransport.connect();
 }
 
+/**
+ * @param embeddedLaunchId 指定时只发给这个独占预览，见 DEDICATED_PREVIEW_LAUNCH_ID_PREFIX
+ */
 function sendPreviewCommand<TType extends PreviewCommandType>(
   type: TType,
   payload: RequestPayloadByType[TType],
+  embeddedLaunchId?: string,
 ): boolean {
   ensureEditorPreviewClientStarted();
   editorPreviewTransport?.ensureConnected();
@@ -269,7 +282,7 @@ function sendPreviewCommand<TType extends PreviewCommandType>(
     return false;
   }
 
-  return editorPreviewTransport.send(createRequestEnvelope(type, createId(), payload));
+  return editorPreviewTransport.send({ ...createRequestEnvelope(type, createId(), payload), embeddedLaunchId });
 }
 
 export class EditorPreviewClient {
@@ -350,10 +363,22 @@ export class EditorPreviewClient {
     return sendPreviewCommand('preview.command.set-effect', payload);
   }
 
+  public static seekAnimation(payload: SeekAnimationPayload) {
+    return sendPreviewCommand('preview.command.seek-animation', payload);
+  }
+
   public static setComponentVisibility(
     payload: SetComponentVisibilityPayload,
   ) {
     return sendPreviewCommand('preview.command.set-component-visibility', payload);
+  }
+
+  public static sendToDedicatedPreview<TType extends PreviewCommandType>(
+    embeddedLaunchId: string,
+    type: TType,
+    payload: RequestPayloadByType[TType],
+  ) {
+    return sendPreviewCommand(type, payload, embeddedLaunchId);
   }
 
   public static getPreviewQueryCapabilityState() {

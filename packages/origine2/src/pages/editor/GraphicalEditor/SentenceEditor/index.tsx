@@ -351,7 +351,8 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
   {
     type: commandType.setTempAnimation,
     title: () => t`多段动画`,
-    initialText: () => t`setTempAnimation:[{"duration":0},{"duration":500}];`,
+    // 新建的多段动画使用 Animation v2。JSON 中的花括号会被当作 ICU 占位符，因此不经过 t
+    initialText: () => 'setTempAnimation:{"version":2,"keyframes":[]};',
     component: SetTempAnimation,
     icon: <TrendingUp theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`为立绘或背景图片设置多段动画效果`

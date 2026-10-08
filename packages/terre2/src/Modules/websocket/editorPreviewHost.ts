@@ -5,6 +5,7 @@ import {
   createResponseEnvelope,
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
   SESSION_REGISTER_PREVIEW_TYPE,
+  isDedicatedPreviewLaunchId,
   isPreviewCommandRequestEnvelope,
   isKnownPreviewRequestErrorEnvelope,
   isKnownProtocolEnvelope,
@@ -260,9 +261,12 @@ function getLegacySyncMessage(payload: SyncScenePayload): string {
   );
 }
 
+/**
+ * 把命令翻译为旧版调试消息；旧版没有对应命令时返回 null
+ */
 function translatePreviewCommandToLegacyEnvelope(
   envelope: PreviewCommandRequestEnvelope,
-): LegacyDebugEnvelope {
+): LegacyDebugEnvelope | null {
   switch (envelope.type) {
     case 'preview.command.sync-scene':
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.JUMP, {
@@ -318,6 +322,8 @@ function translatePreviewCommandToLegacyEnvelope(
       return createLegacyDebugEnvelope(LEGACY_DEBUG_COMMAND.SET_EFFECT, {
         message: JSON.stringify(envelope.payload),
       });
+    case 'preview.command.seek-animation':
+      return null;
   }
 }
 
@@ -332,6 +338,9 @@ export class EditorPreviewHost {
   >();
 
   private activeEmbeddedPreview: WebSocket | null = null;
+
+  /** 独占预览，键为 embeddedLaunchId */
+  private readonly dedicatedPreviews = new Map<string, WebSocket>();
 
   private activeGameId: string | undefined;
 
@@ -361,6 +370,12 @@ export class EditorPreviewHost {
 
     this.v1Connections.delete(client);
     this.rejectPendingQueriesForDisconnectedSocket(client);
+    if (
+      removedState.embeddedLaunchId &&
+      this.dedicatedPreviews.get(removedState.embeddedLaunchId) === client
+    ) {
+      this.dedicatedPreviews.delete(removedState.embeddedLaunchId);
+    }
     if (this.activeEmbeddedPreview === client) {
       this.activeEmbeddedPreview = null;
       this.activeGameId = undefined;
@@ -435,7 +450,9 @@ export class EditorPreviewHost {
     connectionState.gameId = payload.gameId;
     connectionState.embeddedLaunchId = payload.embeddedLaunchId;
 
-    if (payload.embeddedLaunchId) {
+    if (isDedicatedPreviewLaunchId(payload.embeddedLaunchId)) {
+      this.dedicatedPreviews.set(payload.embeddedLaunchId, client);
+    } else if (payload.embeddedLaunchId) {
       this.activeEmbeddedPreview = client;
       this.activeGameId = payload.gameId;
     }
@@ -456,6 +473,21 @@ export class EditorPreviewHost {
     envelope: PreviewCommandRequestEnvelope,
   ) {
     connectionState.role = 'editor';
+
+    // 指定了独占预览的命令只发给它
+    if (envelope.embeddedLaunchId) {
+      const dedicatedPreview = this.dedicatedPreviews.get(
+        envelope.embeddedLaunchId,
+      );
+      if (dedicatedPreview) {
+        sendEnvelope(dedicatedPreview, envelope);
+      }
+      sendEnvelope(
+        client,
+        createResponseEnvelope(envelope.type, envelope.requestId, {}),
+      );
+      return;
+    }
 
     for (const [previewSocket, previewState] of this.v1Connections) {
       if (!this.isActivePreview(previewSocket, previewState)) {
@@ -581,6 +613,14 @@ export class EditorPreviewHost {
     connectionState: V1ConnectionState,
     envelope: ForwardedHostEventEnvelope,
   ) {
+    if (isDedicatedPreviewLaunchId(connectionState.embeddedLaunchId)) {
+      this.forwardHostEventToEditors({
+        ...envelope,
+        embeddedLaunchId: connectionState.embeddedLaunchId,
+      });
+      return;
+    }
+
     if (!this.isActivePreview(client, connectionState)) {
       return;
     }
@@ -593,6 +633,11 @@ export class EditorPreviewHost {
     connectionState: V1ConnectionState,
   ): boolean {
     if (connectionState.role !== 'preview') {
+      return false;
+    }
+
+    // 独占预览不接收广播
+    if (isDedicatedPreviewLaunchId(connectionState.embeddedLaunchId)) {
       return false;
     }
 
@@ -628,6 +673,9 @@ export class LegacyEditorPreviewAdapter {
 
   public forwardPreviewCommand(envelope: PreviewCommandRequestEnvelope) {
     const legacyEnvelope = translatePreviewCommandToLegacyEnvelope(envelope);
+    if (!legacyEnvelope) {
+      return;
+    }
     const serializedMessage = JSON.stringify(legacyEnvelope);
     for (const socket of this.connections) {
       socket.send(serializedMessage);
