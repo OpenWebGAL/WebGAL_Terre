@@ -113,6 +113,9 @@ msgstr "Live2D 모션"
 msgid "Live2D 表情"
 msgstr "Live2D 표정"
 
+msgid "Live2D 预留内存（MB）"
+msgstr "Live2D 예약 메모리 (MB)"
+
 msgid "miniAvatar:选择小头像;"
 msgstr "miniAvatar:미니 프로필 선택;"
 

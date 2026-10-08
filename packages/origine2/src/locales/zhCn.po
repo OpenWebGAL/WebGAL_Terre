@@ -113,6 +113,9 @@ msgstr "Live2D 动作"
 msgid "Live2D 表情"
 msgstr "Live2D 表情"
 
+msgid "Live2D 预留内存（MB）"
+msgstr "Live2D 预留内存（MB）"
+
 msgid "miniAvatar:选择小头像;"
 msgstr "miniAvatar:选择小头像;"
 
