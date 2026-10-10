@@ -42,10 +42,11 @@ const EffectInputField = memo(
     const { effectFields, fieldKey, submit, updateField, slider, update } = props;
     const { effectConfig } = useEffectEditorConfig();
     const val = effectFields[fieldKey];
-    let [innerVal, setInnerVal] = useState((val ?? '').toString());
+    const [innerVal, setInnerVal] = useState((val ?? '').toString());
+    const [isEditing, setIsEditing] = useState(false);
     useEffect(() => {
-      setInnerVal((val ?? '').toString());
-    }, [val]);
+      if (!isEditing) setInnerVal((val ?? '').toString());
+    }, [val, isEditing]);
     const config = effectConfig[fieldKey];
     const handleChange = useCallback(
       (value: string) => {
@@ -75,15 +76,21 @@ const EffectInputField = memo(
       },
       [slider],
     );
+    const commitInput = useCallback(() => {
+      setIsEditing(false);
+      setInnerVal((effectFields[fieldKey] ?? '').toString());
+      submit();
+    }, [effectFields, fieldKey, submit]);
     return (
       <CommonOptions title={config.label ?? fieldKey} key={fieldKey}>
         <Input
           style={{ width: '140px' }}
           value={innerVal}
           placeholder={config.placeholder}
+          onFocus={() => setIsEditing(true)}
           onChange={(_, data) => handleChange(data.value)}
-          onBlur={submit}
-          onKeyDown={(e) => e.key === 'Enter' && submit()}
+          onBlur={commitInput}
+          onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
         />
         {slider && (
           <Slider
