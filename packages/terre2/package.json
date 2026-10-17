@@ -114,7 +114,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^trash$": "<rootDir>/../test/__mocks__/trash.ts"
+    }
   },
   "workspaces": {
     "nohoist": [
