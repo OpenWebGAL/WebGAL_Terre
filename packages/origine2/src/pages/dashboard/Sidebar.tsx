@@ -91,7 +91,7 @@ export default function Sidebar(props: ISidebarProps) {
     if (gameName.trim() !== '' && gameDir.trim() !== '' && !isGameDirTaken) {
       props.createGame({
         gameName: gameName.trim(),
-        gameDir,
+        gameDir: gameDir.trim(),
         derivative,
         templateDir,
         ignoreTemplate,
