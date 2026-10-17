@@ -72,13 +72,14 @@ export function isAbsoluteValue(fields: Record<string, unknown>, path: string): 
 }
 
 /**
- * 当前基准状态在帧值中的表示：相加时为 0，相乘时为 1，绝对值时为属性的默认值。
+ * 当前基准状态在帧值中的表示：相加时为 0，相乘时为 1，绝对值时为基准状态中该属性的值。
  * 用于显示第一个关键帧之前以及没有关键帧的属性的值
+ * @param baseValue 基准状态中该属性的值
  */
-export function getNeutralValue(fields: Record<string, unknown>, path: string, defaultValue: number): number {
-  if (!isRelative(fields)) return defaultValue;
+export function getNeutralValue(fields: Record<string, unknown>, path: string, baseValue: number): number {
+  if (!isRelative(fields)) return baseValue;
   const calc = getRelativeCalcOverride(fields, path) ?? getDefaultRelativeCalc(path);
   if (calc === 'add') return 0;
-  if (calc === 'absolute') return defaultValue;
+  if (calc === 'absolute') return baseValue;
   return 1;
 }

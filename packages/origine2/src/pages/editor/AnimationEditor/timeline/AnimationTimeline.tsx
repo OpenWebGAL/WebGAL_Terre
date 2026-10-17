@@ -1,4 +1,5 @@
 import { KeyboardEvent, useRef, useState } from 'react';
+import type { Transform } from '@webgal/editor-preview-protocol';
 import { getAnimationDuration, IAnimationDocument, ITrack } from '../model/animationDocument';
 import { addTrack, removePoint, updatePoints } from '../model/trackOperations';
 import { useAnimationProperties } from '../model/useAnimationProperties';
@@ -24,6 +25,8 @@ interface IAnimationTimelineProps {
   time: number;
   /** 必须是稳定的函数（如 useState 的 setter） */
   onTimeChange: (time: number) => void;
+  /** 动画开始前对象的变换（如预览初始状态），用于计算第一个关键帧之前的值 */
+  baseTransform?: Transform;
 }
 
 /**
@@ -32,7 +35,14 @@ interface IAnimationTimelineProps {
  *
  * 只有右下的轨道区域会滚动，刻度尺随它横向滚动，左侧属性栏随它纵向滚动
  */
-export function AnimationTimeline({ doc, updateTracks, updateFields, time, onTimeChange }: IAnimationTimelineProps) {
+export function AnimationTimeline({
+  doc,
+  updateTracks,
+  updateFields,
+  time,
+  onTimeChange,
+  baseTransform,
+}: IAnimationTimelineProps) {
   const { getProperty } = useAnimationProperties();
   const bodyRef = useRef<HTMLDivElement>(null);
   const lanesRef = useRef<HTMLDivElement>(null);
@@ -55,6 +65,7 @@ export function AnimationTimeline({ doc, updateTracks, updateFields, time, onTim
     path: track.path,
     ...buildTrackRow(track, {
       fields: doc.fields,
+      baseTransform,
       tracks: doc.tracks,
       time,
       pxPerMs,

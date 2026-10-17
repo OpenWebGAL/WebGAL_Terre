@@ -5,7 +5,7 @@ import { ResizableSplit } from './components/ResizableSplit';
 import { toAnimationObject } from './model/animationDocument';
 import { useAnimationFileDocument } from './model/useAnimationDocument';
 import { AnimationPreview } from './preview/AnimationPreview';
-import { usePreviewSettings } from './preview/previewSettings';
+import { getInitialTransform, usePreviewSettings } from './preview/previewSettings';
 import { AnimationSettingsPanel } from './settings/AnimationSettingsPanel';
 import { AnimationTimeline } from './timeline/AnimationTimeline';
 
@@ -55,6 +55,7 @@ export function AnimationEditor({ url, initialText }: IAnimationEditorProps) {
           updateFields={updateFields}
           time={time}
           onTimeChange={setTime}
+          baseTransform={getInitialTransform(previewSettings)}
         />
       }
     />
