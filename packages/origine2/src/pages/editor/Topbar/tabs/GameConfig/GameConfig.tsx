@@ -67,6 +67,9 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
 
   useEffect(() => {
     getGameConfig();
+    // 快捷配置与“更多配置”是两个实例，任一方保存后都要同步，否则会用旧快照覆盖对方的修改
+    eventBus.on('editor:game-config-updated', getGameConfig);
+    return () => eventBus.off('editor:game-config-updated', getGameConfig);
   }, []);
 
   const { data: templateList } = useSWR('template-list', async () => (await api.manageTemplateControllerGetTemplateList()).data);
@@ -101,7 +104,8 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
 
   function updateGameConfig() {
     const newConfig = WebgalParser.stringifyConfig(gameConfig.value);
-    api.manageGameControllerSetGameConfig({gameName: gameDir, newConfig}).then(getGameConfig);
+    api.manageGameControllerSetGameConfig({gameName: gameDir, newConfig})
+      .then(() => eventBus.emit('editor:game-config-updated', null));
   }
 
   function getConfigContentAsString(key: string) {
