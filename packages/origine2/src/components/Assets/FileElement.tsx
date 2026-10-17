@@ -64,6 +64,9 @@ export default function FileElement({
   const is_picture = (extName: string) => (extractExtension(extName) === 'image' ? true : false);
 
   const isAccessible = checkFileName(newFileName.value);
+  // 提交时会去掉首尾空格，查重也必须用同样的名字，否则 " b.txt " 能绕过检查覆盖 b.txt
+  const trimmedNewName = newFileName.value.trim();
+  const isNameTaken = checkHasFile(trimmedNewName) && trimmedNewName !== file.name;
 
   return (
     <Tooltip
@@ -206,12 +209,12 @@ export default function FileElement({
                       if (
                         e.key === 'Enter' &&
                         !(
-                          newFileName.value.trim() === '' ||
+                          trimmedNewName === '' ||
                           !isAccessible ||
-                          (checkHasFile(newFileName.value) && newFileName.value !== file.name)
+                          isNameTaken
                         )
                       ) {
-                        handleRenameFile(filePath, newFileName.value.trim());
+                        handleRenameFile(filePath, trimmedNewName);
                       }
                     }}
                   >
@@ -228,17 +231,17 @@ export default function FileElement({
                       >
                         <Tooltip
                           content={{
-                            children: t`已存在文件或文件夹 ${newFileName.value}，请输入其他名称`,
+                            children: t`已存在文件或文件夹 ${newFileName.value.trim()}，请输入其他名称`,
                             style: { color: 'var(--danger)' },
                           }}
                           relationship="description"
-                          visible={checkHasFile(newFileName.value) && newFileName.value !== file.name}
+                          visible={isNameTaken}
                           positioning="below"
                         >
                           <Input
                             value={newFileName.value}
                             className={
-                              checkHasFile(newFileName.value) && newFileName.value !== file.name
+                              isNameTaken
                                 ? styles.inputDanger
                                 : ''
                             }
@@ -256,11 +259,11 @@ export default function FileElement({
                       <Button
                         appearance="primary"
                         disabled={
-                          newFileName.value.trim() === '' ||
+                          trimmedNewName === '' ||
                           !isAccessible ||
-                          (checkHasFile(newFileName.value) && newFileName.value !== file.name)
+                          isNameTaken
                         }
-                        onClick={() => handleRenameFile(filePath, newFileName.value.trim())}
+                        onClick={() => handleRenameFile(filePath, trimmedNewName)}
                       >{t`重命名`}</Button>
                     </div>
                   </PopoverSurface>

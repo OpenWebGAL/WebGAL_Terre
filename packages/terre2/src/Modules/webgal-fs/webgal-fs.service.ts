@@ -184,6 +184,11 @@ export class WebgalFsService {
       newPath = '/' + newPath;
       oldPath = '/' + oldPath;
     }
+    // fs.rename 会静默覆盖已存在的文件，必须先拦截
+    if (await this.isOccupiedByOtherFile(oldPath, newPath)) {
+      this.logger.warn(`重命名文件失败（目标已存在）: ${newPath}`);
+      return 'Target exists!';
+    }
 
     return await new Promise((resolve) => {
       fs.rename(oldPath, newPath)
@@ -196,6 +201,17 @@ export class WebgalFsService {
           resolve('File not exist!');
         });
     });
+  }
+
+  /**
+   * 判断目标路径是否已被另一个文件占用
+   * 通过 inode 比较，放行 Windows 上仅大小写不同的重命名（此时目标与源是同一个文件）
+   */
+  private async isOccupiedByOtherFile(oldPath: string, newPath: string) {
+    const target = await fs.stat(newPath, { bigint: true }).catch(() => null);
+    if (!target) return false;
+    const source = await fs.stat(oldPath, { bigint: true }).catch(() => null);
+    return !source || source.ino !== target.ino || source.dev !== target.dev;
   }
 
   /**
