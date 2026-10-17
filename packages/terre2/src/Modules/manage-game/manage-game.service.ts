@@ -86,13 +86,14 @@ export class ManageGameService {
     const { gameName, gameDir, derivative, templateDir, ignoreTemplate } =
       createGameData;
     // 检查是否存在这个游戏
+    // 忽略大小写：Windows/macOS 文件系统不区分大小写，test 会写入已有的 Test 目录
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/games`),
     );
     let isThisGameExist = false;
     checkDir.forEach((e) => {
       const info: IFileInfo = e as IFileInfo;
-      if (info.name === gameDir && info.isDir) {
+      if (info.name.toLowerCase() === gameDir.toLowerCase() && info.isDir) {
         isThisGameExist = true;
       }
     });

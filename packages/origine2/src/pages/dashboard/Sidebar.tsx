@@ -84,8 +84,11 @@ export default function Sidebar(props: ISidebarProps) {
     )}
   </Dropdown>;
 
+  // 忽略大小写查重：Windows/macOS 上 test 与 Test 是同一个目录
+  const isGameDirTaken = props.gameList.some((item) => item.dir.toLowerCase() === gameDir.trim().toLowerCase());
+
   function createNewGame() {
-    if (gameName.trim() !== '' && gameDir.trim() !== '' && !props.gameList.find((item) => item.dir === gameDir.trim())) {
+    if (gameName.trim() !== '' && gameDir.trim() !== '' && !isGameDirTaken) {
       props.createGame({
         gameName: gameName.trim(),
         gameDir,
@@ -151,7 +154,7 @@ export default function Sidebar(props: ISidebarProps) {
                 disabled={
                   gameName.trim() === ''
                   || gameDir.trim() === ''
-                  || props.gameList.find((item) => item.dir === gameDir.trim()) !== undefined
+                  || isGameDirTaken
                 }
                 onClick={createNewGame}
               >

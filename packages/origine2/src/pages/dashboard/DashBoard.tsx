@@ -114,9 +114,12 @@ export default function DashBoard() {
   const setCurrentTemplate = (e: string | null) => currentTemplate.set(e);
 
   async function createGame(createGameData: CreateGameDto) {
-    const res = await api.manageGameControllerCreateGame(createGameData).then(r => r.data);
+    const res = await api.manageGameControllerCreateGame(createGameData).then(r => r.data as unknown as { status: string });
     logger.info("创建结果：", res);
-    messageRef.current!.showMessage(`${createGameData.gameName} ` + t`已创建`, 2000);
+    // 后端拒绝创建（如目录已存在）时不能提示成功
+    if (res.status === 'success') {
+      messageRef.current!.showMessage(`${createGameData.gameName} ` + t`已创建`, 2000);
+    }
     refreash();
   }
 
