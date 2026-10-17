@@ -505,21 +505,22 @@ export class WebgalFsService {
 
     // 读取目录下所有文件
     const files = await fs.readdir(dir);
-    // 匹配类似 xxx_序号.txt 的文件
-    const regex = new RegExp(`^${base}_(\\d{3})${ext.replace('.', '\\.')}$`);
+    // 匹配类似 xxx_序号.txt 的文件；用字符串比较而非拼接正则，文件名中的括号等符号才不会被当成正则语法
+    const prefix = `${base}_`;
     let maxNum = 0;
     for (const file of files) {
-      const match = file.match(regex);
-      if (match) {
-        const num = parseInt(match[1], 10);
-        if (num > maxNum) maxNum = num;
+      if (!file.startsWith(prefix) || !file.endsWith(ext)) continue;
+      const numText = file.slice(prefix.length, file.length - ext.length);
+      if (/^\d{3}$/.test(numText)) {
+        maxNum = Math.max(maxNum, parseInt(numText, 10));
       }
     }
     const nextNum = (maxNum + 1).toString().padStart(3, '0');
     const newName = `${base}_${nextNum}${ext}`;
     const newPath = join(dir, newName);
 
-    await fs.copyFile(filePath, newPath);
+    // COPYFILE_EXCL：目标已存在时报错而不是覆盖
+    await fs.copyFile(filePath, newPath, fs.constants.COPYFILE_EXCL);
     this.logger.log(`复制文件: ${filePath} -> ${newPath}`);
     return newPath;
   }
