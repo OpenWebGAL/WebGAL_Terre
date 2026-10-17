@@ -81,6 +81,31 @@ export function getAnimationDuration(doc: IAnimationDocument): number {
   return Math.max(0, ...pointTimes, ...doc.emptyFrames.map(getFrameTime));
 }
 
+/** setTempAnimation 中会覆盖动画同名字段的语句参数 */
+export const OVERRIDE_ARG_KEYS = ['relative', 'inherit'];
+
+/**
+ * 把语句参数 -relative、-inherit 并入 v2 动画 JSON。引擎执行时参数会覆盖 JSON 中的同名字段，二者等价；
+ * 并入后编辑器的显示、预览与实际执行一致，之后在编辑器中修改这些字段也不会再被参数覆盖。
+ * 不是 v2 动画（如 v1 关键帧数组）时原样返回，参数仍需保留在语句中
+ */
+export function mergeOverrideArgs(text: string, args: { key: string; value: unknown }[]): string {
+  const animation = tryParse(text);
+  if (!animation || (animation.version !== undefined && animation.version !== 2)) return text;
+  const overrides = OVERRIDE_ARG_KEYS.map((key) => [key, toSafeBoolean(args.find((arg) => arg.key === key)?.value)])
+    .filter(([, value]) => value !== null);
+  return overrides.length > 0 ? JSON.stringify({ ...animation, ...Object.fromEntries(overrides) }) : text;
+}
+
+/** 与引擎读取布尔参数的方式一致，无法识别时为 null（引擎不覆盖） */
+function toSafeBoolean(value: unknown): boolean | null {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') return value !== 0;
+  if (typeof value !== 'string') return null;
+  const lower = value.trim().toLowerCase();
+  return lower === 'true' ? true : lower === 'false' ? false : null;
+}
+
 function tryParse(text: string): AnimationObject | null {
   try {
     const value = JSON.parse(text);
