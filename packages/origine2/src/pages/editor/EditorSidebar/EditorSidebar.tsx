@@ -29,7 +29,8 @@ export default function EditorSideBar() {
   const isShowPreview = useEditorStore.use.isShowPreview();
   const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
   const isAnimationEditorOpen = useEditorStore.use.isAnimationEditorOpen();
-  // 动画编辑器自带预览，打开期间不显示游戏预览（不改变预览窗口开关），离开后恢复
+  // 动画编辑器自带预览，打开期间不显示游戏预览（不改变预览窗口开关），离开后恢复。
+  // 只用 display 隐藏而不卸载 iframe，否则游戏预览会重启、丢失进度
   const isPreviewVisible = isShowPreview && !isAnimationEditorOpen;
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
@@ -64,10 +65,10 @@ export default function EditorSideBar() {
   }, []);
 
   useEffect(() => {
-    if (isPreviewVisible) {
+    if (isShowPreview) {
       embeddedLaunchIdRef.current = createId();
     }
-  }, [gameDir, isPreviewVisible]);
+  }, [gameDir, isShowPreview]);
 
   useEffect(() => {
     const iframeElement = ifRef.current;
@@ -87,7 +88,7 @@ export default function EditorSideBar() {
     return () => {
       iframeElement.onload = null;
     };
-  }, [gameDir, isPreviewVisible]);
+  }, [gameDir, isShowPreview]);
 
   useEffect(() => {
     const handlePreviewReady = ({ ready }: { ready: boolean }) => {
@@ -281,11 +282,12 @@ export default function EditorSideBar() {
               {t`正在使用动画编辑器，游戏预览暂时隐藏`}
             </div>}
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          {isPreviewVisible && <iframe
+          {isShowPreview && <iframe
             ref={ifRef}
             id="gamePreviewIframe"
             frameBorder="0"
             className={styles.previewWindow}
+            style={{ display: isPreviewVisible ? undefined : 'none' }}
             src={`/games/${gameDir}`}
           />}
         </div>
