@@ -50,7 +50,7 @@ export function AnimationTimeline({
   const headersRef = useRef<HTMLDivElement>(null);
   const lanesViewportWidth = useElementWidth(lanesRef);
   const { pxPerMs, setPxPerMs } = useTimelineZoom(bodyRef, lanesRef);
-  const duration = getAnimationDuration(doc.tracks);
+  const duration = getAnimationDuration(doc);
   const playback = usePlayback(duration, time, onTimeChange);
   const [selected, setSelected] = useState<{ path: string; id: string } | null>(null);
   // 轨道至少铺满可视区域，并在动画结尾后留出一段，便于把关键帧往后拖

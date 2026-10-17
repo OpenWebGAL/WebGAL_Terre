@@ -31,6 +31,11 @@ export interface IAnimationDocument {
   fields: Record<string, unknown>;
   /** 时间轴上显示的轨道；没有关键点的轨道只用于显示，不会写入文件 */
   tracks: ITrack[];
+  /**
+   * 不含可编辑属性的关键帧（如只有 time 的帧），无法拆进轨道，原样保留。
+   * 它们会延长动画时长；inherit 为 false 时还会让未指定的属性回到基准状态
+   */
+  emptyFrames: Record<string, unknown>[];
 }
 
 type AnimationObject = Record<string, unknown> & { keyframes: unknown[] };
@@ -54,6 +59,7 @@ export function parseAnimation(text: string): IAnimationDocument {
   return {
     fields,
     tracks: tracks.length > 0 ? tracks : DEFAULT_TRACK_PATHS.map((path) => ({ path, points: [] })),
+    emptyFrames: keyframes.filter(isFrame).filter((frame) => collectNumericValues(frame).length === 0),
   };
 }
 
@@ -62,14 +68,17 @@ export function serializeAnimation(doc: IAnimationDocument): string {
 }
 
 export function toAnimationObject(doc: IAnimationDocument): AnimationObject {
-  return { ...doc.fields, keyframes: tracksToFrames(doc.tracks) };
+  // sort 是稳定的，同一时刻的空帧排在有属性的帧之后
+  const keyframes = [...tracksToFrames(doc.tracks), ...doc.emptyFrames].sort((a, b) => getFrameTime(a) - getFrameTime(b));
+  return { ...doc.fields, keyframes };
 }
 
 /**
- * 动画时长：最后一个关键点的时间
+ * 动画时长：最后一个关键帧的时间（包括空帧）
  */
-export function getAnimationDuration(tracks: ITrack[]): number {
-  return Math.max(0, ...tracks.flatMap((track) => track.points.map((point) => point.time)));
+export function getAnimationDuration(doc: IAnimationDocument): number {
+  const pointTimes = doc.tracks.flatMap((track) => track.points.map((point) => point.time));
+  return Math.max(0, ...pointTimes, ...doc.emptyFrames.map(getFrameTime));
 }
 
 function tryParse(text: string): AnimationObject | null {
@@ -84,12 +93,10 @@ function tryParse(text: string): AnimationObject | null {
 
 function framesToTracks(keyframes: unknown[]): ITrack[] {
   const tracks = new Map<string, IKeyPoint[]>();
-  for (const frame of keyframes) {
-    if (typeof frame !== 'object' || frame === null) continue;
-    const { time: rawTime, ease, ...values } = frame as Record<string, unknown>;
-    // 与引擎一致：time 缺省或非法时按 0 处理
-    const time = typeof rawTime === 'number' && rawTime >= 0 ? rawTime : 0;
-    for (const [path, value] of collectNumericValues(values)) {
+  for (const frame of keyframes.filter(isFrame)) {
+    const time = getFrameTime(frame);
+    const ease = frame.ease;
+    for (const [path, value] of collectNumericValues(frame)) {
       const points = tracks.get(path) ?? [];
       points.push({ id: createId(), time, value, ease: typeof ease === 'string' ? ease : DEFAULT_EASE });
       tracks.set(path, points);
@@ -99,10 +106,20 @@ function framesToTracks(keyframes: unknown[]): ITrack[] {
   return [...tracks].map(([path, points]) => ({ path, points: points.sort((a, b) => a.time - b.time) }));
 }
 
+function isFrame(frame: unknown): frame is Record<string, unknown> {
+  return typeof frame === 'object' && frame !== null;
+}
+
+/** 与引擎一致：time 缺省或非法时按 0 处理 */
+function getFrameTime(frame: Record<string, unknown>): number {
+  return typeof frame.time === 'number' && frame.time >= 0 ? frame.time : 0;
+}
+
 /**
- * 帧中的数值属性，position、scale 这类嵌套对象展开为 'position.x' 这样的路径
+ * 帧中的数值属性（不含 time、ease），position、scale 这类嵌套对象展开为 'position.x' 这样的路径
  */
-function collectNumericValues(values: Record<string, unknown>): [string, number][] {
+function collectNumericValues(frame: Record<string, unknown>): [string, number][] {
+  const { time, ease, ...values } = frame;
   return Object.entries(values).flatMap(([key, value]): [string, number][] => {
     if (typeof value === 'number') return [[key, value]];
     if (typeof value !== 'object' || value === null) return [];
