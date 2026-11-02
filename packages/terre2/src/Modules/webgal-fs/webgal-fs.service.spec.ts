@@ -82,35 +82,52 @@ describe('WebgalFsService', () => {
   });
 
   const symlinkTest = process.platform === 'win32' ? it.skip : it;
-  symlinkTest('keeps copied frameworks portable through relative symlinks', async () => {
-    const sourceDir = join(testRoot, 'template');
-    const exportDir = join(testRoot, 'export');
-    const movedDir = join(testRoot, 'moved');
-    await fs.mkdir(join(sourceDir, 'Versions', 'A'), { recursive: true });
-    await fs.writeFile(
-      join(sourceDir, 'Versions', 'A', 'Electron Framework'),
-      'framework',
-    );
-    await fs.symlink('A', join(sourceDir, 'Versions', 'Current'));
-    await fs.symlink(
-      'Versions/Current/Electron Framework',
-      join(sourceDir, 'Electron Framework'),
-    );
+  symlinkTest(
+    'keeps copied frameworks portable through relative symlinks',
+    async () => {
+      const sourceDir = join(testRoot, 'template');
+      const exportDir = join(testRoot, 'export');
+      const movedDir = join(testRoot, 'moved');
+      await fs.mkdir(join(sourceDir, 'Versions', 'A'), { recursive: true });
+      await fs.writeFile(
+        join(sourceDir, 'Versions', 'A', 'Electron Framework'),
+        'framework',
+      );
+      await fs.symlink('A', join(sourceDir, 'Versions', 'Current'));
+      await fs.symlink(
+        'Versions/Current/Electron Framework',
+        join(sourceDir, 'Electron Framework'),
+      );
 
-    await expect(service.copy(sourceDir, exportDir)).resolves.toBe(true);
-    expect(
-      (await fs.lstat(join(exportDir, 'Electron Framework'))).isSymbolicLink(),
-    ).toBe(true);
-    expect(await fs.readlink(join(exportDir, 'Electron Framework'))).toBe(
-      'Versions/Current/Electron Framework',
-    );
-    expect(await fs.readlink(join(exportDir, 'Versions', 'Current'))).toBe('A');
+      await expect(service.copy(sourceDir, exportDir)).resolves.toBe(true);
+      expect(
+        (
+          await fs.lstat(join(exportDir, 'Electron Framework'))
+        ).isSymbolicLink(),
+      ).toBe(true);
+      expect(await fs.readlink(join(exportDir, 'Electron Framework'))).toBe(
+        'Versions/Current/Electron Framework',
+      );
+      expect(await fs.readlink(join(exportDir, 'Versions', 'Current'))).toBe(
+        'A',
+      );
 
-    await fs.rm(sourceDir, { recursive: true });
-    await fs.rename(exportDir, movedDir);
-    expect(
-      await fs.readFile(join(movedDir, 'Electron Framework'), 'utf8'),
-    ).toBe('framework');
+      await fs.rm(sourceDir, { recursive: true });
+      await fs.rename(exportDir, movedDir);
+      expect(
+        await fs.readFile(join(movedDir, 'Electron Framework'), 'utf8'),
+      ).toBe('framework');
+      await expect(service.deleteFileOrDirectory(movedDir)).resolves.toBe(true);
+    },
+  );
+
+  it('deletes directories recursively and returns false when target is missing', async () => {
+    const dir = join(testRoot, 'to-delete');
+    await fs.mkdir(join(dir, 'nested'), { recursive: true });
+    await fs.writeFile(join(dir, 'nested', 'file.txt'), 'content');
+
+    await expect(service.deleteFileOrDirectory(dir)).resolves.toBe(true);
+    await expect(service.deleteFileOrDirectory(dir)).resolves.toBe(false);
   });
 
   it('creates gzip copies for files with given extensions', async () => {

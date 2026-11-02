@@ -114,6 +114,7 @@ export class WebgalFsService {
   async copy(src: string, dest: string): Promise<boolean> {
     try {
       this.logger.log(`复制: ${decodeURI(src)} -> ${decodeURI(dest)}`);
+      // 当前 @types/node 尚未收录 verbatimSymlinks，借局部变量绕过字面量多余属性检查。
       const copyOptions = {
         recursive: true,
         // 保留相对链接，使导出的 macOS Framework 不依赖原先的模板目录。
@@ -228,23 +229,12 @@ export class WebgalFsService {
   async deleteFileOrDirectory(_path: string): Promise<boolean> {
     try {
       const path = decodeURI(_path);
-
-      const stat = await fs.stat(path);
-
-      if (stat.isDirectory()) {
-        const files = await fs.readdir(path);
-        await Promise.all(
-          files.map(async (file) => {
-            const filePath = `${path}/${file}`;
-            await this.deleteFileOrDirectory(filePath);
-          }),
-        );
-        await fs.rmdir(path);
-        this.logger.log(`删除目录: ${path}`);
-      } else {
-        await fs.unlink(path);
-        this.logger.log(`删除文件: ${path}`);
-      }
+      // 使用 lstat 与 fs.rm，避免跟随目录符号链接引发 ENOTDIR 或误删链接目标。
+      const stat = await fs.lstat(path);
+      await fs.rm(path, { recursive: true });
+      this.logger.log(
+        `${stat.isDirectory() ? '删除目录' : '删除文件'}: ${path}`,
+      );
       return true;
     } catch (error) {
       this.logger.error(`删除失败: ${decodeURI(_path)}, ${String(error)}`);

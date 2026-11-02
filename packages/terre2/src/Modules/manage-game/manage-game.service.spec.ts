@@ -61,19 +61,19 @@ describe('ManageGameService', () => {
         const appDir = join(resourcesDir, 'app');
         const asarPath = join(resourcesDir, 'app.asar');
         const nativeFiles = [
-          'osx/steamworksjs.darwin-arm64.node',
-          'osx/libsteam_api.dylib',
-          'linux64/steamworksjs.linux-x64-gnu.node',
-          'linux64/libsteam_api.so',
-          'win64/steamworksjs.win32-x64-msvc.node',
-          'win64/steam_api64.dll',
-        ].map((file) => `node_modules/steamworks.js/dist/${file}`);
+          join('osx', 'steamworksjs.darwin-arm64.node'),
+          join('osx', 'libsteam_api.dylib'),
+          join('linux64', 'steamworksjs.linux-x64-gnu.node'),
+          join('linux64', 'libsteam_api.so'),
+          join('win64', 'steamworksjs.win32-x64-msvc.node'),
+          join('win64', 'steam_api64.dll'),
+        ].map((file) => join('node_modules', 'steamworks.js', 'dist', file));
         for (const file of nativeFiles) {
           const target = join(appDir, file);
           await fs.mkdir(dirname(target), { recursive: true });
           await fs.writeFile(target, file);
         }
-        const indexPath = 'node_modules/steamworks.js/index.js';
+        const indexPath = join('node_modules', 'steamworks.js', 'index.js');
         await fs.writeFile(join(appDir, indexPath), 'module.exports = {};');
         await fs.mkdir(join(appDir, 'public'));
         await fs.writeFile(
@@ -99,7 +99,7 @@ describe('ManageGameService', () => {
             await fs.readFile(join(`${asarPath}.unpacked`, file), 'utf8'),
           ).toBe(file);
         }
-        for (const file of [indexPath, 'public/index.html']) {
+        for (const file of [indexPath, join('public', 'index.html')]) {
           expect(asar.statFile(asarPath, file)).not.toHaveProperty(
             'unpacked',
             true,
