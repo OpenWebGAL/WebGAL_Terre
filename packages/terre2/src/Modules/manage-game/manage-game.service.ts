@@ -507,13 +507,20 @@ export class ManageGameService {
           const electronExportDir = this.webgalFs.getPath(
             `${exportDir}/WebGAL.app`,
           );
+          // 先清理旧导出包，避免旧版展开的实体目录与新版模板中的符号链接冲突。
+          if (await this.webgalFs.existsDir(electronExportDir)) {
+            await this.webgalFs.deleteFileOrDirectory(electronExportDir);
+          }
           await this.webgalFs.mkdir(electronExportDir, '');
-          await this.webgalFs.copy(
+          const templateCopied = await this.webgalFs.copy(
             this.webgalFs.getPathFromRoot(
               `/assets/templates/WebGAL_Electron_Template/`,
             ),
             `${electronExportDir}/`,
           );
+          if (!templateCopied) {
+            return false;
+          }
           if (!isEngineTemplateExist)
             await this.webgalFs.copy(
               this.webgalFs.getPathFromRoot(
@@ -714,7 +721,8 @@ export class ManageGameService {
 
   private async packElectronAppAsar(appDir: string, asarPath: string) {
     await asar.createPackageWithOptions(appDir, asarPath, {
-      unpack: '**/node_modules/steamworks.js/dist/**',
+      // 按包内相对目录解包，避免隐藏的用户数据目录影响原生库匹配。
+      unpackDir: 'node_modules/steamworks.js/dist',
     });
     await this.webgalFs.deleteFileOrDirectory(appDir);
   }

@@ -95,7 +95,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-mac.sh
       - name: Compress
-        run: 7z a -tzip release/WebGAL_Terre_Mac.zip release/*
+        # ditto preserves Framework symlinks and executable permissions in ZIP archives.
+        run: |
+          ditto -c -k release "$RUNNER_TEMP/WebGAL_Terre_Mac.zip"
+          mv "$RUNNER_TEMP/WebGAL_Terre_Mac.zip" release/WebGAL_Terre_Mac.zip
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -119,7 +122,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: sh release-mac-x64.sh
       - name: Compress
-        run: 7z a -tzip release/WebGAL_Terre_Mac_Intel.zip release/*
+        # ditto preserves Framework symlinks and executable permissions in ZIP archives.
+        run: |
+          ditto -c -k release "$RUNNER_TEMP/WebGAL_Terre_Mac_Intel.zip"
+          mv "$RUNNER_TEMP/WebGAL_Terre_Mac_Intel.zip" release/WebGAL_Terre_Mac_Intel.zip
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
