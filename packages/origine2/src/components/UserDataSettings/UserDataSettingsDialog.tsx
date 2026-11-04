@@ -15,6 +15,7 @@ import useSWR, { mutate } from 'swr';
 import { t } from '@lingui/macro';
 import useEditorStore from '@/store/useEditorStore';
 import { getMigrationGuideUrl } from '@/utils/language';
+import { isLocalBrowserHost } from '@/utils/isLocalBrowserHost';
 import styles from './UserDataSettingsDialog.module.scss';
 
 declare global {
@@ -72,6 +73,7 @@ export function UserDataSettingsPanel() {
   const [busy, setBusy] = useState(false);
   const language = useEditorStore.use.language();
   const migrationGuideUrl = getMigrationGuideUrl(language);
+  const canOpenLocalFolder = isLocalBrowserHost();
 
   useEffect(() => {
     if (status) setTargetPath(status.configuredUserDataRoot);
@@ -207,17 +209,19 @@ export function UserDataSettingsPanel() {
                 {status.configRoot}
               </div>
             </div>
-            <div className={styles.actions}>
-              <Button icon={<FolderOpen20Regular />} onClick={() => openPath('active')}>
-                {t`打开用户数据目录`}
-              </Button>
-              <Button icon={<FolderOpen20Regular />} onClick={() => openPath('config')}>
-                {t`打开配置目录`}
-              </Button>
-              <Button icon={<FolderOpen20Regular />} onClick={() => openPath('app')}>
-                {t`打开安装目录`}
-              </Button>
-            </div>
+            {canOpenLocalFolder && (
+              <div className={styles.actions}>
+                <Button icon={<FolderOpen20Regular />} onClick={() => openPath('active')}>
+                  {t`打开用户数据目录`}
+                </Button>
+                <Button icon={<FolderOpen20Regular />} onClick={() => openPath('config')}>
+                  {t`打开配置目录`}
+                </Button>
+                <Button icon={<FolderOpen20Regular />} onClick={() => openPath('app')}>
+                  {t`打开安装目录`}
+                </Button>
+              </div>
+            )}
           </div>
 
           <div className={styles.section}>
