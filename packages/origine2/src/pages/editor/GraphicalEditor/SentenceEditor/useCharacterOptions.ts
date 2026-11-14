@@ -83,11 +83,26 @@ export function formatCharacterContent(characterPath: string, presetName: string
 const readObjectKeys = (obj: unknown): string[] =>
   obj && typeof obj === 'object' && !Array.isArray(obj) ? Object.keys(obj) : [];
 
+const readComponentNames = (items: unknown): string[] => {
+  if (!Array.isArray(items)) return [];
+  const seen = new Set<string>();
+  const names: string[] = [];
+  for (const item of items) {
+    const rawName = item && typeof item === 'object' && !Array.isArray(item) ? (item as { name?: unknown }).name : '';
+    const name = typeof rawName === 'string' ? rawName.trim() : '';
+    if (name && !seen.has(name)) {
+      seen.add(name);
+      names.push(name);
+    }
+  }
+  return names;
+};
+
 export function parseFigureJsonOptions(jsonText: string | undefined): { presetKeys: string[]; componentKeys: string[] } {
   if (!jsonText) return { presetKeys: [], componentKeys: [] };
   try {
     const parsed = JSON.parse(jsonText) as { presets?: unknown; components?: unknown };
-    return { presetKeys: readObjectKeys(parsed?.presets), componentKeys: readObjectKeys(parsed?.components) };
+    return { presetKeys: readObjectKeys(parsed?.presets), componentKeys: readComponentNames(parsed?.components) };
   } catch {
     return { presetKeys: [], componentKeys: [] };
   }

@@ -38,6 +38,7 @@ export interface ICharacterDocument {
 }
 
 const KNOWN_COMPONENT_KEYS = new Set([
+  'name',
   'src',
   'x',
   'y',
@@ -80,7 +81,7 @@ export function isEditableCharacter(text: string, url: string): boolean {
   if (!obj || Array.isArray(obj.keyframes)) return false;
   if ('FileReferences' in obj || 'motions' in obj) return false;
   if ('skeleton' in obj || 'bones' in obj) return false;
-  if (!isPlainObject(obj.components)) return false;
+  if (!Array.isArray(obj.components)) return false;
   return obj.version === 1 || (obj.version === undefined && isInFigureDir);
 }
 
@@ -119,6 +120,18 @@ function parsePresets(raw: unknown): Record<string, string[]> | undefined {
   return Object.fromEntries(entries);
 }
 
+function parseLayers(raw: unknown): ICharacterLayer[] {
+  if (!Array.isArray(raw)) return [];
+  const byKey = new Map<string, ICharacterLayer>();
+  for (const item of raw) {
+    const key = isPlainObject(item) && typeof item.name === 'string' ? item.name.trim() : '';
+    if (!key) continue;
+    if (byKey.has(key)) byKey.delete(key);
+    byKey.set(key, { key, component: parseComponent(item) });
+  }
+  return Array.from(byKey.values()).reverse();
+}
+
 /**
  * 解析 figure.json 为编辑器文档；新建空文件时初始化默认画布与空图层
  */
@@ -132,22 +145,17 @@ export function parseCharacter(text: string): ICharacterDocument {
     isPlainObject(canvas) && isPositiveNumber(canvas.width) && isPositiveNumber(canvas.height)
       ? { width: canvas.width, height: canvas.height }
       : undefined;
-  const layers = isPlainObject(components)
-    ? Object.entries(components)
-      .map(([key, value]) => ({ key, component: parseComponent(value) }))
-      .reverse()
-    : [];
   return {
     fields: { ...restFields, version: 1 },
     ...(parsedCanvas ? { canvas: parsedCanvas } : {}),
-    layers,
+    layers: parseLayers(components),
     ...(presets !== undefined ? { presets: parsePresets(presets) ?? {} } : {}),
   };
 }
 
-function serializeComponent(comp: ICharacterComponent): Record<string, unknown> {
+function serializeComponent(name: string, comp: ICharacterComponent): Record<string, unknown> {
   const hasExplicitSize = (comp.width ?? 0) > 0 && (comp.height ?? 0) > 0;
-  const out: Record<string, unknown> = { src: comp.src };
+  const out: Record<string, unknown> = { name, src: comp.src };
   if (comp.x) out.x = comp.x;
   if (comp.y) out.y = comp.y;
   if (hasExplicitSize) {
@@ -164,6 +172,7 @@ function serializeComponent(comp: ICharacterComponent): Record<string, unknown> 
   }
   if (comp.rotation) out.rotation = comp.rotation;
   if (comp.extra) Object.assign(out, comp.extra);
+  out.name = name;
   return out;
 }
 
@@ -171,9 +180,9 @@ function serializeComponent(comp: ICharacterComponent): Record<string, unknown> 
  * 序列化为 WebGAL figure.json（components 恢复为从底到顶顺序）
  */
 export function serializeCharacter(doc: ICharacterDocument): string {
-  const components = Object.fromEntries(
-    [...doc.layers].reverse().map((layer) => [layer.key, serializeComponent(layer.component)]),
-  );
+  const components = [...doc.layers]
+    .reverse()
+    .map((layer) => serializeComponent(layer.key, layer.component));
   const output: Record<string, unknown> = {
     ...doc.fields,
     version: 1,

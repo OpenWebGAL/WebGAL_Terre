@@ -94,7 +94,7 @@ describe('game-entity-creator', () => {
       expect(JSON.parse(content ?? '')).toEqual({
         version: 1,
         canvas: { width: 2560, height: 1440 },
-        components: {},
+        components: [],
         presets: {},
       });
     });

@@ -17,7 +17,7 @@ const INITIAL_CHARACTER_CONTENT = `${JSON.stringify(
       width: 2560,
       height: 1440,
     },
-    components: {},
+    components: [],
     presets: {},
   },
   null,

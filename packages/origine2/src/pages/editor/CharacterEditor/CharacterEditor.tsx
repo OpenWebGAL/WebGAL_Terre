@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { ResizableSplit } from '../AnimationEditor/components/ResizableSplit';
 import { CharacterCanvas } from './canvas/CharacterCanvas';
 import { INaturalSize } from './canvas/hitTestLayer';
+import { resolveCanvasLayers } from './model/characterOperations';
 import { useCharacterDocument } from './model/useCharacterDocument';
 import { LayerInspectorPanel } from './panels/LayerInspectorPanel';
 import { LayerListPanel } from './panels/LayerListPanel';
@@ -44,6 +45,10 @@ export function CharacterEditor({ url, initialText }: ICharacterEditorProps) {
     () => doc.layers.find((layer) => layer.key === selectedLayerKey) ?? null,
     [doc.layers, selectedLayerKey],
   );
+  const canvasLayers = useMemo(
+    () => resolveCanvasLayers(doc, selectedPresetKey),
+    [doc, selectedPresetKey],
+  );
 
   const handleImageLoad = useCallback((assetUrl: string, size: INaturalSize) => {
     if (size.width <= 0 || size.height <= 0) return;
@@ -58,7 +63,7 @@ export function CharacterEditor({ url, initialText }: ICharacterEditorProps) {
     <CharacterCanvas
       charDirPath={charDirPath}
       canvas={doc.canvas}
-      layers={doc.layers}
+      layers={canvasLayers}
       visibleKeys={visibleKeys}
       selectedLayerKey={selectedLayerKey}
       naturalSizes={naturalSizes}

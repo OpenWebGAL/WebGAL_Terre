@@ -5,6 +5,7 @@ import {
   filterLayerKeysBottomToTop,
   ICharacterComponent,
   ICharacterDocument,
+  ICharacterLayer,
 } from './characterDocument';
 
 export function getInitialVisibleKeys(doc: ICharacterDocument): Set<string> {
@@ -73,11 +74,36 @@ export function removeLayerFromDoc(doc: ICharacterDocument, key: string): IChara
 }
 
 export function reorderLayersInDoc(doc: ICharacterDocument, fromIndex: number, toIndex: number): ICharacterDocument {
+  if (fromIndex === toIndex) return doc;
   const nextLayers = [...doc.layers];
   const [moved] = nextLayers.splice(fromIndex, 1);
   if (!moved) return doc;
   nextLayers.splice(toIndex, 0, moved);
-  return { ...doc, layers: nextLayers };
+  const presets = mapPresets(doc.presets, (keys) => filterLayerKeysBottomToTop(nextLayers, new Set(keys)));
+  return presets ? { ...doc, layers: nextLayers, presets } : { ...doc, layers: nextLayers };
+}
+
+/**
+ * 解析画布预览使用的从顶到底图层顺序：选中预设时优先按预设内从底到顶顺序排列
+ */
+export function resolveCanvasLayers(
+  doc: ICharacterDocument,
+  selectedPresetKey: string | null,
+): ICharacterLayer[] {
+  if (!selectedPresetKey || !doc.presets || !Object.hasOwn(doc.presets, selectedPresetKey)) {
+    return doc.layers;
+  }
+  const layerByKey = new Map(doc.layers.map((layer) => [layer.key, layer]));
+  const presetBottomToTop = new Map<string, ICharacterLayer>();
+  for (const key of doc.presets[selectedPresetKey] ?? []) {
+    const layer = layerByKey.get(key);
+    if (!layer) continue;
+    if (presetBottomToTop.has(key)) presetBottomToTop.delete(key);
+    presetBottomToTop.set(key, layer);
+  }
+  const presetTopToBottom = Array.from(presetBottomToTop.values()).reverse();
+  const rest = doc.layers.filter((layer) => !presetBottomToTop.has(layer.key));
+  return [...presetTopToBottom, ...rest];
 }
 
 export function renamePresetInDoc(doc: ICharacterDocument, oldKey: string, nextKey: string): ICharacterDocument {
