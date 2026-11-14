@@ -71,6 +71,9 @@ msgstr "changeFigureDiff:스탠딩 파일 선택;"
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene:장면 파일 선택;"
 
+msgid "character:选择角色;"
+msgstr "character:캐릭터 선택;"
+
 msgid "choose:选项:选择场景文件;"
 msgstr "choose:선택지:장면 파일 선택;"
 
@@ -227,9 +230,6 @@ msgstr "다음 단계"
 msgid "下移"
 msgstr "아래로 이동"
 
-msgid "不使用 clear 参数"
-msgstr "clear 함수 사용하지 않음"
-
 msgid "不使用 when 条件"
 msgstr "when 조건 사용하지 않음"
 
@@ -317,8 +317,8 @@ msgstr "전달한 인자는 호출된 씬의 지역 변수가 됩니다. 그쪽�
 msgid "伽马值"
 msgstr "감마값"
 
-msgid "使用 clear 参数清除"
-msgstr "clear 함수를 사용해 초기화"
+msgid "位置"
+msgstr "위치"
 
 msgid "使用中的模板："
 msgstr "사용 중인 템플릿:"
@@ -341,6 +341,9 @@ msgstr "커스텀 특수 효과 사용"
 msgid "使用预制特效"
 msgstr "프리셋 특수 효과 사용"
 
+msgid "使用预设"
+msgstr "프리셋 사용"
+
 msgid "使用预设的作用目标，如果设置了id则不生效"
 msgstr "프리셋 대상을 사용하되, ID가 설정된 경우 적용되지 않습니다."
 
@@ -358,6 +361,9 @@ msgstr "예: a=1 또는 name=WebGAL"
 
 msgid "例如：a>0 && flag==true"
 msgstr "예: a>0 && flag==true"
+
+msgid "例如：base,dress,smile"
+msgstr "예: base,dress,smile"
 
 msgid "例如：fig-center"
 msgstr "예: fig-center"
@@ -455,6 +461,12 @@ msgstr "모두 숨기기"
 msgid "全部展示"
 msgstr "모두 표시"
 
+msgid "全部显示"
+msgstr "모두 표시"
+
+msgid "全部隐藏"
+msgstr "모두 숨기기"
+
 msgid "关于"
 msgstr "About"
 
@@ -533,6 +545,9 @@ msgstr "배경 전환"
 msgid "切换背景图片"
 msgstr "배경 이미지 전환"
 
+msgid "切换角色"
+msgstr "캐릭터 전환"
+
 msgid "列表视图"
 msgstr "목록 확인"
 
@@ -557,6 +572,9 @@ msgstr "키프레임 삭제"
 msgid "删除参数"
 msgstr "인자 삭제"
 
+msgid "删除图层"
+msgstr "레이어 삭제"
+
 msgid "删除属性"
 msgstr "속성 삭제"
 
@@ -571,6 +589,9 @@ msgstr "템플릿 삭제"
 
 msgid "删除游戏"
 msgstr "게임 삭제"
+
+msgid "删除预设"
+msgstr "프리셋 삭제"
 
 msgid "刷新"
 msgstr "새로고침"
@@ -698,6 +719,9 @@ msgstr "우측 스탠딩"
 msgid "右对齐"
 msgstr "우측 정렬"
 
+msgid "名称"
+msgstr "이름"
+
 msgid "向上添加"
 msgstr "위로 추가"
 
@@ -730,6 +754,9 @@ msgstr "고정 팝업"
 
 msgid "图像"
 msgstr "이미지"
+
+msgid "图层组合"
+msgstr "레이어 조합"
 
 msgid "图形编辑器"
 msgstr "그래픽 에디터"
@@ -883,6 +910,9 @@ msgstr "실험적 빠른 미리보기"
 
 msgid "宽度"
 msgstr "너비"
+
+msgid "宽高"
+msgstr "크기"
 
 msgid "对比度"
 msgstr "대비"
@@ -1238,6 +1268,9 @@ msgstr "힌트: 이펙트는 다른 스탠딩으로 전환하거나 이전 스�
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "알림: 이펙트는 다른 배경으로 전환하거나 이전 배경을 끄고 다시 추가할 때만 적용됩니다. 기존 배경에 이펙트를 설정하려면 개별 이펙트 설정 명령을 사용하세요."
 
+msgid "提示：效果只有在切换到不同角色或关闭之前的角色再重新添加时生效。如果你要为现有的角色设置效果，请使用单独的设置效果命令"
+msgstr "힌트: 이펙트는 다른 캐릭터로 전환하거나 이전 캐릭터를 끄고 다시 추가할 때만 적용됩니다. 기존 캐릭터에 이펙트를 설정하려면 개별 이펙트 설정 명령을 사용하세요."
+
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "알림: 스타일에 사용되는 리소스는 assets 목록 안에 배치하세요"
 
@@ -1306,6 +1339,9 @@ msgstr "효과음 파일"
 
 msgid "文件内容不是有效的 v2 动画，请在脚本编辑器中修改"
 msgstr "파일 내용이 올바른 v2 애니메이션이 아닙니다. 스크립트 편집기에서 수정하세요"
+
+msgid "文件内容不是有效的角色描述文件，请在脚本编辑器中修改"
+msgstr "파일 내용이 올바른 캐릭터 정의 파일이 아닙니다. 스크립트 편집기에서 수정하세요"
 
 msgid "文件名"
 msgstr "파일 이름"
@@ -1385,6 +1421,9 @@ msgstr "새 플로차트"
 msgid "新建游戏"
 msgstr "새 게임"
 
+msgid "新建预设"
+msgstr "새 프리셋"
+
 msgid "新文件名"
 msgstr "새 파일 이름"
 
@@ -1411,6 +1450,9 @@ msgstr "나레이션 모드, 캐릭터 이름을 표시하지 않음"
 
 msgid "旁白模式，无角色名"
 msgstr "내레이션 모드, 캐릭터 이름 없음"
+
+msgid "旋转"
+msgstr "회전"
 
 msgid "旋转（弧度）"
 msgstr "회전 (호도)"
@@ -1454,6 +1496,9 @@ msgstr "사이드바 표시"
 msgid "显示变量"
 msgstr "변수 표시"
 
+msgid "显示图层"
+msgstr "레이어 표시"
+
 msgid "显示效果"
 msgstr "이펙트 표시"
 
@@ -1465,6 +1510,9 @@ msgstr "스탠딩 표시"
 
 msgid "显示背景"
 msgstr "배경 표시"
+
+msgid "显示角色"
+msgstr "캐릭터 표시"
 
 msgid "显示预览窗口"
 msgstr "미리보기 창 표시"
@@ -1483,6 +1531,9 @@ msgstr "변수 스냅샷 없음"
 
 msgid "暂无调试变量，点击“新增变量”创建。"
 msgstr "디버그 변수가 없습니다. “변수 추가”를 클릭하여 생성하세요."
+
+msgid "暂无预设"
+msgstr "프리셋 없음"
 
 msgid "更多"
 msgstr "더 보기"
@@ -1511,8 +1562,14 @@ msgstr "인식되지 않음"
 msgid "未识别的指令"
 msgstr "인식되지 않은 명령어"
 
+msgid "未选择图层"
+msgstr "선택된 레이어 없음"
+
 msgid "未选择跳转目标"
 msgstr "이동 대상이 선택되지 않았습니다"
+
+msgid "未选择预设"
+msgstr "선택된 프리셋 없음"
 
 msgid "本句前插入句子"
 msgstr "이 문장 앞에 문장 삽입"
@@ -1724,11 +1781,17 @@ msgstr "애니메이션 프레임 추가"
 msgid "添加参数"
 msgstr "인자 추가"
 
+msgid "添加图层"
+msgstr "레이어 추가"
+
 msgid "添加属性"
 msgstr "속성 추가"
 
 msgid "添加或切换指定位置的立绘"
 msgstr "지정된 위치의 스탠딩을 추가하거나 전환합니다"
+
+msgid "添加或切换指定位置的角色"
+msgstr "지정된 위치의 캐릭터를 추가하거나 전환합니다"
 
 msgid "添加新行"
 msgstr "새 줄 추가"
@@ -1748,6 +1811,9 @@ msgstr "문장 추가"
 msgid "清除"
 msgstr "지우기"
 
+msgid "清除宽高"
+msgstr "크기 지우기"
+
 msgid "清除当前舞台的特殊效果"
 msgstr "현재 스테이지의 이펙트 초기화"
 
@@ -1759,6 +1825,9 @@ msgstr "특수 효과 초기화"
 
 msgid "清除立绘"
 msgstr "스탠딩 초기화"
+
+msgid "清除角色"
+msgstr "캐릭터 초기화"
 
 msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "캐릭터 이름을 초기화하며, 캐릭터 이름을 비워 둔 문장에는 캐릭터 이름이 표시되지 않음"
@@ -1952,9 +2021,6 @@ msgstr "스탠딩 일러스트 ID"
 msgid "立绘文件"
 msgstr "스탠딩 파일"
 
-msgid "立绘清除参数"
-msgstr "스탠딩 초기화 매개변수"
-
 msgid "等待"
 msgstr "대기"
 
@@ -1969,6 +2035,9 @@ msgstr "중국어 간체"
 
 msgid "红色通道"
 msgstr "빨강 채널"
+
+msgid "素材"
+msgstr "리소스"
 
 msgid "紧急回避"
 msgstr "긴급 회피"
@@ -2126,6 +2195,9 @@ msgstr "커스텀 값"
 msgid "自定义分隔符"
 msgstr "커스텀 구분 기호"
 
+msgid "自定义图层"
+msgstr "사용자 지정 레이어"
+
 msgid "自定义特效名称"
 msgstr "커스텀 특수 효과 이름"
 
@@ -2176,6 +2248,18 @@ msgstr "{0} 속성을 삭제하시겠습니까?"
 
 msgid "覆盖"
 msgstr "덮어쓰기"
+
+msgid "角色"
+msgstr "캐릭터"
+
+msgid "角色 ID"
+msgstr "캐릭터 ID"
+
+msgid "角色ID（可选）"
+msgstr "캐릭터 ID(선택 사항)"
+
+msgid "角色位置"
+msgstr "캐릭터 위치"
 
 msgid "角色名，留空以继承上句"
 msgstr "캐릭터 이름 (빈칸으로 두면 이전 문장에서 이어짐)"
@@ -2387,6 +2471,9 @@ msgstr "연속 실행"
 msgid "退场时长（单位为毫秒）"
 msgstr "퇴장 시간(단위: 밀리초)"
 
+msgid "适配画布"
+msgstr "캔버스에 맞추기"
+
 msgid "选择"
 msgstr "선택"
 
@@ -2395,6 +2482,9 @@ msgstr "애니메이션 선택"
 
 msgid "选择动画文件"
 msgstr "애니메이션 파일 선택"
+
+msgid "选择图层"
+msgstr "레이어 선택"
 
 msgid "选择图片"
 msgstr "이미지 선택"
@@ -2440,6 +2530,9 @@ msgstr "배경 파일 선택"
 
 msgid "选择背景音乐"
 msgstr "배경음악 선택"
+
+msgid "选择角色"
+msgstr "캐릭터 선택"
 
 msgid "选择语音文件"
 msgstr "음성 파일 선택"
@@ -2519,6 +2612,9 @@ msgstr "템플릿 목록의 이름 바꾸기"
 msgid "重命名游戏目录"
 msgstr "게임 목록의 이름 바꾸기"
 
+msgid "重置旋转"
+msgstr "회전 초기화"
+
 msgid "重试"
 msgstr "다시 시도"
 
@@ -2566,6 +2662,9 @@ msgstr "임계값(Threshold)"
 
 msgid "隐藏侧边栏"
 msgstr "사이드바 숨기기"
+
+msgid "隐藏图层"
+msgstr "레이어 숨기기"
 
 msgid "隐藏文本框"
 msgstr "대화창 숨기기"
@@ -2620,6 +2719,9 @@ msgstr "미리보기 대상"
 
 msgid "预览窗口"
 msgstr "미리보기 창"
+
+msgid "预设"
+msgstr "프리셋"
 
 msgid "颜色"
 msgstr "색상"
@@ -2677,6 +2779,9 @@ msgstr "기본 언어"
 
 msgid "默认选项"
 msgstr "기본 옵션"
+
+msgid "默认预设"
+msgstr "기본 프리셋"
 
 msgid "鼠标悬浮样式"
 msgstr "마우스 호버 스타일"

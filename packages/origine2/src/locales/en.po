@@ -71,6 +71,9 @@ msgstr "changeFigureDiff: Choose a file of figure;"
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene: Choose a file of scene;"
 
+msgid "character:选择角色;"
+msgstr "character: Choose a character;"
+
 msgid "choose:选项:选择场景文件;"
 msgstr "choose: Choose a scene file;"
 
@@ -227,9 +230,6 @@ msgstr "Next"
 msgid "下移"
 msgstr "Move down"
 
-msgid "不使用 clear 参数"
-msgstr "Do not use clear"
-
 msgid "不使用 when 条件"
 msgstr "Do not use when condition"
 
@@ -317,8 +317,8 @@ msgstr "Arguments passed here become local variables of the called scene. Read t
 msgid "伽马值"
 msgstr "Gamma"
 
-msgid "使用 clear 参数清除"
-msgstr "Clear with the clear parameter"
+msgid "位置"
+msgstr "Position"
 
 msgid "使用中的模板："
 msgstr "Template in use: "
@@ -341,6 +341,9 @@ msgstr "Use the special effects defined by user"
 msgid "使用预制特效"
 msgstr "Use prepared special effects"
 
+msgid "使用预设"
+msgstr "Use preset"
+
 msgid "使用预设的作用目标，如果设置了id则不生效"
 msgstr "Use prepared apply target, if target set the ID, it won't apply"
 
@@ -358,6 +361,9 @@ msgstr "Example: a=1 or name=WebGAL"
 
 msgid "例如：a>0 && flag==true"
 msgstr "Example: a>0 && flag==true"
+
+msgid "例如：base,dress,smile"
+msgstr "Example: base,dress,smile"
 
 msgid "例如：fig-center"
 msgstr "Example: fig-center"
@@ -455,6 +461,12 @@ msgstr "Hide all"
 msgid "全部展示"
 msgstr "Show all"
 
+msgid "全部显示"
+msgstr "Show all"
+
+msgid "全部隐藏"
+msgstr "Hide all"
+
 msgid "关于"
 msgstr "About"
 
@@ -533,6 +545,9 @@ msgstr "Change background"
 msgid "切换背景图片"
 msgstr "Change background image"
 
+msgid "切换角色"
+msgstr "Change character"
+
 msgid "列表视图"
 msgstr "List view"
 
@@ -557,6 +572,9 @@ msgstr "Delete keyframe"
 msgid "删除参数"
 msgstr "Delete argument"
 
+msgid "删除图层"
+msgstr "Delete layer"
+
 msgid "删除属性"
 msgstr "Delete Property"
 
@@ -571,6 +589,9 @@ msgstr "Delete template"
 
 msgid "删除游戏"
 msgstr "Delete game"
+
+msgid "删除预设"
+msgstr "Delete preset"
 
 msgid "刷新"
 msgstr "Refresh"
@@ -698,6 +719,9 @@ msgstr "Right side figure"
 msgid "右对齐"
 msgstr "Right Align"
 
+msgid "名称"
+msgstr "Name"
+
 msgid "向上添加"
 msgstr "Add above"
 
@@ -730,6 +754,9 @@ msgstr "Pin popup"
 
 msgid "图像"
 msgstr "Image"
+
+msgid "图层组合"
+msgstr "Layer combination"
 
 msgid "图形编辑器"
 msgstr "Graphical editor"
@@ -883,6 +910,9 @@ msgstr "Experimental fast preview"
 
 msgid "宽度"
 msgstr "Width"
+
+msgid "宽高"
+msgstr "Size"
 
 msgid "对比度"
 msgstr "Contrast"
@@ -1238,6 +1268,9 @@ msgstr "Tip: The effect will only take place when switching to a different chara
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "Tip: The effect will only take place when switching to a different background or removing the current background and adding it again. If you want to set an effect for an existing background, please use a separate command for setting effects."
 
+msgid "提示：效果只有在切换到不同角色或关闭之前的角色再重新添加时生效。如果你要为现有的角色设置效果，请使用单独的设置效果命令"
+msgstr "Tip: The effect will only take place when switching to a different character or closing the current character and adding it again. If you want to set an effect for an existing character, please use a separate command for setting effects."
+
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "Tips: Resources used in styles are placed in the assets directory"
 
@@ -1306,6 +1339,9 @@ msgstr "Sound effect file"
 
 msgid "文件内容不是有效的 v2 动画，请在脚本编辑器中修改"
 msgstr "The file is not a valid v2 animation. Please edit it in the script editor"
+
+msgid "文件内容不是有效的角色描述文件，请在脚本编辑器中修改"
+msgstr "The file is not a valid character definition. Please edit it in the script editor"
 
 msgid "文件名"
 msgstr "File name"
@@ -1385,6 +1421,9 @@ msgstr "New flowchart"
 msgid "新建游戏"
 msgstr "Create new game"
 
+msgid "新建预设"
+msgstr "New preset"
+
 msgid "新文件名"
 msgstr "New file name"
 
@@ -1411,6 +1450,9 @@ msgstr "Narration mode, no role name shown"
 
 msgid "旁白模式，无角色名"
 msgstr "Voiceover mode, no role name"
+
+msgid "旋转"
+msgstr "Rotation"
 
 msgid "旋转（弧度）"
 msgstr "Rotation(radian)"
@@ -1454,6 +1496,9 @@ msgstr "Show sidebar"
 msgid "显示变量"
 msgstr "Display variables"
 
+msgid "显示图层"
+msgstr "Show layer"
+
 msgid "显示效果"
 msgstr "Display effect"
 
@@ -1465,6 +1510,9 @@ msgstr "Show figure"
 
 msgid "显示背景"
 msgstr "Show background"
+
+msgid "显示角色"
+msgstr "Show character"
 
 msgid "显示预览窗口"
 msgstr "Show preview window"
@@ -1483,6 +1531,9 @@ msgstr "No variable snapshot"
 
 msgid "暂无调试变量，点击“新增变量”创建。"
 msgstr "No debug variables. Click \"Add variable\" to create one."
+
+msgid "暂无预设"
+msgstr "No presets"
 
 msgid "更多"
 msgstr "More"
@@ -1511,8 +1562,14 @@ msgstr "Unrecognized"
 msgid "未识别的指令"
 msgstr "Unrecognized command"
 
+msgid "未选择图层"
+msgstr "No layer selected"
+
 msgid "未选择跳转目标"
 msgstr "No jump target selected"
+
+msgid "未选择预设"
+msgstr "No preset selected"
 
 msgid "本句前插入句子"
 msgstr "Insert sentence before this"
@@ -1724,11 +1781,17 @@ msgstr "Add animation frame"
 msgid "添加参数"
 msgstr "Add argument"
 
+msgid "添加图层"
+msgstr "Add layer"
+
 msgid "添加属性"
 msgstr "Add Property"
 
 msgid "添加或切换指定位置的立绘"
 msgstr "Add or switch the figure at the specified position"
+
+msgid "添加或切换指定位置的角色"
+msgstr "Add or switch the character at the specified position"
 
 msgid "添加新行"
 msgstr "Add new line"
@@ -1748,6 +1811,9 @@ msgstr "Add statement"
 msgid "清除"
 msgstr "Clear"
 
+msgid "清除宽高"
+msgstr "Clear size"
+
 msgid "清除当前舞台的特殊效果"
 msgstr "Clear special effects of current stage"
 
@@ -1759,6 +1825,9 @@ msgstr "Clear effects"
 
 msgid "清除立绘"
 msgstr "Clear figure"
+
+msgid "清除角色"
+msgstr "Clear character"
 
 msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "Clear the role name; lines that leave the role name blank no longer show one"
@@ -1952,9 +2021,6 @@ msgstr "ID of figure illustration"
 msgid "立绘文件"
 msgstr "Figure file"
 
-msgid "立绘清除参数"
-msgstr "Figure clear parameter"
-
 msgid "等待"
 msgstr "Wait"
 
@@ -1969,6 +2035,9 @@ msgstr "Simplified Chinese"
 
 msgid "红色通道"
 msgstr "Red channel"
+
+msgid "素材"
+msgstr "Asset"
 
 msgid "紧急回避"
 msgstr "Emergency Evasion"
@@ -2126,6 +2195,9 @@ msgstr "Custom Value "
 msgid "自定义分隔符"
 msgstr "Custom separator"
 
+msgid "自定义图层"
+msgstr "Custom layers"
+
 msgid "自定义特效名称"
 msgstr "Custom effect name"
 
@@ -2176,6 +2248,18 @@ msgstr "Delete the property {0}?"
 
 msgid "覆盖"
 msgstr "Coverage"
+
+msgid "角色"
+msgstr "Character"
+
+msgid "角色 ID"
+msgstr "Character ID"
+
+msgid "角色ID（可选）"
+msgstr "Character ID (optional)"
+
+msgid "角色位置"
+msgstr "Character position"
 
 msgid "角色名，留空以继承上句"
 msgstr "Role name, leave blank to inherit from previous sentence"
@@ -2387,6 +2471,9 @@ msgstr "Execute Continuously"
 msgid "退场时长（单位为毫秒）"
 msgstr "Exit duration (milliseconds)"
 
+msgid "适配画布"
+msgstr "Fit canvas"
+
 msgid "选择"
 msgstr "Choose"
 
@@ -2395,6 +2482,9 @@ msgstr "Choose animation"
 
 msgid "选择动画文件"
 msgstr "Choose animation file"
+
+msgid "选择图层"
+msgstr "Select layers"
 
 msgid "选择图片"
 msgstr "Choose image"
@@ -2440,6 +2530,9 @@ msgstr "Choose background file"
 
 msgid "选择背景音乐"
 msgstr "Choose Background Music"
+
+msgid "选择角色"
+msgstr "Choose character"
 
 msgid "选择语音文件"
 msgstr "Choose voice file"
@@ -2519,6 +2612,9 @@ msgstr "Rename template directory"
 msgid "重命名游戏目录"
 msgstr "Rename game directory"
 
+msgid "重置旋转"
+msgstr "Reset rotation"
+
 msgid "重试"
 msgstr "Retry"
 
@@ -2566,6 +2662,9 @@ msgstr "Threshold"
 
 msgid "隐藏侧边栏"
 msgstr "Hide Sidebar"
+
+msgid "隐藏图层"
+msgstr "Hide layer"
 
 msgid "隐藏文本框"
 msgstr "Hide Text Box"
@@ -2620,6 +2719,9 @@ msgstr "Preview target"
 
 msgid "预览窗口"
 msgstr "Preview window"
+
+msgid "预设"
+msgstr "Preset"
 
 msgid "颜色"
 msgstr "Color"
@@ -2677,6 +2779,9 @@ msgstr "Default Language"
 
 msgid "默认选项"
 msgstr "Default option"
+
+msgid "默认预设"
+msgstr "Default preset"
 
 msgid "鼠标悬浮样式"
 msgstr "Mouse hover style"

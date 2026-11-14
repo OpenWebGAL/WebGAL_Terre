@@ -71,6 +71,9 @@ msgstr "changeFigureDiff:选择立绘文件;"
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene:选择场景文件;"
 
+msgid "character:选择角色;"
+msgstr "character:选择角色;"
+
 msgid "choose:选项:选择场景文件;"
 msgstr "choose:选项:选择场景文件;"
 
@@ -227,9 +230,6 @@ msgstr "下一步"
 msgid "下移"
 msgstr "下移"
 
-msgid "不使用 clear 参数"
-msgstr "不使用 clear 参数"
-
 msgid "不使用 when 条件"
 msgstr "不使用 when 条件"
 
@@ -317,8 +317,8 @@ msgstr "传入的参数会成为被调用场景的局部变量，在那边用花
 msgid "伽马值"
 msgstr "伽马值"
 
-msgid "使用 clear 参数清除"
-msgstr "使用 clear 参数清除"
+msgid "位置"
+msgstr "位置"
 
 msgid "使用中的模板："
 msgstr "使用中的模板："
@@ -341,6 +341,9 @@ msgstr "使用自定义特效"
 msgid "使用预制特效"
 msgstr "使用预制特效"
 
+msgid "使用预设"
+msgstr "使用预设"
+
 msgid "使用预设的作用目标，如果设置了id则不生效"
 msgstr "使用预设的作用目标，如果设置了id则不生效"
 
@@ -358,6 +361,9 @@ msgstr "例如：a=1 或 name=WebGAL"
 
 msgid "例如：a>0 && flag==true"
 msgstr "例如：a>0 && flag==true"
+
+msgid "例如：base,dress,smile"
+msgstr "例如：base,dress,smile"
 
 msgid "例如：fig-center"
 msgstr "例如：fig-center"
@@ -455,6 +461,12 @@ msgstr "全部不展示"
 msgid "全部展示"
 msgstr "全部展示"
 
+msgid "全部显示"
+msgstr "全部显示"
+
+msgid "全部隐藏"
+msgstr "全部隐藏"
+
 msgid "关于"
 msgstr "关于"
 
@@ -533,6 +545,9 @@ msgstr "切换背景"
 msgid "切换背景图片"
 msgstr "切换背景图片"
 
+msgid "切换角色"
+msgstr "切换角色"
+
 msgid "列表视图"
 msgstr "列表视图"
 
@@ -557,6 +572,9 @@ msgstr "删除关键帧"
 msgid "删除参数"
 msgstr "删除参数"
 
+msgid "删除图层"
+msgstr "删除图层"
+
 msgid "删除属性"
 msgstr "删除属性"
 
@@ -571,6 +589,9 @@ msgstr "删除模板"
 
 msgid "删除游戏"
 msgstr "删除游戏"
+
+msgid "删除预设"
+msgstr "删除预设"
 
 msgid "刷新"
 msgstr "刷新"
@@ -698,6 +719,9 @@ msgstr "右侧立绘"
 msgid "右对齐"
 msgstr "右对齐"
 
+msgid "名称"
+msgstr "名称"
+
 msgid "向上添加"
 msgstr "向上添加"
 
@@ -730,6 +754,9 @@ msgstr "固定弹窗"
 
 msgid "图像"
 msgstr "图像"
+
+msgid "图层组合"
+msgstr "图层组合"
 
 msgid "图形编辑器"
 msgstr "图形编辑器"
@@ -883,6 +910,9 @@ msgstr "实验性快速预览"
 
 msgid "宽度"
 msgstr "宽度"
+
+msgid "宽高"
+msgstr "宽高"
 
 msgid "对比度"
 msgstr "对比度"
@@ -1238,6 +1268,9 @@ msgstr "提示：效果只有在切换到不同立绘或关闭之前的立绘再
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 
+msgid "提示：效果只有在切换到不同角色或关闭之前的角色再重新添加时生效。如果你要为现有的角色设置效果，请使用单独的设置效果命令"
+msgstr "提示：效果只有在切换到不同角色或关闭之前的角色再重新添加时生效。如果你要为现有的角色设置效果，请使用单独的设置效果命令"
+
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "提示：样式中用到的资源放在 assets 目录下"
 
@@ -1306,6 +1339,9 @@ msgstr "效果音文件"
 
 msgid "文件内容不是有效的 v2 动画，请在脚本编辑器中修改"
 msgstr "文件内容不是有效的 v2 动画，请在脚本编辑器中修改"
+
+msgid "文件内容不是有效的角色描述文件，请在脚本编辑器中修改"
+msgstr "文件内容不是有效的角色描述文件，请在脚本编辑器中修改"
 
 msgid "文件名"
 msgstr "文件名"
@@ -1385,6 +1421,9 @@ msgstr "新建流程图"
 msgid "新建游戏"
 msgstr "新建游戏"
 
+msgid "新建预设"
+msgstr "新建预设"
+
 msgid "新文件名"
 msgstr "新文件名"
 
@@ -1411,6 +1450,9 @@ msgstr "旁白模式，不显示角色名"
 
 msgid "旁白模式，无角色名"
 msgstr "旁白模式，无角色名"
+
+msgid "旋转"
+msgstr "旋转"
 
 msgid "旋转（弧度）"
 msgstr "旋转（弧度）"
@@ -1454,6 +1496,9 @@ msgstr "显示侧边栏"
 msgid "显示变量"
 msgstr "显示变量"
 
+msgid "显示图层"
+msgstr "显示图层"
+
 msgid "显示效果"
 msgstr "显示效果"
 
@@ -1465,6 +1510,9 @@ msgstr "显示立绘"
 
 msgid "显示背景"
 msgstr "显示背景"
+
+msgid "显示角色"
+msgstr "显示角色"
 
 msgid "显示预览窗口"
 msgstr "显示预览窗口"
@@ -1483,6 +1531,9 @@ msgstr "暂无变量快照"
 
 msgid "暂无调试变量，点击“新增变量”创建。"
 msgstr "暂无调试变量，点击“新增变量”创建。"
+
+msgid "暂无预设"
+msgstr "暂无预设"
 
 msgid "更多"
 msgstr "更多"
@@ -1511,8 +1562,14 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
+msgid "未选择图层"
+msgstr "未选择图层"
+
 msgid "未选择跳转目标"
 msgstr "未选择跳转目标"
+
+msgid "未选择预设"
+msgstr "未选择预设"
 
 msgid "本句前插入句子"
 msgstr "本句前插入句子"
@@ -1724,11 +1781,17 @@ msgstr "添加动画帧"
 msgid "添加参数"
 msgstr "添加参数"
 
+msgid "添加图层"
+msgstr "添加图层"
+
 msgid "添加属性"
 msgstr "添加属性"
 
 msgid "添加或切换指定位置的立绘"
 msgstr "添加或切换指定位置的立绘"
+
+msgid "添加或切换指定位置的角色"
+msgstr "添加或切换指定位置的角色"
 
 msgid "添加新行"
 msgstr "添加新行"
@@ -1748,6 +1811,9 @@ msgstr "添加语句"
 msgid "清除"
 msgstr "清除"
 
+msgid "清除宽高"
+msgstr "清除宽高"
+
 msgid "清除当前舞台的特殊效果"
 msgstr "清除当前舞台的特殊效果"
 
@@ -1759,6 +1825,9 @@ msgstr "清除特效"
 
 msgid "清除立绘"
 msgstr "清除立绘"
+
+msgid "清除角色"
+msgstr "清除角色"
 
 msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "清除角色名，留空角色名的语句不再显示角色名"
@@ -1952,9 +2021,6 @@ msgstr "立绘插图的ID"
 msgid "立绘文件"
 msgstr "立绘文件"
 
-msgid "立绘清除参数"
-msgstr "立绘清除参数"
-
 msgid "等待"
 msgstr "等待"
 
@@ -1969,6 +2035,9 @@ msgstr "简体中文"
 
 msgid "红色通道"
 msgstr "红色通道"
+
+msgid "素材"
+msgstr "素材"
 
 msgid "紧急回避"
 msgstr "紧急回避"
@@ -2126,6 +2195,9 @@ msgstr "自定义值"
 msgid "自定义分隔符"
 msgstr "自定义分隔符"
 
+msgid "自定义图层"
+msgstr "自定义图层"
+
 msgid "自定义特效名称"
 msgstr "自定义特效名称"
 
@@ -2176,6 +2248,18 @@ msgstr "要删除属性{0}吗？"
 
 msgid "覆盖"
 msgstr "覆盖"
+
+msgid "角色"
+msgstr "角色"
+
+msgid "角色 ID"
+msgstr "角色 ID"
+
+msgid "角色ID（可选）"
+msgstr "角色ID（可选）"
+
+msgid "角色位置"
+msgstr "角色位置"
 
 msgid "角色名，留空以继承上句"
 msgstr "角色名，留空以继承上句"
@@ -2387,6 +2471,9 @@ msgstr "连续执行"
 msgid "退场时长（单位为毫秒）"
 msgstr "退场时长（单位为毫秒）"
 
+msgid "适配画布"
+msgstr "适配画布"
+
 msgid "选择"
 msgstr "选择"
 
@@ -2395,6 +2482,9 @@ msgstr "选择动画"
 
 msgid "选择动画文件"
 msgstr "选择动画文件"
+
+msgid "选择图层"
+msgstr "选择图层"
 
 msgid "选择图片"
 msgstr "选择图片"
@@ -2440,6 +2530,9 @@ msgstr "选择背景文件"
 
 msgid "选择背景音乐"
 msgstr "选择背景音乐"
+
+msgid "选择角色"
+msgstr "选择角色"
 
 msgid "选择语音文件"
 msgstr "选择语音文件"
@@ -2519,6 +2612,9 @@ msgstr "重命名模板目录"
 msgid "重命名游戏目录"
 msgstr "重命名游戏目录"
 
+msgid "重置旋转"
+msgstr "重置旋转"
+
 msgid "重试"
 msgstr "重试"
 
@@ -2566,6 +2662,9 @@ msgstr "阈值"
 
 msgid "隐藏侧边栏"
 msgstr "隐藏侧边栏"
+
+msgid "隐藏图层"
+msgstr "隐藏图层"
 
 msgid "隐藏文本框"
 msgstr "隐藏文本框"
@@ -2620,6 +2719,9 @@ msgstr "预览对象"
 
 msgid "预览窗口"
 msgstr "预览窗口"
+
+msgid "预设"
+msgstr "预设"
 
 msgid "颜色"
 msgstr "颜色"
@@ -2677,6 +2779,9 @@ msgstr "默认语言"
 
 msgid "默认选项"
 msgstr "默认选项"
+
+msgid "默认预设"
+msgstr "默认预设"
 
 msgid "鼠标悬浮样式"
 msgstr "鼠标悬浮样式"

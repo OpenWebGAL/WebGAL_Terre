@@ -43,7 +43,7 @@ function readDirection(input: ResolveTargetInput): string {
 }
 
 export function resolveTransformTarget(input: ResolveTargetInput): string | undefined {
-  if (input.lineContent.startsWith('changeFigure')) {
+  if (input.lineContent.startsWith('changeFigure') || /^character\s*:/.test(input.lineContent)) {
     const id = getArgValue(input.lineSentence, 'id');
     if (typeof id === 'string' && id.trim()) {
       return id.trim();

@@ -71,6 +71,9 @@ msgstr "changeFigureDiff: 立ち絵ファイルを選択;"
 msgid "changeScene:选择场景文件;"
 msgstr "changeScene: シーンファイルを選択;"
 
+msgid "character:选择角色;"
+msgstr "character: キャラクターを選択;"
+
 msgid "choose:选项:选择场景文件;"
 msgstr "choose: 選択肢を設定: シーンファイルを選択;"
 
@@ -227,9 +230,6 @@ msgstr "次に"
 msgid "下移"
 msgstr "下へ移動"
 
-msgid "不使用 clear 参数"
-msgstr "clear パラメータを使用しない"
-
 msgid "不使用 when 条件"
 msgstr "when 条件を使用しない"
 
@@ -317,8 +317,8 @@ msgstr "渡した引数は呼び出されたシーンのローカル変数にな
 msgid "伽马值"
 msgstr "ガンマ"
 
-msgid "使用 clear 参数清除"
-msgstr "clear パラメータで消去"
+msgid "位置"
+msgstr "位置"
 
 msgid "使用中的模板："
 msgstr "使用中のテンプレート："
@@ -341,6 +341,9 @@ msgstr "カスタムの特殊効果を使用"
 msgid "使用预制特效"
 msgstr "プレハブ効果を使用"
 
+msgid "使用预设"
+msgstr "プリセットを使用"
+
 msgid "使用预设的作用目标，如果设置了id则不生效"
 msgstr "以前に設定されたアクションターゲットを使用。IDを設定した場合は無効"
 
@@ -358,6 +361,9 @@ msgstr "例：a=1 または name=WebGAL"
 
 msgid "例如：a>0 && flag==true"
 msgstr "例：a>0 && flag==true"
+
+msgid "例如：base,dress,smile"
+msgstr "例：base,dress,smile"
 
 msgid "例如：fig-center"
 msgstr "例：fig-center"
@@ -455,6 +461,12 @@ msgstr "すべて非表示"
 msgid "全部展示"
 msgstr "すべて表示"
 
+msgid "全部显示"
+msgstr "すべて表示"
+
+msgid "全部隐藏"
+msgstr "すべて非表示"
+
 msgid "关于"
 msgstr "About"
 
@@ -533,6 +545,9 @@ msgstr "背景の切り替え"
 msgid "切换背景图片"
 msgstr "背景画像の切り替え"
 
+msgid "切换角色"
+msgstr "キャラクターの切り替え"
+
 msgid "列表视图"
 msgstr "リストビュー"
 
@@ -557,6 +572,9 @@ msgstr "キーフレームを削除"
 msgid "删除参数"
 msgstr "引数を削除"
 
+msgid "删除图层"
+msgstr "レイヤーを削除"
+
 msgid "删除属性"
 msgstr "属性を削除"
 
@@ -571,6 +589,9 @@ msgstr "テンプレートを削除"
 
 msgid "删除游戏"
 msgstr "ゲームを削除"
+
+msgid "删除预设"
+msgstr "プリセットを削除"
 
 msgid "刷新"
 msgstr "更新"
@@ -698,6 +719,9 @@ msgstr "右の立ち絵"
 msgid "右对齐"
 msgstr "右揃え"
 
+msgid "名称"
+msgstr "名前"
+
 msgid "向上添加"
 msgstr "上に追加"
 
@@ -730,6 +754,9 @@ msgstr "ポップアップをピン留め"
 
 msgid "图像"
 msgstr "画像"
+
+msgid "图层组合"
+msgstr "レイヤー構成"
 
 msgid "图形编辑器"
 msgstr "グラフィックエディタ"
@@ -883,6 +910,9 @@ msgstr "実験的高速プレビュー"
 
 msgid "宽度"
 msgstr "幅"
+
+msgid "宽高"
+msgstr "サイズ"
 
 msgid "对比度"
 msgstr "コントラスト"
@@ -1238,6 +1268,9 @@ msgstr "ヒント：この効果は、異なる立ち絵に切り替えるか、
 msgid "提示：效果只有在切换到不同背景或关闭之前的背景再重新添加时生效。如果你要为现有的背景设置效果，请使用单独的设置效果命令"
 msgstr "ヒント：エフェクトは、異なる背景に切り替えるか、一度背景を削除してから再度追加した場合にのみ有効になります。既存の背景にエフェクトを設定する場合は、専用の「エフェクト設定」コマンドを使用してください。"
 
+msgid "提示：效果只有在切换到不同角色或关闭之前的角色再重新添加时生效。如果你要为现有的角色设置效果，请使用单独的设置效果命令"
+msgstr "ヒント：この効果は、異なるキャラクターに切り替えるか、一度キャラクターを閉じてから再度追加した場合にのみ有効です。既存のキャラクターに効果を設定する場合は、個別の効果設定コマンドを使用してください。"
+
 msgid "提示：样式中用到的资源放在 assets 目录下"
 msgstr "ヒント：スタイルで使用されるリソースは assets ディレクトリにあります"
 
@@ -1306,6 +1339,9 @@ msgstr "効果音ファイル"
 
 msgid "文件内容不是有效的 v2 动画，请在脚本编辑器中修改"
 msgstr "ファイルの内容が有効な v2 アニメーションではありません。スクリプトエディタで修正してください"
+
+msgid "文件内容不是有效的角色描述文件，请在脚本编辑器中修改"
+msgstr "ファイルの内容が有効なキャラクター定義ファイルではありません。スクリプトエディタで修正してください"
 
 msgid "文件名"
 msgstr "ファイル名"
@@ -1385,6 +1421,9 @@ msgstr "新規フローチャート"
 msgid "新建游戏"
 msgstr "新しいゲームを作成"
 
+msgid "新建预设"
+msgstr "新規プリセット"
+
 msgid "新文件名"
 msgstr "新しいファイル名"
 
@@ -1411,6 +1450,9 @@ msgstr "ナレーションモード、キャラクター名を表示しない"
 
 msgid "旁白模式，无角色名"
 msgstr "キャラクター名は設定不可"
+
+msgid "旋转"
+msgstr "回転"
 
 msgid "旋转（弧度）"
 msgstr "回転(ラジアン)"
@@ -1454,6 +1496,9 @@ msgstr "サイドバーを表示"
 msgid "显示变量"
 msgstr "変数を表示"
 
+msgid "显示图层"
+msgstr "レイヤーを表示"
+
 msgid "显示效果"
 msgstr "エフェクト"
 
@@ -1465,6 +1510,9 @@ msgstr "立ち絵を表示"
 
 msgid "显示背景"
 msgstr "背景画像を表示"
+
+msgid "显示角色"
+msgstr "キャラクターを表示"
 
 msgid "显示预览窗口"
 msgstr "プレビューウィンドウを表示"
@@ -1483,6 +1531,9 @@ msgstr "変数スナップショットはありません"
 
 msgid "暂无调试变量，点击“新增变量”创建。"
 msgstr "デバッグ変数はありません。「変数を追加」をクリックして作成してください。"
+
+msgid "暂无预设"
+msgstr "プリセットなし"
 
 msgid "更多"
 msgstr "その他"
@@ -1511,8 +1562,14 @@ msgstr "認識されないコマンド"
 msgid "未识别的指令"
 msgstr "認識されないコマンド"
 
+msgid "未选择图层"
+msgstr "レイヤー未選択"
+
 msgid "未选择跳转目标"
 msgstr "ジャンプ先が選択されていません"
+
+msgid "未选择预设"
+msgstr "プリセット未選択"
 
 msgid "本句前插入句子"
 msgstr "選択した文の前に追加"
@@ -1724,11 +1781,17 @@ msgstr "アニメーションフレームを追加"
 msgid "添加参数"
 msgstr "引数を追加"
 
+msgid "添加图层"
+msgstr "レイヤーを追加"
+
 msgid "添加属性"
 msgstr "属性を追加"
 
 msgid "添加或切换指定位置的立绘"
 msgstr "指定位置の立ち絵を追加または切り替える"
+
+msgid "添加或切换指定位置的角色"
+msgstr "指定位置のキャラクターを追加または切り替える"
 
 msgid "添加新行"
 msgstr "新しい行を追加"
@@ -1748,6 +1811,9 @@ msgstr "ステートメントを追加"
 msgid "清除"
 msgstr "クリア"
 
+msgid "清除宽高"
+msgstr "サイズをクリア"
+
 msgid "清除当前舞台的特殊效果"
 msgstr "現在のステージの特殊効果をクリア"
 
@@ -1759,6 +1825,9 @@ msgstr "特殊効果をクリア"
 
 msgid "清除立绘"
 msgstr "立ち絵をクリア"
+
+msgid "清除角色"
+msgstr "キャラクターをクリア"
 
 msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "キャラクター名を消去し、キャラクター名が空欄の文ではキャラクター名を表示しない"
@@ -1952,9 +2021,6 @@ msgstr "関連する立ち絵のID"
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
 
-msgid "立绘清除参数"
-msgstr "立ち絵クリアパラメータ"
-
 msgid "等待"
 msgstr "待機"
 
@@ -1969,6 +2035,9 @@ msgstr "簡体字中国語"
 
 msgid "红色通道"
 msgstr "赤いチャネル"
+
+msgid "素材"
+msgstr "素材"
 
 msgid "紧急回避"
 msgstr "緊急回避"
@@ -2126,6 +2195,9 @@ msgstr "カスタム値"
 msgid "自定义分隔符"
 msgstr "カスタム区切り文字"
 
+msgid "自定义图层"
+msgstr "カスタムレイヤー"
+
 msgid "自定义特效名称"
 msgstr "カスタムの特殊効果名"
 
@@ -2176,6 +2248,18 @@ msgstr "プロパティ{0}を削除しますか？"
 
 msgid "覆盖"
 msgstr "カバレッジ"
+
+msgid "角色"
+msgstr "キャラクター"
+
+msgid "角色 ID"
+msgstr "キャラクターID"
+
+msgid "角色ID（可选）"
+msgstr "キャラクターID(オプション)"
+
+msgid "角色位置"
+msgstr "キャラクター位置"
 
 msgid "角色名，留空以继承上句"
 msgstr "キャラクター名を空白のままにすると前の文から継承"
@@ -2387,6 +2471,9 @@ msgstr "連続実行"
 msgid "退场时长（单位为毫秒）"
 msgstr "退場時間（ミリ秒）"
 
+msgid "适配画布"
+msgstr "キャンバスに合わせる"
+
 msgid "选择"
 msgstr "選択"
 
@@ -2395,6 +2482,9 @@ msgstr "アニメーションを選択"
 
 msgid "选择动画文件"
 msgstr "アニメーションファイルを選択"
+
+msgid "选择图层"
+msgstr "レイヤーを選択"
 
 msgid "选择图片"
 msgstr "画像を選択"
@@ -2440,6 +2530,9 @@ msgstr "背景画像ファイルを選択"
 
 msgid "选择背景音乐"
 msgstr "BGMを選択"
+
+msgid "选择角色"
+msgstr "キャラクターを選択"
 
 msgid "选择语音文件"
 msgstr "音声ファイルを選択"
@@ -2519,6 +2612,9 @@ msgstr "テンプレート名変更"
 msgid "重命名游戏目录"
 msgstr "ゲームディレクトリ名変更"
 
+msgid "重置旋转"
+msgstr "回転をリセット"
+
 msgid "重试"
 msgstr "再試行"
 
@@ -2566,6 +2662,9 @@ msgstr "閾値"
 
 msgid "隐藏侧边栏"
 msgstr "サイドバーを隠す"
+
+msgid "隐藏图层"
+msgstr "レイヤーを非表示"
 
 msgid "隐藏文本框"
 msgstr "テキストボックスを非表示"
@@ -2620,6 +2719,9 @@ msgstr "プレビュー対象"
 
 msgid "预览窗口"
 msgstr "プレビューウィンドウ"
+
+msgid "预设"
+msgstr "プリセット"
 
 msgid "颜色"
 msgstr "色"
@@ -2677,6 +2779,9 @@ msgstr "デフォルト言語"
 
 msgid "默认选项"
 msgstr "デフォルト選択肢"
+
+msgid "默认预设"
+msgstr "デフォルトプリセット"
 
 msgid "鼠标悬浮样式"
 msgstr "マウスホバースタイル"

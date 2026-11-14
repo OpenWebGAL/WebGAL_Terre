@@ -23,6 +23,7 @@ import {
   Music,
   NewPicture,
   People,
+  PeoplePlusOne,
   SwitchThemes, Transform,
   VideoTwo,
   RightSmallUp,
@@ -31,6 +32,7 @@ import {
 import ChangeBg from "./ChangeBg";
 import ChangeFigure from "./ChangeFigure";
 import ChangeFigureDiff from "./ChangeFigureDiff";
+import Character from "./Character";
 import Bgm from "./Bgm";
 import PlayVideo from "./PlayVideo";
 import Unrecognized from "./Unrecognized";
@@ -115,6 +117,14 @@ export const sentenceEditorConfig: ISentenceEditorConfig[] = [
     component: ChangeFigureDiff,
     icon: <Exchange theme="multi-color" className={styles.iconSvg} size="24"/>,
     descText: () => t`平滑切换指定位置的立绘差分`
+  },
+  {
+    type: commandType.character,
+    title: () => t`切换角色`,
+    initialText: () => t`character:选择角色;`,
+    component: Character,
+    icon: <PeoplePlusOne theme="multi-color" className={styles.iconSvg} size="24"/>,
+    descText: () => t`添加或切换指定位置的角色`
   },
   {
     type: commandType.setAnimation,

@@ -420,7 +420,10 @@ export function EffectEditor(props: {
 
   // 当 sentence 变化时，同步拖拽框状态
   useEffect(() => {
-    const isTransformCommand = lineContent.startsWith('changeFigure') || lineContent.startsWith('setTransform');
+    const isTransformCommand =
+      lineContent.startsWith('changeFigure') ||
+      /^character\s*:/.test(lineContent) ||
+      lineContent.startsWith('setTransform');
     if (props.sentence && props.targetPath && isTransformCommand) {
       eventBus.emit('editor:pixi-sync-command', {
         targetPath: props.targetPath,

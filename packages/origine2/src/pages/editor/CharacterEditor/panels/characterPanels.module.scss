@@ -1,0 +1,207 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 12px;
+  color: var(--text-weak);
+  background: var(--bg-card);
+}
+
+.toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 8px;
+  border-bottom: var(--border-sm);
+}
+
+.toolbarRight {
+  margin-left: auto;
+}
+
+.scrollList {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.inspector {
+  height: 100%;
+  overflow: auto;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg-card);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+
+.label {
+  flex: none;
+  width: 44px;
+  font-size: 12px;
+  color: var(--text-sub);
+  white-space: nowrap;
+}
+
+.control {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fullInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.pairGroup {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pairField {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.axisTag {
+  flex: none;
+  font-size: 11px;
+  color: var(--text-weak);
+}
+
+.spin {
+  flex: 1;
+  min-width: 0;
+}
+
+.thumb24 {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--black-5pct);
+}
+
+.thumb20 {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--black-5pct);
+}
+
+.ellipsis {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.listRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--black-5pct);
+  }
+
+  &.selected {
+    background: var(--primary-10pct);
+  }
+
+  &.layerHidden {
+    .eyeButton,
+    .ellipsis {
+      color: var(--text-weak);
+    }
+
+    .thumb20 {
+      opacity: 0.55;
+    }
+  }
+}
+
+.hoverAction {
+  opacity: 0;
+  flex: none;
+
+  .listRow:hover &,
+  &:focus-visible {
+    opacity: 1;
+  }
+}
+
+.presetSplit {
+  display: flex;
+  height: 100%;
+  background: var(--bg-card);
+}
+
+.presetLeft {
+  width: 44%;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  border-right: var(--border-sm);
+  min-height: 0;
+}
+
+.presetRight {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--black-5pct);
+  }
+}

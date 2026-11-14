@@ -126,7 +126,8 @@ export async function handleFileSuggestions(
   }
   if (
     sentence.command === commandType.changeFigure ||
-    sentence.command === commandType.changeFigureDiff
+    sentence.command === commandType.changeFigureDiff ||
+    sentence.command === commandType.character
   ) {
     dirPath = getPathFromSubdir(basePath, 'figure', getPath(line));
   }
@@ -166,5 +167,10 @@ export async function handleFileSuggestions(
   }
   dirInfo = await fsService.getDirInfo(dirPath);
 
-  return makeFileSuggestion(filterFiles(dirInfo));
+  const visibleFiles =
+    sentence.command === commandType.character
+      ? filterFiles(dirInfo).filter((di) => di.isDir)
+      : filterFiles(dirInfo);
+
+  return makeFileSuggestion(visibleFiles);
 }
