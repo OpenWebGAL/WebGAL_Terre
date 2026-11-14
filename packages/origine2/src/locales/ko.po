@@ -1400,11 +1400,23 @@ msgstr "텍스트 그림자"
 msgid "文档"
 msgstr "문서"
 
+msgid "新动画名"
+msgstr "새 애니메이션 이름"
+
+msgid "新场景名"
+msgstr "새 장면 이름"
+
 msgid "新增变量"
 msgstr "변수 추가"
 
 msgid "新增字体"
 msgstr "새 폰트 추가"
+
+msgid "新建动画"
+msgstr "새 애니메이션"
+
+msgid "新建场景"
+msgstr "새 장면"
 
 msgid "新建文件"
 msgstr "새 파일"
@@ -1420,6 +1432,9 @@ msgstr "새 플로차트"
 
 msgid "新建游戏"
 msgstr "새 게임"
+
+msgid "新建角色"
+msgstr "새 캐릭터"
 
 msgid "新建预设"
 msgstr "새 프리셋"
@@ -1438,6 +1453,9 @@ msgstr "새로운 템플릿"
 
 msgid "新的游戏"
 msgstr "새로운 게임"
+
+msgid "新角色名"
+msgstr "새 캐릭터 이름"
 
 msgid "方形"
 msgstr "사각형"
@@ -2326,6 +2344,9 @@ msgstr "미리보기 초기 상태 설정"
 
 msgid "设置预览对象在动画开始前的状态，相对动画以此为基准"
 msgstr "애니메이션 시작 전 미리보기 대상의 상태를 설정합니다. 상대 애니메이션은 이를 기준으로 합니다"
+
+msgid "该名称为保留字，请输入其他名称"
+msgstr "예약된 이름입니다. 다른 이름을 입력해 주세요"
 
 msgid "该指令会在文本框显示当前变量。"
 msgstr "이 명령어는 텍스트 창에 현재 변수를 표시합니다."

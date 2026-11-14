@@ -1400,11 +1400,23 @@ msgstr "文本阴影"
 msgid "文档"
 msgstr "文档"
 
+msgid "新动画名"
+msgstr "新动画名"
+
+msgid "新场景名"
+msgstr "新场景名"
+
 msgid "新增变量"
 msgstr "新增变量"
 
 msgid "新增字体"
 msgstr "新增字体"
+
+msgid "新建动画"
+msgstr "新建动画"
+
+msgid "新建场景"
+msgstr "新建场景"
 
 msgid "新建文件"
 msgstr "新建文件"
@@ -1420,6 +1432,9 @@ msgstr "新建流程图"
 
 msgid "新建游戏"
 msgstr "新建游戏"
+
+msgid "新建角色"
+msgstr "新建角色"
 
 msgid "新建预设"
 msgstr "新建预设"
@@ -1438,6 +1453,9 @@ msgstr "新的模板"
 
 msgid "新的游戏"
 msgstr "新的游戏"
+
+msgid "新角色名"
+msgstr "新角色名"
 
 msgid "方形"
 msgstr "方形"
@@ -2326,6 +2344,9 @@ msgstr "设置预览初始状态"
 
 msgid "设置预览对象在动画开始前的状态，相对动画以此为基准"
 msgstr "设置预览对象在动画开始前的状态，相对动画以此为基准"
+
+msgid "该名称为保留字，请输入其他名称"
+msgstr "该名称为保留字，请输入其他名称"
 
 msgid "该指令会在文本框显示当前变量。"
 msgstr "该指令会在文本框显示当前变量。"

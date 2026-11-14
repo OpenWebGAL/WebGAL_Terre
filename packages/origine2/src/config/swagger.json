@@ -779,6 +779,64 @@
         ]
       }
     },
+    "/api/manageGame/createNewAnimation": {
+      "post": {
+        "operationId": "ManageGameController_createNewAnimation",
+        "summary": "Create a New Animation",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Animation creation data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNewAnimationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created the animation."
+          },
+          "400": {
+            "description": "Failed to create the animation or animation already exists."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
+    "/api/manageGame/createNewCharacter": {
+      "post": {
+        "operationId": "ManageGameController_createNewCharacter",
+        "summary": "Create a New Character",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Character creation data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNewCharacterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created the character."
+          },
+          "400": {
+            "description": "Failed to create the character or character already exists."
+          }
+        },
+        "tags": [
+          "Manage Game"
+        ]
+      }
+    },
     "/api/manageGame/editScene": {
       "post": {
         "operationId": "ManageGameController_editScene",
@@ -1962,6 +2020,40 @@
         "required": [
           "gameName",
           "sceneName"
+        ]
+      },
+      "CreateNewAnimationDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game"
+          },
+          "animationName": {
+            "type": "string",
+            "description": "The name of the animation"
+          }
+        },
+        "required": [
+          "gameName",
+          "animationName"
+        ]
+      },
+      "CreateNewCharacterDto": {
+        "type": "object",
+        "properties": {
+          "gameName": {
+            "type": "string",
+            "description": "The name of the game"
+          },
+          "characterName": {
+            "type": "string",
+            "description": "The name of the character"
+          }
+        },
+        "required": [
+          "gameName",
+          "characterName"
         ]
       },
       "EditSceneDto": {

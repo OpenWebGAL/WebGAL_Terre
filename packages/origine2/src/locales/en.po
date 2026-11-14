@@ -1400,11 +1400,23 @@ msgstr "Text Shadow"
 msgid "文档"
 msgstr "Document"
 
+msgid "新动画名"
+msgstr "New animation name"
+
+msgid "新场景名"
+msgstr "New scene name"
+
 msgid "新增变量"
 msgstr "Add variable"
 
 msgid "新增字体"
 msgstr "Add font"
+
+msgid "新建动画"
+msgstr "Create new animation"
+
+msgid "新建场景"
+msgstr "Create new scene"
 
 msgid "新建文件"
 msgstr "Create new file"
@@ -1420,6 +1432,9 @@ msgstr "New flowchart"
 
 msgid "新建游戏"
 msgstr "Create new game"
+
+msgid "新建角色"
+msgstr "Create new character"
 
 msgid "新建预设"
 msgstr "New preset"
@@ -1438,6 +1453,9 @@ msgstr "New template"
 
 msgid "新的游戏"
 msgstr "New game"
+
+msgid "新角色名"
+msgstr "New character name"
 
 msgid "方形"
 msgstr "Square"
@@ -2326,6 +2344,9 @@ msgstr "Set preview initial state"
 
 msgid "设置预览对象在动画开始前的状态，相对动画以此为基准"
 msgstr "Set the state of the preview object before the animation starts; relative animations use it as the base"
+
+msgid "该名称为保留字，请输入其他名称"
+msgstr "This name is reserved, please enter another name"
 
 msgid "该指令会在文本框显示当前变量。"
 msgstr "This command displays current variables in the textbox."

@@ -44,6 +44,22 @@ export class CreateNewSceneDto {
   sceneName: string;
 }
 
+export class CreateNewAnimationDto {
+  @ApiProperty({ description: 'The name of the game' })
+  gameName: string;
+
+  @ApiProperty({ description: 'The name of the animation' })
+  animationName: string;
+}
+
+export class CreateNewCharacterDto {
+  @ApiProperty({ description: 'The name of the game' })
+  gameName: string;
+
+  @ApiProperty({ description: 'The name of the character' })
+  characterName: string;
+}
+
 export class EditSceneDto {
   @ApiProperty({ description: 'The name of the game' })
   gameName: string;
