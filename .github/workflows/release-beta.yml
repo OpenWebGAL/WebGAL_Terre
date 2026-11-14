@@ -81,7 +81,7 @@ jobs:
     name: Build MacOS Binary
     needs: check-dev-tag
     if: ${{ needs.check-dev-tag.outputs.should_release == 'true' }}
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
