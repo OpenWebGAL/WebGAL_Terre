@@ -13,11 +13,16 @@ import { usePresetTargetOptions } from "@/hooks/usePresetTargetOptions";
 import useEditorStore from "@/store/useEditorStore";
 import { TerrePanel } from "../components/TerrePanel";
 import { LegacyTempAnimationFrames } from "../components/LegacyTempAnimationFrames";
-import { isEditableAnimation } from "@/pages/editor/AnimationEditor/model/animationDocument";
+import {
+  isEditableAnimation,
+  mergeOverrideArgs,
+  OVERRIDE_ARG_KEYS,
+} from "@/pages/editor/AnimationEditor/model/animationDocument";
 import { SceneAnimationEditor } from "@/pages/editor/AnimationEditor/SceneAnimationEditor";
 
 export default function SetTempAnimation(props: ISentenceEditorProps) {
-  const content = useValue(props.sentence.content);
+  // -relative、-inherit 参数并入动画 JSON，编辑器与预览才能与实际执行一致
+  const content = useValue(mergeOverrideArgs(props.sentence.content, props.sentence.args));
   const target = useValue(getArgByKey(props.sentence, "target")?.toString() ?? "");
   const presetTargets = usePresetTargetOptions();
   const isPresetTarget = Array.from(presetTargets.keys()).includes(target.value);
@@ -40,6 +45,8 @@ export default function SetTempAnimation(props: ISentenceEditorProps) {
       {key: "keep", value: keep.value},
       {key: "parallel", value: parallel.value},
       {key: "next", value: isGoNext.value},
+      // 已并入 v2 动画 JSON 的参数从语句中删去（值为空串即省略）；v1 关键帧数组仍需这些参数
+      ...(isLegacy ? [] : OVERRIDE_ARG_KEYS.map((key) => ({key, value: ""}))),
     ],
     props.sentence.inlineComment,
   );

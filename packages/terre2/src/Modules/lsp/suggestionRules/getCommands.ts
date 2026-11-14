@@ -67,6 +67,25 @@ changeFigureDiff:<fileName> [-left] [-right] [-left13] [-right13] [-left14] [-ri
   },
   {
     kind: CompletionItemKind.Function,
+    label: 'character',
+    insertText: makeInsertText('character'),
+    detail: `切换角色`,
+    documentation: markdown(
+      `\`\`\`
+character:alice;
+character:alice.smile -left;
+character:alice -components=base,smile -left;
+character:alice.angry -id=alice -enter=fadeIn -exit=fadeOut;
+character:none -left;
+character:none -id=alice;
+character:<characterDir>[.<presetName>] [-components=comp1,comp2] [-left] [-right] [-left13] [-right13] [-left14] [-right14] [-id=figureId] [-next] [-enter=animationName] [-exit=animationName];
+\`\`\`
+
+添加或切换指定位置的角色，可选择预设或图层组合；传入 \`none\` 可清除对应位置或指定 ID 的角色。`,
+    ),
+  },
+  {
+    kind: CompletionItemKind.Function,
     label: 'bgm',
     insertText: makeInsertText('bgm'),
     detail: `背景音乐（BGM）`,

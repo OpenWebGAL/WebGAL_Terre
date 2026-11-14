@@ -64,6 +64,8 @@ type EditorEvents = {
     lineSentence: ISentence | null;
   };
   'editor:sync-current-line': null;
+  /** 游戏配置已保存，所有配置面板需重新拉取，避免用旧快照覆盖 */
+  'editor:game-config-updated': null;
   'editor:drag-update-scene': { targetPath: string; lineNumber: number; newCommand: string };
   'editor:sync-dragger': { x?: number; y?: number; scaleX?: number; scaleY?: number; rotation?: number };
 };

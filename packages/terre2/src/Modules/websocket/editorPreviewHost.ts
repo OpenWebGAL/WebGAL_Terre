@@ -4,6 +4,7 @@ import {
   createRequestErrorEnvelope,
   createResponseEnvelope,
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+  HOST_EVENT_TYPES,
   SESSION_REGISTER_PREVIEW_TYPE,
   isDedicatedPreviewLaunchId,
   isPreviewCommandRequestEnvelope,
@@ -49,11 +50,7 @@ interface V1ConnectionState {
   embeddedLaunchId?: string;
 }
 
-const FORWARDED_EVENT_TYPES = new Set([
-  'preview.ready.updated',
-  'stage.snapshot.updated',
-  'preview.event.fast-preview-timeout',
-]);
+const FORWARDED_EVENT_TYPES: ReadonlySet<string> = new Set(HOST_EVENT_TYPES);
 
 type ForwardedHostEventEnvelope = EventEnvelopeByType<HostEventType>;
 

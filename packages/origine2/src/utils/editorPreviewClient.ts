@@ -1,4 +1,5 @@
 import useEditorStore from '@/store/useEditorStore';
+import usePreviewRuntimeStore from '@/store/usePreviewRuntimeStore';
 import type { IDebugVariable } from '@/types/editor';
 import { createId } from '@/utils/createId';
 import { eventBus } from '@/utils/eventBus';
@@ -11,13 +12,12 @@ import {
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
   isHostEventEnvelope,
   isKnownProtocolEnvelope,
-  type EventEnvelope,
+  type EventEnvelopeByType,
   type BaseTransformQueryResultPayload,
   type DebugVariable,
-  type FastPreviewTimeoutPayload,
+  type HostEventType,
   type PreviewCommandType,
   type ReferenceBoxQueryResultPayload,
-  type PreviewReadyUpdatedPayload,
   type RequestPayloadByType,
   type SeekAnimationPayload,
   type SetComponentVisibilityPayload,
@@ -61,13 +61,7 @@ interface SyncSceneInput {
   transformBaselineRevision?: string;
 }
 
-type HostEventEnvelope =
-  | EventEnvelope<PreviewReadyUpdatedPayload, 'preview.ready.updated'>
-  | EventEnvelope<StageSnapshotUpdatedPayload, 'stage.snapshot.updated'>
-  | EventEnvelope<
-      FastPreviewTimeoutPayload,
-      'preview.event.fast-preview-timeout'
-    >;
+type HostEventEnvelope = EventEnvelopeByType<HostEventType>;
 
 function normalizeSceneName(scenePath: string): string {
   const normalizedPath = scenePath.replace(/\\/g, '/');
@@ -114,6 +108,15 @@ function consumeHostEvent(event: HostEventEnvelope) {
       resetRuntimeLifecycleState();
     }
     eventBus.emit('editor-preview:ready', event.payload);
+    return;
+  case 'preview.version.updated':
+    usePreviewRuntimeStore.getState().updateVersion(event.payload.version);
+    return;
+  case 'preview.template.updated':
+    usePreviewRuntimeStore.getState().updateTemplate(event.payload.template);
+    return;
+  case 'preview.game-info.updated':
+    usePreviewRuntimeStore.getState().updateGameInfo(event.payload.gameInfo);
     return;
   case 'stage.snapshot.updated':
     lastStageSnapshot = event.payload;

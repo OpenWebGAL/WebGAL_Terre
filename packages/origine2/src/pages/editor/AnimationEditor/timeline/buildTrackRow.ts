@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+import type { Transform } from '@webgal/editor-preview-protocol';
 import { IKeyPoint, ITrack } from '../model/animationDocument';
 import {
   getDefaultRelativeCalc,
@@ -25,6 +27,8 @@ type Updater<T> = (update: (value: T) => T) => void;
 
 export interface ITrackRowContext {
   fields: Record<string, unknown>;
+  /** 动画开始前对象的变换，即基准状态；未提供或其中没有的属性按属性默认值处理 */
+  baseTransform?: Transform;
   /** 全部轨道，颜色通道需要读取同组其他通道的值 */
   tracks: ITrack[];
   time: number;
@@ -86,7 +90,13 @@ export function buildTrackRow(track: ITrack, context: ITrackRowContext) {
 
 /** 播放头处的值；第一个关键帧之前以及没有关键帧时为基准状态 */
 function sampleValueAt(path: string, points: IKeyPoint[], context: ITrackRowContext) {
-  const neutral = getNeutralValue(context.fields, path, context.getProperty(path).defaultValue);
+  // 与引擎一致：第一个关键帧之前从基准状态（如预览初始状态）过渡，而不是从属性默认值过渡
+  const baseValue = get(context.baseTransform, path);
+  const neutral = getNeutralValue(
+    context.fields,
+    path,
+    typeof baseValue === 'number' ? baseValue : context.getProperty(path).defaultValue,
+  );
   return sampleTrackValue(points, context.time, neutral);
 }
 

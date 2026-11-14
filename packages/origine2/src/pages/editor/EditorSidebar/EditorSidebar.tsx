@@ -11,6 +11,7 @@ import { ArrowClockwiseFilled, ArrowClockwiseRegular, LiveFilled, LiveOffFilled,
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
 import { createPreviewBootstrapProvide, isPreviewBootstrapRequest } from "@/utils/editorPreviewBootstrap";
 import { createId } from '@/utils/createId';
+import { getSidebarTabConfig, resolveSidebarTab } from './sidebarTabConfig';
 
 let startX = 0;
 let prevXvalue = 0;
@@ -29,7 +30,8 @@ export default function EditorSideBar() {
   const isShowPreview = useEditorStore.use.isShowPreview();
   const updateIsShowPreview = useEditorStore.use.updateIsShowPreview();
   const isAnimationEditorOpen = useEditorStore.use.isAnimationEditorOpen();
-  // 动画编辑器自带预览，打开期间不显示游戏预览（不改变预览窗口开关），离开后恢复
+  // 动画编辑器自带预览，打开期间不显示游戏预览（不改变预览窗口开关），离开后恢复。
+  // 只用 display 隐藏而不卸载 iframe，否则游戏预览会重启、丢失进度
   const isPreviewVisible = isShowPreview && !isAnimationEditorOpen;
 
   const isShowSidebar = useGameEditorContext((state) => state.isShowSidebar);
@@ -64,10 +66,10 @@ export default function EditorSideBar() {
   }, []);
 
   useEffect(() => {
-    if (isPreviewVisible) {
+    if (isShowPreview) {
       embeddedLaunchIdRef.current = createId();
     }
-  }, [gameDir, isPreviewVisible]);
+  }, [gameDir, isShowPreview]);
 
   useEffect(() => {
     const iframeElement = ifRef.current;
@@ -87,7 +89,7 @@ export default function EditorSideBar() {
     return () => {
       iframeElement.onload = null;
     };
-  }, [gameDir, isPreviewVisible]);
+  }, [gameDir, isShowPreview]);
 
   useEffect(() => {
     const handlePreviewReady = ({ ready }: { ready: boolean }) => {
@@ -223,12 +225,20 @@ export default function EditorSideBar() {
     open: handleOpen,
   };
 
+  const activeSidebarTab = resolveSidebarTab(currentSidebarTab);
+  const activeTabConfig = getSidebarTabConfig(gameDir, activeSidebarTab);
+
   const assetsTabs = (
-    <TabList style={{ padding: '0 3px 0 4px' }} size="small" selectedValue={currentSidebarTab}
+    <TabList
+      style={{ padding: 0, flexShrink: 0 }}
+      size="small"
+      selectedValue={activeSidebarTab}
       onTabSelect={(_, data) => updateCurrentSidebarTab(data.value as unknown as IGameEditorSidebarTabs)}
     >
       <Tab value="asset" style={{ padding: '2px 2px 3.5px 2px' }}>{t`资源`}</Tab>
       <Tab value="scene" style={{ padding: '2px 2px 3.5px 2px' }}>{t`场景`}</Tab>
+      <Tab value="animation" style={{ padding: '2px 2px 3.5px 2px' }}>{t`动画`}</Tab>
+      <Tab value="character" style={{ padding: '2px 2px 3.5px 2px' }}>{t`角色`}</Tab>
     </TabList>
   );
 
@@ -281,35 +291,26 @@ export default function EditorSideBar() {
               {t`正在使用动画编辑器，游戏预览暂时隐藏`}
             </div>}
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          {isPreviewVisible && <iframe
+          {isShowPreview && <iframe
             ref={ifRef}
             id="gamePreviewIframe"
             frameBorder="0"
             className={styles.previewWindow}
+            style={{ display: isPreviewVisible ? undefined : 'none' }}
             src={`/games/${gameDir}`}
           />}
         </div>
 
         <div className={styles.sidebarContent}>
-          {
-            currentSidebarTab === 'asset' &&
-            <Assets
-              rootPath={['games', gameDir, 'game']}
-              leading={assetsTabs}
-              fileConfig={fileConfig}
-              fileFunction={fileFunction}
-            />
-          }
-          {
-            currentSidebarTab === 'scene' &&
-            <Assets
-              rootPath={['games', gameDir, 'game']}
-              basePath={['scene']}
-              leading={assetsTabs}
-              fileConfig={fileConfig}
-              fileFunction={fileFunction}
-            />
-          }
+          <Assets
+            key={`${gameDir}-${activeSidebarTab}`}
+            rootPath={['games', gameDir, 'game']}
+            basePath={activeTabConfig.basePath}
+            customCreateAction={activeTabConfig.customCreateAction}
+            leading={assetsTabs}
+            fileConfig={fileConfig}
+            fileFunction={fileFunction}
+          />
         </div>
 
         <div

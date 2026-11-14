@@ -6,12 +6,14 @@ import './assets/font-family.css';
 import useEditorStore from './store/useEditorStore';
 import useLanguage from './hooks/useLanguage';
 import { initMonaco } from '@/utils/initMonaco';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import { useHashRouter, RouterPage } from '@/router';
 import { TrashToaster } from '@/hooks/useTrashFailedToast';
 
 function App() {
   useEffect(() => {
     initMonaco();
+    EditorPreviewClient.ensureConnected();
   }, []);
 
   // // 建立 WS 连接

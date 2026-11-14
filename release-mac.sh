@@ -46,7 +46,8 @@ else
     echo "warning: Steamworks redistributable not found at $STEAM_API_DYLIB" >&2
 fi
 mkdir ../../release/assets/templates/WebGAL_Electron_Template
-cp -rf build/mac-universal/WebGAL.app/* ../../release/assets/templates/WebGAL_Electron_Template/
+# 保留 Framework 内的相对符号链接，避免同一份二进制被重复复制。
+cp -R -P -p build/mac-universal/WebGAL.app/. ../../release/assets/templates/WebGAL_Electron_Template/
 cd ../../
 
 # 克隆 WebGAL Android 模板

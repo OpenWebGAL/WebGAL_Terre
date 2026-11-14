@@ -114,7 +114,13 @@ export class WebgalFsService {
   async copy(src: string, dest: string): Promise<boolean> {
     try {
       this.logger.log(`复制: ${decodeURI(src)} -> ${decodeURI(dest)}`);
-      await fs.cp(decodeURI(src), decodeURI(dest), { recursive: true });
+      // 当前 @types/node 尚未收录 verbatimSymlinks，借局部变量绕过字面量多余属性检查。
+      const copyOptions = {
+        recursive: true,
+        // 保留相对链接，使导出的 macOS Framework 不依赖原先的模板目录。
+        verbatimSymlinks: true,
+      };
+      await fs.cp(decodeURI(src), decodeURI(dest), copyOptions);
       return true;
     } catch (error) {
       this.logger.error(
@@ -184,6 +190,11 @@ export class WebgalFsService {
       newPath = '/' + newPath;
       oldPath = '/' + oldPath;
     }
+    // fs.rename 会静默覆盖已存在的文件，必须先拦截
+    if (await this.isOccupiedByOtherFile(oldPath, newPath)) {
+      this.logger.warn(`重命名文件失败（目标已存在）: ${newPath}`);
+      return 'Target exists!';
+    }
 
     return await new Promise((resolve) => {
       fs.rename(oldPath, newPath)
@@ -196,6 +207,17 @@ export class WebgalFsService {
           resolve('File not exist!');
         });
     });
+  }
+
+  /**
+   * 判断目标路径是否已被另一个文件占用
+   * 通过 inode 比较，放行 Windows 上仅大小写不同的重命名（此时目标与源是同一个文件）
+   */
+  private async isOccupiedByOtherFile(oldPath: string, newPath: string) {
+    const target = await fs.stat(newPath, { bigint: true }).catch(() => null);
+    if (!target) return false;
+    const source = await fs.stat(oldPath, { bigint: true }).catch(() => null);
+    return !source || source.ino !== target.ino || source.dev !== target.dev;
   }
 
   /**
@@ -223,23 +245,12 @@ export class WebgalFsService {
   async deleteFileOrDirectory(_path: string): Promise<boolean> {
     try {
       const path = decodeURI(_path);
-
-      const stat = await fs.stat(path);
-
-      if (stat.isDirectory()) {
-        const files = await fs.readdir(path);
-        await Promise.all(
-          files.map(async (file) => {
-            const filePath = `${path}/${file}`;
-            await this.deleteFileOrDirectory(filePath);
-          }),
-        );
-        await fs.rmdir(path);
-        this.logger.log(`删除目录: ${path}`);
-      } else {
-        await fs.unlink(path);
-        this.logger.log(`删除文件: ${path}`);
-      }
+      // 使用 lstat 与 fs.rm，避免跟随目录符号链接引发 ENOTDIR 或误删链接目标。
+      const stat = await fs.lstat(path);
+      await fs.rm(path, { recursive: true });
+      this.logger.log(
+        `${stat.isDirectory() ? '删除目录' : '删除文件'}: ${path}`,
+      );
       return true;
     } catch (error) {
       this.logger.error(`删除失败: ${decodeURI(_path)}, ${String(error)}`);
@@ -489,21 +500,22 @@ export class WebgalFsService {
 
     // 读取目录下所有文件
     const files = await fs.readdir(dir);
-    // 匹配类似 xxx_序号.txt 的文件
-    const regex = new RegExp(`^${base}_(\\d{3})${ext.replace('.', '\\.')}$`);
+    // 匹配类似 xxx_序号.txt 的文件；用字符串比较而非拼接正则，文件名中的括号等符号才不会被当成正则语法
+    const prefix = `${base}_`;
     let maxNum = 0;
     for (const file of files) {
-      const match = file.match(regex);
-      if (match) {
-        const num = parseInt(match[1], 10);
-        if (num > maxNum) maxNum = num;
+      if (!file.startsWith(prefix) || !file.endsWith(ext)) continue;
+      const numText = file.slice(prefix.length, file.length - ext.length);
+      if (/^\d{3}$/.test(numText)) {
+        maxNum = Math.max(maxNum, parseInt(numText, 10));
       }
     }
     const nextNum = (maxNum + 1).toString().padStart(3, '0');
     const newName = `${base}_${nextNum}${ext}`;
     const newPath = join(dir, newName);
 
-    await fs.copyFile(filePath, newPath);
+    // COPYFILE_EXCL：目标已存在时报错而不是覆盖
+    await fs.copyFile(filePath, newPath, fs.constants.COPYFILE_EXCL);
     this.logger.log(`复制文件: ${filePath} -> ${newPath}`);
     return newPath;
   }

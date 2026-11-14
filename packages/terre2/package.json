@@ -1,6 +1,6 @@
 {
   "name": "webgal-terre-2",
-  "version": "4.6.6",
+  "version": "4.6.7",
   "description": "",
   "author": "",
   "private": true,
@@ -62,8 +62,8 @@
     "vscode-languageserver": "^8.1.0",
     "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-ws-jsonrpc-webgal": "0.2.1",
-    "webgal-engine": "4.6.6",
-    "webgal-parser": "4.6.5",
+    "webgal-engine": "4.6.7",
+    "webgal-parser": "4.6.7",
     "webpack": "5.76.0",
     "ws": "8.18.0"
   },
@@ -114,7 +114,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^trash$": "<rootDir>/../test/__mocks__/trash.ts"
+    }
   },
   "workspaces": {
     "nohoist": [

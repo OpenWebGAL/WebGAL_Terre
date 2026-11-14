@@ -48,7 +48,6 @@ export function getArgsKey(
         durationKey,
         enterDurationKey,
         exitDurationKey,
-        clearKey,
         idFigureKey,
         leftKey,
         rightKey,
@@ -89,6 +88,28 @@ export function getArgsKey(
         mouthOpenKey,
         mouthHalfOpenKey,
         mouthCloseKey,
+      ];
+    }
+    case commandType.character: {
+      return [
+        whenKey,
+        nextKey,
+        continueKey,
+        componentsKey,
+        idFigureKey,
+        leftKey,
+        rightKey,
+        ...centeredPositionKeys,
+        durationKey,
+        enterDurationKey,
+        exitDurationKey,
+        transformKey,
+        transformFromKey,
+        zIndexKey,
+        enterAnimationKey,
+        exitAnimationKey,
+        easeKey,
+        blendModeKey,
       ];
     }
     case commandType.bgm: {
@@ -1226,5 +1247,19 @@ const nobreakKey: CompletionItem = {
   detail: '禁止跳过等待',
   documentation: markdown(`
 用于 wait 指令，开启后等待期间不能被跳过。
+  `),
+};
+
+const componentsKey: CompletionItem = {
+  kind: CompletionItemKind.Constant,
+  label: 'components',
+  insertText: 'components=',
+  detail: '角色立绘组件列表',
+  documentation: markdown(`
+指定要启用的角色立绘组件名称，多个组件用英文逗号分隔。
+
+\`\`\`
+character:alice -components=base,smile;
+\`\`\`
   `),
 };

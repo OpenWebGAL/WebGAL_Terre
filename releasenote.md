@@ -4,17 +4,29 @@
 
 #### 新功能
 
-新增动画编辑器。打开动画文件或编辑多段动画时，可以在时间轴上添加和拖动关键帧、为关键帧设置缓动，并实时预览动画效果。
+新增角色编辑器与“切换角色”语句。可以将身体、服装、表情等多个图层图片组合为同一个角色，在画布中直观地调整图层顺序、位置、缩放与旋转并保存多套预设，在场景中按预设或自定义图层组合显示与切换角色。
 
-支持新版动画格式。开启“相对动画”后，动画会基于立绘或背景的当前状态进行变换；开启“帧继承”后，关键帧中没有设置的属性会沿用之前关键帧的值。模板中新增一组以 -v2 结尾的内置动画。
-
-游戏配置中新增 Live2D 预留内存设置，可以调整 Live2D 预先分配的内存大小。
+左侧边栏新增“动画”和“角色”选项卡，并在“场景”“动画”“角色”选项卡中提供快捷新建入口，可直接创建对应的场景、动画或角色。
 
 #### 修复
 
-修复在脚本编辑中打开场景时，如果场景读取缓慢或失败，场景文件可能被错误内容覆盖的问题。现在读取完成前无法编辑，读取或保存失败时会提示并可以重试。
+修复在场景内编辑多段动画时，“相对动画”和“帧继承”设置未能在预览中生效的问题。
 
-修复在脚本编辑中切回窗口时，尚未保存的修改可能被覆盖的问题。
+修复动画编辑器在第一个关键帧之前，属性栏显示的数值和添加关键帧时的初始值不正确的问题。
+
+修复动画编辑器保存时可能丢失不含属性变化的结尾关键帧，导致动画时长缩短的问题。
+
+修复打开动画编辑器再切回场景时，游戏实时预览会被重置、丢失当前播放进度的问题。
+
+修复项目中只有旧版格式动画时，动画选择框为空的问题。
+
+修复在脚本编辑中刚打开 JSON 文件时，执行撤销会清空全部内容的问题。
+
+修复在游戏配置页修改设置后，再使用顶部工具栏的快捷配置可能用旧内容覆盖配置的问题。
+
+修复新建游戏、重命名文件或复制文件时的重名检查问题，避免因大小写、首尾空格或特殊符号导致已有项目或文件被意外覆盖。
+
+修复导出的 macOS 游戏无法启动的问题，并修复 macOS 打包时重复包含框架文件导致应用体积异常增大的问题。
 
 <!-- English Translation -->
 ## Release Notes
@@ -23,17 +35,29 @@
 
 #### New Features
 
-Added an animation editor. When opening an animation file or editing multiple animations, you can add and drag keyframes on a timeline, set easing for each keyframe, and preview the animation in real time.
+Added a character editor and the "Change character" statement. Multiple layer images such as body, outfit, and expression can be combined into a single character, with layer order, position, scale, and rotation adjusted visually on a canvas and saved as presets, so characters can be shown and switched in scenes using presets or custom layer combinations.
 
-Added support for the new animation format. With "Relative animation" on, animations transform figures or backgrounds from their current state. With "Keyframe inheritance" on, properties not set in a keyframe carry over values from previous keyframes. Templates now include a set of built-in animations ending in -v2.
-
-Added a Live2D reserved memory setting to the game configuration, which adjusts how much memory Live2D allocates in advance.
+Added "Animation" and "Character" tabs to the left sidebar, along with quick-create buttons on the "Scene", "Animation", and "Character" tabs to create new scenes, animations, or characters directly.
 
 #### Fixes
 
-Fixed scene files possibly being overwritten with incorrect content when a scene loaded slowly or failed to load in script editing. Editing is now disabled until the scene has loaded, and a message with a retry option appears if loading or saving fails.
+Fixed "Relative animation" and "Keyframe inheritance" settings not taking effect in the preview when editing multiple animations inside a scene.
 
-Fixed unsaved changes possibly being overwritten when switching back to the window in script editing.
+Fixed the animation editor showing incorrect values in the inspector and writing wrong initial values when adding a keyframe before the first keyframe.
+
+Fixed saving in the animation editor possibly dropping a trailing keyframe without property changes, shortening the animation duration.
+
+Fixed opening the animation editor and switching back to a scene resetting the live game preview and losing its playback progress.
+
+Fixed the animation dropdown appearing empty in projects that contain only legacy-format animations.
+
+Fixed undoing right after opening a JSON file in script editing clearing the entire file content.
+
+Fixed quick configuration in the top toolbar possibly overwriting settings with stale values after modifying them on the game configuration page.
+
+Fixed duplicate-name checks when creating games, renaming files, or duplicating files to prevent existing projects or files from being overwritten due to letter case, leading or trailing spaces, or special characters.
+
+Fixed exported macOS games failing to launch, and fixed framework files being bundled multiple times during macOS packaging and inflating the app size.
 
 <!-- Japanese Translation -->
 ## リリースノート
@@ -42,14 +66,26 @@ Fixed unsaved changes possibly being overwritten when switching back to the wind
 
 #### 新機能
 
-アニメーションエディタを追加しました。アニメーションファイルを開いたときや複数のアニメーションを編集するときに、タイムライン上でキーフレームを追加・ドラッグしたり、キーフレームごとにイージングを設定したりでき、アニメーションをリアルタイムでプレビューできます。
+キャラクターエディタと「キャラクターの切り替え」文を追加しました。素体、衣装、表情などの複数のレイヤー画像を 1 人のキャラクターとして組み合わせ、キャンバス上でレイヤーの順序、位置、拡大縮小、回転を直感的に調整して複数のプリセットとして保存し、シーン内でプリセットや任意のレイヤー構成を使って表示・切り替えができます。
 
-新しいアニメーション形式に対応しました。「相対アニメーション」をオンにすると、立ち絵や背景の現在の状態を基準に変換します。「キーフレーム継承」をオンにすると、キーフレームで設定されていないプロパティは前のキーフレームの値を引き継ぎます。テンプレートに -v2 で終わる組み込みアニメーションを追加しました。
-
-ゲーム構成に Live2D の予約メモリ設定を追加しました。Live2D があらかじめ確保するメモリの大きさを調整できます。
+左サイドバーに「アニメーション」と「キャラクター」タブを追加し、「シーン」「アニメーション」「キャラクター」タブから対応するシーン、アニメーション、キャラクターを直接作成できる新規作成ボタンを追加しました。
 
 #### 修正
 
-スクリプト編集でシーンを開く際、シーンの読み込みが遅い、または失敗した場合に、シーンファイルが誤った内容で上書きされることがある問題を修正しました。読み込みが完了するまでは編集できず、読み込みや保存に失敗した場合はメッセージが表示され、再試行できます。
+シーン内で複数のアニメーションを編集する際、「相対アニメーション」と「キーフレーム継承」の設定がプレビューに反映されない問題を修正しました。
 
-スクリプト編集でウィンドウに戻ったときに、未保存の変更が上書きされることがある問題を修正しました。
+アニメーションエディタで最初のキーフレームより前の位置にあるとき、プロパティ欄の表示値やキーフレーム追加時の初期値が正しくならない問題を修正しました。
+
+アニメーションエディタで保存する際、プロパティの変化を含まない末尾のキーフレームが失われ、アニメーションの長さが短くなることがある問題を修正しました。
+
+アニメーションエディタを開いてからシーンに戻った際、ゲームのリアルタイムプレビューがリセットされ、再生位置が失われる問題を修正しました。
+
+旧形式のアニメーションのみを含むプロジェクトで、アニメーションの選択欄が空になる問題を修正しました。
+
+スクリプト編集で JSON ファイルを開いた直後に元に戻す操作を行うと、内容がすべて消えてしまう問題を修正しました。
+
+ゲーム構成ページで設定を変更したあと、上部ツールバーのクイック設定を使うと古い内容で上書きされることがある問題を修正しました。
+
+ゲームの新規作成、ファイル名の変更、ファイルの複製における重複チェックを修正し、大文字・小文字の違いや前後の空白、記号によって既存のプロジェクトやファイルが誤って上書きされないようにしました。
+
+書き出した macOS 版ゲームが起動しない問題を修正し、macOS 向けのパッケージ作成時にフレームワークファイルが重複して含まれアプリのサイズが肥大化する問題を修正しました。

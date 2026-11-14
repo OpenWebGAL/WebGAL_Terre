@@ -13425,10 +13425,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-engine@4.6.6:
-  version "4.6.6"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.6.6.tgz#b6b6d9faa97ab09c68f9f2fddc9512e6e8d46b94"
-  integrity sha512-+DLscXnc/NF2SW7/SzzIlQyRqecZJgJfQk4LqKdl4p3KK+iszxn/yqAlUwPnkuoAHY0laKkEkWmrrLL6nLGO4Q==
+webgal-engine@4.6.7:
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.6.7.tgz#1d7289df4f6158d1143ee692c6f0ce41fd6a4c8d"
+  integrity sha512-wxsIekA01de3JsA97F95OpVn0ogs/jdHazn5pwQ1I/T7AJSEjrDuIxRBL3jrTJufsm+13bOY0dQHGLU6N/ANOQ==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"
@@ -13456,10 +13456,10 @@ webgal-engine@4.6.6:
     uuid "^9.0.0"
     vite-plugin-package-version "^1.0.2"
 
-webgal-parser@4.6.5:
-  version "4.6.5"
-  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.6.5.tgz#2b869a73b5647f517864078a0a6401c2f4c52c1f"
-  integrity sha512-e/cimA4uUA4tY3cJc7yGTosS2MuhgVc8zVGo6lBBOXDrz4z8a4oq4kYOpj0FMJalWQ/0rFoa5bf+OibT3VliBQ==
+webgal-parser@4.6.7:
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/webgal-parser/-/webgal-parser-4.6.7.tgz#3507d4325cf1a807cabf6cb4ad09d065df14a926"
+  integrity sha512-ho94zuP4GwhvFVVoxsnG06/Jt4IAERbrzaEIz7kroa3naT1WHphzLxYKWbCt/2wXiyySPX5Qg4agBUaTmeSq8g==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

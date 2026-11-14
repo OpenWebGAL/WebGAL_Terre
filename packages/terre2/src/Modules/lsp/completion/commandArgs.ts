@@ -43,6 +43,7 @@ export enum commandType {
   callSteam = 34,
   return = 35,
   changeFigureDiff = 36,
+  character = 37,
 }
 
 export function markdown(content: string): MarkupContent {

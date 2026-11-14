@@ -567,6 +567,49 @@ describe('EditorPreviewHost', () => {
       ),
     ]);
   });
+
+  it('forwards preview version, template metadata, and game info events to V1 editors', () => {
+    const host = new EditorPreviewHost();
+    const editorSocket = new MockSocket(EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL);
+    const previewSocket = new MockSocket(
+      EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
+    );
+
+    connectV1Client(host, editorSocket);
+    connectV1Client(host, previewSocket);
+    registerPreview(host, previewSocket, {
+      gameId: 'game-key-1',
+      embeddedLaunchId: 'embedded-launch-1',
+    });
+
+    const versionEvent = createEventEnvelope('preview.version.updated', {
+      version: '4.6.6',
+    });
+    const templateEvent = createEventEnvelope('preview.template.updated', {
+      template: {
+        name: 'WebGAL Refine 2026',
+        'webgal-version': '4.6.6',
+        customField: 'extra-value',
+      },
+    });
+    const gameInfoEvent = createEventEnvelope('preview.game-info.updated', {
+      gameInfo: {
+        Game_name: 'Demo Game',
+        Game_key: 'game-key-1',
+        Enable_Appreciation: true,
+      },
+    });
+
+    host.handleMessage(previewSocket as never, JSON.stringify(versionEvent));
+    host.handleMessage(previewSocket as never, JSON.stringify(templateEvent));
+    host.handleMessage(previewSocket as never, JSON.stringify(gameInfoEvent));
+
+    expect(editorSocket.sentMessages).toEqual([
+      JSON.stringify(versionEvent),
+      JSON.stringify(templateEvent),
+      JSON.stringify(gameInfoEvent),
+    ]);
+  });
 });
 
 describe('LegacyEditorPreviewAdapter', () => {

@@ -14,6 +14,11 @@ import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 import { promisify } from 'util';
 import { execFile } from 'child_process';
 import { join } from 'path';
+import {
+  createAnimationEntity,
+  createCharacterEntity,
+  createSceneEntity,
+} from './game-entity-creator';
 
 @Injectable()
 export class ManageGameService {
@@ -86,13 +91,14 @@ export class ManageGameService {
     const { gameName, gameDir, derivative, templateDir, ignoreTemplate } =
       createGameData;
     // 检查是否存在这个游戏
+    // 忽略大小写：Windows/macOS 文件系统不区分大小写，test 会写入已有的 Test 目录
     const checkDir = await this.webgalFs.getDirInfo(
       this.webgalFs.getPathFromRoot(`/public/games`),
     );
     let isThisGameExist = false;
     checkDir.forEach((e) => {
       const info: IFileInfo = e as IFileInfo;
-      if (info.name === gameDir && info.isDir) {
+      if (info.name.toLowerCase() === gameDir.toLowerCase() && info.isDir) {
         isThisGameExist = true;
       }
     });
@@ -208,6 +214,26 @@ export class ManageGameService {
           ? 'com.openwebgal.demo'
           : config.Package_name,
     };
+  }
+
+  async createNewScene(gameName: string, sceneName: string): Promise<void> {
+    await createSceneEntity(this.webgalFs, gameName, sceneName);
+  }
+
+  async createNewAnimation(
+    gameName: string,
+    animationName: string,
+  ): Promise<void> {
+    await createAnimationEntity(this.webgalFs, gameName, animationName, (dir) =>
+      this.updateAnimationTable(dir),
+    );
+  }
+
+  async createNewCharacter(
+    gameName: string,
+    characterName: string,
+  ): Promise<void> {
+    await createCharacterEntity(this.webgalFs, gameName, characterName);
   }
 
   async updateAnimationTable(gameName: string): Promise<boolean> {
@@ -506,13 +532,20 @@ export class ManageGameService {
           const electronExportDir = this.webgalFs.getPath(
             `${exportDir}/WebGAL.app`,
           );
+          // 先清理旧导出包，避免旧版展开的实体目录与新版模板中的符号链接冲突。
+          if (await this.webgalFs.existsDir(electronExportDir)) {
+            await this.webgalFs.deleteFileOrDirectory(electronExportDir);
+          }
           await this.webgalFs.mkdir(electronExportDir, '');
-          await this.webgalFs.copy(
+          const templateCopied = await this.webgalFs.copy(
             this.webgalFs.getPathFromRoot(
               `/assets/templates/WebGAL_Electron_Template/`,
             ),
             `${electronExportDir}/`,
           );
+          if (!templateCopied) {
+            return false;
+          }
           if (!isEngineTemplateExist)
             await this.webgalFs.copy(
               this.webgalFs.getPathFromRoot(
@@ -713,7 +746,8 @@ export class ManageGameService {
 
   private async packElectronAppAsar(appDir: string, asarPath: string) {
     await asar.createPackageWithOptions(appDir, asarPath, {
-      unpack: '**/node_modules/steamworks.js/dist/**',
+      // 按包内相对目录解包，避免隐藏的用户数据目录影响原生库匹配。
+      unpackDir: 'node_modules/steamworks.js/dist',
     });
     await this.webgalFs.deleteFileOrDirectory(appDir);
   }

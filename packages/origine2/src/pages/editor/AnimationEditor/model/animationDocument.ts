@@ -31,6 +31,11 @@ export interface IAnimationDocument {
   fields: Record<string, unknown>;
   /** 时间轴上显示的轨道；没有关键点的轨道只用于显示，不会写入文件 */
   tracks: ITrack[];
+  /**
+   * 不含可编辑属性的关键帧（如只有 time 的帧），无法拆进轨道，原样保留。
+   * 它们会延长动画时长；inherit 为 false 时还会让未指定的属性回到基准状态
+   */
+  emptyFrames: Record<string, unknown>[];
 }
 
 type AnimationObject = Record<string, unknown> & { keyframes: unknown[] };
@@ -54,6 +59,7 @@ export function parseAnimation(text: string): IAnimationDocument {
   return {
     fields,
     tracks: tracks.length > 0 ? tracks : DEFAULT_TRACK_PATHS.map((path) => ({ path, points: [] })),
+    emptyFrames: keyframes.filter(isFrame).filter((frame) => collectNumericValues(frame).length === 0),
   };
 }
 
@@ -62,14 +68,42 @@ export function serializeAnimation(doc: IAnimationDocument): string {
 }
 
 export function toAnimationObject(doc: IAnimationDocument): AnimationObject {
-  return { ...doc.fields, keyframes: tracksToFrames(doc.tracks) };
+  // sort 是稳定的，同一时刻的空帧排在有属性的帧之后
+  const keyframes = [...tracksToFrames(doc.tracks), ...doc.emptyFrames].sort((a, b) => getFrameTime(a) - getFrameTime(b));
+  return { ...doc.fields, keyframes };
 }
 
 /**
- * 动画时长：最后一个关键点的时间
+ * 动画时长：最后一个关键帧的时间（包括空帧）
  */
-export function getAnimationDuration(tracks: ITrack[]): number {
-  return Math.max(0, ...tracks.flatMap((track) => track.points.map((point) => point.time)));
+export function getAnimationDuration(doc: IAnimationDocument): number {
+  const pointTimes = doc.tracks.flatMap((track) => track.points.map((point) => point.time));
+  return Math.max(0, ...pointTimes, ...doc.emptyFrames.map(getFrameTime));
+}
+
+/** setTempAnimation 中会覆盖动画同名字段的语句参数 */
+export const OVERRIDE_ARG_KEYS = ['relative', 'inherit'];
+
+/**
+ * 把语句参数 -relative、-inherit 并入 v2 动画 JSON。引擎执行时参数会覆盖 JSON 中的同名字段，二者等价；
+ * 并入后编辑器的显示、预览与实际执行一致，之后在编辑器中修改这些字段也不会再被参数覆盖。
+ * 不是 v2 动画（如 v1 关键帧数组）时原样返回，参数仍需保留在语句中
+ */
+export function mergeOverrideArgs(text: string, args: { key: string; value: unknown }[]): string {
+  const animation = tryParse(text);
+  if (!animation || (animation.version !== undefined && animation.version !== 2)) return text;
+  const overrides = OVERRIDE_ARG_KEYS.map((key) => [key, toSafeBoolean(args.find((arg) => arg.key === key)?.value)])
+    .filter(([, value]) => value !== null);
+  return overrides.length > 0 ? JSON.stringify({ ...animation, ...Object.fromEntries(overrides) }) : text;
+}
+
+/** 与引擎读取布尔参数的方式一致，无法识别时为 null（引擎不覆盖） */
+function toSafeBoolean(value: unknown): boolean | null {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') return value !== 0;
+  if (typeof value !== 'string') return null;
+  const lower = value.trim().toLowerCase();
+  return lower === 'true' ? true : lower === 'false' ? false : null;
 }
 
 function tryParse(text: string): AnimationObject | null {
@@ -84,12 +118,10 @@ function tryParse(text: string): AnimationObject | null {
 
 function framesToTracks(keyframes: unknown[]): ITrack[] {
   const tracks = new Map<string, IKeyPoint[]>();
-  for (const frame of keyframes) {
-    if (typeof frame !== 'object' || frame === null) continue;
-    const { time: rawTime, ease, ...values } = frame as Record<string, unknown>;
-    // 与引擎一致：time 缺省或非法时按 0 处理
-    const time = typeof rawTime === 'number' && rawTime >= 0 ? rawTime : 0;
-    for (const [path, value] of collectNumericValues(values)) {
+  for (const frame of keyframes.filter(isFrame)) {
+    const time = getFrameTime(frame);
+    const ease = frame.ease;
+    for (const [path, value] of collectNumericValues(frame)) {
       const points = tracks.get(path) ?? [];
       points.push({ id: createId(), time, value, ease: typeof ease === 'string' ? ease : DEFAULT_EASE });
       tracks.set(path, points);
@@ -99,10 +131,20 @@ function framesToTracks(keyframes: unknown[]): ITrack[] {
   return [...tracks].map(([path, points]) => ({ path, points: points.sort((a, b) => a.time - b.time) }));
 }
 
+function isFrame(frame: unknown): frame is Record<string, unknown> {
+  return typeof frame === 'object' && frame !== null;
+}
+
+/** 与引擎一致：time 缺省或非法时按 0 处理 */
+function getFrameTime(frame: Record<string, unknown>): number {
+  return typeof frame.time === 'number' && frame.time >= 0 ? frame.time : 0;
+}
+
 /**
- * 帧中的数值属性，position、scale 这类嵌套对象展开为 'position.x' 这样的路径
+ * 帧中的数值属性（不含 time、ease），position、scale 这类嵌套对象展开为 'position.x' 这样的路径
  */
-function collectNumericValues(values: Record<string, unknown>): [string, number][] {
+function collectNumericValues(frame: Record<string, unknown>): [string, number][] {
+  const { time, ease, ...values } = frame;
   return Object.entries(values).flatMap(([key, value]): [string, number][] => {
     if (typeof value === 'number') return [[key, value]];
     if (typeof value !== 'object' || value === null) return [];
