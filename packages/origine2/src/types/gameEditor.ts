@@ -5,7 +5,7 @@ export interface ITag {
   type: 'asset' | 'scene' | 'flowchart',
   path: string,
 }
-export type IGameEditorSidebarTabs = 'asset' | 'scene';
+export type IGameEditorSidebarTabs = 'asset' | 'scene' | 'animation' | 'character';
 export type IGameEditorTopbarTabs = 'config' | 'view' | 'settings' | 'help' | 'export' | 'addSentence';
 
 export interface IGameEditorState {

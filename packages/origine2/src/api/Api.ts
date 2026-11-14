@@ -196,6 +196,20 @@ export interface CreateNewSceneDto {
   sceneName: string;
 }
 
+export interface CreateNewAnimationDto {
+  /** The name of the game */
+  gameName: string;
+  /** The name of the animation */
+  animationName: string;
+}
+
+export interface CreateNewCharacterDto {
+  /** The name of the game */
+  gameName: string;
+  /** The name of the character */
+  characterName: string;
+}
+
 export interface EditSceneDto {
   /** The name of the game */
   gameName: string;
@@ -1040,6 +1054,46 @@ export class Api<
     ) =>
       this.request<void, void>({
         path: `/api/manageGame/createNewScene`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerCreateNewAnimation
+     * @summary Create a New Animation
+     * @request POST:/api/manageGame/createNewAnimation
+     */
+    manageGameControllerCreateNewAnimation: (
+      data: CreateNewAnimationDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/createNewAnimation`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerCreateNewCharacter
+     * @summary Create a New Character
+     * @request POST:/api/manageGame/createNewCharacter
+     */
+    manageGameControllerCreateNewCharacter: (
+      data: CreateNewCharacterDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/createNewCharacter`,
         method: "POST",
         body: data,
         type: ContentType.Json,

@@ -25,6 +25,8 @@ import {
 } from '@nestjs/swagger';
 import {
   CreateGameDto,
+  CreateNewAnimationDto,
+  CreateNewCharacterDto,
   CreateNewSceneDto,
   DeleteDto,
   DeleteFileDto,
@@ -236,16 +238,57 @@ export class ManageGameController {
   @ApiBody({ type: CreateNewSceneDto, description: 'Scene creation data' })
   async createNewScene(
     @Body() createNewSceneData: CreateNewSceneDto,
-  ): Promise<string | void> {
-    const path = this.webgalFs.getPathFromRoot(
-      `/public/games/${createNewSceneData.gameName}/game/scene/${createNewSceneData.sceneName}.txt`,
+  ): Promise<void> {
+    await this.manageGame.createNewScene(
+      createNewSceneData.gameName,
+      createNewSceneData.sceneName,
     );
+  }
 
-    if (await this.webgalFs.exists(path)) {
-      throw new BadRequestException('Scene already exists');
-    }
+  @Post('createNewAnimation')
+  @ApiOperation({ summary: 'Create a New Animation' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully created the animation.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to create the animation or animation already exists.',
+  })
+  @ApiBody({
+    type: CreateNewAnimationDto,
+    description: 'Animation creation data',
+  })
+  async createNewAnimation(
+    @Body() createNewAnimationData: CreateNewAnimationDto,
+  ): Promise<void> {
+    await this.manageGame.createNewAnimation(
+      createNewAnimationData.gameName,
+      createNewAnimationData.animationName,
+    );
+  }
 
-    return this.webgalFs.createEmptyFile(path);
+  @Post('createNewCharacter')
+  @ApiOperation({ summary: 'Create a New Character' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully created the character.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Failed to create the character or character already exists.',
+  })
+  @ApiBody({
+    type: CreateNewCharacterDto,
+    description: 'Character creation data',
+  })
+  async createNewCharacter(
+    @Body() createNewCharacterData: CreateNewCharacterDto,
+  ): Promise<void> {
+    await this.manageGame.createNewCharacter(
+      createNewCharacterData.gameName,
+      createNewCharacterData.characterName,
+    );
   }
 
   @Post('editScene')

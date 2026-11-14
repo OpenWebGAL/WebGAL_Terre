@@ -14,6 +14,11 @@ import { TemplateConfigDto } from '../manage-template/manage-template.dto';
 import { promisify } from 'util';
 import { execFile } from 'child_process';
 import { join } from 'path';
+import {
+  createAnimationEntity,
+  createCharacterEntity,
+  createSceneEntity,
+} from './game-entity-creator';
 
 @Injectable()
 export class ManageGameService {
@@ -209,6 +214,26 @@ export class ManageGameService {
           ? 'com.openwebgal.demo'
           : config.Package_name,
     };
+  }
+
+  async createNewScene(gameName: string, sceneName: string): Promise<void> {
+    await createSceneEntity(this.webgalFs, gameName, sceneName);
+  }
+
+  async createNewAnimation(
+    gameName: string,
+    animationName: string,
+  ): Promise<void> {
+    await createAnimationEntity(this.webgalFs, gameName, animationName, (dir) =>
+      this.updateAnimationTable(dir),
+    );
+  }
+
+  async createNewCharacter(
+    gameName: string,
+    characterName: string,
+  ): Promise<void> {
+    await createCharacterEntity(this.webgalFs, gameName, characterName);
   }
 
   async updateAnimationTable(gameName: string): Promise<boolean> {

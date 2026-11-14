@@ -58,6 +58,9 @@ import Upload from './Upload';
 import naturalCompare from 'natural-compare-lite';
 import useEditorStore from '@/store/useEditorStore';
 import useTrashFailedToast from '@/hooks/useTrashFailedToast';
+import CreateEntityPopover, { ICustomCreateAction } from './CreateEntityPopover';
+
+export type { ICustomCreateAction };
 
 export interface IFile {
   extName: string;
@@ -116,6 +119,7 @@ export default function Assets({
   fileConfig,
   fileFunction,
   allowedExtNames,
+  customCreateAction,
 }: {
   rootPath: string[];
   basePath?: string[]; // 相对于rootPath的路径
@@ -125,6 +129,7 @@ export default function Assets({
   fileConfig?: IFileConfig;
   fileFunction?: IFileFunction;
   allowedExtNames?: string[];
+  customCreateAction?: ICustomCreateAction;
 }) {
   const { mutate } = useSWRConfig();
 
@@ -154,6 +159,7 @@ export default function Assets({
 
   const normalizePath = (path: string) => path.replace(/\\/g, '/');
   const animationRootPath = useMemo(() => normalizePath([...rootPath, 'animation'].join('/')), [rootPath]);
+  const figureRootPath = useMemo(() => normalizePath([...rootPath, 'figure'].join('/')), [rootPath]);
   const animationGameDir = useMemo(() => (rootPath[0] === 'games' ? rootPath[1] : ''), [rootPath]);
 
   const updateAnimationTable = async () => {
@@ -165,10 +171,10 @@ export default function Assets({
     }
   };
 
-  const isInAnimationDirectory = () => {
+  const isInDirectory = (targetRootPath: string) => {
     if (!animationGameDir) return false;
     const normalized = normalizePath(currentFullPath.join('/'));
-    return normalized === animationRootPath || normalized.startsWith(`${animationRootPath}/`);
+    return normalized === targetRootPath || normalized.startsWith(`${targetRootPath}/`);
   };
 
   const scrollToIndex = (goToIndex: number) => {
@@ -257,14 +263,18 @@ export default function Assets({
     return () => clearTimeout(timer);
   }, [lastPath.value, sortedFiles]);
 
-  const handleRefresh = () => {
+  const refreshCurrentDir = (syncAnimationTable: boolean) => {
     const swrKey = currentFullPath.join('/');
-    if (isInAnimationDirectory()) {
+    if (isInDirectory(figureRootPath)) {
+      mutate(`character-directories-${animationGameDir}`);
+    }
+    if (syncAnimationTable && isInDirectory(animationRootPath)) {
       updateAnimationTable().finally(() => mutate(swrKey));
       return;
     }
     mutate(swrKey);
   };
+  const handleRefresh = () => refreshCurrentDir(true);
   const handleOpenFolder = () => api.assetsControllerOpenDict(currentFullPath.join('/'));
   const handleBack = () => {
     if (!isBasePath) {
@@ -335,6 +345,8 @@ export default function Assets({
   const uploadAssetPopoverOpen = useValue(false);
 
   const checkHasFile = (fileNmae: string) => (files?.find((item) => item.name === fileNmae) ? true : false);
+  const checkHasFileIgnoreCase = (entryName: string) =>
+    Boolean(files?.some((item) => item.name.toLowerCase() === entryName.toLowerCase()));
   const disableCreateFile = useMemo(
     () =>
       newFileName.value.trim() === '' ||
@@ -389,10 +401,11 @@ export default function Assets({
           style={{
             display: 'flex',
             flexDirection: 'row',
+            flexWrap: 'wrap',
             flexGrow: 1,
             alignItems: 'center',
+            gap: '3px',
             padding: '4px',
-            paddingLeft: leading ? '0px' : '4px',
           }}
         >
           {leading}
@@ -401,7 +414,7 @@ export default function Assets({
             onChange={(_, data) => filterText.set(data.value)}
             placeholder={t`过滤文件`}
             size="small"
-            style={{ width: '100%', minWidth: 0 }}
+            style={{ flex: '1 1 80px', minWidth: 0 }}
             type="search"
           />
         </div>
@@ -418,81 +431,90 @@ export default function Assets({
 
           {!isProtected && (
             <>
-              <Popover
-                withArrow
-                open={createNewFilePopoverOpen.value}
-                onOpenChange={() => {
-                  createNewFilePopoverOpen.set(!createNewFilePopoverOpen.value);
-                  newFileName.set('');
-                }}
-              >
-                <PopoverTrigger>
-                  <Tooltip content={t`新建文件`} relationship="label" positioning="below">
-                    <Button icon={<DocumentAddIcon />} size="small" />
-                  </Tooltip>
-                </PopoverTrigger>
-                <PopoverSurface
-                  onKeyDown={(event) => {
-                    event.stopPropagation();
-                    if (event.key === 'Enter' && !checkHasFile(newFileName.value.trim() + newFileExtensionName.value)) {
-                      handleCreateNewFile(
-                        currentFullPath.join('/'),
-                        `${newFileName.value.trim()}${newFileExtensionName.value}`,
-                      );
-                      createNewFilePopoverOpen.set(false);
-                      newFileName.set('');
-                    }
+              {customCreateAction ? (
+                <CreateEntityPopover
+                  action={customCreateAction}
+                  subPath={currentPath.value.slice(basePath.length)}
+                  hasEntryIgnoreCase={checkHasFileIgnoreCase}
+                  onCreated={() => refreshCurrentDir(false)}
+                />
+              ) : (
+                <Popover
+                  withArrow
+                  open={createNewFilePopoverOpen.value}
+                  onOpenChange={() => {
+                    createNewFilePopoverOpen.set(!createNewFilePopoverOpen.value);
+                    newFileName.set('');
                   }}
                 >
-                  <div style={{ display: 'flex', flexFlow: 'column', gap: '16px' }}>
-                    <Subtitle1>{t`新建文件`}</Subtitle1>
-                    <Tooltip
-                      content={{
-                        children: t`已存在文件或文件夹 ${
-                          newFileName.value.trim() + newFileExtensionName.value
-                        }，请输入其他名称`,
-                        style: { color: 'var(--danger)' },
-                      }}
-                      relationship="description"
-                      visible={checkHasFile(newFileName.value.trim() + newFileExtensionName.value)}
-                      positioning="below"
-                    >
-                      <Input
-                        value={newFileName.value}
-                        placeholder={t`新文件名`}
-                        className={
-                          checkHasFile(newFileName.value.trim() + newFileExtensionName.value) ? styles.inputDanger : ''
-                        }
-                        onChange={(_, data) => {
-                          newFileName.set(data.value ?? '');
-                        }}
-                      />
+                  <PopoverTrigger>
+                    <Tooltip content={t`新建文件`} relationship="label" positioning="below">
+                      <Button icon={<DocumentAddIcon />} size="small" />
                     </Tooltip>
-                    <Field label={t`扩展名`} size="small">
-                      <RadioGroup
-                        value={newFileExtensionName.value}
-                        onChange={(_, data) => newFileExtensionName.set(data.value)}
-                      >
-                        <Radio value="" label={t`无`} />
-                        <Radio value=".txt" label="txt" />
-                        <Radio value=".json" label="json" />
-                      </RadioGroup>
-                    </Field>
-                    <Button
-                      appearance="primary"
-                      disabled={disableCreateFile}
-                      onClick={() => {
+                  </PopoverTrigger>
+                  <PopoverSurface
+                    onKeyDown={(event) => {
+                      event.stopPropagation();
+                      if (event.key === 'Enter' && !checkHasFile(newFileName.value.trim() + newFileExtensionName.value)) {
                         handleCreateNewFile(
                           currentFullPath.join('/'),
                           `${newFileName.value.trim()}${newFileExtensionName.value}`,
                         );
                         createNewFilePopoverOpen.set(false);
                         newFileName.set('');
-                      }}
-                    >{t`创建`}</Button>
-                  </div>
-                </PopoverSurface>
-              </Popover>
+                      }
+                    }}
+                  >
+                    <div style={{ display: 'flex', flexFlow: 'column', gap: '16px' }}>
+                      <Subtitle1>{t`新建文件`}</Subtitle1>
+                      <Tooltip
+                        content={{
+                          children: t`已存在文件或文件夹 ${
+                            newFileName.value.trim() + newFileExtensionName.value
+                          }，请输入其他名称`,
+                          style: { color: 'var(--danger)' },
+                        }}
+                        relationship="description"
+                        visible={checkHasFile(newFileName.value.trim() + newFileExtensionName.value)}
+                        positioning="below"
+                      >
+                        <Input
+                          value={newFileName.value}
+                          placeholder={t`新文件名`}
+                          className={
+                            checkHasFile(newFileName.value.trim() + newFileExtensionName.value) ? styles.inputDanger : ''
+                          }
+                          onChange={(_, data) => {
+                            newFileName.set(data.value ?? '');
+                          }}
+                        />
+                      </Tooltip>
+                      <Field label={t`扩展名`} size="small">
+                        <RadioGroup
+                          value={newFileExtensionName.value}
+                          onChange={(_, data) => newFileExtensionName.set(data.value)}
+                        >
+                          <Radio value="" label={t`无`} />
+                          <Radio value=".txt" label="txt" />
+                          <Radio value=".json" label="json" />
+                        </RadioGroup>
+                      </Field>
+                      <Button
+                        appearance="primary"
+                        disabled={disableCreateFile}
+                        onClick={() => {
+                          handleCreateNewFile(
+                            currentFullPath.join('/'),
+                            `${newFileName.value.trim()}${newFileExtensionName.value}`,
+                          );
+                          createNewFilePopoverOpen.set(false);
+                          newFileName.set('');
+                        }}
+                      >{t`创建`}</Button>
+                    </div>
+                  </PopoverSurface>
+                </Popover>
+              )}
               <Popover
                 withArrow
                 open={createNewFolderPopoverOpen.value}

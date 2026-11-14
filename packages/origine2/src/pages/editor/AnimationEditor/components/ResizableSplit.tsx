@@ -6,6 +6,8 @@ interface IResizableSplitProps {
   direction: 'horizontal' | 'vertical';
   /** 用于在 localStorage 中记住分割位置 */
   storageKey: string;
+  /** 初次打开时的默认分割比例，默认 0.5 */
+  defaultRatio?: number;
   first: ReactNode;
   second: ReactNode;
 }
@@ -16,9 +18,9 @@ const MAX_RATIO = 0.85;
 /**
  * 两个区域加一条可拖动的分割线，分割位置按比例记住
  */
-export function ResizableSplit({ direction, storageKey, first, second }: IResizableSplitProps) {
+export function ResizableSplit({ direction, storageKey, defaultRatio = 0.5, first, second }: IResizableSplitProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [ratio, setRatio] = useState(() => Number(localStorage.getItem(storageKey)) || 0.5);
+  const [ratio, setRatio] = useState(() => Number(localStorage.getItem(storageKey)) || defaultRatio);
   const [isDragging, setIsDragging] = useState(false);
   const isHorizontal = direction === 'horizontal';
 

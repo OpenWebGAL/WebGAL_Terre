@@ -35,11 +35,14 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   const panelType = useValue<PanelType>("effect");
   const updateExpand = useEditorStore.use.updateExpand();
   const isGoNext = useValue(!!getArgByKey(props.sentence, "next"));
-  const figureFile = useValue(props.sentence.content);
+  const hasClearArg = getArgByKey(props.sentence, "clear") === true;
+  const incomingFile = hasClearArg || props.sentence.content === "" || props.sentence.content === "none"
+    ? "none"
+    : props.sentence.content;
+  const figureFile = useValue(incomingFile);
   const isHaveSpineArg = figureFile.value.includes('?type=spine');
   const figurePosition = useValue<FigurePosition>("");
-  const isNoFile = props.sentence.content === "" || props.sentence.content === "none";
-  const clear = useValue(getArgByKey(props.sentence, "clear") === true);
+  const isNoFile = figureFile.value === "" || figureFile.value === "none";
   const id = useValue(getArgByKey(props.sentence, "id").toString() ?? "");
   const json = useValue<string>(getArgByKey(props.sentence, 'transform') as string);
   const duration = useValue<number | string>(getArgByKey(props.sentence, 'duration') as number);
@@ -224,6 +227,9 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     },
   };
   useEffect(() => {
+    figureFile.set(incomingFile);
+  }, [incomingFile]);
+  useEffect(() => {
     /**
      * 初始化立绘位置
      */
@@ -241,9 +247,12 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
     }
   }, [associatedAnimation.animationFlag.value]);
   const submit = () => {
-    const contentWithType = isSpineJsonFormat && !isHaveSpineArg
-      ? `${figureFile.value}?type=spine`
-      : figureFile.value;
+    const noFileNow = figureFile.value === "" || figureFile.value === "none";
+    const contentWithType = noFileNow
+      ? "none"
+      : isSpineJsonFormat && !isHaveSpineArg
+        ? `${figureFile.value}?type=spine`
+        : figureFile.value;
     const submitString = combineSubmitString(
       props.sentence.commandRaw,
       contentWithType,
@@ -252,7 +261,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
         ...Array.from(figurePositions.keys())
           .filter((position) => position !== "")
           .map((position) => ({key: position, value: figurePosition.value === position})),
-        {key: "clear", value: clear.value},
+        {key: "clear", value: false},
         {key: "id", value: id.value},
         {key: "transform", value: json.value},
         {key: "duration", value: duration.value},
@@ -311,7 +320,7 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
   });
 
   const shouldRenderMoreOptions = useMemo(() => {
-    if (!figureFile.value) {
+    if (!figureFile.value || figureFile.value === "none") {
       return false;
     }
     if (figureFile.value.includes('.json')) {
@@ -443,17 +452,15 @@ export default function ChangeFigure(props: ISentenceEditorProps) {
       <CommonOptions key="isNoDialog" title={t`清除立绘`}>
         <TerreToggle title="" onChange={(newValue) => {
           if (!newValue) {
-            figureFile.set(t`选择立绘文件`);
-          } else
+            const fallback = props.sentence.content && props.sentence.content !== "none"
+              ? props.sentence.content
+              : t`选择立绘文件`;
+            figureFile.set(fallback);
+          } else {
             figureFile.set("none");
+          }
           submit();
         }} onText={t`清除立绘`} offText={t`显示立绘`} isChecked={isNoFile} />
-      </CommonOptions>
-      <CommonOptions key="clearFigure" title={t`立绘清除参数`}>
-        <TerreToggle title="" onChange={(newValue) => {
-          clear.set(newValue);
-          submit();
-        }} onText={t`使用 clear 参数清除`} offText={t`不使用 clear 参数`} isChecked={clear.value} />
       </CommonOptions>
       {!isNoFile &&
         <CommonOptions key="1" title={t`立绘文件`}>

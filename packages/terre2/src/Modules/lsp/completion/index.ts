@@ -166,6 +166,7 @@ export async function complete(
         [
           commandType.changeBg,
           commandType.changeFigure,
+          commandType.character,
           commandType.setTransition,
         ].includes(sentence.command)
       ) {
@@ -193,6 +194,14 @@ export async function complete(
           break;
         }
         case commandType.changeFigureDiff: {
+          newSuggestions = await handleFileSuggestions(
+            sentence,
+            basePath,
+            line,
+          );
+          break;
+        }
+        case commandType.character: {
           newSuggestions = await handleFileSuggestions(
             sentence,
             basePath,
