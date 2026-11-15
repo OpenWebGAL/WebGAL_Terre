@@ -81,9 +81,10 @@ export function TemplatePreviewPane({
       const padding = 16;
       const availW = Math.max(160, container.clientWidth - padding);
       const availH = Math.max(90, container.clientHeight - padding);
-      const width = Math.min(availW, (availH * 16) / 9);
+      const maxWidth = Math.min(availW, (availH * 16) / 9);
+      const width = Math.max(160, Math.floor(maxWidth / 16) * 16);
       const height = (width * 9) / 16;
-      setStageSize({ width: Math.floor(width), height: Math.floor(height) });
+      setStageSize({ width, height });
     };
 
     updateSize();
@@ -165,7 +166,7 @@ export function TemplatePreviewPane({
       <div className={styles.viewport} ref={viewportRef}>
         <div
           className={styles.stageBox}
-          style={{ width: `${stageSize.width}px`, height: `${stageSize.height}px` }}
+          style={{ width: `${stageSize.width}px`, height: `${stageSize.height}px`, boxSizing: 'content-box' }}
         >
           <iframe
             ref={iframeRef}
