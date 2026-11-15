@@ -461,7 +461,7 @@ export type PreviewCommandResponsePayloadByType = Omit<
   Record<PreviewCommandType, EmptyObject>,
   'preview.command.seek-animation'
 > & {
-  'preview.command.seek-animation': SeekAnimationResponsePayload;
+  'preview.command.seek-animation': SeekAnimationResponsePayload | EmptyObject;
 };
 
 export const PREVIEW_QUERY_RESPONSE_PAYLOADS = definePayloadMap({
