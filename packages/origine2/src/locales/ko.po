@@ -296,6 +296,9 @@ msgstr "테마"
 msgid "九宫格"
 msgstr ""
 
+msgid "交互状态"
+msgstr "상호작용 상태"
+
 msgid "亮度"
 msgstr "밝기"
 
@@ -966,9 +969,6 @@ msgid "存档变量"
 msgstr "세이브 변수"
 
 msgid "存档界面"
-msgstr ""
-
-msgid "完全 CSS 定义"
 msgstr ""
 
 msgid "定位方式"
@@ -2581,6 +2581,9 @@ msgstr "이 명령어를 인식할 수 없습니다. 스크립트 편집 모드�
 
 msgid "该文件类型不支持预览"
 msgstr "이 파일 유형은 미리보기를 지원하지 않습니다"
+
+msgid "详细模式"
+msgstr "상세 모드"
 
 msgid "语言"
 msgstr "언어"

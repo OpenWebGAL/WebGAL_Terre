@@ -120,6 +120,15 @@
   background: var(--bg-card);
 }
 
+.barLabel {
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text, #111111);
+  white-space: nowrap;
+  margin-right: 4px;
+}
+
 .barSpacer {
   flex: 1;
 }

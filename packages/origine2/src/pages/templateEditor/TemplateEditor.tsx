@@ -76,6 +76,7 @@ export default function TemplateEditor() {
           }
           second={
             <RightInspectorPane
+              isBlank={session.activeScreenId === null}
               part={session.selectedPart}
               scssText={session.draftScssText}
               templateDir={templateDir}

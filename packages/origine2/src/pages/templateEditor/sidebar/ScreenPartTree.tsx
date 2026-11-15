@@ -32,7 +32,7 @@ import styles from './screenPartTree.module.scss';
 
 interface IScreenPartTreeProps {
   screensInfo: TemplateScreensInfo | null;
-  activeScreenId: UiScreenId;
+  activeScreenId: UiScreenId | null;
   parts: UiPartDescriptor[];
   selectedPartId: string | null;
   onSelectScreen: (screen: UiScreenId) => void;

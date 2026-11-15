@@ -64,6 +64,9 @@ export function useTemplateScreenSession(templateDir: string) {
   );
 
   const activeVariantMeta = useMemo(() => {
+    if (!activeScreenId) {
+      return { variantId: '', scssPath: null as string | null };
+    }
     const entry = screensInfo?.screens.find((item) => item.screen === activeScreenId);
     const variantId = entry?.activeVariant ?? DEFAULT_SCREEN_VARIANTS[activeScreenId as TemplateScreenId];
     const variant = entry?.variants.find((item) => item.variantId === variantId);
@@ -77,7 +80,7 @@ export function useTemplateScreenSession(templateDir: string) {
   );
 
   const parts: UiPartDescriptor[] = useMemo(() => {
-    if (!screenPayload || screenPayload.screen !== activeScreenId) return [];
+    if (!activeScreenId || !screenPayload || screenPayload.screen !== activeScreenId) return [];
     return screenPayload.parts;
   }, [screenPayload, activeScreenId]);
 
@@ -88,6 +91,7 @@ export function useTemplateScreenSession(templateDir: string) {
 
   const stateRef = useRef({
     activeScreenId,
+    screenPayload,
     previewMode,
     useMockData,
     lockedState,
@@ -99,6 +103,7 @@ export function useTemplateScreenSession(templateDir: string) {
   });
   stateRef.current = {
     activeScreenId,
+    screenPayload,
     previewMode,
     useMockData,
     lockedState,
@@ -112,10 +117,15 @@ export function useTemplateScreenSession(templateDir: string) {
   const loadedFileRef = useRef<string | null>(null);
   const ensuredSignatureRef = useRef<string | null>(null);
   const pendingScreenRef = useRef<UiScreenId | null>(null);
+  const reopenVerifyScreenRef = useRef<UiScreenId | null>(null);
   const pendingVariantRef = useRef<{ screen: UiScreenId; variantId: string; expiresAt: number } | null>(null);
 
   useEffect(() => {
-    if (!isCustomUi || !activeFilePath) return;
+    if (!isCustomUi || !activeFilePath) {
+      loadedFileRef.current = null;
+      ensuredSignatureRef.current = null;
+      return;
+    }
     let cancelled = false;
     loadedFileRef.current = null;
     ensuredSignatureRef.current = null;
@@ -156,6 +166,7 @@ export function useTemplateScreenSession(templateDir: string) {
 
   useEffect(() => {
     const applyScreenPayload = (payload: UiScreenUpdatedPayload) => {
+      const wasPending = pendingScreenRef.current !== null;
       if (pendingScreenRef.current !== null) {
         if (payload.screen !== pendingScreenRef.current) {
           return;
@@ -173,7 +184,18 @@ export function useTemplateScreenSession(templateDir: string) {
         }
         pendingVariantRef.current = null;
       }
+      if (reopenVerifyScreenRef.current !== null && payload.screen === reopenVerifyScreenRef.current) {
+        reopenVerifyScreenRef.current = null;
+        if (payload.parts.length > 0 && payload.parts.every((p) => p.box === null)) {
+          pendingScreenRef.current = payload.screen;
+          EditorPreviewClient.setActiveUiScreen({ screen: payload.screen });
+          return;
+        }
+      }
       updateScreenPayload(payload);
+      if (!wasPending && stateRef.current.activeScreenId === null) {
+        return;
+      }
       if (payload.screen && payload.screen !== stateRef.current.activeScreenId) {
         updateActiveScreenId(payload.screen);
       }
@@ -185,9 +207,14 @@ export function useTemplateScreenSession(templateDir: string) {
 
     const syncInitialSession = () => {
       const current = stateRef.current;
-      pendingScreenRef.current = current.activeScreenId;
+      reopenVerifyScreenRef.current = null;
       EditorPreviewClient.setUiEditMode({ mode: current.previewMode });
       EditorPreviewClient.setUiMockData({ enabled: current.useMockData });
+      if (!current.activeScreenId) {
+        pendingScreenRef.current = null;
+        return;
+      }
+      pendingScreenRef.current = current.activeScreenId;
       EditorPreviewClient.setActiveUiScreen({ screen: current.activeScreenId });
       if (current.lockedState !== 'default') {
         EditorPreviewClient.setUiPseudoState({
@@ -217,6 +244,9 @@ export function useTemplateScreenSession(templateDir: string) {
         if (pendingScreenRef.current !== null && payload.screen !== pendingScreenRef.current) {
           return;
         }
+        if (pendingScreenRef.current === null && stateRef.current.activeScreenId === null) {
+          return;
+        }
         if (payload.screen !== stateRef.current.activeScreenId) {
           updateActiveScreenId(payload.screen);
         }
@@ -242,17 +272,58 @@ export function useTemplateScreenSession(templateDir: string) {
   const activateScreen = useCallback(
     (screen: UiScreenId) => {
       pendingVariantRef.current = null;
+      if (stateRef.current.activeScreenId === screen) {
+        pendingScreenRef.current = null;
+        reopenVerifyScreenRef.current = null;
+        updateActiveScreenId(null);
+        updateSelectedPartId(null);
+        updateApplyStyleIgnored(null);
+        EditorPreviewClient.selectUiPart({ screen, partId: null });
+        return;
+      }
+
+      const cachedPayload = EditorPreviewClient.getLastUiScreenPayload() ?? stateRef.current.screenPayload;
+      if (
+        cachedPayload
+        && cachedPayload.screen === screen
+        && (cachedPayload.parts.length === 0 || cachedPayload.parts.some((p) => p.box !== null))
+      ) {
+        pendingScreenRef.current = null;
+        reopenVerifyScreenRef.current = screen;
+        if (cachedPayload !== stateRef.current.screenPayload) {
+          updateScreenPayload(cachedPayload);
+        }
+        updateActiveScreenId(screen);
+        const nextPart = cachedPayload.parts[0] ?? null;
+        updateSelectedPartId(nextPart?.id ?? null);
+        updateApplyStyleIgnored(null);
+        EditorPreviewClient.selectUiPart({ screen, partId: nextPart?.id ?? null });
+        if (stateRef.current.lockedState !== 'default') {
+          EditorPreviewClient.setUiPseudoState({
+            screen,
+            selector: nextPart?.selector ?? null,
+            pseudoState: stateRef.current.lockedState,
+          });
+        }
+        return;
+      }
+
       pendingScreenRef.current = screen;
+      reopenVerifyScreenRef.current = null;
       updateActiveScreenId(screen);
       updateSelectedPartId(null);
       updateApplyStyleIgnored(null);
       EditorPreviewClient.setActiveUiScreen({ screen });
     },
-    [updateActiveScreenId, updateApplyStyleIgnored, updateSelectedPartId],
+    [updateActiveScreenId, updateApplyStyleIgnored, updateScreenPayload, updateSelectedPartId],
   );
 
   const selectPart = useCallback(
     (partId: string | null) => {
+      if (!activeScreenId) {
+        updateSelectedPartId(null);
+        return;
+      }
       updateSelectedPartId(partId);
       EditorPreviewClient.selectUiPart({ screen: activeScreenId, partId });
       if (lockedState !== 'default') {
@@ -286,6 +357,7 @@ export function useTemplateScreenSession(templateDir: string) {
   const setLockedState = useCallback(
     (pseudoState: UiPseudoState) => {
       updateLockedState(pseudoState);
+      if (!activeScreenId) return;
       EditorPreviewClient.setUiPseudoState({
         screen: activeScreenId,
         selector: selectedPart?.selector ?? null,
@@ -297,6 +369,7 @@ export function useTemplateScreenSession(templateDir: string) {
 
   const previewScss = useCallback(
     (nextScss: string) => {
+      if (!activeScreenId) return;
       updateDraftScssText(nextScss);
       updateApplyStyleIgnored(null);
       EditorPreviewClient.setUiPartStyle({
@@ -311,6 +384,7 @@ export function useTemplateScreenSession(templateDir: string) {
 
   const commitScss = useCallback(
     async (nextScss: string) => {
+      if (!activeScreenId) return;
       updateDraftScssText(nextScss);
       updateApplyStyleIgnored(null);
       EditorPreviewClient.setUiPartStyle({
@@ -329,6 +403,7 @@ export function useTemplateScreenSession(templateDir: string) {
 
   const commitScssFromCode = useCallback(
     (nextScss: string) => {
+      if (!activeScreenId) return;
       updateDraftScssText(nextScss);
       updateApplyStyleIgnored(null);
       EditorPreviewClient.setUiPartStyle({
@@ -343,6 +418,7 @@ export function useTemplateScreenSession(templateDir: string) {
 
   const switchVariant = useCallback(
     async (screen: UiScreenId, variantId: string) => {
+      reopenVerifyScreenRef.current = null;
       pendingScreenRef.current = screen;
       pendingVariantRef.current = { screen, variantId, expiresAt: Date.now() + 1500 };
       try {
@@ -367,6 +443,7 @@ export function useTemplateScreenSession(templateDir: string) {
 
   const importVariant = useCallback(
     async (screen: UiScreenId, file: File) => {
+      reopenVerifyScreenRef.current = null;
       pendingScreenRef.current = screen;
       pendingVariantRef.current = null;
       try {

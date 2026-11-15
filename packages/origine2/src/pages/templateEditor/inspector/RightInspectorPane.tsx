@@ -6,6 +6,7 @@ import { StyleInspector } from './StyleInspector';
 import styles from './inspectorCommon.module.scss';
 
 interface IRightInspectorPaneProps {
+  isBlank?: boolean;
   part: UiPartDescriptor | null;
   scssText: string;
   templateDir: string;
@@ -24,6 +25,7 @@ interface IRightInspectorPaneProps {
 }
 
 export function RightInspectorPane({
+  isBlank = false,
   part,
   scssText,
   templateDir,
@@ -40,6 +42,10 @@ export function RightInspectorPane({
   onCommitScss,
   onCodeSaved,
 }: IRightInspectorPaneProps) {
+  if (isBlank) {
+    return <div className={styles.pane} />;
+  }
+
   const layoutPane = (
     <LayoutInspector
       part={part}

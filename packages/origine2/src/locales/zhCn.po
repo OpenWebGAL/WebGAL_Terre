@@ -296,6 +296,9 @@ msgstr "主题"
 msgid "九宫格"
 msgstr "九宫格"
 
+msgid "交互状态"
+msgstr "交互状态"
+
 msgid "亮度"
 msgstr "亮度"
 
@@ -967,9 +970,6 @@ msgstr "存档变量"
 
 msgid "存档界面"
 msgstr "存档界面"
-
-msgid "完全 CSS 定义"
-msgstr "完全 CSS 定义"
 
 msgid "定位方式"
 msgstr "定位方式"
@@ -2581,6 +2581,9 @@ msgstr "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 
 msgid "该文件类型不支持预览"
 msgstr "该文件类型不支持预览"
+
+msgid "详细模式"
+msgstr "详细模式"
 
 msgid "语言"
 msgstr "语言"

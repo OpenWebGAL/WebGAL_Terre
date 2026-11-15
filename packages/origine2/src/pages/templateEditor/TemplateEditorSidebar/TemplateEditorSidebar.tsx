@@ -25,7 +25,7 @@ import { UI_SCREEN_IDS, type TemplateScreensInfo } from '../screenCatalog';
 
 export interface ITemplateSidebarCustomSession {
   screensInfo: TemplateScreensInfo | null;
-  activeScreenId: UiScreenId;
+  activeScreenId: UiScreenId | null;
   parts: UiPartDescriptor[];
   selectedPartId: string | null;
   onSelectScreen: (screen: UiScreenId) => void;
@@ -60,7 +60,10 @@ export default function TemplateEditorSidebar({ customSession }: ITemplateEditor
       const normalized = file.path.replace(/\\/g, '/');
       const matched = normalized.match(/screens\/([^/]+)\/[^/]+\/style\.scss$/);
       if (matched && UI_SCREEN_IDS.includes(matched[1] as UiScreenId)) {
-        customSession.onSelectScreen(matched[1] as UiScreenId);
+        const targetScreen = matched[1] as UiScreenId;
+        if (customSession.activeScreenId !== targetScreen) {
+          customSession.onSelectScreen(targetScreen);
+        }
       }
       updateStyleTab('full');
       updateFullCssMode('code');

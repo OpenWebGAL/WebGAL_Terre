@@ -68,6 +68,7 @@ export function StyleInspector({
   return (
     <div className={styles.pane} style={{ borderLeft: 'none' }}>
       <div className={styles.bar}>
+        <span className={styles.barLabel}>{t`交互状态`}</span>
         <div className={styles.stateSegment}>
           {PSEUDO_STATES.map((item) => (
             <button
@@ -98,7 +99,7 @@ export function StyleInspector({
           onTabSelect={(_ev, data) => onChangeStyleTab(data.value as TemplateStyleTab)}
         >
           <Tab value="simple">{t`简易模式`}</Tab>
-          <Tab value="full">{t`完全 CSS 定义`}</Tab>
+          <Tab value="full">{t`详细模式`}</Tab>
         </TabList>
       </div>
 

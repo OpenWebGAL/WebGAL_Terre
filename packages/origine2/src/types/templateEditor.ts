@@ -30,7 +30,7 @@ export interface ITemplateEditorState {
   styleTab: TemplateStyleTab,
   fullCssMode: TemplateFullCssMode,
   isStyleCollapsed: boolean,
-  activeScreenId: UiScreenId,
+  activeScreenId: UiScreenId | null,
   isPreviewReady: boolean,
   screenPayload: UiScreenUpdatedPayload | null,
   draftScssText: string,

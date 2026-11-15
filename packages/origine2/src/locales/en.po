@@ -296,6 +296,9 @@ msgstr "Theme"
 msgid "九宫格"
 msgstr ""
 
+msgid "交互状态"
+msgstr "Interaction state"
+
 msgid "亮度"
 msgstr "Brightness"
 
@@ -966,9 +969,6 @@ msgid "存档变量"
 msgstr "Save-data variable"
 
 msgid "存档界面"
-msgstr ""
-
-msgid "完全 CSS 定义"
 msgstr ""
 
 msgid "定位方式"
@@ -2581,6 +2581,9 @@ msgstr "This command is not recognized, please open script editing mode to edit 
 
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
+
+msgid "详细模式"
+msgstr "Detailed mode"
 
 msgid "语言"
 msgstr "Language"
