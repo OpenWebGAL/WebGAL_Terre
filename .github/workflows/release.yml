@@ -6,6 +6,7 @@ on:
     tags:
       - '*.*'
       - '!*beta*'
+      - '!*preview*'
 
 jobs:
   build-linux:
