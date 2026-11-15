@@ -151,6 +151,71 @@ export interface TemplateConfigDto {
   "webgal-version": string;
   /** The font registrations of the template */
   fonts?: TemplateFontConfigDto[];
+  /** UI template mode */
+  uiMode?: "legacy" | "custom";
+  /** Active variant per UI screen slot */
+  screens?: Record<string, string>;
+}
+
+export interface TemplateScreenVariantDto {
+  /** Variant identifier */
+  variantId: string;
+  /** Display name of the variant */
+  name: string;
+  /** Whether this variant is built into WebGAL */
+  builtIn: boolean;
+  /** Whether a custom index.js entry exists on disk */
+  hasEntryJs: boolean;
+  /** Relative path to style.scss inside the template */
+  scssPath: string;
+}
+
+export interface TemplateScreenSlotDto {
+  /** UI screen slot identifier */
+  screen: string;
+  /** Currently active variantId for this screen */
+  activeVariant: string;
+  /** Available built-in and custom variants */
+  variants: TemplateScreenVariantDto[];
+}
+
+export interface TemplateScreensResponseDto {
+  /** Resolved UI mode */
+  uiMode: "legacy" | "custom";
+  /** Screen slot definitions and variants */
+  screens: TemplateScreenSlotDto[];
+}
+
+export interface SwitchScreenVariantDto {
+  /** The directory name of the template */
+  templateDir: string;
+  /** Target UI screen slot identifier */
+  screen: string;
+  /** Target variantId to activate */
+  variantId: string;
+}
+
+export interface ImportScreenVariantDto {
+  /**
+   * Zip package of the custom UI screen
+   * @format binary
+   */
+  file: File;
+  /** The directory name of the template */
+  templateDir: string;
+  /** Target UI screen slot identifier */
+  screen: string;
+  /** Optional preferred variantId */
+  variantId?: string;
+}
+
+export interface ImportScreenVariantResponseDto {
+  /** Resolved variantId written on disk */
+  variantId: string;
+  /** Relative path to style.scss inside the template */
+  scssPath: string;
+  /** Updated template configuration */
+  config: TemplateConfigDto;
 }
 
 export interface GameInfoDto {
@@ -435,6 +500,9 @@ export class HttpClient<SecurityDataType = unknown> {
     }
     return Object.keys(input || {}).reduce((formData, key) => {
       const property = input[key];
+      if (property === undefined) {
+        return formData;
+      }
       const propertyContent: any[] =
         property instanceof Array ? property : [property];
 
@@ -1531,6 +1599,67 @@ export class Api<
     ) =>
       this.request<boolean, void>({
         path: `/api/manageTemplate/importTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerGetTemplateScreens
+     * @summary Get template screen slots and variants
+     * @request GET:/api/manageTemplate/screens/{templateDir}
+     */
+    manageTemplateControllerGetTemplateScreens: (
+      templateDir: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<TemplateScreensResponseDto, void>({
+        path: `/api/manageTemplate/screens/${templateDir}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerSwitchScreenVariant
+     * @summary Switch active variant for a UI screen slot
+     * @request PUT:/api/manageTemplate/switchScreenVariant
+     */
+    manageTemplateControllerSwitchScreenVariant: (
+      data: SwitchScreenVariantDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<TemplateConfigDto, void>({
+        path: `/api/manageTemplate/switchScreenVariant`,
+        method: "PUT",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerImportScreenVariant
+     * @summary Import a custom UI screen variant zip package
+     * @request POST:/api/manageTemplate/importScreenVariant
+     */
+    manageTemplateControllerImportScreenVariant: (
+      data: ImportScreenVariantDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<ImportScreenVariantResponseDto, void>({
+        path: `/api/manageTemplate/importScreenVariant`,
         method: "POST",
         body: data,
         type: ContentType.FormData,

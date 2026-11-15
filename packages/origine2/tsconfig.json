@@ -18,7 +18,8 @@
     "baseUrl": "./",
     "types": ["react", "react-dom"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@webgal/editor-preview-protocol": ["../editor-preview-protocol/src/index.ts"]
     }
   },
   "include": ["src"],

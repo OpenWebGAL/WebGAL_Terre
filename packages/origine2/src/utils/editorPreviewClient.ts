@@ -12,6 +12,7 @@ import {
   EDITOR_PREVIEW_PROTOCOL_V1_SUBPROTOCOL,
   isHostEventEnvelope,
   isKnownProtocolEnvelope,
+  type ApplyStyleIgnoredPayload,
   type EventEnvelopeByType,
   type BaseTransformQueryResultPayload,
   type DebugVariable,
@@ -20,19 +21,35 @@ import {
   type ReferenceBoxQueryResultPayload,
   type RequestPayloadByType,
   type SeekAnimationPayload,
+  type SelectUiPartPayload,
+  type SetActiveUiScreenPayload,
   type SetComponentVisibilityPayload,
   type SetEffectPayload,
+  type SetUiEditModePayload,
+  type SetUiMockDataPayload,
+  type SetUiPartStylePayload,
+  type SetUiPseudoStatePayload,
   type SyncSceneSettleMode,
   type StageSnapshotUpdatedPayload,
   type TransformBaselineQueryResultPayload,
+  type UiPartSelectedPayload,
+  type UiScreenUpdatedPayload,
 } from '@webgal/editor-preview-protocol';
+
+export interface UiEditorEventHandlers {
+  onScreenUpdated?: (payload: UiScreenUpdatedPayload) => void;
+  onPartSelected?: (payload: UiPartSelectedPayload) => void;
+  onApplyStyleIgnored?: (payload: ApplyStyleIgnoredPayload) => void;
+}
 
 let editorPreviewTransport: EditorPreviewTransport | null = null;
 let editorPreviewClientStarted = false;
 let lifecycleBound = false;
 let lastStageSnapshot: StageSnapshotUpdatedPayload | null = null;
+let lastUiScreenPayload: UiScreenUpdatedPayload | null = null;
 let baseTransformCache: BaseTransformQueryResultPayload | null = null;
 let queryCapabilityState: PreviewQueryCapabilityState = 'unknown';
+const uiEventSubscribers = new Set<UiEditorEventHandlers>();
 
 const PREVIEW_QUERY_TIMEOUT_MS = 300;
 const TRANSFORM_BASELINE_MAX_RETRIES = 3;
@@ -129,6 +146,16 @@ function consumeHostEvent(event: HostEventEnvelope) {
       payload: event.payload,
     });
     return;
+  case 'ui.screen.updated':
+    lastUiScreenPayload = event.payload;
+    uiEventSubscribers.forEach((handler) => handler.onScreenUpdated?.(event.payload));
+    return;
+  case 'ui.part.selected':
+    uiEventSubscribers.forEach((handler) => handler.onPartSelected?.(event.payload));
+    return;
+  case 'preview.event.apply-style-ignored':
+    uiEventSubscribers.forEach((handler) => handler.onApplyStyleIgnored?.(event.payload));
+    return;
   }
 }
 
@@ -175,6 +202,7 @@ function bindLifecycleEvents() {
 }
 
 function resetRuntimeLifecycleState() {
+  lastUiScreenPayload = null;
   baseTransformCache = null;
   queryCapabilityState = 'unknown';
   previewRequestOwner.rejectAll(new Error('编辑器预览同步 V1 WebSocket 已关闭'));
@@ -215,7 +243,8 @@ function sendPreviewRequest<
   TType extends
     | 'preview.query.reference-box'
     | 'preview.query.base-transform'
-    | 'preview.query.transform-baseline',
+    | 'preview.query.transform-baseline'
+    | 'preview.query.ui-screen',
 >(
   type: TType,
   payload: RequestPayloadByType[TType],
@@ -440,5 +469,44 @@ export class EditorPreviewClient {
     }
 
     return { status: 'unavailable' };
+  }
+
+  public static subscribeUiEvents(handlers: UiEditorEventHandlers): () => void {
+    uiEventSubscribers.add(handlers);
+    return () => {
+      uiEventSubscribers.delete(handlers);
+    };
+  }
+
+  public static getLastUiScreenPayload(): UiScreenUpdatedPayload | null {
+    return lastUiScreenPayload;
+  }
+
+  public static setUiEditMode(payload: SetUiEditModePayload, embeddedLaunchId?: string) {
+    return sendPreviewCommand('preview.command.set-ui-edit-mode', payload, embeddedLaunchId);
+  }
+
+  public static setActiveUiScreen(payload: SetActiveUiScreenPayload, embeddedLaunchId?: string) {
+    return sendPreviewCommand('preview.command.set-active-ui-screen', payload, embeddedLaunchId);
+  }
+
+  public static selectUiPart(payload: SelectUiPartPayload, embeddedLaunchId?: string) {
+    return sendPreviewCommand('preview.command.select-ui-part', payload, embeddedLaunchId);
+  }
+
+  public static setUiPartStyle(payload: SetUiPartStylePayload, embeddedLaunchId?: string) {
+    return sendPreviewCommand('preview.command.set-ui-part-style', payload, embeddedLaunchId);
+  }
+
+  public static setUiPseudoState(payload: SetUiPseudoStatePayload, embeddedLaunchId?: string) {
+    return sendPreviewCommand('preview.command.set-ui-pseudo-state', payload, embeddedLaunchId);
+  }
+
+  public static setUiMockData(payload: SetUiMockDataPayload, embeddedLaunchId?: string) {
+    return sendPreviewCommand('preview.command.set-ui-mock-data', payload, embeddedLaunchId);
+  }
+
+  public static queryUiScreen(): Promise<UiScreenUpdatedPayload> {
+    return sendPreviewRequest('preview.query.ui-screen', {}, PREVIEW_QUERY_TIMEOUT_MS);
   }
 }
