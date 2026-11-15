@@ -178,8 +178,9 @@ export class AssetsController {
   @ApiResponse({ status: 200, description: 'File edited successfully.' })
   @ApiResponse({ status: 400, description: 'Failed to edit the text.' })
   async editTextFile(@Body() editTextFileData: EditTextFileDto) {
-    const path = editTextFileData.path;
-    const filePath = this.webgalFs.getPathFromRoot(`public/${path}`);
+    const filePath = await this.assets.ensureTextFileParentDir(
+      editTextFileData.path,
+    );
     return this.webgalFs.updateTextFile(filePath, editTextFileData.textFile);
   }
 

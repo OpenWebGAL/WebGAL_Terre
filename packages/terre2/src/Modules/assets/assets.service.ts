@@ -1,11 +1,22 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import sizeOf from 'image-size';
-import { readFile } from 'fs/promises';
+import { mkdir, readFile } from 'fs/promises';
+import { dirname } from 'path';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 
 @Injectable()
 export class AssetsService {
   constructor(private readonly webgalFs: WebgalFsService) {}
+
+  async ensureTextFileParentDir(relativePath: string): Promise<string> {
+    const decodedRelative = decodeURI(relativePath);
+    if (WebgalFsService.hasInvalidPathSegments(decodedRelative)) {
+      throw new BadRequestException('Invalid path segments detected');
+    }
+    const filePath = this.webgalFs.getPathFromRoot(`public/${relativePath}`);
+    await mkdir(dirname(decodeURI(filePath)), { recursive: true });
+    return filePath;
+  }
 
   /**
    * 获取图片的尺寸信息

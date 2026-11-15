@@ -234,6 +234,17 @@ export class UserDataService {
       filePath,
     );
     if (await this.pathExists(installPath)) return installPath;
+    const normalizedRel = filePath
+      .replace(/\\/g, '/')
+      .replace(/^(\.\/)+/, '')
+      .replace(/^\/+/, '');
+    if (normalizedRel.startsWith('screens/')) {
+      const defaultPath = this.safeResolve(
+        this.getDefaultTemplateRoot(),
+        normalizedRel,
+      );
+      if (await this.pathExists(defaultPath)) return defaultPath;
+    }
     return userPath;
   }
 

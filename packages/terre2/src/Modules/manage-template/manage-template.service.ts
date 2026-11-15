@@ -1,13 +1,31 @@
-import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConsoleLogger,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as fsp from 'fs/promises';
 import { webgalParser } from '../../util/webgal-parser';
 import { version_number } from '../../version';
-import { TemplateConfigDto, TemplateInfoDto } from './manage-template.dto';
+import {
+  ImportScreenVariantResponseDto,
+  SwitchScreenVariantDto,
+  TemplateConfigDto,
+  TemplateInfoDto,
+  TemplateScreensResponseDto,
+} from './manage-template.dto';
 import { randomUUID } from 'crypto';
 import { UserDataService } from '../user-data/user-data.service';
 import { _open } from '../../util/open';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
+import {
+  copyMissingBuiltInScreenAssets,
+  getDefaultTemplateScreensConfig,
+  inspectTemplateScreens,
+  isUiScreenId,
+} from './screen-registry';
+import { extractScreenPackage } from './screen-package.util';
 
 @Injectable()
 export class ManageTemplateService {
@@ -142,12 +160,14 @@ export class ManageTemplateService {
     );
 
     /**
-     * 把模板配置文件的名称改一下
+     * 把模板配置文件的名称改一下，新建模板默认启用独立界面架构
      */
     const templateConfig: TemplateConfigDto = {
       name: templateName,
       id: randomUUID(),
       'webgal-version': version_number,
+      uiMode: 'custom',
+      screens: getDefaultTemplateScreensConfig(),
     };
 
     const templateConfigText = JSON.stringify(templateConfig, undefined, 2);
@@ -237,16 +257,35 @@ export class ManageTemplateService {
     gameDir: string,
   ): Promise<boolean> {
     try {
-      // 删除指定游戏的模板
-      await this.webgalFs.deleteFileOrDirectory(
-        this.webgalFs.getPathFromRoot(`public/games/${gameDir}/game/template`),
+      const sourceTemplateRoot = this.webgalFs.getPathFromRoot(
+        `/public/templates/${templateDir}/`,
       );
+      const gameTemplateRoot = this.webgalFs.getPathFromRoot(
+        `public/games/${gameDir}/game/template/`,
+      );
+      const templateConfig = await this.getTemplateConfig(templateDir).catch(
+        () => null,
+      );
+      const isWritableUserTemplate =
+        this.isSafeTemplateDirName(templateDir) &&
+        UserDataService.getTemplateRoot(templateDir) ===
+          UserDataService.getUserTemplateRoot(templateDir);
+      if (templateConfig && isWritableUserTemplate) {
+        await this.ensureBuiltInScreenAssets(
+          sourceTemplateRoot,
+          templateConfig,
+        );
+      }
+
+      // 删除指定游戏的模板
+      await this.webgalFs.deleteFileOrDirectory(gameTemplateRoot);
 
       // 递归复制指定的模板到游戏
-      await this.webgalFs.copy(
-        this.webgalFs.getPathFromRoot(`/public/templates/${templateDir}/`),
-        this.webgalFs.getPathFromRoot(`public/games/${gameDir}/game/template/`),
-      );
+      await this.webgalFs.copy(sourceTemplateRoot, gameTemplateRoot);
+
+      if (templateConfig && !isWritableUserTemplate) {
+        await this.ensureBuiltInScreenAssets(gameTemplateRoot, templateConfig);
+      }
 
       return true;
     } catch (e) {
@@ -343,5 +382,148 @@ export class ManageTemplateService {
     );
 
     return res;
+  }
+
+  private async resolveExistingTemplateRoot(
+    templateDir: string,
+  ): Promise<string> {
+    if (!this.isSafeTemplateDirName(templateDir)) {
+      throw new BadRequestException('Invalid template directory name.');
+    }
+    if (!(await this.templateDirExists(templateDir))) {
+      throw new NotFoundException('Template not found.');
+    }
+    return UserDataService.getTemplateRoot(templateDir);
+  }
+
+  private async resolveWritableTemplateRoot(
+    templateDir: string,
+  ): Promise<string> {
+    const templateRoot = await this.resolveExistingTemplateRoot(templateDir);
+    if (templateRoot !== UserDataService.getUserTemplateRoot(templateDir)) {
+      throw new BadRequestException('Built-in templates cannot be modified.');
+    }
+    return templateRoot;
+  }
+
+  private async ensureBuiltInScreenAssets(
+    templateRoot: string,
+    config?: TemplateConfigDto,
+  ): Promise<void> {
+    const defaultRoot = UserDataService.getDefaultTemplateRoot();
+    if (templateRoot === defaultRoot) return;
+
+    let resolvedConfig = config;
+    if (!resolvedConfig) {
+      try {
+        const raw = await fsp.readFile(
+          join(templateRoot, 'template.json'),
+          'utf8',
+        );
+        resolvedConfig = JSON.parse(raw) as TemplateConfigDto;
+      } catch {
+        return;
+      }
+    }
+
+    if (
+      resolvedConfig?.uiMode !== 'custom' &&
+      resolvedConfig?.screens == null
+    ) {
+      return;
+    }
+
+    await copyMissingBuiltInScreenAssets(templateRoot, defaultRoot);
+  }
+
+  async getTemplateScreens(
+    templateDir: string,
+  ): Promise<TemplateScreensResponseDto> {
+    const templateRoot = await this.resolveExistingTemplateRoot(templateDir);
+    const config = await this.getTemplateConfig(templateDir);
+    if (templateRoot === UserDataService.getUserTemplateRoot(templateDir)) {
+      await this.ensureBuiltInScreenAssets(templateRoot, config);
+    }
+    return inspectTemplateScreens(templateRoot, config);
+  }
+
+  async switchScreenVariant(
+    dto: SwitchScreenVariantDto,
+  ): Promise<TemplateConfigDto> {
+    const variantId = dto.variantId?.trim();
+    if (!isUiScreenId(dto.screen)) {
+      throw new BadRequestException(`Unknown UI screen slot: ${dto.screen}`);
+    }
+    if (!variantId || !this.isSafeTemplateDirName(variantId)) {
+      throw new BadRequestException('Invalid variantId.');
+    }
+    const templateRoot = await this.resolveWritableTemplateRoot(
+      dto.templateDir,
+    );
+    const currentConfig = await this.getTemplateConfig(dto.templateDir);
+    const updatedConfig: TemplateConfigDto = {
+      ...currentConfig,
+      uiMode: 'custom',
+      screens: {
+        ...(currentConfig.screens ?? {}),
+        [dto.screen]: variantId,
+      },
+    };
+    await this.ensureBuiltInScreenAssets(templateRoot, updatedConfig);
+    const scssPath = join(
+      templateRoot,
+      'screens',
+      dto.screen,
+      variantId,
+      'style.scss',
+    );
+    await fsp.mkdir(dirname(scssPath), { recursive: true });
+    try {
+      await fsp.access(scssPath);
+    } catch {
+      await fsp.writeFile(scssPath, '');
+    }
+    await this.webgalFs.updateTextFile(
+      join(templateRoot, 'template.json'),
+      JSON.stringify(updatedConfig, undefined, 2),
+    );
+    return updatedConfig;
+  }
+
+  async importScreenVariant(
+    file: { buffer?: Buffer; originalname?: string } | undefined,
+    templateDir: string,
+    screen: string,
+    requestedVariantId?: string,
+  ): Promise<ImportScreenVariantResponseDto> {
+    if (!file?.buffer) {
+      throw new BadRequestException('Missing screen zip file.');
+    }
+    if (!isUiScreenId(screen)) {
+      throw new BadRequestException(`Unknown UI screen slot: ${screen}`);
+    }
+    const templateRoot = await this.resolveWritableTemplateRoot(templateDir);
+    const { variantId, scssPath } = await extractScreenPackage({
+      buffer: file.buffer,
+      originalname: file.originalname,
+      templateRoot,
+      screen,
+      requestedVariantId,
+    });
+
+    const currentConfig = await this.getTemplateConfig(templateDir);
+    const updatedConfig: TemplateConfigDto = {
+      ...currentConfig,
+      uiMode: 'custom',
+      screens: {
+        ...(currentConfig.screens ?? {}),
+        [screen]: variantId,
+      },
+    };
+    await this.webgalFs.updateTextFile(
+      join(templateRoot, 'template.json'),
+      JSON.stringify(updatedConfig, undefined, 2),
+    );
+    return { variantId, scssPath, config: updatedConfig };
   }
 }

@@ -17,10 +17,14 @@ import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import {
   CreateTemplateDto,
   GetStyleByClassNameDto,
+  ImportScreenVariantDto,
+  ImportScreenVariantResponseDto,
   ImportTemplateDto,
   OutputTemplateDto,
+  SwitchScreenVariantDto,
   TemplateConfigDto,
   TemplateInfoDto,
+  TemplateScreensResponseDto,
   UpdateTemplateConfigDto,
 } from './manage-template.dto';
 import {
@@ -353,5 +357,55 @@ export class ManageTemplateController {
       return false;
     }
     return await this.manageTemplate.importTemplate(file.buffer);
+  }
+
+  @Get('screens/:templateDir')
+  @ApiOperation({ summary: 'Get template screen slots and variants' })
+  @ApiResponse({
+    status: 200,
+    type: TemplateScreensResponseDto,
+    description: 'Returned template screen slots and available variants.',
+  })
+  async getTemplateScreens(
+    @Param('templateDir') templateDir: string,
+  ): Promise<TemplateScreensResponseDto> {
+    return this.manageTemplate.getTemplateScreens(templateDir);
+  }
+
+  @Put('switchScreenVariant')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Switch active variant for a UI screen slot' })
+  @ApiResponse({
+    status: 200,
+    type: TemplateConfigDto,
+    description: 'Updated template configuration after switching variant.',
+  })
+  async switchScreenVariant(
+    @Body() dto: SwitchScreenVariantDto,
+  ): Promise<TemplateConfigDto> {
+    return this.manageTemplate.switchScreenVariant(dto);
+  }
+
+  @Post('importScreenVariant')
+  @HttpCode(200)
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({ summary: 'Import a custom UI screen variant zip package' })
+  @ApiResponse({
+    status: 200,
+    type: ImportScreenVariantResponseDto,
+    description: 'Imported custom UI screen variant.',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: ImportScreenVariantDto })
+  async importScreenVariant(
+    @Body() dto: ImportScreenVariantDto,
+    @UploadedFile() file?: { buffer?: Buffer; originalname?: string },
+  ): Promise<ImportScreenVariantResponseDto> {
+    return this.manageTemplate.importScreenVariant(
+      file,
+      dto.templateDir,
+      dto.screen,
+      dto.variantId,
+    );
   }
 }
