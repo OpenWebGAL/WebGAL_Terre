@@ -515,6 +515,9 @@ msgstr "内层文本"
 msgid "内置"
 msgstr "内置"
 
+msgid "内置模板为只读，请新建模板后再更换界面"
+msgstr "内置模板为只读，请新建模板后再更换界面"
+
 msgid "内边距"
 msgstr "内边距"
 
@@ -1699,6 +1702,9 @@ msgstr "更多配置"
 
 msgid "更换界面"
 msgstr "更换界面"
+
+msgid "更换界面失败"
+msgstr "更换界面失败"
 
 msgid "替换 UI 样式标签"
 msgstr "替换 UI 样式标签"

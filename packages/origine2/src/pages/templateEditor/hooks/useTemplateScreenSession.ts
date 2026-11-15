@@ -112,7 +112,7 @@ export function useTemplateScreenSession(templateDir: string) {
   const loadedFileRef = useRef<string | null>(null);
   const ensuredSignatureRef = useRef<string | null>(null);
   const pendingScreenRef = useRef<UiScreenId | null>(null);
-  const pendingVariantRef = useRef<{ screen: UiScreenId; variantId: string } | null>(null);
+  const pendingVariantRef = useRef<{ screen: UiScreenId; variantId: string; expiresAt: number } | null>(null);
 
   useEffect(() => {
     if (!isCustomUi || !activeFilePath) return;
@@ -127,17 +127,6 @@ export function useTemplateScreenSession(templateDir: string) {
         const text = typeof res.data === 'string' ? res.data : '';
         loadedFileRef.current = activeFilePath;
         updateDraftScssText(text);
-        if (
-          text.trim() !== ''
-          && EditorPreviewClient.getLastUiScreenPayload()?.screen === stateRef.current.activeScreenId
-        ) {
-          EditorPreviewClient.setUiPartStyle({
-            screen: stateRef.current.activeScreenId,
-            variantId: stateRef.current.variantId,
-            scssText: text,
-            phase: 'preview',
-          });
-        }
       })
       .catch(() => {
         if (cancelled) return;
@@ -173,10 +162,12 @@ export function useTemplateScreenSession(templateDir: string) {
         }
         pendingScreenRef.current = null;
       }
-      if (pendingVariantRef.current !== null) {
+      const pendingVariant = pendingVariantRef.current;
+      if (pendingVariant !== null) {
         if (
-          payload.screen !== pendingVariantRef.current.screen
-          || payload.variantId !== pendingVariantRef.current.variantId
+          payload.screen === pendingVariant.screen
+          && payload.variantId !== pendingVariant.variantId
+          && Date.now() < pendingVariant.expiresAt
         ) {
           return;
         }
@@ -353,16 +344,23 @@ export function useTemplateScreenSession(templateDir: string) {
   const switchVariant = useCallback(
     async (screen: UiScreenId, variantId: string) => {
       pendingScreenRef.current = screen;
-      pendingVariantRef.current = { screen, variantId };
-      await api.manageTemplateControllerSwitchScreenVariant({
-        templateDir,
-        screen,
-        variantId,
-      });
-      await Promise.all([mutateScreensInfo(), mutateTemplateConfig()]);
-      updateActiveScreenId(screen);
-      EditorPreviewClient.reloadTemplates();
-      EditorPreviewClient.setActiveUiScreen({ screen });
+      pendingVariantRef.current = { screen, variantId, expiresAt: Date.now() + 1500 };
+      try {
+        await api.manageTemplateControllerSwitchScreenVariant({
+          templateDir,
+          screen,
+          variantId,
+        });
+        await Promise.all([mutateScreensInfo(), mutateTemplateConfig()]);
+        pendingVariantRef.current = { screen, variantId, expiresAt: Date.now() + 1500 };
+        updateActiveScreenId(screen);
+        EditorPreviewClient.reloadTemplates();
+        EditorPreviewClient.setActiveUiScreen({ screen });
+      } catch (error) {
+        pendingScreenRef.current = null;
+        pendingVariantRef.current = null;
+        throw error;
+      }
     },
     [mutateScreensInfo, mutateTemplateConfig, templateDir, updateActiveScreenId],
   );
@@ -371,18 +369,28 @@ export function useTemplateScreenSession(templateDir: string) {
     async (screen: UiScreenId, file: File) => {
       pendingScreenRef.current = screen;
       pendingVariantRef.current = null;
-      const resp = await api.manageTemplateControllerImportScreenVariant({
-        file,
-        templateDir,
-        screen,
-      });
-      if (resp.data?.variantId) {
-        pendingVariantRef.current = { screen, variantId: resp.data.variantId };
+      try {
+        const resp = await api.manageTemplateControllerImportScreenVariant({
+          file,
+          templateDir,
+          screen,
+        });
+        if (resp.data?.variantId) {
+          pendingVariantRef.current = {
+            screen,
+            variantId: resp.data.variantId,
+            expiresAt: Date.now() + 1500,
+          };
+        }
+        await Promise.all([mutateScreensInfo(), mutateTemplateConfig()]);
+        updateActiveScreenId(screen);
+        EditorPreviewClient.reloadTemplates();
+        EditorPreviewClient.setActiveUiScreen({ screen });
+      } catch (error) {
+        pendingScreenRef.current = null;
+        pendingVariantRef.current = null;
+        throw error;
       }
-      await Promise.all([mutateScreensInfo(), mutateTemplateConfig()]);
-      updateActiveScreenId(screen);
-      EditorPreviewClient.reloadTemplates();
-      EditorPreviewClient.setActiveUiScreen({ screen });
     },
     [mutateScreensInfo, mutateTemplateConfig, templateDir, updateActiveScreenId],
   );

@@ -202,6 +202,27 @@ export function ScreenPartTree({
     fileInputRef.current?.click();
   };
 
+  const resolveSwitchErrorMessage = (error: unknown, fallback: string): string => {
+    const responseMessage = (error as { response?: { data?: { message?: unknown } } })?.response?.data?.message;
+    const raw = typeof responseMessage === 'string'
+      ? responseMessage
+      : error instanceof Error
+        ? error.message
+        : '';
+    if (raw.includes('Built-in templates cannot be modified')) {
+      return t`内置模板为只读，请新建模板后再更换界面`;
+    }
+    return raw || fallback;
+  };
+
+  const handleSwitchVariant = async (screen: UiScreenId, variantId: string) => {
+    try {
+      await onSwitchVariant(screen, variantId);
+    } catch (error) {
+      notify(resolveSwitchErrorMessage(error, t`更换界面失败`), 'error');
+    }
+  };
+
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     event.target.value = '';
@@ -209,8 +230,8 @@ export function ScreenPartTree({
     try {
       await onImportVariant(uploadTargetScreenRef.current, file);
       notify(t`界面导入成功`, 'success');
-    } catch {
-      notify(t`界面导入失败`, 'error');
+    } catch (error) {
+      notify(resolveSwitchErrorMessage(error, t`界面导入失败`), 'error');
     }
   };
 
@@ -234,7 +255,7 @@ export function ScreenPartTree({
           selectedPartId={selectedPartId}
           onSelectScreen={onSelectScreen}
           onSelectPart={onSelectPart}
-          onSwitchVariant={onSwitchVariant}
+          onSwitchVariant={handleSwitchVariant}
           onPickImportFile={handlePickImportFile}
         />
       ))}

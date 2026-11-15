@@ -93,7 +93,7 @@ export function TemplatePreviewPane({
   }, []);
 
   const previewUrl = useMemo(
-    () => `/template-preview/${templateDir}${reloadNonce > 0 ? `?r=${reloadNonce}` : ''}`,
+    () => `/template-preview/${encodeURIComponent(templateDir)}/${reloadNonce > 0 ? `?r=${reloadNonce}` : ''}`,
     [templateDir, reloadNonce],
   );
 
@@ -103,7 +103,7 @@ export function TemplatePreviewPane({
   };
 
   const handleOpenInNewTab = () => {
-    window.open(`/template-preview/${templateDir}`, '_blank');
+    window.open(`/template-preview/${encodeURIComponent(templateDir)}/`, '_blank');
   };
 
   return (
