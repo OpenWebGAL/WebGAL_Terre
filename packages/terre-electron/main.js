@@ -1,11 +1,15 @@
 global['isElectron'] = true;
-const { app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog, shell } = require('electron');
 const log = require('electron-log');
 const http = require('http');
 const path = require('path');
 
 let Steamworks;
 let steamClient;
+let mainWindow;
+
+const isTrustedSender = (event) =>
+    Boolean(mainWindow && !mainWindow.isDestroyed() && event.senderFrame === mainWindow.webContents.mainFrame);
 
 try {
     Steamworks = require('steamworks.js');
@@ -69,9 +73,19 @@ const initializeSteam = (appId = STEAM_APP_ID) => {
     }
 };
 
-ipcMain.handle('steam-initialize', async (_event, appId) => initializeSteam(appId));
+ipcMain.handle('steam-initialize', async (event, appId) => {
+    if (!isTrustedSender(event)) {
+        log.warn('Blocked steam-initialize from untrusted frame');
+        return false;
+    }
+    return initializeSteam(appId);
+});
 
-ipcMain.handle('steam-unlock-achievement', async (_event, achievementId) => {
+ipcMain.handle('steam-unlock-achievement', async (event, achievementId) => {
+    if (!isTrustedSender(event)) {
+        log.warn('Blocked steam-unlock-achievement from untrusted frame');
+        return false;
+    }
     if (!steamClient && !initializeSteam()) {
         log.warn(`Cannot unlock achievement ${achievementId}: Steamworks not initialized`);
         return false;
@@ -93,7 +107,11 @@ ipcMain.handle('steam-unlock-achievement', async (_event, achievementId) => {
     }
 });
 
-ipcMain.handle('dialog-select-directory', async (_event, defaultPath) => {
+ipcMain.handle('dialog-select-directory', async (event, defaultPath) => {
+    if (!isTrustedSender(event)) {
+        log.warn('Blocked dialog-select-directory from untrusted frame');
+        return null;
+    }
     const result = await dialog.showOpenDialog({
         title: 'Select user data directory',
         defaultPath: typeof defaultPath === 'string' && defaultPath.length > 0 ? defaultPath : undefined,
@@ -154,6 +172,23 @@ const waitForServer = (url, retries = 120, delay = 250) => new Promise((resolve,
     tryConnect(retries);
 });
 
+const normalizeLoopbackHost = (hostname) =>
+    hostname === '127.0.0.1' || hostname === 'localhost' ? 'localhost' : hostname;
+
+const isAllowedTerreUrl = (targetUrl) => {
+    try {
+        const target = new URL(targetUrl);
+        const expected = new URL(WEBGAL_URL);
+        return (
+            target.protocol === expected.protocol &&
+            target.port === expected.port &&
+            normalizeLoopbackHost(target.hostname) === normalizeLoopbackHost(expected.hostname)
+        );
+    } catch {
+        return false;
+    }
+};
+
 const createWindow = async () => {
     const win = new BrowserWindow({
         width: 1600,
@@ -164,8 +199,30 @@ const createWindow = async () => {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
+            sandbox: true,
         },
     })
+    mainWindow = win;
+
+    win.webContents.setWindowOpenHandler(({ url }) => {
+        try {
+            const parsed = new URL(url);
+            if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+                shell.openExternal(url).catch((error) => {
+                    log.warn(`Failed to open external URL: ${url}`, error);
+                });
+            }
+        } catch {
+            // 忽略非法 URL
+        }
+        return { action: 'deny' };
+    });
+    win.webContents.on('will-navigate', (event, targetUrl) => {
+        if (!isAllowedTerreUrl(targetUrl)) {
+            log.warn(`Blocked unexpected navigation: ${targetUrl}`);
+            event.preventDefault();
+        }
+    });
 
     try {
         await waitForServer(WEBGAL_URL);

@@ -1,10 +1,26 @@
 const { app, BrowserWindow, globalShortcut, Menu, ipcMain } = require('electron');
 const log = require('electron-log');
 const path = require('path');
+const { fileURLToPath } = require('url');
 const Steamworks = require('steamworks.js');
 
+const ENTRY_HTML_PATH = path.resolve(__dirname, 'public', 'index.html');
+
+let mainWindow;
 let steamClient;
 let steamCallbackInterval;
+
+const isTrustedSender = (event) =>
+    Boolean(mainWindow && !mainWindow.isDestroyed() && event.senderFrame === mainWindow.webContents.mainFrame);
+
+const isAllowedNavigationUrl = (targetUrl) => {
+    try {
+        const parsed = new URL(targetUrl);
+        return parsed.protocol === 'file:' && path.relative(ENTRY_HTML_PATH, fileURLToPath(parsed)) === '';
+    } catch {
+        return false;
+    }
+};
 
 const parseAppId = (appId) => {
     if (typeof appId === 'number') {
@@ -21,7 +37,11 @@ const stopSteamCallbacks = () => {
     }
 };
 
-ipcMain.handle('steam-initialize', async (_event, appId) => {
+ipcMain.handle('steam-initialize', async (event, appId) => {
+    if (!isTrustedSender(event)) {
+        log.warn('Blocked steam-initialize from untrusted frame');
+        return false;
+    }
     if (steamClient) {
         return true;
     }
@@ -54,7 +74,11 @@ ipcMain.handle('steam-initialize', async (_event, appId) => {
     }
 });
 
-ipcMain.handle('steam-unlock-achievement', async (_event, achievementId) => {
+ipcMain.handle('steam-unlock-achievement', async (event, achievementId) => {
+    if (!isTrustedSender(event)) {
+        log.warn('Blocked steam-unlock-achievement from untrusted frame');
+        return false;
+    }
     if (!steamClient) {
         log.warn(`Cannot unlock achievement ${achievementId}: Steamworks not initialized`);
         return false;
@@ -115,10 +139,20 @@ const createWindow = () => {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
+            sandbox: true,
         },
     })
+    mainWindow = win;
 
-    win.loadFile('./public/index.html').then(r => {
+    win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+    win.webContents.on('will-navigate', (event, targetUrl) => {
+        if (!isAllowedNavigationUrl(targetUrl)) {
+            log.warn(`Blocked unexpected navigation: ${targetUrl}`);
+            event.preventDefault();
+        }
+    });
+
+    win.loadFile(ENTRY_HTML_PATH).then(r => {
         console.log(r)
         win.webContents.executeJavaScript('window.isElectron = true')
     });
