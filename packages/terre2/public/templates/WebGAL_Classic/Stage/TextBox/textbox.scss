@@ -26,6 +26,8 @@
 .TextBox_Background {
   z-index: 2;
   background: linear-gradient(rgba(245, 247, 250, 1) 0%, rgba(189, 198, 222, 1) 100%);
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 @keyframes showSoftly {
@@ -62,6 +64,7 @@
   left: 0;
   top: 0;
   -webkit-text-stroke: 0.1em rgba(255, 255, 255, 1);
+  text-shadow: none;
   z-index: 1;
 }
 
@@ -80,6 +83,7 @@
 .TextBox_showName {
   font-size: 85%;
   padding: 0 2em 0 2em;
+  min-width: 0;
   position: absolute;
   left: 150px;
   top: -68px;
@@ -94,6 +98,7 @@
   z-index: 2;
   background: rgba(11, 52, 110, 1);
   border: 4px solid rgba(255, 255, 255, 0.75);
+  border-image: none;
   box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.5);
 }
 
@@ -146,6 +151,8 @@
   position: absolute;
   left: 0;
   top: 0;
+  -webkit-text-stroke: 0 transparent;
+  text-shadow: none;
   z-index: 1;
 }
 

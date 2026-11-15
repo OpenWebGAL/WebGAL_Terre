@@ -22,6 +22,8 @@ transition: left 0.33s;
 .TextBox_Background {
 z-index: 2;
 background: linear-gradient(transparent, rgba(0, 0, 0, .25) 25%, rgba(0, 0, 0, .35) 75%, rgba(0, 0, 0, .6)), linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .35) 25%, rgba(0, 0, 0, .35) 75%, transparent);
+-webkit-mask-image: none;
+mask-image: none;
 &:hover {}
 
     &:active {}}
@@ -50,6 +52,7 @@ position: absolute;
 left: 0;
 top: 0;
 -webkit-text-stroke: 0em rgba(255, 255, 255, 1);
+text-shadow: none;
 z-index: 1;
 }
 
@@ -80,6 +83,8 @@ background: transparent;
 
 .TextBox_ShowName_Background {
 z-index: 2;
+border: 0;
+border-image: none;
 box-shadow: none;
 background: transparent;
 
@@ -124,6 +129,8 @@ z-index: 2;
 position: absolute;
 left: 0;
 top: 0;
+-webkit-text-stroke: 0 transparent;
+text-shadow: none;
 z-index: 1;
 }
 

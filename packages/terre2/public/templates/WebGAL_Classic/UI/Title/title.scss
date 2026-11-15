@@ -34,6 +34,8 @@
   background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
 
   &:hover {
+    transform: skewX(-10deg);
+    filter: none;
     text-shadow: 0 0 10px rgba(255, 255, 255, 1);
     padding: 1em 6em 1em 3em;
   }
@@ -47,6 +49,16 @@
   font-size: 200%;
   font-family: WebgalUI, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   letter-spacing: 0.15em;
+  line-height: normal;
+}
+
+.Title_button_text_outer {
+  display: none;
+}
+
+.Title_button_text_inner {
+  display: none;
+  -webkit-text-stroke: 0 transparent;
 }
 
 .Title_backup_background {
@@ -55,4 +67,14 @@
   position: absolute;
   z-index: 13;
   background: linear-gradient(135deg, #fdfbfb 0%, #dcddde 100%);
+}
+
+.Title_button_disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+
+  &:hover {
+    transform: skewX(-10deg);
+    filter: none;
+  }
 }
