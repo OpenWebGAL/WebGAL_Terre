@@ -321,6 +321,8 @@ function translatePreviewCommandToLegacyEnvelope(
       });
     case 'preview.command.seek-animation':
       return null;
+    default:
+      return null;
   }
 }
 
@@ -509,7 +511,9 @@ export class EditorPreviewHost {
   ) {
     connectionState.role = 'editor';
 
-    const previewSocket = this.activeEmbeddedPreview;
+    const previewSocket = envelope.embeddedLaunchId
+      ? this.dedicatedPreviews.get(envelope.embeddedLaunchId)
+      : this.activeEmbeddedPreview;
     const previewState = previewSocket
       ? this.v1Connections.get(previewSocket)
       : undefined;
