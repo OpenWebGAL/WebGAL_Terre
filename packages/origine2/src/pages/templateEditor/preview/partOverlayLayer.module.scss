@@ -1,0 +1,40 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hitbox {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.1s ease, background-color 0.1s ease;
+
+  &:hover {
+    border-color: var(--blue-sky-50pct);
+    background: var(--primary-5pct);
+  }
+}
+
+.hitboxSelected {
+  border: 1px dashed var(--primary);
+  background: var(--primary-5pct);
+  pointer-events: none;
+}
+
+.hitboxReadonly {
+  border: 1px dashed var(--warning);
+  background: transparent;
+  pointer-events: none;
+}
+
+.moveTarget {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  outline: 1px solid var(--primary);
+  pointer-events: auto;
+  cursor: move;
+}

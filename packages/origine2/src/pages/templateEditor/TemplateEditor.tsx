@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import TemplateEditorSidebar from "./TemplateEditorSidebar/TemplateEditorSidebar";
-import TemplateEditorMainAria from "./TemplateEditorMainAria/TemplateEditorMainAria";
-import styles from "./templateEditor.module.scss";
+import useEditorStore from "@/store/useEditorStore";
 import { useTemplateEditorContext } from "@/store/useTemplateEditorStore";
 import { EditorPreviewClient } from "@/utils/editorPreviewClient";
+import { ResizableSplit } from "@/pages/editor/AnimationEditor/components/ResizableSplit";
 import {
   useComponentTreeChoose,
   useComponentTreeTextbox,
@@ -11,13 +10,91 @@ import {
   useTemplateTempScene
 }
   from "@/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree";
+import TemplateEditorSidebar from "./TemplateEditorSidebar/TemplateEditorSidebar";
+import TemplateEditorMainAria from "./TemplateEditorMainAria/TemplateEditorMainAria";
+import { useTemplateScreenSession } from "./hooks/useTemplateScreenSession";
+import { TemplatePreviewPane } from "./preview/TemplatePreviewPane";
+import { RightInspectorPane } from "./inspector/RightInspectorPane";
+import styles from "./templateEditor.module.scss";
 
 export default function TemplateEditor() {
+  const templateDir = useEditorStore.use.subPage();
+  const styleTab = useTemplateEditorContext((s) => s.styleTab);
+  const fullCssMode = useTemplateEditorContext((s) => s.fullCssMode);
+  const isStyleCollapsed = useTemplateEditorContext((s) => s.isStyleCollapsed);
+  const updateStyleTab = useTemplateEditorContext((s) => s.updateStyleTab);
+  const updateFullCssMode = useTemplateEditorContext((s) => s.updateFullCssMode);
+  const updateIsStyleCollapsed = useTemplateEditorContext((s) => s.updateIsStyleCollapsed);
+
+  const session = useTemplateScreenSession(templateDir);
+
+  if (!session.isCustomUi) {
+    return (
+      <div className={styles.editor}>
+        <TemplateEditorSidebar />
+        <SideberResizer />
+        <TemplateEditorMainAria />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.editor}>
-      <TemplateEditorSidebar />
+      <TemplateEditorSidebar
+        customSession={{
+          screensInfo: session.screensInfo,
+          activeScreenId: session.activeScreenId,
+          parts: session.parts,
+          selectedPartId: session.selectedPartId,
+          onSelectScreen: session.activateScreen,
+          onSelectPart: session.selectPart,
+          onSwitchVariant: session.switchVariant,
+          onImportVariant: session.importVariant,
+        }}
+      />
       <SideberResizer />
-      <TemplateEditorMainAria />
+      <div className={styles.workspace}>
+        <ResizableSplit
+          direction="horizontal"
+          storageKey="template-editor-workspace-split"
+          defaultRatio={0.64}
+          first={
+            <TemplatePreviewPane
+              templateDir={templateDir}
+              previewMode={session.previewMode}
+              useMockData={session.useMockData}
+              parts={session.parts}
+              selectedPartId={session.selectedPartId}
+              scssText={session.draftScssText}
+              applyStyleIgnored={session.applyStyleIgnored}
+              onChangePreviewMode={session.setPreviewMode}
+              onChangeMockData={session.setMockData}
+              onSelectPart={session.selectPart}
+              onPreviewScss={session.previewScss}
+              onCommitScss={session.commitScss}
+            />
+          }
+          second={
+            <RightInspectorPane
+              part={session.selectedPart}
+              scssText={session.draftScssText}
+              templateDir={templateDir}
+              scssPath={session.activeScssPath}
+              styleTab={styleTab}
+              fullCssMode={fullCssMode}
+              lockedState={session.lockedState}
+              isStyleCollapsed={isStyleCollapsed}
+              onChangeStyleTab={updateStyleTab}
+              onChangeFullCssMode={updateFullCssMode}
+              onChangeLockedState={session.setLockedState}
+              onToggleStyleCollapse={() => updateIsStyleCollapsed(!isStyleCollapsed)}
+              onPreviewScss={session.previewScss}
+              onCommitScss={session.commitScss}
+              onCodeSaved={session.commitScssFromCode}
+            />
+          }
+        />
+      </div>
     </div>
   );
 }

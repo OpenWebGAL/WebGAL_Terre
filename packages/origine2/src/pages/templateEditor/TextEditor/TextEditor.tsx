@@ -5,27 +5,51 @@ import { api } from '@/api';
 import { EditorPreviewClient } from '@/utils/editorPreviewClient';
 import useEditorStore from '@/store/useEditorStore';
 
-export default function TextEditor({ path }: { path: string }) {
+interface ITextEditorProps {
+  path: string;
+  fallbackText?: string;
+  onSaved?: (text: string) => void;
+}
+
+export default function TextEditor({ path, fallbackText, onSaved }: ITextEditorProps) {
   const { mutate } = useSWRConfig();
   const extName = path.split('.').pop() || '';
 
-  const fileFetcher = async (path: string) => {
-    const res = await axios.get(path, { responseType: 'text', transformResponse: [(data) => data] });
-    return res.data;
+  const fileFetcher = async (filePath: string) => {
+    try {
+      const res = await axios.get(filePath, { responseType: 'text', transformResponse: [(data) => data] });
+      return typeof res.data === 'string' ? res.data : '';
+    } catch {
+      return '';
+    }
   };
 
   const { data } = useSWR(path, fileFetcher);
 
   const isDarkMode = useEditorStore.use.isDarkMode();
 
+  const onSavedRef = useRef(onSaved);
+  onSavedRef.current = onSaved;
+
   const update = async (text: string) => {
     await api.assetsControllerEditTextFile({ textFile: text, path: path });
-    await mutate(path);
-    EditorPreviewClient.reloadTemplates();
+    await mutate(path, text, false);
+    if (onSavedRef.current) {
+      onSavedRef.current(text);
+    } else {
+      EditorPreviewClient.reloadTemplates();
+    }
   };
+
+  const updateRef = useRef(update);
+  updateRef.current = update;
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [editorReady, setEditorReady] = useState(false);
+
+  useEffect(() => {
+    setEditorReady(false);
+  }, [path]);
 
   // 使用 useMemo 缓存 iframe 元素
   const memoizedIframe = useMemo(() => {
@@ -47,10 +71,11 @@ export default function TextEditor({ path }: { path: string }) {
     if (!iframe) return;
 
     const handleMessage = (event: MessageEvent) => {
+      if (event.source !== iframe.contentWindow) return;
       if (event.data.type === 'editorReady') {
         setEditorReady(true);
       } else if (event.data.type === 'valueChanged') {
-        update(event.data.value);
+        updateRef.current(event.data.value);
       }
     };
 
@@ -59,14 +84,16 @@ export default function TextEditor({ path }: { path: string }) {
     return () => window.removeEventListener('message', handleMessage);
   }, [path]);
 
+  const initialText = data === undefined ? undefined : (data.trim() ? data : (fallbackText ?? data));
+
   useEffect(() => {
     const iframe = iframeRef.current;
-    if (!iframe || !data || !editorReady) return;
+    if (!iframe || initialText === undefined || !editorReady) return;
 
-    iframe.contentWindow?.postMessage({ type: 'setValue', value: data }, '*');
+    iframe.contentWindow?.postMessage({ type: 'setValue', value: initialText }, '*');
     iframe.contentWindow?.postMessage({ type: 'setLanguage', language: extName }, '*');
     iframe.contentWindow?.postMessage({ type: 'setTheme', theme: isDarkMode ? 'vs-dark' : 'vs' }, '*');
-  }, [data, editorReady, extName, isDarkMode]);
+  }, [initialText, editorReady, extName, isDarkMode]);
 
   return memoizedIframe;
 }

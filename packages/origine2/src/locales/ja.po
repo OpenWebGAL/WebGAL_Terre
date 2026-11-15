@@ -35,6 +35,9 @@ msgstr "1, 2, 3, ..."
 msgid "4.6 用户数据迁移"
 msgstr "4.6 ユーザーデータ移行"
 
+msgid "applyStyle 已覆盖"
+msgstr ""
+
 msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 
@@ -248,6 +251,9 @@ msgstr "循環接続は作成できません"
 msgid "不设定"
 msgstr "未設定"
 
+msgid "不透明"
+msgstr ""
+
 msgid "与同目标动画并行"
 msgstr "同じ対象のアニメーションと並行実行"
 
@@ -287,6 +293,9 @@ msgstr "WebGALホーム"
 msgid "主题"
 msgstr "テーマ"
 
+msgid "九宫格"
+msgstr ""
+
 msgid "亮度"
 msgstr "輝度"
 
@@ -304,6 +313,9 @@ msgstr "このシーンから選択"
 
 msgid "从默认状态开始"
 msgstr "デフォルトの状態から開始"
+
+msgid "代码"
+msgstr ""
 
 msgid "代码编辑器"
 msgstr "コードエディタ"
@@ -449,6 +461,9 @@ msgstr "入場時間（ミリ秒）"
 msgid "全局变量"
 msgstr "グローバル変数"
 
+msgid "全局弹窗"
+msgstr ""
+
 msgid "全屏文字"
 msgstr "全画面テキスト"
 
@@ -488,11 +503,17 @@ msgstr "背景画像を非表示"
 msgid "关闭预览窗口"
 msgstr "プレビューウィンドウを閉じる"
 
+msgid "内"
+msgstr ""
+
 msgid "内容"
 msgstr "内容"
 
 msgid "内层文本"
 msgstr "内側テキスト"
+
+msgid "内置"
+msgstr ""
 
 msgid "内边距"
 msgstr "パディング"
@@ -548,6 +569,9 @@ msgstr "背景画像の切り替え"
 msgid "切换角色"
 msgstr "キャラクターの切り替え"
 
+msgid "切片"
+msgstr ""
+
 msgid "列表视图"
 msgstr "リストビュー"
 
@@ -599,6 +623,9 @@ msgstr "更新"
 msgid "刷新游戏"
 msgstr "ゲームをリフレッシュ"
 
+msgid "刷新预览"
+msgstr ""
+
 msgid "前景"
 msgstr "Foreground"
 
@@ -620,6 +647,9 @@ msgstr "フレームコントロール"
 msgid "动画编辑器"
 msgstr "アニメーションエディタ"
 
+msgid "包含"
+msgstr ""
+
 msgid "半张嘴"
 msgstr "半分開いた口"
 
@@ -638,8 +668,14 @@ msgstr "ユーザーデータを新しいディレクトリへ移行します。
 msgid "即将把用户数据迁移回默认目录。文件较多时可能需要一些时间。"
 msgstr "ユーザーデータを既定のディレクトリへ戻します。ファイルが多い場合は時間がかかることがあります。"
 
+msgid "历史记录"
+msgstr ""
+
 msgid "厚度"
 msgstr "厚さ"
+
+msgid "原尺寸"
+msgstr ""
 
 msgid "原样式->新样式，多个用逗号分隔"
 msgstr "元のスタイル->新しいスタイル、複数はカンマで区切る"
@@ -652,6 +688,9 @@ msgstr "引数の値。波かっこ補間で呼び出し元の変数を参照で
 
 msgid "参数名"
 msgstr "引数名"
+
+msgid "双线"
+msgstr ""
 
 msgid "反射电影滤镜"
 msgstr "反射映画"
@@ -679,6 +718,9 @@ msgstr "変数名"
 
 msgid "变量表达式"
 msgstr "変数式"
+
+msgid "叠色"
+msgstr ""
 
 msgid "只展示节点，不展示名称"
 msgstr "ノードのみ表示し、名前は表示しない"
@@ -722,8 +764,20 @@ msgstr "右揃え"
 msgid "名称"
 msgstr "名前"
 
+msgid "向上"
+msgstr ""
+
 msgid "向上添加"
 msgstr "上に追加"
+
+msgid "向下"
+msgstr ""
+
+msgid "向右"
+msgstr ""
+
+msgid "向左"
+msgstr ""
 
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "BGMの再生を開始、切り替え、または停止する"
@@ -757,6 +811,9 @@ msgstr "画像"
 
 msgid "图层组合"
 msgstr "レイヤー構成"
+
+msgid "图形"
+msgstr ""
 
 msgid "图形编辑器"
 msgstr "グラフィックエディタ"
@@ -800,6 +857,9 @@ msgstr "ファイルエクスプローラーで開く"
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
 
+msgid "在新标签页打开"
+msgstr ""
+
 msgid "在游戏中显示当前变量"
 msgstr "ゲーム内に現在の変数を表示"
 
@@ -824,6 +884,9 @@ msgstr "シーンの読み込みに失敗しました。ファイルが存在す
 msgid "场景返回"
 msgstr "シーンから戻る"
 
+msgid "填充"
+msgstr ""
+
 msgid "填写参数值"
 msgstr "パラメータ値を入力"
 
@@ -835,6 +898,9 @@ msgstr "複雑アニメーション名はエンジン内蔵アニメーション
 
 msgid "外层文本"
 msgstr "外側テキスト"
+
+msgid "外观样式"
+msgstr ""
 
 msgid "外边距"
 msgstr "マージン"
@@ -875,14 +941,32 @@ msgstr "フォントタイプ"
 msgid "字体配置"
 msgstr "フォント設定"
 
+msgid "字号"
+msgstr ""
+
+msgid "字影"
+msgstr ""
+
 msgid "字母间距"
 msgstr "文字間隔"
+
+msgid "字色"
+msgstr ""
+
+msgid "字距"
+msgstr ""
 
 msgid "字重"
 msgstr "フォントの太さ"
 
 msgid "存档变量"
 msgstr "セーブデータ変数"
+
+msgid "存档界面"
+msgstr ""
+
+msgid "完全 CSS 定义"
+msgstr ""
 
 msgid "定位方式"
 msgstr "位置決め方法"
@@ -904,6 +988,9 @@ msgstr "リアルタイムプレビューの早送りがタイムアウト制限
 
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
+
+msgid "实线"
+msgstr ""
 
 msgid "实验性快速预览"
 msgstr "実験的高速プレビュー"
@@ -928,6 +1015,9 @@ msgstr "ダイアログタイトル"
 
 msgid "导入模板"
 msgstr "テンプレートをインポート"
+
+msgid "导入自定义界面"
+msgstr ""
 
 msgid "导出"
 msgstr "エクスポート"
@@ -983,6 +1073,9 @@ msgstr "まだフォントが追加されていません"
 msgid "尚未配置任何字体"
 msgstr "まだフォントが設定されていません"
 
+msgid "尺寸"
+msgstr ""
+
 msgid "局部变量"
 msgstr "ローカル変数"
 
@@ -997,6 +1090,9 @@ msgstr "中央揃え"
 
 msgid "居中对齐"
 msgstr "中央揃え"
+
+msgid "展开样式区"
+msgstr ""
 
 msgid "展示小头像"
 msgstr "アバターを表示"
@@ -1055,6 +1151,9 @@ msgstr "既読テキスト内側"
 msgid "已读文本外层"
 msgstr "既読テキスト外側"
 
+msgid "布局由列表控制"
+msgstr ""
+
 msgid "帧继承"
 msgstr "キーフレーム継承"
 
@@ -1090,6 +1189,12 @@ msgstr "すでに適用されているテンプレート"
 
 msgid "应用颜色变化"
 msgstr "色の変更を適用"
+
+msgid "底框图"
+msgstr ""
+
+msgid "底部快捷栏"
+msgstr ""
 
 msgid "延迟时间（秒）"
 msgstr "遅延時間（秒）"
@@ -1139,6 +1244,9 @@ msgstr "現在の環境ではシステムのフォルダー選択を使用でき
 msgid "当前预览变量"
 msgstr "現在のプレビュー変数"
 
+msgid "影色"
+msgstr ""
+
 msgid "循环播放"
 msgstr "ループ再生"
 
@@ -1171,6 +1279,9 @@ msgstr "このバージョンを無視する"
 
 msgid "恢复默认目录"
 msgstr "既定のディレクトリに戻す"
+
+msgid "悬停"
+msgstr ""
 
 msgid "我确定要删除游戏"
 msgstr "ゲームを削除することを確認しました"
@@ -1211,8 +1322,14 @@ msgstr "この文まで実行"
 msgid "执行后清除角色名"
 msgstr "実行後にキャラクター名を消去"
 
+msgid "扩展"
+msgstr ""
+
 msgid "扩展名"
 msgstr "拡張子"
+
+msgid "拉伸"
+msgstr ""
 
 msgid "拖动调整时间，右键设置缓动或删除"
 msgstr "ドラッグで時間を調整、右クリックでイージングの設定や削除"
@@ -1232,11 +1349,23 @@ msgstr "継続時間（ミリ秒）"
 msgid "指针"
 msgstr "ポインター"
 
+msgid "按下"
+msgstr ""
+
 msgid "排序方式"
 msgstr "並べ替え"
 
+msgid "排版"
+msgstr ""
+
 msgid "控制是否要显示文本框"
 msgstr "テキストボックスの表示を制御する"
+
+msgid "描边"
+msgstr ""
+
+msgid "描边色"
+msgstr ""
 
 msgid "提交"
 msgstr "提出"
@@ -1300,6 +1429,9 @@ msgstr "操作"
 
 msgid "操作失败"
 msgstr "操作に失敗しました"
+
+msgid "收起样式区"
+msgstr ""
 
 msgid "放大"
 msgstr "拡大"
@@ -1565,11 +1697,17 @@ msgstr "その他のオプション"
 msgid "更多配置"
 msgstr "その他の設定"
 
+msgid "更换界面"
+msgstr ""
+
 msgid "替换 UI 样式标签"
 msgstr "UI スタイルタグを置換"
 
 msgid "替换同目标动画"
 msgstr "同じ対象のアニメーションを置換"
+
+msgid "未找到样式文件"
+msgstr ""
 
 msgid "未指定"
 msgstr "指定なし"
@@ -1580,11 +1718,17 @@ msgstr "認識されないコマンド"
 msgid "未识别的指令"
 msgstr "認識されないコマンド"
 
+msgid "未选择"
+msgstr ""
+
 msgid "未选择图层"
 msgstr "レイヤー未選択"
 
 msgid "未选择跳转目标"
 msgstr "ジャンプ先が選択されていません"
+
+msgid "未选择部件"
+msgstr ""
 
 msgid "未选择预设"
 msgstr "プリセット未選択"
@@ -1646,6 +1790,9 @@ msgstr "タイトルボタンテキスト外層"
 msgid "标题按钮禁用"
 msgstr "タイトルボタン無効"
 
+msgid "标题界面"
+msgstr ""
+
 msgid "标题背景图片"
 msgstr "タイトルの背景画像"
 
@@ -1669,6 +1816,9 @@ msgstr "移行が必要な内容を検出しました：{0}。"
 
 msgid "模式"
 msgstr "モード"
+
+msgid "模拟数据"
+msgstr "シミュレートデータ"
 
 msgid "模板"
 msgstr "テンプレート"
@@ -1730,6 +1880,9 @@ msgstr "このコマンドはすべてのゲームが終わるときに使用"
 msgid "每个流程图只能有一个根节点"
 msgstr "各フローチャートに設定できるルートノードは 1 つだけです"
 
+msgid "毛玻璃"
+msgstr ""
+
 msgid "永不换行"
 msgstr "折り返しなし"
 
@@ -1753,6 +1906,9 @@ msgstr "コメント"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "コメントは編集時のみ表示され、ゲームプレイ時には非表示"
+
+msgid "流程图"
+msgstr ""
 
 msgid "流程图列表"
 msgstr "フローチャート一覧"
@@ -1850,6 +2006,12 @@ msgstr "キャラクターをクリア"
 msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "キャラクター名を消去し、キャラクター名が空欄の文ではキャラクター名を表示しない"
 
+msgid "渐变"
+msgstr ""
+
+msgid "渐隐"
+msgstr ""
+
 msgid "游戏"
 msgstr "ゲーム"
 
@@ -1904,6 +2066,9 @@ msgstr "エフェクト状態"
 msgid "特殊演出"
 msgstr "特別演出"
 
+msgid "环绕"
+msgstr ""
+
 msgid "用户数据"
 msgstr "ユーザーデータ"
 
@@ -1928,6 +2093,15 @@ msgstr "映画モード"
 msgid "电影模式值"
 msgstr "映画モードの値"
 
+msgid "画布编辑"
+msgstr ""
+
+msgid "界面导入失败"
+msgstr ""
+
+msgid "界面导入成功"
+msgstr ""
+
 msgid "留空使用默认值"
 msgstr "空欄で既定値を使用"
 
@@ -1936,6 +2110,9 @@ msgstr "空欄なら戻り値なし。数値、true/false、文字列、式が�
 
 msgid "百分比。 0-100 有效"
 msgstr "百分率。 0-100 有効"
+
+msgid "盒影"
+msgstr ""
 
 msgid "目前没有打开任何文件"
 msgstr "現在開いているファイルはありません"
@@ -2012,6 +2189,9 @@ msgstr "動画のスキップを無効にする"
 msgid "禁用"
 msgstr "無効化"
 
+msgid "禁用样式"
+msgstr ""
+
 msgid "移动到回收站失败"
 msgstr "ゴミ箱への移動に失敗しました"
 
@@ -2048,8 +2228,14 @@ msgstr "一定時間待機"
 msgid "等待时间（单位为毫秒）"
 msgstr "待機時間（ミリ秒）"
 
+msgid "等待预览上报部件"
+msgstr ""
+
 msgid "简体中文"
 msgstr "簡体字中国語"
+
+msgid "简易模式"
+msgstr ""
 
 msgid "红色通道"
 msgstr "赤いチャネル"
@@ -2059,6 +2245,9 @@ msgstr "素材"
 
 msgid "紧急回避"
 msgstr "緊急回避"
+
+msgid "纯色"
+msgstr ""
 
 msgid "纹理"
 msgstr "Tex"
@@ -2078,6 +2267,9 @@ msgstr "バックアウト"
 msgid "终点弹跳"
 msgstr "バウンスアウト"
 
+msgid "终色"
+msgstr ""
+
 msgid "结束后保持"
 msgstr "終了後保持"
 
@@ -2095,6 +2287,9 @@ msgstr "絶対"
 
 msgid "绝对值"
 msgstr "絶対値"
+
+msgid "继承"
+msgstr ""
 
 msgid "继续游戏按钮"
 msgstr "「続きから」ボタン"
@@ -2152,6 +2347,9 @@ msgstr "ズーム（Ctrl + ホイール）"
 
 msgid "网格视图"
 msgstr "グリッドビュー"
+
+msgid "羽化"
+msgstr ""
 
 msgid "老电影滤镜"
 msgstr "古い映画"
@@ -2243,11 +2441,20 @@ msgstr "ユーザーからの文字入力を取得"
 msgid "获取输入"
 msgstr "入力を取得"
 
+msgid "菜单浮层"
+msgstr ""
+
 msgid "蓝色通道"
 msgstr "青いチャネル"
 
+msgid "虚线"
+msgstr ""
+
 msgid "行脚本"
 msgstr " スクリプトの行、"
+
+msgid "行高"
+msgstr ""
 
 msgid "补充"
 msgstr "補完"
@@ -2266,6 +2473,9 @@ msgstr "プロパティ{0}を削除しますか？"
 
 msgid "覆盖"
 msgstr "カバレッジ"
+
+msgid "角度"
+msgstr ""
 
 msgid "角色"
 msgstr "キャラクター"
@@ -2333,6 +2543,9 @@ msgstr "変数を設定"
 msgid "设置普通变量或全局变量"
 msgstr "通常変数またはグローバル変数を設定"
 
+msgid "设置界面"
+msgstr ""
+
 msgid "设置立绘或背景的进出场动画"
 msgstr "人物や背景のアニメーションを設定する。"
 
@@ -2375,6 +2588,9 @@ msgstr "フォント名を入力または選択してください"
 msgid "请输入搜索提示词..."
 msgstr "検索ヒントを入力してください..."
 
+msgid "读档界面"
+msgstr ""
+
 msgid "调整前景图片"
 msgstr "前景画像のリサイズ"
 
@@ -2411,6 +2627,9 @@ msgstr "デバッグ変数"
 msgid "资源"
 msgstr "アセット"
 
+msgid "起止"
+msgstr ""
+
 msgid "起止回弹"
 msgstr "バックインアウト"
 
@@ -2422,6 +2641,9 @@ msgstr "バックイン"
 
 msgid "起点弹跳"
 msgstr "バウンスイン"
+
+msgid "起色"
+msgstr ""
 
 msgid "跨语句动画"
 msgstr "アニメーションを維持する"
@@ -2461,6 +2683,15 @@ msgstr "入力検証の正規表現"
 
 msgid "输入目标 ID"
 msgstr "ターゲットIDを入力"
+
+msgid "边框"
+msgstr ""
+
+msgid "边框宽"
+msgstr ""
+
+msgid "边框色"
+msgstr ""
 
 msgid "迁移到此目录"
 msgstr "このディレクトリへ移行"
@@ -2651,6 +2882,9 @@ msgstr "CG鑑賞"
 msgid "鉴赏排序"
 msgstr "鑑賞の並び順"
 
+msgid "鉴赏界面"
+msgstr ""
+
 msgid "鉴赏系列"
 msgstr "鑑賞シリーズ"
 
@@ -2729,6 +2963,9 @@ msgstr "組み込みテンプレートはインストールディレクトリに
 msgid "预览"
 msgstr "プレビュー"
 
+msgid "预览交互"
+msgstr ""
+
 msgid "预览初始状态"
 msgstr "プレビューの初期状態"
 
@@ -2794,6 +3031,9 @@ msgstr "デフォルト値は50"
 
 msgid "默认变换和效果"
 msgstr "デフォルトの変換と効果"
+
+msgid "默认字重"
+msgstr ""
 
 msgid "默认语言"
 msgstr "デフォルト言語"

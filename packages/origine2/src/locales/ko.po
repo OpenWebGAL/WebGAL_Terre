@@ -35,6 +35,9 @@ msgstr "1, 2, 3, ..."
 msgid "4.6 用户数据迁移"
 msgstr "4.6 사용자 데이터 이동"
 
+msgid "applyStyle 已覆盖"
+msgstr ""
+
 msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 
@@ -248,6 +251,9 @@ msgstr "순환 연결을 만들 수 없습니다"
 msgid "不设定"
 msgstr "설정 안 함"
 
+msgid "不透明"
+msgstr ""
+
 msgid "与同目标动画并行"
 msgstr "동일 대상 애니메이션과 병행 실행"
 
@@ -287,6 +293,9 @@ msgstr "홈페이지"
 msgid "主题"
 msgstr "테마"
 
+msgid "九宫格"
+msgstr ""
+
 msgid "亮度"
 msgstr "밝기"
 
@@ -304,6 +313,9 @@ msgstr "현재 장면에서 선택"
 
 msgid "从默认状态开始"
 msgstr "기본 상태에서 시작"
+
+msgid "代码"
+msgstr ""
 
 msgid "代码编辑器"
 msgstr "코드 에디터"
@@ -449,6 +461,9 @@ msgstr "입장 시간(단위: 밀리초)"
 msgid "全局变量"
 msgstr "전역 변수"
 
+msgid "全局弹窗"
+msgstr ""
+
 msgid "全屏文字"
 msgstr "전체 화면 텍스트"
 
@@ -488,11 +503,17 @@ msgstr "배경 끄기"
 msgid "关闭预览窗口"
 msgstr "미리보기 창 닫기"
 
+msgid "内"
+msgstr ""
+
 msgid "内容"
 msgstr "내용"
 
 msgid "内层文本"
 msgstr "내부 텍스트"
+
+msgid "内置"
+msgstr ""
 
 msgid "内边距"
 msgstr "안쪽 여백"
@@ -548,6 +569,9 @@ msgstr "배경 이미지 전환"
 msgid "切换角色"
 msgstr "캐릭터 전환"
 
+msgid "切片"
+msgstr ""
+
 msgid "列表视图"
 msgstr "목록 확인"
 
@@ -599,6 +623,9 @@ msgstr "새로고침"
 msgid "刷新游戏"
 msgstr "게임 새로고침"
 
+msgid "刷新预览"
+msgstr ""
+
 msgid "前景"
 msgstr "전경"
 
@@ -620,6 +647,9 @@ msgstr "애니메이션 프레임 제어"
 msgid "动画编辑器"
 msgstr "애니메이션 에디터"
 
+msgid "包含"
+msgstr ""
+
 msgid "半张嘴"
 msgstr "반쯤 벌린 입"
 
@@ -638,8 +668,14 @@ msgstr "곧 사용자 데이터를 새로운 목록으로 이동합니다. 파�
 msgid "即将把用户数据迁移回默认目录。文件较多时可能需要一些时间。"
 msgstr "사용자 데이터를 기본 목록으로 되돌립니다. 파일이 많을 경우 시간이 걸릴 수 있습니다."
 
+msgid "历史记录"
+msgstr ""
+
 msgid "厚度"
 msgstr "두께"
+
+msgid "原尺寸"
+msgstr ""
 
 msgid "原样式->新样式，多个用逗号分隔"
 msgstr "기존 스타일->새 스타일, 여러 개는 쉼표로 구분"
@@ -652,6 +688,9 @@ msgstr "인자 값. 중괄호 보간으로 호출한 쪽의 변수를 사용할 
 
 msgid "参数名"
 msgstr "인자 이름"
+
+msgid "双线"
+msgstr ""
 
 msgid "反射电影滤镜"
 msgstr "반사 영화 필터"
@@ -679,6 +718,9 @@ msgstr "변수명"
 
 msgid "变量表达式"
 msgstr "변수 표현식"
+
+msgid "叠色"
+msgstr ""
 
 msgid "只展示节点，不展示名称"
 msgstr "노드만 표시하고 이름은 표시하지 않음"
@@ -722,8 +764,20 @@ msgstr "우측 정렬"
 msgid "名称"
 msgstr "이름"
 
+msgid "向上"
+msgstr ""
+
 msgid "向上添加"
 msgstr "위로 추가"
+
+msgid "向下"
+msgstr ""
+
+msgid "向右"
+msgstr ""
+
+msgid "向左"
+msgstr ""
 
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "배경음악 재생, 전환 또는 정지"
@@ -757,6 +811,9 @@ msgstr "이미지"
 
 msgid "图层组合"
 msgstr "레이어 조합"
+
+msgid "图形"
+msgstr ""
 
 msgid "图形编辑器"
 msgstr "그래픽 에디터"
@@ -800,6 +857,9 @@ msgstr "파일 탐색기에서 열기"
 msgid "在新标签页中预览"
 msgstr "새 탭에서 미리보기"
 
+msgid "在新标签页打开"
+msgstr ""
+
 msgid "在游戏中显示当前变量"
 msgstr "게임 내에서 현재 변수 표시"
 
@@ -824,6 +884,9 @@ msgstr "장면을 불러오지 못했습니다. 파일이 있는지 확인한 �
 msgid "场景返回"
 msgstr "씬 반환"
 
+msgid "填充"
+msgstr ""
+
 msgid "填写参数值"
 msgstr "파라미터 값 작성"
 
@@ -835,6 +898,9 @@ msgstr "복잡 애니메이션 이름은 엔진에 내장된 애니메이션에�
 
 msgid "外层文本"
 msgstr "외부 텍스트"
+
+msgid "外观样式"
+msgstr ""
 
 msgid "外边距"
 msgstr "바깥 여백"
@@ -875,14 +941,32 @@ msgstr "폰트 유형"
 msgid "字体配置"
 msgstr "폰트 구성"
 
+msgid "字号"
+msgstr ""
+
+msgid "字影"
+msgstr ""
+
 msgid "字母间距"
 msgstr "글자 간격"
+
+msgid "字色"
+msgstr ""
+
+msgid "字距"
+msgstr ""
 
 msgid "字重"
 msgstr "글꼴 두께"
 
 msgid "存档变量"
 msgstr "세이브 변수"
+
+msgid "存档界面"
+msgstr ""
+
+msgid "完全 CSS 定义"
+msgstr ""
 
 msgid "定位方式"
 msgstr "위치 지정 방식"
@@ -904,6 +988,9 @@ msgstr "실시간 미리보기 빨리 감기가 제한 시간을 초과하여 �
 
 msgid "实时预览打开"
 msgstr "실시간 미리보기 켜짐"
+
+msgid "实线"
+msgstr ""
 
 msgid "实验性快速预览"
 msgstr "실험적 빠른 미리보기"
@@ -928,6 +1015,9 @@ msgstr "대화창 제목"
 
 msgid "导入模板"
 msgstr "템플릿 불러오기"
+
+msgid "导入自定义界面"
+msgstr ""
 
 msgid "导出"
 msgstr "내보내기"
@@ -983,6 +1073,9 @@ msgstr "아직 폰트가 추가되지 않았습니다"
 msgid "尚未配置任何字体"
 msgstr "아직 구성된 폰트가 없습니다"
 
+msgid "尺寸"
+msgstr ""
+
 msgid "局部变量"
 msgstr "지역 변수"
 
@@ -997,6 +1090,9 @@ msgstr "가운데 정렬"
 
 msgid "居中对齐"
 msgstr "가운데 맞춤"
+
+msgid "展开样式区"
+msgstr ""
 
 msgid "展示小头像"
 msgstr "미니 프로필 표시"
@@ -1055,6 +1151,9 @@ msgstr "읽은 텍스트 내부"
 msgid "已读文本外层"
 msgstr "읽은 텍스트 외부"
 
+msgid "布局由列表控制"
+msgstr ""
+
 msgid "帧继承"
 msgstr "키프레임 상속"
 
@@ -1090,6 +1189,12 @@ msgstr "적용된 템플릿"
 
 msgid "应用颜色变化"
 msgstr "색상 변경 적용"
+
+msgid "底框图"
+msgstr ""
+
+msgid "底部快捷栏"
+msgstr ""
 
 msgid "延迟时间（秒）"
 msgstr "지연 시간(초)"
@@ -1139,6 +1244,9 @@ msgstr "현재 환경은 시스템 파일 탐색기를 지원하지 않습니다
 msgid "当前预览变量"
 msgstr "현재 미리보기 변수"
 
+msgid "影色"
+msgstr ""
+
 msgid "循环播放"
 msgstr "반복 재생"
 
@@ -1171,6 +1279,9 @@ msgstr "이 버전 무시"
 
 msgid "恢复默认目录"
 msgstr "기본 목록으로 복원"
+
+msgid "悬停"
+msgstr ""
 
 msgid "我确定要删除游戏"
 msgstr "게임 삭제를 확정하겠습니다."
@@ -1211,8 +1322,14 @@ msgstr "이 문장까지 실행"
 msgid "执行后清除角色名"
 msgstr "실행 후 캐릭터 이름 초기화"
 
+msgid "扩展"
+msgstr ""
+
 msgid "扩展名"
 msgstr "확장명"
+
+msgid "拉伸"
+msgstr ""
 
 msgid "拖动调整时间，右键设置缓动或删除"
 msgstr "드래그해 시간 조정, 우클릭으로 이징 설정 또는 삭제"
@@ -1232,11 +1349,23 @@ msgstr "지속 시간(밀리초)"
 msgid "指针"
 msgstr "포인터"
 
+msgid "按下"
+msgstr ""
+
 msgid "排序方式"
 msgstr "정렬 방식"
 
+msgid "排版"
+msgstr ""
+
 msgid "控制是否要显示文本框"
 msgstr "텍스트 창 표시 여부 제어"
+
+msgid "描边"
+msgstr ""
+
+msgid "描边色"
+msgstr ""
 
 msgid "提交"
 msgstr "제출"
@@ -1300,6 +1429,9 @@ msgstr "조작"
 
 msgid "操作失败"
 msgstr "조작 실패"
+
+msgid "收起样式区"
+msgstr ""
 
 msgid "放大"
 msgstr "확대"
@@ -1565,11 +1697,17 @@ msgstr "더 많은 옵션"
 msgid "更多配置"
 msgstr "추가 구성"
 
+msgid "更换界面"
+msgstr ""
+
 msgid "替换 UI 样式标签"
 msgstr "UI 스타일 태그 교체"
 
 msgid "替换同目标动画"
 msgstr "동일 대상 애니메이션 교체"
+
+msgid "未找到样式文件"
+msgstr ""
 
 msgid "未指定"
 msgstr "지정되지 않음"
@@ -1580,11 +1718,17 @@ msgstr "인식되지 않음"
 msgid "未识别的指令"
 msgstr "인식되지 않은 명령어"
 
+msgid "未选择"
+msgstr ""
+
 msgid "未选择图层"
 msgstr "선택된 레이어 없음"
 
 msgid "未选择跳转目标"
 msgstr "이동 대상이 선택되지 않았습니다"
+
+msgid "未选择部件"
+msgstr ""
 
 msgid "未选择预设"
 msgstr "선택된 프리셋 없음"
@@ -1646,6 +1790,9 @@ msgstr "타이틀 버튼 텍스트 외부"
 msgid "标题按钮禁用"
 msgstr "타이틀 버튼 비활성화"
 
+msgid "标题界面"
+msgstr ""
+
 msgid "标题背景图片"
 msgstr "타이틀 배경 이미지"
 
@@ -1669,6 +1816,9 @@ msgstr "이동이 필요한 내용 감지됨: {0}."
 
 msgid "模式"
 msgstr "모드"
+
+msgid "模拟数据"
+msgstr "시뮬레이션 데이터"
 
 msgid "模板"
 msgstr "템플릿"
@@ -1730,6 +1880,9 @@ msgstr "이 명령어는 게임을 종료시킵니다."
 msgid "每个流程图只能有一个根节点"
 msgstr "각 플로차트에는 루트 노드를 하나만 둘 수 있습니다"
 
+msgid "毛玻璃"
+msgstr ""
+
 msgid "永不换行"
 msgstr "줄바꿈 안 함"
 
@@ -1753,6 +1906,9 @@ msgstr "주석"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "주석은 편집창에만 보이며, 게임 화면에 실행되지 않습니다"
+
+msgid "流程图"
+msgstr ""
 
 msgid "流程图列表"
 msgstr "플로차트 목록"
@@ -1850,6 +2006,12 @@ msgstr "캐릭터 초기화"
 msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "캐릭터 이름을 초기화하며, 캐릭터 이름을 비워 둔 문장에는 캐릭터 이름이 표시되지 않음"
 
+msgid "渐变"
+msgstr ""
+
+msgid "渐隐"
+msgstr ""
+
 msgid "游戏"
 msgstr "게임"
 
@@ -1904,6 +2066,9 @@ msgstr "특수 효과 상태"
 msgid "特殊演出"
 msgstr "특수 이펙트"
 
+msgid "环绕"
+msgstr ""
+
 msgid "用户数据"
 msgstr "사용자 데이터"
 
@@ -1928,6 +2093,15 @@ msgstr "시네마틱 모드"
 msgid "电影模式值"
 msgstr "시네마틱 모드"
 
+msgid "画布编辑"
+msgstr ""
+
+msgid "界面导入失败"
+msgstr ""
+
+msgid "界面导入成功"
+msgstr ""
+
 msgid "留空使用默认值"
 msgstr "비워두면 기본값 사용"
 
@@ -1936,6 +2110,9 @@ msgstr "비워 두면 반환값이 없습니다. 숫자, true/false, 문자열, 
 
 msgid "百分比。 0-100 有效"
 msgstr "백분율. 0-100 유효"
+
+msgid "盒影"
+msgstr ""
 
 msgid "目前没有打开任何文件"
 msgstr "현재 열려 있는 파일이 없습니다"
@@ -2012,6 +2189,9 @@ msgstr "비디오 스킵 금지"
 msgid "禁用"
 msgstr "비활성화"
 
+msgid "禁用样式"
+msgstr ""
+
 msgid "移动到回收站失败"
 msgstr "휴지통으로 이동하지 못했습니다"
 
@@ -2048,8 +2228,14 @@ msgstr "일정 시간 대기"
 msgid "等待时间（单位为毫秒）"
 msgstr "대기 시간(단위: 밀리초)"
 
+msgid "等待预览上报部件"
+msgstr ""
+
 msgid "简体中文"
 msgstr "중국어 간체"
+
+msgid "简易模式"
+msgstr ""
 
 msgid "红色通道"
 msgstr "빨강 채널"
@@ -2059,6 +2245,9 @@ msgstr "리소스"
 
 msgid "紧急回避"
 msgstr "긴급 회피"
+
+msgid "纯色"
+msgstr ""
 
 msgid "纹理"
 msgstr "텍스처"
@@ -2078,6 +2267,9 @@ msgstr "종점 반동"
 msgid "终点弹跳"
 msgstr "종점 튕김"
 
+msgid "终色"
+msgstr ""
+
 msgid "结束后保持"
 msgstr "종료 후 유지"
 
@@ -2095,6 +2287,9 @@ msgstr "절대적"
 
 msgid "绝对值"
 msgstr "절대값"
+
+msgid "继承"
+msgstr ""
 
 msgid "继续游戏按钮"
 msgstr "이어하기 버튼"
@@ -2152,6 +2347,9 @@ msgstr "확대/축소 (Ctrl + 휠)"
 
 msgid "网格视图"
 msgstr "그리드 보기"
+
+msgid "羽化"
+msgstr ""
 
 msgid "老电影滤镜"
 msgstr "옛날 영화 필터"
@@ -2243,11 +2441,20 @@ msgstr "사용자로부터 문자부호 입력을 획득"
 msgid "获取输入"
 msgstr "입력 가져오기"
 
+msgid "菜单浮层"
+msgstr ""
+
 msgid "蓝色通道"
 msgstr "파랑 채널"
 
+msgid "虚线"
+msgstr ""
+
 msgid "行脚本"
 msgstr "줄 스크립트"
+
+msgid "行高"
+msgstr ""
 
 msgid "补充"
 msgstr "보완"
@@ -2266,6 +2473,9 @@ msgstr "{0} 속성을 삭제하시겠습니까?"
 
 msgid "覆盖"
 msgstr "덮어쓰기"
+
+msgid "角度"
+msgstr ""
 
 msgid "角色"
 msgstr "캐릭터"
@@ -2333,6 +2543,9 @@ msgstr "변수 설정"
 msgid "设置普通变量或全局变量"
 msgstr "일반 변수 또는 전체 변수 설정"
 
+msgid "设置界面"
+msgstr ""
+
 msgid "设置立绘或背景的进出场动画"
 msgstr "스탠딩 또는 배경의 입/퇴장 애니메이션 설정"
 
@@ -2375,6 +2588,9 @@ msgstr "폰트 이름을 입력하거나 선택하세요"
 msgid "请输入搜索提示词..."
 msgstr "검색어를 입력하세요..."
 
+msgid "读档界面"
+msgstr ""
+
 msgid "调整前景图片"
 msgstr "전경 이미지 조정"
 
@@ -2411,6 +2627,9 @@ msgstr "디버그 변수"
 msgid "资源"
 msgstr "리소스"
 
+msgid "起止"
+msgstr ""
+
 msgid "起止回弹"
 msgstr "시점 종점 반동"
 
@@ -2422,6 +2641,9 @@ msgstr "시점 반동"
 
 msgid "起点弹跳"
 msgstr "시점 튕김"
+
+msgid "起色"
+msgstr ""
 
 msgid "跨语句动画"
 msgstr "문장 간 애니메이션"
@@ -2461,6 +2683,15 @@ msgstr "검증 정규식 입력"
 
 msgid "输入目标 ID"
 msgstr "대상 ID 입력"
+
+msgid "边框"
+msgstr ""
+
+msgid "边框宽"
+msgstr ""
+
+msgid "边框色"
+msgstr ""
 
 msgid "迁移到此目录"
 msgstr "이 목록으로 이동"
@@ -2651,6 +2882,9 @@ msgstr "이미지 감상"
 msgid "鉴赏排序"
 msgstr "감상 정렬"
 
+msgid "鉴赏界面"
+msgstr ""
+
 msgid "鉴赏系列"
 msgstr "시리즈 감상"
 
@@ -2729,6 +2963,9 @@ msgstr "사전 설정 템플릿은 설치 디렉터리에 저장됩니다. 편�
 msgid "预览"
 msgstr "미리보기"
 
+msgid "预览交互"
+msgstr ""
+
 msgid "预览初始状态"
 msgstr "미리보기 초기 상태"
 
@@ -2794,6 +3031,9 @@ msgstr "기본값 50"
 
 msgid "默认变换和效果"
 msgstr "기본 변환 및 효과"
+
+msgid "默认字重"
+msgstr ""
 
 msgid "默认语言"
 msgstr "기본 언어"

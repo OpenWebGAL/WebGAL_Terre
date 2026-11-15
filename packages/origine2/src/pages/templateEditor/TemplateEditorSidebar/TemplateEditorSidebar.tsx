@@ -19,8 +19,26 @@ import {PlugConnected20Regular, Settings20Regular, Textbox20Regular, TextboxChec
 import { createId } from '@/utils/createId';
 import { AppSettingsButton } from '@/components/AppSettings/AppSettingsDialog';
 import { EditorPreviewClient } from '@/utils/editorPreviewClient';
+import type { UiPartDescriptor, UiScreenId } from '@webgal/editor-preview-protocol';
+import { ScreenPartTree } from '../sidebar/ScreenPartTree';
+import { UI_SCREEN_IDS, type TemplateScreensInfo } from '../screenCatalog';
 
-export default function TemplateEditorSidebar() {
+export interface ITemplateSidebarCustomSession {
+  screensInfo: TemplateScreensInfo | null;
+  activeScreenId: UiScreenId;
+  parts: UiPartDescriptor[];
+  selectedPartId: string | null;
+  onSelectScreen: (screen: UiScreenId) => void;
+  onSelectPart: (partId: string) => void;
+  onSwitchVariant: (screen: UiScreenId, variantId: string) => Promise<void>;
+  onImportVariant: (screen: UiScreenId, file: File) => Promise<void>;
+}
+
+interface ITemplateEditorSidebarProps {
+  customSession?: ITemplateSidebarCustomSession;
+}
+
+export default function TemplateEditorSidebar({ customSession }: ITemplateEditorSidebarProps) {
   const templateDir = useEditorStore.use.subPage();
   const sidebarWidth = useTemplateEditorContext((state) => state.sidebarWidth);
   const templateActionsHeight = useTemplateEditorContext((state) => state.templateActionsHeight);
@@ -29,13 +47,26 @@ export default function TemplateEditorSidebar() {
   const tabs = useTemplateEditorContext((state) => state.tabs);
   const updateTabs = useTemplateEditorContext((state) => state.updateTabs);
   const updateCurrentTab = useTemplateEditorContext((state) => state.updateCurrentTab);
+  const updateStyleTab = useTemplateEditorContext((state) => state.updateStyleTab);
+  const updateFullCssMode = useTemplateEditorContext((state) => state.updateFullCssMode);
 
   const {data: templateConfig, mutate: mutateTemplateConfig} = useSWR(
     `/templateConfig/${templateDir}`,
     async () => (await api.manageTemplateControllerGetTemplateConfig(templateDir)).data
   );
 
-  const handleOpen: IFileFunction['open'] = async (file, type) => {
+  const handleOpen: IFileFunction['open'] = async (file) => {
+    if (customSession) {
+      const normalized = file.path.replace(/\\/g, '/');
+      const matched = normalized.match(/screens\/([^/]+)\/[^/]+\/style\.scss$/);
+      if (matched && UI_SCREEN_IDS.includes(matched[1] as UiScreenId)) {
+        customSession.onSelectScreen(matched[1] as UiScreenId);
+      }
+      updateStyleTab('full');
+      updateFullCssMode('code');
+      return;
+    }
+
     const newTab: ITab = {
       name: file.name,
       path: file.path,
@@ -79,7 +110,20 @@ export default function TemplateEditorSidebar() {
       </div>
       <TemplateActionsReSizer/>
       <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
-        <ComponentTree/>
+        {customSession ? (
+          <ScreenPartTree
+            screensInfo={customSession.screensInfo}
+            activeScreenId={customSession.activeScreenId}
+            parts={customSession.parts}
+            selectedPartId={customSession.selectedPartId}
+            onSelectScreen={customSession.onSelectScreen}
+            onSelectPart={customSession.onSelectPart}
+            onSwitchVariant={customSession.onSwitchVariant}
+            onImportVariant={customSession.onImportVariant}
+          />
+        ) : (
+          <ComponentTree/>
+        )}
       </div>
       <ComponentTreeReSizer/>
       <div className={styles.assets}>

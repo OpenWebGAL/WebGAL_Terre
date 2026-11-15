@@ -1,0 +1,417 @@
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import axios from 'axios';
+import useSWR, { useSWRConfig } from 'swr';
+import type {
+  UiPartDescriptor,
+  UiPreviewMode,
+  UiPseudoState,
+  UiScreenId,
+  UiScreenUpdatedPayload,
+} from '@webgal/editor-preview-protocol';
+import { api } from '@/api';
+import { useTemplateEditorContext } from '@/store/useTemplateEditorStore';
+import { EditorPreviewClient } from '@/utils/editorPreviewClient';
+import { eventBus } from '@/utils/eventBus';
+import {
+  DEFAULT_SCREEN_VARIANTS,
+  isCustomUiTemplate,
+  type TemplateScreenId,
+  type TemplateScreensInfo,
+} from '../screenCatalog';
+import { ensureEditableScss } from '../styleModel';
+
+export function useTemplateScreenSession(templateDir: string) {
+  const { mutate } = useSWRConfig();
+
+  const activeScreenId = useTemplateEditorContext((s) => s.activeScreenId);
+  const previewMode = useTemplateEditorContext((s) => s.previewMode);
+  const useMockData = useTemplateEditorContext((s) => s.useMockData);
+  const isPreviewReady = useTemplateEditorContext((s) => s.isPreviewReady);
+  const screenPayload = useTemplateEditorContext((s) => s.screenPayload);
+  const draftScssText = useTemplateEditorContext((s) => s.draftScssText);
+  const selectedPartId = useTemplateEditorContext((s) => s.selectedPartId);
+  const lockedState = useTemplateEditorContext((s) => s.lockedState);
+  const applyStyleIgnored = useTemplateEditorContext((s) => s.applyStyleIgnored);
+
+  const updateActiveScreenId = useTemplateEditorContext((s) => s.updateActiveScreenId);
+  const updatePreviewMode = useTemplateEditorContext((s) => s.updatePreviewMode);
+  const updateUseMockData = useTemplateEditorContext((s) => s.updateUseMockData);
+  const updateIsPreviewReady = useTemplateEditorContext((s) => s.updateIsPreviewReady);
+  const updateScreenPayload = useTemplateEditorContext((s) => s.updateScreenPayload);
+  const updateDraftScssText = useTemplateEditorContext((s) => s.updateDraftScssText);
+  const updateSelectedPartId = useTemplateEditorContext((s) => s.updateSelectedPartId);
+  const updateLockedState = useTemplateEditorContext((s) => s.updateLockedState);
+  const updateApplyStyleIgnored = useTemplateEditorContext((s) => s.updateApplyStyleIgnored);
+
+  const { data: templateConfig, mutate: mutateTemplateConfig } = useSWR(
+    templateDir ? `/templateConfig/${templateDir}` : null,
+    async () => (await api.manageTemplateControllerGetTemplateConfig(templateDir)).data,
+  );
+
+  const { data: screensInfo, mutate: mutateScreensInfo } = useSWR(
+    templateDir ? `/templateScreens/${templateDir}` : null,
+    async () => (await api.manageTemplateControllerGetTemplateScreens(templateDir)).data as TemplateScreensInfo,
+  );
+
+  const isCustomUi = useMemo(
+    () =>
+      Boolean(
+        screensInfo?.uiMode === 'custom'
+          || isCustomUiTemplate(templateConfig as { uiMode?: string; screens?: Record<string, string> } | undefined)
+          || screenPayload?.isCustomTemplate,
+      ),
+    [screensInfo, templateConfig, screenPayload],
+  );
+
+  const activeVariantMeta = useMemo(() => {
+    const entry = screensInfo?.screens.find((item) => item.screen === activeScreenId);
+    const variantId = entry?.activeVariant ?? DEFAULT_SCREEN_VARIANTS[activeScreenId as TemplateScreenId];
+    const variant = entry?.variants.find((item) => item.variantId === variantId);
+    const scssPath = variant?.scssPath ?? `screens/${activeScreenId}/${variantId}/style.scss`;
+    return { variantId, scssPath };
+  }, [screensInfo, activeScreenId]);
+
+  const activeFilePath = useMemo(
+    () => (templateDir && activeVariantMeta.scssPath ? `templates/${templateDir}/${activeVariantMeta.scssPath}` : null),
+    [templateDir, activeVariantMeta.scssPath],
+  );
+
+  const parts: UiPartDescriptor[] = useMemo(() => {
+    if (!screenPayload || screenPayload.screen !== activeScreenId) return [];
+    return screenPayload.parts;
+  }, [screenPayload, activeScreenId]);
+
+  const selectedPart = useMemo(
+    () => parts.find((part) => part.id === selectedPartId) ?? null,
+    [parts, selectedPartId],
+  );
+
+  const stateRef = useRef({
+    activeScreenId,
+    previewMode,
+    useMockData,
+    lockedState,
+    selectedPartId,
+    selectedSelector: selectedPart?.selector ?? null,
+    variantId: activeVariantMeta.variantId,
+    draftScssText,
+    isCustomUi,
+  });
+  stateRef.current = {
+    activeScreenId,
+    previewMode,
+    useMockData,
+    lockedState,
+    selectedPartId,
+    selectedSelector: selectedPart?.selector ?? null,
+    variantId: activeVariantMeta.variantId,
+    draftScssText,
+    isCustomUi,
+  };
+
+  const loadedFileRef = useRef<string | null>(null);
+  const ensuredSignatureRef = useRef<string | null>(null);
+  const pendingScreenRef = useRef<UiScreenId | null>(null);
+  const pendingVariantRef = useRef<{ screen: UiScreenId; variantId: string } | null>(null);
+
+  useEffect(() => {
+    if (!isCustomUi || !activeFilePath) return;
+    let cancelled = false;
+    loadedFileRef.current = null;
+    ensuredSignatureRef.current = null;
+
+    axios
+      .get(activeFilePath, { responseType: 'text', transformResponse: [(data) => data] })
+      .then((res) => {
+        if (cancelled) return;
+        const text = typeof res.data === 'string' ? res.data : '';
+        loadedFileRef.current = activeFilePath;
+        updateDraftScssText(text);
+        if (
+          text.trim() !== ''
+          && EditorPreviewClient.getLastUiScreenPayload()?.screen === stateRef.current.activeScreenId
+        ) {
+          EditorPreviewClient.setUiPartStyle({
+            screen: stateRef.current.activeScreenId,
+            variantId: stateRef.current.variantId,
+            scssText: text,
+            phase: 'preview',
+          });
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        loadedFileRef.current = activeFilePath;
+        updateDraftScssText('');
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isCustomUi, activeFilePath, updateDraftScssText]);
+
+  useEffect(() => {
+    if (!isCustomUi || !activeFilePath || loadedFileRef.current !== activeFilePath) return;
+    if (!screenPayload || screenPayload.screen !== activeScreenId) return;
+    if (screenPayload.variantId !== activeVariantMeta.variantId) return;
+
+    const signature = `${activeFilePath}::${screenPayload.variantId}::${screenPayload.defaultCssText.length}`;
+    if (ensuredSignatureRef.current === signature) return;
+    ensuredSignatureRef.current = signature;
+
+    const nextScss = ensureEditableScss(screenPayload.defaultCssText, stateRef.current.draftScssText);
+    if (nextScss !== stateRef.current.draftScssText) {
+      updateDraftScssText(nextScss);
+    }
+  }, [isCustomUi, activeFilePath, activeScreenId, activeVariantMeta.variantId, screenPayload, updateDraftScssText]);
+
+  useEffect(() => {
+    const applyScreenPayload = (payload: UiScreenUpdatedPayload) => {
+      if (pendingScreenRef.current !== null) {
+        if (payload.screen !== pendingScreenRef.current) {
+          return;
+        }
+        pendingScreenRef.current = null;
+      }
+      if (pendingVariantRef.current !== null) {
+        if (
+          payload.screen !== pendingVariantRef.current.screen
+          || payload.variantId !== pendingVariantRef.current.variantId
+        ) {
+          return;
+        }
+        pendingVariantRef.current = null;
+      }
+      updateScreenPayload(payload);
+      if (payload.screen && payload.screen !== stateRef.current.activeScreenId) {
+        updateActiveScreenId(payload.screen);
+      }
+      const nextPartExists = payload.parts.some((p) => p.id === stateRef.current.selectedPartId);
+      if (!nextPartExists) {
+        updateSelectedPartId(payload.parts[0]?.id ?? null);
+      }
+    };
+
+    const syncInitialSession = () => {
+      const current = stateRef.current;
+      pendingScreenRef.current = current.activeScreenId;
+      EditorPreviewClient.setUiEditMode({ mode: current.previewMode });
+      EditorPreviewClient.setUiMockData({ enabled: current.useMockData });
+      EditorPreviewClient.setActiveUiScreen({ screen: current.activeScreenId });
+      if (current.lockedState !== 'default') {
+        EditorPreviewClient.setUiPseudoState({
+          screen: current.activeScreenId,
+          selector: current.selectedSelector,
+          pseudoState: current.lockedState,
+        });
+      }
+    };
+
+    const cached = EditorPreviewClient.getLastUiScreenPayload();
+    if (cached) {
+      applyScreenPayload(cached);
+    }
+
+    const handleReady = (payload: { ready: boolean }) => {
+      updateIsPreviewReady(payload.ready);
+      if (payload.ready) {
+        syncInitialSession();
+      }
+    };
+
+    eventBus.on('editor-preview:ready', handleReady);
+    const unsubscribeUi = EditorPreviewClient.subscribeUiEvents({
+      onScreenUpdated: applyScreenPayload,
+      onPartSelected: (payload) => {
+        if (pendingScreenRef.current !== null && payload.screen !== pendingScreenRef.current) {
+          return;
+        }
+        if (payload.screen !== stateRef.current.activeScreenId) {
+          updateActiveScreenId(payload.screen);
+        }
+        updateSelectedPartId(payload.partId);
+      },
+      onApplyStyleIgnored: (payload) => {
+        updateApplyStyleIgnored(payload);
+      },
+    });
+
+    return () => {
+      eventBus.off('editor-preview:ready', handleReady);
+      unsubscribeUi();
+    };
+  }, [
+    updateActiveScreenId,
+    updateApplyStyleIgnored,
+    updateIsPreviewReady,
+    updateScreenPayload,
+    updateSelectedPartId,
+  ]);
+
+  const activateScreen = useCallback(
+    (screen: UiScreenId) => {
+      pendingVariantRef.current = null;
+      pendingScreenRef.current = screen;
+      updateActiveScreenId(screen);
+      updateSelectedPartId(null);
+      updateApplyStyleIgnored(null);
+      EditorPreviewClient.setActiveUiScreen({ screen });
+    },
+    [updateActiveScreenId, updateApplyStyleIgnored, updateSelectedPartId],
+  );
+
+  const selectPart = useCallback(
+    (partId: string | null) => {
+      updateSelectedPartId(partId);
+      EditorPreviewClient.selectUiPart({ screen: activeScreenId, partId });
+      if (lockedState !== 'default') {
+        const nextPart = parts.find((part) => part.id === partId);
+        EditorPreviewClient.setUiPseudoState({
+          screen: activeScreenId,
+          selector: nextPart?.selector ?? null,
+          pseudoState: lockedState,
+        });
+      }
+    },
+    [activeScreenId, lockedState, parts, updateSelectedPartId],
+  );
+
+  const setPreviewMode = useCallback(
+    (mode: UiPreviewMode) => {
+      updatePreviewMode(mode);
+      EditorPreviewClient.setUiEditMode({ mode });
+    },
+    [updatePreviewMode],
+  );
+
+  const setMockData = useCallback(
+    (enabled: boolean) => {
+      updateUseMockData(enabled);
+      EditorPreviewClient.setUiMockData({ enabled });
+    },
+    [updateUseMockData],
+  );
+
+  const setLockedState = useCallback(
+    (pseudoState: UiPseudoState) => {
+      updateLockedState(pseudoState);
+      EditorPreviewClient.setUiPseudoState({
+        screen: activeScreenId,
+        selector: selectedPart?.selector ?? null,
+        pseudoState,
+      });
+    },
+    [activeScreenId, selectedPart?.selector, updateLockedState],
+  );
+
+  const previewScss = useCallback(
+    (nextScss: string) => {
+      updateDraftScssText(nextScss);
+      updateApplyStyleIgnored(null);
+      EditorPreviewClient.setUiPartStyle({
+        screen: activeScreenId,
+        variantId: activeVariantMeta.variantId,
+        scssText: nextScss,
+        phase: 'preview',
+      });
+    },
+    [activeScreenId, activeVariantMeta.variantId, updateApplyStyleIgnored, updateDraftScssText],
+  );
+
+  const commitScss = useCallback(
+    async (nextScss: string) => {
+      updateDraftScssText(nextScss);
+      updateApplyStyleIgnored(null);
+      EditorPreviewClient.setUiPartStyle({
+        screen: activeScreenId,
+        variantId: activeVariantMeta.variantId,
+        scssText: nextScss,
+        phase: 'commit',
+      });
+      if (activeFilePath) {
+        await api.assetsControllerEditTextFile({ path: activeFilePath, textFile: nextScss });
+        await mutate(activeFilePath, nextScss, false);
+      }
+    },
+    [activeFilePath, activeScreenId, activeVariantMeta.variantId, mutate, updateApplyStyleIgnored, updateDraftScssText],
+  );
+
+  const commitScssFromCode = useCallback(
+    (nextScss: string) => {
+      updateDraftScssText(nextScss);
+      updateApplyStyleIgnored(null);
+      EditorPreviewClient.setUiPartStyle({
+        screen: activeScreenId,
+        variantId: activeVariantMeta.variantId,
+        scssText: nextScss,
+        phase: 'commit',
+      });
+    },
+    [activeScreenId, activeVariantMeta.variantId, updateApplyStyleIgnored, updateDraftScssText],
+  );
+
+  const switchVariant = useCallback(
+    async (screen: UiScreenId, variantId: string) => {
+      pendingScreenRef.current = screen;
+      pendingVariantRef.current = { screen, variantId };
+      await api.manageTemplateControllerSwitchScreenVariant({
+        templateDir,
+        screen,
+        variantId,
+      });
+      await Promise.all([mutateScreensInfo(), mutateTemplateConfig()]);
+      updateActiveScreenId(screen);
+      EditorPreviewClient.reloadTemplates();
+      EditorPreviewClient.setActiveUiScreen({ screen });
+    },
+    [mutateScreensInfo, mutateTemplateConfig, templateDir, updateActiveScreenId],
+  );
+
+  const importVariant = useCallback(
+    async (screen: UiScreenId, file: File) => {
+      pendingScreenRef.current = screen;
+      pendingVariantRef.current = null;
+      const resp = await api.manageTemplateControllerImportScreenVariant({
+        file,
+        templateDir,
+        screen,
+      });
+      if (resp.data?.variantId) {
+        pendingVariantRef.current = { screen, variantId: resp.data.variantId };
+      }
+      await Promise.all([mutateScreensInfo(), mutateTemplateConfig()]);
+      updateActiveScreenId(screen);
+      EditorPreviewClient.reloadTemplates();
+      EditorPreviewClient.setActiveUiScreen({ screen });
+    },
+    [mutateScreensInfo, mutateTemplateConfig, templateDir, updateActiveScreenId],
+  );
+
+  return {
+    templateConfig,
+    screensInfo: screensInfo ?? null,
+    isCustomUi,
+    isPreviewReady,
+    activeScreenId,
+    activeVariantId: activeVariantMeta.variantId,
+    activeScssPath: activeVariantMeta.scssPath,
+    previewMode,
+    useMockData,
+    draftScssText,
+    parts,
+    selectedPartId,
+    selectedPart,
+    lockedState,
+    applyStyleIgnored,
+    activateScreen,
+    selectPart,
+    setPreviewMode,
+    setMockData,
+    setLockedState,
+    previewScss,
+    commitScss,
+    commitScssFromCode,
+    switchVariant,
+    importVariant,
+  };
+}

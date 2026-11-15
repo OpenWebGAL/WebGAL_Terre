@@ -35,6 +35,9 @@ msgstr "1, 2, 3, ..."
 msgid "4.6 用户数据迁移"
 msgstr "4.6 用户数据迁移"
 
+msgid "applyStyle 已覆盖"
+msgstr "applyStyle 已覆盖"
+
 msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 
@@ -248,6 +251,9 @@ msgstr "不能创建循环连接"
 msgid "不设定"
 msgstr "不设定"
 
+msgid "不透明"
+msgstr "不透明"
+
 msgid "与同目标动画并行"
 msgstr "与同目标动画并行"
 
@@ -287,6 +293,9 @@ msgstr "主页"
 msgid "主题"
 msgstr "主题"
 
+msgid "九宫格"
+msgstr "九宫格"
+
 msgid "亮度"
 msgstr "亮度"
 
@@ -304,6 +313,9 @@ msgstr "从本场景选择"
 
 msgid "从默认状态开始"
 msgstr "从默认状态开始"
+
+msgid "代码"
+msgstr "代码"
 
 msgid "代码编辑器"
 msgstr "代码编辑器"
@@ -449,6 +461,9 @@ msgstr "入场时长（单位为毫秒）"
 msgid "全局变量"
 msgstr "全局变量"
 
+msgid "全局弹窗"
+msgstr "全局弹窗"
+
 msgid "全屏文字"
 msgstr "全屏文字"
 
@@ -488,11 +503,17 @@ msgstr "关闭背景"
 msgid "关闭预览窗口"
 msgstr "关闭预览窗口"
 
+msgid "内"
+msgstr "内"
+
 msgid "内容"
 msgstr "内容"
 
 msgid "内层文本"
 msgstr "内层文本"
+
+msgid "内置"
+msgstr "内置"
 
 msgid "内边距"
 msgstr "内边距"
@@ -548,6 +569,9 @@ msgstr "切换背景图片"
 msgid "切换角色"
 msgstr "切换角色"
 
+msgid "切片"
+msgstr "切片"
+
 msgid "列表视图"
 msgstr "列表视图"
 
@@ -599,6 +623,9 @@ msgstr "刷新"
 msgid "刷新游戏"
 msgstr "刷新游戏"
 
+msgid "刷新预览"
+msgstr "刷新预览"
+
 msgid "前景"
 msgstr "前景"
 
@@ -620,6 +647,9 @@ msgstr "动画帧控制"
 msgid "动画编辑器"
 msgstr "动画编辑器"
 
+msgid "包含"
+msgstr "包含"
+
 msgid "半张嘴"
 msgstr "半张嘴"
 
@@ -638,8 +668,14 @@ msgstr "即将把用户数据迁移到新的目录。文件较多时可能需要
 msgid "即将把用户数据迁移回默认目录。文件较多时可能需要一些时间。"
 msgstr "即将把用户数据迁移回默认目录。文件较多时可能需要一些时间。"
 
+msgid "历史记录"
+msgstr "历史记录"
+
 msgid "厚度"
 msgstr "厚度"
+
+msgid "原尺寸"
+msgstr "原尺寸"
 
 msgid "原样式->新样式，多个用逗号分隔"
 msgstr "原样式->新样式，多个用逗号分隔"
@@ -652,6 +688,9 @@ msgstr "参数值，用花括号插值可取调用方的变量"
 
 msgid "参数名"
 msgstr "参数名"
+
+msgid "双线"
+msgstr "双线"
 
 msgid "反射电影滤镜"
 msgstr "反射电影滤镜"
@@ -679,6 +718,9 @@ msgstr "变量名"
 
 msgid "变量表达式"
 msgstr "变量表达式"
+
+msgid "叠色"
+msgstr "叠色"
 
 msgid "只展示节点，不展示名称"
 msgstr "只展示节点，不展示名称"
@@ -722,8 +764,20 @@ msgstr "右对齐"
 msgid "名称"
 msgstr "名称"
 
+msgid "向上"
+msgstr "向上"
+
 msgid "向上添加"
 msgstr "向上添加"
+
+msgid "向下"
+msgstr "向下"
+
+msgid "向右"
+msgstr "向右"
+
+msgid "向左"
+msgstr "向左"
 
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "启动、切换或停止背景音乐的播放"
@@ -757,6 +811,9 @@ msgstr "图像"
 
 msgid "图层组合"
 msgstr "图层组合"
+
+msgid "图形"
+msgstr "图形"
 
 msgid "图形编辑器"
 msgstr "图形编辑器"
@@ -800,6 +857,9 @@ msgstr "在文件管理器中打开"
 msgid "在新标签页中预览"
 msgstr "在新标签页中预览"
 
+msgid "在新标签页打开"
+msgstr "在新标签页打开"
+
 msgid "在游戏中显示当前变量"
 msgstr "在游戏中显示当前变量"
 
@@ -824,6 +884,9 @@ msgstr "场景读取失败，请检查文件是否存在后重试"
 msgid "场景返回"
 msgstr "场景返回"
 
+msgid "填充"
+msgstr "填充"
+
 msgid "填写参数值"
 msgstr "填写参数值"
 
@@ -835,6 +898,9 @@ msgstr "复杂动画名来自引擎内置动画。若要使用项目动画文件
 
 msgid "外层文本"
 msgstr "外层文本"
+
+msgid "外观样式"
+msgstr "外观样式"
 
 msgid "外边距"
 msgstr "外边距"
@@ -875,14 +941,32 @@ msgstr "字体类型"
 msgid "字体配置"
 msgstr "字体配置"
 
+msgid "字号"
+msgstr "字号"
+
+msgid "字影"
+msgstr "字影"
+
 msgid "字母间距"
 msgstr "字母间距"
+
+msgid "字色"
+msgstr "字色"
+
+msgid "字距"
+msgstr "字距"
 
 msgid "字重"
 msgstr "字重"
 
 msgid "存档变量"
 msgstr "存档变量"
+
+msgid "存档界面"
+msgstr "存档界面"
+
+msgid "完全 CSS 定义"
+msgstr "完全 CSS 定义"
 
 msgid "定位方式"
 msgstr "定位方式"
@@ -904,6 +988,9 @@ msgstr "实时预览快进超过了超时时间限制，已停止继续演算。
 
 msgid "实时预览打开"
 msgstr "实时预览打开"
+
+msgid "实线"
+msgstr "实线"
 
 msgid "实验性快速预览"
 msgstr "实验性快速预览"
@@ -928,6 +1015,9 @@ msgstr "对话框标题"
 
 msgid "导入模板"
 msgstr "导入模板"
+
+msgid "导入自定义界面"
+msgstr "导入自定义界面"
 
 msgid "导出"
 msgstr "导出"
@@ -983,6 +1073,9 @@ msgstr "尚未添加任何字体"
 msgid "尚未配置任何字体"
 msgstr "尚未配置任何字体"
 
+msgid "尺寸"
+msgstr "尺寸"
+
 msgid "局部变量"
 msgstr "局部变量"
 
@@ -997,6 +1090,9 @@ msgstr "居中"
 
 msgid "居中对齐"
 msgstr "居中对齐"
+
+msgid "展开样式区"
+msgstr "展开样式区"
 
 msgid "展示小头像"
 msgstr "展示小头像"
@@ -1055,6 +1151,9 @@ msgstr "已读文本内层"
 msgid "已读文本外层"
 msgstr "已读文本外层"
 
+msgid "布局由列表控制"
+msgstr "布局由列表控制"
+
 msgid "帧继承"
 msgstr "帧继承"
 
@@ -1090,6 +1189,12 @@ msgstr "应用的模板"
 
 msgid "应用颜色变化"
 msgstr "应用颜色变化"
+
+msgid "底框图"
+msgstr "底框图"
+
+msgid "底部快捷栏"
+msgstr "底部快捷栏"
 
 msgid "延迟时间（秒）"
 msgstr "延迟时间（秒）"
@@ -1139,6 +1244,9 @@ msgstr "当前环境不支持系统文件夹选择器，请手动输入路径。
 msgid "当前预览变量"
 msgstr "当前预览变量"
 
+msgid "影色"
+msgstr "影色"
+
 msgid "循环播放"
 msgstr "循环播放"
 
@@ -1171,6 +1279,9 @@ msgstr "忽略此版本"
 
 msgid "恢复默认目录"
 msgstr "恢复默认目录"
+
+msgid "悬停"
+msgstr "悬停"
 
 msgid "我确定要删除游戏"
 msgstr "我确定要删除游戏"
@@ -1211,8 +1322,14 @@ msgstr "执行到此句"
 msgid "执行后清除角色名"
 msgstr "执行后清除角色名"
 
+msgid "扩展"
+msgstr "扩展"
+
 msgid "扩展名"
 msgstr "扩展名"
+
+msgid "拉伸"
+msgstr "拉伸"
 
 msgid "拖动调整时间，右键设置缓动或删除"
 msgstr "拖动调整时间，右键设置缓动或删除"
@@ -1232,11 +1349,23 @@ msgstr "持续时间（毫秒）"
 msgid "指针"
 msgstr "指针"
 
+msgid "按下"
+msgstr "按下"
+
 msgid "排序方式"
 msgstr "排序方式"
 
+msgid "排版"
+msgstr "排版"
+
 msgid "控制是否要显示文本框"
 msgstr "控制是否要显示文本框"
+
+msgid "描边"
+msgstr "描边"
+
+msgid "描边色"
+msgstr "描边色"
 
 msgid "提交"
 msgstr "提交"
@@ -1300,6 +1429,9 @@ msgstr "操作"
 
 msgid "操作失败"
 msgstr "操作失败"
+
+msgid "收起样式区"
+msgstr "收起样式区"
 
 msgid "放大"
 msgstr "放大"
@@ -1565,11 +1697,17 @@ msgstr "更多选项"
 msgid "更多配置"
 msgstr "更多配置"
 
+msgid "更换界面"
+msgstr "更换界面"
+
 msgid "替换 UI 样式标签"
 msgstr "替换 UI 样式标签"
 
 msgid "替换同目标动画"
 msgstr "替换同目标动画"
+
+msgid "未找到样式文件"
+msgstr "未找到样式文件"
 
 msgid "未指定"
 msgstr "未指定"
@@ -1580,11 +1718,17 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
+msgid "未选择"
+msgstr "未选择"
+
 msgid "未选择图层"
 msgstr "未选择图层"
 
 msgid "未选择跳转目标"
 msgstr "未选择跳转目标"
+
+msgid "未选择部件"
+msgstr "未选择部件"
 
 msgid "未选择预设"
 msgstr "未选择预设"
@@ -1646,6 +1790,9 @@ msgstr "标题按钮文字外层"
 msgid "标题按钮禁用"
 msgstr "标题按钮禁用"
 
+msgid "标题界面"
+msgstr "标题界面"
+
 msgid "标题背景图片"
 msgstr "标题背景图片"
 
@@ -1669,6 +1816,9 @@ msgstr "检测到需要迁移的内容：{0}。"
 
 msgid "模式"
 msgstr "模式"
+
+msgid "模拟数据"
+msgstr "模拟数据"
 
 msgid "模板"
 msgstr "模板"
@@ -1730,6 +1880,9 @@ msgstr "此指令将结束游戏"
 msgid "每个流程图只能有一个根节点"
 msgstr "每个流程图只能有一个根节点"
 
+msgid "毛玻璃"
+msgstr "毛玻璃"
+
 msgid "永不换行"
 msgstr "永不换行"
 
@@ -1753,6 +1906,9 @@ msgstr "注释"
 
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "注释仅在编辑时可见，游戏中不会执行"
+
+msgid "流程图"
+msgstr "流程图"
 
 msgid "流程图列表"
 msgstr "流程图列表"
@@ -1850,6 +2006,12 @@ msgstr "清除角色"
 msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "清除角色名，留空角色名的语句不再显示角色名"
 
+msgid "渐变"
+msgstr "渐变"
+
+msgid "渐隐"
+msgstr "渐隐"
+
 msgid "游戏"
 msgstr "游戏"
 
@@ -1904,6 +2066,9 @@ msgstr "特效状态"
 msgid "特殊演出"
 msgstr "特殊演出"
 
+msgid "环绕"
+msgstr "环绕"
+
 msgid "用户数据"
 msgstr "用户数据"
 
@@ -1928,6 +2093,15 @@ msgstr "电影模式"
 msgid "电影模式值"
 msgstr "电影模式值"
 
+msgid "画布编辑"
+msgstr "画布编辑"
+
+msgid "界面导入失败"
+msgstr "界面导入失败"
+
+msgid "界面导入成功"
+msgstr "界面导入成功"
+
 msgid "留空使用默认值"
 msgstr "留空使用默认值"
 
@@ -1936,6 +2110,9 @@ msgstr "留空表示不返回值。可填数字、true/false、字符串或表�
 
 msgid "百分比。 0-100 有效"
 msgstr "百分比。 0-100 有效"
+
+msgid "盒影"
+msgstr "盒影"
 
 msgid "目前没有打开任何文件"
 msgstr "目前没有打开任何文件"
@@ -2012,6 +2189,9 @@ msgstr "禁止跳过视频"
 msgid "禁用"
 msgstr "禁用"
 
+msgid "禁用样式"
+msgstr "禁用样式"
+
 msgid "移动到回收站失败"
 msgstr "移动到回收站失败"
 
@@ -2048,8 +2228,14 @@ msgstr "等待一段时间"
 msgid "等待时间（单位为毫秒）"
 msgstr "等待时间（单位为毫秒）"
 
+msgid "等待预览上报部件"
+msgstr "等待预览上报部件"
+
 msgid "简体中文"
 msgstr "简体中文"
+
+msgid "简易模式"
+msgstr "简易模式"
 
 msgid "红色通道"
 msgstr "红色通道"
@@ -2059,6 +2245,9 @@ msgstr "素材"
 
 msgid "紧急回避"
 msgstr "紧急回避"
+
+msgid "纯色"
+msgstr "纯色"
 
 msgid "纹理"
 msgstr "纹理"
@@ -2078,6 +2267,9 @@ msgstr "终点回弹"
 msgid "终点弹跳"
 msgstr "终点弹跳"
 
+msgid "终色"
+msgstr "终色"
+
 msgid "结束后保持"
 msgstr "结束后保持"
 
@@ -2095,6 +2287,9 @@ msgstr "绝对"
 
 msgid "绝对值"
 msgstr "绝对值"
+
+msgid "继承"
+msgstr "继承"
 
 msgid "继续游戏按钮"
 msgstr "继续游戏按钮"
@@ -2152,6 +2347,9 @@ msgstr "缩放（Ctrl + 滚轮）"
 
 msgid "网格视图"
 msgstr "网格视图"
+
+msgid "羽化"
+msgstr "羽化"
 
 msgid "老电影滤镜"
 msgstr "老电影滤镜"
@@ -2243,11 +2441,20 @@ msgstr "获取来自用户的字符输入"
 msgid "获取输入"
 msgstr "获取输入"
 
+msgid "菜单浮层"
+msgstr "菜单浮层"
+
 msgid "蓝色通道"
 msgstr "蓝色通道"
 
+msgid "虚线"
+msgstr "虚线"
+
 msgid "行脚本"
 msgstr "行脚本"
+
+msgid "行高"
+msgstr "行高"
 
 msgid "补充"
 msgstr "补充"
@@ -2266,6 +2473,9 @@ msgstr "要删除属性{0}吗？"
 
 msgid "覆盖"
 msgstr "覆盖"
+
+msgid "角度"
+msgstr "角度"
 
 msgid "角色"
 msgstr "角色"
@@ -2333,6 +2543,9 @@ msgstr "设置变量"
 msgid "设置普通变量或全局变量"
 msgstr "设置普通变量或全局变量"
 
+msgid "设置界面"
+msgstr "设置界面"
+
 msgid "设置立绘或背景的进出场动画"
 msgstr "设置立绘或背景的进出场动画"
 
@@ -2375,6 +2588,9 @@ msgstr "请输入或选择字体名称"
 msgid "请输入搜索提示词..."
 msgstr "请输入搜索提示词..."
 
+msgid "读档界面"
+msgstr "读档界面"
+
 msgid "调整前景图片"
 msgstr "调整前景图片"
 
@@ -2411,6 +2627,9 @@ msgstr "调试变量"
 msgid "资源"
 msgstr "资源"
 
+msgid "起止"
+msgstr "起止"
+
 msgid "起止回弹"
 msgstr "起止回弹"
 
@@ -2422,6 +2641,9 @@ msgstr "起点回弹"
 
 msgid "起点弹跳"
 msgstr "起点弹跳"
+
+msgid "起色"
+msgstr "起色"
 
 msgid "跨语句动画"
 msgstr "跨语句动画"
@@ -2461,6 +2683,15 @@ msgstr "输入校验正则"
 
 msgid "输入目标 ID"
 msgstr "输入目标 ID"
+
+msgid "边框"
+msgstr "边框"
+
+msgid "边框宽"
+msgstr "边框宽"
+
+msgid "边框色"
+msgstr "边框色"
 
 msgid "迁移到此目录"
 msgstr "迁移到此目录"
@@ -2651,6 +2882,9 @@ msgstr "鉴赏图片"
 msgid "鉴赏排序"
 msgstr "鉴赏排序"
 
+msgid "鉴赏界面"
+msgstr "鉴赏界面"
+
 msgid "鉴赏系列"
 msgstr "鉴赏系列"
 
@@ -2729,6 +2963,9 @@ msgstr "预置模板保存在安装目录，请先复制为自定义模板再编
 msgid "预览"
 msgstr "预览"
 
+msgid "预览交互"
+msgstr "预览交互"
+
 msgid "预览初始状态"
 msgstr "预览初始状态"
 
@@ -2794,6 +3031,9 @@ msgstr "默认值50"
 
 msgid "默认变换和效果"
 msgstr "默认变换和效果"
+
+msgid "默认字重"
+msgstr "默认字重"
 
 msgid "默认语言"
 msgstr "默认语言"

@@ -6,7 +6,8 @@ import s from './singleStateEditor.module.scss';
 export function getStateNameMap(){
   return {
     'hover': t`鼠标悬浮样式`,
-    'active': t`鼠标按下样式`
+    'active': t`鼠标按下样式`,
+    'disabled': t`禁用样式`,
   };
 }
 

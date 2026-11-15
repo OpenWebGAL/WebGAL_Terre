@@ -1,0 +1,150 @@
+.treeRoot {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 4px;
+  user-select: none;
+}
+
+.screenGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.screenRow {
+  width: 100%;
+  height: 30px;
+  min-height: 30px;
+  border: var(--border-sm);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px 0 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+
+  &:hover {
+    background: var(--bg-button-hover);
+  }
+}
+
+.screenRowActive {
+  border-color: var(--primary);
+  background: var(--primary-5pct);
+  color: var(--primary);
+}
+
+.screenName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.screenActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  flex: none;
+  opacity: 0;
+
+  .screenRow:hover &,
+  .screenRowActive & {
+    opacity: 1;
+  }
+}
+
+.partList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 8px;
+}
+
+.partRow {
+  width: 100%;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 0 8px 0 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 12.5px;
+  color: var(--text);
+
+  &:hover {
+    background: var(--bg-button-hover);
+  }
+}
+
+.partRowActive {
+  background: var(--primary-10pct);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.partName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lockBadge {
+  flex: none;
+  color: var(--text-weak);
+  display: inline-flex;
+  align-items: center;
+}
+
+.emptyParts {
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--text-weak);
+}
+
+.variantPopover {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+  max-width: 260px;
+}
+
+.variantItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 12.5px;
+
+  &:hover {
+    background: var(--bg-button-hover);
+  }
+}
+
+.variantItemActive {
+  background: var(--primary-10pct);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.variantTag {
+  font-size: 11px;
+  color: var(--text-weak);
+  flex: none;
+}
