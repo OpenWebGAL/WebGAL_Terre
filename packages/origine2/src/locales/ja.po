@@ -14,6 +14,9 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: @lingui/cli\n"
 
+msgid "游戏目录不能以句点或空格结尾。"
+msgstr "ゲームディレクトリ名の末尾にピリオドや空白は使用できません。"
+
 msgid ";注释"
 msgstr ";コメント"
 

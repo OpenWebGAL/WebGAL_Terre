@@ -2,7 +2,7 @@ import GameElement from "./GameElement";
 import styles from "./sidebar.module.scss";
 import {useState} from "react";
 import {
-  Button, Checkbox, Dropdown,
+  Button, Checkbox, Dropdown, Field,
   Input,
   Option,
   Popover,
@@ -86,9 +86,10 @@ export default function Sidebar(props: ISidebarProps) {
 
   // 忽略大小写查重：Windows/macOS 上 test 与 Test 是同一个目录
   const isGameDirTaken = props.gameList.some((item) => item.dir.toLowerCase() === gameDir.trim().toLowerCase());
+  const isGameDirInvalid = /[. ]$/.test(gameDir);
 
   function createNewGame() {
-    if (gameName.trim() !== '' && gameDir.trim() !== '' && !isGameDirTaken) {
+    if (gameName.trim() !== '' && gameDir.trim() !== '' && !isGameDirTaken && !isGameDirInvalid) {
       props.createGame({
         gameName: gameName.trim(),
         gameDir: gameDir.trim(),
@@ -128,14 +129,19 @@ export default function Sidebar(props: ISidebarProps) {
                 defaultValue={t`新的游戏`}
                 placeholder={t`游戏名称`}
               />
-              {t`游戏目录`}
-              <Input
-                value={gameDir}
-                onChange={(event) => setGameDir(event.target.value)}
-                onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
-                defaultValue={gameDir}
-                placeholder={t`游戏目录`}
-              />
+              <Field
+                label={t`游戏目录`}
+                validationState={isGameDirInvalid ? 'error' : 'none'}
+                validationMessage={isGameDirInvalid ? t`游戏目录不能以句点或空格结尾。` : undefined}
+              >
+                <Input
+                  value={gameDir}
+                  onChange={(event) => setGameDir(event.target.value)}
+                  onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
+                  defaultValue={gameDir}
+                  placeholder={t`游戏目录`}
+                />
+              </Field>
               {t`选择游戏引擎版本`}
               {selector}
               <Checkbox
@@ -155,6 +161,7 @@ export default function Sidebar(props: ISidebarProps) {
                   gameName.trim() === ''
                   || gameDir.trim() === ''
                   || isGameDirTaken
+                  || isGameDirInvalid
                 }
                 onClick={createNewGame}
               >

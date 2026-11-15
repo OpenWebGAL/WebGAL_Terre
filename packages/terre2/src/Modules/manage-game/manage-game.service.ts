@@ -1,4 +1,4 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { BadRequestException, ConsoleLogger, Injectable } from '@nestjs/common';
 import { _open } from '../../util/open';
 import { IFileInfo, WebgalFsService } from '../webgal-fs/webgal-fs.service';
 import * as process from 'process';
@@ -90,6 +90,12 @@ export class ManageGameService {
   async createGame(createGameData: CreateGameDto): Promise<boolean> {
     const { gameName, gameDir, derivative, templateDir, ignoreTemplate } =
       createGameData;
+    // Keep project directories usable on Windows.
+    if (/[. ]$/.test(gameDir)) {
+      throw new BadRequestException(
+        'Game directory names cannot end with a dot or a space.',
+      );
+    }
     // 检查是否存在这个游戏
     // 忽略大小写：Windows/macOS 文件系统不区分大小写，test 会写入已有的 Test 目录
     const checkDir = await this.webgalFs.getDirInfo(
