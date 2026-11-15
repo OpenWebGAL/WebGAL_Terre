@@ -1982,6 +1982,9 @@ msgstr "Add root node"
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
 
+msgid "添加色标"
+msgstr "Add color stop"
+
 msgid "添加节点"
 msgstr "Add node"
 
@@ -2407,6 +2410,9 @@ msgstr "Auto-hide toolbar"
 
 msgid "自定义"
 msgstr "Customization"
+
+msgid "自定义 (CSS)"
+msgstr "Custom (CSS)"
 
 msgid "自定义 Live2D 绘制范围"
 msgstr "Custom Live2D drawing area"

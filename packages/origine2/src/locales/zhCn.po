@@ -1982,6 +1982,9 @@ msgstr "添加根节点"
 msgid "添加自定义属性"
 msgstr "添加自定义属性"
 
+msgid "添加色标"
+msgstr "添加色标"
+
 msgid "添加节点"
 msgstr "添加节点"
 
@@ -2407,6 +2410,9 @@ msgstr "自动隐藏功能区"
 
 msgid "自定义"
 msgstr "自定义"
+
+msgid "自定义 (CSS)"
+msgstr "自定义 (CSS)"
 
 msgid "自定义 Live2D 绘制范围"
 msgstr "自定义 Live2D 绘制范围"

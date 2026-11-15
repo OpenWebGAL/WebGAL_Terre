@@ -17,13 +17,21 @@ export interface LayoutFields {
   marginLeft?: number;
 }
 
+export interface GradientColorStop {
+  color: string;
+  position?: number;
+  rawPosition?: string;
+}
+
 export interface ColorOrGradientValue {
-  mode: 'none' | 'solid' | 'gradient';
+  mode: 'none' | 'solid' | 'gradient' | 'custom';
   solidColor?: string;
   gradientCss?: string;
   angle?: number;
+  stops?: GradientColorStop[];
   startColor?: string;
   endColor?: string;
+  rawCss?: string;
 }
 
 export interface TextStrokeValue {
@@ -43,16 +51,18 @@ export interface ShadowValue {
 }
 
 export interface BackgroundFillValue {
-  mode: 'none' | 'solid' | 'gradient' | 'image';
+  mode: 'none' | 'solid' | 'gradient' | 'image' | 'custom';
   solidColor?: string;
   gradientCss?: string;
   angle?: number;
+  stops?: GradientColorStop[];
   startColor?: string;
   endColor?: string;
   imageUrl?: string;
   size?: string;
   repeat?: string;
   position?: string;
+  rawCss?: string;
 }
 
 export interface BorderImage9SliceValue {

@@ -1982,6 +1982,9 @@ msgstr "ルートノードを追加"
 msgid "添加自定义属性"
 msgstr "カスタム属性を追加"
 
+msgid "添加色标"
+msgstr "カラーストップを追加"
+
 msgid "添加节点"
 msgstr "ノードを追加"
 
@@ -2407,6 +2410,9 @@ msgstr "ツールバーを自動的に隠す"
 
 msgid "自定义"
 msgstr "カスタム"
+
+msgid "自定义 (CSS)"
+msgstr "カスタム (CSS)"
 
 msgid "自定义 Live2D 绘制范围"
 msgstr "Live2D 描画範囲のカスタマイズ"

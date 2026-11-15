@@ -208,3 +208,22 @@
   font-size: 12px;
   color: var(--text);
 }
+
+.gradientStopRow {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gradientStopColor {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.gradientStopPos {
+  flex: none;
+  width: 76px;
+}

@@ -22,6 +22,7 @@ import {
   parseBlurPx,
   parseFiniteNumber,
   parseLinearGradient,
+  isGradientCss,
   parseMaskFade,
   parsePx,
   parseShadow,
@@ -37,16 +38,22 @@ type StyleUpdater<K extends keyof SimpleStyleModel> = (
 
 function parseTextFill(decls: Record<string, string>): ColorOrGradientValue {
   if (isTextBackgroundClip(decls)) {
-    const bg = extractBackgroundGradientOrColor(decls);
-    if (bg.gradient) {
-      const parsed = parseLinearGradient(bg.gradient);
-      return {
-        mode: 'gradient',
-        gradientCss: bg.gradient,
-        angle: parsed?.angle ?? 90,
-        startColor: parsed?.startColor ?? '#ffffff',
-        endColor: parsed?.endColor ?? '#90caf9',
-      };
+    const rawBg = decls.background ? stripImportant(decls.background) : undefined;
+    const rawImage = decls['background-image'] ? stripImportant(decls['background-image']) : undefined;
+    const candidate = (rawImage && rawImage.toLowerCase() !== 'none' ? rawImage : undefined)
+      ?? (rawBg && rawBg.toLowerCase() !== 'none' ? rawBg : undefined);
+    if (candidate) {
+      const parsed = parseLinearGradient(candidate);
+      if (parsed) {
+        return {
+          mode: 'gradient',
+          angle: parsed.angle,
+          stops: parsed.stops,
+          startColor: parsed.startColor,
+          endColor: parsed.endColor,
+        };
+      }
+      return { mode: 'custom', rawCss: candidate };
     }
   }
 
@@ -84,9 +91,32 @@ function parseTextStroke(decls: Record<string, string>): TextStrokeValue {
   return { enabled: false, widthPx: 2, color: '#000000' };
 }
 
+function isComplexBackgroundValue(raw: string | undefined): boolean {
+  if (!raw) return false;
+  const lower = raw.toLowerCase();
+  if (lower === 'none' || lower === 'transparent') return false;
+  const layers = splitTopLevel(raw, 'comma');
+  if (layers.length > 1) return true;
+  const tokens = splitTopLevel(layers[0], 'space');
+  return tokens.some((token) => isGradientCss(token)) && !parseLinearGradient(layers[0]);
+}
+
 function parseBackgroundFill(decls: Record<string, string>): BackgroundFillValue {
   if (isTextBackgroundClip(decls)) {
     return { mode: 'none' };
+  }
+
+  const rawBg = decls.background ? stripImportant(decls.background) : undefined;
+  const rawImage = decls['background-image'] ? stripImportant(decls['background-image']) : undefined;
+
+  if (isComplexBackgroundValue(rawImage)) {
+    return { mode: 'custom', rawCss: rawImage };
+  }
+  if (isComplexBackgroundValue(rawBg)) {
+    return { mode: 'custom', rawCss: rawBg };
+  }
+  if (rawBg && rawBg.toLowerCase() !== 'none' && rawImage && rawImage.toLowerCase() !== 'none') {
+    return { mode: 'custom', rawCss: `${rawBg}; background-image: ${rawImage}` };
   }
 
   const bg = extractBackgroundGradientOrColor(decls);
@@ -102,13 +132,20 @@ function parseBackgroundFill(decls: Record<string, string>): BackgroundFillValue
 
   if (bg.gradient) {
     const parsed = parseLinearGradient(bg.gradient);
+    if (!parsed) {
+      return { mode: 'custom', rawCss: bg.gradient };
+    }
     return {
       mode: 'gradient',
-      gradientCss: bg.gradient,
-      angle: parsed?.angle ?? 180,
-      startColor: parsed?.startColor ?? 'rgba(0, 0, 0, 0.7)',
-      endColor: parsed?.endColor ?? 'rgba(0, 0, 0, 0.2)',
+      angle: parsed.angle,
+      stops: parsed.stops,
+      startColor: parsed.startColor,
+      endColor: parsed.endColor,
     };
+  }
+
+  if (rawImage && rawImage.toLowerCase() !== 'none') {
+    return { mode: 'custom', rawCss: rawImage };
   }
 
   if (bg.solidColor) {
@@ -171,6 +208,10 @@ function clearTextClipResiduals(decls: Record<string, string>): Record<string, s
 
 const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
   textFill: (decls, value) => {
+    if (value.mode === 'custom') {
+      return {};
+    }
+
     if (value.mode === 'none') {
       return {
         color: null,
@@ -187,9 +228,12 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
       };
     }
 
-    const grad =
-      value.gradientCss?.trim() ||
-      buildLinearGradient(value.angle ?? 90, value.startColor ?? '#ffffff', value.endColor ?? '#90caf9');
+    const angle = value.angle ?? 90;
+    const grad = value.stops && value.stops.length >= 2
+      ? buildLinearGradient(angle, value.stops)
+      : (value.startColor || value.endColor)
+        ? buildLinearGradient(angle, value.startColor ?? '#ffffff', value.endColor ?? '#90caf9')
+        : (value.gradientCss?.trim() || buildLinearGradient(angle, '#ffffff', '#90caf9'));
 
     return {
       color: 'transparent',
@@ -240,6 +284,10 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
   }),
 
   background: (decls, value) => {
+    if (value.mode === 'custom') {
+      return {};
+    }
+
     const clearClip: Record<string, string | null> = isTextBackgroundClip(decls)
       ? {
         'background-clip': null,
@@ -274,9 +322,12 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
     }
 
     if (value.mode === 'gradient') {
-      const grad =
-        value.gradientCss?.trim() ||
-        buildLinearGradient(value.angle ?? 180, value.startColor ?? 'rgba(0, 0, 0, 0.7)', value.endColor ?? 'rgba(0, 0, 0, 0.2)');
+      const angle = value.angle ?? 180;
+      const grad = value.stops && value.stops.length >= 2
+        ? buildLinearGradient(angle, value.stops)
+        : (value.startColor || value.endColor)
+          ? buildLinearGradient(angle, value.startColor ?? 'rgba(0, 0, 0, 0.7)', value.endColor ?? 'rgba(0, 0, 0, 0.2)')
+          : (value.gradientCss?.trim() || buildLinearGradient(angle, 'rgba(0, 0, 0, 0.7)', 'rgba(0, 0, 0, 0.2)'));
       return {
         ...clearClip,
         background: grad,

@@ -1,13 +1,109 @@
-import { Input, Select, Switch } from '@fluentui/react-components';
+import { Button, Input, Select, Switch } from '@fluentui/react-components';
+import { AddRegular, DismissRegular } from '@fluentui/react-icons';
 import { t } from '@lingui/macro';
 import type {
   ColorOrGradientValue,
+  GradientColorStop,
   ShadowValue,
   SimpleStyleModel,
   TextStrokeValue,
 } from '../styleModel';
 import { CompactColorField, InspectorRow, PxSpinField } from './SimpleFieldHelpers';
 import styles from './inspectorCommon.module.scss';
+
+export function resolveGradientStops(
+  stops: GradientColorStop[] | undefined,
+  fallbackStart: string,
+  fallbackEnd: string,
+): GradientColorStop[] {
+  if (stops && stops.length >= 2) return stops;
+  return [{ color: fallbackStart, position: 0 }, { color: fallbackEnd, position: 100 }];
+}
+
+function insertMiddleStop(stops: GradientColorStop[]): GradientColorStop[] {
+  const effectivePos = (idx: number) =>
+    stops[idx].position ?? Math.round((idx / Math.max(1, stops.length - 1)) * 100);
+
+  let bestIndex = 0;
+  let bestSpan = -1;
+  for (let i = 0; i < stops.length - 1; i += 1) {
+    const span = Math.abs(effectivePos(i + 1) - effectivePos(i));
+    if (span > bestSpan) {
+      bestSpan = span;
+      bestIndex = i;
+    }
+  }
+
+  const midPos = Math.round((effectivePos(bestIndex) + effectivePos(bestIndex + 1)) / 2);
+  const nextStops = [...stops];
+  nextStops.splice(bestIndex + 1, 0, { color: stops[bestIndex].color, position: midPos });
+  return nextStops;
+}
+
+interface ILinearGradientFieldsProps {
+  angle: number;
+  stops: GradientColorStop[];
+  onChange: (angle: number, stops: GradientColorStop[], commit: boolean) => void;
+}
+
+export function LinearGradientFields({ angle, stops, onChange }: ILinearGradientFieldsProps) {
+  const updateStop = (index: number, patch: Partial<GradientColorStop>, commit: boolean) => {
+    const nextStops = stops.map((stop, i) => (i === index ? { ...stop, ...patch } : stop));
+    onChange(angle, nextStops, commit);
+  };
+
+  return (
+    <>
+      <InspectorRow label={t`角度`}>
+        <PxSpinField
+          value={angle}
+          min={0}
+          max={360}
+          onChange={(nextAngle) => onChange(nextAngle ?? 180, stops, false)}
+        />
+        <span className={styles.unitTag}>deg</span>
+        <div className={styles.barSpacer} />
+        <Button
+          size="small"
+          appearance="subtle"
+          icon={<AddRegular />}
+          title={t`添加色标`}
+          onClick={() => onChange(angle, insertMiddleStop(stops), true)}
+        />
+      </InspectorRow>
+      {stops.map((stop, idx) => (
+        <InspectorRow key={idx} label={`#${idx + 1}`}>
+          <div className={styles.gradientStopRow}>
+            <div className={styles.gradientStopColor}>
+              <CompactColorField
+                color={stop.color}
+                onChange={(color) => updateStop(idx, { color }, true)}
+              />
+            </div>
+            <div className={styles.gradientStopPos}>
+              <PxSpinField
+                tag="%"
+                min={0}
+                max={100}
+                placeholder={String(Math.round((idx / Math.max(1, stops.length - 1)) * 100))}
+                value={stop.position}
+                onChange={(pos) => updateStop(idx, { position: pos, rawPosition: undefined }, false)}
+              />
+            </div>
+            {stops.length > 2 && (
+              <Button
+                size="small"
+                appearance="subtle"
+                icon={<DismissRegular />}
+                onClick={() => onChange(angle, stops.filter((_, i) => i !== idx), true)}
+              />
+            )}
+          </div>
+        </InspectorRow>
+      ))}
+    </>
+  );
+}
 
 export interface ISimpleSectionProps {
   model: SimpleStyleModel;
@@ -22,19 +118,26 @@ export function SimpleTextSection({ model, onPatch }: ISimpleSectionProps) {
   const { textFill, textStroke, textShadow } = model;
 
   const updateFillMode = (mode: ColorOrGradientValue['mode']) => {
+    if (mode === 'custom') return;
     if (mode === 'none') {
       onPatch('textFill', { mode: 'none' }, true);
     } else if (mode === 'solid') {
       onPatch('textFill', {
         mode: 'solid',
-        solidColor: textFill.solidColor || textFill.startColor || '#FFFFFFFF',
+        solidColor: textFill.solidColor || textFill.stops?.[0]?.color || textFill.startColor || '#FFFFFFFF',
       }, true);
     } else {
+      const stops = resolveGradientStops(
+        textFill.stops,
+        textFill.startColor || textFill.solidColor || '#FFFFFFFF',
+        textFill.endColor || '#8EC5FCFF',
+      );
       onPatch('textFill', {
         mode: 'gradient',
         angle: textFill.angle ?? 180,
-        startColor: textFill.startColor || textFill.solidColor || '#FFFFFFFF',
-        endColor: textFill.endColor || '#8EC5FCFF',
+        stops,
+        startColor: stops[0].color,
+        endColor: stops[stops.length - 1].color,
       }, true);
     }
   };
@@ -58,6 +161,7 @@ export function SimpleTextSection({ model, onPatch }: ISimpleSectionProps) {
           <option value="none">{t`继承`}</option>
           <option value="solid">{t`纯色`}</option>
           <option value="gradient">{t`渐变`}</option>
+          {textFill.mode === 'custom' && <option value="custom">{t`自定义 (CSS)`}</option>}
         </Select>
       </InspectorRow>
 
@@ -71,29 +175,23 @@ export function SimpleTextSection({ model, onPatch }: ISimpleSectionProps) {
       )}
 
       {textFill.mode === 'gradient' && (
-        <>
-          <InspectorRow label={t`角度`}>
-            <PxSpinField
-              value={textFill.angle ?? 180}
-              min={0}
-              max={360}
-              onChange={(angle) => onPatch('textFill', { ...textFill, angle: angle ?? 180 })}
-            />
-            <span className={styles.unitTag}>deg</span>
-          </InspectorRow>
-          <InspectorRow label={t`起色`}>
-            <CompactColorField
-              color={textFill.startColor || '#FFFFFFFF'}
-              onChange={(startColor) => onPatch('textFill', { ...textFill, startColor }, true)}
-            />
-          </InspectorRow>
-          <InspectorRow label={t`终色`}>
-            <CompactColorField
-              color={textFill.endColor || '#8EC5FCFF'}
-              onChange={(endColor) => onPatch('textFill', { ...textFill, endColor }, true)}
-            />
-          </InspectorRow>
-        </>
+        <LinearGradientFields
+          angle={textFill.angle ?? 180}
+          stops={resolveGradientStops(
+            textFill.stops,
+            textFill.startColor || '#FFFFFFFF',
+            textFill.endColor || '#8EC5FCFF',
+          )}
+          onChange={(angle, stops, commit) =>
+            onPatch('textFill', {
+              mode: 'gradient',
+              angle,
+              stops,
+              startColor: stops[0]?.color,
+              endColor: stops[stops.length - 1]?.color,
+            }, commit)
+          }
+        />
       )}
 
       <InspectorRow label={t`字号`}>

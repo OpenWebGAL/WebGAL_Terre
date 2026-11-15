@@ -13,6 +13,7 @@ import {
   InspectorRow,
   PxSpinField,
 } from './SimpleFieldHelpers';
+import { LinearGradientFields, resolveGradientStops } from './SimpleTextSection';
 import styles from './inspectorCommon.module.scss';
 
 interface ISimpleBackgroundSectionProps {
@@ -35,19 +36,26 @@ export function SimpleBackgroundSection({
   const { background, borderImage, maskFade, backdropBlur } = model;
 
   const updateBgMode = (mode: BackgroundFillValue['mode']) => {
+    if (mode === 'custom') return;
     if (mode === 'none') {
       onPatch('background', { mode: 'none' }, true);
     } else if (mode === 'solid') {
       onPatch('background', {
         mode: 'solid',
-        solidColor: background.solidColor || '#00000080',
+        solidColor: background.solidColor || background.stops?.[0]?.color || background.startColor || '#00000080',
       }, true);
     } else if (mode === 'gradient') {
+      const stops = resolveGradientStops(
+        background.stops,
+        background.startColor || background.solidColor || '#00000099',
+        background.endColor || '#00000033',
+      );
       onPatch('background', {
         mode: 'gradient',
         angle: background.angle ?? 180,
-        startColor: background.startColor || '#00000099',
-        endColor: background.endColor || '#00000033',
+        stops,
+        startColor: stops[0].color,
+        endColor: stops[stops.length - 1].color,
       }, true);
     } else {
       onPatch('background', {
@@ -84,6 +92,7 @@ export function SimpleBackgroundSection({
           <option value="solid">{t`纯色`}</option>
           <option value="gradient">{t`渐变`}</option>
           <option value="image">{t`图片`}</option>
+          {background.mode === 'custom' && <option value="custom">{t`自定义 (CSS)`}</option>}
         </Select>
       </InspectorRow>
 
@@ -97,29 +106,23 @@ export function SimpleBackgroundSection({
       )}
 
       {background.mode === 'gradient' && (
-        <>
-          <InspectorRow label={t`角度`}>
-            <PxSpinField
-              value={background.angle ?? 180}
-              min={0}
-              max={360}
-              onChange={(angle) => onPatch('background', { ...background, angle: angle ?? 180 })}
-            />
-            <span className={styles.unitTag}>deg</span>
-          </InspectorRow>
-          <InspectorRow label={t`起色`}>
-            <CompactColorField
-              color={background.startColor || '#00000099'}
-              onChange={(startColor) => onPatch('background', { ...background, startColor }, true)}
-            />
-          </InspectorRow>
-          <InspectorRow label={t`终色`}>
-            <CompactColorField
-              color={background.endColor || '#00000033'}
-              onChange={(endColor) => onPatch('background', { ...background, endColor }, true)}
-            />
-          </InspectorRow>
-        </>
+        <LinearGradientFields
+          angle={background.angle ?? 180}
+          stops={resolveGradientStops(
+            background.stops,
+            background.startColor || '#00000099',
+            background.endColor || '#00000033',
+          )}
+          onChange={(angle, stops, commit) =>
+            onPatch('background', {
+              mode: 'gradient',
+              angle,
+              stops,
+              startColor: stops[0]?.color,
+              endColor: stops[stops.length - 1]?.color,
+            }, commit)
+          }
+        />
       )}
 
       {background.mode === 'image' && (

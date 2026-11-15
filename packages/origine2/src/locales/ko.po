@@ -1982,6 +1982,9 @@ msgstr "루트 노드 추가"
 msgid "添加自定义属性"
 msgstr "커스텀 속성 추가"
 
+msgid "添加色标"
+msgstr "색상 정지점 추가"
+
 msgid "添加节点"
 msgstr "노드 추가"
 
@@ -2407,6 +2410,9 @@ msgstr "리본 메뉴 자동 숨기기"
 
 msgid "自定义"
 msgstr "커스텀"
+
+msgid "自定义 (CSS)"
+msgstr "커스텀 (CSS)"
 
 msgid "自定义 Live2D 绘制范围"
 msgstr "커스텀 Live2D 렌더링 범위"

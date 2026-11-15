@@ -4,6 +4,7 @@ export type {
   BorderBoxValue,
   BorderImage9SliceValue,
   ColorOrGradientValue,
+  GradientColorStop,
   LayoutFields,
   MaskFadeValue,
   PartRawRuleMap,

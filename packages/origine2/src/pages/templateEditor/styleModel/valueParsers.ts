@@ -1,4 +1,4 @@
-import { MaskFadeValue, ShadowValue } from './types';
+import { GradientColorStop, MaskFadeValue, ShadowValue } from './types';
 
 export function stripImportant(raw: string): string {
   return raw.replace(/\s*!important\s*$/i, '').trim();
@@ -123,23 +123,84 @@ const DIRECTION_TO_ANGLE: Record<string, number> = {
   'to left top': 315,
 };
 
-function stripColorStopPosition(stop: string): string {
-  const tokens = splitTopLevel(stop, 'space');
-  return tokens[0] ?? stop.trim();
+function unwrapSingleLinearGradient(cleaned: string): string | undefined {
+  if (splitTopLevel(cleaned, 'comma').length !== 1) return undefined;
+  const prefixMatch = cleaned.match(/^linear-gradient\(/i);
+  if (!prefixMatch) return undefined;
+
+  const openIdx = prefixMatch[0].length - 1;
+  let depth = 0;
+  let quote: '"' | "'" | null = null;
+
+  for (let i = openIdx; i < cleaned.length; i += 1) {
+    const ch = cleaned[i];
+    if (quote) {
+      if (ch === quote && cleaned[i - 1] !== '\\') quote = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (ch === '(') depth += 1;
+    else if (ch === ')') {
+      depth -= 1;
+      if (depth === 0) {
+        return i === cleaned.length - 1 ? cleaned.slice(openIdx + 1, i).trim() : undefined;
+      }
+    }
+  }
+  return undefined;
 }
 
-export function parseLinearGradient(raw: string | undefined): {
+const LENGTH_OR_PERCENT_RE = /^-?(?:\d+(?:\.\d+)?|\.\d+)(?:%|px|em|rem|vw|vh|vmin|vmax|ch|ex|pt|pc|cm|mm|in)?$/i;
+
+function parseStopPosition(token: string): Pick<GradientColorStop, 'position' | 'rawPosition'> {
+  const pctMatch = token.match(/^(-?\d+(?:\.\d+)?)%$/);
+  if (pctMatch) {
+    const num = Number(pctMatch[1]);
+    if (Number.isFinite(num)) return { position: num };
+  }
+  return { rawPosition: token };
+}
+
+function parseGradientStops(rawStops: string[]): GradientColorStop[] | undefined {
+  const stops: GradientColorStop[] = [];
+
+  for (const rawStop of rawStops) {
+    const tokens = splitTopLevel(rawStop, 'space');
+    if (tokens.length === 0 || tokens.length > 3) return undefined;
+    const color = tokens[0];
+    if (LENGTH_OR_PERCENT_RE.test(color)) return undefined;
+
+    if (tokens.length === 1) {
+      stops.push({ color });
+      continue;
+    }
+
+    for (const posToken of tokens.slice(1)) {
+      stops.push({ color, ...parseStopPosition(posToken) });
+    }
+  }
+
+  return stops.length >= 2 ? stops : undefined;
+}
+
+export interface ParsedLinearGradient {
   gradientCss: string;
   angle: number;
+  stops: GradientColorStop[];
   startColor: string;
   endColor: string;
-} | undefined {
+}
+
+export function parseLinearGradient(raw: string | undefined): ParsedLinearGradient | undefined {
   if (!raw) return undefined;
   const cleaned = stripImportant(raw);
-  const match = cleaned.match(/^linear-gradient\(([\s\S]+)\)$/i);
-  if (!match) return undefined;
+  const inner = unwrapSingleLinearGradient(cleaned);
+  if (!inner) return undefined;
 
-  const args = splitTopLevel(match[1], 'comma');
+  const args = splitTopLevel(inner, 'comma');
   if (args.length < 2) return undefined;
 
   let angle = 180;
@@ -148,26 +209,54 @@ export function parseLinearGradient(raw: string | undefined): {
   const degMatch = firstLower.match(/^(-?\d+(?:\.\d+)?)deg$/);
 
   if (degMatch) {
-    angle = Number(degMatch[1]);
+    const rawDeg = Number(degMatch[1]);
+    angle = rawDeg < 0 ? ((rawDeg % 360) + 360) % 360 : rawDeg;
     colorStartIndex = 1;
   } else if (firstLower in DIRECTION_TO_ANGLE) {
     angle = DIRECTION_TO_ANGLE[firstLower];
     colorStartIndex = 1;
+  } else if (firstLower.startsWith('to ') || /\bin\s+/i.test(firstLower)) {
+    return undefined;
   }
 
-  const stops = args.slice(colorStartIndex);
-  if (stops.length < 2) return undefined;
+  const stops = parseGradientStops(args.slice(colorStartIndex));
+  if (!stops) return undefined;
 
   return {
     gradientCss: cleaned,
     angle,
-    startColor: stripColorStopPosition(stops[0]),
-    endColor: stripColorStopPosition(stops[stops.length - 1]),
+    stops,
+    startColor: stops[0].color,
+    endColor: stops[stops.length - 1].color,
   };
 }
 
-export function buildLinearGradient(angle = 90, startColor = '#ffffff', endColor = '#000000'): string {
-  return `linear-gradient(${angle}deg, ${startColor}, ${endColor})`;
+function roundTwoDecimals(value: number): number {
+  const rounded = Math.round(value * 100) / 100;
+  return Object.is(rounded, -0) ? 0 : rounded;
+}
+
+function formatGradientStop(stop: GradientColorStop): string {
+  const color = stop.color.trim() || '#ffffff';
+  if (typeof stop.position === 'number' && Number.isFinite(stop.position)) {
+    return `${color} ${roundTwoDecimals(stop.position)}%`;
+  }
+  if (stop.rawPosition?.trim()) {
+    return `${color} ${stop.rawPosition.trim()}`;
+  }
+  return color;
+}
+
+export function buildLinearGradient(
+  angle = 90,
+  stopsOrStart: GradientColorStop[] | string = '#ffffff',
+  endColor = '#000000',
+): string {
+  const stops: GradientColorStop[] = Array.isArray(stopsOrStart)
+    ? (stopsOrStart.length >= 2 ? stopsOrStart : [{ color: '#ffffff' }, { color: '#000000' }])
+    : [{ color: stopsOrStart }, { color: endColor }];
+  const deg = Number.isFinite(angle) ? roundTwoDecimals(angle) : 180;
+  return `linear-gradient(${deg}deg, ${stops.map(formatGradientStop).join(', ')})`;
 }
 
 export function parseShadow(raw: string | undefined, hasSpread: boolean): ShadowValue {
