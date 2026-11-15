@@ -27,14 +27,9 @@ function convertSentenceToNode(sentence: ISentenceEditorConfig) {
 
 export function AddSentenceTab() {
 
-  const btsCommon1 = pickSentenceType([
-    commandType.say,
-    commandType.changeBg,
-    commandType.changeFigure,
-    commandType.changeFigureDiff,
-    commandType.character,
-  ]);
+  const btsCommon1 = pickSentenceType([commandType.say, commandType.changeBg, commandType.changeFigure]);
   const btsCommon2 = pickSentenceType([commandType.bgm, commandType.video, commandType.playEffect]);
+  const btsCommon3 = pickSentenceType([commandType.changeFigureDiff, commandType.character]);
   const btsControl = pickSentenceType([commandType.setAnimation, commandType.setComplexAnimation, commandType.setTransform]);
   const btsControl2 = pickSentenceType([commandType.setTempAnimation, commandType.setTransition]);
   const btsSpecial = pickSentenceType([commandType.pixi, commandType.pixiInit, commandType.intro]);
@@ -53,6 +48,9 @@ export function AddSentenceTab() {
       </div>
       <div>
         {btsCommon2}
+      </div>
+      <div>
+        {btsCommon3}
       </div>
     </TabItem>
     <TabItem title={t`舞台对象控制`}>
