@@ -11388,16 +11388,7 @@ react-css-styled@^1.1.9:
     css-styled "~1.0.8"
     framework-utils "^1.1.0"
 
-react-dom@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
-  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    scheduler "^0.20.2"
-
-react-dom@^18.0.0:
+react-dom@^18.0.0, react-dom@^18.2.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -11502,15 +11493,7 @@ react-window@^1.8.11:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"
 
-react@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
-  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-
-react@^18.0.0:
+react@^18.0.0, react@^18.2.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
@@ -11853,14 +11836,6 @@ sax@>=0.6.0:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.4.4.tgz#f29c2bba80ce5b86f4343b4c2be9f2b96627cf8b"
   integrity sha512-1n3r/tGXO6b6VXMdFT54SHzT9ytu9yr7TaELowdYpMqY/Ao7EnlQGmAQ1+RatX7Tkkdm6hONI2owqNx2aZj5Sw==
-
-scheduler@^0.20.2:
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
-  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.23.2:
   version "0.23.2"
@@ -13425,10 +13400,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-engine@4.6.7:
-  version "4.6.7"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.6.7.tgz#1d7289df4f6158d1143ee692c6f0ce41fd6a4c8d"
-  integrity sha512-wxsIekA01de3JsA97F95OpVn0ogs/jdHazn5pwQ1I/T7AJSEjrDuIxRBL3jrTJufsm+13bOY0dQHGLU6N/ANOQ==
+webgal-engine@4.7.0-preview.0:
+  version "4.7.0-preview.0"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.7.0-preview.0.tgz#81b79fb3174061bd1e9b40b3f5ed23f9eb3808aa"
+  integrity sha512-f8Tj2fW9iH07WMOZMUnRNfP2rtA3vbidyvlJRN750wQgTuWzUw8D+tPKR930BI0oKmwQcDrO8IDwUPKaStL0gg==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"
@@ -13448,11 +13423,12 @@ webgal-engine@4.6.7:
     pixi-live2d-display-webgal "^0.5.19"
     pixi.js "^6.3.0"
     popmotion "^11.0.5"
-    react "^17.0.2"
-    react-dom "^17.0.2"
+    react "^18.2.0"
+    react-dom "^18.2.0"
     react-i18next "^12.2.2"
     react-redux "^8.0.1"
     sass "^1.49.9"
+    stylis "^4.2.0"
     uuid "^9.0.0"
     vite-plugin-package-version "^1.0.2"
 
