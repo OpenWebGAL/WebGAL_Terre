@@ -42,15 +42,14 @@ export const SCREEN_PRESET_REGISTRY: Record<
 > = {
   title: [
     { variantId: 'default', name: '默认样式 (Refine 2026)' },
-    { variantId: 'classic', name: '经典底栏 (WebGAL Classic)' },
+    { variantId: 'classic', name: '经典底栏' },
     { variantId: 'editorial-right', name: '右侧书卷' },
   ],
   textbox: [
     { variantId: 'default', name: '默认样式 (Refine 2026)' },
     { variantId: 'classic', name: '经典胶囊 (WebGAL Classic)' },
     { variantId: 'black', name: '暗黑半透 (WebGAL Black)' },
-    { variantId: 'clean-adv', name: '极简底栏' },
-    { variantId: 'immersive-nvl', name: '全屏书卷 (NVL)' },
+    { variantId: 'bare', name: '无样式基底' },
   ],
   choose: [
     { variantId: 'default', name: '默认样式' },
