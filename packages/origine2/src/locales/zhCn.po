@@ -2276,9 +2276,6 @@ msgstr "终点回弹"
 msgid "终点弹跳"
 msgstr "终点弹跳"
 
-msgid "终色"
-msgstr "终色"
-
 msgid "结束后保持"
 msgstr "结束后保持"
 
@@ -2656,9 +2653,6 @@ msgstr "起点回弹"
 
 msgid "起点弹跳"
 msgstr "起点弹跳"
-
-msgid "起色"
-msgstr "起色"
 
 msgid "跨语句动画"
 msgstr "跨语句动画"

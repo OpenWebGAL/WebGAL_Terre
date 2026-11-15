@@ -36,7 +36,7 @@ msgid "4.6 用户数据迁移"
 msgstr "4.6 User Data Migration"
 
 msgid "applyStyle 已覆盖"
-msgstr ""
+msgstr "Overridden by applyStyle"
 
 msgid "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
 msgstr "applyStyle:TextBox_ShowName_Background->TextBox_ShowName_Background_Red;"
@@ -252,7 +252,7 @@ msgid "不设定"
 msgstr "Not set"
 
 msgid "不透明"
-msgstr ""
+msgstr "Opacity"
 
 msgid "与同目标动画并行"
 msgstr "Run in parallel with animations on the same target"
@@ -294,7 +294,7 @@ msgid "主题"
 msgstr "Theme"
 
 msgid "九宫格"
-msgstr ""
+msgstr "9-Slice"
 
 msgid "交互状态"
 msgstr "Interaction state"
@@ -318,7 +318,7 @@ msgid "从默认状态开始"
 msgstr "Start from default state"
 
 msgid "代码"
-msgstr ""
+msgstr "Code"
 
 msgid "代码编辑器"
 msgstr "Code Editor"
@@ -465,7 +465,7 @@ msgid "全局变量"
 msgstr "Global variable"
 
 msgid "全局弹窗"
-msgstr ""
+msgstr "Global Dialog"
 
 msgid "全屏文字"
 msgstr "Full-screen text"
@@ -507,7 +507,7 @@ msgid "关闭预览窗口"
 msgstr "Close preview pane"
 
 msgid "内"
-msgstr ""
+msgstr "Inset"
 
 msgid "内容"
 msgstr "Content"
@@ -516,10 +516,10 @@ msgid "内层文本"
 msgstr "Inner Text"
 
 msgid "内置"
-msgstr ""
+msgstr "Built-in"
 
 msgid "内置模板为只读，请新建模板后再更换界面"
-msgstr ""
+msgstr "Built-in templates are read-only. Please create a new template before switching screens."
 
 msgid "内边距"
 msgstr "Padding"
@@ -576,7 +576,7 @@ msgid "切换角色"
 msgstr "Change character"
 
 msgid "切片"
-msgstr ""
+msgstr "Slice"
 
 msgid "列表视图"
 msgstr "List view"
@@ -630,7 +630,7 @@ msgid "刷新游戏"
 msgstr "Refresh game"
 
 msgid "刷新预览"
-msgstr ""
+msgstr "Refresh preview"
 
 msgid "前景"
 msgstr "Foreground"
@@ -654,7 +654,7 @@ msgid "动画编辑器"
 msgstr "Animation editor"
 
 msgid "包含"
-msgstr ""
+msgstr "Contain"
 
 msgid "半张嘴"
 msgstr "Half open mouth"
@@ -675,13 +675,13 @@ msgid "即将把用户数据迁移回默认目录。文件较多时可能需要�
 msgstr "User data will be migrated back to the default directory. This may take some time if there are many files."
 
 msgid "历史记录"
-msgstr ""
+msgstr "Backlog"
 
 msgid "厚度"
 msgstr "Thickness"
 
 msgid "原尺寸"
-msgstr ""
+msgstr "Original size"
 
 msgid "原样式->新样式，多个用逗号分隔"
 msgstr "Original style->new style, separate multiple entries with commas"
@@ -696,7 +696,7 @@ msgid "参数名"
 msgstr "Argument name"
 
 msgid "双线"
-msgstr ""
+msgstr "Double"
 
 msgid "反射电影滤镜"
 msgstr "Reflection film filter"
@@ -726,7 +726,7 @@ msgid "变量表达式"
 msgstr "Variable expression"
 
 msgid "叠色"
-msgstr ""
+msgstr "Tint overlay"
 
 msgid "只展示节点，不展示名称"
 msgstr "Only show nodes, not names"
@@ -771,19 +771,19 @@ msgid "名称"
 msgstr "Name"
 
 msgid "向上"
-msgstr ""
+msgstr "Upward"
 
 msgid "向上添加"
 msgstr "Add above"
 
 msgid "向下"
-msgstr ""
+msgstr "Downward"
 
 msgid "向右"
-msgstr ""
+msgstr "Rightward"
 
 msgid "向左"
-msgstr ""
+msgstr "Leftward"
 
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
@@ -819,7 +819,7 @@ msgid "图层组合"
 msgstr "Layer combination"
 
 msgid "图形"
-msgstr ""
+msgstr "Visual"
 
 msgid "图形编辑器"
 msgstr "Graphical editor"
@@ -864,7 +864,7 @@ msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
 msgid "在新标签页打开"
-msgstr ""
+msgstr "Open in new tab"
 
 msgid "在游戏中显示当前变量"
 msgstr "Display current variables in game"
@@ -891,7 +891,7 @@ msgid "场景返回"
 msgstr "Return from scene"
 
 msgid "填充"
-msgstr ""
+msgstr "Fit"
 
 msgid "填写参数值"
 msgstr "Fill in parameter value"
@@ -906,7 +906,7 @@ msgid "外层文本"
 msgstr "Outer Text"
 
 msgid "外观样式"
-msgstr ""
+msgstr "Appearance"
 
 msgid "外边距"
 msgstr "Margin"
@@ -948,19 +948,19 @@ msgid "字体配置"
 msgstr "Font configuration"
 
 msgid "字号"
-msgstr ""
+msgstr "Font size"
 
 msgid "字影"
-msgstr ""
+msgstr "Text shadow"
 
 msgid "字母间距"
 msgstr "Letter spacing"
 
 msgid "字色"
-msgstr ""
+msgstr "Text color"
 
 msgid "字距"
-msgstr ""
+msgstr "Letter spacing"
 
 msgid "字重"
 msgstr "Font Weight"
@@ -969,7 +969,7 @@ msgid "存档变量"
 msgstr "Save-data variable"
 
 msgid "存档界面"
-msgstr ""
+msgstr "Save Screen"
 
 msgid "定位方式"
 msgstr "Positioning"
@@ -993,7 +993,7 @@ msgid "实时预览打开"
 msgstr "Live preview on"
 
 msgid "实线"
-msgstr ""
+msgstr "Solid"
 
 msgid "实验性快速预览"
 msgstr "Experimental fast preview"
@@ -1020,7 +1020,7 @@ msgid "导入模板"
 msgstr "Import template"
 
 msgid "导入自定义界面"
-msgstr ""
+msgstr "Import custom screen"
 
 msgid "导出"
 msgstr "Export"
@@ -1077,7 +1077,7 @@ msgid "尚未配置任何字体"
 msgstr "No fonts configured yet"
 
 msgid "尺寸"
-msgstr ""
+msgstr "Size"
 
 msgid "局部变量"
 msgstr "Local variable"
@@ -1095,7 +1095,7 @@ msgid "居中对齐"
 msgstr "Center Align"
 
 msgid "展开样式区"
-msgstr ""
+msgstr "Expand style panel"
 
 msgid "展示小头像"
 msgstr "Show avatar"
@@ -1155,7 +1155,7 @@ msgid "已读文本外层"
 msgstr "Read text outer layer"
 
 msgid "布局由列表控制"
-msgstr ""
+msgstr "Layout controlled by list"
 
 msgid "帧继承"
 msgstr "Keyframe inheritance"
@@ -1194,10 +1194,10 @@ msgid "应用颜色变化"
 msgstr "Apply color changes"
 
 msgid "底框图"
-msgstr ""
+msgstr "Border image"
 
 msgid "底部快捷栏"
-msgstr ""
+msgstr "Bottom Control Bar"
 
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
@@ -1248,7 +1248,7 @@ msgid "当前预览变量"
 msgstr "Current preview variables"
 
 msgid "影色"
-msgstr ""
+msgstr "Shadow color"
 
 msgid "循环播放"
 msgstr "Loop"
@@ -1284,7 +1284,7 @@ msgid "恢复默认目录"
 msgstr "Restore default directory"
 
 msgid "悬停"
-msgstr ""
+msgstr "Hover"
 
 msgid "我确定要删除游戏"
 msgstr "I'm sure to delete the game"
@@ -1326,13 +1326,13 @@ msgid "执行后清除角色名"
 msgstr "Clear role name after execution"
 
 msgid "扩展"
-msgstr ""
+msgstr "Spread"
 
 msgid "扩展名"
 msgstr "Extension name"
 
 msgid "拉伸"
-msgstr ""
+msgstr "Stretch"
 
 msgid "拖动调整时间，右键设置缓动或删除"
 msgstr "Drag to change the time, right-click to set easing or delete"
@@ -1353,22 +1353,22 @@ msgid "指针"
 msgstr "Pointer"
 
 msgid "按下"
-msgstr ""
+msgstr "Pressed"
 
 msgid "排序方式"
 msgstr "Sort by"
 
 msgid "排版"
-msgstr ""
+msgstr "Typography"
 
 msgid "控制是否要显示文本框"
 msgstr "Control whether to display the text box"
 
 msgid "描边"
-msgstr ""
+msgstr "Stroke"
 
 msgid "描边色"
-msgstr ""
+msgstr "Stroke color"
 
 msgid "提交"
 msgstr "Submit"
@@ -1434,7 +1434,7 @@ msgid "操作失败"
 msgstr "Operation failed"
 
 msgid "收起样式区"
-msgstr ""
+msgstr "Collapse style panel"
 
 msgid "放大"
 msgstr "Zoom in"
@@ -1701,10 +1701,10 @@ msgid "更多配置"
 msgstr "More config"
 
 msgid "更换界面"
-msgstr ""
+msgstr "Switch screen"
 
 msgid "更换界面失败"
-msgstr ""
+msgstr "Failed to switch screen"
 
 msgid "替换 UI 样式标签"
 msgstr "Replace UI style tags"
@@ -1713,7 +1713,7 @@ msgid "替换同目标动画"
 msgstr "Replace animation on same target"
 
 msgid "未找到样式文件"
-msgstr ""
+msgstr "Stylesheet not found"
 
 msgid "未指定"
 msgstr "Unspecified"
@@ -1725,7 +1725,7 @@ msgid "未识别的指令"
 msgstr "Unrecognized command"
 
 msgid "未选择"
-msgstr ""
+msgstr "Not selected"
 
 msgid "未选择图层"
 msgstr "No layer selected"
@@ -1734,7 +1734,7 @@ msgid "未选择跳转目标"
 msgstr "No jump target selected"
 
 msgid "未选择部件"
-msgstr ""
+msgstr "No part selected"
 
 msgid "未选择预设"
 msgstr "No preset selected"
@@ -1797,7 +1797,7 @@ msgid "标题按钮禁用"
 msgstr "Title Button Disabled"
 
 msgid "标题界面"
-msgstr ""
+msgstr "Title Screen"
 
 msgid "标题背景图片"
 msgstr "Title background image"
@@ -1887,7 +1887,7 @@ msgid "每个流程图只能有一个根节点"
 msgstr "Each flowchart can only have one root node"
 
 msgid "毛玻璃"
-msgstr ""
+msgstr "Frosted glass"
 
 msgid "永不换行"
 msgstr "Never wrap"
@@ -1914,7 +1914,7 @@ msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "Comments are only visible when editing and will not be executed in the game"
 
 msgid "流程图"
-msgstr ""
+msgstr "Flowchart"
 
 msgid "流程图列表"
 msgstr "Flowchart list"
@@ -2016,10 +2016,10 @@ msgid "清除角色名，留空角色名的语句不再显示角色名"
 msgstr "Clear the role name; lines that leave the role name blank no longer show one"
 
 msgid "渐变"
-msgstr ""
+msgstr "Gradient"
 
 msgid "渐隐"
-msgstr ""
+msgstr "Fade mask"
 
 msgid "游戏"
 msgstr "Games"
@@ -2076,7 +2076,7 @@ msgid "特殊演出"
 msgstr "Special performance"
 
 msgid "环绕"
-msgstr ""
+msgstr "Round"
 
 msgid "用户数据"
 msgstr "User data"
@@ -2103,13 +2103,13 @@ msgid "电影模式值"
 msgstr "Film mode value"
 
 msgid "画布编辑"
-msgstr ""
+msgstr "Canvas edit"
 
 msgid "界面导入失败"
-msgstr ""
+msgstr "Failed to import screen"
 
 msgid "界面导入成功"
-msgstr ""
+msgstr "Screen imported successfully"
 
 msgid "留空使用默认值"
 msgstr "Leave empty to use default"
@@ -2121,7 +2121,7 @@ msgid "百分比。 0-100 有效"
 msgstr "Percentage. 0-100 valid"
 
 msgid "盒影"
-msgstr ""
+msgstr "Box shadow"
 
 msgid "目前没有打开任何文件"
 msgstr "No file currently open"
@@ -2199,7 +2199,7 @@ msgid "禁用"
 msgstr "Disabled"
 
 msgid "禁用样式"
-msgstr ""
+msgstr "Disabled style"
 
 msgid "移动到回收站失败"
 msgstr "Failed to move to Trash"
@@ -2238,13 +2238,13 @@ msgid "等待时间（单位为毫秒）"
 msgstr "Wait time (ms)"
 
 msgid "等待预览上报部件"
-msgstr ""
+msgstr "Waiting for preview parts..."
 
 msgid "简体中文"
 msgstr "Simplified Chinese"
 
 msgid "简易模式"
-msgstr ""
+msgstr "Simple mode"
 
 msgid "红色通道"
 msgstr "Red channel"
@@ -2256,7 +2256,7 @@ msgid "紧急回避"
 msgstr "Emergency Evasion"
 
 msgid "纯色"
-msgstr ""
+msgstr "Solid color"
 
 msgid "纹理"
 msgstr "Texture"
@@ -2275,9 +2275,6 @@ msgstr "Back out"
 
 msgid "终点弹跳"
 msgstr "Bounce out"
-
-msgid "终色"
-msgstr ""
 
 msgid "结束后保持"
 msgstr "Hold after end"
@@ -2298,7 +2295,7 @@ msgid "绝对值"
 msgstr "Absolute"
 
 msgid "继承"
-msgstr ""
+msgstr "Inherit"
 
 msgid "继续游戏按钮"
 msgstr "Continue button"
@@ -2358,7 +2355,7 @@ msgid "网格视图"
 msgstr "Grid view"
 
 msgid "羽化"
-msgstr ""
+msgstr "Blur"
 
 msgid "老电影滤镜"
 msgstr "Old film filter"
@@ -2454,19 +2451,19 @@ msgid "获取输入"
 msgstr "Get input"
 
 msgid "菜单浮层"
-msgstr ""
+msgstr "Menu Overlay"
 
 msgid "蓝色通道"
 msgstr "Blue channel"
 
 msgid "虚线"
-msgstr ""
+msgstr "Dashed"
 
 msgid "行脚本"
 msgstr "Line of script"
 
 msgid "行高"
-msgstr ""
+msgstr "Line height"
 
 msgid "补充"
 msgstr "Fill in"
@@ -2487,7 +2484,7 @@ msgid "覆盖"
 msgstr "Coverage"
 
 msgid "角度"
-msgstr ""
+msgstr "Angle"
 
 msgid "角色"
 msgstr "Character"
@@ -2556,7 +2553,7 @@ msgid "设置普通变量或全局变量"
 msgstr "Set a normal or global variable"
 
 msgid "设置界面"
-msgstr ""
+msgstr "Options Screen"
 
 msgid "设置立绘或背景的进出场动画"
 msgstr "Setting the animation of the figure or background."
@@ -2604,7 +2601,7 @@ msgid "请输入搜索提示词..."
 msgstr "Please enter a search hint..."
 
 msgid "读档界面"
-msgstr ""
+msgstr "Load Screen"
 
 msgid "调整前景图片"
 msgstr "Resize foreground image"
@@ -2643,7 +2640,7 @@ msgid "资源"
 msgstr "Assets"
 
 msgid "起止"
-msgstr ""
+msgstr "Range"
 
 msgid "起止回弹"
 msgstr "Back in out"
@@ -2656,9 +2653,6 @@ msgstr "Back in"
 
 msgid "起点弹跳"
 msgstr "Bounce in"
-
-msgid "起色"
-msgstr ""
 
 msgid "跨语句动画"
 msgstr "Keep animation"
@@ -2700,13 +2694,13 @@ msgid "输入目标 ID"
 msgstr "Enter Target ID"
 
 msgid "边框"
-msgstr ""
+msgstr "Border"
 
 msgid "边框宽"
-msgstr ""
+msgstr "Border width"
 
 msgid "边框色"
-msgstr ""
+msgstr "Border color"
 
 msgid "迁移到此目录"
 msgstr "Migrate to this directory"
@@ -2898,7 +2892,7 @@ msgid "鉴赏排序"
 msgstr "Gallery order"
 
 msgid "鉴赏界面"
-msgstr ""
+msgstr "Gallery Screen"
 
 msgid "鉴赏系列"
 msgstr "Gallery series"
@@ -2979,7 +2973,7 @@ msgid "预览"
 msgstr "Preview"
 
 msgid "预览交互"
-msgstr ""
+msgstr "Interactive preview"
 
 msgid "预览初始状态"
 msgstr "Preview initial state"
@@ -3048,7 +3042,7 @@ msgid "默认变换和效果"
 msgstr "Default transforms and effects"
 
 msgid "默认字重"
-msgstr ""
+msgstr "Default weight"
 
 msgid "默认语言"
 msgstr "Default Language"
