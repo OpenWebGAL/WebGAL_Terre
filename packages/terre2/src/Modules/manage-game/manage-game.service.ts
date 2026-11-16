@@ -90,6 +90,7 @@ export class ManageGameService {
   async createGame(createGameData: CreateGameDto): Promise<boolean> {
     const { gameName, gameDir, derivative, templateDir, ignoreTemplate } =
       createGameData;
+    WebgalFsService.assertValidDirectoryName(gameDir, 'Game directory');
     // 检查是否存在这个游戏
     // 忽略大小写：Windows/macOS 文件系统不区分大小写，test 会写入已有的 Test 目录
     const checkDir = await this.webgalFs.getDirInfo(

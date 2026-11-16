@@ -420,6 +420,10 @@ export class ManageGameController {
     description: 'Failed to rename the file or directory.',
   })
   async rename(@Body() fileOperationDto: RenameDto) {
+    WebgalFsService.assertValidDirectoryName(
+      fileOperationDto.newName,
+      'Game directory',
+    );
     return this.webgalFs.renameFile(
       this.webgalFs.getPathFromRoot(
         `public/games/${fileOperationDto.gameName}`,

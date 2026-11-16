@@ -116,6 +116,7 @@ export class ManageTemplateService {
     templateName: string,
     templateDir: string,
   ): Promise<boolean> {
+    WebgalFsService.assertValidDirectoryName(templateDir, 'Template directory');
     // 检查是否存在这个模板
     const checkDir = await this.getTemplateList();
     let isThisTemplateExist = false;

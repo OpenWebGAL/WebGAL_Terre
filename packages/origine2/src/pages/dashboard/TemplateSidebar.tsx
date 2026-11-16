@@ -1,11 +1,12 @@
 import styles from "./TemplateSidebar.module.scss";
 import { ChangeEvent, useRef, useState } from "react";
-import { Button, Input, Popover, PopoverSurface, PopoverTrigger, Subtitle1, Toast, Toaster, ToastIntent, ToastTitle, useId, useToastController } from "@fluentui/react-components";
+import { Button, Field, Input, Popover, PopoverSurface, PopoverTrigger, Subtitle1, Toast, Toaster, ToastIntent, ToastTitle, useId, useToastController } from "@fluentui/react-components";
 import { AddFilled, AddRegular, ArrowImport24Filled, ArrowImport24Regular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon } from "@fluentui/react-icons";
 import TemplateElement from "./TemplateElement";
 import {t} from "@lingui/macro";
 import { CreateTemplateDto, TemplateInfoDto } from "@/api/Api";
 import normalizeFileName from "@/utils/normalizeFileName";
+import { hasTrailingDotOrSpace } from "@/utils/checkFileName";
 import { api } from "@/api";
 
 interface ITemplateSidebarProps {
@@ -29,15 +30,17 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
   const toasterId = useId("template-toaster");
   const { dispatchToast, dismissAllToasts } = useToastController(toasterId);
 
+  const isTemplateDirInvalid = hasTrailingDotOrSpace(newTemplateDir);
   const isAllowCreate = newTemplateName
     && newTemplateName.trim() !== ''
     && newTemplateDir
     && newTemplateDir.trim() !== ''
+    && !isTemplateDirInvalid
     && !props.templateList.find((item) => item.dir === newTemplateDir.trim());
 
   function createNewTemplate() {
     if (isAllowCreate) {
-      props.createTemplate({templateName: newTemplateName, templateDir: newTemplateDir});
+      props.createTemplate({templateName: newTemplateName.trim(), templateDir: newTemplateDir.trim()});
       setCreateTemplateFormOpen(false);
       setNewTemplateName(t`新的模板`);
       setNewTemplateDir(t`新的模板`);
@@ -98,17 +101,20 @@ export default function TemplateSidebar(props:ITemplateSidebarProps){
                   newTemplateDir === normalizeFileName(newTemplateName) && setNewTemplateDir(normalizeFileName(event.target.value));
                 }}
                 onKeyDown={(event) => (event.key === 'Enter') && createNewTemplate()}
-                defaultValue={t`新的模板`}
                 placeholder={t`模板名称`}
               />
-              {t`模板目录`}
-              <Input
-                value={newTemplateDir}
-                onChange={(event) => setNewTemplateDir(event.target.value)}
-                onKeyDown={(event) => (event.key === 'Enter') && createNewTemplate()}
-                defaultValue={t`新的模板`}
-                placeholder={t`模板目录`}
-              />
+              <Field
+                label={t`模板目录`}
+                validationState={isTemplateDirInvalid ? 'error' : 'none'}
+                validationMessage={isTemplateDirInvalid ? t`模板目录不能以句点或空格结尾。` : undefined}
+              >
+                <Input
+                  value={newTemplateDir}
+                  onChange={(event) => setNewTemplateDir(event.target.value)}
+                  onKeyDown={(event) => (event.key === 'Enter') && createNewTemplate()}
+                  placeholder={t`模板目录`}
+                />
+              </Field>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button appearance='primary' disabled={!isAllowCreate} onClick={createNewTemplate} >{t`创建`}</Button>
               </div>

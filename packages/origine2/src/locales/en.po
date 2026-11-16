@@ -14,6 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: @lingui/cli\n"
 
+msgid "游戏目录不能以句点或空格结尾。"
+msgstr "The game directory name cannot end with a dot or a space."
+
+msgid "模板目录不能以句点或空格结尾。"
+msgstr "The template directory name cannot end with a dot or a space."
+
 msgid ";注释"
 msgstr "Comment"
 
