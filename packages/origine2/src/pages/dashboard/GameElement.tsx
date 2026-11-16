@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogSurface,
   DialogTitle,
+  Field,
   Input,
   Menu,
   MenuButton,
@@ -38,6 +39,7 @@ import { t } from '@lingui/macro';
 import { GameInfoDto } from '@/api/Api';
 import useEditorStore from '@/store/useEditorStore';
 import useTrashFailedToast from '@/hooks/useTrashFailedToast';
+import { hasTrailingDotOrSpace } from '@/utils/checkFileName';
 
 interface IGameElementProps {
   gameInfo: GameInfoDto;
@@ -83,11 +85,18 @@ export default function GameElement(props: IGameElementProps) {
     window.open(`/games/${props.gameInfo.dir}`, '_blank');
   };
 
-  const renameThisGame = async (gameName: string, newGameName: string) => {
-    await api.manageGameControllerRename({ gameName: gameName, newName: newGameName });
+  const isRenameDirInvalid = hasTrailingDotOrSpace(newGameName.value);
+  const isRenameDisabled = newGameName.value.trim() === '' || isRenameDirInvalid;
+
+  const renameThisGame = async (gameName: string, targetGameName: string) => {
+    const trimmedName = targetGameName.trim();
+    if (trimmedName === '' || hasTrailingDotOrSpace(targetGameName)) {
+      return;
+    }
+    await api.manageGameControllerRename({ gameName: gameName, newName: trimmedName });
     props.refreash?.();
     isShowRenameDialog.set(false);
-    localStorageRename(`game-editor-storage-${gameName}`, `game-editor-storage-${newGameName}`);
+    localStorageRename(`game-editor-storage-${gameName}`, `game-editor-storage-${trimmedName}`);
   };
 
   const deleteThisGame = async () => {
@@ -137,7 +146,10 @@ export default function GameElement(props: IGameElementProps) {
                   <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
                   <MenuItem
                     icon={<RenameIcon />}
-                    onClick={() => isShowRenameDialog.set(true)}
+                    onClick={() => {
+                      newGameName.set(props.gameInfo.dir);
+                      isShowRenameDialog.set(true);
+                    }}
                   >{t`重命名游戏目录`}</MenuItem>
                   <MenuItem icon={<DeleteIcon />} onClick={() => isShowDeleteDialog.set(true)}>{t`删除游戏`}</MenuItem>
                 </MenuList>
@@ -147,24 +159,36 @@ export default function GameElement(props: IGameElementProps) {
         </div>
       </div>
       {/* 重命名对话框 */}
-      <Dialog open={isShowRenameDialog.value} onOpenChange={() => isShowRenameDialog.set(!isShowRenameDialog.value)}>
+      <Dialog
+        open={isShowRenameDialog.value}
+        onOpenChange={(_, data) => {
+          isShowRenameDialog.set(data.open);
+          if (data.open) {
+            newGameName.set(props.gameInfo.dir);
+          }
+        }}
+      >
         <DialogSurface>
           <DialogBody>
             <DialogTitle>{t`重命名游戏目录`}</DialogTitle>
             <DialogContent>
-              <Input
-                style={{ width: '100%' }}
-                defaultValue={props.gameInfo.dir}
-                onChange={(event) =>
-                  newGameName.set(event.target.value ? event.target.value.trim() : props.gameInfo.dir)
-                }
-                onKeyDown={(event) => event.key === 'Enter' && renameThisGame(props.gameInfo.dir, newGameName.value)}
-              />
+              <Field
+                validationState={isRenameDirInvalid ? 'error' : 'none'}
+                validationMessage={isRenameDirInvalid ? t`游戏目录不能以句点或空格结尾。` : undefined}
+              >
+                <Input
+                  style={{ width: '100%' }}
+                  value={newGameName.value}
+                  onChange={(event) => newGameName.set(event.target.value)}
+                  onKeyDown={(event) => event.key === 'Enter' && renameThisGame(props.gameInfo.dir, newGameName.value)}
+                />
+              </Field>
             </DialogContent>
             <DialogActions>
               <Button appearance="secondary" onClick={() => isShowRenameDialog.set(false)}>{t`返回`}</Button>
               <Button
                 appearance="primary"
+                disabled={isRenameDisabled}
                 onClick={() => renameThisGame(props.gameInfo.dir, newGameName.value)}
               >{t`重命名`}</Button>
             </DialogActions>

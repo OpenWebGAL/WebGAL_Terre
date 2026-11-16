@@ -1,4 +1,4 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { BadRequestException, ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import archiver = require('archiver');
 import AdmZip = require('adm-zip');
@@ -39,6 +39,28 @@ export class WebgalFsService {
 
   static checkFileName(name: string): boolean {
     return name.search(/[\/\\\:\*\?"\<\>\|]/) === -1;
+  }
+
+  /**
+   * 校验目录名是否合法（非空字符串、不以句点或空格结尾以兼容 Windows、不含非法路径字符）。
+   */
+  static assertValidDirectoryName(
+    name: unknown,
+    label = 'Directory',
+  ): asserts name is string {
+    if (typeof name !== 'string' || name.trim().length === 0) {
+      throw new BadRequestException(`${label} name is required.`);
+    }
+    if (/[. ]$/.test(name)) {
+      throw new BadRequestException(
+        `${label} names cannot end with a dot or a space.`,
+      );
+    }
+    if (!WebgalFsService.checkFileName(name)) {
+      throw new BadRequestException(
+        `${label} name contains invalid characters.`,
+      );
+    }
   }
 
   static hasInvalidPathSegments(

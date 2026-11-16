@@ -89,6 +89,9 @@ export class ManageTemplateController {
         return { status: 'failed', message: 'Failed to create template.' };
       }
     } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
       console.error('Error creating template:', error);
       throw new HttpException(
         { status: 'error', message: 'Internal server error.' },

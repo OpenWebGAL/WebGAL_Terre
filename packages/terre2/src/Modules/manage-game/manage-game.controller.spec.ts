@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConsoleLogger } from '@nestjs/common';
+import { BadRequestException, ConsoleLogger } from '@nestjs/common';
 import { ManageGameController } from './manage-game.controller';
 import { ManageGameService } from './manage-game.service';
 import { WebgalFsService } from '../webgal-fs/webgal-fs.service';
@@ -55,5 +55,14 @@ describe('ManageGameController', () => {
       'demo',
       'sae',
     );
+  });
+
+  it('rejects renaming a game directory to a name ending with a dot or space', async () => {
+    await expect(
+      controller.rename({ gameName: 'demo', newName: 'demo.' }),
+    ).rejects.toThrow(BadRequestException);
+    await expect(
+      controller.rename({ gameName: 'demo', newName: 'demo ' }),
+    ).rejects.toThrow(BadRequestException);
   });
 });

@@ -17,6 +17,7 @@ import useSWR from "swr";
 import {api} from "@/api";
 import {CreateGameDto, GameInfoDto} from "@/api/Api";
 import normalizeFileName from "@/utils/normalizeFileName";
+import {hasTrailingDotOrSpace} from "@/utils/checkFileName";
 
 interface ISidebarProps {
   gameList: GameInfoDto[];
@@ -86,7 +87,7 @@ export default function Sidebar(props: ISidebarProps) {
 
   // 忽略大小写查重：Windows/macOS 上 test 与 Test 是同一个目录
   const isGameDirTaken = props.gameList.some((item) => item.dir.toLowerCase() === gameDir.trim().toLowerCase());
-  const isGameDirInvalid = /[. ]$/.test(gameDir);
+  const isGameDirInvalid = hasTrailingDotOrSpace(gameDir);
 
   function createNewGame() {
     if (gameName.trim() !== '' && gameDir.trim() !== '' && !isGameDirTaken && !isGameDirInvalid) {
@@ -126,7 +127,6 @@ export default function Sidebar(props: ISidebarProps) {
                   gameDir === normalizeFileName(gameName) && setGameDir(normalizeFileName(event.target.value));
                 }}
                 onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
-                defaultValue={t`新的游戏`}
                 placeholder={t`游戏名称`}
               />
               <Field
@@ -138,7 +138,6 @@ export default function Sidebar(props: ISidebarProps) {
                   value={gameDir}
                   onChange={(event) => setGameDir(event.target.value)}
                   onKeyDown={(event) => (event.key === 'Enter') && createNewGame()}
-                  defaultValue={gameDir}
                   placeholder={t`游戏目录`}
                 />
               </Field>

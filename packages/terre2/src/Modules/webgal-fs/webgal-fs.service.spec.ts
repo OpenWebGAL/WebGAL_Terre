@@ -1,4 +1,4 @@
-import { ConsoleLogger } from '@nestjs/common';
+import { BadRequestException, ConsoleLogger } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import { join, resolve } from 'path';
 import { gunzipSync } from 'zlib';
@@ -192,5 +192,23 @@ describe('WebgalFsService', () => {
     } finally {
       await fs.rm(outsidePath, { force: true });
     }
+  });
+
+  it('validates directory names for emptiness, trailing dots/spaces, and invalid characters', () => {
+    expect(() =>
+      WebgalFsService.assertValidDirectoryName('My.Game 物語'),
+    ).not.toThrow();
+    expect(() => WebgalFsService.assertValidDirectoryName('')).toThrow(
+      BadRequestException,
+    );
+    expect(() => WebgalFsService.assertValidDirectoryName('MyGame.')).toThrow(
+      BadRequestException,
+    );
+    expect(() => WebgalFsService.assertValidDirectoryName('MyGame ')).toThrow(
+      BadRequestException,
+    );
+    expect(() => WebgalFsService.assertValidDirectoryName('bad|name')).toThrow(
+      BadRequestException,
+    );
   });
 });
