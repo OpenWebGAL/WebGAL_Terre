@@ -76,13 +76,37 @@ export function isUiScreenId(value: string): value is UiScreenId {
   return (UI_SCREEN_IDS as readonly string[]).includes(value);
 }
 
+export function parseSemverCore(
+  version?: string | null,
+): { major: number; minor: number; patch: number } | null {
+  if (typeof version !== 'string') return null;
+  const match = version.trim().match(/^v?(\d+)\.(\d+)\.(\d+)/);
+  if (!match) return null;
+  return {
+    major: Number(match[1]),
+    minor: Number(match[2]),
+    patch: Number(match[3]),
+  };
+}
+
 export function isCustomUiTemplate(
   cfg?: Partial<TemplateConfigDto> | null,
 ): boolean {
+  if (!cfg || cfg.uiMode === 'legacy') return false;
+  const ver = parseSemverCore(cfg['webgal-version']);
+  if (!ver || ver.major < 4 || (ver.major === 4 && ver.minor < 7)) {
+    return false;
+  }
   return (
-    cfg?.uiMode === 'custom' ||
-    (cfg?.screens != null && Object.keys(cfg.screens).length > 0)
+    cfg.uiMode === 'custom' ||
+    (cfg.screens != null && Object.keys(cfg.screens).length > 0)
   );
+}
+
+export function isLegacyTemplate(
+  cfg?: Partial<TemplateConfigDto> | null,
+): boolean {
+  return !isCustomUiTemplate(cfg);
 }
 
 export function getDefaultTemplateScreensConfig(): Record<UiScreenId, string> {
@@ -192,8 +216,10 @@ export async function inspectTemplateScreens(
       inspectScreenSlot(templateRoot, screen, config.screens?.[screen]),
     ),
   );
+  const customUi = isCustomUiTemplate(config);
   return {
-    uiMode: isCustomUiTemplate(config) ? 'custom' : 'legacy',
+    uiMode: customUi ? 'custom' : 'legacy',
+    isLegacy: !customUi,
     screens: slots,
   };
 }

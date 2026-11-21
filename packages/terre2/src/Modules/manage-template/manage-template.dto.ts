@@ -77,6 +77,11 @@ export class TemplateScreensResponseDto {
   @ApiProperty({ description: 'Resolved UI mode', enum: ['legacy', 'custom'] })
   uiMode: 'legacy' | 'custom';
   @ApiProperty({
+    description: 'Whether this template uses legacy (< 4.7) format',
+    required: false,
+  })
+  isLegacy?: boolean;
+  @ApiProperty({
     description: 'Screen slot definitions and variants',
     type: TemplateScreenSlotDto,
     isArray: true,
@@ -129,6 +134,24 @@ export class TemplateInfoDto extends TemplateConfigDto {
 
   @ApiProperty({ description: 'Whether the template is built in' })
   builtIn?: boolean;
+
+  @ApiProperty({
+    description: 'Whether the template uses legacy (< 4.7) format',
+    required: false,
+  })
+  isLegacy?: boolean;
+}
+
+export class UpgradeTemplateDto {
+  @ApiProperty({ description: 'The directory name of the template to upgrade' })
+  templateDir: string;
+}
+
+export class UpgradeGameTemplateDto {
+  @ApiProperty({
+    description: 'The directory name of the game whose template to upgrade',
+  })
+  gameDir: string;
 }
 
 export class CreateTemplateDto {

@@ -11,6 +11,10 @@ import {
   platforms,
 } from './manage-game.dto';
 import { TemplateConfigDto } from '../manage-template/manage-template.dto';
+import {
+  copyMissingBuiltInScreenAssets,
+  isCustomUiTemplate,
+} from '../manage-template/screen-registry';
 import { promisify } from 'util';
 import { execFile } from 'child_process';
 import { join } from 'path';
@@ -146,12 +150,29 @@ export class ManageGameService {
         `/public/templates/${templateDir}/`,
       );
       if (await this.webgalFs.existsDir(templatePath)) {
-        await this.webgalFs.copy(
-          templatePath,
-          this.webgalFs.getPathFromRoot(
-            `/public/games/${gameDir}/game/template/`,
-          ),
+        const gameTemplateRoot = this.webgalFs.getPathFromRoot(
+          `/public/games/${gameDir}/game/template/`,
         );
+        await this.webgalFs.copy(templatePath, gameTemplateRoot);
+        const cfgPath = this.webgalFs.getPathFromRoot(
+          `/public/games/${gameDir}/game/template/template.json`,
+        );
+        if (await this.webgalFs.exists(cfgPath)) {
+          try {
+            const rawCfg = await this.webgalFs.readTextFile(cfgPath);
+            const parsedCfg = JSON.parse(rawCfg as string) as TemplateConfigDto;
+            if (isCustomUiTemplate(parsedCfg)) {
+              await copyMissingBuiltInScreenAssets(
+                gameTemplateRoot,
+                this.webgalFs.getPathFromRoot(
+                  '/assets/templates/WebGAL_Default_Template/',
+                ),
+              );
+            }
+          } catch {
+            // 忽略无法解析的自定义模板配置
+          }
+        }
         templateApplied = true;
       }
     }

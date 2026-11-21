@@ -1,5 +1,20 @@
 {
-  "name":"WebGAL Classic",
-  "id":"5488d7cf-3523-44f8-bac7-f04ba7a77aa4",
-  "webgal-version":"4.5.5"
+  "name": "WebGAL Classic",
+  "id": "5488d7cf-3523-44f8-bac7-f04ba7a77aa4",
+  "webgal-version": "4.7.0-preview.0",
+  "uiMode": "custom",
+  "screens": {
+    "title": "default",
+    "textbox": "classic",
+    "choose": "default",
+    "save": "grid-2x5",
+    "load": "grid-2x5",
+    "options": "tabbed-classic",
+    "flowchart": "default",
+    "menuPanel": "default",
+    "backlog": "default",
+    "extra": "gallery-classic",
+    "bottomControlPanel": "default",
+    "globalDialog": "default"
+  }
 }

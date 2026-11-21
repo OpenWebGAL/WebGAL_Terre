@@ -23,8 +23,11 @@ import {
   copyMissingBuiltInScreenAssets,
   getDefaultTemplateScreensConfig,
   inspectTemplateScreens,
+  isCustomUiTemplate,
+  isLegacyTemplate,
   isUiScreenId,
 } from './screen-registry';
+import { migrateLegacyTemplateDirectory } from './legacy-template-migrator';
 import { extractScreenPackage } from './screen-package.util';
 
 @Injectable()
@@ -100,6 +103,7 @@ export class ManageTemplateService {
             builtIn:
               installTemplateNames.has(item.name) &&
               !userTemplateNames.has(item.name),
+            isLegacy: isLegacyTemplate(templateConfig),
           };
         } catch {
           return null;
@@ -119,6 +123,7 @@ export class ManageTemplateService {
         ...templateConfig,
         dir: UserDataService.getDefaultTemplateDir(),
         builtIn: true,
+        isLegacy: isLegacyTemplate(templateConfig),
       };
     } catch {
       return null;
@@ -426,14 +431,37 @@ export class ManageTemplateService {
       }
     }
 
-    if (
-      resolvedConfig?.uiMode !== 'custom' &&
-      resolvedConfig?.screens == null
-    ) {
+    if (!isCustomUiTemplate(resolvedConfig)) {
       return;
     }
 
     await copyMissingBuiltInScreenAssets(templateRoot, defaultRoot);
+  }
+
+  async upgradeTemplate(templateDir: string): Promise<TemplateConfigDto> {
+    const templateRoot = await this.resolveWritableTemplateRoot(templateDir);
+    return migrateLegacyTemplateDirectory(
+      templateRoot,
+      UserDataService.getDefaultTemplateRoot(),
+    );
+  }
+
+  async upgradeGameTemplate(gameDir: string): Promise<TemplateConfigDto> {
+    if (!this.isSafeTemplateDirName(gameDir)) {
+      throw new BadRequestException('Invalid game directory name.');
+    }
+    const gameRoot = this.webgalFs.getPathFromRoot(`/public/games/${gameDir}`);
+    if (!(await this.webgalFs.existsDir(gameRoot))) {
+      throw new NotFoundException('Game not found.');
+    }
+    const gameTemplateRoot = this.webgalFs.getPathFromRoot(
+      `/public/games/${gameDir}/game/template`,
+    );
+    await fsp.mkdir(gameTemplateRoot, { recursive: true });
+    return migrateLegacyTemplateDirectory(
+      gameTemplateRoot,
+      UserDataService.getDefaultTemplateRoot(),
+    );
   }
 
   async getTemplateScreens(

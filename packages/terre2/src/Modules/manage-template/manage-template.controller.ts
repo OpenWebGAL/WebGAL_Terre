@@ -26,6 +26,8 @@ import {
   TemplateInfoDto,
   TemplateScreensResponseDto,
   UpdateTemplateConfigDto,
+  UpgradeGameTemplateDto,
+  UpgradeTemplateDto,
 } from './manage-template.dto';
 import {
   ApiTags,
@@ -407,5 +409,35 @@ export class ManageTemplateController {
       dto.screen,
       dto.variantId,
     );
+  }
+
+  @Post('upgradeTemplate')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Upgrade a legacy template to WebGAL 4.7 format' })
+  @ApiResponse({
+    status: 200,
+    type: TemplateConfigDto,
+    description: 'Upgraded template configuration.',
+  })
+  async upgradeTemplate(
+    @Body() dto: UpgradeTemplateDto,
+  ): Promise<TemplateConfigDto> {
+    return this.manageTemplate.upgradeTemplate(dto.templateDir);
+  }
+
+  @Post('upgradeGameTemplate')
+  @HttpCode(200)
+  @ApiOperation({
+    summary: "Upgrade a game's legacy template to WebGAL 4.7 format",
+  })
+  @ApiResponse({
+    status: 200,
+    type: TemplateConfigDto,
+    description: 'Upgraded game template configuration.',
+  })
+  async upgradeGameTemplate(
+    @Body() dto: UpgradeGameTemplateDto,
+  ): Promise<TemplateConfigDto> {
+    return this.manageTemplate.upgradeGameTemplate(dto.gameDir);
   }
 }
