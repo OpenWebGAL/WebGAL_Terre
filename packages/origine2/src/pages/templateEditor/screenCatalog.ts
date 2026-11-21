@@ -48,6 +48,7 @@ export interface TemplateScreenEntryMeta {
 
 export interface TemplateScreensInfo {
   uiMode: 'legacy' | 'custom';
+  isLegacy?: boolean;
   screens: TemplateScreenEntryMeta[];
 }
 
@@ -70,11 +71,23 @@ export function getScreenDisplayName(screen: TemplateScreenId): string {
 }
 
 export function isCustomUiTemplate(
-  config?: { uiMode?: string; screens?: Record<string, string> } | null,
+  config?: { 'webgal-version'?: string; uiMode?: string; screens?: Record<string, string> } | null,
 ): boolean {
-  if (!config) return false;
+  if (!config || config.uiMode === 'legacy') return false;
+  const rawVersion = config['webgal-version'];
+  const match = typeof rawVersion === 'string' ? rawVersion.trim().match(/^v?(\d+)\.(\d+)\.(\d+)/) : null;
+  if (!match) return false;
+  const major = Number(match[1]);
+  const minor = Number(match[2]);
+  if (major < 4 || (major === 4 && minor < 7)) return false;
   if (config.uiMode === 'custom') return true;
   return Boolean(config.screens && Object.keys(config.screens).length > 0);
+}
+
+export function isLegacyTemplate(
+  config?: { 'webgal-version'?: string; uiMode?: string; screens?: Record<string, string> } | null,
+): boolean {
+  return !isCustomUiTemplate(config);
 }
 
 /**

@@ -182,6 +182,8 @@ export interface TemplateScreenSlotDto {
 export interface TemplateScreensResponseDto {
   /** Resolved UI mode */
   uiMode: "legacy" | "custom";
+  /** Whether this template uses legacy (< 4.7) format */
+  isLegacy?: boolean;
   /** Screen slot definitions and variants */
   screens: TemplateScreenSlotDto[];
 }
@@ -342,10 +344,26 @@ export interface TemplateInfoDto {
   "webgal-version": string;
   /** The font registrations of the template */
   fonts?: TemplateFontConfigDto[];
+  /** UI template mode */
+  uiMode?: "legacy" | "custom";
+  /** Active variant per UI screen slot */
+  screens?: Record<string, string>;
   /** The dir of the template */
   dir: string;
   /** Whether the template is built in */
   builtIn: boolean;
+  /** Whether the template uses legacy (< 4.7) format */
+  isLegacy?: boolean;
+}
+
+export interface UpgradeTemplateDto {
+  /** The directory name of the template to upgrade */
+  templateDir: string;
+}
+
+export interface UpgradeGameTemplateDto {
+  /** The directory name of the game whose template to upgrade */
+  gameDir: string;
 }
 
 export interface CreateTemplateDto {
@@ -1663,6 +1681,48 @@ export class Api<
         method: "POST",
         body: data,
         type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerUpgradeTemplate
+     * @summary Upgrade a legacy template to WebGAL 4.7 format
+     * @request POST:/api/manageTemplate/upgradeTemplate
+     */
+    manageTemplateControllerUpgradeTemplate: (
+      data: UpgradeTemplateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<TemplateConfigDto, void>({
+        path: `/api/manageTemplate/upgradeTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Template
+     * @name ManageTemplateControllerUpgradeGameTemplate
+     * @summary Upgrade a game's legacy template to WebGAL 4.7 format
+     * @request POST:/api/manageTemplate/upgradeGameTemplate
+     */
+    manageTemplateControllerUpgradeGameTemplate: (
+      data: UpgradeGameTemplateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<TemplateConfigDto, void>({
+        path: `/api/manageTemplate/upgradeGameTemplate`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

@@ -15,7 +15,8 @@ import {AddFilled, AddRegular, ArrowSyncFilled, ArrowSyncRegular, bundleIcon} fr
 import {t} from "@lingui/macro";
 import useSWR from "swr";
 import {api} from "@/api";
-import {CreateGameDto, GameInfoDto} from "@/api/Api";
+import {CreateGameDto, GameInfoDto, TemplateInfoDto} from "@/api/Api";
+import {UpgradeLegacyTemplateDialog} from "@/components/UpgradeLegacyTemplateDialog/UpgradeLegacyTemplateDialog";
 import normalizeFileName from "@/utils/normalizeFileName";
 
 interface ISidebarProps {
@@ -38,6 +39,7 @@ export default function Sidebar(props: ISidebarProps) {
   const [derivative, setDerivative] = useState<string | undefined>(undefined);
   const [templateDir, setTemplateDir] = useState<string | undefined>(undefined);
   const [ignoreTemplate, setIgnoreTemplate] = useState<boolean>(false);
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
 
   // 可用的衍生版
   const derivativeEnginesResp = useSWR('derivativeEngines', async () => {
@@ -47,15 +49,23 @@ export default function Sidebar(props: ISidebarProps) {
 
   const templatesResp = useSWR('template-list-selector', async () => {
     const resp = await api.manageTemplateControllerGetTemplateList();
-    return resp.data as unknown as { name: string; dir: string }[];
+    return resp.data as TemplateInfoDto[];
   });
 
   const DEFAULT_OPTION = '__DEFAULT__';
   const defaultTemplateName = 'WebGAL Refine 2026';
 
+  const selectedTemplateInfo = templateDir
+    ? templatesResp.data?.find(e => e.dir === templateDir)
+    : undefined;
+
+  const formatTemplateLabel = (tpl: Pick<TemplateInfoDto, 'name' | 'isLegacy'>): string =>
+    tpl.isLegacy ? `${tpl.name} (${t`旧版`})` : tpl.name;
+
   const getTemplateDisplayName = (dir: string | undefined): string => {
     if (!dir) return defaultTemplateName;
-    return templatesResp.data?.find(e => e.dir === dir)?.name ?? dir;
+    const found = templatesResp.data?.find(e => e.dir === dir);
+    return found ? formatTemplateLabel(found) : dir;
   };
 
   const getDerivativeDisplayName = (val: string | undefined): string => {
@@ -80,25 +90,34 @@ export default function Sidebar(props: ISidebarProps) {
     }}>
     <Option key="default-template" value={DEFAULT_OPTION}>{defaultTemplateName}</Option>
     {(templatesResp.data ?? []).filter(e => e.dir !== DEFAULT_TEMPLATE_DIR).map(e =>
-      <Option key={e.dir} value={e.dir}>{e.name}</Option>
+      <Option key={e.dir} value={e.dir}>{formatTemplateLabel(e)}</Option>
     )}
   </Dropdown>;
 
   // 忽略大小写查重：Windows/macOS 上 test 与 Test 是同一个目录
   const isGameDirTaken = props.gameList.some((item) => item.dir.toLowerCase() === gameDir.trim().toLowerCase());
 
+  function doCreateNewGame() {
+    props.createGame({
+      gameName: gameName.trim(),
+      gameDir: gameDir.trim(),
+      derivative,
+      templateDir,
+      ignoreTemplate,
+    });
+    setCreateGameFormOpen(false);
+    setGameName(t`新的游戏`);
+  }
+
   function createNewGame() {
-    if (gameName.trim() !== '' && gameDir.trim() !== '' && !isGameDirTaken) {
-      props.createGame({
-        gameName: gameName.trim(),
-        gameDir: gameDir.trim(),
-        derivative,
-        templateDir,
-        ignoreTemplate,
-      });
-      setCreateGameFormOpen(false);
-      setGameName(t`新的游戏`);
+    if (gameName.trim() === '' || gameDir.trim() === '' || isGameDirTaken) {
+      return;
     }
+    if (!ignoreTemplate && !derivative && selectedTemplateInfo?.isLegacy) {
+      setUpgradeDialogOpen(true);
+      return;
+    }
+    doCreateNewGame();
   }
 
   return <div className={`${styles.sidebar_main} ${!props.currentSetGame ? styles.sidebar_main_fullwidth : ""}`}>
@@ -180,5 +199,14 @@ export default function Sidebar(props: ISidebarProps) {
         })
       }
     </div>
+    {selectedTemplateInfo && (
+      <UpgradeLegacyTemplateDialog
+        open={upgradeDialogOpen}
+        templateDir={selectedTemplateInfo.dir}
+        templateName={selectedTemplateInfo.name}
+        onClose={() => setUpgradeDialogOpen(false)}
+        onProceed={doCreateNewGame}
+      />
+    )}
   </div>;
 }

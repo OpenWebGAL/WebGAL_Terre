@@ -31,6 +31,7 @@ import {
   type SetUiPseudoStatePayload,
   type SyncSceneSettleMode,
   type StageSnapshotUpdatedPayload,
+  type TemplateIncompatiblePayload,
   type TransformBaselineQueryResultPayload,
   type UiPartSelectedPayload,
   type UiScreenUpdatedPayload,
@@ -47,6 +48,7 @@ let editorPreviewClientStarted = false;
 let lifecycleBound = false;
 let lastStageSnapshot: StageSnapshotUpdatedPayload | null = null;
 let lastUiScreenPayload: UiScreenUpdatedPayload | null = null;
+let lastTemplateIncompatiblePayload: TemplateIncompatiblePayload | null = null;
 let baseTransformCache: BaseTransformQueryResultPayload | null = null;
 let queryCapabilityState: PreviewQueryCapabilityState = 'unknown';
 const uiEventSubscribers = new Set<UiEditorEventHandlers>();
@@ -156,6 +158,12 @@ function consumeHostEvent(event: HostEventEnvelope) {
   case 'preview.event.apply-style-ignored':
     uiEventSubscribers.forEach((handler) => handler.onApplyStyleIgnored?.(event.payload));
     return;
+  case 'preview.event.template-incompatible':
+    lastTemplateIncompatiblePayload = event.payload;
+    eventBus.emit('editor-preview:template-incompatible', {
+      payload: event.payload,
+    });
+    return;
   }
 }
 
@@ -203,6 +211,7 @@ function bindLifecycleEvents() {
 
 function resetRuntimeLifecycleState() {
   lastUiScreenPayload = null;
+  lastTemplateIncompatiblePayload = null;
   baseTransformCache = null;
   queryCapabilityState = 'unknown';
   previewRequestOwner.rejectAll(new Error('编辑器预览同步 V1 WebSocket 已关闭'));
@@ -376,7 +385,16 @@ export class EditorPreviewClient {
   }
 
   public static reloadTemplates() {
+    lastTemplateIncompatiblePayload = null;
     return sendPreviewCommand('preview.command.reload-templates', {});
+  }
+
+  public static getLastTemplateIncompatiblePayload() {
+    return lastTemplateIncompatiblePayload;
+  }
+
+  public static clearTemplateIncompatiblePayload() {
+    lastTemplateIncompatiblePayload = null;
   }
 
   public static setFontOptimization(enabled: boolean) {

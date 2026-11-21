@@ -1,5 +1,6 @@
 import styles from './templateElement.module.scss';
 import {
+  Badge,
   Button,
   Dialog,
   DialogActions,
@@ -17,6 +18,8 @@ import {
 } from '@fluentui/react-components';
 import type { ToastIntent } from '@fluentui/react-components';
 import {
+  ArrowCircleUp24Filled,
+  ArrowCircleUp24Regular,
   ArrowExportUp24Filled,
   ArrowExportUp24Regular,
   Delete24Filled,
@@ -55,6 +58,7 @@ const OpenIcon = bundleIcon(Open24Filled, Open24Regular);
 const RenameIcon = bundleIcon(Rename24Filled, Rename24Regular);
 const DeleteIcon = bundleIcon(Delete24Filled, Delete24Regular);
 const ArrowExportUpIcon = bundleIcon(ArrowExportUp24Filled, ArrowExportUp24Regular);
+const UpgradeIcon = bundleIcon(ArrowCircleUp24Filled, ArrowCircleUp24Regular);
 
 export default function TemplateElement(props: ITemplateElementProps) {
   let className = styles.templateElement_main;
@@ -119,14 +123,32 @@ export default function TemplateElement(props: ITemplateElementProps) {
     }
   };
 
+  const upgradeThisTemplate = async () => {
+    try {
+      await api.manageTemplateControllerUpgradeTemplate({
+        templateDir: props.templateInfo.dir,
+      });
+      props.notify?.('success', t`模板已升级为 4.7 格式`);
+      props?.refreash?.();
+    } catch {
+      props.notify?.('error', t`模板升级失败`);
+    }
+  };
+
   const templateName = props.templateInfo.dir;
   const isBuiltIn = props.templateInfo.builtIn;
+  const isLegacy = Boolean(props.templateInfo.isLegacy);
 
   return (
     <>
       <div onClick={props.onClick} className={className} id={props.templateInfo.dir}>
         <div className={styles.templateElement_title}>
           <span>{props.templateInfo.name}</span>
+          {isLegacy && (
+            <Badge appearance="tint" color="warning" size="small">
+              {t`旧版`}
+            </Badge>
+          )}
         </div>
         <div className={styles.templateElement_sub}>
           <span className={styles.templateElement_dir}>{props.templateInfo.dir}</span>
@@ -146,11 +168,20 @@ export default function TemplateElement(props: ITemplateElementProps) {
               </MenuTrigger>
               <MenuPopover>
                 <MenuList>
+                  {!isBuiltIn && isLegacy && (
+                    <MenuItem icon={<UpgradeIcon />} onClick={() => upgradeThisTemplate()}>
+                      {t`升级模板`}
+                    </MenuItem>
+                  )}
                   <MenuItem
                     icon={<FolderOpenIcon />}
                     onClick={() => openInFileExplorer()}
                   >{t`在文件管理器中打开`}</MenuItem>
-                  <MenuItem icon={<OpenIcon />} onClick={() => previewInNewTab()}>{t`在新标签页中预览`}</MenuItem>
+                  <MenuItem
+                    disabled={isLegacy}
+                    icon={<OpenIcon />}
+                    onClick={() => previewInNewTab()}
+                  >{t`在新标签页中预览`}</MenuItem>
                   <MenuItem
                     disabled={isBuiltIn}
                     icon={<RenameIcon />}

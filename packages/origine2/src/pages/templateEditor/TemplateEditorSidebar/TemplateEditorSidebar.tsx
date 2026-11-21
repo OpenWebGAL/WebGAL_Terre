@@ -1,11 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Assets, {IFileFunction} from '@/components/Assets/Assets';
-import ComponentTree from './ComponentTree/ComponentTree';
 import styles from './templateEditorSidebar.module.scss';
 import useEditorStore from '@/store/useEditorStore';
 import {Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, DialogTrigger} from '@fluentui/react-components';
 import {useTemplateEditorContext} from '@/store/useTemplateEditorStore';
-import {ITab} from '@/types/templateEditor';
 import {t} from "@lingui/macro";
 import BackDashboardButton from "@/pages/editor/Topbar/components/BackDashboardButton";
 import { goTo } from '@/router';
@@ -44,9 +42,6 @@ export default function TemplateEditorSidebar({ customSession }: ITemplateEditor
   const templateActionsHeight = useTemplateEditorContext((state) => state.templateActionsHeight);
   const componentTreeHeight = useTemplateEditorContext((state) => state.componentTreeHeight);
 
-  const tabs = useTemplateEditorContext((state) => state.tabs);
-  const updateTabs = useTemplateEditorContext((state) => state.updateTabs);
-  const updateCurrentTab = useTemplateEditorContext((state) => state.updateCurrentTab);
   const updateStyleTab = useTemplateEditorContext((state) => state.updateStyleTab);
   const updateFullCssMode = useTemplateEditorContext((state) => state.updateFullCssMode);
 
@@ -56,35 +51,26 @@ export default function TemplateEditorSidebar({ customSession }: ITemplateEditor
   );
 
   const handleOpen: IFileFunction['open'] = async (file) => {
-    if (customSession) {
-      const normalized = file.path.replace(/\\/g, '/');
-      const matched = normalized.match(/screens\/([^/]+)\/[^/]+\/style\.scss$/);
-      if (matched && UI_SCREEN_IDS.includes(matched[1] as UiScreenId)) {
-        const targetScreen = matched[1] as UiScreenId;
-        if (customSession.activeScreenId !== targetScreen) {
-          customSession.onSelectScreen(targetScreen);
-        }
-      }
-      updateStyleTab('full');
-      updateFullCssMode('code');
+    if (!customSession) {
       return;
     }
-
-    const newTab: ITab = {
-      name: file.name,
-      path: file.path,
-    };
-    if (!tabs.some(tab => tab.path === newTab.path && tab.class === newTab.class)) {
-      updateTabs([...tabs, newTab]);
+    const normalized = file.path.replace(/\\/g, '/');
+    const matched = normalized.match(/screens\/([^/]+)\/[^/]+\/style\.scss$/);
+    if (matched && UI_SCREEN_IDS.includes(matched[1] as UiScreenId)) {
+      const targetScreen = matched[1] as UiScreenId;
+      if (customSession.activeScreenId !== targetScreen) {
+        customSession.onSelectScreen(targetScreen);
+      }
     }
-    updateCurrentTab(newTab);
+    updateStyleTab('full');
+    updateFullCssMode('code');
   };
 
   const backToDashboard = () => goTo('dashboard', 'template');
 
-  // 当前模板没有id时自动添加
+  // 当前模板没有id时自动添加（仅对可编辑的 4.7 模板生效）
   useEffect(() => {
-    if (templateConfig && !templateConfig.id) {
+    if (customSession && templateConfig && !templateConfig.id) {
       const newTemplateConfig = {
         ...templateConfig,
         id: createId(),
@@ -92,49 +78,55 @@ export default function TemplateEditorSidebar({ customSession }: ITemplateEditor
       api.manageTemplateControllerUpdateTemplateConfig({templateDir, newTemplateConfig});
       mutate(`/templateConfig/${templateDir}`);
     }
-  },[templateConfig]);
+  },[customSession, templateConfig, templateDir]);
 
   return (
     <div className={styles.sidebar} style={{width: `${sidebarWidth}px`, minWidth: `${sidebarWidth}px`}}>
       <div className={styles.toolbar}>
         <BackDashboardButton onClick={backToDashboard}/>
-        {/* <Button appearance='subtle' icon={<ArrowLeftIcon />} as='a' href='#/dashboard/template' style={{ minWidth: 0 }}>{t`模板列表`}</Button> */}
         <span className={styles.title}>
           {templateConfig ? templateConfig.name : templateDir}
         </span>
       </div>
-      <div className={styles.actionsBlock} style={{height: `${templateActionsHeight}px`}}>
-        <TemplateActions
-          templateConfig={templateConfig}
-          onTemplateConfigUpdated={async () => {
-            await mutateTemplateConfig();
-          }}
-        />
-      </div>
-      <TemplateActionsReSizer/>
-      <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
-        {customSession ? (
-          <ScreenPartTree
-            screensInfo={customSession.screensInfo}
-            activeScreenId={customSession.activeScreenId}
-            parts={customSession.parts}
-            selectedPartId={customSession.selectedPartId}
-            onSelectScreen={customSession.onSelectScreen}
-            onSelectPart={customSession.onSelectPart}
-            onSwitchVariant={customSession.onSwitchVariant}
-            onImportVariant={customSession.onImportVariant}
-          />
-        ) : (
-          <ComponentTree/>
-        )}
-      </div>
-      <ComponentTreeReSizer/>
+      {customSession ? (
+        <>
+          <div className={styles.actionsBlock} style={{height: `${templateActionsHeight}px`}}>
+            <TemplateActions
+              templateConfig={templateConfig}
+              onTemplateConfigUpdated={async () => {
+                await mutateTemplateConfig();
+              }}
+            />
+          </div>
+          <TemplateActionsReSizer/>
+          <div className={styles.componentTree} style={{height: `${componentTreeHeight}px`}}>
+            <ScreenPartTree
+              screensInfo={customSession.screensInfo}
+              activeScreenId={customSession.activeScreenId}
+              parts={customSession.parts}
+              selectedPartId={customSession.selectedPartId}
+              onSelectScreen={customSession.onSelectScreen}
+              onSelectPart={customSession.onSelectPart}
+              onSwitchVariant={customSession.onSwitchVariant}
+              onImportVariant={customSession.onImportVariant}
+            />
+          </div>
+          <ComponentTreeReSizer/>
+        </>
+      ) : (
+        <div className={styles.actions}>
+          <AppSettingsButton appearance="transparent" className={styles.actionButton} />
+        </div>
+      )}
       <div className={styles.assets}>
-        <CommonTips style={{margin:4}} text={t`提示：样式中用到的资源放在 assets 目录下`}/>
+        <CommonTips
+          style={{margin:4}}
+          text={customSession ? t`提示：样式中用到的资源放在 assets 目录下` : t`旧版模板当前为只读状态，升级后即可编辑`}
+        />
         <Assets
           rootPath={['templates', templateDir]}
-          // isProtected
-          fileFunction={{open: handleOpen}}
+          isProtected={!customSession}
+          fileFunction={customSession ? {open: handleOpen} : undefined}
         />
       </div>
     </div>

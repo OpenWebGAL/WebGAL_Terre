@@ -53,15 +53,18 @@ export function useTemplateScreenSession(templateDir: string) {
     async () => (await api.manageTemplateControllerGetTemplateScreens(templateDir)).data as TemplateScreensInfo,
   );
 
-  const isCustomUi = useMemo(
-    () =>
-      Boolean(
-        screensInfo?.uiMode === 'custom'
-          || isCustomUiTemplate(templateConfig as { uiMode?: string; screens?: Record<string, string> } | undefined)
-          || screenPayload?.isCustomTemplate,
-      ),
-    [screensInfo, templateConfig, screenPayload],
+  const isLoadingConfig = Boolean(
+    templateDir && templateConfig === undefined && screensInfo === undefined,
   );
+
+  const isCustomUi = useMemo(() => {
+    if (screensInfo) {
+      return screensInfo.uiMode === 'custom' && !screensInfo.isLegacy;
+    }
+    return isCustomUiTemplate(
+      templateConfig as { 'webgal-version'?: string; uiMode?: string; screens?: Record<string, string> } | undefined,
+    );
+  }, [screensInfo, templateConfig]);
 
   const activeVariantMeta = useMemo(() => {
     if (!activeScreenId) {
@@ -89,6 +92,10 @@ export function useTemplateScreenSession(templateDir: string) {
     [parts, selectedPartId],
   );
 
+  const selectedPseudoLockSelector = selectedPart
+    ? (selectedPart.stateHostSelector ?? selectedPart.selector)
+    : null;
+
   const stateRef = useRef({
     activeScreenId,
     screenPayload,
@@ -96,7 +103,7 @@ export function useTemplateScreenSession(templateDir: string) {
     useMockData,
     lockedState,
     selectedPartId,
-    selectedSelector: selectedPart?.selector ?? null,
+    selectedSelector: selectedPseudoLockSelector,
     variantId: activeVariantMeta.variantId,
     draftScssText,
     isCustomUi,
@@ -108,7 +115,7 @@ export function useTemplateScreenSession(templateDir: string) {
     useMockData,
     lockedState,
     selectedPartId,
-    selectedSelector: selectedPart?.selector ?? null,
+    selectedSelector: selectedPseudoLockSelector,
     variantId: activeVariantMeta.variantId,
     draftScssText,
     isCustomUi,
@@ -301,7 +308,7 @@ export function useTemplateScreenSession(templateDir: string) {
         if (stateRef.current.lockedState !== 'default') {
           EditorPreviewClient.setUiPseudoState({
             screen,
-            selector: nextPart?.selector ?? null,
+            selector: nextPart ? (nextPart.stateHostSelector ?? nextPart.selector) : null,
             pseudoState: stateRef.current.lockedState,
           });
         }
@@ -330,7 +337,7 @@ export function useTemplateScreenSession(templateDir: string) {
         const nextPart = parts.find((part) => part.id === partId);
         EditorPreviewClient.setUiPseudoState({
           screen: activeScreenId,
-          selector: nextPart?.selector ?? null,
+          selector: nextPart ? (nextPart.stateHostSelector ?? nextPart.selector) : null,
           pseudoState: lockedState,
         });
       }
@@ -360,11 +367,11 @@ export function useTemplateScreenSession(templateDir: string) {
       if (!activeScreenId) return;
       EditorPreviewClient.setUiPseudoState({
         screen: activeScreenId,
-        selector: selectedPart?.selector ?? null,
+        selector: selectedPseudoLockSelector,
         pseudoState,
       });
     },
-    [activeScreenId, selectedPart?.selector, updateLockedState],
+    [activeScreenId, selectedPseudoLockSelector, updateLockedState],
   );
 
   const previewScss = useCallback(
@@ -472,9 +479,22 @@ export function useTemplateScreenSession(templateDir: string) {
     [mutateScreensInfo, mutateTemplateConfig, templateDir, updateActiveScreenId],
   );
 
+  const upgradeCurrentTemplate = useCallback(async () => {
+    if (!templateDir) return;
+    await api.manageTemplateControllerUpgradeTemplate({ templateDir });
+    await Promise.all([
+      mutateTemplateConfig(),
+      mutateScreensInfo(),
+      mutate('template-list'),
+      mutate('template-list-selector'),
+    ]);
+    EditorPreviewClient.reloadTemplates();
+  }, [mutate, mutateScreensInfo, mutateTemplateConfig, templateDir]);
+
   return {
     templateConfig,
     screensInfo: screensInfo ?? null,
+    isLoadingConfig,
     isCustomUi,
     isPreviewReady,
     activeScreenId,
@@ -498,5 +518,6 @@ export function useTemplateScreenSession(templateDir: string) {
     commitScssFromCode,
     switchVariant,
     importVariant,
+    upgradeCurrentTemplate,
   };
 }

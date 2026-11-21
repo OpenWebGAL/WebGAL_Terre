@@ -46,3 +46,50 @@
     visibility: visible;
   }
 }
+
+.legacyUpgradeContainer {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.legacyUpgradeCard {
+  max-width: 520px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  border: var(--border-md);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legacyUpgradeTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.legacyUpgradeDesc {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-sub);
+}
+
+.legacyUpgradeError {
+  color: var(--status-error, #d13438);
+  font-size: 0.9rem;
+}
+
+.legacyUpgradeActions {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}

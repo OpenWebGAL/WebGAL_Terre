@@ -6,6 +6,7 @@ import type {
   HostEventType,
   PreviewReadyUpdatedPayload,
   StageSnapshotUpdatedPayload,
+  TemplateIncompatiblePayload,
 } from '@webgal/editor-preview-protocol';
 import type { ISentence } from 'webgal-parser/src/interface/sceneInterface';
 
@@ -74,6 +75,7 @@ interface EditorPreviewEvents {
   'editor-preview:ready': PreviewReadyUpdatedPayload;
   'editor-preview:stage-snapshot': { snapshot: StageSnapshotUpdatedPayload };
   'editor-preview:fast-preview-timeout': { payload: FastPreviewTimeoutPayload };
+  'editor-preview:template-incompatible': { payload: TemplateIncompatiblePayload };
   /** 独占预览发出的事件，embeddedLaunchId 标明来源 */
   'editor-preview:dedicated-event': EventEnvelopeByType<HostEventType>;
 }

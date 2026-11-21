@@ -5,6 +5,7 @@ import MainArea from "./MainArea/MainArea";
 import useEditorStore from "@/store/useEditorStore";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import FastPreviewTimeoutDialog from "./FastPreviewTimeoutDialog";
+import TemplateIncompatibleDialog from "./TemplateIncompatibleDialog";
 
 export default function Editor() {
   const isAutoHideToolbar = useEditorStore.use.isAutoHideToolbar();
@@ -15,6 +16,7 @@ export default function Editor() {
   return (
     <div className={styles.editor}>
       <FastPreviewTimeoutDialog />
+      <TemplateIncompatibleDialog />
       <TopBar />
       <div className={styles.container} onClick={()=>handleMainAreaClick()}>
         <EditorSideBar />

@@ -41,6 +41,7 @@ import axios from "axios";
 import {EditorPreviewClient} from "@/utils/editorPreviewClient";
 import {eventBus} from "@/utils/eventBus";
 import { TemplateConfigDto, TemplateInfoDto } from "@/api/Api";
+import { UpgradeLegacyTemplateDialog } from "@/components/UpgradeLegacyTemplateDialog/UpgradeLegacyTemplateDialog";
 import { IconWithTextItem } from "../../components/IconWithTextItem";
 import IconCreator from "@/components/IconCreator/IconCreator";
 import { extNameMap } from "@/pages/editor/ChooseFile/chooseFileConfig";
@@ -82,6 +83,10 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
   const currentTemplateName = currentTemplateResp.data?.name ?? '';
 
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateInfoDto | null>(null);
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
+
+  const formatTemplateLabel = (tpl: Pick<TemplateInfoDto, 'name' | 'isLegacy'>) =>
+    tpl.isLegacy ? `${tpl.name} (${t`旧版`})` : tpl.name;
 
   useEffect(() => {
     if (templateList && currentTemplateResp.data) {
@@ -93,13 +98,22 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
     }
   }, [templateList, currentTemplateResp.data]);
 
-  async function applyNewTemplate() {
+  async function doApplyNewTemplate() {
     if (selectedTemplate) {
       await api.manageTemplateControllerApplyTemplateToGame({gameDir, templateDir: selectedTemplate.dir});
       // 更新模板后，让游戏再去拉一次模板的样式文件
       EditorPreviewClient.reloadTemplates();
       await currentTemplateResp.mutate();
     }
+  }
+
+  async function applyNewTemplate() {
+    if (!selectedTemplate) return;
+    if (selectedTemplate.isLegacy) {
+      setUpgradeDialogOpen(true);
+      return;
+    }
+    await doApplyNewTemplate();
   }
 
   function updateGameConfig() {
@@ -236,7 +250,7 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
           <div className={styles.applyTemplateSelectorLine}>
             <Dropdown
               style={{minWidth: 150}}
-              value={!selectedTemplate ? '' : selectedTemplate.name}
+              value={!selectedTemplate ? '' : formatTemplateLabel(selectedTemplate)}
               selectedOptions={[!selectedTemplate ? '' : selectedTemplate.dir]}
               onOptionSelect={(_, data) => {
                 if (data.optionValue){
@@ -245,12 +259,22 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
                 }
               }}
             >
-              {(templateList ?? []).map(template => <Option key={template.dir} value={template.dir}>{template.name}</Option>)}
+              {(templateList ?? []).map(template => <Option key={template.dir} value={template.dir}>{formatTemplateLabel(template)}</Option>)}
             </Dropdown>
             <Trans>
               <Button onClick={applyNewTemplate}>应用新的模板</Button>
             </Trans>
           </div>
+          {selectedTemplate && (
+            <UpgradeLegacyTemplateDialog
+              open={upgradeDialogOpen}
+              templateDir={selectedTemplate.dir}
+              templateName={selectedTemplate.name}
+              allowApplyDirectly
+              onClose={() => setUpgradeDialogOpen(false)}
+              onProceed={doApplyNewTemplate}
+            />
+          )}
         </div>,
         true,
       )}
