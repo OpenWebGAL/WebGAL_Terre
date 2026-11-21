@@ -77,6 +77,31 @@ async function updateWebGALEngineFiles() {
       fsExtra.copy(sourceServiceWorker, targetServiceWorker),
     ]);
 
+    const sourceDefaultTemplateDir = path.join(
+      cwd,
+      'node_modules',
+      'webgal-engine',
+      'dist',
+      'game',
+      'template',
+    );
+    const sourceScreensDir = path.join(sourceDefaultTemplateDir, 'screens');
+    const defaultTemplateDir = path.join(
+      cwd,
+      'assets',
+      'templates',
+      'WebGAL_Default_Template',
+    );
+    if (await fsExtra.pathExists(sourceScreensDir)) {
+      const targetScreensDir = path.join(defaultTemplateDir, 'screens');
+      await fsExtra.remove(targetScreensDir);
+      await fsExtra.copy(sourceScreensDir, targetScreensDir);
+      const sourceTemplateJson = path.join(sourceDefaultTemplateDir, 'template.json');
+      if (await fsExtra.pathExists(sourceTemplateJson)) {
+        await fsExtra.copy(sourceTemplateJson, path.join(defaultTemplateDir, 'template.json'));
+      }
+    }
+
     console.log('新 WebGAL 引擎文件复制成功。');
   } catch (error) {
     console.error('复制新文件时出错:', error);

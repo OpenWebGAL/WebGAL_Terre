@@ -88,6 +88,33 @@ async function ensureTemplateFiles() {
       console.error('复制模板文件时出错:', error);
     }
   }
+
+  const defaultScreensDir = path.join(
+    cwd,
+    'assets',
+    'templates',
+    'WebGAL_Default_Template',
+    'screens',
+  );
+  if (!(await fsExtra.pathExists(defaultScreensDir))) {
+    const sourceScreensDir = path.join(
+      cwd,
+      'node_modules',
+      'webgal-engine',
+      'dist',
+      'game',
+      'template',
+      'screens',
+    );
+    if (await fsExtra.pathExists(sourceScreensDir)) {
+      try {
+        await fsExtra.copy(sourceScreensDir, defaultScreensDir);
+        console.log('默认模板预制界面文件复制成功。');
+      } catch (error) {
+        console.error('复制默认模板预制界面文件时出错:', error);
+      }
+    }
+  }
 }
 
 async function bootstrap() {
