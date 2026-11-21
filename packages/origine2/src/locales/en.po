@@ -188,6 +188,9 @@ msgstr "unlockCg:;"
 msgid "wait:1000;"
 msgstr "wait:1000;"
 
+msgid "WebGAL 4.7 已采用全新的独立界面架构，不再支持直接编辑旧版模板。"
+msgstr "WebGAL 4.7 uses a new standalone UI screen architecture and no longer supports editing legacy templates directly."
+
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -236,9 +239,6 @@ msgstr "Move down"
 msgid "不使用 when 条件"
 msgstr "Do not use when condition"
 
-msgid "不可选项"
-msgstr "Not selectable item"
-
 msgid "不应用模板"
 msgstr "Do not apply template"
 
@@ -284,9 +284,6 @@ msgstr "Set multiple animations for figure or background"
 msgid "为立绘或背景图片调用动画效果"
 msgstr "Call animation for figure or background"
 
-msgid "主要样式"
-msgstr "Main Style"
-
 msgid "主页"
 msgstr "WebGAL Home"
 
@@ -304,6 +301,9 @@ msgstr "Brightness"
 
 msgid "仅用于预览，不会写入动画文件"
 msgstr "Only used for preview, not saved to the animation file"
+
+msgid "仍直接应用"
+msgstr "Apply Anyway"
 
 msgid "从上一关键帧到此帧"
 msgstr "From the previous keyframe to this one"
@@ -512,9 +512,6 @@ msgstr "Inset"
 msgid "内容"
 msgstr "Content"
 
-msgid "内层文本"
-msgstr "Inner Text"
-
 msgid "内置"
 msgstr "Built-in"
 
@@ -656,6 +653,15 @@ msgstr "Animation editor"
 msgid "包含"
 msgstr "Contain"
 
+msgid "升级并继续"
+msgstr "Upgrade & Continue"
+
+msgid "升级模板"
+msgstr "Upgrade Template"
+
+msgid "升级游戏模板失败，请检查游戏目录权限后重试。"
+msgstr "Failed to upgrade game template. Please check game directory permissions and try again."
+
 msgid "半张嘴"
 msgstr "Half open mouth"
 
@@ -739,9 +745,6 @@ msgstr "Use $0 for the current input"
 
 msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
 msgstr "Possible causes include a loop jump in the script, or too many lines to fast-forward before the target line."
-
-msgid "可选项"
-msgstr "Selectable options"
 
 msgid "右"
 msgstr "Right"
@@ -902,9 +905,6 @@ msgstr "Complex animation"
 msgid "复杂动画名来自引擎内置动画。若要使用项目动画文件，通常应使用“调用动画”。"
 msgstr "Complex animation names come from built-in engine animations. To use project animation files, use \"Call animation\"."
 
-msgid "外层文本"
-msgstr "Outer Text"
-
 msgid "外观样式"
 msgstr "Appearance"
 
@@ -1010,9 +1010,6 @@ msgstr "Contrast"
 msgid "对话"
 msgstr "Dialogue"
 
-msgid "对话框文字"
-msgstr "Text in Textbox"
-
 msgid "对话框标题"
 msgstr "Dialog title"
 
@@ -1057,12 +1054,6 @@ msgstr "Set text box text as unread"
 
 msgid "小"
 msgstr "Small"
-
-msgid "小头像图像"
-msgstr "Mini avatar image"
-
-msgid "小头像容器"
-msgstr "Mini avatar container"
 
 msgid "小头像文件"
 msgstr "Avatar file"
@@ -1145,15 +1136,6 @@ msgstr "Fast-forwarded lines"
 msgid "已禁用，删除操作会永久删除"
 msgstr "Disabled. Delete actions permanently delete files."
 
-msgid "已读文本"
-msgstr "Read text"
-
-msgid "已读文本内层"
-msgstr "Read text inner layer"
-
-msgid "已读文本外层"
-msgstr "Read text outer layer"
-
 msgid "布局由列表控制"
 msgstr "Layout controlled by list"
 
@@ -1202,6 +1184,9 @@ msgstr "Bottom Control Bar"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
+msgid "建议先将其升级为 4.7 模板后再继续应用（旧版 Stage、UI 目录会自动备份至 legacy-backup）。"
+msgstr "We recommend upgrading it to a 4.7 template before applying (legacy Stage and UI directories will be backed up to legacy-backup)."
+
 msgid "开启"
 msgstr "On"
 
@@ -1232,8 +1217,17 @@ msgstr "No labels are available in the current scene"
 msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
 msgstr "Portable mode is active. The actual data directory is determined by the data folder in the install directory."
 
+msgid "当前模板为旧版格式（{versionText}）"
+msgstr "Legacy Template Format ({versionText})"
+
 msgid "当前没有检测到可迁移内容，但新版本已经切换为用户数据目录。"
 msgstr "No migratable content was detected, but this version has switched to the user data directory."
+
+msgid "当前游戏使用的模板（{templateLabel}，{templateVersionLabel}）为旧版格式，当前引擎（v{engineVersionLabel}）已不再兼容旧版模板，预览暂时回退至默认界面。"
+msgstr "The template used by this game ({templateLabel}, {templateVersionLabel}) is in a legacy format. The current engine (v{engineVersionLabel}) no longer supports legacy templates and has fallen back to the default UI."
+
+msgid "当前游戏模板版本（{templateVersionLabel}）与当前引擎版本（v{engineVersionLabel}）大版本不一致，已回退至默认界面。请检查游戏所用的引擎或模板版本。"
+msgstr "The game template version ({templateVersionLabel}) does not match the major version of the current engine (v{engineVersionLabel}) and has fallen back to the default UI. Please check your engine or template version."
 
 msgid "当前版本"
 msgstr "Current version"
@@ -1288,6 +1282,9 @@ msgstr "Hover"
 
 msgid "我确定要删除游戏"
 msgstr "I'm sure to delete the game"
+
+msgid "所选模板为旧版格式"
+msgstr "Selected Template Is Legacy Format"
 
 msgid "手动触发下一句"
 msgstr "Manually trigger next intro sentence"
@@ -1499,6 +1496,9 @@ msgstr "Text display complete, execute next sentence"
 msgid "文字展示完等待"
 msgstr "Text display complete, wait"
 
+msgid "文字样式"
+msgstr "Text Style"
+
 msgid "文字颜色"
 msgstr "Font color"
 
@@ -1514,17 +1514,8 @@ msgstr "Text display"
 msgid "文本框"
 msgstr "Text Box"
 
-msgid "文本框（小头像关闭时）"
-msgstr "Textbox (when avatar is closed)"
-
-msgid "文本框文本"
-msgstr "Text Box Text"
-
 msgid "文本框显示状态"
 msgstr "Textbox display status"
-
-msgid "文本框背景"
-msgstr "Text Box Background"
 
 msgid "文本长度 (em)"
 msgstr "Text length (em)"
@@ -1628,11 +1619,20 @@ msgstr "legacy custom engines"
 msgid "旧游戏目录"
 msgstr "legacy game directories"
 
+msgid "旧版"
+msgstr "Legacy"
+
+msgid "旧版模板当前为只读状态，升级后即可编辑"
+msgstr "Legacy templates are read-only. Upgrade to edit."
+
 msgid "旧自定义模板"
 msgstr "legacy custom templates"
 
 msgid "是否固定弹窗"
 msgstr "Pin popup"
+
+msgid "是否立即将该游戏的模板升级为 4.7 格式？升级后会自动迁移标题、文本框与分支选择样式，并将原有 Stage、UI 目录备份至 game/template/legacy-backup。"
+msgstr "Upgrade this game's template to 4.7 format now? Title, TextBox, and Choose styles will be migrated automatically, and the original Stage and UI directories will be backed up to game/template/legacy-backup."
 
 msgid "是否自定义分隔符"
 msgstr "Use custom separator"
@@ -1676,6 +1676,9 @@ msgstr "General dialogue"
 msgid "普通对话，显示角色名"
 msgstr "Normal dialogue, role name shown"
 
+msgid "暂不升级"
+msgstr "Not Now"
+
 msgid "暂停"
 msgstr "Pause"
 
@@ -1712,11 +1715,17 @@ msgstr "Replace UI style tags"
 msgid "替换同目标动画"
 msgstr "Replace animation on same target"
 
+msgid "未命名模板"
+msgstr "Unnamed Template"
+
 msgid "未找到样式文件"
 msgstr "Stylesheet not found"
 
 msgid "未指定"
 msgstr "Unspecified"
+
+msgid "未知版本"
+msgstr "Unknown Version"
 
 msgid "未识别"
 msgstr "Unrecognized"
@@ -1772,30 +1781,6 @@ msgstr "Label name"
 msgid "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
 msgstr "The argument names in red are generic argument names reserved by the engine. They are not passed into the called scene as local variables, so please rename them."
 
-msgid "标题"
-msgstr "Title"
-
-msgid "标题备用背景"
-msgstr "Title Alternate Background"
-
-msgid "标题按钮"
-msgstr "Title Button"
-
-msgid "标题按钮列表"
-msgstr "Title Button List"
-
-msgid "标题按钮文字"
-msgstr "Title Button Text"
-
-msgid "标题按钮文字内层"
-msgstr "Title Button Text Inner"
-
-msgid "标题按钮文字外层"
-msgstr "Title Button Text Outer"
-
-msgid "标题按钮禁用"
-msgstr "Title Button Disabled"
-
 msgid "标题界面"
 msgstr "Title Screen"
 
@@ -1817,6 +1802,9 @@ msgstr "Root Font Size (rem)"
 msgid "根节点"
 msgstr "Root node"
 
+msgid "检测到旧版 UI 模板"
+msgstr "Legacy UI Template Detected"
+
 msgid "检测到需要迁移的内容：{0}。"
 msgstr "Detected content to migrate: {0}."
 
@@ -1829,8 +1817,23 @@ msgstr "Simulated Data"
 msgid "模板"
 msgstr "Template"
 
+msgid "模板 \"{templateName}\" 仍是旧版格式，WebGAL 4.7 引擎已不再直接兼容旧版模板。"
+msgstr "Template \"{templateName}\" is still in a legacy format, which is no longer directly compatible with the WebGAL 4.7 engine."
+
+msgid "模板与引擎版本不匹配"
+msgstr "Template and Engine Version Mismatch"
+
 msgid "模板列表"
 msgstr "Template list"
+
+msgid "模板升级失败"
+msgstr "Failed to upgrade template"
+
+msgid "模板升级失败，请检查模板文件是否可写后重试。"
+msgstr "Failed to upgrade template. Please check whether the template files are writable and try again."
+
+msgid "模板升级失败，请检查模板目录是否可写后重试。"
+msgstr "Failed to upgrade template. Please check whether the template directory is writable and try again."
 
 msgid "模板名称"
 msgstr "Template name"
@@ -1843,6 +1846,9 @@ msgstr "Template import failed. Check whether a template with the same name exis
 
 msgid "模板导入成功"
 msgstr "Template imported successfully"
+
+msgid "模板已升级为 4.7 格式"
+msgstr "Template upgraded to 4.7 format"
 
 msgid "模板目录"
 msgstr "Template directory"
@@ -1864,6 +1870,9 @@ msgstr "The animation editor is in use. Game preview is temporarily hidden"
 
 msgid "正在加载模板配置"
 msgstr "Loading template configuration"
+
+msgid "正在升级..."
+msgstr "Upgrading..."
 
 msgid "正在读取场景…"
 msgstr "Loading scene…"
@@ -2059,6 +2068,9 @@ msgstr "Screen"
 
 msgid "滤镜"
 msgstr "Filter"
+
+msgid "点击下方升级按钮即可将其转换为 4.7 模板：系统会保留原有字体与资源文件，自动迁移标题、文本框与分支选择样式，并将旧版 Stage、UI 目录备份至 legacy-backup 文件夹。"
+msgstr "Click Upgrade Template below to convert it to 4.7 format: fonts and assets will be preserved, Title, TextBox, and Choose styles will be migrated automatically, and legacy Stage and UI directories will be backed up to legacy-backup."
 
 msgid "点击或拖拽文件至此上传"
 msgstr "Click or drag file to this area to upload"
@@ -2366,6 +2378,9 @@ msgstr "Time taken"
 msgid "背景"
 msgstr "Background"
 
+msgid "背景与材质"
+msgstr "Background & Material"
+
 msgid "背景图像位置"
 msgstr "Background Image Position"
 
@@ -2503,21 +2518,6 @@ msgstr "Role name, leave blank to inherit from previous sentence"
 
 msgid "角色名，留空以继承上句:对话;"
 msgstr "Role name, leave blank to inherit from previous sentence: Dialogue;"
-
-msgid "角色名内层文本"
-msgstr "Role Name Inner Text"
-
-msgid "角色名外层文本"
-msgstr "Role Name Outer Text"
-
-msgid "角色名容器"
-msgstr "Role Name Container"
-
-msgid "角色名文本框"
-msgstr "Role Name Text Box"
-
-msgid "角色名文本框背景"
-msgstr "Role Name Text Box Background"
 
 msgid "角落头像"
 msgstr "Corner avatar"
@@ -2696,6 +2696,9 @@ msgstr "Enter Target ID"
 msgid "边框"
 msgstr "Border"
 
+msgid "边框与效果"
+msgstr "Border & Effects"
+
 msgid "边框宽"
 msgstr "Border width"
 
@@ -2723,6 +2726,9 @@ msgstr "Return value"
 msgid "返回值写入"
 msgstr "Return value goes to"
 
+msgid "返回模板列表"
+msgstr "Back to Template List"
+
 msgid "进出场动画"
 msgstr "Entry and exit animation"
 
@@ -2734,6 +2740,12 @@ msgstr "Exit duration (milliseconds)"
 
 msgid "适配画布"
 msgstr "Fit canvas"
+
+msgid "选中"
+msgstr "Active"
+
+msgid "选中样式"
+msgstr "Active style"
 
 msgid "选择"
 msgstr "Choose"
@@ -2828,20 +2840,8 @@ msgstr "Select Color"
 msgid "选项"
 msgstr "Option"
 
-msgid "选项列表"
-msgstr "Selection List"
-
 msgid "选项名称"
 msgstr "Option Name"
-
-msgid "选项按钮"
-msgstr "Selection Button"
-
-msgid "选项按钮（禁用）"
-msgstr "Selection Button (disabled)"
-
-msgid "选项按钮外层"
-msgstr "Selection Button Wrapper"
 
 msgid "透明度（0-1）"
 msgstr "Opacity (0-1)"

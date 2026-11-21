@@ -188,6 +188,9 @@ msgstr "unlockCg:;"
 msgid "wait:1000;"
 msgstr "wait:1000;"
 
+msgid "WebGAL 4.7 已采用全新的独立界面架构，不再支持直接编辑旧版模板。"
+msgstr "WebGAL 4.7은 새로운 독립 UI 화면 아키텍처를 채택하여 구버전 템플릿의 직접 편집을 더 이상 지원하지 않습니다."
+
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -236,9 +239,6 @@ msgstr "아래로 이동"
 msgid "不使用 when 条件"
 msgstr "when 조건 사용하지 않음"
 
-msgid "不可选项"
-msgstr "선택 불가"
-
 msgid "不应用模板"
 msgstr "템플릿을 적용하지 않음"
 
@@ -284,9 +284,6 @@ msgstr "스탠딩 또는 배경 이미지에 다중 구간 애니메이션 이�
 msgid "为立绘或背景图片调用动画效果"
 msgstr "스탠딩 또는 배경 이미지에 애니메이션 불러오기 이펙트를 적용"
 
-msgid "主要样式"
-msgstr "메인 스타일"
-
 msgid "主页"
 msgstr "홈페이지"
 
@@ -304,6 +301,9 @@ msgstr "밝기"
 
 msgid "仅用于预览，不会写入动画文件"
 msgstr "미리보기 전용이며 애니메이션 파일에 저장되지 않습니다"
+
+msgid "仍直接应用"
+msgstr "그대로 적용"
 
 msgid "从上一关键帧到此帧"
 msgstr "이전 키프레임에서 이 키프레임까지"
@@ -512,9 +512,6 @@ msgstr "안쪽"
 msgid "内容"
 msgstr "내용"
 
-msgid "内层文本"
-msgstr "내부 텍스트"
-
 msgid "内置"
 msgstr "내장"
 
@@ -656,6 +653,15 @@ msgstr "애니메이션 에디터"
 msgid "包含"
 msgstr "포함"
 
+msgid "升级并继续"
+msgstr "업그레이드 후 계속"
+
+msgid "升级模板"
+msgstr "템플릿 업그레이드"
+
+msgid "升级游戏模板失败，请检查游戏目录权限后重试。"
+msgstr "게임 템플릿 업그레이드에 실패했습니다. 게임 디렉터리 권한을 확인한 후 다시 시도해 주세요."
+
 msgid "半张嘴"
 msgstr "반쯤 벌린 입"
 
@@ -739,9 +745,6 @@ msgstr "$0를 사용하여 현재 입력 표시 가능"
 
 msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
 msgstr "스크립트 간에 무한 루프가 있거나 대상 줄 이전에 빨리 감기해야 할 행수가 너무 많을 수 있습니다."
-
-msgid "可选项"
-msgstr "선택 가능 항목"
 
 msgid "右"
 msgstr "오른쪽"
@@ -902,9 +905,6 @@ msgstr "복잡 애니메이션"
 msgid "复杂动画名来自引擎内置动画。若要使用项目动画文件，通常应使用“调用动画”。"
 msgstr "복잡 애니메이션 이름은 엔진에 내장된 애니메이션에서 가져옵니다. 프로젝트 애니메이션 파일을 사용하려면 일반적으로 '애니메이션 불러오기'을 사용해야 합니다."
 
-msgid "外层文本"
-msgstr "외부 텍스트"
-
 msgid "外观样式"
 msgstr "외관 스타일"
 
@@ -1010,9 +1010,6 @@ msgstr "대비"
 msgid "对话"
 msgstr "대화"
 
-msgid "对话框文字"
-msgstr "대화창 텍스트"
-
 msgid "对话框标题"
 msgstr "대화창 제목"
 
@@ -1057,12 +1054,6 @@ msgstr "텍스트 창의 텍스트를 읽지 않음으로 설정"
 
 msgid "小"
 msgstr "소"
-
-msgid "小头像图像"
-msgstr "미니 프로필 이미지"
-
-msgid "小头像容器"
-msgstr "미니 프로필 용기"
 
 msgid "小头像文件"
 msgstr "미니 프로필 파일"
@@ -1145,15 +1136,6 @@ msgstr "빨리 감기한 줄 수"
 msgid "已禁用，删除操作会永久删除"
 msgstr "비활성화됨: 삭제 작업은 파일을 영구 삭제합니다"
 
-msgid "已读文本"
-msgstr "읽은 텍스트"
-
-msgid "已读文本内层"
-msgstr "읽은 텍스트 내부"
-
-msgid "已读文本外层"
-msgstr "읽은 텍스트 외부"
-
 msgid "布局由列表控制"
 msgstr "목록에서 레이아웃 제어"
 
@@ -1202,6 +1184,9 @@ msgstr "하단 제어 바"
 msgid "延迟时间（秒）"
 msgstr "지연 시간(초)"
 
+msgid "建议先将其升级为 4.7 模板后再继续应用（旧版 Stage、UI 目录会自动备份至 legacy-backup）。"
+msgstr "적용하기 전에 4.7 템플릿으로 먼저 업그레이드하는 것을 권장합니다(기존 Stage, UI 폴더는 legacy-backup에 자동 백업됩니다)."
+
 msgid "开启"
 msgstr "켜기"
 
@@ -1232,8 +1217,17 @@ msgstr "현재 장면에 선택 가능한 태그가 없습니다"
 msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
 msgstr "현재 portable 모드이며, 실제 데이터 목록은 다운로드 목록 내의 data 폴더에 의해 결정됩니다."
 
+msgid "当前模板为旧版格式（{versionText}）"
+msgstr "구버전 형식 템플릿 ({versionText})"
+
 msgid "当前没有检测到可迁移内容，但新版本已经切换为用户数据目录。"
 msgstr "이동 가능한 내용을 감지하지 못했지만, 새 버전은 이미 사용자 데이터 목록으로 전환되었습니다."
+
+msgid "当前游戏使用的模板（{templateLabel}，{templateVersionLabel}）为旧版格式，当前引擎（v{engineVersionLabel}）已不再兼容旧版模板，预览暂时回退至默认界面。"
+msgstr "현재 게임에서 사용 중인 템플릿({templateLabel}, {templateVersionLabel})은 구버전 형식입니다. 현재 엔진(v{engineVersionLabel})은 구버전 템플릿을 지원하지 않아 기본 UI로 대체되었습니다."
+
+msgid "当前游戏模板版本（{templateVersionLabel}）与当前引擎版本（v{engineVersionLabel}）大版本不一致，已回退至默认界面。请检查游戏所用的引擎或模板版本。"
+msgstr "게임 템플릿 버전({templateVersionLabel})과 현재 엔진 버전(v{engineVersionLabel})의 메이저 버전이 일치하지 않아 기본 UI로 대체되었습니다. 엔진 또는 템플릿 버전을 확인해 주세요."
 
 msgid "当前版本"
 msgstr "현재 버전"
@@ -1288,6 +1282,9 @@ msgstr "호버"
 
 msgid "我确定要删除游戏"
 msgstr "게임 삭제를 확정하겠습니다."
+
+msgid "所选模板为旧版格式"
+msgstr "선택한 템플릿이 구버전 형식입니다"
 
 msgid "手动触发下一句"
 msgstr "수동으로 다음 문장을 표시"
@@ -1499,6 +1496,9 @@ msgstr "텍스트가 모두 표시된 후 다음 문장을 실행"
 msgid "文字展示完等待"
 msgstr "텍스트가 모두 표시된 후 대기"
 
+msgid "文字样式"
+msgstr "텍스트 스타일"
+
 msgid "文字颜色"
 msgstr "글자 색상"
 
@@ -1514,17 +1514,8 @@ msgstr "텍스트 표시"
 msgid "文本框"
 msgstr "대화창"
 
-msgid "文本框（小头像关闭时）"
-msgstr "대화창(미니 프로필 꺼짐)"
-
-msgid "文本框文本"
-msgstr "대화창 텍스트"
-
 msgid "文本框显示状态"
 msgstr "대화창 표시 상태"
-
-msgid "文本框背景"
-msgstr "대화창 배경"
 
 msgid "文本长度 (em)"
 msgstr "텍스트 길이(em)"
@@ -1628,11 +1619,20 @@ msgstr "구버전 커스텀 엔진"
 msgid "旧游戏目录"
 msgstr "구버전 게임 목록"
 
+msgid "旧版"
+msgstr "구버전"
+
+msgid "旧版模板当前为只读状态，升级后即可编辑"
+msgstr "구버전 템플릿은 현재 읽기 전용이며 업그레이드 후 편집할 수 있습니다"
+
 msgid "旧自定义模板"
 msgstr "구버전 커스텀 템플릿"
 
 msgid "是否固定弹窗"
 msgstr "팝업 고정 여부"
+
+msgid "是否立即将该游戏的模板升级为 4.7 格式？升级后会自动迁移标题、文本框与分支选择样式，并将原有 Stage、UI 目录备份至 game/template/legacy-backup。"
+msgstr "이 게임의 템플릿을 지금 4.7 형식으로 업그레이드하시겠습니까? 타이틀, 텍스트박스, 선택지 스타일이 자동으로 마이그레이션되며 기존 Stage, UI 폴더는 game/template/legacy-backup에 백업됩니다."
 
 msgid "是否自定义分隔符"
 msgstr "커스텀 구분 기호 사용 여부"
@@ -1676,6 +1676,9 @@ msgstr "일반 대화"
 msgid "普通对话，显示角色名"
 msgstr "일반 대화, 캐릭터 이름 표시"
 
+msgid "暂不升级"
+msgstr "나중에"
+
 msgid "暂停"
 msgstr "일시정지"
 
@@ -1712,11 +1715,17 @@ msgstr "UI 스타일 태그 교체"
 msgid "替换同目标动画"
 msgstr "동일 대상 애니메이션 교체"
 
+msgid "未命名模板"
+msgstr "이름 없는 템플릿"
+
 msgid "未找到样式文件"
 msgstr "스타일 파일을 찾을 수 없습니다"
 
 msgid "未指定"
 msgstr "지정되지 않음"
+
+msgid "未知版本"
+msgstr "알 수 없는 버전"
 
 msgid "未识别"
 msgstr "인식되지 않음"
@@ -1772,30 +1781,6 @@ msgstr "태그명"
 msgid "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
 msgstr "빨간색 인자 이름은 엔진이 예약한 공통 매개변수 이름입니다. 지역 변수로 호출된 씬에 전달되지 않으니 다른 이름으로 바꿔 주세요."
 
-msgid "标题"
-msgstr "타이틀"
-
-msgid "标题备用背景"
-msgstr "타이틀 예비 배경"
-
-msgid "标题按钮"
-msgstr "타이틀 버튼"
-
-msgid "标题按钮列表"
-msgstr "타이틀 버튼 목록"
-
-msgid "标题按钮文字"
-msgstr "타이틀 버튼 텍스트"
-
-msgid "标题按钮文字内层"
-msgstr "타이틀 버튼 텍스트 내부"
-
-msgid "标题按钮文字外层"
-msgstr "타이틀 버튼 텍스트 외부"
-
-msgid "标题按钮禁用"
-msgstr "타이틀 버튼 비활성화"
-
 msgid "标题界面"
 msgstr "타이틀 화면"
 
@@ -1817,6 +1802,9 @@ msgstr "루트 텍스트 길이 (rem)"
 msgid "根节点"
 msgstr "루트 노드"
 
+msgid "检测到旧版 UI 模板"
+msgstr "구버전 UI 템플릿 감지됨"
+
 msgid "检测到需要迁移的内容：{0}。"
 msgstr "이동이 필요한 내용 감지됨: {0}."
 
@@ -1829,8 +1817,23 @@ msgstr "시뮬레이션 데이터"
 msgid "模板"
 msgstr "템플릿"
 
+msgid "模板 \"{templateName}\" 仍是旧版格式，WebGAL 4.7 引擎已不再直接兼容旧版模板。"
+msgstr "템플릿 \"{templateName}\"은(는) 구버전 형식이므로 WebGAL 4.7 엔진과 직접 호환되지 않습니다."
+
+msgid "模板与引擎版本不匹配"
+msgstr "템플릿 및 엔진 버전 불일치"
+
 msgid "模板列表"
 msgstr "템플릿 목록"
+
+msgid "模板升级失败"
+msgstr "템플릿 업그레이드 실패"
+
+msgid "模板升级失败，请检查模板文件是否可写后重试。"
+msgstr "템플릿 업그레이드에 실패했습니다. 템플릿 파일의 쓰기 권한을 확인한 후 다시 시도해 주세요."
+
+msgid "模板升级失败，请检查模板目录是否可写后重试。"
+msgstr "템플릿 업그레이드에 실패했습니다. 템플릿 디렉터리의 쓰기 권한을 확인한 후 다시 시도해 주세요."
 
 msgid "模板名称"
 msgstr "템플릿 이름"
@@ -1843,6 +1846,9 @@ msgstr "템플릿 불러오기 실패. 이름이 중복되거나 템플릿이 �
 
 msgid "模板导入成功"
 msgstr "템플릿 불러오기 성공"
+
+msgid "模板已升级为 4.7 格式"
+msgstr "템플릿이 4.7 형식으로 업그레이드되었습니다"
 
 msgid "模板目录"
 msgstr "템플릿 목록"
@@ -1864,6 +1870,9 @@ msgstr "애니메이션 에디터를 사용 중이므로 게임 미리보기를 
 
 msgid "正在加载模板配置"
 msgstr "템플릿 구성을 불러오는 중"
+
+msgid "正在升级..."
+msgstr "업그레이드 중..."
 
 msgid "正在读取场景…"
 msgstr "장면을 불러오는 중…"
@@ -2059,6 +2068,9 @@ msgstr "스크린"
 
 msgid "滤镜"
 msgstr "필터"
+
+msgid "点击下方升级按钮即可将其转换为 4.7 模板：系统会保留原有字体与资源文件，自动迁移标题、文本框与分支选择样式，并将旧版 Stage、UI 目录备份至 legacy-backup 文件夹。"
+msgstr "아래 업그레이드 버튼을 클릭하면 4.7 템플릿으로 변환됩니다. 기존 글꼴과 에셋 파일은 유지되며 타이틀, 텍스트박스, 선택지 스타일이 자동 마이그레이션되고 구버전 Stage, UI 폴더는 legacy-backup 폴더에 백업됩니다."
 
 msgid "点击或拖拽文件至此上传"
 msgstr "파일을 클릭하거나 여기로 드래그하여 업로드"
@@ -2366,6 +2378,9 @@ msgstr "소요 시간"
 msgid "背景"
 msgstr "배경"
 
+msgid "背景与材质"
+msgstr "배경 및 재질"
+
 msgid "背景图像位置"
 msgstr "배경 이미지 위치"
 
@@ -2503,21 +2518,6 @@ msgstr "캐릭터 이름 (빈칸으로 두면 이전 문장에서 이어짐)"
 
 msgid "角色名，留空以继承上句:对话;"
 msgstr "캐릭터 이름, 이전 문장과 이으려면 빈칸:대화;"
-
-msgid "角色名内层文本"
-msgstr "캐릭터 이름 내부 텍스트"
-
-msgid "角色名外层文本"
-msgstr "캐릭터 이름 외부 텍스트"
-
-msgid "角色名容器"
-msgstr "캐릭터 이름 용기"
-
-msgid "角色名文本框"
-msgstr "캐릭터 이름 텍스트 창"
-
-msgid "角色名文本框背景"
-msgstr "캐릭터 이름 텍스트 창 배경"
 
 msgid "角落头像"
 msgstr "구석 미니 프로필"
@@ -2696,6 +2696,9 @@ msgstr "대상 ID 입력"
 msgid "边框"
 msgstr "테두리"
 
+msgid "边框与效果"
+msgstr "테두리 및 효과"
+
 msgid "边框宽"
 msgstr "테두리 두께"
 
@@ -2723,6 +2726,9 @@ msgstr "반환값"
 msgid "返回值写入"
 msgstr "반환값 기록 대상"
 
+msgid "返回模板列表"
+msgstr "템플릿 목록으로 돌아가기"
+
 msgid "进出场动画"
 msgstr "입/퇴장 애니메이션"
 
@@ -2734,6 +2740,12 @@ msgstr "퇴장 시간(단위: 밀리초)"
 
 msgid "适配画布"
 msgstr "캔버스에 맞추기"
+
+msgid "选中"
+msgstr "선택됨"
+
+msgid "选中样式"
+msgstr "선택 시 스타일"
 
 msgid "选择"
 msgstr "선택"
@@ -2828,20 +2840,8 @@ msgstr "색상 선택"
 msgid "选项"
 msgstr "옵션"
 
-msgid "选项列表"
-msgstr "옵션 목록"
-
 msgid "选项名称"
 msgstr "옵션 이름"
-
-msgid "选项按钮"
-msgstr "선택지 버튼"
-
-msgid "选项按钮（禁用）"
-msgstr "선택지 버튼(비활성화)"
-
-msgid "选项按钮外层"
-msgstr "선택지 버튼 외층"
 
 msgid "透明度（0-1）"
 msgstr "투명도(0-1)"

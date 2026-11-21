@@ -188,6 +188,9 @@ msgstr "unlockCg:;"
 msgid "wait:1000;"
 msgstr "wait:1000;"
 
+msgid "WebGAL 4.7 已采用全新的独立界面架构，不再支持直接编辑旧版模板。"
+msgstr "WebGAL 4.7 では新しい独立画面アーキテクチャが採用されており、旧形式テンプレートの直接編集には対応していません。"
+
 msgid "WebGAL Standard"
 msgstr "WebGAL Standard"
 
@@ -236,9 +239,6 @@ msgstr "下へ移動"
 msgid "不使用 when 条件"
 msgstr "when 条件を使用しない"
 
-msgid "不可选项"
-msgstr "選択できない選択肢"
-
 msgid "不应用模板"
 msgstr "テンプレートを適用しない"
 
@@ -284,9 +284,6 @@ msgstr "立ち絵や背景画像に複数のアニメーション効果を設定
 msgid "为立绘或背景图片调用动画效果"
 msgstr "立ち絵や背景画像にアニメーション効果を適用する"
 
-msgid "主要样式"
-msgstr "メインスタイル"
-
 msgid "主页"
 msgstr "WebGALホーム"
 
@@ -304,6 +301,9 @@ msgstr "輝度"
 
 msgid "仅用于预览，不会写入动画文件"
 msgstr "プレビュー専用で、アニメーションファイルには保存されません"
+
+msgid "仍直接应用"
+msgstr "そのまま適用"
 
 msgid "从上一关键帧到此帧"
 msgstr "前のキーフレームからこのキーフレームまで"
@@ -512,9 +512,6 @@ msgstr "内側"
 msgid "内容"
 msgstr "内容"
 
-msgid "内层文本"
-msgstr "内側テキスト"
-
 msgid "内置"
 msgstr "組み込み"
 
@@ -656,6 +653,15 @@ msgstr "アニメーションエディタ"
 msgid "包含"
 msgstr "収める"
 
+msgid "升级并继续"
+msgstr "アップグレードして続行"
+
+msgid "升级模板"
+msgstr "テンプレートをアップグレード"
+
+msgid "升级游戏模板失败，请检查游戏目录权限后重试。"
+msgstr "ゲームテンプレートのアップグレードに失敗しました。ディレクトリの権限を確認して再試行してください。"
+
 msgid "半张嘴"
 msgstr "半分開いた口"
 
@@ -739,9 +745,6 @@ msgstr "$0 で現在の入力を表せます"
 
 msgid "可能原因是脚本中存在循环跳转，或者目标行之前需要快进的行数过多。"
 msgstr "スクリプト内のループジャンプ、または対象行までの早送り行数が多すぎることが原因の可能性があります。"
-
-msgid "可选项"
-msgstr "選択可能な選択肢"
 
 msgid "右"
 msgstr "右"
@@ -902,9 +905,6 @@ msgstr "複雑アニメーション"
 msgid "复杂动画名来自引擎内置动画。若要使用项目动画文件，通常应使用“调用动画”。"
 msgstr "複雑アニメーション名はエンジン内蔵アニメーションに由来します。プロジェクトのアニメーションファイルを使う場合は通常「アニメーション呼び出し」を使用します。"
 
-msgid "外层文本"
-msgstr "外側テキスト"
-
 msgid "外观样式"
 msgstr "外観スタイル"
 
@@ -1010,9 +1010,6 @@ msgstr "コントラスト"
 msgid "对话"
 msgstr "ダイアログ"
 
-msgid "对话框文字"
-msgstr "ダイアログテキスト"
-
 msgid "对话框标题"
 msgstr "ダイアログタイトル"
 
@@ -1057,12 +1054,6 @@ msgstr "テキストボックスのテキストを未読に設定"
 
 msgid "小"
 msgstr "小さい"
-
-msgid "小头像图像"
-msgstr "アバター画像"
-
-msgid "小头像容器"
-msgstr "アバターコンテナ"
 
 msgid "小头像文件"
 msgstr "アバターファイル"
@@ -1145,15 +1136,6 @@ msgstr "早送り済み行数"
 msgid "已禁用，删除操作会永久删除"
 msgstr "無効: 削除操作はファイルを完全に削除します"
 
-msgid "已读文本"
-msgstr "既読テキスト"
-
-msgid "已读文本内层"
-msgstr "既読テキスト内側"
-
-msgid "已读文本外层"
-msgstr "既読テキスト外側"
-
 msgid "布局由列表控制"
 msgstr "レイアウトはリストで制御"
 
@@ -1202,6 +1184,9 @@ msgstr "下部コントロールバー"
 msgid "延迟时间（秒）"
 msgstr "遅延時間（秒）"
 
+msgid "建议先将其升级为 4.7 模板后再继续应用（旧版 Stage、UI 目录会自动备份至 legacy-backup）。"
+msgstr "適用する前に 4.7 形式へアップグレードすることをおすすめします（既存の Stage・UI フォルダは legacy-backup にバックアップされます）。"
+
 msgid "开启"
 msgstr "有効化"
 
@@ -1232,8 +1217,17 @@ msgstr "現在のシーンに選択可能なラベルはありません"
 msgid "当前处于 portable 模式，实际数据目录由安装目录下的 data 文件夹决定。"
 msgstr "現在 Portable モードです。実際のデータディレクトリはインストールディレクトリ内の data フォルダーで決まります。"
 
+msgid "当前模板为旧版格式（{versionText}）"
+msgstr "旧形式のテンプレート（{versionText}）"
+
 msgid "当前没有检测到可迁移内容，但新版本已经切换为用户数据目录。"
 msgstr "移行可能な内容は検出されませんでしたが、このバージョンではユーザーデータディレクトリへ切り替わっています。"
+
+msgid "当前游戏使用的模板（{templateLabel}，{templateVersionLabel}）为旧版格式，当前引擎（v{engineVersionLabel}）已不再兼容旧版模板，预览暂时回退至默认界面。"
+msgstr "現在のゲームで使用されているテンプレート（{templateLabel}、{templateVersionLabel}）は旧形式です。現在のエンジン（v{engineVersionLabel}）は旧形式テンプレートに非対応のため、デフォルト UI にフォールバックしています。"
+
+msgid "当前游戏模板版本（{templateVersionLabel}）与当前引擎版本（v{engineVersionLabel}）大版本不一致，已回退至默认界面。请检查游戏所用的引擎或模板版本。"
+msgstr "ゲームテンプレートのバージョン（{templateVersionLabel}）とエンジンのバージョン（v{engineVersionLabel}）のメジャーバージョンが一致しないため、デフォルト UI にフォールバックしました。エンジンまたはテンプレートのバージョンを確認してください。"
 
 msgid "当前版本"
 msgstr "現在のバージョン"
@@ -1288,6 +1282,9 @@ msgstr "ホバー"
 
 msgid "我确定要删除游戏"
 msgstr "ゲームを削除することを確認しました"
+
+msgid "所选模板为旧版格式"
+msgstr "選択されたテンプレートは旧形式です"
 
 msgid "手动触发下一句"
 msgstr "手動で次の行を表示"
@@ -1499,6 +1496,9 @@ msgstr "テキスト表示完了後、次の文を実行"
 msgid "文字展示完等待"
 msgstr "テキスト表示完了待ち"
 
+msgid "文字样式"
+msgstr "テキストスタイル"
+
 msgid "文字颜色"
 msgstr "文字色"
 
@@ -1514,17 +1514,8 @@ msgstr "テキストボックス"
 msgid "文本框"
 msgstr "テキストボックス"
 
-msgid "文本框（小头像关闭时）"
-msgstr "テキストボックス（アバターが閉じている場合）"
-
-msgid "文本框文本"
-msgstr "テキストボックスのテキスト"
-
 msgid "文本框显示状态"
 msgstr "テキストボックス表示状態"
-
-msgid "文本框背景"
-msgstr "テキストボックスの背景"
 
 msgid "文本长度 (em)"
 msgstr "テキストの長さ (em)"
@@ -1628,11 +1619,20 @@ msgstr "旧カスタムエンジン"
 msgid "旧游戏目录"
 msgstr "旧ゲームディレクトリ"
 
+msgid "旧版"
+msgstr "旧版"
+
+msgid "旧版模板当前为只读状态，升级后即可编辑"
+msgstr "旧形式テンプレートは現在読み取り専用です。アップグレードすると編集できます"
+
 msgid "旧自定义模板"
 msgstr "旧カスタムテンプレート"
 
 msgid "是否固定弹窗"
 msgstr "ポップアップをピン留め"
+
+msgid "是否立即将该游戏的模板升级为 4.7 格式？升级后会自动迁移标题、文本框与分支选择样式，并将原有 Stage、UI 目录备份至 game/template/legacy-backup。"
+msgstr "このゲームのテンプレートを今すぐ 4.7 形式にアップグレードしますか？タイトル・テキストボックス・選択肢のスタイルが自動移行され、元の Stage・UI フォルダは game/template/legacy-backup にバックアップされます。"
 
 msgid "是否自定义分隔符"
 msgstr "カスタム区切り文字を使用"
@@ -1676,6 +1676,9 @@ msgstr "ダイアログ"
 msgid "普通对话，显示角色名"
 msgstr "通常の会話、キャラクター名を表示"
 
+msgid "暂不升级"
+msgstr "後で"
+
 msgid "暂停"
 msgstr "一時停止"
 
@@ -1712,11 +1715,17 @@ msgstr "UI スタイルタグを置換"
 msgid "替换同目标动画"
 msgstr "同じ対象のアニメーションを置換"
 
+msgid "未命名模板"
+msgstr "無題のテンプレート"
+
 msgid "未找到样式文件"
 msgstr "スタイルファイルが見つかりません"
 
 msgid "未指定"
 msgstr "指定なし"
+
+msgid "未知版本"
+msgstr "不明なバージョン"
 
 msgid "未识别"
 msgstr "認識されないコマンド"
@@ -1772,30 +1781,6 @@ msgstr "ラベル名"
 msgid "标红的参数名是引擎保留的通用参数名，不会作为局部变量传入被调用的场景，请换一个名字。"
 msgstr "赤い引数名はエンジンが予約している共通パラメータ名です。ローカル変数として呼び出されたシーンに渡されないため、別の名前に変更してください。"
 
-msgid "标题"
-msgstr "タイトル"
-
-msgid "标题备用背景"
-msgstr "タイトル代替背景"
-
-msgid "标题按钮"
-msgstr "タイトルボタン"
-
-msgid "标题按钮列表"
-msgstr "タイトルボタンリスト"
-
-msgid "标题按钮文字"
-msgstr "タイトルボタンテキスト"
-
-msgid "标题按钮文字内层"
-msgstr "タイトルボタンテキスト内層"
-
-msgid "标题按钮文字外层"
-msgstr "タイトルボタンテキスト外層"
-
-msgid "标题按钮禁用"
-msgstr "タイトルボタン無効"
-
 msgid "标题界面"
 msgstr "タイトル画面"
 
@@ -1817,6 +1802,9 @@ msgstr "ルートテキストの長さ (rem)"
 msgid "根节点"
 msgstr "ルートノード"
 
+msgid "检测到旧版 UI 模板"
+msgstr "旧形式の UI テンプレートを検出しました"
+
 msgid "检测到需要迁移的内容：{0}。"
 msgstr "移行が必要な内容を検出しました：{0}。"
 
@@ -1829,8 +1817,23 @@ msgstr "シミュレートデータ"
 msgid "模板"
 msgstr "テンプレート"
 
+msgid "模板 \"{templateName}\" 仍是旧版格式，WebGAL 4.7 引擎已不再直接兼容旧版模板。"
+msgstr "テンプレート \"{templateName}\" は旧形式のため、WebGAL 4.7 エンジンではそのまま使用できません。"
+
+msgid "模板与引擎版本不匹配"
+msgstr "テンプレートとエンジンのバージョン不一致"
+
 msgid "模板列表"
 msgstr "テンプレートリスト"
+
+msgid "模板升级失败"
+msgstr "テンプレートのアップグレードに失敗しました"
+
+msgid "模板升级失败，请检查模板文件是否可写后重试。"
+msgstr "テンプレートのアップグレードに失敗しました。ファイルが書き込み可能か確認して再試行してください。"
+
+msgid "模板升级失败，请检查模板目录是否可写后重试。"
+msgstr "テンプレートのアップグレードに失敗しました。フォルダが書き込み可能か確認して再試行してください。"
 
 msgid "模板名称"
 msgstr "テンプレート名"
@@ -1843,6 +1846,9 @@ msgstr "テンプレートのインポートに失敗しました。同名のテ
 
 msgid "模板导入成功"
 msgstr "テンプレートをインポートしました"
+
+msgid "模板已升级为 4.7 格式"
+msgstr "テンプレートを 4.7 形式にアップグレードしました"
 
 msgid "模板目录"
 msgstr "テンプレートディレクトリ"
@@ -1864,6 +1870,9 @@ msgstr "アニメーションエディタを使用中のため、ゲームプレ
 
 msgid "正在加载模板配置"
 msgstr "テンプレート設定を読み込み中"
+
+msgid "正在升级..."
+msgstr "アップグレード中..."
 
 msgid "正在读取场景…"
 msgstr "シーンを読み込み中…"
@@ -2059,6 +2068,9 @@ msgstr "スクリーン"
 
 msgid "滤镜"
 msgstr "フィルター"
+
+msgid "点击下方升级按钮即可将其转换为 4.7 模板：系统会保留原有字体与资源文件，自动迁移标题、文本框与分支选择样式，并将旧版 Stage、UI 目录备份至 legacy-backup 文件夹。"
+msgstr "下のボタンから 4.7 形式へ変換できます。既存のフォントとアセットは保持され、タイトル・テキストボックス・選択肢のスタイルを自動移行し、旧 Stage・UI フォルダは legacy-backup にバックアップされます。"
 
 msgid "点击或拖拽文件至此上传"
 msgstr "ここまでクリックかドラッグでアップロードします"
@@ -2366,6 +2378,9 @@ msgstr "時間がかかります"
 msgid "背景"
 msgstr "Background"
 
+msgid "背景与材质"
+msgstr "背景とマテリアル"
+
 msgid "背景图像位置"
 msgstr "背景画像位置"
 
@@ -2503,21 +2518,6 @@ msgstr "キャラクター名を空白のままにすると前の文から継承
 
 msgid "角色名，留空以继承上句:对话;"
 msgstr "キャラクター名を空白のままにすると前の文から継承;ダイアログ;"
-
-msgid "角色名内层文本"
-msgstr "キャラクター名内側テキスト"
-
-msgid "角色名外层文本"
-msgstr "キャラクター名外側テキスト"
-
-msgid "角色名容器"
-msgstr "キャラクター名コンテナ"
-
-msgid "角色名文本框"
-msgstr "キャラクター名テキストボックス"
-
-msgid "角色名文本框背景"
-msgstr "キャラクター名テキストボックスの背景"
 
 msgid "角落头像"
 msgstr "コーナーアバター"
@@ -2696,6 +2696,9 @@ msgstr "ターゲットIDを入力"
 msgid "边框"
 msgstr "ボーダー"
 
+msgid "边框与效果"
+msgstr "枠線とエフェクト"
+
 msgid "边框宽"
 msgstr "ボーダー幅"
 
@@ -2723,6 +2726,9 @@ msgstr "戻り値"
 msgid "返回值写入"
 msgstr "戻り値の書き込み先"
 
+msgid "返回模板列表"
+msgstr "テンプレート一覧に戻る"
+
 msgid "进出场动画"
 msgstr "入退場アニメーション"
 
@@ -2734,6 +2740,12 @@ msgstr "退場時間（ミリ秒）"
 
 msgid "适配画布"
 msgstr "キャンバスに合わせる"
+
+msgid "选中"
+msgstr "選択中"
+
+msgid "选中样式"
+msgstr "選択時のスタイル"
 
 msgid "选择"
 msgstr "選択"
@@ -2828,20 +2840,8 @@ msgstr "色を選ぶ"
 msgid "选项"
 msgstr "選択肢を設定"
 
-msgid "选项列表"
-msgstr "選択肢リスト"
-
 msgid "选项名称"
 msgstr "選択肢を設定"
-
-msgid "选项按钮"
-msgstr "選択肢ボタン"
-
-msgid "选项按钮（禁用）"
-msgstr "選択肢ボタン（無効状態）"
-
-msgid "选项按钮外层"
-msgstr "選択肢ボタン外層"
 
 msgid "透明度（0-1）"
 msgstr "透明度（０－１）"
