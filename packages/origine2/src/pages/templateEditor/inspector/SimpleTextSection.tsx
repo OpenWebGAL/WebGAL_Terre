@@ -152,6 +152,7 @@ export function SimpleTextSection({ model, onPatch }: ISimpleSectionProps) {
 
   return (
     <div className={styles.section}>
+      <div className={styles.sectionTitle}>{t`文字样式`}</div>
       <InspectorRow label={t`字色`}>
         <Select
           size="small"

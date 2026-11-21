@@ -64,9 +64,9 @@ export function FullCssEditor({
 
   const parsed = useMemo(() => {
     if (!part) return null;
-    const raw = parsePartRawDeclarations(scssText, part.selector);
+    const raw = parsePartRawDeclarations(scssText, part.selector, part.stateHostSelector);
     const props = recordToProps(raw.default);
-    const propWithState: IWebgalPropsWithState[] = (['hover', 'active', 'disabled'] as const)
+    const propWithState: IWebgalPropsWithState[] = (['hover', 'active', 'selected', 'disabled'] as const)
       .map((state) => ({
         state,
         props: recordToProps(raw[state]),
@@ -84,9 +84,14 @@ export function FullCssEditor({
       default: propsToRecord(parsed.props),
       hover: propsToRecord(stateMap.hover ?? []),
       active: propsToRecord(stateMap.active ?? []),
+      selected: propsToRecord(stateMap.selected ?? []),
       disabled: propsToRecord(stateMap.disabled ?? []),
     };
-    const nextScss = replacePartRawDeclarations(scssText, part.selector, nextRuleMap);
+    const nextScss = replacePartRawDeclarations(
+      scssText,
+      { selector: part.selector, stateHostSelector: part.stateHostSelector },
+      nextRuleMap,
+    );
     lastSubmittedScssRef.current = nextScss;
     onCommitScss(nextScss);
   }, [part, parsed, scssText, onCommitScss]);

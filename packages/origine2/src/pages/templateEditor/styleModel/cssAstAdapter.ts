@@ -153,9 +153,26 @@ export function serializeScssAst(nodes: ScssNode[]): string {
   return nodes.map((node) => serializeNode(node, 0)).join('\n\n') + (nodes.length > 0 ? '\n' : '');
 }
 
-function getTargetSelector(selector: string, state: PseudoState): string {
+export interface RuleSelectorQuery {
+  selector: string;
+  state: PseudoState;
+  stateHostSelector?: string;
+}
+
+function getTargetSelector({ selector, state, stateHostSelector }: RuleSelectorQuery): string {
   const base = normalizeSelector(selector);
-  return state === 'default' ? base : `${base}:${state}`;
+  if (state === 'default') return base;
+  if (stateHostSelector?.trim()) {
+    const host = normalizeSelector(stateHostSelector);
+    const hostState = state === 'selected' ? `${host}.active` : `${host}:${state}`;
+    return `${hostState} ${base}`;
+  }
+  if (state === 'selected') return `${base}.active`;
+  return `${base}:${state}`;
+}
+
+function formatNestedStateHeader(state: Exclude<PseudoState, 'default'>): string {
+  return state === 'selected' ? '&.active' : `&:${state}`;
 }
 
 function ruleMatchesSelector(rule: RuleNode, targetSelector: string): boolean {
@@ -188,13 +205,13 @@ function walkMatchingRules(
   return matched;
 }
 
-function pickWritableRule(nodes: ScssNode[], selector: string, state: PseudoState): {
+function pickWritableRule(nodes: ScssNode[], query: RuleSelectorQuery): {
   baseRule?: RuleNode;
   targetRule?: RuleNode;
   parentRule?: RuleNode;
 } {
-  const baseSelector = normalizeSelector(selector);
-  const targetSelector = getTargetSelector(selector, state);
+  const baseSelector = normalizeSelector(query.selector);
+  const targetSelector = getTargetSelector(query);
   const baseRules: RuleNode[] = [];
   for (const node of nodes) {
     if (node.kind === 'rule' && ruleMatchesSelector(node, baseSelector)) {
@@ -203,32 +220,31 @@ function pickWritableRule(nodes: ScssNode[], selector: string, state: PseudoStat
   }
   const baseRule = baseRules[baseRules.length - 1];
 
-  if (state === 'default') {
+  if (query.state === 'default') {
     return { baseRule, targetRule: baseRule };
   }
 
-  let nestedPseudoRule: RuleNode | undefined;
-  let nestedParentRule: RuleNode | undefined;
-  for (const rule of baseRules) {
-    for (const child of rule.children) {
+  let matchedRule: RuleNode | undefined;
+  let matchedParent: RuleNode | undefined;
+  for (const node of nodes) {
+    if (node.kind !== 'rule') continue;
+    if (ruleMatchesSelector(node, targetSelector)) {
+      matchedRule = node;
+      matchedParent = undefined;
+    }
+    for (const child of node.children) {
       if (child.kind === 'rule' && ruleMatchesSelector(child, targetSelector)) {
-        nestedPseudoRule = child;
-        nestedParentRule = rule;
+        matchedRule = child;
+        matchedParent = node;
       }
     }
   }
-  if (nestedPseudoRule) {
-    return { baseRule: nestedParentRule, targetRule: nestedPseudoRule, parentRule: nestedParentRule };
-  }
 
-  let topLevelPseudoRule: RuleNode | undefined;
-  for (const node of nodes) {
-    if (node.kind === 'rule' && ruleMatchesSelector(node, targetSelector)) {
-      topLevelPseudoRule = node;
-    }
-  }
-
-  return { baseRule, targetRule: topLevelPseudoRule };
+  return {
+    baseRule: matchedParent ?? baseRule,
+    targetRule: matchedRule,
+    parentRule: matchedParent,
+  };
 }
 
 function applyDeclarationsToRule(
@@ -288,13 +304,22 @@ export function ensureEditableScss(defaultCssText: string, currentScssText: stri
   return currentScssText.trim() ? currentScssText : defaultCssText;
 }
 
+export type ReadRuleStateArg =
+  | PseudoState
+  | {
+    state?: PseudoState;
+    stateHostSelector?: string;
+  };
+
 export function readRuleDeclarations(
   scssText: string,
   selector: string,
-  state: PseudoState = 'default',
+  stateOrOptions: ReadRuleStateArg = 'default',
 ): Record<string, string> {
+  const state = typeof stateOrOptions === 'string' ? stateOrOptions : (stateOrOptions.state ?? 'default');
+  const stateHostSelector = typeof stateOrOptions === 'string' ? undefined : stateOrOptions.stateHostSelector;
   const ast = parseScssAst(scssText);
-  const targetSelector = getTargetSelector(selector, state);
+  const targetSelector = getTargetSelector({ selector, state, stateHostSelector });
   const matched = walkMatchingRules(ast, targetSelector, state !== 'default');
 
   const declarations: Record<string, string> = {};
@@ -308,82 +333,199 @@ export interface PatchRuleInput {
   scssText: string;
   selector: string;
   state: PseudoState;
+  stateHostSelector?: string;
   updates: Record<string, string | null | undefined>;
 }
 
-export function patchRuleDeclarations({ scssText, selector, state, updates }: PatchRuleInput): string {
+function willMutateRule(
+  rule: RuleNode,
+  updates: Record<string, string | null | undefined>,
+): boolean {
+  for (const [rawProp, nextValue] of Object.entries(updates)) {
+    if (nextValue === undefined) continue;
+    const prop = rawProp.toLowerCase().trim();
+    if (!prop) continue;
+    const existing = rule.children.filter(
+      (child): child is DeclNode => child.kind === 'decl' && child.prop.toLowerCase() === prop,
+    );
+    if (nextValue === null) {
+      if (existing.length > 0) return true;
+    } else if (existing.length !== 1 || existing[0].value !== nextValue) {
+      return true;
+    }
+  }
+  return false;
+}
+
+interface IsolateSharedRuleInput {
+  container: ScssNode[];
+  sharedRule: RuleNode;
+  targetSelector: string;
+  baseSelector: string;
+  newHeader: string;
+  isNested: boolean;
+}
+
+function isolateSharedRuleTarget({
+  container,
+  sharedRule,
+  targetSelector,
+  baseSelector,
+  newHeader,
+  isNested,
+}: IsolateSharedRuleInput): RuleNode {
+  const remaining = sharedRule.resolvedSelectors.filter((sel) => sel !== targetSelector);
+  sharedRule.resolvedSelectors = remaining;
+  sharedRule.header = isNested
+    ? remaining
+      .map((sel) => (sel.startsWith(baseSelector) ? `&${sel.slice(baseSelector.length)}` : sel))
+      .join(', ')
+    : remaining.join(', ');
+
+  const clonedChildren: ScssNode[] = sharedRule.children
+    .filter((child): child is DeclNode => child.kind === 'decl')
+    .map((decl) => ({ ...decl }));
+
+  const dedicatedRule: RuleNode = {
+    kind: 'rule',
+    header: newHeader,
+    resolvedSelectors: [targetSelector],
+    children: clonedChildren,
+    line: sharedRule.line,
+  };
+
+  const idx = container.indexOf(sharedRule);
+  if (idx === -1) {
+    container.push(dedicatedRule);
+  } else {
+    container.splice(idx + 1, 0, dedicatedRule);
+  }
+  return dedicatedRule;
+}
+
+function createMissingWritableRule(
+  ast: ScssNode[],
+  query: RuleSelectorQuery,
+  existingBaseRule?: RuleNode,
+): { targetRule: RuleNode; parentRule?: RuleNode } {
+  const baseSelector = normalizeSelector(query.selector);
+  const targetSelector = getTargetSelector(query);
+  if (query.state === 'default' || query.stateHostSelector?.trim()) {
+    const header = query.state === 'default' ? query.selector.trim() : targetSelector;
+    const resolvedSelectors = query.state === 'default' ? [baseSelector] : [targetSelector];
+    const targetRule: RuleNode = {
+      kind: 'rule',
+      header,
+      resolvedSelectors,
+      children: [],
+      line: Number.MAX_SAFE_INTEGER,
+    };
+    ast.push(targetRule);
+    return { targetRule };
+  }
+
+  let baseRule = existingBaseRule;
+  if (!baseRule) {
+    baseRule = {
+      kind: 'rule',
+      header: query.selector.trim(),
+      resolvedSelectors: [baseSelector],
+      children: [],
+      line: Number.MAX_SAFE_INTEGER,
+    };
+    ast.push(baseRule);
+  }
+  const targetRule: RuleNode = {
+    kind: 'rule',
+    header: formatNestedStateHeader(query.state),
+    resolvedSelectors: [targetSelector],
+    children: [],
+    line: Number.MAX_SAFE_INTEGER,
+  };
+  baseRule.children.push(targetRule);
+  return { targetRule, parentRule: baseRule };
+}
+
+export function patchRuleDeclarations({
+  scssText,
+  selector,
+  state,
+  stateHostSelector,
+  updates,
+}: PatchRuleInput): string {
   const ast = parseScssAst(scssText);
   const hasInsertOrUpdate = Object.values(updates).some((val) => typeof val === 'string');
-  const resolved = pickWritableRule(ast, selector, state);
-  let { baseRule, targetRule, parentRule } = resolved;
+  const query: RuleSelectorQuery = { selector, state, stateHostSelector };
+  const resolved = pickWritableRule(ast, query);
+  let { targetRule, parentRule } = resolved;
+  const { baseRule } = resolved;
+  const baseSelector = normalizeSelector(selector);
+  const targetSelector = getTargetSelector(query);
 
   if (!targetRule) {
     if (!hasInsertOrUpdate) return scssText;
-
-    const baseSelector = normalizeSelector(selector);
-    if (state === 'default') {
-      targetRule = {
-        kind: 'rule',
-        header: selector.trim(),
-        resolvedSelectors: [baseSelector],
-        children: [],
-        line: Number.MAX_SAFE_INTEGER,
-      };
-      ast.push(targetRule);
-    } else {
-      if (!baseRule) {
-        baseRule = {
-          kind: 'rule',
-          header: selector.trim(),
-          resolvedSelectors: [baseSelector],
-          children: [],
-          line: Number.MAX_SAFE_INTEGER,
-        };
-        ast.push(baseRule);
-      }
-      targetRule = {
-        kind: 'rule',
-        header: `&:${state}`,
-        resolvedSelectors: [`${baseSelector}:${state}`],
-        children: [],
-        line: Number.MAX_SAFE_INTEGER,
-      };
-      baseRule.children.push(targetRule);
-      parentRule = baseRule;
-    }
-
-    applyDeclarationsToRule(targetRule, updates);
+    const created = createMissingWritableRule(ast, query, baseRule);
+    applyDeclarationsToRule(created.targetRule, updates);
     return serializeScssAst(ast);
+  }
+
+  if (targetRule.resolvedSelectors.length > 1) {
+    if (!willMutateRule(targetRule, updates)) return scssText;
+    const isNested = Boolean(parentRule && state !== 'default');
+    const parentBase = parentRule?.resolvedSelectors[0] ?? baseSelector;
+    const nestedHeader = targetSelector.startsWith(parentBase)
+      ? `&${targetSelector.slice(parentBase.length)}`
+      : targetSelector;
+    targetRule = isolateSharedRuleTarget({
+      container: isNested ? parentRule!.children : ast,
+      sharedRule: targetRule,
+      targetSelector,
+      baseSelector: parentBase,
+      newHeader: isNested ? nestedHeader : targetSelector,
+      isNested,
+    });
   }
 
   const changed = applyDeclarationsToRule(targetRule, updates);
   if (!changed) return scssText;
 
-  if (state !== 'default' && parentRule && targetRule.children.length === 0) {
-    parentRule.children = parentRule.children.filter((child) => child !== targetRule);
+  if (state !== 'default' && targetRule.children.length === 0) {
+    if (parentRule) {
+      parentRule.children = parentRule.children.filter((child) => child !== targetRule);
+    } else {
+      const idx = ast.indexOf(targetRule);
+      if (idx !== -1) ast.splice(idx, 1);
+    }
   }
 
   return serializeScssAst(ast);
 }
 
-export function parsePartRawDeclarations(scssText: string, selector: string): PartRawRuleMap {
+export function parsePartRawDeclarations(
+  scssText: string,
+  selector: string,
+  stateHostSelector?: string,
+): PartRawRuleMap {
   return {
-    default: readRuleDeclarations(scssText, selector, 'default'),
-    hover: readRuleDeclarations(scssText, selector, 'hover'),
-    active: readRuleDeclarations(scssText, selector, 'active'),
-    disabled: readRuleDeclarations(scssText, selector, 'disabled'),
+    default: readRuleDeclarations(scssText, selector, { state: 'default', stateHostSelector }),
+    hover: readRuleDeclarations(scssText, selector, { state: 'hover', stateHostSelector }),
+    active: readRuleDeclarations(scssText, selector, { state: 'active', stateHostSelector }),
+    selected: readRuleDeclarations(scssText, selector, { state: 'selected', stateHostSelector }),
+    disabled: readRuleDeclarations(scssText, selector, { state: 'disabled', stateHostSelector }),
   };
 }
 
 export function replacePartRawDeclarations(
   scssText: string,
-  selector: string,
+  target: string | { selector: string; stateHostSelector?: string },
   rules: PartRawRuleMap,
 ): string {
+  const selector = typeof target === 'string' ? target : target.selector;
+  const stateHostSelector = typeof target === 'string' ? undefined : target.stateHostSelector;
   let nextScss = scssText;
 
   for (const state of PSEUDO_STATES) {
-    const existing = readRuleDeclarations(nextScss, selector, state);
+    const existing = readRuleDeclarations(nextScss, selector, { state, stateHostSelector });
     const nextDecls = rules[state];
     const updates: Record<string, string | null> = {};
 
@@ -399,7 +541,7 @@ export function replacePartRawDeclarations(
       }
     }
 
-    nextScss = patchRuleDeclarations({ scssText: nextScss, selector, state, updates });
+    nextScss = patchRuleDeclarations({ scssText: nextScss, selector, state, stateHostSelector, updates });
   }
 
   return nextScss;

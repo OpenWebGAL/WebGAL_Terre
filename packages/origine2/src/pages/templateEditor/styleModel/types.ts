@@ -1,6 +1,6 @@
-export type PseudoState = 'default' | 'hover' | 'active' | 'disabled';
+export type PseudoState = 'default' | 'hover' | 'active' | 'selected' | 'disabled';
 
-export const PSEUDO_STATES: readonly PseudoState[] = ['default', 'hover', 'active', 'disabled'];
+export const PSEUDO_STATES: readonly PseudoState[] = ['default', 'hover', 'active', 'selected', 'disabled'];
 
 export interface LayoutFields {
   left?: number;
@@ -118,5 +118,6 @@ export interface PartRawRuleMap {
   default: Record<string, string>;
   hover: Record<string, string>;
   active: Record<string, string>;
+  selected: Record<string, string>;
   disabled: Record<string, string>;
 }

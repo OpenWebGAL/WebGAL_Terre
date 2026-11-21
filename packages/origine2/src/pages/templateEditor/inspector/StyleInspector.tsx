@@ -11,6 +11,7 @@ const PSEUDO_STATES: { key: UiPseudoState; label: () => string }[] = [
   { key: 'default', label: () => t`默认` },
   { key: 'hover', label: () => t`悬停` },
   { key: 'active', label: () => t`按下` },
+  { key: 'selected', label: () => t`选中` },
   { key: 'disabled', label: () => t`禁用` },
 ];
 
@@ -108,8 +109,8 @@ export function StyleInspector({
           <div className={styles.emptyState}>{t`未选择部件`}</div>
         ) : (
           <SimpleStyleEditor
+            part={part}
             scssText={scssText}
-            selector={part.selector}
             state={lockedState}
             templateDir={templateDir}
             scssPath={scssPath}

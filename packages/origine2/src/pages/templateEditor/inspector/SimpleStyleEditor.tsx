@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { debounce } from 'lodash';
+import type { UiPartDescriptor } from '@webgal/editor-preview-protocol';
 import {
   applyPartSimpleStylePatch,
   parsePartSimpleStyle,
@@ -12,8 +13,8 @@ import { SimpleTextSection } from './SimpleTextSection';
 import styles from './inspectorCommon.module.scss';
 
 interface ISimpleStyleEditorProps {
+  part: UiPartDescriptor;
   scssText: string;
-  selector: string;
   state: PseudoState;
   templateDir: string;
   scssPath?: string | null;
@@ -22,17 +23,18 @@ interface ISimpleStyleEditorProps {
 }
 
 export function SimpleStyleEditor({
+  part,
   scssText,
-  selector,
   state,
   templateDir,
   scssPath,
   onPreviewScss,
   onCommitScss,
 }: ISimpleStyleEditorProps) {
+  const { selector, stateHostSelector, kind } = part;
   const model = useMemo(
-    () => parsePartSimpleStyle(scssText, selector, state),
-    [scssText, selector, state],
+    () => parsePartSimpleStyle(scssText, { selector, state, stateHostSelector }),
+    [scssText, selector, state, stateHostSelector],
   );
 
   const latestScssRef = useRef(scssText);
@@ -54,13 +56,14 @@ export function SimpleStyleEditor({
       value: SimpleStyleModel[K],
       immediateCommit = false,
     ) => {
-      const nextScss = applyPartSimpleStylePatch(
-        latestScssRef.current,
+      const nextScss = applyPartSimpleStylePatch({
+        scssText: latestScssRef.current,
         selector,
         state,
+        stateHostSelector,
         group,
         value,
-      );
+      });
       latestScssRef.current = nextScss;
       onPreviewScss(nextScss);
       if (immediateCommit) {
@@ -70,19 +73,26 @@ export function SimpleStyleEditor({
         debouncedCommit(nextScss);
       }
     },
-    [selector, state, onPreviewScss, debouncedCommit],
+    [selector, state, stateHostSelector, onPreviewScss, debouncedCommit],
   );
+
+  const showText = !kind || kind === 'text';
+  const showContainer = !kind || kind === 'container';
 
   return (
     <div className={styles.scrollBody}>
-      <SimpleTextSection model={model} onPatch={handlePatch} />
-      <SimpleBackgroundSection
-        model={model}
-        templateDir={templateDir}
-        scssPath={scssPath}
-        onPatch={handlePatch}
-      />
-      <SimpleBorderSection model={model} onPatch={handlePatch} />
+      {showText && <SimpleTextSection model={model} onPatch={handlePatch} />}
+      {showContainer && (
+        <>
+          <SimpleBackgroundSection
+            model={model}
+            templateDir={templateDir}
+            scssPath={scssPath}
+            onPatch={handlePatch}
+          />
+          <SimpleBorderSection model={model} onPatch={handlePatch} />
+        </>
+      )}
     </div>
   );
 }

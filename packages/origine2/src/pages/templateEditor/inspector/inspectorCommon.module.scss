@@ -43,6 +43,14 @@
   }
 }
 
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 20px;
+  padding-top: 2px;
+}
+
 .row {
   display: flex;
   align-items: center;
@@ -144,12 +152,13 @@
 
 .stateButton {
   height: 22px;
-  padding: 0 8px;
+  padding: 0 7px;
   border: none;
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-sub);
   font-size: 12px;
+  white-space: nowrap;
   cursor: pointer;
 
   &:hover {

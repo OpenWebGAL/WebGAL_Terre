@@ -19,10 +19,10 @@ import {
   formatPx,
   formatShadow,
   formatUrlValue,
+  isGradientCss,
   parseBlurPx,
   parseFiniteNumber,
   parseLinearGradient,
-  isGradientCss,
   parseMaskFade,
   parsePx,
   parseShadow,
@@ -34,6 +34,7 @@ import {
 type StyleUpdater<K extends keyof SimpleStyleModel> = (
   decls: Record<string, string>,
   value: SimpleStyleModel[K],
+  defaultDecls?: Record<string, string>,
 ) => Record<string, string | null | undefined>;
 
 function parseTextFill(decls: Record<string, string>): ColorOrGradientValue {
@@ -170,12 +171,20 @@ function parseBackdropBlur(decls: Record<string, string>): BackdropBlurValue {
   };
 }
 
+export interface SimpleStylePartTarget {
+  selector: string;
+  state: PseudoState;
+  stateHostSelector?: string;
+}
+
 export function parsePartSimpleStyle(
   scssText: string,
-  selector: string,
-  state: PseudoState,
+  target: SimpleStylePartTarget,
 ): SimpleStyleModel {
-  const decls = readRuleDeclarations(scssText, selector, state);
+  const decls = readRuleDeclarations(scssText, target.selector, {
+    state: target.state,
+    stateHostSelector: target.stateHostSelector,
+  });
 
   return {
     textFill: parseTextFill(decls),
@@ -206,8 +215,34 @@ function clearTextClipResiduals(decls: Record<string, string>): Record<string, s
   };
 }
 
+function formatTextGradient(value: ColorOrGradientValue): string {
+  const angle = value.angle ?? 90;
+  if (value.stops && value.stops.length >= 2) {
+    return buildLinearGradient(angle, value.stops);
+  }
+  if (value.startColor || value.endColor) {
+    return buildLinearGradient(angle, value.startColor ?? '#ffffff', value.endColor ?? '#90caf9');
+  }
+  return value.gradientCss?.trim() || buildLinearGradient(angle, '#ffffff', '#90caf9');
+}
+
+function formatBackgroundGradient(value: BackgroundFillValue): string {
+  const angle = value.angle ?? 180;
+  if (value.stops && value.stops.length >= 2) {
+    return buildLinearGradient(angle, value.stops);
+  }
+  if (value.startColor || value.endColor) {
+    return buildLinearGradient(
+      angle,
+      value.startColor ?? 'rgba(0, 0, 0, 0.7)',
+      value.endColor ?? 'rgba(0, 0, 0, 0.2)',
+    );
+  }
+  return value.gradientCss?.trim() || buildLinearGradient(angle, 'rgba(0, 0, 0, 0.7)', 'rgba(0, 0, 0, 0.2)');
+}
+
 const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
-  textFill: (decls, value) => {
+  textFill: (decls, value, defaultDecls) => {
     if (value.mode === 'custom') {
       return {};
     }
@@ -221,24 +256,19 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
     }
 
     if (value.mode === 'solid') {
+      const baseUsesClip = Boolean(defaultDecls && isTextBackgroundClip(defaultDecls));
       return {
         ...clearTextClipResiduals(decls),
         color: value.solidColor?.trim() || '#ffffff',
-        '-webkit-text-fill-color': null,
+        '-webkit-text-fill-color': baseUsesClip ? 'currentColor' : null,
+        ...(baseUsesClip ? { background: 'none' } : {}),
       };
     }
-
-    const angle = value.angle ?? 90;
-    const grad = value.stops && value.stops.length >= 2
-      ? buildLinearGradient(angle, value.stops)
-      : (value.startColor || value.endColor)
-        ? buildLinearGradient(angle, value.startColor ?? '#ffffff', value.endColor ?? '#90caf9')
-        : (value.gradientCss?.trim() || buildLinearGradient(angle, '#ffffff', '#90caf9'));
 
     return {
       color: 'transparent',
       '-webkit-text-fill-color': 'transparent',
-      background: grad,
+      background: formatTextGradient(value),
       'background-image': null,
       'background-clip': 'text',
       '-webkit-background-clip': 'text',
@@ -296,12 +326,13 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
         ...(stripImportant(decls.color ?? '').toLowerCase() === 'transparent' ? { color: null } : {}),
       }
       : {};
+    const hasBackdrop = parseBackdropBlur(decls).enabled;
 
     if (value.mode === 'none') {
       if (isTextBackgroundClip(decls)) return {};
       return {
         background: null,
-        'background-color': null,
+        ...(hasBackdrop ? {} : { 'background-color': null }),
         'background-image': null,
         'background-size': null,
         'background-position': null,
@@ -312,8 +343,8 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
     if (value.mode === 'solid') {
       return {
         ...clearClip,
-        background: value.solidColor?.trim() || 'transparent',
-        'background-color': null,
+        background: null,
+        'background-color': value.solidColor?.trim() || 'transparent',
         'background-image': null,
         'background-size': null,
         'background-position': null,
@@ -322,17 +353,11 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
     }
 
     if (value.mode === 'gradient') {
-      const angle = value.angle ?? 180;
-      const grad = value.stops && value.stops.length >= 2
-        ? buildLinearGradient(angle, value.stops)
-        : (value.startColor || value.endColor)
-          ? buildLinearGradient(angle, value.startColor ?? 'rgba(0, 0, 0, 0.7)', value.endColor ?? 'rgba(0, 0, 0, 0.2)')
-          : (value.gradientCss?.trim() || buildLinearGradient(angle, 'rgba(0, 0, 0, 0.7)', 'rgba(0, 0, 0, 0.2)'));
       return {
         ...clearClip,
-        background: grad,
-        'background-color': null,
-        'background-image': null,
+        background: null,
+        ...(hasBackdrop ? {} : { 'background-color': null }),
+        'background-image': formatBackgroundGradient(value),
         'background-size': null,
         'background-position': null,
         'background-repeat': null,
@@ -466,7 +491,12 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
     if (tint) {
       updates['background-color'] = tint;
       const bg = extractBackgroundGradientOrColor(decls);
-      if (decls.background && !bg.gradient && !bg.imageUrl) {
+      if (decls.background) {
+        if (bg.gradient) {
+          updates['background-image'] = bg.gradient;
+        } else if (bg.imageUrl) {
+          updates['background-image'] = formatUrlValue(bg.imageUrl);
+        }
         updates.background = null;
       }
     }
@@ -480,16 +510,28 @@ const STYLE_UPDATERS: { [K in keyof SimpleStyleModel]-?: StyleUpdater<K> } = {
   }),
 };
 
-// eslint-disable-next-line max-params
-export function applyPartSimpleStylePatch<K extends keyof SimpleStyleModel>(
-  scssText: string,
-  selector: string,
-  state: PseudoState,
-  group: K,
-  value: SimpleStyleModel[K],
-): string {
-  const decls = readRuleDeclarations(scssText, selector, state);
+export interface ApplyPartSimpleStylePatchInput<K extends keyof SimpleStyleModel> {
+  scssText: string;
+  selector: string;
+  state: PseudoState;
+  stateHostSelector?: string;
+  group: K;
+  value: SimpleStyleModel[K];
+}
+
+export function applyPartSimpleStylePatch<K extends keyof SimpleStyleModel>({
+  scssText,
+  selector,
+  state,
+  stateHostSelector,
+  group,
+  value,
+}: ApplyPartSimpleStylePatchInput<K>): string {
+  const decls = readRuleDeclarations(scssText, selector, { state, stateHostSelector });
+  const defaultDecls = state === 'default'
+    ? undefined
+    : readRuleDeclarations(scssText, selector, { state: 'default', stateHostSelector });
   const updater = STYLE_UPDATERS[group] as StyleUpdater<K>;
-  const updates = updater(decls, value);
-  return patchRuleDeclarations({ scssText, selector, state, updates });
+  const updates = updater(decls, value, defaultDecls);
+  return patchRuleDeclarations({ scssText, selector, state, stateHostSelector, updates });
 }

@@ -98,6 +98,9 @@ function parseStyleString(styleString: string): [string,string] {
 }
 
 function extractState(styleString: string): string | null {
+  if (/&\.active\s*\{/.test(styleString)) {
+    return 'selected';
+  }
   // 使用正则表达式匹配 &:状态 { 的模式
   const stateRegex = /&:(\w+)\s*\{/;
 

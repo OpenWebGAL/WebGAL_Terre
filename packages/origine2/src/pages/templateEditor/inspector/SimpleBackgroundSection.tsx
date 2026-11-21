@@ -82,6 +82,7 @@ export function SimpleBackgroundSection({
 
   return (
     <div className={styles.section}>
+      <div className={styles.sectionTitle}>{t`背景与材质`}</div>
       <InspectorRow label={t`背景`}>
         <Select
           size="small"
@@ -291,7 +292,7 @@ export function SimpleBackgroundSection({
       {backdropBlur.enabled && (
         <InspectorRow label={t`叠色`}>
           <CompactColorField
-            color={backdropBlur.tintColor || '#FFFFFF33'}
+            color={backdropBlur.tintColor || 'transparent'}
             onChange={(tintColor) => updateBackdropBlur({ tintColor }, true)}
           />
         </InspectorRow>

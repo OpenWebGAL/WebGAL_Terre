@@ -10,7 +10,8 @@ export function formCss(extractedCss: ICssExtractResult): string {
 
   for (const state of extractedCss.propsWithState) {
     let currentStateStr = '';
-    currentStateStr = currentStateStr + `&:${state.state} {\n`;
+    const selectorHeader = state.state === 'selected' ? '&.active' : `&:${state.state}`;
+    currentStateStr = currentStateStr + `${selectorHeader} {\n`;
 
     for (const prop of state.props) {
       currentStateStr = currentStateStr + `${prop.propName}: ${prop.propValue};\n`;

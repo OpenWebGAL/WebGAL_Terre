@@ -18,6 +18,7 @@ export function SimpleBorderSection({ model, onPatch }: ISimpleSectionProps) {
 
   return (
     <div className={styles.section}>
+      <div className={styles.sectionTitle}>{t`边框与效果`}</div>
       <InspectorRow label={t`圆角`}>
         <PxSpinField
           tag="px"
