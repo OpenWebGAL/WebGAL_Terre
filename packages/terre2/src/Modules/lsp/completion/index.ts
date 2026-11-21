@@ -36,6 +36,7 @@ export function checkTriggerCompletion(
   variableList.set('Game_name', -1);
   variableList.set('Game_key', -1);
   variableList.set('Title_img', -1);
+  variableList.set('Landing_img', -1);
   variableList.set('Title_bgm', -1);
   variableList.set('Game_Logo', -1);
 

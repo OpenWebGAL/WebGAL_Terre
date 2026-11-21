@@ -1727,6 +1727,9 @@ msgstr "未指定"
 msgid "未知版本"
 msgstr "未知版本"
 
+msgid "未设置"
+msgstr "未设置"
+
 msgid "未识别"
 msgstr "未识别"
 
@@ -2467,6 +2470,9 @@ msgstr "获取输入"
 
 msgid "菜单浮层"
 msgstr "菜单浮层"
+
+msgid "落地启动图"
+msgstr "落地启动图"
 
 msgid "蓝色通道"
 msgstr "蓝色通道"

@@ -1727,6 +1727,9 @@ msgstr "지정되지 않음"
 msgid "未知版本"
 msgstr "알 수 없는 버전"
 
+msgid "未设置"
+msgstr "미설정"
+
 msgid "未识别"
 msgstr "인식되지 않음"
 
@@ -2467,6 +2470,9 @@ msgstr "입력 가져오기"
 
 msgid "菜单浮层"
 msgstr "메뉴 오버레이"
+
+msgid "落地启动图"
+msgstr "랜딩 이미지"
 
 msgid "蓝色通道"
 msgstr "파랑 채널"

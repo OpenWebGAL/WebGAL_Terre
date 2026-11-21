@@ -10,7 +10,7 @@ import {WebgalParser} from "@/pages/editor/GraphicalEditor/parser";
 import {logger} from "@/utils/logger";
 import {textboxThemes} from "./constants";
 import {TabItem} from "@/pages/editor/Topbar/components/TabItem";
-import {Add, Plus, Write} from "@icon-park/react";
+import {Add, CloseSmall, Plus, Write} from "@icon-park/react";
 import {
   Button,
   Dialog,
@@ -130,10 +130,14 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
     return gameConfig.value.find(e => e.command === key)?.args ?? [];
   }
 
-  function updateGameConfigSimpleByKey(key: string, value: string) {
+  function updateGameConfigSimpleByKey(key: string, value: string, removeIfEmpty = false) {
     const newConfig = cloneDeep(gameConfig.value);
     const index = newConfig.findIndex(e => e.command === key);
-    if (index >= 0) {
+    if (removeIfEmpty && value === '') {
+      if (index >= 0) {
+        newConfig.splice(index, 1);
+      }
+    } else if (index >= 0) {
       newConfig[index].args = [value];
     } else {
       newConfig.push({command: key, args: [value], options: []});
@@ -230,6 +234,16 @@ export default function GameConfig({ mode = 'full' }: GameConfigProps) {
           sourceBase="bgm" key="titleBgm"
           value={getConfigContentAsString('Title_bgm')}
           onChange={(e: string) => updateGameConfigSimpleByKey('Title_bgm', e)}/>,
+      )}
+      {mode === 'full' && renderConfigItem(t`落地启动图`,
+        <GameConfigEditorWithFileChoose
+          sourceBase="background"
+          extNameList={extNameMap.get('image') ?? []}
+          key="landingImage"
+          clearable
+          placeholder={t`未设置`}
+          value={getConfigContentAsString('Landing_img')}
+          onChange={(e: string) => updateGameConfigSimpleByKey('Landing_img', e, true)}/>,
       )}
       {mode === 'full' && renderConfigItem(t`启动图`,
         <GameConfigEditorWithImageFileChoose
@@ -470,11 +484,12 @@ function GameConfigEditorWithSelector(props: IGameConfigEditor & {
 
 function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
   sourceBase: string,
-  extNameList: string[]
+  extNameList: string[],
+  clearable?: boolean,
+  placeholder?: string,
 }) {
-  const inputBoxRef = useRef<HTMLInputElement>(null);
   return <div className={styles.textEditArea}>
-    {props.value}
+    {props.value || (props.placeholder ? <span style={{color: 'var(--text-sub)'}}>{props.placeholder}</span> : null)}
     <ChooseFile
       basePath={[props.sourceBase]}
       button={
@@ -489,6 +504,15 @@ function GameConfigEditorWithFileChoose(props: IGameConfigEditor & {
         }
       }}
       extNames={props.extNameList}/>
+    {props.clearable && props.value && (
+      <span
+        className={styles.editButton}
+        title={t`清除`}
+        onClick={() => props.onChange('')}
+      >
+        <CloseSmall theme="outline" size="16" fill="var(--text-sub)" strokeWidth={3}/>
+      </span>
+    )}
   </div>;
 }
 

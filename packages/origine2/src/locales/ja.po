@@ -1727,6 +1727,9 @@ msgstr "指定なし"
 msgid "未知版本"
 msgstr "不明なバージョン"
 
+msgid "未设置"
+msgstr "未設定"
+
 msgid "未识别"
 msgstr "認識されないコマンド"
 
@@ -2467,6 +2470,9 @@ msgstr "入力を取得"
 
 msgid "菜单浮层"
 msgstr "メニューオーバーレイ"
+
+msgid "落地启动图"
+msgstr "ランディング画像"
 
 msgid "蓝色通道"
 msgstr "青いチャネル"

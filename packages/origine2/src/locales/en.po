@@ -1727,6 +1727,9 @@ msgstr "Unspecified"
 msgid "未知版本"
 msgstr "Unknown Version"
 
+msgid "未设置"
+msgstr "Not set"
+
 msgid "未识别"
 msgstr "Unrecognized"
 
@@ -2467,6 +2470,9 @@ msgstr "Get input"
 
 msgid "菜单浮层"
 msgstr "Menu Overlay"
+
+msgid "落地启动图"
+msgstr "Landing image"
 
 msgid "蓝色通道"
 msgstr "Blue channel"
