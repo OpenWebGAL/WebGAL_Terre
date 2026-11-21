@@ -1,4 +1,19 @@
 {
-  "name":"WebGAL Refine 2026",
-  "webgal-version":"4.7.0-preview.0"
+  "name": "WebGAL Refine 2026",
+  "webgal-version": "4.7.0-preview.1",
+  "uiMode": "custom",
+  "screens": {
+    "title": "default",
+    "textbox": "default",
+    "choose": "default",
+    "save": "grid-2x5",
+    "load": "grid-2x5",
+    "options": "tabbed-classic",
+    "flowchart": "default",
+    "menuPanel": "default",
+    "backlog": "default",
+    "extra": "gallery-classic",
+    "bottomControlPanel": "default",
+    "globalDialog": "default"
+  }
 }

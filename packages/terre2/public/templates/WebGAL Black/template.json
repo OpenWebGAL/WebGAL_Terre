@@ -1,7 +1,7 @@
 {
   "name": "WebGAL Black",
   "id": "805c5f5a-8f52-461f-8931-613676d6a086",
-  "webgal-version": "4.7.0-preview.0",
+  "webgal-version": "4.7.0-preview.1",
   "uiMode": "custom",
   "screens": {
     "title": "default",

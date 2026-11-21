@@ -13400,10 +13400,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webgal-engine@4.7.0-preview.0:
-  version "4.7.0-preview.0"
-  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.7.0-preview.0.tgz#81b79fb3174061bd1e9b40b3f5ed23f9eb3808aa"
-  integrity sha512-f8Tj2fW9iH07WMOZMUnRNfP2rtA3vbidyvlJRN750wQgTuWzUw8D+tPKR930BI0oKmwQcDrO8IDwUPKaStL0gg==
+webgal-engine@4.7.0-preview.1:
+  version "4.7.0-preview.1"
+  resolved "https://registry.yarnpkg.com/webgal-engine/-/webgal-engine-4.7.0-preview.1.tgz#a01e4d291e2be5d63efdcfe827804c1bff6cd9e0"
+  integrity sha512-JoLWXNgGt58BoK7nZC5Psqaf1GgyGDhyHjSHqqyDGj2U3xzrvwGUCw5hAqoFIhdy1PrNX+8faxhwxAttJa/QUA==
   dependencies:
     "@emotion/css" "^11.11.2"
     "@icon-park/react" "^1.4.2"
