@@ -8,7 +8,9 @@
 
 支持按界面独立切换内置预设变体与导入自定义界面包，同时为默认模板内置全套 Refine 2026 预制界面并优化 Classic/Black 模板的样式隔离。
 
-内置 WebGAL 4.7.0-preview.1 引擎，并升级桌面端 Electron 运行环境至 v30。
+游戏配置新增“落地启动图”设置，支持替换游戏首屏落地页背景图；同时提供旧版模板一键升级引导流程。
+
+内置 WebGAL 4.7.0-preview.2 引擎，并升级桌面端 Electron 运行环境至 v30。
 
 #### 修复
 
@@ -25,7 +27,9 @@ Added a three-pane visual template editor with canvas drag-and-resize layout, Si
 
 Added per-screen preset switching and custom screen bundle importing, bundled Refine 2026 preset screens into the default template, and improved style isolation for Classic and Black templates.
 
-Bundled WebGAL 4.7.0-preview.1 engine and upgraded the desktop Electron runtime to v30.
+Added a "Landing image" setting in Game Configuration to customize the initial landing screen background, along with a one-click upgrade guide for legacy templates.
+
+Bundled WebGAL 4.7.0-preview.2 engine and upgraded the desktop Electron runtime to v30.
 
 #### Fixes
 
@@ -42,7 +46,9 @@ Improved the layout of the "Regular performance" section in the top toolbar with
 
 画面単位でのプリセット切り替えとカスタム画面パッケージのインポートに対応し、標準テンプレートに Refine 2026 の画面プリセット一式を同梱したほか、Classic／Black テンプレートのスタイル分離を強化しました。
 
-WebGAL 4.7.0-preview.1 エンジンを同梱し、デスクトップ版の Electron ランタイムを v30 へ更新しました。
+ゲーム設定に「ランディング画像」項目を追加し、初回起動時のランディング画面の背景を差し替えられるようにしたほか、旧形式テンプレートのワンクリックアップグレード案内に対応しました。
+
+WebGAL 4.7.0-preview.2 エンジンを同梱し、デスクトップ版の Electron ランタイムを v30 へ更新しました。
 
 #### 修正
 
